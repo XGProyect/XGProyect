@@ -23,6 +23,7 @@ class Message extends Model
 {
     protected $table = 'messages';
     protected $primaryKey = 'message_id';
+    public $timestamps = false;
     protected $allowedFields = [
         'message_sender',
         'message_receiver',

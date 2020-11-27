@@ -23,6 +23,7 @@ class Research extends Model
 {
     protected $table = 'research';
     protected $primaryKey = 'research_id';
+    public $timestamps = false;
     protected $allowedFields = [
         'research_user_id',
         'research_current_research',

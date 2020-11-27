@@ -24,6 +24,7 @@ class AllianceStatistic extends Model
     protected $table = 'alliance_statistics';
     protected $primaryKey = 'alliance_statistic_alliance_id';
     public $incrementing = false;
+    public $timestamps = false;
     protected $allowedFields = [
         'alliance_statistic_buildings_points',
         'alliance_statistic_buildings_old_rank',

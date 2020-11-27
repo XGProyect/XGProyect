@@ -23,6 +23,7 @@ class UserStatistic extends Model
 {
     protected $table = 'users_statistics';
     protected $primaryKey = 'user_statistic_id';
+    public $timestamps = false;
     protected $allowedFields = [
         'user_statistic_user_id',
         'user_statistic_buildings_points',

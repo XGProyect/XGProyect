@@ -23,6 +23,7 @@ class Report extends Model
 {
     protected $table = 'reports';
     protected $primaryKey = '';
+    public $timestamps = false;
     protected $allowedFields = [
         'report_owners',
         'report_rid',

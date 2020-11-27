@@ -23,6 +23,7 @@ class Changelog extends Model
 {
     protected $table = 'changelog';
     protected $primaryKey = 'changelog_id';
+    public $timestamps = false;
     protected $allowedFields = [
         'changelog_lang_id',
         'changelog_version',

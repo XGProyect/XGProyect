@@ -23,6 +23,7 @@ class Ship extends Model
 {
     protected $table = 'ships';
     protected $primaryKey = 'ship_id';
+    public $timestamps = false;
     protected $allowedFields = [
         'ship_planet_id',
         'ship_small_cargo_ship',

@@ -23,6 +23,7 @@ class Alliance extends Model
 {
     protected $table = 'alliance';
     protected $primaryKey = 'alliance_id';
+    public $timestamps = false;
     protected $allowedFields = [
         'alliance_name',
         'alliance_tag',

@@ -23,6 +23,7 @@ class Acs extends Model
 {
     protected $table = 'acs';
     protected $primaryKey = 'acs_id';
+    public $timestamps = false;
     protected $allowedFields = [
         'acs_name',
         'acs_owner',

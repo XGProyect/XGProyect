@@ -23,6 +23,7 @@ class Preference extends Model
 {
     protected $table = 'preferences';
     protected $primaryKey = 'preference_id';
+    public $timestamps = false;
     protected $allowedFields = [
         'preference_user_id',
         'preference_nickname_change',

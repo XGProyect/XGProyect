@@ -23,6 +23,7 @@ class Premium extends Model
 {
     protected $table = 'premium';
     protected $primaryKey = 'premium_id';
+    public $timestamps = false;
     protected $allowedFields = [
         'premium_user_id',
         'premium_dark_matter',

@@ -23,6 +23,7 @@ class Language extends Model
 {
     protected $table = 'languages';
     protected $primaryKey = 'language_id';
+    public $timestamps = false;
     protected $allowedFields = [
         'language_name',
     ];

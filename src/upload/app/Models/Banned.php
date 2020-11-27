@@ -23,6 +23,7 @@ class Banned extends Model
 {
     protected $table = 'banned';
     protected $primaryKey = 'banned_id';
+    public $timestamps = false;
     protected $allowedFields = [
         'banned_who',
         'banned_theme',
