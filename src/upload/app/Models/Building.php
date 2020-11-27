@@ -24,7 +24,7 @@ class Building extends Model
     protected $table = 'buildings';
     protected $primaryKey = 'building_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'building_planet_id',
         'building_metal_mine',
         'building_crystal_mine',

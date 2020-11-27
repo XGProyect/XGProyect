@@ -32,7 +32,7 @@ class Planet extends Model
     protected $table = 'planets';
     protected $primaryKey = 'planet_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'planet_name',
         'planet_user_id',
         'planet_galaxy',

@@ -24,7 +24,7 @@ class Language extends Model
     protected $table = 'languages';
     protected $primaryKey = 'language_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'language_name',
     ];
     protected $returnType = 'App\Entities\Language';

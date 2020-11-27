@@ -24,7 +24,7 @@ class Research extends Model
     protected $table = 'research';
     protected $primaryKey = 'research_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'research_user_id',
         'research_current_research',
         'research_espionage_technology',

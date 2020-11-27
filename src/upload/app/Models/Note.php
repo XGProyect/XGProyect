@@ -24,7 +24,7 @@ class Note extends Model
     protected $table = 'notes';
     protected $primaryKey = 'note_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'note_owner',
         'note_time',
         'note_priority',

@@ -24,7 +24,7 @@ class Message extends Model
     protected $table = 'messages';
     protected $primaryKey = 'message_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'message_sender',
         'message_receiver',
         'message_time',

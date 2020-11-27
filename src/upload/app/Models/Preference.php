@@ -24,7 +24,7 @@ class Preference extends Model
     protected $table = 'preferences';
     protected $primaryKey = 'preference_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'preference_user_id',
         'preference_nickname_change',
         'preference_spy_probes',

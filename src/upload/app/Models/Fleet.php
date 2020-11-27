@@ -24,7 +24,7 @@ class Fleet extends Model
     protected $table = 'fleets';
     protected $primaryKey = 'fleet_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'fleet_owner',
         'fleet_mission',
         'fleet_amount',

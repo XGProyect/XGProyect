@@ -24,7 +24,7 @@ class AcsMember extends Model
     protected $table = 'acs_members';
     protected $primaryKey = 'acs_member_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'acs_group_id',
         'acs_user_id',
     ];

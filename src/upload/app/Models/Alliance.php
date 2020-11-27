@@ -24,7 +24,7 @@ class Alliance extends Model
     protected $table = 'alliance';
     protected $primaryKey = 'alliance_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'alliance_name',
         'alliance_tag',
         'alliance_owner',

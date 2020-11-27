@@ -24,7 +24,7 @@ class Defense extends Model
     protected $table = 'defenses';
     protected $primaryKey = 'defense_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'defense_planet_id',
         'defense_rocket_launcher',
         'defense_light_laser',

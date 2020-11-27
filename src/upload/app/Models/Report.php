@@ -24,7 +24,7 @@ class Report extends Model
     protected $table = 'reports';
     protected $primaryKey = '';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'report_owners',
         'report_rid',
         'report_content',

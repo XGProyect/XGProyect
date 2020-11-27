@@ -24,7 +24,7 @@ class Buddy extends Model
     protected $table = 'buddys';
     protected $primaryKey = 'buddy_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'buddy_sender',
         'buddy_receiver',
         'buddy_status',

@@ -35,7 +35,7 @@ class User extends Model
     protected $table = 'users';
     protected $primaryKey = 'user_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'user_name',
         'user_password',
         'user_email',

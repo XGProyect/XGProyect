@@ -24,7 +24,7 @@ class Option extends Model
     protected $table = 'options';
     protected $primaryKey = 'option_name';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'option_value',
     ];
     protected $returnType = 'App\Entities\Option';

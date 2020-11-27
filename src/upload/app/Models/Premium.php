@@ -24,7 +24,7 @@ class Premium extends Model
     protected $table = 'premium';
     protected $primaryKey = 'premium_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'premium_user_id',
         'premium_dark_matter',
         'premium_officier_commander',

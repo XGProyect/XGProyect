@@ -24,7 +24,7 @@ class Ship extends Model
     protected $table = 'ships';
     protected $primaryKey = 'ship_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'ship_planet_id',
         'ship_small_cargo_ship',
         'ship_big_cargo_ship',

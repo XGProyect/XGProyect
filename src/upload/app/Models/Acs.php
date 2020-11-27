@@ -24,7 +24,7 @@ class Acs extends Model
     protected $table = 'acs';
     protected $primaryKey = 'acs_id';
     public $timestamps = false;
-    protected $allowedFields = [
+    protected $fillable = [
         'acs_name',
         'acs_owner',
         'acs_galaxy',
