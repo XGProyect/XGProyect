@@ -2,15 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{game_name}</title>
-        <link rel="stylesheet" type="text/css" href="{css_path}reset.css" media="screen" />
-        <link rel="stylesheet" type="text/css" href="{css_path}recover.css" media="screen" />
+        <title>{{ $gameName }}</title>
+        <link rel="stylesheet" type="text/css" href="{{ Module::asset('lobby:css/reset.css') }}" media="screen" />
+        <link rel="stylesheet" type="text/css" href="{{ Module::asset('lobby:css/recover.css') }}" media="screen" />
     </head>
     <body id="login">
         <div id="loginwrapper">
-            <h2>{close_title}</h2>
+            <h2>{{ $closeTitle }}</h2>
             <div class="textLeft wrap-inner">
-                {close_reason}
+                {{ $closeReason }}
             </div>
         </div>
     </body>

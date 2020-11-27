@@ -231,7 +231,7 @@
 
         <!-- Visually Hidden Preheader Text : BEGIN -->
         <div style="max-height:0; overflow:hidden; mso-hide:all;" aria-hidden="true">
-            {re_mail_text_part1}
+            {{ __('lobby::register.re_mail_text_part1') }}
         </div>
         <!-- Visually Hidden Preheader Text : END -->
 
@@ -258,13 +258,13 @@
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                         <tr>
                             <td style="padding: 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
-                                <h1 style="margin: 0 0 10px; font-size: 25px; line-height: 30px; color: #333333; font-weight: normal;">{welcome_text}</h1>
-                                <p style="margin: 0 0 10px;">{re_mail_text_part1}</p>
-                                <p style="margin: 0 0 10px;">{re_mail_text_part2}</p>
+                                <h1 style="margin: 0 0 10px; font-size: 25px; line-height: 30px; color: #333333; font-weight: normal;">{{$welcomeText}}</h1>
+                                <p style="margin: 0 0 10px;">{{ __('lobby::register.re_mail_text_part1') }}</p>
+                                <p style="margin: 0 0 10px;">{{ __('lobby::register.re_mail_text_part2') }}</p>
                                 <ul style="padding: 0; margin: 0; list-style-type: disc;">
-									<li style="margin:0 0 10px 20px;" class="list-item-first">{re_mail_text_part3}: <strong>{user_name}</strong></li>
-									<li style="margin:0 0 10px 20px;">{re_mail_text_part4}: <strong>{user_pass}</strong></li>
-									<li style="margin: 0 0 0 20px;" class="list-item-last">{re_mail_text_part5}: <a href="{game_url}">{game_url}</a></li>
+									<li style="margin:0 0 10px 20px;" class="list-item-first">{{ __('lobby::register.re_mail_text_part3') }}: <strong>{{$userName}}</strong></li>
+									<li style="margin:0 0 10px 20px;">{{ __('lobby::register.re_mail_text_part4') }}: <strong>{{$userPass}}</strong></li>
+									<li style="margin: 0 0 0 20px;" class="list-item-last">{{ __('lobby::register.re_mail_text_part5') }}: <a href="{{$gameUrl}}">{{$gameUrl}}</a></li>
 								</ul>
                             </td>
                         </tr>
@@ -274,7 +274,7 @@
                                 <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
                                     <tr>
                                         <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-											<a class="button-a button-a-primary" href="{game_url}" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px;">{re_mail_button}</a>
+											<a class="button-a button-a-primary" href="{{$gameUrl}}" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px;">{{ __('lobby::register.re_mail_button') }}</a>
 										</td>
                                     </tr>
                                 </table>
@@ -302,7 +302,7 @@
         <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: auto;" class="email-container">
 	        <tr>
 	            <td style="padding: 20px; font-family: sans-serif; font-size: 12px; line-height: 15px; text-align: center; color: #ffffff;">
-                    {re_mail_text_part7}
+                    {{ __('lobby::register.re_mail_text_part7') }}
 	                <br><br>
 	            </td>
 	        </tr>

@@ -17,17 +17,12 @@
  */
 namespace Xgp\Lobby\Controllers;
 
-use App\Libraries\Email;
-use App\Libraries\Messaging;
-use App\Libraries\Planet;
-use App\Models\UserModel;
-use CodeIgniter\HTTP\RedirectResponse;
-use Xgp\Lobby\Controllers\BaseController;
+namespace Xgp\Lobby\Http\Controllers;
 
-/**
- * Register controller
- */
-class Register extends BaseController
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+
+class RegisterController extends Controller
 {
     /**
      * @var App\Models\UserModel
@@ -69,7 +64,7 @@ class Register extends BaseController
      */
     public function index(): RedirectResponse
     {
-        $url = base_url();
+        $url = url('/');
         $this->post = $this->request->getPost(['character', 'email', 'password', 'agb']);
 
         if (isset($this->post)) {

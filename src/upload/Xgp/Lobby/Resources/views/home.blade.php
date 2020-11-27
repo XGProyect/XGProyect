@@ -12,7 +12,7 @@
     <meta name="Description" content="{{ __('lobby::home.hm_description') }}">
     <meta name="robots" content="index,follow">
     <meta name="Revisit" content="After 14 days">
-    <title>{servername}</title>
+    <title>{{ $servername }}</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="{{ Module::asset('lobby:css/reset.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ Module::asset('lobby:css/forms.css') }}">
@@ -116,7 +116,7 @@
     $(document).ready(function() {
         $(".zebra tr:odd").addClass("alt");
         $.validationEngineLanguage.newLang()
-        $.validationEngine.buildPrompt("{div_id}", "{message}", "error");
+        $.validationEngine.buildPrompt("{{$divId}}", "{{$message}}", "error");
     });
     // ]]>
     </script>
@@ -125,7 +125,7 @@
 	<div id="start">
 	    <div id="header">
             <h1>
-                <img src="{game_logo}" width="200px">
+                <img src="{{ $gameLogo }}" width="200px">
                 <a href="./" title="{{ __('lobby::home.hm_hidden_title') }}">
                     {{ __('lobby::home.hm_hidden_title') }}
                 </a>
@@ -134,7 +134,7 @@
                 {{ __('lobby::home.hm_login_button') }}
             </a>
             <div id="login">
-                <form id="loginForm" name="loginForm" method="post" action="{{$basePath}}/home/signin">
+                <form id="loginForm" name="loginForm" method="post" action="{{$baseUrl}}/home/signin">
                     <input type="hidden" name="kid" value="">
                         <div class="input-wrap">
                             <label for="serverLogin">
@@ -161,7 +161,7 @@
                         <input type="submit" id="loginSubmit" value="{{ __('lobby::home.hm_login_button') }}">
                         <a href="#" id="pwLost" target="_blank" title="{{ __('lobby::home.hm_password_forgot') }}">{{ __('lobby::home.hm_password_forgot') }}</a>
                         <p id="TermsAndConditionsAcceptWithLogin">
-                            {{ __('lobby::home.hm_terms_accept') }} <a class="" href="{{$basePath}}/home/terms" target="_blank" title="{{ __('lobby::home.hm_terms') }}">{{ __('lobby::home.hm_terms') }}</a>
+                            {{ __('lobby::home.hm_terms_accept') }} <a class="" href="{{$baseUrl}}/home/terms" target="_blank" title="{{ __('lobby::home.hm_terms') }}">{{ __('lobby::home.hm_terms') }}</a>
                         </p>
                 </form>
 			</div>
@@ -193,10 +193,10 @@
                             <div id="uni_selection" style="display: none;">
                                 <script type="text/javascript">
                                 <!--
-                                    select_uni('{{$basePath}}'.replace('http://', '').replace('https://', ''), '{{ __('lobby::home.hm_universe_name') }}','');
+                                    select_uni('{{$baseUrl}}'.replace('http://', '').replace('https://', ''), '{{ __('lobby::home.hm_universe_name') }}','');
                                 //-->
                                 </script>
-                                <div id="row-0" class="server-row " title="" onclick="select_uni('{{$basePath}}','{{ __('lobby::home.hm_universe_name') }}');" onmouseover="highlightRow(&#39;row-0&#39;);this.style.cursor=&#39;pointer&#39;" onmouseout="unHighlightRow(&#39;row-0&#39;);">
+                                <div id="row-0" class="server-row " title="" onclick="select_uni('{{$baseUrl}}','{{ __('lobby::home.hm_universe_name') }}');" onmouseover="highlightRow(&#39;row-0&#39;);this.style.cursor=&#39;pointer&#39;" onmouseout="unHighlightRow(&#39;row-0&#39;);">
                                     <span class="uni_span ">{{ __('lobby::home.hm_universe_name') }}</span>
                                 </div>
                             </div>
@@ -206,7 +206,7 @@
                         <label for="username">{{ __('lobby::home.hm_username') }}</label>
 						<div class="black-border">
                             <!-- validate options dürfen nicht umgebrochen werden, da das plugin sonst nicht mehr funktioniert  -->
-                            <input id="username" class="js_userName validate[required,custom[noSpecialCharacters],custom[noBeginOrEndUnderscore],custom[noBeginOrEndWhitespace],custom[noBeginOrEndHyphen],custom[notMoreThanThreeUnderscores],custom[notMoreThanThreeWhitespaces],custom[notMoreThanThreeHyphen],custom[noCollocateUnderscores],custom[noCollocateWhitespaces],custom[noCollocateHyphen],length[3,20]]" type="text" name="character" value="{user_name}">
+                            <input id="username" class="js_userName validate[required,custom[noSpecialCharacters],custom[noBeginOrEndUnderscore],custom[noBeginOrEndWhitespace],custom[noBeginOrEndHyphen],custom[notMoreThanThreeUnderscores],custom[notMoreThanThreeWhitespaces],custom[notMoreThanThreeHyphen],custom[noCollocateUnderscores],custom[noCollocateWhitespaces],custom[noCollocateHyphen],length[3,20]]" type="text" name="character" value="{{ $userName }}">
 						</div>
 					</div>
                     <div class="input-wrap">
@@ -218,7 +218,7 @@
 					<div class="input-wrap">
                         <label for="email">{{ __('lobby::home.hm_mail_address') }}</label>
 						<div class="black-border">
-                            <input class="validate[required,custom[email],length[0,255]]" type="text" id="email" name="email" value="{user_email}">
+                            <input class="validate[required,custom[email],length[0,255]]" type="text" id="email" name="email" value="{{ $userEmail }}">
 						</div>
 					</div>
 					<div class="input-wrap">
@@ -234,7 +234,7 @@
 					<div id="submitWrap">
 						<input class="validate[required]" type="checkbox" id="agb" name="agb">
                         <label>
-                            <span>{{ __('lobby::home.hm_accept') }} <a class="" target="_blank" href="{{$basePath}}/home/terms" title="{{ __('lobby::home.hm_terms') }}">{{ __('lobby::home.hm_terms') }}</a> {{ __('lobby::home.hm_and') }} <a class="" target="_blank" href="{{$basePath}}/home/policy" title="{{ __('lobby::home.hm_policy') }}">{{ __('lobby::home.hm_policy') }}</a></span>
+                            <span>{{ __('lobby::home.hm_accept') }} <a class="" target="_blank" href="{{$baseUrl}}/home/terms" title="{{ __('lobby::home.hm_terms') }}">{{ __('lobby::home.hm_terms') }}</a> {{ __('lobby::home.hm_and') }} <a class="" target="_blank" href="{{$baseUrl}}/home/policy" title="{{ __('lobby::home.hm_policy') }}">{{ __('lobby::home.hm_policy') }}</a></span>
 						</label>
                         <div onclick="if($.validationEngine.submitValidation(&#39;subscribeForm&#39;)) {document.forms[&#39;subscribeForm&#39;].submit();}">
                             <input type="submit" id="regSubmit" value="{{ __('lobby::home.hm_register') }}">
@@ -245,11 +245,11 @@
 			<div id="contentWrap">
 				<div id="menu" style="background-position: 15px -33px;">
 					<ul id="tabs">
-						<li><a id="tab1" href="{{$basePath}}/home/welcome" class="current">{{ __('lobby::home.hm_home') }}</a></li>
-                        <li><a id="tab2" href="{{$basePath}}/home/about">{{ __('lobby::home.hm_about') }}</a></li>
-                        <li><a id="tab3" href="{{$basePath}}/home/media">{{ __('lobby::home.hm_media') }}</a></li>
+						<li><a id="tab1" href="{{$baseUrl}}/welcome" class="current">{{ __('lobby::home.hm_home') }}</a></li>
+                        <li><a id="tab2" href="{{$baseUrl}}/about">{{ __('lobby::home.hm_about') }}</a></li>
+                        <li><a id="tab3" href="{{$baseUrl}}/media">{{ __('lobby::home.hm_media') }}</a></li>
 					</ul>
-                                            <a id="tab4" href="{forum_url}" target="_blank">{{ __('lobby::home.hm_forum') }}</a>
+                                            <a id="tab4" href="{{ $forumUrl }}" target="_blank">{{ __('lobby::home.hm_forum') }}</a>
                                         					<br class="clearfloat">
 				</div>
 				<div id="tabContent">
@@ -261,23 +261,41 @@
 		</div>
 		<div id="push"></div>
 	</div>
-	<div id="footer">
-	    <div id="footerContent">
-            <p id="copyright">Powered by <a href="https://xgproyect.org/" target="_blank" title="XG Proyect {version}">XG Proyect</a> © 2008 - {year}.</p>
-        </div>x
-	</div>
-
+        <div id="footer">
+            <div id="footerContent">
+                <p id="copyright">Powered by <a href="https://xgproyect.org/" target="_blank" title="XG Proyect {{ $version }}">XG Proyect</a> © 2008 - {{ $year }}.</p>
+            </div>
+        </div>
     	<!-- OVERLAY DIVISION -->
-
-<script type="text/javascript">
-
-    JSLoca = new Array('{{ __('lobby::home.hm_login_button') }}', '{{ __('lobby::home.hm_close_button') }}');
-
-    </script>
-
-<script type="text/javascript" src="{{ Module::asset('lobby:js/xgproyect.js') }}"></script>
-<script type="text/javascript" src="{{ Module::asset('lobby:js/xgproyect.start.js') }}"></script>
-
-
-
-<div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancy-bg" id="fancy-bg-n"></div><div class="fancy-bg" id="fancy-bg-ne"></div><div class="fancy-bg" id="fancy-bg-e"></div><div class="fancy-bg" id="fancy-bg-se"></div><div class="fancy-bg" id="fancy-bg-s"></div><div class="fancy-bg" id="fancy-bg-sw"></div><div class="fancy-bg" id="fancy-bg-w"></div><div class="fancy-bg" id="fancy-bg-nw"></div><div id="fancybox-inner"></div><a id="fancybox-close"></a><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div></body></html>
+        <script type="text/javascript">
+            JSLoca = new Array('{{ __('lobby::home.hm_login_button') }}', '{{ __('lobby::home.hm_close_button') }}');
+        </script>
+        <script type="text/javascript" src="{{ Module::asset('lobby:js/xgproyect.js') }}"></script>
+        <script type="text/javascript" src="{{ Module::asset('lobby:js/xgproyect.start.js') }}"></script>
+        <div id="fancybox-tmp"></div>
+        <div id="fancybox-loading"><div>
+    </div>
+</div>
+<div id="fancybox-overlay"></div>
+    <div id="fancybox-wrap">
+        <div id="fancybox-outer">
+            <div class="fancy-bg" id="fancy-bg-n"></div>
+            <div class="fancy-bg" id="fancy-bg-ne"></div>
+            <div class="fancy-bg" id="fancy-bg-e"></div>
+            <div class="fancy-bg" id="fancy-bg-se"></div>
+            <div class="fancy-bg" id="fancy-bg-s"></div>
+            <div class="fancy-bg" id="fancy-bg-sw"></div>
+            <div class="fancy-bg" id="fancy-bg-w"></div>
+            <div class="fancy-bg" id="fancy-bg-nw"></div>
+            <div id="fancybox-inner"></div>
+                <a id="fancybox-close"></a>
+                <a href="javascript:;" id="fancybox-left">
+                    <span class="fancy-ico" id="fancybox-left-ico"></span>
+                </a>
+                <a href="javascript:;" id="fancybox-right">
+                    <span class="fancy-ico" id="fancybox-right-ico"></span>
+                </a>
+            </div>
+        </div>
+    </body>
+</html>

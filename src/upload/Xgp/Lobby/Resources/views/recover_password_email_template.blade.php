@@ -1,16 +1,3 @@
-
-        <td>{ma_mail_text_part4}</td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>{ma_mail_text_part5}</td>
-    </tr>
-</table>
-
-
-
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
@@ -244,7 +231,7 @@
 
         <!-- Visually Hidden Preheader Text : BEGIN -->
         <div style="max-height:0; overflow:hidden; mso-hide:all;" aria-hidden="true">
-            {mail_title}, {ma_mail_intro}.
+            {{$mailTitle}}, {{ __('lobby::recover.ma_mail_intro') }}.
         </div>
         <!-- Visually Hidden Preheader Text : END -->
 
@@ -271,11 +258,11 @@
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                         <tr>
                             <td style="padding: 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
-                                <h1 style="margin: 0 0 10px; font-size: 25px; line-height: 30px; color: #333333; font-weight: normal;">{mail_title},</h1>
-                                <p style="margin: 0 0 10px;">{ma_mail_intro}:</p>
+                                <h1 style="margin: 0 0 10px; font-size: 25px; line-height: 30px; color: #333333; font-weight: normal;">{{$mailTitle}},</h1>
+                                <p style="margin: 0 0 10px;">{{ __('lobby::recover.ma_mail_intro') }}:</p>
                                 <ul style="padding: 0; margin: 0; list-style-type: disc;">
-									<li style="margin:0 0 10px 20px;" class="list-item-first">{ma_mail_new_password}: <strong>{user_pass}</strong></li>
-									<li style="margin: 0 0 0 20px;" class="list-item-last">{ma_mail_game_link}: <a href="{game_url}">{game_url}</a></li>
+									<li style="margin:0 0 10px 20px;" class="list-item-first">{{ __('lobby::recover.ma_mail_new_password') }}: <strong>{{$userPass}}</strong></li>
+									<li style="margin: 0 0 0 20px;" class="list-item-last">{{ __('lobby::recover.ma_mail_game_link') }}: <a href="{game_url}">{{$gameUrl}}</a></li>
 								</ul>
                             </td>
                         </tr>
@@ -285,7 +272,7 @@
                                 <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
                                     <tr>
                                         <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-											<a class="button-a button-a-primary" href="{game_url}" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px;">{ma_mail_button}</a>
+											<a class="button-a button-a-primary" href="{game_url}" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px;">{{ __('lobby::recover.ma_mail_button') }}</a>
 										</td>
                                     </tr>
                                 </table>
@@ -313,7 +300,7 @@
         <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: auto;" class="email-container">
 	        <tr>
 	            <td style="padding: 20px; font-family: sans-serif; font-size: 12px; line-height: 15px; text-align: center; color: #ffffff;">
-                    {ma_mail_team}
+                    {{ __('lobby::recover.ma_mail_team') }}
 	                <br><br>
 	            </td>
 	        </tr>

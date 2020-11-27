@@ -15,16 +15,12 @@
  * @link       https://github.com/XGProyect/
  * @since      Version 4.0.0
  */
-namespace Xgp\Lobby\Controllers;
+namespace Xgp\Lobby\Http\Controllers;
 
-use App\Libraries\Email;
-use CodeIgniter\HTTP\RedirectResponse;
-use Xgp\Lobby\Controllers\BaseController;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
-/**
- * Recover controller
- */
-class Recover extends BaseController
+class RecoverController extends Controller
 {
     /**
      * @var App\Models\UserModel
@@ -59,12 +55,10 @@ class Recover extends BaseController
         ])->setData(array_merge(
             $this->lang->all(),
             [
-                'base_url' => base_url(),
-                'game_name' => $this->setting->one('game_name'),
-                'css_path' => LOBBY_CSS,
+                'gameName' => $this->setting->one('game_name'),
                 'display' => $this->request->getGet('send') == '' ? 'display: none' : 'display: block',
-                'error_msg' => $this->request->getGet('send') == 'ok' ? $this->lang->line('ma_sent') : $this->lang->line('ma_error'),
-                'ma_send_pwd_title' => strtr($this->lang->line('ma_send_pwd_title'), ['%s' => $this->setting->one('game_name')]),
+                'errorMsg' => $this->request->getGet('send') == 'ok' ? $this->lang->line('ma_sent') : $this->lang->line('ma_error'),
+                'maSendPwdTitle' => strtr($this->lang->line('ma_send_pwd_title'), ['%s' => $this->setting->one('game_name')]),
             ]
         ))->display($this->view_location . 'recover');
     }
@@ -76,7 +70,7 @@ class Recover extends BaseController
      */
     public function request(): RedirectResponse
     {
-        $url = base_url() . '/recover';
+        $url = url('/') . '/recover';
         $result = '';
         $this->post = $this->request->getPost(['email']);
 

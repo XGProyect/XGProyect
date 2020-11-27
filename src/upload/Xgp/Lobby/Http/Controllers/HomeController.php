@@ -15,54 +15,25 @@
  * @link       https://github.com/XGProyect/
  * @since      Version 4.0.0
  */
-namespace Xgp\Lobby\Controllers;
+namespace Xgp\Lobby\Http\Controllers;
 
-use CodeIgniter\HTTP\RedirectResponse;
-use Xgp\Lobby\Controllers\BaseController;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\View\View;
 
-/**
- * Home controller
- */
-class Home extends BaseController
+class HomeController extends Controller
 {
-    /**
-     * @var App\Models\UserModel
-     */
-    private $userModel;
-
-    /**
-     * @var Xgp\Lobby\Models\HomeModel
-     */
-    private $homeModel;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        // load models
-        $this->userModel = model('App\Models\UserModel');
-        $this->homeModel = model('Xgp\Lobby\Models\HomeModel');
-
-        // load languages
-        $this->langLoad('home');
-    }
-
     /**
      * Users land here
      *
      * @return void
      */
-    public function index(): void
+    public function index(): View
     {
-        $this->page->withOptions([
-            'topnav' => false,
-            'menu' => false,
-        ])->setData(array_merge(
-            $this->lang->all(),
+        return view('lobby::home')->with(array_merge(
             $this->getPageData(),
             $this->getErrors()
-        ))->display('index_body');
+        ));
     }
 
     /**
@@ -70,20 +41,13 @@ class Home extends BaseController
      *
      * @return void
      */
-    public function maintenance(): void
+    public function maintenance(): View
     {
-        $this->page->withOptions([
-            'topnav' => false,
-            'menu' => false,
-        ])->setData(array_merge(
-            $this->lang->all(),
-            [
-                'css_path' => LOBBY_CSS,
-                'game_name' => strtr($this->lang->line('hm_title'), ['%s' => $this->setting->one('game_name')]),
-                'close_title' => $this->lang->line('hm_server_closed'),
-                'close_reason' => $this->getCloseReason(),
-            ]
-        ))->display('maintenance');
+        return view('lobby::maintenance')->with([
+            'gameName' => strtr(__('lobby::home.hm_title'), ['%s' => $this->setting->one('game_name')]),
+            'closeTitle' => __('lobby::home.hm_server_closed'),
+            'closeReason' => $this->getCloseReason(),
+        ]);
     }
 
     /**
@@ -91,17 +55,9 @@ class Home extends BaseController
      *
      * @return void
      */
-    public function welcome(): void
+    public function welcome(): View
     {
-        $this->page->withOptions([
-            'topnav' => false,
-            'menu' => false,
-        ])->setData(array_merge(
-            $this->lang->all(),
-            [
-                'flash_path' => LOBBY_FLASH,
-            ]
-        ))->display('welcome');
+        return view('lobby::welcome');
     }
 
     /**
@@ -109,14 +65,9 @@ class Home extends BaseController
      *
      * @return void
      */
-    public function about(): void
+    public function about(): View
     {
-        $this->page->withOptions([
-            'topnav' => false,
-            'menu' => false,
-        ])->setData(
-            $this->lang->all()
-        )->display('info');
+        return view('lobby::info');
     }
 
     /**
@@ -124,14 +75,9 @@ class Home extends BaseController
      *
      * @return void
      */
-    public function media(): void
+    public function media(): View
     {
-        $this->page->withOptions([
-            'topnav' => false,
-            'menu' => false,
-        ])->setData(
-            $this->lang->all()
-        )->display('media');
+        return view('lobby::media');
     }
 
     /**
@@ -142,7 +88,7 @@ class Home extends BaseController
     public function signin(): RedirectResponse
     {
         $post = $this->request->getPost(['login', 'pass']);
-        $url = base_url();
+        $url = url('/')();
 
         if (isset($post)) {
             if ($this->validation->run($post, 'signin')) {
@@ -157,7 +103,7 @@ class Home extends BaseController
             }
         }
 
-        return redirect()->to($url);
+        return redirect()->route($url);
     }
 
     /**
@@ -169,7 +115,7 @@ class Home extends BaseController
     {
         $this->player->doLogout();
 
-        return redirect()->to(base_url());
+        return redirect()->route('/');
     }
 
     /**
@@ -180,16 +126,12 @@ class Home extends BaseController
     private function getPageData(): array
     {
         return [
-            'servername' => strtr($this->lang->line('hm_title'), ['%s' => $this->setting->one('game_name')]),
-            'css_path' => LOBBY_CSS,
-            'js_path' => LOBBY_JS,
-            'game_logo' => $this->setting->one('game_logo'),
-            'img_path' => LOBBY_IMG,
-            'base_path' => base_url(),
-            'user_name' => $this->request->getGet('user'),
-            'user_email' => $this->request->getGet('email'),
-            'forum_url' => $this->setting->one('forum_url'),
-            'version' => SYSTEM_VERSION,
+            //'servername' => strtr(__('lobby::home.hm_title'), ['%s' => $this->setting->one('game_name')]),
+            //'gameLogo' => $this->setting->one('game_logo'),
+            //'userName' => $this->request->getGet('user'),
+            //'userEmail' => $this->request->getGet('email'),
+            //'forumUrl' => $this->setting->one('forum_url'),
+            //'version' => SYSTEM_VERSION,
             'year' => date('Y'),
         ];
     }
@@ -201,26 +143,26 @@ class Home extends BaseController
      */
     private function getErrors(): array
     {
-        switch ($this->request->getGet('error')) {
+        switch (0) {
             case 1:
-                $div_id = '#username';
-                $message = $this->lang->line('hm_username_not_available');
+                $divId = '#username';
+                $message = __('lobby::home.hm_username_not_available');
                 break;
 
             case 2:
-                $div_id = '#email';
-                $message = $this->lang->line('hm_email_not_available');
+                $divId = '#email';
+                $message = __('lobby::home.hm_email_not_available');
                 break;
 
             case 0:
             default:
-                $div_id = '';
+                $divId = '';
                 $message = '';
                 break;
         }
 
         return [
-            'div_id' => $div_id,
+            'divId' => $divId,
             'message' => $message,
         ];
     }

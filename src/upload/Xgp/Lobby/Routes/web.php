@@ -11,4 +11,12 @@
 |
  */
 
-Route::resource('/', 'HomeController');
+Route::prefix('/')->group(function () {
+    Route::get('/', 'HomeController@index');
+    Route::get('/maintenance', 'HomeController@maintenance');
+    Route::get('/welcome', 'HomeController@welcome');
+    Route::get('/about', 'HomeController@about');
+    Route::get('/media', 'HomeController@media');
+    Route::post('/signin', 'HomeController@signin');
+    Route::get('/signout', 'HomeController@signout');
+});
