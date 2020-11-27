@@ -1,0 +1,34 @@
+<?php
+/**
+ * XG Proyect
+ *
+ * Open-source OGame Clon
+ *
+ * This content is released under the GPL-3.0 License
+ *
+ * Copyright (c) 2008-2021 XG Proyect
+ *
+ * @package    XG Proyect
+ * @author     XG Proyect Team
+ * @copyright  2008-2021 XG Proyect
+ * @license    https://www.gnu.org/licenses/gpl-3.0.en.html GPL-3.0 License
+ * @link       https://github.com/XGProyect/
+ * @since      Version 4.0.0
+ */
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Note extends Model
+{
+    protected $table = 'notes';
+    protected $primaryKey = 'note_id';
+    protected $allowedFields = [
+        'note_owner',
+        'note_time',
+        'note_priority',
+        'note_title',
+        'note_text',
+    ];
+    protected $returnType = 'App\Entities\Note';
+}
