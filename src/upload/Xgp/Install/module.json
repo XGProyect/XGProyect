@@ -1,0 +1,13 @@
+{
+    "name": "Install",
+    "alias": "install",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Xgp\\Install\\Providers\\InstallServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

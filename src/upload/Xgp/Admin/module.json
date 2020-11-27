@@ -1,0 +1,13 @@
+{
+    "name": "Admin",
+    "alias": "admin",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Xgp\\Admin\\Providers\\AdminServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

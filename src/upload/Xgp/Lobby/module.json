@@ -1,0 +1,13 @@
+{
+    "name": "Lobby",
+    "alias": "lobby",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Xgp\\Lobby\\Providers\\LobbyServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
