@@ -12,7 +12,7 @@ RUN set -ex; \
 	libzip-dev \
 	; \
 	\
-	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
+	docker-php-ext-configure gd -with-jpeg=/usr/include/; \
 	docker-php-ext-install gd mysqli opcache zip; \
 	\
 	# reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
