@@ -126,12 +126,12 @@ class HomeController extends Controller
     private function getPageData(): array
     {
         return [
-            //'servername' => strtr(__('lobby::home.hm_title'), ['%s' => $this->setting->one('game_name')]),
-            //'gameLogo' => $this->setting->one('game_logo'),
-            //'userName' => $this->request->getGet('user'),
-            //'userEmail' => $this->request->getGet('email'),
-            //'forumUrl' => $this->setting->one('forum_url'),
-            //'version' => SYSTEM_VERSION,
+            'servername' => '', //strtr(__('lobby::home.hm_title'), ['%s' => $this->setting->one('game_name')]),
+            'gameLogo' => '', //$this->setting->one('game_logo'),
+            'userName' => '', //$this->request->getGet('user'),
+            'userEmail' => '', //$this->request->getGet('email'),
+            'forumUrl' => '', //$this->setting->one('forum_url'),
+            'version' => '', //SYSTEM_VERSION,
             'year' => date('Y'),
         ];
     }
