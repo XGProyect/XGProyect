@@ -12,7 +12,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./src/upload:/var/www/html
+      - ./src/upload:/var/www/html:delegated
     networks:
       - xgp
   mysql:
