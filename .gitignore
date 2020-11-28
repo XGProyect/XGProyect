@@ -1,21 +1,19 @@
 #
 # application
 #
-src/upload/application/config/config.php
+
 
 #
-# writable
+# public
 #
-src/upload/writable/backups/*.sql
-src/upload/writable/cache/*.html
-/src/upload/writable/logs/*.txt
+src/upload/public/xgp/
 
 #
 # tests
 #
-src/upload/tests/.phpunit.result.cache
-src/upload/tests/build/
-src/upload/tests/_reports/
+#src/upload/tests/.phpunit.result.cache
+#src/upload/tests/build/
+#src/upload/tests/_reports/
 
 #
 # docs
@@ -26,6 +24,7 @@ src/upload/tests/_reports/
 # docker
 #
 data/xgp.sql
+db/
 
 #
 # IDE
