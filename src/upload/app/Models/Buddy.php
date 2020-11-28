@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Buddy extends Model
 {
-    protected $table = 'buddys';
+    protected $table = 'buddies';
     protected $primaryKey = 'buddy_id';
     public $timestamps = false;
     protected $fillable = [
@@ -30,5 +30,4 @@ class Buddy extends Model
         'buddy_status',
         'buddy_request_text',
     ];
-    protected $returnType = 'App\Entities\Buddy';
 }

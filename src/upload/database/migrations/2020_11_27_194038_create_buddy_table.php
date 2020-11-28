@@ -13,7 +13,7 @@ class CreateBuddyTable extends Migration
      */
     public function up()
     {
-        Schema::create('buddy', function (Blueprint $table) {
+        Schema::create('buddies', function (Blueprint $table) {
             $table->increments('buddy_id');
             $table->unsignedInteger('buddy_sender')->index('user_buddy_sender');
             $table->unsignedInteger('buddy_receiver')->index('user_buddy_receiver');
@@ -29,6 +29,6 @@ class CreateBuddyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('buddy');
+        Schema::dropIfExists('buddies');
     }
 }

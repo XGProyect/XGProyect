@@ -45,13 +45,13 @@ class Sessions extends Model
      * Get session data by ID
      *
      * @param string $sid
-     * @return array
+     * @return string
      */
     public function getSessionDataById(string $sid): string
     {
         $sessions = $this->db->query(
             "SELECT
-                `data`
+                `payload`
             FROM `" . SESSIONS . "`
             WHERE `id` = '" . $this->db->escapeValue($sid) . "'
             LIMIT 1"
@@ -60,7 +60,9 @@ class Sessions extends Model
         if ($this->db->numRows($sessions) == 1) {
             $fields = $this->db->fetchAssoc($sessions);
 
-            return $fields['data'];
+            $_SESSION = unserialize(base64_decode($fields['payload']));
+
+            return session_encode();
         } else {
             return '';
         }
@@ -75,9 +77,13 @@ class Sessions extends Model
      */
     public function insertNewSessionData(string $sid, string $data): bool
     {
+        session_decode($data);
+
+        $data = base64_encode(serialize($_SESSION));
+
         $this->db->query(
-            "REPLACE INTO `" . SESSIONS . "` (`id`, `ip_address`, `timestamp`, `data`)
-            VALUES ('" . $this->db->escapeValue($sid) . "', '" . $this->db->escapeValue($_SERVER['REMOTE_ADDR']) . "', '" . time() . "', '" . $this->db->escapeValue($data) . "')"
+            "REPLACE INTO `" . SESSIONS . "` (`id`, `ip_address`, `payload`, `last_activity`)
+            VALUES ('" . $this->db->escapeValue($sid) . "', '" . $this->db->escapeValue($_SERVER['REMOTE_ADDR']) . "', '" . $data . "', '" . time() . "')"
         );
 
         return ($this->db->affectedRows() > 0);
@@ -109,7 +115,7 @@ class Sessions extends Model
     {
         $this->db->query(
             "DELETE FROM `" . SESSIONS . "`
-            WHERE DATE_ADD(`timestamp`, INTERVAL " . $expire . " SECOND) < NOW()"
+            WHERE DATE_ADD(`last_activity`, INTERVAL " . $expire . " SECOND) < NOW()"
         );
 
         return ($this->db->affectedRows() > 0);

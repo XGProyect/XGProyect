@@ -13,7 +13,7 @@ class AddForeignKeysToUserStatisticsTable extends Migration
      */
     public function up()
     {
-        Schema::table('user_statistics', function (Blueprint $table) {
+        Schema::table('users_statistics', function (Blueprint $table) {
             $table->foreign('user_statistic_user_id', 'user_statistic')->references('user_id')->on('users')->onUpdate('RESTRICT')->onDelete('CASCADE');
         });
     }
@@ -25,7 +25,7 @@ class AddForeignKeysToUserStatisticsTable extends Migration
      */
     public function down()
     {
-        Schema::table('user_statistics', function (Blueprint $table) {
+        Schema::table('users_statistics', function (Blueprint $table) {
             $table->dropForeign('user_statistic');
         });
     }

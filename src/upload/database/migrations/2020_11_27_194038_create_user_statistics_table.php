@@ -13,7 +13,7 @@ class CreateUserStatisticsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_statistics', function (Blueprint $table) {
+        Schema::create('users_statistics', function (Blueprint $table) {
             $table->increments('user_statistic_id');
             $table->unsignedInteger('user_statistic_user_id')->unique('user_statistic_user_id');
             $table->double('user_statistic_buildings_points', 132, 8)->default(0.00000000);
@@ -42,6 +42,6 @@ class CreateUserStatisticsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_statistics');
+        Schema::dropIfExists('users_statistics');
     }
 }

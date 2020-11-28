@@ -13,7 +13,7 @@ class AddForeignKeysToBuddyTable extends Migration
      */
     public function up()
     {
-        Schema::table('buddy', function (Blueprint $table) {
+        Schema::table('buddies', function (Blueprint $table) {
             $table->foreign('buddy_receiver', 'user_buddy_receiver')->references('user_id')->on('users')->onUpdate('RESTRICT')->onDelete('CASCADE');
             $table->foreign('buddy_sender', 'user_buddy_sender')->references('user_id')->on('users')->onUpdate('RESTRICT')->onDelete('CASCADE');
         });
@@ -26,7 +26,7 @@ class AddForeignKeysToBuddyTable extends Migration
      */
     public function down()
     {
-        Schema::table('buddy', function (Blueprint $table) {
+        Schema::table('buddies', function (Blueprint $table) {
             $table->dropForeign('user_buddy_receiver');
             $table->dropForeign('user_buddy_sender');
         });

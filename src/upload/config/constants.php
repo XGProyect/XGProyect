@@ -7,10 +7,10 @@ return [
     'tables' => [
         'ACS' => 'acs',
         'ACS_MEMBERS' => 'acs_members',
-        'ALLIANCE' => 'alliance',
+        'ALLIANCES' => 'alliances',
         'ALLIANCE_STATISTICS' => 'alliance_statistics',
         'BANNED' => 'banned',
-        'BUDDY' => 'buddys',
+        'BUDDY' => 'buddies',
         'BUILDINGS' => 'buildings',
         'CHANGELOG' => 'changelog',
         'DEFENSES' => 'defenses',

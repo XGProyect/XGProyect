@@ -71,7 +71,7 @@ class UpdatesLibrary extends Model
      */
     public function deleteSessions($del_before)
     {
-        $this->db->query("DELETE FROM " . SESSIONS . " WHERE `timestamp` < '" . $del_before . "';");
+        $this->db->query("DELETE FROM " . SESSIONS . " WHERE `last_activity` < '" . $del_before . "';");
     }
 
     /**

@@ -203,10 +203,10 @@ define('PHALANX_COST', 10000);
 // TABLES
 define('ACS', '{xgp_prefix}acs');
 define('ACS_MEMBERS', '{xgp_prefix}acs_members');
-define('ALLIANCE', '{xgp_prefix}alliance');
+define('ALLIANCE', '{xgp_prefix}alliances');
 define('ALLIANCE_STATISTICS', '{xgp_prefix}alliance_statistics');
 define('BANNED', '{xgp_prefix}banned');
-define('BUDDY', '{xgp_prefix}buddys');
+define('BUDDY', '{xgp_prefix}buddies');
 define('BUILDINGS', '{xgp_prefix}buildings');
 define('CHANGELOG', '{xgp_prefix}changelog');
 define('DEFENSES', '{xgp_prefix}defenses');
