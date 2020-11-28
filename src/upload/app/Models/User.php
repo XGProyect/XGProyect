@@ -96,7 +96,7 @@ class User extends Model
                 'user_current_planet' => DB::raw(
                     "(SELECT
                         MIN(`planet_id`)
-                    FROM `" . config('constants.tables.PLANETS') . "`
+                    FROM `" . DB::getTablePrefix() . config('constants.tables.PLANETS') . "`
                     WHERE
                         `planet_user_id` = '" . $userId . "'
                     AND

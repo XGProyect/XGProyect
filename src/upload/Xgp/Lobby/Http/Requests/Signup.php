@@ -24,9 +24,9 @@ class Signup extends FormRequest
     public function rules()
     {
         return [
-            'character' => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[users.user_name]',
+            'character' => 'required|alpha_dash|min:3|max:20|is_unique[users.user_name]',
             'email' => 'required|valid_email|is_unique[users.user_email]',
-            'password' => 'required|min_length[8]',
+            'password' => 'required|min:8',
             'agb' => 'required',
         ];
     }
