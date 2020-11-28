@@ -14,6 +14,7 @@ class CreateReportsTable extends Migration
     public function up()
     {
         Schema::create('reports', function (Blueprint $table) {
+            $table->increments('report_id');
             $table->string('report_owners');
             $table->string('report_rid', 42)->unique('report_rid');
             $table->text('report_content');

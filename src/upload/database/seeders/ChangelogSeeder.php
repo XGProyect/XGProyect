@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
-class LanguagesSeeder extends Seeder
+class ChangelogSeeder extends Seeder
 {
     /**
      * Seed the application's database.

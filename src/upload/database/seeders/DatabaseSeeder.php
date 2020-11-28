@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\ChangelogSeeder;
+use Database\Seeders\LanguagesSeeder;
+use Database\Seeders\OptionsSeeder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +17,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        Model::unguard();
+        $this->call(ChangelogSeeder::class);
+        $this->call(LanguagesSeeder::class);
+        $this->call(OptionsSeeder::class);
+        Model::reguard();
     }
 }
