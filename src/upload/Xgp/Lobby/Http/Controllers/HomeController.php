@@ -118,9 +118,9 @@ class HomeController extends Controller
      */
     public function signout(): RedirectResponse
     {
-        $this->player->doLogout();
+        (new Player)->doLogout();
 
-        return redirect()->route('/');
+        return redirect('/');
     }
 
     /**

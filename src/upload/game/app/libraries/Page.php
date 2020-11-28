@@ -300,7 +300,7 @@ class Page
                 $link = 'index.php?page=' . $data[0];
 
                 if ($data[0] == 'signout') {
-                    $link = '/home/' . $data[0];
+                    $link = '/' . $data[0];
                 }
             }
 
