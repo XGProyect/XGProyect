@@ -17,18 +17,12 @@
  */
 namespace App\Models;
 
-use App\Entities\Preference;
-use App\Entities\Premium;
-use App\Entities\Research;
-use App\Entities\User;
-use App\Entities\UserStatistic;
-use App\Models\BaseModel;
 use App\Models\PreferenceModel;
 use App\Models\PremiumModel;
 use App\Models\ResearchModel;
-use App\Models\UserModel;
 use App\Models\UserStatisticModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class User extends Model
 {
@@ -91,26 +85,26 @@ class User extends Model
     /**
      * Reset the user current planet to the oldest possible
      *
-     * @param integer $user_id
+     * @param integer $userId
      * @return void
      */
-    public function setCurrentPlanet(int $user_id): void
+    public function setCurrentPlanet(int $userId): void
     {
-        $this->db->query(
-            "UPDATE `" . $this->prefix(USERS) . "` AS u SET
-                u.`user_current_planet` = (
-                    SELECT
+        DB::table(config('constants.tables.USERS'))
+            ->where('user_id', $userId)
+            ->update([
+                'user_current_planet' => DB::raw(
+                    "(SELECT
                         MIN(`planet_id`)
-                    FROM `" . $this->prefix(PLANETS) . "`
+                    FROM `" . config('constants.tables.PLANETS') . "`
                     WHERE
-                        `planet_user_id` = '" . $user_id . "'
+                        `planet_user_id` = '" . $userId . "'
                     AND
                         `planet_type` = 1
                     AND
-                        `planet_destroyed` = 0
-                )
-                WHERE u.`user_id` = '" . $user_id . "';"
-        );
+                        `planet_destroyed` = 0)"
+                ),
+            ]);
     }
 
     /**
@@ -121,7 +115,7 @@ class User extends Model
      */
     public function getUsernameByEmail(string $email): string
     {
-        $user = $this->db->table($this->prefix(USERS))
+        $user = $this->db->table(config('constants.tables.USERS'))
             ->select('user_name')
             ->where('user_email', $email)
             ->get()
@@ -139,7 +133,7 @@ class User extends Model
      */
     public function updatePassword(string $email, string $newPassword): void
     {
-        $this->db->table($this->prefix(USERS))
+        $this->db->table(config('constants.tables.USERS'))
             ->set('user_password', pswHash($newPassword))
             ->where('user_email', $email)
             ->update();

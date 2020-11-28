@@ -25,5 +25,4 @@ class Session extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [];
-    protected $returnType = 'App\Entities\Session';
 }

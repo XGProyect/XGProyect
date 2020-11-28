@@ -17,25 +17,8 @@
  */
 namespace App\Libraries;
 
-use Config\Services;
-
 class Session
 {
-    /**
-     * Contains a Session
-     *
-     * @var \CodeIgniter\Session\Session
-     */
-    private $session;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->session = Services::session();
-    }
-
     /**
      * Set a player session
      *
@@ -45,7 +28,7 @@ class Session
      */
     public function setUserSession(int $user_id, string $user_password): void
     {
-        $this->session->set([
+        session([
             'user_id' => $user_id,
             'user_password' => $user_password,
         ]);
@@ -60,7 +43,7 @@ class Session
      */
     public function setAdminSession(int $admin_id, string $admin_password): void
     {
-        $this->session->set([
+        session([
             'admin_id' => $admin_id,
             'admin_password' => $admin_password,
         ]);
@@ -73,7 +56,7 @@ class Session
      */
     public function isUserSessionSet(): bool
     {
-        return ($this->session->has('user_id') && $this->session->has('user_password'));
+        return (session()->has('user_id') && session()->has('user_password'));
     }
 
     /**
@@ -83,7 +66,7 @@ class Session
      */
     public function isAdminSessionSet(): bool
     {
-        return ($this->session->has('admin_id') && $this->session->has('admin_password'));
+        return (session()->has('admin_id') && session()->has('admin_password'));
     }
 
     /**
@@ -93,9 +76,7 @@ class Session
      */
     public function destroyUserSession(): void
     {
-        $this->session->remove('user_id');
-        $this->session->remove('user_password');
-        $this->session->destroy();
+        session()->forget(['user_id', 'user_password']);
     }
 
     /**
@@ -105,8 +86,6 @@ class Session
      */
     public function destroyAdminSession(): void
     {
-        $this->session->remove('admin_id');
-        $this->session->remove('admin_password');
-        $this->session->destroy();
+        session()->forget(['admin_id', 'admin_password']);
     }
 }

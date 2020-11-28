@@ -18,24 +18,16 @@
 namespace Xgp\Lobby\Http\Controllers;
 
 use App\Libraries\User\Player;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Xgp\Lobby\Entities\Home;
 use Xgp\Lobby\Http\Requests\Signin;
 
 class HomeController extends Controller
 {
-    private $player;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->player = new Player;
-    }
-
     /**
      * Users land here
      *
@@ -107,10 +99,10 @@ class HomeController extends Controller
                 $post = $request->only(['login', 'pass']);
                 $player = (new Home)->getUserWithProvidedCredentials($post['login']);
 
-                if (isset($player) && password_verify($post['pass'], $player->user_password)) {
-                    if ($this->player->doLogin($player->user_id, $player->user_password)) {
-                        $this->userModel->setCurrentPlanet($player->user_id);
-                        $url .= '/game/index.php?page=overview&sessionId=' . session_id();
+                if (isset($player) && Hash::check($post['pass'], $player->user_password)) {
+                    if ((new Player)->doLogin($player->user_id, $player->user_password)) {
+                        (new User)->setCurrentPlanet($player->user_id);
+                        $url .= '/game/index.php?page=overview&sessionId=' . session()->getId();
                     }
                 }
             }

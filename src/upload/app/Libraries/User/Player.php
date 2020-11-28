@@ -19,6 +19,7 @@ namespace App\Libraries\User;
 
 use App\Libraries\Session;
 use App\Libraries\User\User;
+use Illuminate\Support\Facades\Hash;
 
 class Player extends User
 {
@@ -32,7 +33,7 @@ class Player extends User
     public function doLogin(int $id, string $password): bool
     {
         if ($id != 0 && !empty($password)) {
-            $this->session->setUserSession($id, pswHash($password));
+            $this->session->setUserSession($id, Hash::make($password));
 
             return true;
         }
