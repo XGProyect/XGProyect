@@ -4,7 +4,7 @@ return [
     // home page
     'hm_keywords' => 'Juego, navegador, online, gratis, legendario, MMOG, ciencia ficción, espacio, nave',
     'hm_description' => 'XG Proyect - ¡El juego legendario en el espacio! Descubre un universo junto con miles de jugadores.',
-    'hm_title' => 'Página inicial de %s',
+    'hm_title' => 'Página inicial de :game_name',
     'hm_field_required' => 'Se requiere este campo',
     'hm_must_accept_tandc' => 'Tienes que aceptar los T&Cs.',
     'hm_username_length' => 'Se permiten entre 3 y 20 caracteres.',

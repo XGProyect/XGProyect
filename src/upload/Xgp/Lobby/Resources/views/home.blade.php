@@ -134,7 +134,7 @@
                 {{ __('lobby::home.hm_login_button') }}
             </a>
             <div id="login">
-                <form id="loginForm" name="loginForm" method="post" action="{{$baseUrl}}/home/signin">
+                <form id="loginForm" name="loginForm" method="post" action="{{$baseUrl}}/signin">
                     <input type="hidden" name="kid" value="">
                         <div class="input-wrap">
                             <label for="serverLogin">

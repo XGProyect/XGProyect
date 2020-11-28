@@ -4,7 +4,7 @@ return [
     // home page
     'hm_keywords' => 'Game, Browser, online, for free, legendary, MMOG, Science fiction, space, space ship',
     'hm_description' => 'XG Proyect - The legendary game in the space! Discover the universe together with thousands of players.',
-    'hm_title' => '%s Homepage',
+    'hm_title' => ':game_name Homepage',
     'hm_field_required' => 'This field is required',
     'hm_must_accept_tandc' => 'You must accept the T&Cs.',
     'hm_username_length' => 'Between 3 and 20 characters allowed.',
