@@ -135,6 +135,7 @@
             </a>
             <div id="login">
                 <form id="loginForm" name="loginForm" method="post" action="{{$baseUrl}}/signin">
+                    @csrf <!-- {{ csrf_field() }} -->
                     <input type="hidden" name="kid" value="">
                         <div class="input-wrap">
                             <label for="serverLogin">
@@ -169,6 +170,7 @@
 		<div id="content" class="clearfix">
 			<div id="subscribe">
                 <form id="subscribeForm" name="subscribeForm" method="POST" onsubmit="changeAction(&#39;register&#39;,&#39;subscribeForm&#39;);" action="">
+                    @csrf <!-- {{ csrf_field() }} -->
                     <input type="hidden" name="v" value="3">
                     <input type="hidden" name="step" value="validate">
                     <input type="hidden" name="kid" value="">

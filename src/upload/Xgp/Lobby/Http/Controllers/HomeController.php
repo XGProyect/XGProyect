@@ -17,12 +17,25 @@
  */
 namespace Xgp\Lobby\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Libraries\User\Player;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
+use Xgp\Lobby\Entities\Home;
+use Xgp\Lobby\Http\Requests\Signin;
 
 class HomeController extends Controller
 {
+    private $player;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->player = new Player;
+    }
+
     /**
      * Users land here
      *
@@ -85,25 +98,25 @@ class HomeController extends Controller
      *
      * @return RedirectResponse
      */
-    public function signin(): RedirectResponse
+    public function signin(Signin $request): RedirectResponse
     {
-        $post = $this->request->getPost(['login', 'pass']);
-        $url = url('/')();
+        $url = url('/');
 
-        if (isset($post)) {
-            if ($this->validation->run($post, 'signin')) {
-                $login = $this->homeModel->getUserWithProvidedCredentials($post['login']);
+        if ($request->isMethod('post')) {
+            if ($request->validated()) {
+                $post = $request->only(['login', 'pass']);
+                $player = (new Home)->getUserWithProvidedCredentials($post['login']);
 
-                if (isset($login) && password_verify($post['pass'], $login->user_password)) {
-                    if ($this->player->doLogin($login->user_id, $login->user_password)) {
-                        $this->userModel->setCurrentPlanet($login->user_id);
+                if (isset($player) && password_verify($post['pass'], $player->user_password)) {
+                    if ($this->player->doLogin($player->user_id, $player->user_password)) {
+                        $this->userModel->setCurrentPlanet($player->user_id);
                         $url .= '/game/index.php?page=overview&sessionId=' . session_id();
                     }
                 }
             }
         }
 
-        return redirect()->route($url);
+        return redirect($url);
     }
 
     /**
