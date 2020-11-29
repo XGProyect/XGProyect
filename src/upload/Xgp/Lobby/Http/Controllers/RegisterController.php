@@ -19,21 +19,12 @@ namespace Xgp\Lobby\Controllers;
 
 namespace Xgp\Lobby\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Signup;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 
 class RegisterController extends Controller
 {
-    /**
-     * @var App\Models\UserModel
-     */
-    private $userModel;
-
-    /**
-     * @var Xgp\Lobby\Models\RegisterModel
-     */
-    private $registerModel;
-
     /**
      * Contains the registration submit data
      *
@@ -42,42 +33,26 @@ class RegisterController extends Controller
     private $post;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        // load models
-        $this->userModel = model('App\Models\UserModel');
-        $this->registerModel = model('Xgp\Lobby\Models\RegisterModel');
-
-        // load languages
-        $this->langLoad('register');
-
-        // set default view path
-        $this->view_location = 'Xgp\Lobby\Views\\';
-    }
-
-    /**
      * Users land here
      *
      * @return RedirectResponse
      */
-    public function index(): RedirectResponse
+    public function index(Signup $request): RedirectResponse
     {
         $url = url('/');
-        $this->post = $this->request->getPost(['character', 'email', 'password', 'agb']);
 
-        if (isset($this->post)) {
-            if ($this->validation->run($this->post, 'signup')) {
+        if ($request->isMethod('post')) {
+            if ($request->validated()) {
+                $this->post = $request->only(['character', 'email', 'password', 'agb']);
                 if ($this->doSignup()) {
-                    $url .= '/game/index.php?page=overview&sessionId=' . session_id();
+                    $url .= '/game/index.php?page=overview&sessionId=' . session()->getId();
                 }
             } else {
                 $url .= '?user=' . $this->post['character'] . '&email=' . $this->post['email'] . '&error=' . $this->setErrorId();
             }
         }
 
-        return redirect()->to($url);
+        return redirect($url);
     }
 
     /**
@@ -109,7 +84,7 @@ class RegisterController extends Controller
      */
     private function doSignup(): bool
     {
-        $newUserId = $this->registerModel->createNewUser(
+        $newUserId = (new Register)->createNewUser(
             [
                 'user_name' => $this->post['character'],
                 'user_email' => $this->post['email'],

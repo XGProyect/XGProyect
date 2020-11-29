@@ -49,36 +49,48 @@ class User extends Model
     ];
 
     /**
+     * Get the planets for the user
+     */
+    public function planets()
+    {
+        return $this->hasMany('App\Models\Planet');
+    }
+
+    /**
      * Create a new user
      *
      * @param array $data
      * @return integer
      */
-    public function create(array $data): int
+    public function insert(array $data): int
     {
-        $this->db->transStart();
+        $newUserId = 0;
 
-        $environment_data = [
-            'user_lastip' => $_SERVER['REMOTE_ADDR'],
-            'user_ip_at_reg' => $_SERVER['REMOTE_ADDR'],
-            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-            'user_current_page' => $_SERVER['REQUEST_URI'],
-            'user_register_time' => time(),
-            'user_onlinetime' => time(),
-        ];
+        try {
+            $newUserId = DB::transaction(function ($data) {
+                $environmentData = [
+                    'user_lastip' => $_SERVER['REMOTE_ADDR'],
+                    'user_ip_at_reg' => $_SERVER['REMOTE_ADDR'],
+                    'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+                    'user_current_page' => $_SERVER['REQUEST_URI'],
+                    'user_register_time' => time(),
+                    'user_onlinetime' => time(),
+                ];
 
-        $this->save((new User(array_merge($data, $environment_data))));
+                $newUserId = $this->create(array_merge($data, $environmentData));
 
-        $newUserId = $this->db->insertID();
+                (new PreferenceModel)->create(['preference_user_id' => $newUserId]);
+                (new PremiumModel)->create(['premium_user_id' => $newUserId]);
+                (new ResearchModel)->create(['research_user_id' => $newUserId]);
+                (new UserStatisticModel)->create(['user_statistic_user_id' => $newUserId]);
 
-        (new PreferenceModel)->save(new Preference(['preference_user_id' => $newUserId]));
-        (new PremiumModel)->save(new Premium(['premium_user_id' => $newUserId]));
-        (new ResearchModel)->save(new Research(['research_user_id' => $newUserId]));
-        (new UserStatisticModel)->save(new UserStatistic(['user_statistic_user_id' => $newUserId]));
+                return $newUserId;
+            });
+        } catch (\Exception $e) {
+            return $newUserId;
+        }
 
-        $this->db->transComplete();
-
-        return ($this->db->transStatus() === true ? $newUserId : 0);
+        return $newUserId;
     }
 
     /**

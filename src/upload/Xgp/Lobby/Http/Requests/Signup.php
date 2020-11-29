@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Xgp\Lobby\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,7 +25,7 @@ class Signup extends FormRequest
     {
         return [
             'character' => 'required|alpha_dash|min:3|max:20|is_unique[users.user_name]',
-            'email' => 'required|valid_email|is_unique[users.user_email]',
+            'email' => 'required|email|is_unique[users.user_email]',
             'password' => 'required|min:8',
             'agb' => 'required',
         ];

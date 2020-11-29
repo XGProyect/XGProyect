@@ -19,4 +19,5 @@ Route::prefix('/')->group(function () {
     Route::get('/media', 'HomeController@media');
     Route::post('/signin', 'HomeController@signin');
     Route::get('/signout', 'HomeController@signout');
+    Route::post('/register', 'RegisterController@index');
 });

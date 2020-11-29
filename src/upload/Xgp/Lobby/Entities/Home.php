@@ -2,22 +2,11 @@
 
 namespace Xgp\Lobby\Entities;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Xgp\Lobby\Database\factories\HomeFactory;
 
 class Home extends Model
 {
-    use HasFactory;
-
-    protected $fillable = [];
-
-    protected static function newFactory()
-    {
-        return HomeFactory::new ();
-    }
-
     /**
      * Get the user based on the provided credentials
      *

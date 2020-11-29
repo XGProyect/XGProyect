@@ -17,15 +17,10 @@
  */
 namespace App\Models;
 
-use App\Entities\Building;
-use App\Entities\Coordinates;
-use App\Entities\Defense;
-use App\Entities\Planet;
-use App\Entities\Ship;
-use App\Models\BaseModel;
-use App\Models\BuildingModel;
-use App\Models\DefenseModel;
-use App\Models\ShipModel;
+use App\Models\Building;
+use App\Models\Defense;
+use App\Models\Ship;
+use Illuminate\Database\Eloquent\Model;
 
 class Planet extends Model
 {
@@ -74,33 +69,65 @@ class Planet extends Model
     ];
 
     /**
+     * Get the buildings associated to the planet
+     *
+     * @return void
+     */
+    public function buildings()
+    {
+        return $this->hasOne('App\Models\Building');
+    }
+
+    /**
+     * Get the defenses associated to the planet
+     *
+     * @return void
+     */
+    public function defenses()
+    {
+        return $this->hasOne('App\Models\Defense');
+    }
+
+    /**
+     * Get the ships associated to the planet
+     *
+     * @return void
+     */
+    public function ships()
+    {
+        return $this->hasOne('App\Models\Ship');
+    }
+
+    /**
      * Create a new planet
      *
      * @param array $data
      * @return integer
      */
-    public function create(int $userId, Coordinates $coords): int
+    public function insert(int $userId, Coordinates $coords): int
     {
-        $this->db->transStart();
+        $newPlanetId = 0;
 
-        $this->save(
-            new Planet([
-                'planet_user_id' => $userId,
-                'planet_galaxy' => $coords->galaxy,
-                'planet_system' => $coords->system,
-                'planet_planet' => $coords->planet,
-            ])
-        );
+        try {
+            $newPlanetId = DB::transaction(function ($userId, $coords) {
+                $newPlanetId = $this->create([
+                    'planet_user_id' => $userId,
+                    'planet_galaxy' => $coords->galaxy,
+                    'planet_system' => $coords->system,
+                    'planet_planet' => $coords->planet,
+                ])->planet_id;
 
-        $newPlanetId = $this->db->insertID();
+                (new Building)->create(['building_planet_id' => $newPlanetId]);
+                (new Defense)->create(['defense_planet_id' => $newPlanetId]);
+                (new Ship)->create(['ship_planet_id' => $newPlanetId]);
 
-        (new BuildingModel)->save(new Building(['building_planet_id' => $newPlanetId]));
-        (new DefenseModel)->save(new Defense(['defense_planet_id' => $newPlanetId]));
-        (new ShipModel)->save(new Ship(['ship_planet_id' => $newPlanetId]));
+                return $newPlanetId;
+            });
+        } catch (\Exception $e) {
+            return $newPlanetId;
+        }
 
-        $this->db->transComplete();
-
-        return ($this->db->transStatus() === true ? $newPlanetId : 0);
+        return $newPlanetId;
     }
 
     /**
