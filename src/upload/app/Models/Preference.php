@@ -33,5 +33,4 @@ class Preference extends Model
         'preference_vacation_mode',
         'preference_delete_mode',
     ];
-    protected $returnType = 'App\Entities\Preference';
 }

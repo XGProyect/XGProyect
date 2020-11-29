@@ -43,5 +43,4 @@ class AllianceStatistic extends Model
         'alliance_statistic_total_rank',
         'alliance_statistic_update_time',
     ];
-    protected $returnType = 'App\Entities\AllianceStatistic';
 }

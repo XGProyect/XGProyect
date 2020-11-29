@@ -32,5 +32,4 @@ class Banned extends Model
         'banned_author',
         'banned_email',
     ];
-    protected $returnType = 'App\Entities\Banned';
 }

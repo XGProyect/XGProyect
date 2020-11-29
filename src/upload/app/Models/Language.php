@@ -27,5 +27,4 @@ class Language extends Model
     protected $fillable = [
         'language_name',
     ];
-    protected $returnType = 'App\Entities\Language';
 }

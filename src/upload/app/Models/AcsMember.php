@@ -28,5 +28,4 @@ class AcsMember extends Model
         'acs_group_id',
         'acs_user_id',
     ];
-    protected $returnType = 'App\Entities\AcsMember';
 }

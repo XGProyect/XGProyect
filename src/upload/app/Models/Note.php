@@ -31,5 +31,4 @@ class Note extends Model
         'note_title',
         'note_text',
     ];
-    protected $returnType = 'App\Entities\Note';
 }

@@ -37,5 +37,4 @@ class Defense extends Model
         'defense_anti-ballistic_missile',
         'defense_interplanetary_missile',
     ];
-    protected $returnType = 'App\Entities\Defense';
 }

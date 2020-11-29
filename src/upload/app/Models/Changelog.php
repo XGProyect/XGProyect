@@ -30,5 +30,4 @@ class Changelog extends Model
         'changelog_date',
         'changelog_description',
     ];
-    protected $returnType = 'App\Entities\Changelog';
 }

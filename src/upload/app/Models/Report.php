@@ -31,5 +31,4 @@ class Report extends Model
         'report_destroyed',
         'report_time',
     ];
-    protected $returnType = 'App\Entities\Report';
 }

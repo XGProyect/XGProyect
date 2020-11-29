@@ -47,7 +47,6 @@ class User extends Model
         'user_ally_rank_id',
         'user_banned',
     ];
-    protected $returnType = 'App\Entities\User';
 
     /**
      * Create a new user

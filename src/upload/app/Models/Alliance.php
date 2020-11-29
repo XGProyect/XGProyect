@@ -38,5 +38,4 @@ class Alliance extends Model
         'alliance_owner_range',
         'alliance_ranks',
     ];
-    protected $returnType = 'App\Entities\Alliance';
 }

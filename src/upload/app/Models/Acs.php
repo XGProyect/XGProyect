@@ -32,5 +32,4 @@ class Acs extends Model
         'acs_planet',
         'acs_planet_type',
     ];
-    protected $returnType = 'App\Entities\Acs';
 }

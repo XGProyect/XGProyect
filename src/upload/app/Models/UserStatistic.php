@@ -43,5 +43,4 @@ class UserStatistic extends Model
         'user_statistic_total_rank',
         'user_statistic_update_time',
     ];
-    protected $returnType = 'App\Entities\UserStatistic';
 }

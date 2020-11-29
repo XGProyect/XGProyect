@@ -34,5 +34,4 @@ class Message extends Model
         'message_text',
         'message_read',
     ];
-    protected $returnType = 'App\Entities\Message';
 }

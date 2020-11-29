@@ -72,7 +72,6 @@ class Planet extends Model
         'planet_debris_crystal',
         'planet_invisible_start_time',
     ];
-    protected $returnType = 'App\Entities\Planet';
 
     /**
      * Create a new planet

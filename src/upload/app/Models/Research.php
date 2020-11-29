@@ -44,5 +44,4 @@ class Research extends Model
         'research_astrophysics',
         'research_graviton_technology',
     ];
-    protected $returnType = 'App\Entities\Research';
 }

@@ -33,5 +33,4 @@ class Premium extends Model
         'premium_officier_geologist',
         'premium_officier_technocrat',
     ];
-    protected $returnType = 'App\Entities\Premium';
 }

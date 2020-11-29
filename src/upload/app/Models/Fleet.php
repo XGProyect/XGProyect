@@ -49,5 +49,4 @@ class Fleet extends Model
         'fleet_group',
         'fleet_mess',
     ];
-    protected $returnType = 'App\Entities\Fleet';
 }

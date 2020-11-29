@@ -27,5 +27,4 @@ class Option extends Model
     protected $fillable = [
         'option_value',
     ];
-    protected $returnType = 'App\Entities\Option';
 }

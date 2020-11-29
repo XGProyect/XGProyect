@@ -45,5 +45,4 @@ class Building extends Model
         'building_phalanx',
         'building_jump_gate',
     ];
-    protected $returnType = 'App\Entities\Building';
 }

@@ -41,5 +41,4 @@ class Ship extends Model
         'ship_deathstar',
         'ship_battlecruiser',
     ];
-    protected $returnType = 'App\Entities\Ship';
 }
