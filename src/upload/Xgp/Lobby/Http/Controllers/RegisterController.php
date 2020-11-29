@@ -19,9 +19,14 @@ namespace Xgp\Lobby\Controllers;
 
 namespace Xgp\Lobby\Http\Controllers;
 
-use App\Http\Requests\Signup;
+use App\Libraries\Email;
+use App\Libraries\Messaging;
+use App\Libraries\Planet;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
+use Xgp\Lobby\Entities\Register;
+use Xgp\Lobby\Http\Requests\Signup;
 
 class RegisterController extends Controller
 {
@@ -40,41 +45,13 @@ class RegisterController extends Controller
     public function index(Signup $request): RedirectResponse
     {
         $url = url('/');
+        $this->post = $request->validated();
 
-        if ($request->isMethod('post')) {
-            if ($request->validated()) {
-                $this->post = $request->only(['character', 'email', 'password', 'agb']);
-                if ($this->doSignup()) {
-                    $url .= '/game/index.php?page=overview&sessionId=' . session()->getId();
-                }
-            } else {
-                $url .= '?user=' . $this->post['character'] . '&email=' . $this->post['email'] . '&error=' . $this->setErrorId();
-            }
+        if ($this->doSignup()) {
+            $url .= '/game/index.php?page=overview&sessionId=' . session()->getId();
         }
 
         return redirect($url);
-    }
-
-    /**
-     * Set the error ID
-     *
-     * @return string
-     */
-    private function setErrorId(): string
-    {
-        $errors = $this->validation->getErrors();
-
-        if ($errors) {
-            if (isset($errors['character']) == 1) {
-                return 1;
-            }
-
-            if (isset($errors['email']) == 2) {
-                return 2;
-            }
-        }
-
-        return '';
     }
 
     /**
@@ -98,7 +75,7 @@ class RegisterController extends Controller
         }
 
         // send welcome message to the user if the feature is enabled
-        if ($this->setting->one('reg_welcome_message')) {
+        if (config('settings.reg_welcome_message')) {
             $message = new Messaging;
             $message->receiver($newUserId);
             $message->from($this->lang->line('re_welcome_message_from'));
@@ -108,11 +85,11 @@ class RegisterController extends Controller
         }
 
         // send welcome email to the user if the feature is enabled
-        if ($this->setting->one('reg_welcome_email')) {
+        if (config('settings.reg_welcome_email')) {
             $this->sendWelcome();
         }
 
-        $this->player->doLogin($newUserId, (new UserModel)->find($newUserId)->user_password);
+        $this->player->doLogin($newUserId, (new User)->find($newUserId)->user_password);
         $this->userModel->setCurrentPlanet($newUserId);
 
         return true;
@@ -125,10 +102,10 @@ class RegisterController extends Controller
      */
     private function sendWelcome(): void
     {
-        $gameName = $this->setting->one('game_name');
+        $gameName = config('settings.game_name');
 
         (new Email)
-            ->from($this->setting->one('admin_email'), $gameName)
+            ->from(config('settings.admin_email'), $gameName)
             ->to($this->post['email'])
             ->subject(sprintf($this->lang->line('re_mail_register_at'), $gameName))
             ->template(

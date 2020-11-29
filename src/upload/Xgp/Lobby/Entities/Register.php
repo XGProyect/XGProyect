@@ -15,7 +15,7 @@
  * @link       https://github.com/XGProyect/
  * @since      Version 4.0.0
  */
-namespace Xgp\Lobby\Models;
+namespace Xgp\Lobby\Entities;
 
 use App\Models\Planet;
 use App\Models\User;

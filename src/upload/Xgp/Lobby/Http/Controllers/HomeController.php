@@ -49,7 +49,7 @@ class HomeController extends Controller
     public function maintenance(): View
     {
         return view('lobby::maintenance')->with([
-            'gameName' => strtr(__('lobby::home.hm_title'), ['%s' => $this->setting->one('game_name')]),
+            'gameName' => strtr(__('lobby::home.hm_title'), ['%s' => config('settings.game_name')]),
             'closeTitle' => __('lobby::home.hm_server_closed'),
             'closeReason' => $this->getCloseReason(),
         ]);
@@ -93,18 +93,13 @@ class HomeController extends Controller
     public function signin(Signin $request): RedirectResponse
     {
         $url = url('/');
+        $data = $request->validated();
+        $player = (new Home)->getUserWithProvidedCredentials($data['login']);
 
-        if ($request->isMethod('post')) {
-            if ($request->validated()) {
-                $post = $request->only(['login', 'pass']);
-                $player = (new Home)->getUserWithProvidedCredentials($post['login']);
-
-                if (isset($player) && Hash::check($post['pass'], $player->user_password)) {
-                    if ((new Player)->doLogin($player->user_id, $player->user_password)) {
-                        (new User)->setCurrentPlanet($player->user_id);
-                        $url .= '/game/index.php?page=overview&sessionId=' . session()->getId();
-                    }
-                }
+        if (isset($player) && Hash::check($data['pass'], $player->user_password)) {
+            if ((new Player)->doLogin($player->user_id, $player->user_password)) {
+                (new User)->setCurrentPlanet($player->user_id);
+                $url .= '/game/index.php?page=overview&sessionId=' . session()->getId();
             }
         }
 
@@ -133,8 +128,6 @@ class HomeController extends Controller
         return [
             'servername' => __('lobby::home.hm_title', ['game_name' => config('settings.game_name')]),
             'gameLogo' => config('settings.game_logo'),
-            'userName' => '', //$this->request->getGet('user'),
-            'userEmail' => '', //$this->request->getGet('email'),
             'forumUrl' => config('settings.forum_url'),
             'version' => config('system.version'),
             'year' => date('Y'),
@@ -148,27 +141,21 @@ class HomeController extends Controller
      */
     private function getErrors(): array
     {
-        switch (0) {
-            case 1:
+        if ($errors = session()->get('errors')) {
+            if ($nameTaken = $errors->first('character')) {
                 $divId = '#username';
-                $message = __('lobby::home.hm_username_not_available');
-                break;
+                $message = $nameTaken;
+            }
 
-            case 2:
+            if ($emailTaken = $errors->first('email')) {
                 $divId = '#email';
-                $message = __('lobby::home.hm_email_not_available');
-                break;
-
-            case 0:
-            default:
-                $divId = '';
-                $message = '';
-                break;
+                $message = $emailTaken;
+            }
         }
 
         return [
-            'divId' => $divId,
-            'message' => $message,
+            'divId' => $divId ?? '',
+            'message' => $message ?? '',
         ];
     }
 
@@ -179,12 +166,12 @@ class HomeController extends Controller
      */
     private function getCloseReason(): string
     {
-        if ($this->setting->one('game_close') == 1) {
-            return $this->setting->one('close_reason');
+        if (config('settings.game_close') == 1) {
+            return config('settings.close_reason');
         }
 
-        if ($this->setting->one('reg_enable') != 1) {
-            return $this->lang->line('hm_reg_close');
+        if (config('settings.reg_enable') != 1) {
+            return __('lobby::home.hm_reg_close');
         }
 
         return '';

@@ -8,20 +8,6 @@ function setUniUrl(url) {
     jQuery("#loginForm").attr("action", "//" + url + "/game/reg/login2.php");
 }
 
-function changeAction(type, formular) {
-    var uniUrl = document.forms[formular].uni_url.value;
-
-    if (type == "login") {
-        document.forms[formular].action = "//" + uniUrl + "/game/reg/login2.php";
-    }
-    else if (type == "getpw") {
-        document.forms[formular].action = "//" + uniUrl + "/mail";
-    }
-    else if (type == "register") {
-        document.forms[formular].action = "//" + uniUrl + "/register";
-
-    }
-}
 function select_uni(code, name, cssClass) {
     $('#uni_selection').css('display', 'none');
     $('#uni_name').text(name);

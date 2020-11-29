@@ -21,13 +21,26 @@ class Signup extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'character' => 'required|alpha_dash|min:3|max:20|is_unique[users.user_name]',
-            'email' => 'required|email|is_unique[users.user_email]',
+            'character' => 'required|alpha_dash|between:3,20|unique:users,user_name',
+            'email' => 'required|email|unique:users,user_email',
             'password' => 'required|min:8',
             'agb' => 'required',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'character.unique' => __('lobby::home.hm_username_not_available'),
+            'email.unique' => __('lobby::home.hm_email_not_available'),
         ];
     }
 }

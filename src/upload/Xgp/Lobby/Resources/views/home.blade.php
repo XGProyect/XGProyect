@@ -162,21 +162,15 @@
                         <input type="submit" id="loginSubmit" value="{{ __('lobby::home.hm_login_button') }}">
                         <a href="#" id="pwLost" target="_blank" title="{{ __('lobby::home.hm_password_forgot') }}">{{ __('lobby::home.hm_password_forgot') }}</a>
                         <p id="TermsAndConditionsAcceptWithLogin">
-                            {{ __('lobby::home.hm_terms_accept') }} <a class="" href="{{$baseUrl}}/home/terms" target="_blank" title="{{ __('lobby::home.hm_terms') }}">{{ __('lobby::home.hm_terms') }}</a>
+                            {{ __('lobby::home.hm_terms_accept') }} <a class="" href="{{$baseUrl}}/terms" target="_blank" title="{{ __('lobby::home.hm_terms') }}">{{ __('lobby::home.hm_terms') }}</a>
                         </p>
                 </form>
 			</div>
 		</div>
 		<div id="content" class="clearfix">
 			<div id="subscribe">
-                <form id="subscribeForm" name="subscribeForm" method="POST" onsubmit="changeAction(&#39;register&#39;,&#39;subscribeForm&#39;);" action="">
-                    @csrf <!-- {{ csrf_field() }} -->
-                    <input type="hidden" name="v" value="3">
-                    <input type="hidden" name="step" value="validate">
-                    <input type="hidden" name="kid" value="">
-                    <input type="hidden" name="errorCodeOn" value="1">
-                    <input type="hidden" name="is_utf8" value="1">
-                    
+                <form id="subscribeForm" name="subscribeForm" method="POST" action="{{$baseUrl}}/register">
+                    @csrf <!-- {{ csrf_field() }} -->                    
                     <h2>{{ __('lobby::home.hm_play_for_free') }}</h2>
                     <div class="input-wrap first">
                         <label for="server">{{ __('lobby::home.hm_universe') }}</label>
@@ -208,7 +202,7 @@
                         <label for="username">{{ __('lobby::home.hm_username') }}</label>
 						<div class="black-border">
                             <!-- validate options dürfen nicht umgebrochen werden, da das plugin sonst nicht mehr funktioniert  -->
-                            <input id="username" class="js_userName validate[required,custom[noSpecialCharacters],custom[noBeginOrEndUnderscore],custom[noBeginOrEndWhitespace],custom[noBeginOrEndHyphen],custom[notMoreThanThreeUnderscores],custom[notMoreThanThreeWhitespaces],custom[notMoreThanThreeHyphen],custom[noCollocateUnderscores],custom[noCollocateWhitespaces],custom[noCollocateHyphen],length[3,20]]" type="text" name="character" value="{{ $userName }}">
+                            <input id="username" class="js_userName validate[required,custom[noSpecialCharacters],custom[noBeginOrEndUnderscore],custom[noBeginOrEndWhitespace],custom[noBeginOrEndHyphen],custom[notMoreThanThreeUnderscores],custom[notMoreThanThreeWhitespaces],custom[notMoreThanThreeHyphen],custom[noCollocateUnderscores],custom[noCollocateWhitespaces],custom[noCollocateHyphen],length[3,20]]" type="text" name="character" value="{{ old('character') }}">
 						</div>
 					</div>
                     <div class="input-wrap">
@@ -220,7 +214,7 @@
 					<div class="input-wrap">
                         <label for="email">{{ __('lobby::home.hm_mail_address') }}</label>
 						<div class="black-border">
-                            <input class="validate[required,custom[email],length[0,255]]" type="text" id="email" name="email" value="{{ $userEmail }}">
+                            <input class="validate[required,custom[email],length[0,255]]" type="text" id="email" name="email" value="{{ old('email') }}">
 						</div>
 					</div>
 					<div class="input-wrap">
