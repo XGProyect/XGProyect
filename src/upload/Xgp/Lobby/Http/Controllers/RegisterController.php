@@ -13,7 +13,7 @@
  * @copyright  2008-2021 XG Proyect
  * @license    https://www.gnu.org/licenses/gpl-3.0.en.html GPL-3.0 License
  * @link       https://github.com/XGProyect/
- * @since      Version 4.0.0
+ * @since      4.0.0
  */
 namespace Xgp\Lobby\Controllers;
 
