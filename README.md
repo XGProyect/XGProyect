@@ -56,10 +56,10 @@ docker-compose build --build-arg PHP_VERSION=8.2 && docker-compose up -d
 
 Simple change the **PHP version** to any other **version** that you'd like to test.
 
-## MailHog
-XGP uses MailHog and PHPMailer as tools for better mailing support. MailHog allows you to intercept emails locally and receive them under a convenient panel.
+## Mailpit
+XGP uses Mailpit to make mailing support better. Mailpit allows you to intercept emails locally and receive them under a convenient panel.
 
-Read our <a href="https://github.com/XGProyect/XG-Proyect-v3.x.x/wiki/MailHog-usage-and-setup" target="_blank">MailHog guide</a> to get started.
+Read more about <a href="https://github.com/axllent/mailpit" target="_blank">Mailpit guide</a> to get started.
 
 ## Who is using XG Proyect?
 We are happy to deliver this software giving others the possibility to have a good OGame Clon.
@@ -71,20 +71,28 @@ On the other hand, it's a pleasure to see people using XG Proyect.
 ## We support
 The following are tools or frameworks that we use to do our coding experience better!
 
-<p>
-    <a href="https://laravel.com/" rel="nofollow">
-        <img src="https://laravel.com/img/logomark.min.svg" alt="Laravel" width="75px">
-    </a>
-    <a href="https://getcomposer.org/" rel="nofollow">
-        <img src="https://getcomposer.org/img/logo-composer-transparent2.png" alt="Composer" width="75px">
-    </a>
-    <a href="https://www.phpdoc.org/" rel="nofollow">
-        <img src="https://avatars0.githubusercontent.com/u/1239567?s=400&v=4" alt="PHPDocumentor" width="75px">
-    </a>
-    <a href="https://github.com/llaville/php-compat-info" rel="nofollow">
-        <img src="https://avatars2.githubusercontent.com/u/364342?s=460&v=4" alt="PHP CompatInfo" width="75px">
-    </a>
-</p>
+<ul>
+    <li>
+        <a href="https://laravel.com/" rel="nofollow">
+            Laravel
+        </a>
+    </li>
+    <li>
+        <a href="https://getcomposer.org/" rel="nofollow">
+            Composer
+        </a>
+    </li>
+    <li>
+        <a href="https://github.com/axllent/mailpit" rel="nofollow">
+            Mailpit
+        </a>
+    </li>
+    <li>
+        <a href="https://www.phpdoc.org/" rel="nofollow">
+            PHPDocumentor
+        </a>
+    </li>
+</ul>
 
 ## License
 The XG Proyect is open-sourced software licensed under the GPL-3.0 License.
