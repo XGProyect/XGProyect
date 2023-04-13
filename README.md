@@ -38,20 +38,10 @@ composer create-project xgproyect/xgproyect
 ```
 
 ## How to run XG Proyect?
-Easiest way to do it, is using Docker.
+Easiest way to do it, is using Docker, through sail. See this <a href="https://laravel.com/docs/10.x/sail">Laravel Sail guide</a> to install it.
 
 ```
-docker-compose up
-```
-
-You can also build with different PHP versions:
-```
-docker build -t xgproyect:8.1 --build-arg PHP_VERSION=8.1 .
-```
-
-Or build and run, altogether, specifying a PHP version:
-```
-docker-compose build --build-arg PHP_VERSION=8.2 && docker-compose up -d
+sail up
 ```
 
 Simple change the **PHP version** to any other **version** that you'd like to test.
