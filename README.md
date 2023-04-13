@@ -19,8 +19,8 @@ Live Server: https://www.xgproyect.net/
 
 ## Requirements
 
-PHP 8.1 or greater
-MySQLi 5.5 or greater
+PHP 8.1 or greater  
+MySQLi 5.5 or greater  
 
 ## How to get XG Proyect?
 
@@ -72,8 +72,8 @@ On the other hand, it's a pleasure to see people using XG Proyect.
 The following are tools or frameworks that we use to do our coding experience better!
 
 <p>
-    <a href="https://codeigniter.com/" rel="nofollow">
-        <img src="https://codeigniter.com/favicon.ico" alt="CodeIgniter" width="75px">
+    <a href="https://laravel.com/" rel="nofollow">
+        <img src="https://laravel.com/img/logomark.min.svg" alt="Laravel" width="75px">
     </a>
     <a href="https://getcomposer.org/" rel="nofollow">
         <img src="https://getcomposer.org/img/logo-composer-transparent2.png" alt="Composer" width="75px">
