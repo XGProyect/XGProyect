@@ -39,7 +39,7 @@ composer create-project xgproyect/xgproyect
 
 ### Quick start
 
-By default if you did not change any setting, to connect to the game go to `http://localhost`, to check the email client go to `http://localhost:8025` and to connect to the DB by default we use `localhost` on port `3306` and user/password `root`. Check your `.env` file for the initial configutations.
+By default if you did not change any setting, to connect to the game go to `http://localhost`, to check the email client go to `http://localhost:8025` and to connect to the DB by default we use `mysql` on port `3306` and user/password `root`. Also, you can check your `.env` file for the initial configutations, or if you want to make any change.
 
 ## How to run XG Proyect?
 Easiest way to do it, is using Docker, through sail. See this <a href="https://laravel.com/docs/10.x/sail">Laravel Sail guide</a> to install it.
