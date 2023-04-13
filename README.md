@@ -44,8 +44,6 @@ Easiest way to do it, is using Docker, through sail. See this <a href="https://l
 sail up
 ```
 
-Simple change the **PHP version** to any other **version** that you'd like to test.
-
 ## Mailpit
 XGP uses Mailpit to make mailing support better. Mailpit allows you to intercept emails locally and receive them under a convenient panel.
 
