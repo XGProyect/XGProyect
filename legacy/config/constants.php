@@ -47,13 +47,13 @@ define(
 );
 
 // SYSTEM ROOT, IGNORING PUBLIC
-define('SYSTEM_ROOT', PROTOCOL . strtr(BASE_PATH, ['public' => '', 'public/' => '']));
+define('SYSTEM_ROOT', PROTOCOL . strtr(BASE_PATH, ['public' => '', 'public/' => '']) . '/');
 
 // GAME URL
 define('GAMEURL', PROTOCOL . $_SERVER['HTTP_HOST'] . '/');
 
 // ADMIN PATHS
-define('ADM_URL', PROTOCOL . strtr(BASE_PATH, ['public' => '', 'public/' => '']));
+define('ADM_URL', PROTOCOL . strtr(BASE_PATH, ['public' => '', 'public/' => '']) . '/');
 
 /**
  *
@@ -119,12 +119,12 @@ define('LOGS_PATH', DATA_PATH . 'logs' . DIRECTORY_SEPARATOR);
  * PUBLIC DIRECTORY STRUCTURE
  *
  */
-define('CSS_PATH', PUBLIC_PATH . 'css' . DIRECTORY_SEPARATOR);
-define('ADMIN_PUBLIC_PATH', PUBLIC_PATH . 'admin' . DIRECTORY_SEPARATOR);
-define('IMG_PATH', PUBLIC_PATH . 'images' . DIRECTORY_SEPARATOR);
-define('PUB_INS_PATH', PUBLIC_PATH . 'install' . DIRECTORY_SEPARATOR);
-define('JS_PATH', PUBLIC_PATH . 'js' . DIRECTORY_SEPARATOR);
-define('UPLOAD_PATH', PUBLIC_PATH . 'upload' . DIRECTORY_SEPARATOR);
+define('CSS_PATH', 'css' . DIRECTORY_SEPARATOR);
+define('ADMIN_PUBLIC_PATH', 'admin' . DIRECTORY_SEPARATOR);
+define('IMG_PATH', 'images' . DIRECTORY_SEPARATOR);
+define('PUB_INS_PATH', 'install' . DIRECTORY_SEPARATOR);
+define('JS_PATH', 'js' . DIRECTORY_SEPARATOR);
+define('UPLOAD_PATH', 'upload' . DIRECTORY_SEPARATOR);
 
 /**
  *

@@ -1,14 +1,5 @@
 <?php
-/**
- * Admin File
- *
- * @category Root File
- * @package  N/A
- * @author   XG Proyect Team
- * @license  http://www.xgproyect.org XG Proyect
- * @link     http://www.xgproyect.org
- * @version  3.1.0
- */
+
 use App\Core\common;
 use App\Libraries\Adm\AdministrationLib;
 use App\Libraries\Functions;
