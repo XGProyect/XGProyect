@@ -7,28 +7,28 @@
     <strong>X</strong>treme <strong>G</strong>amez <strong>Proyect</strong>o
     <br>
     <strong>Open-source OGame Clon</strong>
-</p> 
+</p>
 
 About
 ====
 
 XG Proyect (XGP) is a web browser game based on the famous OGame. Our goal is to offer a package that is as similar as possible to the original.
 
-Official Website: https://www.xgproyect.org/  
-Live Server: https://www.xgproyect.net/  
+Official Website: https://www.xgproyect.org/
+Live Server: https://www.xgproyect.net/
 
 ## Requirements
 
-PHP 7.3 or greater  
-MySQLi 5.5 or greater  
+PHP 8.1 or greater
+MySQLi 5.5 or greater
 
 ## How to get XG Proyect?
 
 ### Manually
 Download and install XG Proyect is easy.
 
-- Go to the releases section and get the latest stable release.  
-- Then unzip the upload dir in your localhost, rename that folder to wathever you want.  
+- Go to the releases section and get the latest stable release.
+- Then unzip the upload dir in your localhost, rename that folder to wathever you want.
 - Point you browser to your localhost and follow the step by step instructions provided by the installation software.
 
 ### Composer
@@ -46,12 +46,12 @@ docker-compose up
 
 You can also build with different PHP versions:
 ```
-docker build -t xgproyect:7.4 --build-arg PHP_VERSION=7.4 .
+docker build -t xgproyect:8.1 --build-arg PHP_VERSION=8.1 .
 ```
 
 Or build and run, altogether, specifying a PHP version:
 ```
-docker-compose build --build-arg PHP_VERSION=8.0 && docker-compose up -d
+docker-compose build --build-arg PHP_VERSION=8.2 && docker-compose up -d
 ```
 
 Simple change the **PHP version** to any other **version** that you'd like to test.
@@ -62,9 +62,9 @@ XGP uses MailHog and PHPMailer as tools for better mailing support. MailHog allo
 Read our <a href="https://github.com/XGProyect/XG-Proyect-v3.x.x/wiki/MailHog-usage-and-setup" target="_blank">MailHog guide</a> to get started.
 
 ## Who is using XG Proyect?
-We are happy to deliver this software giving others the possibility to have a good OGame Clon.  
-On the other hand, it's a pleasure to see people using XG Proyect.  
-<a href="https://github.com/XGProyect/XG-Proyect-v3.x.x/issues" target="_blank">Create a ticket</a> on GitHub so I can put your game logo here!  
+We are happy to deliver this software giving others the possibility to have a good OGame Clon.
+On the other hand, it's a pleasure to see people using XG Proyect.
+<a href="https://github.com/XGProyect/XG-Proyect-v3.x.x/issues" target="_blank">Create a ticket</a> on GitHub so I can put your game logo here!
 
 <img align="center" img src="https://xgproyect.org/wp-content/uploads/2019/10/xgp-new-logo-black.png" width="150px" title="XG Proyect" alt="xgp-logo">
 

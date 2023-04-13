@@ -4,8 +4,8 @@ services:
     build:
       context: .
       args:
-        PHP_VERSION: 8.2
-    container_name: xgproyect-v3
+        PHP_VERSION: 8.1
+    container_name: xgproyect
     restart: always
     ports:
       - 80:80
