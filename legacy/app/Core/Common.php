@@ -86,7 +86,7 @@ class Common
             $this->initLanguage();
 
             if (!$this->is_installed && !defined('IN_INSTALL')) {
-                Functions::redirect(SYSTEM_ROOT . 'install.php');
+                Functions::redirect(SYSTEM_ROOT . '/install.php');
             }
         } catch (Exception $e) {
             die('Error #0001' . $e->getMessage());
