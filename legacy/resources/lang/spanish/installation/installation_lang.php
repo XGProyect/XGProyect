@@ -38,6 +38,7 @@ $lang = [
     'ins_install_title' => 'Instalación',
     'ins_connection_data_title' => 'Datos para la conexi&oacute;n con la Base de Datos',
     'ins_server_title' => 'Servidor SQL:',
+    'ins_port_title' => 'Puerto Servidor SQL:',
     'ins_db_title' => 'Base de datos:',
     'ins_user_title' => 'Usuario:',
     'ins_password_title' => 'Contraseña:',

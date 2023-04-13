@@ -43,9 +43,9 @@ class Installation extends Model
      *
      * @return Database
      */
-    public function tryConnection($host, $user, $password)
+    public function tryConnection($host, $port, $user, $password)
     {
-        return $this->db->tryConnection($host, $user, $password);
+        return $this->db->tryConnection($host, $port, $user, $password);
     }
 
     /**

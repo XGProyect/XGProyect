@@ -12,6 +12,7 @@ class InstallationController extends BaseController
 {
     private PlanetLib $_planet;
     private $db_host;
+    private $db_port;
     private $db_name;
     private $db_user;
     private $db_password;
@@ -76,6 +77,7 @@ class InstallationController extends BaseController
         switch ((isset($_POST['page']) ? $_POST['page'] : '')) {
             case 'step1':
                 $this->db_host = isset($_POST['host']) ? $_POST['host'] : null;
+                $this->db_port = isset($_POST['port']) ? $_POST['port'] : null;
                 $this->db_user = isset($_POST['user']) ? $_POST['user'] : null;
                 $this->db_password = isset($_POST['password']) ? $_POST['password'] : null;
                 $this->db_name = isset($_POST['db']) ? $_POST['db'] : null;
@@ -107,6 +109,7 @@ class InstallationController extends BaseController
 
                 $parse['alert'] = $this->saveMessage($alerts, 'warning');
                 $parse['v_host'] = $this->db_host;
+                $parse['v_port'] = $this->db_port;
                 $parse['v_db'] = $this->db_name;
                 $parse['v_user'] = $this->db_user;
                 $parse['v_prefix'] = $this->db_prefix;
@@ -204,6 +207,7 @@ class InstallationController extends BaseController
                             [
                                 'alert' => '',
                                 'v_host' => '',
+                                'v_port' => '3306',
                                 'v_user' => '',
                                 'v_db' => '',
                                 'v_prefix' => 'xgp_',
@@ -374,7 +378,7 @@ class InstallationController extends BaseController
      */
     private function tryConnection()
     {
-        return $this->installationModel->tryConnection($this->db_host, $this->db_user, $this->db_password);
+        return $this->installationModel->tryConnection($this->db_host, $this->db_port, $this->db_user, $this->db_password);
     }
 
     /**
@@ -402,6 +406,7 @@ class InstallationController extends BaseController
 
         $data = "<?php\n";
         $data .= "defined('DB_HOST') ? null : define('DB_HOST', '" . $this->db_host . "');\n";
+        $data .= "defined('DB_PORT') ? null : define('DB_PORT', '" . $this->db_port . "');\n";
         $data .= "defined('DB_USER') ? null : define('DB_USER', '" . $this->db_user . "');\n";
         $data .= "defined('DB_PASS') ? null : define('DB_PASS', '" . $this->db_password . "');\n";
         $data .= "defined('DB_NAME') ? null : define('DB_NAME', '" . $this->db_name . "');\n";
@@ -518,7 +523,7 @@ class InstallationController extends BaseController
      */
     private function validateDbData()
     {
-        return (!empty($this->db_host) && !empty($this->db_name) && !empty($this->db_user) && !empty($this->db_prefix));
+        return (!empty($this->db_host) && !empty($this->db_port) && !empty($this->db_name) && !empty($this->db_user) && !empty($this->db_prefix));
     }
 
     /**

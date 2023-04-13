@@ -38,6 +38,7 @@ $lang = [
     // installation - step 1
     'ins_connection_data_title' => 'Data to connect to the database',
     'ins_server_title' => 'SQL server:',
+    'ins_port_title' => 'SQL server port:',
     'ins_db_title' => 'Database:',
     'ins_user_title' => 'User:',
     'ins_password_title' => 'Password:',

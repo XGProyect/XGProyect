@@ -13,6 +13,8 @@
             <div align="left">
                 <label>{ins_server_title}</label>
                 <input type="text" name="host" placeholder="{ins_ex_tag} localhost" value="{v_host}"/>
+                <label>{ins_port_title}</label>
+                <input type="text" name="port" placeholder="{ins_ex_tag} 3306" value="{v_port}"/>
                 <label>{ins_user_title}</label>
                 <input type="text" name="user" placeholder="{ins_ex_tag} root" value="{v_user}">
                 <label>{ins_password_title}</label>

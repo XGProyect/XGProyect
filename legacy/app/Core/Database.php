@@ -13,6 +13,7 @@ class Database
     private DebugLib $debug;
     private array $db_data = [
         'host' => '',
+        'port' => '',
         'user' => '',
         'pass' => '',
         'name' => '',
@@ -26,6 +27,7 @@ class Database
         if (defined('DB_HOST') && defined('DB_USER') && defined('DB_PASS') && defined('DB_NAME') && defined('DB_PREFIX')) {
             $this->db_data = [
                 'host' => DB_HOST,
+                'port' => DB_PORT,
                 'user' => DB_USER,
                 'pass' => DB_PASS,
                 'name' => DB_NAME,
@@ -44,8 +46,8 @@ class Database
      */
     public function openConnection()
     {
-        if (isset($this->db_data['host']) && isset($this->db_data['user']) && isset($this->db_data['pass']) && isset($this->db_data['name'])) {
-            if (!$this->tryConnection($this->db_data['host'], $this->db_data['user'], $this->db_data['pass'])) {
+        if (isset($this->db_data['host']) && $this->db_data['port'] && isset($this->db_data['user']) && isset($this->db_data['pass']) && isset($this->db_data['name'])) {
+            if (!$this->tryConnection($this->db_data['host'], $this->db_data['port'], $this->db_data['user'], $this->db_data['pass'])) {
                 if (!defined('IN_INSTALL')) {
                     die($this->debug->error(
                         -1,
@@ -69,14 +71,14 @@ class Database
         }
     }
 
-    public function tryConnection(string $host = '', string $user = '', string $pass = null): bool
+    public function tryConnection(string $host = '', string $port = '', string $user = '', string $pass = null): bool
     {
         try {
             if (empty($host) or empty($user)) {
                 return false;
             }
 
-            $this->connection = new mysqli($host, $user, $pass);
+            $this->connection = new mysqli($host, $user, $pass, null, (int) $port);
 
             if ($this->connection->connect_error) {
                 return false;
