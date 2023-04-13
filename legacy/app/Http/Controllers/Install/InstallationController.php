@@ -7,6 +7,7 @@ use App\Helpers\StringsHelper;
 use App\Libraries\Functions;
 use App\Libraries\PlanetLib;
 use App\Models\Install\Installation;
+use Illuminate\Support\Facades\Artisan;
 
 class InstallationController extends BaseController
 {
@@ -398,9 +399,10 @@ class InstallationController extends BaseController
      */
     private function writeConfigFile()
     {
-        $config_file = @fopen(XGP_ROOT . CONFIGS_PATH . 'config.php', "w");
+        $legacyConfigFile = @fopen(XGP_ROOT . CONFIGS_PATH . 'config.php', "w");
+        $laravelConfigFile = @fopen(XGP_ROOT . '../' . CONFIGS_PATH . 'config.php', "w");
 
-        if (!$config_file) {
+        if (!$legacyConfigFile || !$laravelConfigFile) {
             return false;
         }
 
@@ -412,18 +414,39 @@ class InstallationController extends BaseController
         $data .= "defined('DB_NAME') ? null : define('DB_NAME', '" . $this->db_name . "');\n";
         $data .= "defined('DB_PREFIX') ? null : define('DB_PREFIX', '" . $this->db_prefix . "');\n";
         $data .= "defined('SECRETWORD') ? null : define('SECRETWORD', 'xgp-" . StringsHelper::randomString(16) . "');\n";
-        $data .= "?>";
+        $data .= "\n";
+
+        $newData = "<?php\n";
+        $newData .= "putenv('DB_HOST=" . $this->db_host . "');\n";
+        $newData .= "putenv('DB_PORT=" . $this->db_port . "');\n";
+        $newData .= "putenv('DB_USERNAME=" . $this->db_user . "');\n";
+        $newData .= "putenv('DB_PASSWORD=" . $this->db_password . "');\n";
+        $newData .= "putenv('DB_DATABASE=" . $this->db_name . "');\n";
+        $newData .= "putenv('DB_PREFIX=" . $this->db_prefix . "');\n";
+        $newData .= "putenv('SECRETWORD=xgp-" . StringsHelper::randomString(16) . "');\n";
+        $newData .= "\n";
 
         // create the new file
-        if (fwrite($config_file, $data)) {
-            fclose($config_file);
+        if (fwrite($legacyConfigFile, $data)) {
+            fclose($legacyConfigFile);
 
-            return true;
+            if (fwrite($laravelConfigFile, $newData)) {
+                fclose($laravelConfigFile);
+
+                Artisan::call('cache:clear');
+                Artisan::call('config:clear');
+
+                return true;
+            } {
+                unlink(XGP_ROOT . CONFIGS_PATH . 'config.php');
+                unlink(XGP_ROOT . '../' . CONFIGS_PATH . 'config.php');
+            }
         }
 
         // check if something was created and delete it
-        if (file_exists($config_file)) {
-            unlink($config_file);
+        if (file_exists(XGP_ROOT . CONFIGS_PATH . 'config.php') && file_exists(XGP_ROOT . '../' . CONFIGS_PATH . 'config.php')) {
+            unlink(XGP_ROOT . CONFIGS_PATH . 'config.php');
+            unlink(XGP_ROOT . '../' . CONFIGS_PATH . 'config.php');
         }
 
         return false;
