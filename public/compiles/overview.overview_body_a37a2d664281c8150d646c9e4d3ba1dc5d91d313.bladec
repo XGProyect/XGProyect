@@ -1,0 +1,44 @@
+<br />
+<div id="content">
+ <table width="519">
+ <tr>
+ <td class="c" colspan="4"><a href="game.php?page=renameplanet" title="{Planet_menu}"><?php echo \htmlentities($ov_planet??'', ENT_QUOTES, 'UTF-8', false); ?> "<?php echo \htmlentities($planet_name??'', ENT_QUOTES, 'UTF-8', false); ?>"</a> (<?php echo \htmlentities($user_name??'', ENT_QUOTES, 'UTF-8', false); ?>)</td>
+ </tr>
+ <?php echo $Have_new_message; ?>
+
+ <tr>
+ <th><?php echo \htmlentities($ov_server_time??'', ENT_QUOTES, 'UTF-8', false); ?></th>
+ <th colspan="3"><?php echo \htmlentities($date_time??'', ENT_QUOTES, 'UTF-8', false); ?></th>
+ </tr>
+ <tr>
+ <td colspan="4" class="c"><?php echo \htmlentities($ov_events??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ </tr>
+ <?php echo $fleet_list; ?>
+
+ <tr>
+ <th><?php echo $moon_img; ?><br><?php echo \htmlentities($moon??'', ENT_QUOTES, 'UTF-8', false); ?></th>
+ <th colspan="2"><img src="<?php echo \htmlentities($dpath??'', ENT_QUOTES, 'UTF-8', false); ?>planets/<?php echo \htmlentities($planet_image??'', ENT_QUOTES, 'UTF-8', false); ?>.jpg" height="200" width="200"><br><?php echo $building; ?></th>
+ <th class="s">
+ <table class="s" align="top" border="0">
+ <tr><?php echo $anothers_planets; ?></tr>
+ </table>
+ </th>
+ </tr>
+ <tr>
+ <th><?php echo \htmlentities($ov_diameter??'', ENT_QUOTES, 'UTF-8', false); ?></th>
+ <th colspan="3"><?php echo \htmlentities($planet_diameter??'', ENT_QUOTES, 'UTF-8', false); ?> <?php echo \htmlentities($ov_distance_unit??'', ENT_QUOTES, 'UTF-8', false); ?> (<?php echo \htmlentities($planet_field_current??'', ENT_QUOTES, 'UTF-8', false); ?> / <?php echo \htmlentities($planet_field_max??'', ENT_QUOTES, 'UTF-8', false); ?> <?php echo \htmlentities($ov_fields??'', ENT_QUOTES, 'UTF-8', false); ?>)</th>
+ </tr>
+ <tr>
+ <th><?php echo \htmlentities($ov_temperature??'', ENT_QUOTES, 'UTF-8', false); ?></th>
+ <th colspan="3"><?php echo \htmlentities($ov_aprox??'', ENT_QUOTES, 'UTF-8', false); ?> <?php echo \htmlentities($planet_temp_min??'', ENT_QUOTES, 'UTF-8', false); ?><?php echo \htmlentities($ov_temp_unit??'', ENT_QUOTES, 'UTF-8', false); ?> <?php echo \htmlentities($ov_to??'', ENT_QUOTES, 'UTF-8', false); ?> <?php echo \htmlentities($planet_temp_max??'', ENT_QUOTES, 'UTF-8', false); ?><?php echo \htmlentities($ov_temp_unit??'', ENT_QUOTES, 'UTF-8', false); ?></th>
+ </tr>
+ <tr>
+ <th><?php echo \htmlentities($ov_position??'', ENT_QUOTES, 'UTF-8', false); ?></th>
+ <th colspan="3"><a href="game.php?page=galaxy&mode=0&galaxy=<?php echo \htmlentities($galaxy_galaxy??'', ENT_QUOTES, 'UTF-8', false); ?>&system=<?php echo \htmlentities($galaxy_system??'', ENT_QUOTES, 'UTF-8', false); ?>">[<?php echo \htmlentities($galaxy_galaxy??'', ENT_QUOTES, 'UTF-8', false); ?>:<?php echo \htmlentities($galaxy_system??'', ENT_QUOTES, 'UTF-8', false); ?>:<?php echo \htmlentities($galaxy_planet??'', ENT_QUOTES, 'UTF-8', false); ?>]</a></th>
+ </tr>
+ <tr>
+ <th><?php echo \htmlentities($ov_points??'', ENT_QUOTES, 'UTF-8', false); ?></th>
+ <th colspan="3"><?php echo \htmlentities($user_rank??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ </tr>
+ </table>
+</div>
