@@ -4,7 +4,7 @@
     </tr>
     <tr>
         <td>
-            <form name="refill-resources" method="POST" action="">
+            <form name="refill-resources" method="POST" action="" role="form">
                 <table width="100%">
                     <tr>
                         <td class="c" colspan="2">{tr_merchant1_tab_title}</td>
@@ -23,7 +23,7 @@
                     {list_of_resources}
                     <tr>
                         <th>
-                            <img border="0" src="{dpath}resources/{resource}.gif" width="42" height="22">
+                            <img border="0" src="{dpath}resources/{resource}.gif" width="42" height="22" alt=""/>
                             <br>
                             {resource_name}
                         </th>
@@ -52,7 +52,7 @@
                     {/list_of_resources}
                 </table>
             </form>
-            <form name="trade-resources" method="POST" action="">
+            <form name="trade-resources" method="POST" action="" role="form">
                 <table width="100%">
                     <tr>
                         <td class="c" colspan="2">{tr_merchant2_tab_title}</td>
@@ -75,13 +75,13 @@
                             <table width="100%">
                                 <tr>
                                     <th>
-                                        <img border="0" src="public/upload/skins/xgproyect/resources/metal.gif" width="42" height="22">
+                                        <img border="0" src="public/upload/skins/xgproyect/resources/metal.gif" width="42" height="22" alt=""/>
                                     </th>
                                     <th>
-                                        <img border="0" src="public/upload/skins/xgproyect/resources/crystal.gif" width="42" height="22">
+                                        <img border="0" src="public/upload/skins/xgproyect/resources/crystal.gif" width="42" height="22" alt=""/>
                                     </th>
                                     <th>
-                                        <img border="0" src="public/upload/skins/xgproyect/resources/deuterium.gif" width="42" height="22">
+                                        <img border="0" src="public/upload/skins/xgproyect/resources/deuterium.gif" width="42" height="22" alt=""/>
                                     </th>
                                 </tr>
                                 <tr>

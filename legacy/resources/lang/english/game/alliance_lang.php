@@ -120,6 +120,7 @@ $lang = [
     'al_rank_member_title' => 'Member',
     'al_rank_alliance_title' => 'Alliance',
     'al_rank_warning' => '<strong>Warning!</strong> You can only give permissions that you have yourself.',
+    'al_rank_delete' => 'Delete rank',
     'al_create' => 'Create new rank',
     'al_legend' => 'Rights legend',
     'al_legend_disolve_alliance' => 'Disband alliance',

@@ -1,5 +1,5 @@
-<div id="content">
-    <table>
+<div id="content" role="main">
+    <table role="presentation">
         <tr>
             <td>
                 {cr_lost_contact}

@@ -38,7 +38,7 @@ class AllianceController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         // load Language
-        parent::loadLang(['game/alliance']);
+        parent::loadLang(['game/alliance', 'game/global']);
 
         // load Library
         $this->bbcode = Functions::loadLibrary('BBCodeLib');
@@ -937,7 +937,7 @@ class AllianceController extends BaseController
                     'request_form' => $request_form,
                     'pending_message' => strtr($this->langs->line('al_no_request_pending'), ['%n' => $amount_of_requests]),
                     'list_of_requests' => $list_of_requests,
-                    'no_requests' => $amount_of_requests <= 0 ? '<tr><th colspan="2">' . $this->langs->line('al_no_requests') . '</th></tr>' : '',
+                    'no_requests' => $amount_of_requests <= 0 ? '<tr><th role="cell" colspan="2">' . $this->langs->line('al_no_requests') . '</th></tr>' : '',
                 ]
             )
         );
@@ -1007,7 +1007,7 @@ class AllianceController extends BaseController
 
         if (is_array($ranks->getAllRanksAsArray())) {
             foreach ($ranks->getAllRanksAsArray() as $rank_id => $details) {
-                $delete = '<a href="game.php?page=alliance&mode=admin&edit=rights&d=' . $rank_id . '"><img src="' . DPATH . 'alliance/abort.gif" border="0"></a>';
+                $delete = '<a href="game.php?page=alliance&mode=admin&edit=rights&d=' . $rank_id . '"><img src="' . DPATH . 'alliance/abort.gif" border="0" alt="'.$this->langs->line('al_rank_delete').'"/></a>';
                 $disabled = '';
                 if ($rank_id == 0 or $rank_id == 1) {
                     $delete = '';
@@ -1171,7 +1171,7 @@ class AllianceController extends BaseController
                 $this->langs->line('al_click_to_send_request')
             );
 
-            return '<tr><th>' . $this->langs->line('al_request') . '</th><th>' . $url . '</th></tr>';
+            return '<tr><th scope="row">' . $this->langs->line('al_request') . '</th><th role="cell">' . $url . '</th></tr>';
         }
 
         return '';
@@ -1187,7 +1187,7 @@ class AllianceController extends BaseController
         $image = $this->alliance->getCurrentAlliance()->getAllianceImage();
 
         if (!empty($image)) {
-            return '<tr><th colspan="2">' . Functions::setImage($image, $image) . '</td></tr>';
+            return '<tr><th role="cell" colspan="2">' . Functions::setImage($image, $image) . '</th></tr>';
         }
 
         return '';
@@ -1312,7 +1312,7 @@ class AllianceController extends BaseController
             $description = nl2br($this->bbcode->bbCode($alliance_description)) . '</th></tr>';
         }
 
-        return '<tr><th colspan="2" height="100px">' . $description . '</th></tr>';
+        return '<tr><th role="cell" colspan="2" height="100px">' . $description . '</th></tr>';
     }
 
     /**

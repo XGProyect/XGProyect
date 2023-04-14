@@ -1,5 +1,5 @@
 <br />
-<div id="content">
+<div id="content" role="main">
     <table border="0" cellpadding="0" cellspacing="1" width="750px">
         <tbody>
             <tr height="20px" valign="left">
@@ -10,7 +10,7 @@
                 {image}
                 <th width="75px">
                     <a href="game.php?page=overview&cp={planet_id}&re=0">
-                        <img src="{dpath}planets/small/s_{planet_image}.jpg" border="0" width="80px" height="80px">
+                        <img src="{dpath}planets/small/s_{planet_image}.jpg" border="0" width="80px" height="80px" alt="{planet_name}"/>
                     </a>
                 </th>
                 {/image}

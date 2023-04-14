@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{lang_code}">
     <head>
         <title>{{ $game_title }}</title>
         <link rel="shortcut icon" href="favicon.ico">

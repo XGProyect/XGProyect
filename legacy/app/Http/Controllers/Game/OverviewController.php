@@ -141,12 +141,12 @@ class OverviewController extends BaseController
             $new_message = '<tr>';
 
             if ($this->user['new_message'] == 1) {
-                $new_message .= '<th colspan="4">' . UrlHelper::setUrl('game.php?page=messages', $this->langs->line('ov_have_new_message'), $this->langs->line('ov_have_new_message')) . '</th>';
+                $new_message .= '<th role="cell" colspan="4">' . UrlHelper::setUrl('game.php?page=messages', $this->langs->line('ov_have_new_message'), $this->langs->line('ov_have_new_message')) . '</th>';
             }
 
             if ($this->user['new_message'] > 1) {
                 $link_text = str_replace('%m', FormatLib::prettyNumber($this->user['new_message']), $this->langs->line('ov_have_new_messages'));
-                $new_message .= '<th colspan="4">' . UrlHelper::setUrl('game.php?page=messages', $link_text, $link_text) . '</th>';
+                $new_message .= '<th role="cell" colspan="4">' . UrlHelper::setUrl('game.php?page=messages', $link_text, $link_text) . '</th>';
             }
 
             $new_message .= '</tr>';
@@ -270,7 +270,7 @@ class OverviewController extends BaseController
             if ($fleets['fleet_owner'] != $this->user['user_id']) {
                 $acs_member = false;
 
-                if (in_array($this->user['user_id'], explode(',', $fleets['acs_members']))) {
+                if (in_array($this->user['user_id'], explode(',', $fleets['acs_members'] ?? ''))) {
                     $acs_member = true;
                 }
 

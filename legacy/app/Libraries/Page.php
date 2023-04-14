@@ -353,10 +353,13 @@ class Page
      */
     private function installHeader()
     {
+        $lang = $this->langs->loadLang(['installation/installation'], true);
+
         return $this->template->set(
             'install/simple_header',
             [
                 'title' => 'Install',
+                'lang_code' => $lang->line('lang_code'),
                 'js_path' => '../js/',
                 'css_path' => '../css/',
             ]
@@ -452,12 +455,15 @@ class Page
      */
     private function gameHeader($metatags = '')
     {
+        $lang = $this->langs->loadLang(['game/global'], true);
+
         $parse['game_title'] = Functions::readConfig('game_name');
         $parse['version'] = SYSTEM_VERSION;
         $parse['css_path'] = CSS_PATH;
         $parse['skin_path'] = DPATH;
         $parse['js_path'] = JS_PATH;
-        $parse['meta_tags'] = ($metatags) ? $metatags : "";
+        $parse['meta_tags'] = ($metatags) ? $metatags : '';
+        $parse['lang_code'] = $lang->line('lang_code');
 
         return $this->template->set(
             'general/simple_header',

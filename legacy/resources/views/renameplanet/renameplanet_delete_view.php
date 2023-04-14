@@ -1,7 +1,7 @@
 <br />
-<div id="content">
-    <form action="game.php?page=renameplanet" method="POST">
-        <table width="519">
+<div id="content" role="main">
+    <form action="game.php?page=renameplanet" method="POST" role="form">
+        <table role="presentation" width="519">
             <tr>
                 <td colspan="3" class="c">{rp_security_request}</td>
             </tr><tr>

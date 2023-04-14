@@ -1,6 +1,6 @@
 <br />
-<div id="content">
-    <table border="1" align="center">
+<div id="content" role="main">
+    <table border="1" align="center" role="presentation">
         <tr>
             <th>
                 <font color="red">

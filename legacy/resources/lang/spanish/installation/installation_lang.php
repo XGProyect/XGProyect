@@ -1,6 +1,8 @@
 <?php
 
 $lang = [
+    'lang_code' => 'es',
+
     // messages
     'ins_no_server_requirements' => 'Tu servidor/hosting no cumple con los requisitos m&iacute;nimos que requiere XG Proyect para funcionar.<br /><br />Requisitos: <br />- PHP 7.3+<br />- MySQL 5.5+',
     'ins_not_writable' => 'Debes dar permisos de escritura (chmod 777) al directorio config para poder continuar con la instalación.',

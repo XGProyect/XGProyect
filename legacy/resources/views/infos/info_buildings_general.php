@@ -1,15 +1,15 @@
 <br />
-<div id="content">
-    <table width="519">
+<div id="content" role="main">
+    <table role="presentation" width="519">
         <tbody>
             <tr>
                 <td class="c">{name}</td>
             </tr><tr>
                 <th>
-                    <table>
+                    <table role="presentation">
                         <tbody>
                             <tr>
-                                <td><img src="{dpath}elements/{image}.gif" align="top" border="0" height="120" width="120"></td>
+                                <td><img src="{dpath}elements/{image}.gif" align="top" border="0" height="120" width="120" alt=""/></td>
                                 <td>{description}</td>
                             </tr>
                         </tbody>

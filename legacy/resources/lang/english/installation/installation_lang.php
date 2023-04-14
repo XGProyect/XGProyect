@@ -1,6 +1,8 @@
 <?php
 
 $lang = [
+    'lang_code' => 'en',
+
     // messages
     'ins_no_server_requirements' => 'Your server / hosting does not meet the minimum requirements needed to run XG Proyect.<br /><br />Requirements: <br />- PHP 7.3+<br />- MySQL 5.5+',
     'ins_not_writable' => 'You must provide write permission (chmod 777) to the config directory to continue with the installation.',

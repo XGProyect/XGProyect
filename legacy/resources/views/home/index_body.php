@@ -128,7 +128,7 @@
 	<div id="start">
 	    <div id="header">
                 <h1>
-                	<img src="{game_logo}" width="200px">
+                	<img src="{game_logo}" width="200px" alt=""/>
                     <a href="./" title="{hm_hidden_title}">
                         {hm_hidden_title}                    </a>
                 </h1>
@@ -240,8 +240,8 @@
 						</div>
 					</div>
 					<div id="submitWrap">
-						<input class="validate[required]" type="checkbox" id="agb" name="agb">
-                        <label>
+						<input class="validate[required]" type="checkbox" id="agb" name="agb"/>
+                        <label for="agb">
                             <span>{hm_accept} <a class="" target="_blank" href="index.php?page=terms" title="{hm_terms}">{hm_terms}</a> {hm_and} <a class="" target="_blank" href="index.php?page=policy" title="{hm_policy}">{hm_policy}</a></span>
 						</label>
                         <div onclick="if($.validationEngine.submitValidation(&#39;subscribeForm&#39;)) {document.forms[&#39;subscribeForm&#39;].submit();}">

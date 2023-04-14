@@ -120,6 +120,7 @@ $lang = [
     'al_rank_member_title' => 'Miembros',
     'al_rank_alliance_title' => 'Alianza',
     'al_rank_warning' => '<strong>¡Atención!</strong> Solamente puedes conceder derechos si tú también los tienes.',
+    'al_rank_delete' => 'Borrar rango',
     'al_create' => 'Crear nuevo rango',
     'al_legend' => 'Descripción de las leyes',
     'al_legend_disolve_alliance' => 'Disolver alianza',

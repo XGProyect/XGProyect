@@ -1,13 +1,13 @@
-<form action="" method="POST">
+<form action="" method="POST" role="form">
     <input type="hidden" value="{federation_invited}" name="federation_invited">
-    <table width="519" border="0" cellpadding="0" cellspacing="1">
+    <table role="presentation" width="519" border="0" cellpadding="0" cellspacing="1">
         <tr>
             <td class="c" colspan="3">{fl_fleet_union}</td>
         </tr>
         <tr>
             <th colspan="3">
                 <div style="text-align:left">
-                    {fl_fleet_union_name} <input name="name_acs" type="text" id="txt_name_acs" value="{acs_code}" minlength="3" maxlength="20"/> 
+                    {fl_fleet_union_name} <input name="name_acs" type="text" id="txt_name_acs" value="{acs_code}" minlength="3" maxlength="20"/>
                     <a href="#" onclick="document.getElementById('search').style.display = 'block';">{fl_search_user}</a>
                 </div>
             </th>

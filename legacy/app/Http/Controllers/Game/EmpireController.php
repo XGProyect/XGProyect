@@ -111,6 +111,7 @@ class EmpireController extends BaseController
         return [
             'planet_id' => $planet['planet_id'],
             'planet_image' => $planet['planet_image'],
+            'planet_name' => $planet['planet_name'],
             'dpath' => DPATH,
         ];
     }

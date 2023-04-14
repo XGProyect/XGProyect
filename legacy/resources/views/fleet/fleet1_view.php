@@ -1,7 +1,7 @@
 <script language="JavaScript" src="{js_path}flotten-min.js"></script>
 <script language="JavaScript" src="{js_path}ocnt-min.js"></script>
 <br />
-<div id="content">
+<div id="content" role="main">
     <table width="519" border="0" cellpadding="0" cellspacing="1">
         <tr height="20">
             <td colspan="9" class="c">
@@ -15,7 +15,7 @@
         </tr>
         {no_slot}
     </table>
-    <form action="game.php?page=fleet2" method="POST">
+    <form action="game.php?page=fleet2" method="POST" role="form">
         <table width="519" border="0" cellpadding="0" cellspacing="1">
             <tr height="20">
                 <td colspan="4" class="c">{fl_new_mission_title}</td>
@@ -28,16 +28,16 @@
             </tr>
             {list_of_ships}
             <tr height="20px">
-                <th>
+                <th scope="row">
                     {ship_name}
                 </th>
-                <th>
+                <th role="cell">
                     {ship_amount}
                 </th>
-                <th>
+                <th role="cell">
                     {max_ships_link}
                 </th>
-                <th>
+                <th role="cell">
                     {ships_input}
                     <input type="hidden" name="maxship{ship_id}" value="{max_ships}" />
                     <input type="hidden" name="consumption{ship_id}" value="{consumption}" />

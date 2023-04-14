@@ -1,5 +1,5 @@
 <br />
-<div id="content">
+<div id="content" role="main">
     {BuildListScript}
     <table width=530>
         {BuildList}
@@ -7,7 +7,7 @@
         <tr>
             <td class="l" width="120" height="120">
                 <a href="game.php?page=infos&gid={i}">
-                    <img border="0" src="{dpath}elements/{i}.gif" align="top" width="120" height="120">
+                    <img alt="{n}" border="0" src="{dpath}elements/{i}.gif" align="top" width="120" height="120">
                 </a>
             </td>
             <td class="l">
