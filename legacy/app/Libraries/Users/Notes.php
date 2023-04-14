@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries\Users;
+namespace Xgp\App\Libraries\Users;
 
-use App\Core\Entity\NotesEntity;
+use Xgp\App\Core\Entity\NotesEntity;
 
 class Notes
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Libraries\FormatLib as Format;
-use App\Libraries\Functions;
-use App\Libraries\Game\ResourceMarket;
-use App\Libraries\Users;
-use App\Models\Game\Trader;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Libraries\FormatLib as Format;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Game\ResourceMarket;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Trader;
 
 class TraderController extends BaseController
 {

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
-use App\Helpers\UrlHelper;
-use App\Libraries\Combatreport\Report;
-use App\Libraries\FleetsLib;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\Missions\Attack_lang;
-use App\Libraries\Missions\Missions;
-use App\Libraries\PlanetLib;
-use App\Libraries\UpdatesLibrary;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\Combatreport\Report;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Missions\Attack_lang;
+use Xgp\App\Libraries\Missions\Missions;
+use Xgp\App\Libraries\PlanetLib;
+use Xgp\App\Libraries\UpdatesLibrary;
 use Battle;
 use BattleReport;
 use CiLang;

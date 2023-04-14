@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Adm;
+namespace Xgp\App\Http\Controllers\Adm;
 
-use App\Core\BaseController;
-use App\Libraries\Adm\AdministrationLib as Administration;
-use App\Libraries\FormatLib as Format;
-use App\Libraries\Functions;
-use App\Models\Adm\Home;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Libraries\FormatLib as Format;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Models\Adm\Home;
 use JsonException;
 
 class HomeController extends BaseController

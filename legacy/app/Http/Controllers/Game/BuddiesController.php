@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Entity\BuddyEntity;
-use App\Core\Enumerators\BuddiesStatusEnumerator as BuddiesStatus;
-use App\Libraries\Buddies\Buddy;
-use App\Libraries\Functions;
-use App\Libraries\TimingLibrary as Timing;
-use App\Libraries\Users;
-use App\Models\Game\Buddies;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Entity\BuddyEntity;
+use Xgp\App\Core\Enumerators\BuddiesStatusEnumerator as BuddiesStatus;
+use Xgp\App\Libraries\Buddies\Buddy;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Buddies;
 use Exception;
 
 class BuddiesController extends BaseController

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
 
 class Missile extends Missions
 {

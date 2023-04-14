@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
-use App\Libraries\FleetsLib;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
 
 class Recycle extends Missions
 {

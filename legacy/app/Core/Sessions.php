@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Core;
+namespace Xgp\App\Core;
 
-use App\Models\Core\Sessions as SessionsModel;
+use Xgp\App\Models\Core\Sessions as SessionsModel;
 
 class Sessions
 {

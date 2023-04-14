@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Libraries\Buildings;
+namespace Xgp\App\Libraries\Buildings;
 
-use App\Libraries\Buildings\Queue;
-use App\Libraries\Buildings\QueueElements;
-use App\Libraries\DevelopmentsLib;
-use App\Libraries\OfficiersLib;
+use Xgp\App\Libraries\Buildings\Queue;
+use Xgp\App\Libraries\Buildings\QueueElements;
+use Xgp\App\Libraries\DevelopmentsLib;
+use Xgp\App\Libraries\OfficiersLib;
 
 class Building
 {

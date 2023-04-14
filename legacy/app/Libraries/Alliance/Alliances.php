@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Libraries\Alliance;
+namespace Xgp\App\Libraries\Alliance;
 
-use App\Core\Entity\AllianceEntity;
-use App\Core\Enumerators\SwitchIntEnumerator;
-use App\Libraries\Alliance\Ranks;
+use Xgp\App\Core\Entity\AllianceEntity;
+use Xgp\App\Core\Enumerators\SwitchIntEnumerator;
+use Xgp\App\Libraries\Alliance\Ranks;
 
 class Alliances
 {

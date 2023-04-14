@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries\Research;
+namespace Xgp\App\Libraries\Research;
 
-use App\Core\Entity\ResearchEntity;
+use Xgp\App\Core\Entity\ResearchEntity;
 
 class Researches
 {

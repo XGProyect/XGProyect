@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Helpers\UrlHelper;
-use App\Libraries\Functions;
-use App\Libraries\TimingLibrary as Timing;
-use App\Libraries\Users;
-use App\Models\Game\Banned;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Banned;
 
 class BannedController extends BaseController
 {

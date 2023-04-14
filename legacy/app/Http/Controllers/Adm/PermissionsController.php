@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Adm;
+namespace Xgp\App\Http\Controllers\Adm;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use App\Libraries\Adm\AdministrationLib as Administration;
-use App\Libraries\Adm\Permissions;
-use App\Libraries\Functions;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Libraries\Adm\Permissions;
+use Xgp\App\Libraries\Functions;
 
 class PermissionsController extends BaseController
 {

@@ -1,6 +1,6 @@
 <?php
 
-use App\Core\Common;
+use Xgp\App\Core\Common;
 
 define('IN_LOGIN', true);
 define('XGP_ROOT', base_path('legacy') . DIRECTORY_SEPARATOR);
@@ -16,7 +16,7 @@ if (isset($_GET['content'])) {
     if (file_exists($file_name)) {
         include $file_name;
 
-        $class_name = 'App\Http\Controllers\Ajax\\' . ucfirst($_GET['content']) . 'Controller';
+        $class_name = 'Xgp\App\Http\Controllers\Ajax\\' . ucfirst($_GET['content']) . 'Controller';
 
         (new $class_name())->index();
     }

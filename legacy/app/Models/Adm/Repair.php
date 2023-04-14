@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Adm;
+namespace Xgp\App\Models\Adm;
 
-use App\Core\Model;
+use Xgp\App\Core\Model;
 
 class Repair extends Model
 {

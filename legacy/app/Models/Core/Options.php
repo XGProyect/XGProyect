@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Core;
+namespace Xgp\App\Models\Core;
 
-use App\Core\Model;
+use Xgp\App\Core\Model;
 
 class Options extends Model
 {

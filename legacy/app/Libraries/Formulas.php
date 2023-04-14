@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Enumerators\BuildingsEnumerator as Buildings;
-use App\Libraries\Functions;
+use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
+use Xgp\App\Libraries\Functions;
 
 abstract class Formulas
 {

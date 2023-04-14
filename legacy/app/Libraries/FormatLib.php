@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Enumerators\ImportanceEnumerator as Importance;
-use App\Helpers\UrlHelper;
+use Xgp\App\Core\Enumerators\ImportanceEnumerator as Importance;
+use Xgp\App\Helpers\UrlHelper;
 use DateTime;
 
 class FormatLib

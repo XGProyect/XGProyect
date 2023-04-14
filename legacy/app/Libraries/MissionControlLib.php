@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Models\Libraries\MissionControlLib as MissionControlLibModel;
+use Xgp\App\Models\Libraries\MissionControlLib as MissionControlLibModel;
 
 class MissionControlLib
 {
@@ -70,7 +70,7 @@ class MissionControlLib
         foreach ($all_fleets as $fleet) {
             $name = $missions[$fleet['fleet_mission']];
             $mission_name = $name . 'Mission';
-            $class_name = '\App\Libraries\Missions\\' . $name;
+            $class_name = '\Xgp\App\Libraries\Missions\\' . $name;
 
             $mission = new $class_name();
             $mission->$mission_name($fleet);

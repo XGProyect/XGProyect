@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Core;
+namespace Xgp\App\Core;
 
-use App\Libraries\DebugLib as Debug;
+use Xgp\App\Libraries\DebugLib as Debug;
 
 final class ErrorHandler
 {

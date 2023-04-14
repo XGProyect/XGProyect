@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Core;
+namespace Xgp\App\Core;
 
 use CiParser;
-use eftec\bladeone\BladeOne;
 use Exception;
+use Illuminate\Support\Facades\View;
 
 class Template
 {
@@ -15,22 +15,15 @@ class Template
      */
     private $ciParser = null;
 
-    /**
-     *
-     * @var Blade
-     */
-    private $bladeParser = null;
-
     public function __construct()
     {
         $this->createNewParser();
-        $this->createNewBladeParser();
     }
 
     public function get(string $template_name): ?string
     {
         try {
-            $route = XGP_ROOT . VIEWS_DIR . strtr($template_name, ['/' => DIRECTORY_SEPARATOR, '.' => DIRECTORY_SEPARATOR]) . '.php';
+            $route = VIEWS_DIR . strtr($template_name, ['/' => DIRECTORY_SEPARATOR, '.' => DIRECTORY_SEPARATOR]) . '.php';
             $template = @file_get_contents($route);
 
             if ($template) { // We got something
@@ -47,7 +40,7 @@ class Template
 
     public function set(string $template = '', array $data = [], bool $return = false): string
     {
-        $route = XGP_ROOT . VIEWS_DIR . strtr($template, ['/' => DIRECTORY_SEPARATOR, '.' => DIRECTORY_SEPARATOR]) . '.blade.php';
+        $route = VIEWS_DIR . strtr($template, ['/' => DIRECTORY_SEPARATOR, '.' => DIRECTORY_SEPARATOR]) . '.blade.php';
 
         if (file_exists($route)) {
             return $this->setBlade($template, $data);
@@ -58,10 +51,7 @@ class Template
 
     private function setBlade(string $template = '', array $data = []): string
     {
-        return $this->bladeParser
-            ->setView(strtr($template, ['/' => '.']))
-            ->share($data)
-            ->run();
+        return View::make(strtr($template, ['/' => '.']), $data)->render();
     }
 
     private function createNewParser(): void
@@ -75,27 +65,12 @@ class Template
 
         // required by the library
         if (!defined('BASEPATH')) {
-            define('BASEPATH', XGP_ROOT . RESOURCES_PATH);
+            define('BASEPATH', RESOURCES_PATH);
         }
 
         // use CI library
         require_once $parser_library_path;
 
         $this->ciParser = new CiParser();
-    }
-
-    private function createNewBladeParser(): void
-    {
-        // require email library
-        $bladePath = XGP_ROOT . VENDOR_PATH . 'eftec' . DIRECTORY_SEPARATOR . 'bladeone' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'BladeOne.php';
-
-        if (!file_exists($bladePath)) {
-            return;
-        }
-
-        // use CI library
-        require_once $bladePath;
-
-        $this->bladeParser = new BladeOne(XGP_ROOT . VIEWS_DIR);
     }
 }

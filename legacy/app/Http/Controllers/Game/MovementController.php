@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Entity\FleetEntity;
-use App\Core\Enumerators\MissionsEnumerator as Missions;
-use App\Helpers\UrlHelper;
-use App\Libraries\FleetsLib;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\Game\Fleets;
-use App\Libraries\Premium\Premium;
-use App\Libraries\Research\Researches;
-use App\Libraries\TimingLibrary as Timing;
-use App\Libraries\Users;
-use App\Models\Game\Fleet;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Entity\FleetEntity;
+use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Game\Fleets;
+use Xgp\App\Libraries\Premium\Premium;
+use Xgp\App\Libraries\Research\Researches;
+use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Fleet;
 
 class MovementController extends BaseController
 {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Libraries\Game;
+namespace Xgp\App\Libraries\Game;
 
-use App\Core\Entity\BuildingsEntity;
-use App\Core\Entity\PlanetEntity;
-use App\Core\Entity\PremiumEntity;
-use App\Core\Entity\UserEntity;
-use App\Libraries\ProductionLib as Production;
+use Xgp\App\Core\Entity\BuildingsEntity;
+use Xgp\App\Core\Entity\PlanetEntity;
+use Xgp\App\Core\Entity\PremiumEntity;
+use Xgp\App\Core\Entity\UserEntity;
+use Xgp\App\Libraries\ProductionLib as Production;
 
 class ResourceMarket
 {

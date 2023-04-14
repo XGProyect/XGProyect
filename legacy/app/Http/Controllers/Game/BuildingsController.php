@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\BuildingsEnumerator;
-use App\Helpers\UrlHelper;
-use App\Libraries\Buildings\Building;
-use App\Libraries\DevelopmentsLib as Developments;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\OfficiersLib;
-use App\Libraries\TimingLibrary as Timing;
-use App\Libraries\UpdatesLibrary;
-use App\Libraries\Users;
-use App\Models\Game\Buildings;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\BuildingsEnumerator;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\Buildings\Building;
+use Xgp\App\Libraries\DevelopmentsLib as Developments;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\OfficiersLib;
+use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Libraries\UpdatesLibrary;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Buildings;
 use Exception;
 
 class BuildingsController extends BaseController

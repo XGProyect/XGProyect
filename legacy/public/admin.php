@@ -1,8 +1,8 @@
 <?php
 
-use App\Core\common;
-use App\Libraries\Adm\AdministrationLib;
-use App\Libraries\Functions;
+use Xgp\App\Core\common;
+use Xgp\App\Libraries\Adm\AdministrationLib;
+use Xgp\App\Libraries\Functions;
 
 define('IN_ADMIN', true);
 define('XGP_ROOT', base_path('legacy') . DIRECTORY_SEPARATOR);
@@ -32,7 +32,7 @@ if ($page == 'logout') {
 if (file_exists($file_name)) {
     include $file_name;
 
-    $class_name = 'App\Http\Controllers\Adm\\' . ucfirst($page) . 'Controller';
+    $class_name = 'Xgp\App\Http\Controllers\Adm\\' . ucfirst($page) . 'Controller';
 
     (new $class_name())->index();
 } else {

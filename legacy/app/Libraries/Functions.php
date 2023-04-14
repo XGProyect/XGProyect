@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Database;
-use App\Core\Enumerators\MessagesEnumerator;
-use App\Core\Language;
-use App\Core\Options;
-use App\Core\Template;
-use App\Helpers\StringsHelper;
-use App\Libraries\Messenger\MessagesFormat;
-use App\Libraries\Messenger\MessagesOptions;
-use App\Libraries\Messenger\Messenger;
-use App\Libraries\Page;
-use App\Libraries\Users;
+use Xgp\App\Core\Database;
+use Xgp\App\Core\Enumerators\MessagesEnumerator;
+use Xgp\App\Core\Language;
+use Xgp\App\Core\Options;
+use Xgp\App\Core\Template;
+use Xgp\App\Helpers\StringsHelper;
+use Xgp\App\Libraries\Messenger\MessagesFormat;
+use Xgp\App\Libraries\Messenger\MessagesOptions;
+use Xgp\App\Libraries\Messenger\Messenger;
+use Xgp\App\Libraries\Page;
+use Xgp\App\Libraries\Users;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -41,7 +41,7 @@ abstract class Functions
             // Require file
             require_once XGP_ROOT . LIB_PATH . $library . '.php';
 
-            $class_name = 'App\Libraries\\' . $library;
+            $class_name = 'Xgp\App\Libraries\\' . $library;
 
             // Create new $library object
             return new $class_name();

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Adm;
+namespace Xgp\App\Models\Adm;
 
-use App\Core\Model;
-use App\Libraries\Functions;
-use App\Libraries\PlanetLib;
+use Xgp\App\Core\Model;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\PlanetLib;
 
 class Maker extends Model
 {

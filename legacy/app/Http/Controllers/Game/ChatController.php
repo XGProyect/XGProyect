@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\Users;
-use App\Models\Game\Messages;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Messages;
 
 class ChatController extends BaseController
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries\Combatreport;
+namespace Xgp\App\Libraries\Combatreport;
 
-use App\Core\Entity\ReportEntity;
-use App\Libraries\enumerators\ReportStatusEnumerator as ReportStatus;
+use Xgp\App\Core\Entity\ReportEntity;
+use Xgp\App\Libraries\enumerators\ReportStatusEnumerator as ReportStatus;
 
 class Report
 {

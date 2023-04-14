@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\MissionsEnumerator as Missions;
-use App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
-use App\Core\Enumerators\ShipsEnumerator as Ships;
-use App\Libraries\FleetsLib;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\Research\Researches;
-use App\Libraries\Users;
-use App\Models\Game\Fleet;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
+use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
+use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Research\Researches;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Fleet;
 
 class Fleet3Controller extends BaseController
 {

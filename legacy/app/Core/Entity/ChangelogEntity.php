@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Entity;
+namespace Xgp\App\Core\Entity;
 
-use App\Core\Entity;
+use Xgp\App\Core\Entity;
 
 class ChangelogEntity extends Entity
 {

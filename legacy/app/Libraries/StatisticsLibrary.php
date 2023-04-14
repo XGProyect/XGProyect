@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Objects;
-use App\Libraries\Functions;
-use App\Models\Libraries\StatisticsLibrary as StatisticsLib;
+use Xgp\App\Core\Objects;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Models\Libraries\StatisticsLibrary as StatisticsLib;
 
 class StatisticsLibrary
 {

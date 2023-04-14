@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Home;
+namespace Xgp\App\Models\Home;
 
-use App\Core\Model;
-use App\Libraries\Functions;
-use App\Libraries\PlanetLib;
-use App\Libraries\Users;
+use Xgp\App\Core\Model;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\PlanetLib;
+use Xgp\App\Libraries\Users;
 
 class Register extends Model
 {

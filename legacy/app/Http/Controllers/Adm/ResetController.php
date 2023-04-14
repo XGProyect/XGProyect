@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Adm;
+namespace Xgp\App\Http\Controllers\Adm;
 
-use App\Core\BaseController;
-use App\Libraries\Adm\AdministrationLib as Administration;
-use App\Models\Adm\Reset;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Models\Adm\Reset;
 
 class ResetController extends BaseController
 {

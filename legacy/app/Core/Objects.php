@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace Xgp\App\Core;
 
 class Objects
 {

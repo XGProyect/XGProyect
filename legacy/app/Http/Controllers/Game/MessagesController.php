@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\MessagesEnumerator;
-use App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
-use App\Helpers\ArraysHelper;
-use App\Helpers\UrlHelper;
-use App\Libraries\Functions;
-use App\Libraries\OfficiersLib;
-use App\Libraries\Users;
-use App\Models\Game\Messages;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\MessagesEnumerator;
+use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Helpers\ArraysHelper;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\OfficiersLib;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Messages;
 
 class MessagesController extends BaseController
 {

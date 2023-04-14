@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries\Premium;
+namespace Xgp\App\Libraries\Premium;
 
-use App\Core\Entity\PremiumEntity;
+use Xgp\App\Core\Entity\PremiumEntity;
 
 class Premium
 {

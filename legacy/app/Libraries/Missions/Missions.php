@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
-use App\Core\Objects;
-use App\Libraries\FleetsLib;
-use App\Libraries\UpdatesLibrary;
-use App\Models\Libraries\Missions\Missions as MissionsModel;
+use Xgp\App\Core\Objects;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\UpdatesLibrary;
+use Xgp\App\Models\Libraries\Missions\Missions as MissionsModel;
 
 class Missions
 {

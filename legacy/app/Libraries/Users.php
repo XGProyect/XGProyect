@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
-use App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
-use App\Libraries\Alliance\Ranks;
-use App\Libraries\Functions;
-use App\Models\Libraries\UsersLibrary;
+use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
+use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Libraries\Alliance\Ranks;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Models\Libraries\UsersLibrary;
 
 class Users
 {

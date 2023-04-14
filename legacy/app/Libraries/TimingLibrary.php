@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Language;
-use App\Libraries\Functions;
+use Xgp\App\Core\Language;
+use Xgp\App\Libraries\Functions;
 
 abstract class TimingLibrary
 {

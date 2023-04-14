@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Libraries\Missions;
+namespace Xgp\App\Models\Libraries\Missions;
 
-use App\Core\Model;
-use App\Libraries\FleetsLib;
-use App\Libraries\StatisticsLibrary;
+use Xgp\App\Core\Model;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\StatisticsLibrary;
 
 class Missions extends Model
 {

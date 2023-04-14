@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\Messenger;
+namespace Xgp\App\Libraries\Messenger;
 
 abstract class MessagesFormat
 {

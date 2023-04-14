@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Libraries\Functions;
-use App\Libraries\Users;
-use App\Libraries\Users\Shortcuts;
-use App\Models\Game\Shortcuts as ShortcutsModel;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Libraries\Users\Shortcuts;
+use Xgp\App\Models\Game\Shortcuts as ShortcutsModel;
 
 class FleetshortcutsController extends BaseController
 {

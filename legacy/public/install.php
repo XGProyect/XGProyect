@@ -1,6 +1,6 @@
 <?php
 
-use App\Core\Common;
+use Xgp\App\Core\Common;
 
 define('IN_INSTALL', true);
 define('XGP_ROOT', base_path('legacy') . DIRECTORY_SEPARATOR);
@@ -16,7 +16,7 @@ $file_name = XGP_ROOT . INSTALL_PATH . ucfirst($page) . 'Controller.php';
 if (file_exists($file_name)) {
     include $file_name;
 
-    $class_name = 'App\Http\Controllers\Install\\' . ucfirst($page) . 'Controller';
+    $class_name = 'Xgp\App\Http\Controllers\Install\\' . ucfirst($page) . 'Controller';
 
     (new $class_name())->index();
 }

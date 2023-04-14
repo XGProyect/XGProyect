@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace Xgp\App\Core;
 
 use CiLang;
 use Exception;
@@ -28,7 +28,7 @@ class Language
 
             // required by the library
             if (!defined('BASEPATH')) {
-                define('BASEPATH', XGP_ROOT . RESOURCES_PATH);
+                define('BASEPATH', RESOURCES_PATH);
             }
 
             // use CI library

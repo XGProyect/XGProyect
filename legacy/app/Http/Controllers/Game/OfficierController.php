@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\OfficiersEnumerator as OE;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\OfficiersLib;
-use App\Libraries\Users;
-use App\Models\Game\Officier;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\OfficiersEnumerator as OE;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\OfficiersLib;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Officier;
 
 class OfficierController extends BaseController
 {

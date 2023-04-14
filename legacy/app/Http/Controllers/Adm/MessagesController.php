@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Adm;
+namespace Xgp\App\Http\Controllers\Adm;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\MessagesEnumerator;
-use App\Libraries\Adm\AdministrationLib as Administration;
-use App\Libraries\TimingLibrary as Timing;
-use App\Models\Adm\Messages;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\MessagesEnumerator;
+use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Models\Adm\Messages;
 
 class MessagesController extends BaseController
 {

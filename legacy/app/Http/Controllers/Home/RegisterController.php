@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Home;
+namespace Xgp\App\Http\Controllers\Home;
 
-use App\Core\BaseController;
-use App\Libraries\Functions;
-use App\Models\Home\Register;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Models\Home\Register;
 
 class RegisterController extends BaseController
 {

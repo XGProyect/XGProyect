@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Home;
+namespace Xgp\App\Http\Controllers\Home;
 
-use App\Core\BaseController;
-use App\Libraries\Functions;
-use App\Models\Home\Home;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Models\Home\Home;
 
 class HomeController extends BaseController
 {

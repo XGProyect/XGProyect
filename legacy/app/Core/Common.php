@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Core;
+namespace Xgp\App\Core;
 
-use App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
-use App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use App\Core\ErrorHandler;
-use App\Core\Language;
-use App\Core\Sessions;
-use App\Helpers\StringsHelper;
-use App\Libraries\Functions;
-use App\Libraries\SecurePageLib;
-use App\Libraries\TimingLibrary as Timing;
-use App\Libraries\UpdatesLibrary;
-use App\Libraries\Users;
+use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Core\ErrorHandler;
+use Xgp\App\Core\Language;
+use Xgp\App\Core\Sessions;
+use Xgp\App\Helpers\StringsHelper;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\SecurePageLib;
+use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Libraries\UpdatesLibrary;
+use Xgp\App\Libraries\Users;
 use Exception;
 
 // Require some stuff

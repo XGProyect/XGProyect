@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Entity;
+namespace Xgp\App\Core\Entity;
 
 use Exception;
 

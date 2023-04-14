@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries\Buddies;
+namespace Xgp\App\Libraries\Buddies;
 
-use App\Core\Entity\BuddyEntity;
-use App\Core\Enumerators\BuddiesStatusEnumerator as BuddiesStatus;
+use Xgp\App\Core\Entity\BuddyEntity;
+use Xgp\App\Core\Enumerators\BuddiesStatusEnumerator as BuddiesStatus;
 
 class Buddy
 {

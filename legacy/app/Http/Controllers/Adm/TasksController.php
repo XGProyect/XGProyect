@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Adm;
+namespace Xgp\App\Http\Controllers\Adm;
 
-use App\Core\BaseController;
-use App\Helpers\UrlHelper;
-use App\Libraries\Adm\AdministrationLib as Administration;
-use App\Libraries\FormatLib as Format;
-use App\Libraries\Functions;
-use App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Libraries\FormatLib as Format;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class TasksController extends BaseController
 {

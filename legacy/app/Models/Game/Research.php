@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Game;
+namespace Xgp\App\Models\Game;
 
-use App\Core\Model;
+use Xgp\App\Core\Model;
 
 class Research extends Model
 {

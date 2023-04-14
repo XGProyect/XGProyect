@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\PlanetTypesEnumerator;
-use App\Helpers\UrlHelper;
-use App\Libraries\DevelopmentsLib;
-use App\Libraries\FleetsLib;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\NoobsProtectionLib;
-use App\Libraries\TimingLibrary as Timing;
-use App\Libraries\UpdatesLibrary;
-use App\Libraries\Users;
-use App\Models\Game\Overview;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\DevelopmentsLib;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\NoobsProtectionLib;
+use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Libraries\UpdatesLibrary;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Overview;
 
 class OverviewController extends BaseController
 {

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Adm;
+namespace Xgp\App\Http\Controllers\Adm;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\MessagesEnumerator;
-use App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use App\Libraries\Adm\AdministrationLib as Administration;
-use App\Libraries\FormatLib as Format;
-use App\Libraries\Functions;
-use App\Models\Adm\Announcement;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\MessagesEnumerator;
+use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Libraries\FormatLib as Format;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Models\Adm\Announcement;
 
 class AnnouncementController extends BaseController
 {

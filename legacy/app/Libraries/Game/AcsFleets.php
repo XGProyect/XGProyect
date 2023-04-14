@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries\Game;
+namespace Xgp\App\Libraries\Game;
 
-use App\Core\Entity\AcsFleetEntity;
+use Xgp\App\Core\Entity\AcsFleetEntity;
 
 class AcsFleets
 {

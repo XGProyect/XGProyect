@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Core;
+namespace Xgp\App\Core;
 
-use App\Models\Core\Options as OptionsModel;
+use Xgp\App\Models\Core\Options as OptionsModel;
 
 class Options
 {

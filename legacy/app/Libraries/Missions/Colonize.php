@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
-use App\Libraries\FleetsLib;
-use App\Libraries\Functions;
-use App\Libraries\PlanetLib;
-use App\Libraries\StatisticsLibrary;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\PlanetLib;
+use Xgp\App\Libraries\StatisticsLibrary;
 
 class Colonize extends Missions
 {

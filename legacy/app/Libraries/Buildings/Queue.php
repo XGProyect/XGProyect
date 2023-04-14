@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries\Buildings;
+namespace Xgp\App\Libraries\Buildings;
 
-use App\Libraries\Buildings\QueueElements;
+use Xgp\App\Libraries\Buildings\QueueElements;
 
 final class Queue
 {

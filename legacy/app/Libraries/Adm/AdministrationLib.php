@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Libraries\Adm;
+namespace Xgp\App\Libraries\Adm;
 
-use App\Core\Language;
-use App\Core\Template;
-use App\Libraries\Adm\Permissions;
-use App\Libraries\Functions;
-use App\Libraries\Page;
-use App\Libraries\Users;
+use Xgp\App\Core\Language;
+use Xgp\App\Core\Template;
+use Xgp\App\Libraries\Adm\Permissions;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
+use Xgp\App\Libraries\Users;
 
 class AdministrationLib
 {

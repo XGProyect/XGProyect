@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Libraries\Functions;
-use App\Libraries\TimingLibrary as Timing;
-use App\Libraries\Users;
-use App\Models\Game\Changelog;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Changelog;
 
 class ChangelogController extends BaseController
 {

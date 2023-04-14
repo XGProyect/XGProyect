@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Ajax;
+namespace Xgp\App\Http\Controllers\Ajax;
 
-use App\Core\BaseController;
+use Xgp\App\Core\BaseController;
 
 class MediaController extends BaseController
 {

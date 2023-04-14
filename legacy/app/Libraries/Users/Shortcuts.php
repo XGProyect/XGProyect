@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries\Users;
+namespace Xgp\App\Libraries\Users;
 
-use App\Helpers\StringsHelper;
+use Xgp\App\Helpers\StringsHelper;
 use Exception;
 use JsonException;
 

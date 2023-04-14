@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries\Planet;
+namespace Xgp\App\Libraries\Planet;
 
-use App\Core\Entity\ShipsEntity;
+use Xgp\App\Core\Entity\ShipsEntity;
 
 class Ships
 {

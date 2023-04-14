@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries\Game;
+namespace Xgp\App\Libraries\Game;
 
-use App\Core\Entity\FleetEntity;
-use App\Core\Enumerators\MissionsEnumerator as Missions;
+use Xgp\App\Core\Entity\FleetEntity;
+use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 
 class Fleets
 {

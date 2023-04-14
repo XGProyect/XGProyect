@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Enumerators\BuildingsEnumerator as Buildings;
-use App\Core\Enumerators\PlanetTypesEnumerator;
-use App\Core\Language;
-use App\Core\Objects;
-use App\Helpers\UrlHelper;
-use App\Libraries\DevelopmentsLib as Developments;
-use App\Libraries\FormatLib as Format;
-use App\Libraries\Formulas;
-use App\Libraries\Functions;
-use App\Libraries\MissionControlLib;
-use App\Libraries\OfficiersLib as Officiers;
-use App\Libraries\ProductionLib as Production;
-use App\Libraries\StatisticsLibrary;
-use App\Libraries\Users;
-use App\Models\Libraries\UpdatesLibrary as UpdatesLibraryModel;
+use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
+use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Core\Language;
+use Xgp\App\Core\Objects;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\DevelopmentsLib as Developments;
+use Xgp\App\Libraries\FormatLib as Format;
+use Xgp\App\Libraries\Formulas;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\MissionControlLib;
+use Xgp\App\Libraries\OfficiersLib as Officiers;
+use Xgp\App\Libraries\ProductionLib as Production;
+use Xgp\App\Libraries\StatisticsLibrary;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Libraries\UpdatesLibrary as UpdatesLibraryModel;
 
 class UpdatesLibrary
 {

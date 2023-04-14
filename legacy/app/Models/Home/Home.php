@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Home;
+namespace Xgp\App\Models\Home;
 
-use App\Core\Model;
+use Xgp\App\Core\Model;
 
 class Home extends Model
 {

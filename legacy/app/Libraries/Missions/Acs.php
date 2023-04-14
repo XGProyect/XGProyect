@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
 class Acs extends Missions
 {

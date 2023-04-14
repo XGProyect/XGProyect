@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Install;
+namespace Xgp\App\Models\Install;
 
-use App\Core\Database;
-use App\Core\Model;
+use Xgp\App\Core\Database;
+use Xgp\App\Core\Model;
 
 class Installation extends Model
 {

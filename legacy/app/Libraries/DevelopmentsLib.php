@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Enumerators\BuildingsEnumerator as Buildings;
-use App\Core\Enumerators\ResearchEnumerator as Research;
-use App\Core\Objects;
-use App\Core\Template;
-use App\Libraries\FormatLib;
-use App\Libraries\Formulas;
-use App\Libraries\OfficiersLib;
+use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
+use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
+use Xgp\App\Core\Objects;
+use Xgp\App\Core\Template;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Formulas;
+use Xgp\App\Libraries\OfficiersLib;
 
 class DevelopmentsLib
 {

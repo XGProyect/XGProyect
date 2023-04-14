@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries\Messenger;
+namespace Xgp\App\Libraries\Messenger;
 
-use App\Core\Enumerators\MessagesEnumerator;
-use App\Helpers\StringsHelper;
+use Xgp\App\Core\Enumerators\MessagesEnumerator;
+use Xgp\App\Helpers\StringsHelper;
 
 final class MessagesOptions
 {

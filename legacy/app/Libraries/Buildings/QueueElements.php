@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\Buildings;
+namespace Xgp\App\Libraries\Buildings;
 
 final class QueueElements
 {

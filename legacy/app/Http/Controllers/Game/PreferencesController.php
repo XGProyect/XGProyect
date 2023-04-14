@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\PreferencesEnumerator as PrefEnum;
-use App\Libraries\FormatLib as Format;
-use App\Libraries\Functions;
-use App\Libraries\Game\Preferences as Pref;
-use App\Libraries\TimingLibrary as Timing;
-use App\Libraries\Users;
-use App\Models\Game\Preferences;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\PreferencesEnumerator as PrefEnum;
+use Xgp\App\Libraries\FormatLib as Format;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Game\Preferences as Pref;
+use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Preferences;
 
 class PreferencesController extends BaseController
 {

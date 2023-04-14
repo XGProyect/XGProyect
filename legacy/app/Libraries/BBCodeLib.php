@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Helpers\UrlHelper;
+use Xgp\App\Helpers\UrlHelper;
 
 class BBCodeLib
 {

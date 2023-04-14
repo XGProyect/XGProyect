@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Libraries\enumerators;
+namespace Xgp\App\Libraries\enumerators;
 
 abstract class ReportStatusEnumerator
 {

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
-use App\Helpers\UrlHelper;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\NoobsProtectionLib;
-use App\Libraries\Users;
-use App\Models\Game\Search;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\NoobsProtectionLib;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Search;
 
 class SearchController extends BaseController
 {

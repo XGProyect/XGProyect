@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Game;
+namespace Xgp\App\Models\Game;
 
-use App\Core\Entity\FleetEntity;
-use App\Core\Enumerators\MissionsEnumerator as Missions;
-use App\Core\Model;
+use Xgp\App\Core\Entity\FleetEntity;
+use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
+use Xgp\App\Core\Model;
 
 class Fleet extends Model
 {

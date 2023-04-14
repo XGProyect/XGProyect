@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Core;
+namespace Xgp\App\Core;
 
-use App\Core\Objects;
-use App\Core\Template;
-use App\Libraries\Page;
-use App\Libraries\Users;
 use CiLang;
 use Exception;
+use Xgp\App\Core\Objects;
+use Xgp\App\Core\Template;
+use Xgp\App\Libraries\Page;
+use Xgp\App\Libraries\Users;
 
 abstract class BaseController
 {
@@ -49,7 +49,7 @@ abstract class BaseController
 
             // required by the library
             if (!defined('BASEPATH')) {
-                define('BASEPATH', XGP_ROOT . RESOURCES_PATH);
+                define('BASEPATH', RESOURCES_PATH);
             }
 
             // use CI library

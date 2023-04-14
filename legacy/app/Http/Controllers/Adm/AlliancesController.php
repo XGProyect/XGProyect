@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Adm;
+namespace Xgp\App\Http\Controllers\Adm;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
-use App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
-use App\Libraries\Adm\AdministrationLib as Administration;
-use App\Libraries\Alliance\Ranks;
-use App\Libraries\Functions;
-use App\Models\Adm\Alliances;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
+use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Libraries\Alliance\Ranks;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Models\Adm\Alliances;
 
 class AlliancesController extends BaseController
 {

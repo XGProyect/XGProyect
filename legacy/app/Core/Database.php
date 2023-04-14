@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Core;
+namespace Xgp\App\Core;
 
-use App\Libraries\DebugLib;
+use Xgp\App\Libraries\DebugLib;
 use Exception;
 use mysqli;
 

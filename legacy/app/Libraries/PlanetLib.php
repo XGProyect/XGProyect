@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Enumerators\PlanetTypesEnumerator;
-use App\Core\Language;
-use App\Libraries\Formulas;
-use App\Libraries\Functions;
-use App\Models\Libraries\PlanetLib as PlanetLibModel;
+use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Core\Language;
+use Xgp\App\Libraries\Formulas;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Models\Libraries\PlanetLib as PlanetLibModel;
 use CiLang;
 
 class PlanetLib

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Libraries\Messenger;
+namespace Xgp\App\Models\Libraries\Messenger;
 
-use App\Core\Model;
-use App\Libraries\Messenger\MessagesOptions;
+use Xgp\App\Core\Model;
+use Xgp\App\Libraries\Messenger\MessagesOptions;
 
 class Messenger extends Model
 {

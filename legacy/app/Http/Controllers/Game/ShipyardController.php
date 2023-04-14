@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\DefensesEnumerator as Defenses;
-use App\Core\Enumerators\ShipsEnumerator as Ships;
-use App\Libraries\DevelopmentsLib;
-use App\Libraries\FormatLib;
-use App\Libraries\Formulas;
-use App\Libraries\Functions;
-use App\Libraries\Users;
-use App\Models\Game\Shipyard;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
+use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
+use Xgp\App\Libraries\DevelopmentsLib;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Formulas;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Shipyard;
 use Exception;
 
 class ShipyardController extends BaseController

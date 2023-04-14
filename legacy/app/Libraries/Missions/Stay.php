@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
-use App\Libraries\FleetsLib;
-use App\Libraries\Functions;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\Functions;
 
 class Stay extends Missions
 {

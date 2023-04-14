@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Libraries\Game;
+namespace Xgp\App\Libraries\Game;
 
-use App\Core\Entity\PreferencesEntity;
+use Xgp\App\Core\Entity\PreferencesEntity;
 
 class Preferences
 {

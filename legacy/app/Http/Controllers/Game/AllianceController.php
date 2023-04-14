@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
-use App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
-use App\Helpers\StringsHelper;
-use App\Helpers\UrlHelper;
-use App\Libraries\Alliance\Alliances;
-use App\Libraries\BBCodeLib;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\TimingLibrary as Timing;
-use App\Libraries\Users;
-use App\Models\Game\Alliance;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
+use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Helpers\StringsHelper;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\Alliance\Alliances;
+use Xgp\App\Libraries\BBCodeLib;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Alliance;
 
 class AllianceController extends BaseController
 {

@@ -1,7 +1,7 @@
 <?php
 
-use App\Core\Common;
-use App\Libraries\Functions;
+use Xgp\App\Core\Common;
+use Xgp\App\Libraries\Functions;
 
 define('XGP_ROOT', base_path('legacy') . DIRECTORY_SEPARATOR);
 
@@ -43,7 +43,7 @@ if (isset($page)) {
     if (file_exists($file_name)) {
         include $file_name;
 
-        $class_name = 'App\Http\Controllers\Game\\' . ucfirst($page) . 'Controller';
+        $class_name = 'Xgp\App\Http\Controllers\Game\\' . ucfirst($page) . 'Controller';
 
         (new $class_name())->index();
     }

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Adm;
+namespace Xgp\App\Models\Adm;
 
-use App\Core\Entity\ChangelogEntity;
-use App\Core\Model;
+use Xgp\App\Core\Entity\ChangelogEntity;
+use Xgp\App\Core\Model;
 
 class Changelog extends Model
 {

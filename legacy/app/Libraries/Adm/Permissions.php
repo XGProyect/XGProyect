@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Libraries\Adm;
+namespace Xgp\App\Libraries\Adm;
 
-use App\Core\Enumerators\AdminPagesEnumerator as AdminPages;
-use App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use App\Helpers\ArraysHelper;
-use App\Libraries\Functions;
+use Xgp\App\Core\Enumerators\AdminPagesEnumerator as AdminPages;
+use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Helpers\ArraysHelper;
+use Xgp\App\Libraries\Functions;
 use Exception;
 use JsonException;
 

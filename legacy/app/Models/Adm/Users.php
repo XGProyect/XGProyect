@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Adm;
+namespace Xgp\App\Models\Adm;
 
-use App\Core\Model;
-use App\Libraries\Functions;
+use Xgp\App\Core\Model;
+use Xgp\App\Libraries\Functions;
 
 class Users extends Model
 {

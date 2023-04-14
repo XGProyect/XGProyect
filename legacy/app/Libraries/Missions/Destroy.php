@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
-use App\Core\Enumerators\ShipsEnumerator as Ships;
-use App\Helpers\UrlHelper;
-use App\Libraries\Combatreport\Report;
-use App\Libraries\FleetsLib;
-use App\Libraries\FormatLib;
-use App\Libraries\Formulas;
-use App\Libraries\Functions;
-use App\Libraries\Missions\Attack_lang;
-use App\Libraries\Missions\Missions;
-use App\Libraries\UpdatesLibrary;
+use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\Combatreport\Report;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Formulas;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Missions\Attack_lang;
+use Xgp\App\Libraries\Missions\Missions;
+use Xgp\App\Libraries\UpdatesLibrary;
 use Battle;
 use DebugManager;
 use Defense;

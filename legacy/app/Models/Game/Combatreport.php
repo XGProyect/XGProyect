@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Game;
+namespace Xgp\App\Models\Game;
 
-use App\Core\Model;
+use Xgp\App\Core\Model;
 
 class Combatreport extends Model
 {

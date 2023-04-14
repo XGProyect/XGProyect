@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Enumerators\DefensesEnumerator as Defenses;
-use App\Core\Enumerators\MissionsEnumerator as Missions;
-use App\Core\Language;
-use App\Core\Objects;
-use App\Core\Template;
-use App\Helpers\UrlHelper;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\OfficiersLib;
-use App\Libraries\Page;
-use App\Libraries\TimingLibrary as Timing;
-use App\Libraries\Users;
+use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
+use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
+use Xgp\App\Core\Language;
+use Xgp\App\Core\Objects;
+use Xgp\App\Core\Template;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\OfficiersLib;
+use Xgp\App\Libraries\Page;
+use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Libraries\Users;
 use CiLang;
 
 class FleetsLib

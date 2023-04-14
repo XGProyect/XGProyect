@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
-use App\Core\Enumerators\MissionsEnumerator;
-use App\Helpers\StringsHelper;
-use App\Libraries\FleetsLib;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\Missions\Missions;
-use App\Libraries\OfficiersLib;
+use Xgp\App\Core\Enumerators\MissionsEnumerator;
+use Xgp\App\Helpers\StringsHelper;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Missions\Missions;
+use Xgp\App\Libraries\OfficiersLib;
 
 class Spy extends Missions
 {

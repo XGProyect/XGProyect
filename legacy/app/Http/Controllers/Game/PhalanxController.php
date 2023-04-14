@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\PlanetTypesEnumerator;
-use App\Libraries\FleetsLib;
-use App\Libraries\Formulas;
-use App\Libraries\Functions;
-use App\Libraries\Users;
-use App\Models\Game\Phalanx;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\Formulas;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Phalanx;
 
 class PhalanxController extends BaseController
 {

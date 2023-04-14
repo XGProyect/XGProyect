@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Libraries;
+namespace Xgp\App\Models\Libraries;
 
-use App\Core\Model;
+use Xgp\App\Core\Model;
 
 class MissionControlLib extends Model
 {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
-use App\Helpers\StringsHelper;
-use App\Libraries\FleetsLib as Fleets;
-use App\Libraries\FormatLib as Format;
-use App\Libraries\Functions;
-use App\Libraries\Missions\Missions;
+use Xgp\App\Helpers\StringsHelper;
+use Xgp\App\Libraries\FleetsLib as Fleets;
+use Xgp\App\Libraries\FormatLib as Format;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Missions\Missions;
 
 class Deploy extends Missions
 {

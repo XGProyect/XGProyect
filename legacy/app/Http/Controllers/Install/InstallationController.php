@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Install;
+namespace Xgp\App\Http\Controllers\Install;
 
-use App\Core\BaseController;
-use App\Helpers\StringsHelper;
-use App\Libraries\Functions;
-use App\Libraries\PlanetLib;
-use App\Models\Install\Installation;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Helpers\StringsHelper;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\PlanetLib;
+use Xgp\App\Models\Install\Installation;
 use Illuminate\Support\Facades\Artisan;
 
 class InstallationController extends BaseController

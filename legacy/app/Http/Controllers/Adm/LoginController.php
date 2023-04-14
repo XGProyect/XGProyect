@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Adm;
+namespace Xgp\App\Http\Controllers\Adm;
 
-use App\Core\BaseController;
-use App\Libraries\Adm\AdministrationLib as Administration;
-use App\Libraries\Functions;
-use App\Models\Adm\Login;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Models\Adm\Login;
 
 class LoginController extends BaseController
 {

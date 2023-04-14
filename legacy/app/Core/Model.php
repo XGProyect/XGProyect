@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Core;
+namespace Xgp\App\Core;
 
-use App\Core\Database;
+use Xgp\App\Core\Database;
 
 abstract class Model
 {

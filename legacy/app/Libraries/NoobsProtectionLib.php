@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Models\Libraries\NoobsProtectionLib as NoobsProtectionLibModel;
+use Xgp\App\Models\Libraries\NoobsProtectionLib as NoobsProtectionLibModel;
 
 class NoobsProtectionLib
 {

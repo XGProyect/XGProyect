@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Libraries\Combatreport\Report;
-use App\Libraries\Functions;
-use App\Libraries\Users;
-use App\Models\Game\Combatreport;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Libraries\Combatreport\Report;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Combatreport;
 
 class CombatreportController extends BaseController
 {

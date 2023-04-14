@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Enumerators\ErrorTypesEnumerator as ErrorTypes;
-use App\Libraries\Functions;
+use Xgp\App\Core\Enumerators\ErrorTypesEnumerator as ErrorTypes;
+use Xgp\App\Libraries\Functions;
 
 class DebugLib
 {

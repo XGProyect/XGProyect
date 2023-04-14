@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
 use Lang;
 

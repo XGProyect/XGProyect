@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Libraries;
+namespace Xgp\App\Models\Libraries;
 
-use App\Core\Model;
-use App\Libraries\Functions;
+use Xgp\App\Core\Model;
+use Xgp\App\Libraries\Functions;
 
 class NoobsProtectionLib extends Model
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Helpers\StringsHelper;
-use App\Libraries\FormatLib as Format;
-use App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Helpers\StringsHelper;
+use Xgp\App\Libraries\FormatLib as Format;
+use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class OfficiersLib
 {

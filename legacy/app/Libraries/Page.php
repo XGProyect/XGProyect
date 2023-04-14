@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Database;
-use App\Core\Enumerators\PlanetTypesEnumerator;
-use App\Core\Language;
-use App\Core\Objects;
-use App\Core\Template;
-use App\Helpers\UrlHelper;
-use App\Libraries\FormatLib;
-use App\Libraries\Functions;
-use App\Libraries\OfficiersLib;
-use App\Libraries\ProductionLib as Production;
-use App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Core\Database;
+use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Core\Language;
+use Xgp\App\Core\Objects;
+use Xgp\App\Core\Template;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\OfficiersLib;
+use Xgp\App\Libraries\ProductionLib as Production;
+use Xgp\App\Libraries\TimingLibrary as Timing;
 use CiLang;
 
 class Page

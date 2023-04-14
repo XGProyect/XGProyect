@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Libraries\Alliance;
+namespace Xgp\App\Libraries\Alliance;
 
-use App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
-use App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
-use App\Helpers\StringsHelper;
+use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
+use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Helpers\StringsHelper;
 use Exception;
 use JsonException;
 

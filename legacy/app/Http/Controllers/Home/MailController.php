@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Home;
+namespace Xgp\App\Http\Controllers\Home;
 
-use App\Core\BaseController;
-use App\Libraries\Functions;
-use App\Models\Home\Mail;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Models\Home\Mail;
 
 class MailController extends BaseController
 {

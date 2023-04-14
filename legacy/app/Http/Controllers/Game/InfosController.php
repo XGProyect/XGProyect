@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Game;
+namespace Xgp\App\Http\Controllers\Game;
 
-use App\Core\BaseController;
-use App\Core\Enumerators\BuildingsEnumerator as Buildings;
-use App\Core\Enumerators\ResearchEnumerator as Research;
-use App\Helpers\StringsHelper;
-use App\Helpers\UrlHelper;
-use App\Libraries\DevelopmentsLib;
-use App\Libraries\FleetsLib;
-use App\Libraries\FormatLib;
-use App\Libraries\Formulas;
-use App\Libraries\Functions;
-use App\Libraries\OfficiersLib;
-use App\Libraries\ProductionLib;
-use App\Libraries\Users;
-use App\Models\Game\Infos;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
+use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
+use Xgp\App\Helpers\StringsHelper;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\DevelopmentsLib;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Formulas;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\OfficiersLib;
+use Xgp\App\Libraries\ProductionLib;
+use Xgp\App\Libraries\Users;
+use Xgp\App\Models\Game\Infos;
 
 class InfosController extends BaseController
 {

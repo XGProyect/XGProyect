@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Adm;
+namespace Xgp\App\Http\Controllers\Adm;
 
-use App\Core\BaseController;
-use App\Core\Database;
-use App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Database;
+use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 
 class MigrateController extends BaseController
 {

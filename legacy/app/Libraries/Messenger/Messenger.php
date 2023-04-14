@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries\Messenger;
+namespace Xgp\App\Libraries\Messenger;
 
-use App\Libraries\Functions;
-use App\Models\Libraries\Messenger\Messenger as MessengerModel;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Models\Libraries\Messenger\Messenger as MessengerModel;
 
 final class Messenger
 {

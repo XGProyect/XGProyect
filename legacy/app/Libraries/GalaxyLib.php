@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
-use App\Core\Enumerators\MissionsEnumerator as Missions;
-use App\Core\Enumerators\PlanetTypesEnumerator;
-use App\Core\Enumerators\ShipsEnumerator as Ships;
-use App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use App\Core\Objects;
-use App\Core\Template;
-use App\Helpers\StringsHelper;
-use App\Helpers\UrlHelper;
-use App\Libraries\FleetsLib;
-use App\Libraries\FormatLib;
-use App\Libraries\Formulas;
-use App\Libraries\Functions;
+use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
+use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
+use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Core\Objects;
+use Xgp\App\Core\Template;
+use Xgp\App\Helpers\StringsHelper;
+use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\FleetsLib;
+use Xgp\App\Libraries\FormatLib;
+use Xgp\App\Libraries\Formulas;
+use Xgp\App\Libraries\Functions;
 use CiLang;
 
 class GalaxyLib

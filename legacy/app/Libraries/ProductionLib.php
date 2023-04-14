@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries;
+namespace Xgp\App\Libraries;
 
 class ProductionLib
 {
