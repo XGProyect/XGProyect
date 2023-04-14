@@ -27,6 +27,7 @@ $lang = [
     'hm_update_required' => 'Your system and DB versions are different, <a href="admin.php?page=update"><strong>Update now!</strong></a> to avoid issues.',
     'hm_credits' => 'Credits',
     'hm_proyect_leader' => 'Project Leads',
+    'hm_principal_contributors' => 'Principal contributors',
     'hm_extensions' => 'Libraries / Extensions',
-    'hm_principal_contributors' => 'Special thanks to',
+    'hm_thanks_to' => 'Special thanks to',
 ];

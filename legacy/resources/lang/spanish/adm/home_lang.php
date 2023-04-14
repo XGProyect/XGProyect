@@ -27,6 +27,7 @@ $lang = [
     'hm_update_required' => 'La versión del sistema y la de tu DB no coinciden, <a href="admin.php?page=update"><strong>¡Actualiza ahora!</strong></a> para evitar errores.',
     'hm_credits' => 'Créditos',
     'hm_proyect_leader' => 'Project Leads',
+    'hm_principal_contributors' => 'Colaboradores más importantes',
     'hm_extensions' => 'Librerías / Extensiones',
-    'hm_principal_contributors' => 'Agradecimientos especiales',
+    'hm_thanks_to' => 'Agradecimientos especiales',
 ];

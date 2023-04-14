@@ -84,25 +84,25 @@
                     <br>
                     <a href="https://github.com/BeReal86" target="_blank">BeReal</a>
                     <br><br>
+                    <strong>{hm_principal_contributors}</strong>
+                    <br>
+                    <a href="https://github.com/FGServers" target="_blank">JonaMix</a>
+                    <br><br>
                     <strong>{hm_extensions}</strong>
+                    <br>
+                    <a href="https://laravel.com/" target="_blank">Laravel | Core</a>
                     <br>
                     <a href="https://github.com/jstar88/opbe" target="_blank">jstar - OPBE</a>
                     <br>
-                    <a href="https://codeigniter.com/" target="_blank">CodeIgniter | Lang & Parser</a>
-                    <br>
                     <a href="https://startbootstrap.com/themes/sb-admin-2/" target="_blank">Start Bootstrap | SB Admin 2</a>
                     <br>
-                    <a href="https://github.com/PHPMailer/PHPMailer" target="_blank">PHPMailer</a>
-                    <br>
                     <a href="https://github.com/mailhog/MailHog" target="_blank">MailHog</a>
-                    <br>
-                    <a href="https://github.com/EFTEC/BladeOne" target="_blank">EFTEC/BladeOne</a>
                     <br><br>
-                    <strong>{hm_principal_contributors}</strong>
+                    <strong>{hm_thanks_to}</strong>
                     <br>
                     adri93, Alberto14, angelus_ira, Anghelito, Arali, Borboco, Calzon, cyberghoser1, cyberrichy,
-                    edering, Gmir17, Green, JonaMix, jtsamper, Kloud, LordPretender, Loucouss, medel, MSW, Neko,
-                    Neurus, Nickolay, Pada, pele87, PowerMaster, privatethedawn, quaua, Razican, Tarta, Think,
+                    duhow, edering, Gmir17, Green, jtsamper, Kloud, LordPretender, Loucouss, medel, MSW,
+                    Neko, Neurus, Nickolay, Pada, pele87, PowerMaster, privatethedawn, quaua, Razican, Tarta, Think,
                     thyphoon, tomtom, Tonique, Trojan, Saint, shoghicp, slaver7, war4head, zebulonbof, zorro2666
                 </p>
             </div>
