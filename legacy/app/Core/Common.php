@@ -18,8 +18,9 @@ use App\Libraries\Users;
 use Exception;
 
 // Require some stuff
+
 require_once XGP_ROOT . 'config' . DIRECTORY_SEPARATOR . 'constants.php';
-require_once XGP_ROOT . VENDOR_PATH . 'autoload.php';
+require_once base_path('vendor') . DIRECTORY_SEPARATOR . 'autoload.php';
 
 class Common
 {
