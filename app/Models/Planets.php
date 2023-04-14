@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property string $planet_name
@@ -105,4 +106,18 @@ class Planets extends Model
     // Functions ...
 
     // Relations ...
+    public function buildings(): HasOne
+    {
+        return $this->hasOne(Buildings::class, 'building_planet_id');
+    }
+
+    public function defenses(): HasOne
+    {
+        return $this->hasOne(Defenses::class, 'defense_planet_id');
+    }
+
+    public function ships(): HasOne
+    {
+        return $this->hasOne(Ships::class, 'ship_planet_id');
+    }
 }

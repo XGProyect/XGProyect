@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $user_name
@@ -92,4 +93,8 @@ class Users extends Model
     // Functions ...
 
     // Relations ...
+    public function planets(): HasMany
+    {
+        return $this->hasMany(Planets::class, 'planet_user_id');
+    }
 }
