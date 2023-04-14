@@ -75,13 +75,6 @@ class Overview extends Model
         return null;
     }
 
-    /**
-     * Get own fleets
-     *
-     * @param type $user_id
-     *
-     * @return mixed
-     */
     public function getPlanets($user_id)
     {
         if ((int) $user_id > 0) {
