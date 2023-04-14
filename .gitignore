@@ -19,49 +19,13 @@ yarn-error.log
 /.idea
 /.vscode
 
-#
-# application
-#
-config/config.php
-
-#
-# public
-#
-public/compiles/*
-
-#
-# storage
-#
+#xgproyect
+/config/config.php
+/public/compiles
 storage/backups/*.sql
 storage/cache/*.html
 storage/logs/*.txt
-
-#
-# tests
-#
-tests/.phpunit.result.cache
-tests/build/
-tests/_reports/
-
-#
-# docs
-#
 .phpdoc/*
 /docs/*
-
-#
-# docker
-#
-data/xgp.sql
-
-#
-# IDE
-#
-*.code-workspace
-nbproject/
-
-#
-# composer
-#
 vendor
 composer.lock
