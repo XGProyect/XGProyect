@@ -28,13 +28,13 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
+        "friendsofphp/php-cs-fixer": "^3.16",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.0",
-        "spatie/laravel-ignition": "^2.0",
-        "friendsofphp/php-cs-fixer": "^3.16"
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {
