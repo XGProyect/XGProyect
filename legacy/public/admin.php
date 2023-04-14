@@ -12,7 +12,7 @@ require XGP_ROOT . 'app' . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 
 $system = new Common();
 $system->bootUp('admin');
 
-include_once XGP_ROOT . 'app' . DIRECTORY_SEPARATOR . 'Libraries' . DIRECTORY_SEPARATOR . 'Adm' . DIRECTORY_SEPARATOR . 'AdministrationLib.php';
+include_once LIB_PATH . 'Adm' . DIRECTORY_SEPARATOR . 'AdministrationLib.php';
 
 // check updates
 $page = filter_input(INPUT_GET, 'page');
@@ -21,7 +21,7 @@ if (is_null($page)) {
     $page = 'home';
 }
 
-$file_name = XGP_ROOT . ADMIN_PATH . ucfirst($page) . 'Controller.php';
+$file_name = ADMIN_PATH . ucfirst($page) . 'Controller.php';
 
 // logout
 if ($page == 'logout') {
@@ -36,5 +36,5 @@ if (file_exists($file_name)) {
 
     (new $class_name())->index();
 } else {
-    Functions::redirect(XGP_ROOT . 'admin.php');
+    Functions::redirect(ADM_URL . 'admin.php');
 }

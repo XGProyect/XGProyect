@@ -2,12 +2,12 @@
 
 namespace Xgp\App\Http\Controllers\Install;
 
+use Illuminate\Support\Facades\Artisan;
 use Xgp\App\Core\BaseController;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;
 use Xgp\App\Models\Install\Installation;
-use Illuminate\Support\Facades\Artisan;
 
 class InstallationController extends BaseController
 {
@@ -287,44 +287,27 @@ class InstallationController extends BaseController
         $this->page->displayInstall($current_page, $this->langs->language);
     }
 
-    /**
-     * method server_requirementes
-     * param
-     * return true if the required server requirements are met
-     */
     private function serverRequirementes()
     {
-        return !(version_compare(PHP_VERSION, '7.3.0', '<'));
+        return !(version_compare(PHP_VERSION, '8.1.0', '<'));
     }
 
-    /**
-     * isWritable
-     *
-     * @return boolean
-     */
     private function isWritable()
     {
-        $config_dir = XGP_ROOT . 'config/';
-
-        return is_writable($config_dir);
+        return is_writable(CONFIGS_PATH);
     }
 
-    /**
-     * isInstalled
-     *
-     * @return boolean
-     */
     private function isInstalled()
     {
         // if file not exists
-        $config_file = XGP_ROOT . CONFIGS_PATH . 'config.php';
+        $config_file = CONFIGS_PATH . 'config.php';
 
         if (!file_exists($config_file) or filesize($config_file) == 0) {
             return false;
         }
 
         // if no db object
-        if (!defined('DB_NAME')) {
+        if (!config('DB_DATABASE', false)) {
             return false;
         }
 
@@ -348,7 +331,7 @@ class InstallationController extends BaseController
      */
     private function tablesExists()
     {
-        $result = $this->installationModel->getListOfTables(DB_NAME);
+        $result = $this->installationModel->getListOfTables(config('DB_DATABASE'));
         $arr = [];
 
         foreach ($result as $row) {
@@ -399,22 +382,12 @@ class InstallationController extends BaseController
      */
     private function writeConfigFile()
     {
-        $legacyConfigFile = @fopen(XGP_ROOT . CONFIGS_PATH . 'config.php', "w");
-        $laravelConfigFile = @fopen(XGP_ROOT . '../' . CONFIGS_PATH . 'config.php', "w");
+        $configFile = CONFIGS_PATH . 'config.php';
+        $laravelConfigFile = @fopen($configFile, "w");
 
-        if (!$legacyConfigFile || !$laravelConfigFile) {
+        if (!$laravelConfigFile) {
             return false;
         }
-
-        $data = "<?php\n";
-        $data .= "defined('DB_HOST') ? null : define('DB_HOST', '" . $this->db_host . "');\n";
-        $data .= "defined('DB_PORT') ? null : define('DB_PORT', '" . $this->db_port . "');\n";
-        $data .= "defined('DB_USER') ? null : define('DB_USER', '" . $this->db_user . "');\n";
-        $data .= "defined('DB_PASS') ? null : define('DB_PASS', '" . $this->db_password . "');\n";
-        $data .= "defined('DB_NAME') ? null : define('DB_NAME', '" . $this->db_name . "');\n";
-        $data .= "defined('DB_PREFIX') ? null : define('DB_PREFIX', '" . $this->db_prefix . "');\n";
-        $data .= "defined('SECRETWORD') ? null : define('SECRETWORD', 'xgp-" . StringsHelper::randomString(16) . "');\n";
-        $data .= "\n";
 
         $newData = "<?php\n";
         $newData .= "putenv('DB_HOST=" . $this->db_host . "');\n";
@@ -425,28 +398,32 @@ class InstallationController extends BaseController
         $newData .= "putenv('DB_PREFIX=" . $this->db_prefix . "');\n";
         $newData .= "putenv('SECRETWORD=xgp-" . StringsHelper::randomString(16) . "');\n";
         $newData .= "\n";
+        $newData .= "config([\n";
+        $newData .= "    'DB_HOST' => '" . $this->db_host . "',\n";
+        $newData .= "    'DB_PORT' => '" . $this->db_port . "',\n";
+        $newData .= "    'DB_USERNAME' => '" . $this->db_user . "',\n";
+        $newData .= "    'DB_PASSWORD' => '" . $this->db_password . "',\n";
+        $newData .= "    'DB_DATABASE' => '" . $this->db_name . "',\n";
+        $newData .= "    'DB_PREFIX' => '" . $this->db_prefix . "',\n";
+        $newData .= "    'SECRETWORD' => 'xgp-" . StringsHelper::randomString(16) . "',\n";
+        $newData .= "]);";
+        $newData .= "\n";
 
         // create the new file
-        if (fwrite($legacyConfigFile, $data)) {
-            fclose($legacyConfigFile);
+        if (fwrite($laravelConfigFile, $newData)) {
+            fclose($laravelConfigFile);
 
-            if (fwrite($laravelConfigFile, $newData)) {
-                fclose($laravelConfigFile);
+            Artisan::call('cache:clear');
+            Artisan::call('config:clear');
 
-                Artisan::call('cache:clear');
-                Artisan::call('config:clear');
-
-                return true;
-            } {
-                unlink(XGP_ROOT . CONFIGS_PATH . 'config.php');
-                unlink(XGP_ROOT . '../' . CONFIGS_PATH . 'config.php');
-            }
+            return true;
+        } {
+            unlink(config_path() . '/config.php');
         }
 
         // check if something was created and delete it
-        if (file_exists(XGP_ROOT . CONFIGS_PATH . 'config.php') && file_exists(XGP_ROOT . '../' . CONFIGS_PATH . 'config.php')) {
-            unlink(XGP_ROOT . CONFIGS_PATH . 'config.php');
-            unlink(XGP_ROOT . '../' . CONFIGS_PATH . 'config.php');
+        if (file_exists($configFile)) {
+            unlink($configFile);
         }
 
         return false;
@@ -463,7 +440,7 @@ class InstallationController extends BaseController
         $tables = [];
 
         // get the database structure
-        require_once XGP_ROOT . 'database' . DIRECTORY_SEPARATOR . 'database.php';
+        require_once DATABASE_PATH . DIRECTORY_SEPARATOR . 'database.php';
 
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $this->installationModel->setWindowsSqlMode();

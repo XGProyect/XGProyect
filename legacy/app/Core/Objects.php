@@ -24,7 +24,7 @@ class Objects
     public function __construct()
     {
         // require this damn file
-        require XGP_ROOT . CORE_PATH . 'objects_collection.php';
+        require CORE_PATH . 'objects_collection.php';
 
         // pass the require array into properties
         $this->objects = $resource;

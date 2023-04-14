@@ -11,7 +11,7 @@ $system = new Common();
 $system->bootUp('home');
 
 if (isset($_GET['content'])) {
-    $file_name = XGP_ROOT . AJAX_PATH . ucfirst($_GET['content']) . 'Controller.php';
+    $file_name = AJAX_PATH . ucfirst($_GET['content']) . 'Controller.php';
 
     if (file_exists($file_name)) {
         include $file_name;

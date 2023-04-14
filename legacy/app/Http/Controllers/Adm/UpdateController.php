@@ -100,7 +100,7 @@ class UpdateController extends BaseController
     private function checkVersion()
     {
         return file_exists(
-            XGP_ROOT . UPDATE_PATH . 'update_common.php'
+            UPDATE_PATH . 'update_common.php'
         );
     }
 
@@ -111,7 +111,7 @@ class UpdateController extends BaseController
      */
     private function startUpdate()
     {
-        $updates_dir = opendir(XGP_ROOT . UPDATE_PATH);
+        $updates_dir = opendir(UPDATE_PATH);
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store', 'update_common.php'];
         $files_to_read = [];
         $db_version = strtr($this->db_version, ['v' => '', '.' => '']);
@@ -156,7 +156,7 @@ class UpdateController extends BaseController
     private function executeFile($version)
     {
         // Define some stuff
-        $update_path = XGP_ROOT . UPDATE_PATH . 'update_' . $version . '.php';
+        $update_path = UPDATE_PATH . 'update_' . $version . '.php';
         $queries = [];
 
         require_once $update_path;

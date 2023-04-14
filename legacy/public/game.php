@@ -30,7 +30,7 @@ $page = strtr(
     ]
 );
 
-$file_name = XGP_ROOT . GAME_PATH . ucfirst($page) . 'Controller.php';
+$file_name = GAME_PATH . ucfirst($page) . 'Controller.php';
 
 if (isset($page)) {
     // logout

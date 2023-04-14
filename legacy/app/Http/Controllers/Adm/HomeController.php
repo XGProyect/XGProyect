@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use JsonException;
 use Xgp\App\Core\BaseController;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Adm\Home;
-use JsonException;
 
 class HomeController extends BaseController
 {
@@ -73,7 +73,7 @@ class HomeController extends BaseController
         $alert = [];
 
         if ($this->user['user_authlevel'] >= 3) {
-            if ((bool) (@fileperms(XGP_ROOT . CONFIGS_PATH . 'config.php') & 0x0002)) {
+            if ((bool) (@fileperms(CONFIGS_PATH . 'config.php') & 0x0002)) {
                 $alert[] = $this->langs->line('hm_config_file_writable');
             }
 

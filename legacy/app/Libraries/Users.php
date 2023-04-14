@@ -50,7 +50,7 @@ class Users
     {
         if ($user_id != 0 && !empty($password) && (strlen($password) == 60)) {
             $_SESSION['user_id'] = $user_id;
-            $_SESSION['user_password'] = Functions::hash($password . '-' . SECRETWORD);
+            $_SESSION['user_password'] = Functions::hash($password . '-' . config('SECRETWORD'));
 
             return true;
         } else {
@@ -211,7 +211,7 @@ class Users
             Functions::redirect(SYSTEM_ROOT);
         }
 
-        if (!password_verify(($user_row['user_password'] . "-" . SECRETWORD), $_SESSION['user_password']) && !defined('IN_LOGIN')) {
+        if (!password_verify(($user_row['user_password'] . "-" . config('SECRETWORD')), $_SESSION['user_password']) && !defined('IN_LOGIN')) {
             Functions::redirect(SYSTEM_ROOT);
         }
     }

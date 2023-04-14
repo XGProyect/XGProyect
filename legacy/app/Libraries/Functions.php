@@ -2,6 +2,8 @@
 
 namespace Xgp\App\Libraries;
 
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 use Xgp\App\Core\Database;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Language;
@@ -13,8 +15,6 @@ use Xgp\App\Libraries\Messenger\MessagesOptions;
 use Xgp\App\Libraries\Messenger\Messenger;
 use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\Users;
-use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\PHPMailer;
 
 abstract class Functions
 {
@@ -39,7 +39,7 @@ abstract class Functions
     {
         if (!empty($library)) {
             // Require file
-            require_once XGP_ROOT . LIB_PATH . $library . '.php';
+            require_once LIB_PATH . $library . '.php';
 
             $class_name = 'Xgp\App\Libraries\\' . $library;
 
@@ -445,7 +445,7 @@ abstract class Functions
      */
     public static function getLanguagesList()
     {
-        $langs_dir = opendir(XGP_ROOT . LANG_PATH);
+        $langs_dir = opendir(LANG_PATH);
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store'];
         $langs = [];
 
@@ -467,7 +467,7 @@ abstract class Functions
      */
     public static function getLanguages($current_lang)
     {
-        $langs_dir = opendir(XGP_ROOT . LANG_PATH);
+        $langs_dir = opendir(LANG_PATH);
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store'];
         $lang_options = '';
 

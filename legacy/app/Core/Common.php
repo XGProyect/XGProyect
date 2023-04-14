@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Core;
 
+use Exception;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Core\ErrorHandler;
@@ -15,7 +16,6 @@ use Xgp\App\Libraries\SecurePageLib;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\UpdatesLibrary;
 use Xgp\App\Libraries\Users;
-use Exception;
 
 // Require some stuff
 
@@ -70,13 +70,13 @@ class Common
     private function isServerInstalled(): void
     {
         try {
-            $config_file = XGP_ROOT . CONFIGS_PATH . 'config.php';
+            $config_file = CONFIGS_PATH . 'config.php';
 
             if (file_exists($config_file)) {
                 require $config_file;
 
                 // check if it is installed
-                if (defined('DB_HOST') && defined('DB_USER') && defined('DB_PASS') && defined('DB_NAME') && defined('DB_PREFIX')) {
+                if (config('DB_HOST') && config('DB_PORT') && config('DB_USERNAME') && config('DB_PASSWORD') && config('DB_DATABASE') && config('DB_PREFIX')) {
                     $this->is_installed = true;
                 }
             } else {

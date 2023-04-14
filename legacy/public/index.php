@@ -16,7 +16,7 @@ if (is_null($page)) {
     $page = 'home';
 }
 
-$file_name = XGP_ROOT . HOME_PATH . ucfirst($page) . 'Controller.php';
+$file_name = HOME_PATH . ucfirst($page) . 'Controller.php';
 
 if (file_exists($file_name)) {
     include $file_name;

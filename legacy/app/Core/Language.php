@@ -18,7 +18,7 @@ class Language
     {
         try {
             // require langugage library
-            $langPath = XGP_ROOT . LIB_PATH . 'Ci' . DIRECTORY_SEPARATOR . 'CiLang.php';
+            $langPath = LIB_PATH . 'Ci' . DIRECTORY_SEPARATOR . 'CiLang.php';
 
             if (!file_exists($langPath)) {
                 // not found

@@ -11,7 +11,7 @@ $system = new Common();
 $system->bootUp('install');
 
 $page = isset($_GET['page']) ? $_GET['page'] : 'installation';
-$file_name = XGP_ROOT . INSTALL_PATH . ucfirst($page) . 'Controller.php';
+$file_name = INSTALL_PATH . ucfirst($page) . 'Controller.php';
 
 if (file_exists($file_name)) {
     include $file_name;

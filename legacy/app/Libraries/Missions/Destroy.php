@@ -2,6 +2,15 @@
 
 namespace Xgp\App\Libraries\Missions;
 
+use Battle;
+use DebugManager;
+use Defense;
+use Fleet;
+use HomeFleet;
+use LangManager;
+use Player;
+use PlayerGroup;
+use Ship;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Combatreport\Report;
@@ -12,15 +21,6 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Missions\Attack_lang;
 use Xgp\App\Libraries\Missions\Missions;
 use Xgp\App\Libraries\UpdatesLibrary;
-use Battle;
-use DebugManager;
-use Defense;
-use Fleet;
-use HomeFleet;
-use LangManager;
-use Player;
-use PlayerGroup;
-use Ship;
 
 class Destroy extends Missions
 {
@@ -80,12 +80,12 @@ class Destroy extends Missions
 
         if ($fleet_row['fleet_mess'] == 0 && $fleet_row['fleet_start_time'] <= time()) {
             // require several stuff
-            require XGP_ROOT . LIB_PATH .
+            require LIB_PATH .
                 'BattleEngine' . DIRECTORY_SEPARATOR .
                 'utils' . DIRECTORY_SEPARATOR . 'includer.php';
 
             // require language implementation
-            require XGP_ROOT . LIB_PATH .
+            require LIB_PATH .
                 'missions' . DIRECTORY_SEPARATOR . 'Attack_lang.php';
 
             // set language for the reports

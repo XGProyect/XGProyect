@@ -882,7 +882,7 @@ class UsersController extends BaseController
      */
     private function buildImageCombo($current_image)
     {
-        $images_dir = opendir(XGP_ROOT . DEFAULT_SKINPATH . 'planets');
+        $images_dir = opendir(DEFAULT_SKINPATH . 'planets');
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store', 'small'];
         $images_options = '';
 

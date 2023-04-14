@@ -4,8 +4,8 @@
  */
 
 // "aks" table -> "acs_fleets" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . ACS . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . ACS . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . ACS . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . ACS . "`(
                 `acs_id`,
                 `acs_name`,
                 `acs_owner`,
@@ -24,8 +24,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . ACS . "`(
                 FROM `{prefix}aks`;";
 
 // "alliance" table -> "alliance" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . ALLIANCE . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . ALLIANCE . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . ALLIANCE . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . ALLIANCE . "`(
                 `alliance_id`,
                 `alliance_name`,
                 `alliance_tag`,
@@ -52,8 +52,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . ALLIANCE . "`(
                 FROM `{prefix}alliance`;";
 
 // "banned" table -> "banned" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . BANNED . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . BANNED . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . BANNED . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . BANNED . "`(
                 `banned_id`,
                 `banned_who`,
                 `banned_theme`,
@@ -72,8 +72,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . BANNED . "`(
                 FROM `{prefix}banned`;";
 
 // "buddy" table -> "buddys" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . BUDDY . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . BUDDY . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . BUDDY . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . BUDDY . "`(
                 `buddy_id`,
                 `buddy_sender`,
                 `buddy_receiver`,
@@ -88,8 +88,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . BUDDY . "`(
                 FROM `{prefix}buddy`;";
 
 // "fleets" table -> "fleets" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . FLEETS . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . FLEETS . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . FLEETS . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . FLEETS . "`(
                 `fleet_id`,
                 `fleet_owner`,
                 `fleet_mission`,
@@ -144,8 +144,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . FLEETS . "`(
                 FROM `{prefix}fleets`;";
 
 // "messages" table -> "messages" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . MESSAGES . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . MESSAGES . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . MESSAGES . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . MESSAGES . "`(
                 `message_id`,
                 `message_sender`,
                 `message_receiver`,
@@ -168,8 +168,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . MESSAGES . "`(
                 FROM `{prefix}messages`;";
 
 // "notes" table -> "notes" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . NOTES . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . NOTES . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . NOTES . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . NOTES . "`(
                 `note_id`,
                 `note_owner`,
                 `note_time`,
@@ -190,8 +190,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . NOTES . "`(
  */
 
 // "planets" table -> "planets" table && "galaxy" table -> "planets" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . PLANETS . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . PLANETS . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . PLANETS . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . PLANETS . "`(
                 `planet_id`,
                 `planet_name`,
                 `planet_user_id`,
@@ -278,8 +278,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . PLANETS . "`(
                         AND p.planet = g.planet);";
 
 // "planets" table -> "buildings" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . BUILDINGS . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . BUILDINGS . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . BUILDINGS . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . BUILDINGS . "`(
                     `building_planet_id`,
                     `building_metal_mine`,
                     `building_crystal_mine`,
@@ -322,8 +322,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . BUILDINGS . "`(
                 FROM `{prefix}planets`;";
 
 // "planets" table -> "defenses" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . DEFENSES . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . DEFENSES . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . DEFENSES . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . DEFENSES . "`(
                     `defense_planet_id`,
                     `defense_rocket_launcher`,
                     `defense_light_laser`,
@@ -350,8 +350,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . DEFENSES . "`(
                 FROM `{prefix}planets`;";
 
 // "planets" table -> "ships" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . SHIPS . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . SHIPS . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . SHIPS . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . SHIPS . "`(
                     `ship_planet_id`,
                     `ship_small_cargo_ship`,
                     `ship_big_cargo_ship`,
@@ -386,8 +386,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . SHIPS . "`(
                 FROM `{prefix}planets`;";
 
 // "rw" table -> "reports" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . REPORTS . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . REPORTS . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . REPORTS . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . REPORTS . "`(
                     `report_owners`,
                     `report_rid`,
                     `report_content`,
@@ -406,8 +406,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . REPORTS . "`(
  */
 
 // "statpoints" table -> "users_statistics" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . USERS_STATISTICS . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . USERS_STATISTICS . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . USERS_STATISTICS . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . USERS_STATISTICS . "`(
                     `user_statistic_user_id`,
                     `user_statistic_buildings_points`,
                     `user_statistic_buildings_old_rank`,
@@ -447,8 +447,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . USERS_STATISTICS . "`(
                 WHERE `id_ally` = '0';";
 
 // "statpoints" table -> "alliance_statistics" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . ALLIANCE_STATISTICS . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . ALLIANCE_STATISTICS . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . ALLIANCE_STATISTICS . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . ALLIANCE_STATISTICS . "`(
                     `alliance_statistic_alliance_id`,
                     `alliance_statistic_buildings_points`,
                     `alliance_statistic_buildings_old_rank`,
@@ -492,8 +492,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . ALLIANCE_STATISTICS . "`(
  */
 
 // "users" table -> "users" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . USERS . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . USERS . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . USERS . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . USERS . "`(
                     `user_id`,
                     `user_name`,
                     `user_password`,
@@ -544,8 +544,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . USERS . "`(
                 FROM `{prefix}users`;";
 
 // "users" table -> "premium" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . PREMIUM . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . PREMIUM . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . PREMIUM . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . PREMIUM . "`(
                     `premium_user_id`,
                     `premium_dark_matter`,
                     `premium_officier_commander`,
@@ -564,8 +564,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . PREMIUM . "`(
                 FROM `{prefix}users`;";
 
 // "users" table -> "research" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . RESEARCH . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . RESEARCH . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . RESEARCH . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . RESEARCH . "`(
                     `research_user_id`,
                     `research_current_research`,
                     `research_espionage_technology`,
@@ -606,8 +606,8 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . RESEARCH . "`(
                 FROM `{prefix}users`;";
 
 // "users" table -> "settings" table
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . PREFERENCES . "`;";
-$queries[] = "INSERT INTO " . DB_NAME . ".`" . PREFERENCES . "`(
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . PREFERENCES . "`;";
+$queries[] = "INSERT INTO " . config('DB_DATABASE') . ".`" . PREFERENCES . "`(
                     `preference_user_id`,
                     `preference_spy_probes`,
                     `preference_planet_sort`,
@@ -622,4 +622,4 @@ $queries[] = "INSERT INTO " . DB_NAME . ".`" . PREFERENCES . "`(
                     `urlaubs_until`,
                     `db_deaktjava`
                 FROM `{prefix}users`;";
-$queries[] = "TRUNCATE " . DB_NAME . ".`" . SESSIONS . "`;";
+$queries[] = "TRUNCATE " . config('DB_DATABASE') . ".`" . SESSIONS . "`;";

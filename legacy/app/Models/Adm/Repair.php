@@ -22,7 +22,7 @@ class Repair extends Model
                 `index_length`,
                 `data_free`
             FROM information_schema.TABLES
-            WHERE table_schema = '" . DB_NAME . "';"
+            WHERE table_schema = '" . config('DB_DATABASE') . "';"
         );
     }
 

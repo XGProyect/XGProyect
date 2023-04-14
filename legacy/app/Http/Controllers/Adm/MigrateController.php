@@ -180,7 +180,7 @@ class MigrateController extends BaseController
      */
     private function checkVersion()
     {
-        return file_exists(XGP_ROOT . MIGRATION_PATH . 'migrate_' . $this->version . '.php');
+        return file_exists(MIGRATION_PATH . 'migrate_' . $this->version . '.php');
     }
 
     /**
@@ -233,7 +233,7 @@ class MigrateController extends BaseController
     private function firstStep()
     {
         // Define some stuff
-        $migration_path = XGP_ROOT . MIGRATION_PATH . 'migrate_' . $this->version . '.php';
+        $migration_path = MIGRATION_PATH . 'migrate_' . $this->version . '.php';
         $queries = [];
 
         require_once $migration_path;
@@ -261,7 +261,7 @@ class MigrateController extends BaseController
     private function secondStep()
     {
         // Define some stuff
-        $migration_path = XGP_ROOT . MIGRATION_PATH . 'migrate_common.php';
+        $migration_path = MIGRATION_PATH . 'migrate_common.php';
         $queries = [];
         $password = $this->user['user_password'];
 

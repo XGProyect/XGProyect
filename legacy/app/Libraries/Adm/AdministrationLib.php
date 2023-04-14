@@ -54,7 +54,7 @@ class AdministrationLib
      */
     public static function installDirExists()
     {
-        return (file_exists(XGP_ROOT . PUBLIC_PATH . 'install.php'));
+        return (file_exists(PUBLIC_PATH . 'install.php'));
     }
 
     /**
@@ -150,7 +150,7 @@ class AdministrationLib
 
             // admin login
             $_SESSION['admin_id'] = $admin_id;
-            $_SESSION['admin_password'] = Functions::hash($password . '-' . SECRETWORD);
+            $_SESSION['admin_password'] = Functions::hash($password . '-' . config('SECRETWORD'));
 
             return true;
         } else {
@@ -206,7 +206,7 @@ class AdministrationLib
             $exclude_pages = ['', 'home', 'update', 'logout'];
 
             if (isset($_GET['page']) && !in_array($_GET['page'], $exclude_pages)) {
-                Functions::redirect(XGP_ROOT . 'admin.php?page=update');
+                Functions::redirect(ADM_URL . 'admin.php?page=update');
             }
         }
     }

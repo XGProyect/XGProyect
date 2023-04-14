@@ -27,7 +27,7 @@ class Home extends Model
             "SELECT
                 SUM(data_length + index_length) AS 'db_size'
             FROM information_schema.TABLES
-            WHERE table_schema = '" . $this->db->escapeValue(DB_NAME) . "';"
+            WHERE table_schema = '" . $this->db->escapeValue(config('DB_DATABASE')) . "';"
         );
     }
 

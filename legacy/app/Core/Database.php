@@ -2,9 +2,10 @@
 
 namespace Xgp\App\Core;
 
-use Xgp\App\Libraries\DebugLib;
+use App\Exceptions\LegacyExitScript;
 use Exception;
 use mysqli;
+use Xgp\App\Libraries\DebugLib;
 
 class Database
 {
@@ -22,16 +23,14 @@ class Database
 
     public function __construct()
     {
-        require_once XGP_ROOT . CONFIGS_PATH . 'config.php';
-
-        if (defined('DB_HOST') && defined('DB_USER') && defined('DB_PASS') && defined('DB_NAME') && defined('DB_PREFIX')) {
+        if (config('DB_HOST') && config('DB_PORT') && config('DB_USERNAME') && config('DB_PASSWORD') && config('DB_DATABASE') && config('DB_PREFIX')) {
             $this->db_data = [
-                'host' => DB_HOST,
-                'port' => DB_PORT,
-                'user' => DB_USER,
-                'pass' => DB_PASS,
-                'name' => DB_NAME,
-                'prefix' => DB_PREFIX,
+                'host' => config('DB_HOST'),
+                'port' => config('DB_PORT'),
+                'user' => config('DB_USERNAME'),
+                'pass' => config('DB_PASSWORD'),
+                'name' => config('DB_DATABASE'),
+                'prefix' => config('DB_PREFIX'),
             ];
         }
 
@@ -39,11 +38,6 @@ class Database
         $this->openConnection();
     }
 
-    /**
-     * Open connection
-     *
-     * @return void
-     */
     public function openConnection()
     {
         if (isset($this->db_data['host']) && $this->db_data['port'] && isset($this->db_data['user']) && isset($this->db_data['pass']) && isset($this->db_data['name'])) {

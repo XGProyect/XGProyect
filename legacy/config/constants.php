@@ -60,12 +60,11 @@ define('ADM_URL', PROTOCOL . strtr(BASE_PATH, ['public' => '', 'public/' => ''])
  * GLOBAL DIRECTORY STRUCTURE
  *
  */
-define('APP_PATH', 'app' . DIRECTORY_SEPARATOR);
-define('CONFIGS_PATH', 'config' . DIRECTORY_SEPARATOR);
-define('DATABASE_PATH', 'database' . DIRECTORY_SEPARATOR);
-define('PUBLIC_PATH', 'public' . DIRECTORY_SEPARATOR);
-define('RESOURCES_PATH', 'resources' . DIRECTORY_SEPARATOR);
-define('VENDOR_PATH', 'vendor' . DIRECTORY_SEPARATOR);
+define('APP_PATH', XGP_ROOT . 'app' . DIRECTORY_SEPARATOR);
+define('CONFIGS_PATH', config_path() . DIRECTORY_SEPARATOR);
+define('DATABASE_PATH', XGP_ROOT . 'database' . DIRECTORY_SEPARATOR);
+define('PUBLIC_PATH', XGP_ROOT . 'public' . DIRECTORY_SEPARATOR);
+define('RESOURCES_PATH', XGP_ROOT . 'resources' . DIRECTORY_SEPARATOR);
 
 /**
  *
