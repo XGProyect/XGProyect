@@ -64,6 +64,9 @@
         ],
         "phpunit": [
             "vendor/bin/phpunit --config tests/phpunit.xml --testsuite xgp_application"
+        ],
+        "phpcompatinfo": [
+            "vendor/bin/phpcompatinfo --progress analyser:run ./legacy/"
         ]
     },
     "extra": {
