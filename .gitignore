@@ -29,3 +29,4 @@ storage/logs/*.txt
 /docs/*
 vendor
 composer.lock
+config/xgp-db-config.php

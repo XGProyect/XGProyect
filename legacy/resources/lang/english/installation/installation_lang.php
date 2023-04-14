@@ -52,11 +52,11 @@ $lang = [
     'ins_not_connected_error' => 'Unable to connect to the database with the data entered.',
     'ins_db_not_exists' => 'Unable to access the database with the provided name.',
     'ins_empty_fields_error' => 'All fields are required',
-    'ins_write_config_error' => 'Error writing the config.php file, make sure it is 777 CHMOD (write permissions) or the file exists',
+    'ins_write_config_error' => 'Error writing the xgp-db-config.php file, make sure it is 777 CHMOD (write permissions) or the file exists',
     'ins_insert_tables_error' => 'Failed to insert data into the database, check the database or that the server is active.',
 
     // installation -  step 2
-    'ins_done_config' => 'config.php file successfully configurated.',
+    'ins_done_config' => 'xgp-db-config.php file successfully configurated.',
     'ins_done_connected' => 'Connection succesfully stablished.',
     'ins_done_insert' => 'Base data succesfully inserted.',
 

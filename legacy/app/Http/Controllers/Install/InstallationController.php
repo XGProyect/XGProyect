@@ -300,7 +300,7 @@ class InstallationController extends BaseController
     private function isInstalled()
     {
         // if file not exists
-        $config_file = CONFIGS_PATH . 'config.php';
+        $config_file = CONFIGS_PATH . 'xgp-db-config.php';
 
         if (!file_exists($config_file) or filesize($config_file) == 0) {
             return false;
@@ -336,7 +336,7 @@ class InstallationController extends BaseController
 
         foreach ($result as $row) {
             foreach ($row as $table) {
-                if (strpos($table, DB_PREFIX) !== false) {
+                if (strpos($table, config('DB_PREFIX')) !== false) {
                     $arr[] = $table;
                 }
             }
@@ -382,7 +382,7 @@ class InstallationController extends BaseController
      */
     private function writeConfigFile()
     {
-        $configFile = CONFIGS_PATH . 'config.php';
+        $configFile = CONFIGS_PATH . 'xgp-db-config.php';
         $laravelConfigFile = @fopen($configFile, "w");
 
         if (!$laravelConfigFile) {
@@ -418,7 +418,7 @@ class InstallationController extends BaseController
 
             return true;
         } {
-            unlink(config_path() . '/config.php');
+            unlink(config_path() . '/xgp-db-config.php');
         }
 
         // check if something was created and delete it

@@ -73,7 +73,7 @@ class HomeController extends BaseController
         $alert = [];
 
         if ($this->user['user_authlevel'] >= 3) {
-            if ((bool) (@fileperms(CONFIGS_PATH . 'config.php') & 0x0002)) {
+            if ((bool) (@fileperms(CONFIGS_PATH . 'xgp-db-config.php') & 0x0002)) {
                 $alert[] = $this->langs->line('hm_config_file_writable');
             }
 

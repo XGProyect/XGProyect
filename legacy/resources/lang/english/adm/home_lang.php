@@ -20,7 +20,7 @@ $lang = [
     'hm_warning' => 'Warning!',
     'hm_ok' => 'Ok!',
     'hm_install_file_detected' => 'install/ directory detected. For safety reasons you must rename or delete it.',
-    'hm_config_file_writable' => 'Your config file (config.php) is currently world-writable. We strongly encourage you to change the permissions to 640 or at least to 644.',
+    'hm_config_file_writable' => 'Your config file (xgp-db-config.php) is currently world-writable. We strongly encourage you to change the permissions to 640 or at least to 644.',
     'hm_errors' => 'There are errors in your server. You can view them by clicking <a href="admin.php?page=errors">here</a>',
     'hm_old_version' => 'A new version is available. Click <a href="https//github.com/XGProyect/XG-Proyect-v3.x.x/releases" target="_blank">here</a> to download it.',
     'hm_all_ok' => 'No updates or alerts',

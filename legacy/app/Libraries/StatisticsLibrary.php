@@ -59,7 +59,7 @@ class StatisticsLibrary
      */
     public function rebuildPoints($user_id, $planet_id, $what)
     {
-        if (!in_array(DB_PREFIX . $what, [BUILDINGS, DEFENSES, RESEARCH, SHIPS])) {
+        if (!in_array(config('DB_PREFIX') . $what, [BUILDINGS, DEFENSES, RESEARCH, SHIPS])) {
             return false;
         }
 

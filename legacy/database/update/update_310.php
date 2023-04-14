@@ -2,7 +2,7 @@
 
 $queries[] = "ALTER TABLE `" . BUDDY . "` ADD PRIMARY KEY (`buddy_id`), ADD KEY `buddy_id` (`buddy_id`);";
 $queries[] = "ALTER TABLE `" . FLEETS . "` CHANGE `fleet_mess` `fleet_mess` TINYINT(1) NOT NULL DEFAULT '0';";
-$queries[] = "RENAME TABLE `" . DB_PREFIX . "acs_fleets` TO `" . ACS . "`;";
+$queries[] = "RENAME TABLE `" . config('DB_PREFIX') . "acs_fleets` TO `" . ACS . "`;";
 $queries[] = "ALTER TABLE `" . ACS . "` CHANGE `acs_fleet_members` `acs_fleet_owner` INT(11) NOT NULL DEFAULT '0';";
 $queries[] = "ALTER TABLE `" . ACS . "` ADD UNIQUE(`acs_fleet_name`);";
 $queries[] = "CREATE TABLE `" . ACS_MEMBERS . "` (
@@ -52,7 +52,7 @@ PRIMARY KEY (`preference_id`),
 UNIQUE KEY `preference_user_id` (`preference_user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;";
 $queries[] = "INSERT INTO `" . PREFERENCES . "` (`preference_user_id`) SELECT `user_id` FROM `" . USERS . "`;";
-$queries[] = "DROP TABLE `" . DB_PREFIX . "settings`";
+$queries[] = "DROP TABLE `" . config('DB_PREFIX') . "settings`";
 $queries[] = "ALTER TABLE `" . USERS . "` DROP `user_email_permanent`;";
 $queries[] = "ALTER TABLE `" . OPTIONS . "` ADD PRIMARY KEY(`option_id`);";
 $queries[] = "ALTER TABLE `" . OPTIONS . "` CHANGE `option_id` `option_id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT;";

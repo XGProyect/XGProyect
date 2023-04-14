@@ -33,7 +33,7 @@ class StatisticsLibrary extends Model
     {
         return $this->db->queryFetch(
             "SELECT *
-            FROM `" . DB_PREFIX . $what . "` ttu
+            FROM `" . config('DB_PREFIX') . $what . "` ttu
             WHERE ttu." . rtrim($what, 's') . "_planet_id = '" . $planet_id . "';"
         );
     }

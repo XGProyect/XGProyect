@@ -70,7 +70,7 @@ class Common
     private function isServerInstalled(): void
     {
         try {
-            $config_file = CONFIGS_PATH . 'config.php';
+            $config_file = CONFIGS_PATH . 'xgp-db-config.php';
 
             if (file_exists($config_file)) {
                 require $config_file;
