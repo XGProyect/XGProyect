@@ -65,7 +65,6 @@ define('CONFIGS_PATH', 'config' . DIRECTORY_SEPARATOR);
 define('DATABASE_PATH', 'database' . DIRECTORY_SEPARATOR);
 define('PUBLIC_PATH', 'public' . DIRECTORY_SEPARATOR);
 define('RESOURCES_PATH', 'resources' . DIRECTORY_SEPARATOR);
-define('DATA_PATH', 'storage' . DIRECTORY_SEPARATOR);
 define('VENDOR_PATH', 'vendor' . DIRECTORY_SEPARATOR);
 
 /**
@@ -111,8 +110,8 @@ define('VIEWS_DIR', RESOURCES_PATH . 'views' . DIRECTORY_SEPARATOR);
  * STORAGE DIRECTORY STRUCTURE
  *
  */
-define('BACKUP_PATH', DATA_PATH . 'backups' . DIRECTORY_SEPARATOR);
-define('LOGS_PATH', DATA_PATH . 'logs' . DIRECTORY_SEPARATOR);
+define('BACKUP_PATH', storage_path('backups') . DIRECTORY_SEPARATOR);
+define('LOGS_PATH', storage_path('logs') . DIRECTORY_SEPARATOR);
 
 /**
  *

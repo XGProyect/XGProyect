@@ -93,7 +93,7 @@ class BackupController extends BaseController
      */
     private function doDownloadAction(string $file_name): void
     {
-        $to_download = XGP_ROOT . BACKUP_PATH . $file_name;
+        $to_download = BACKUP_PATH . $file_name;
 
         if (file_exists($to_download)) {
             header('Content-type: text/plain');
@@ -111,7 +111,7 @@ class BackupController extends BaseController
      */
     private function doDeleteAction(string $file_name): void
     {
-        $to_delete = XGP_ROOT . BACKUP_PATH . $file_name;
+        $to_delete = BACKUP_PATH . $file_name;
 
         if (file_exists($to_delete)) {
             unlink($to_delete);
@@ -175,10 +175,9 @@ class BackupController extends BaseController
     private function getBackupList()
     {
         $backup_list = [];
-        $backups_path = XGP_ROOT . BACKUP_PATH;
 
         // list of backup files
-        chdir($backups_path);
+        chdir(BACKUP_PATH);
         $files = glob('*.sql');
 
         if ($files != '') {

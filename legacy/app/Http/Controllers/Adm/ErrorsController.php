@@ -34,11 +34,6 @@ class ErrorsController extends BaseController
         $this->buildPage();
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $delete_all = filter_input(INPUT_GET, 'deleteall', FILTER_DEFAULT);
@@ -67,11 +62,6 @@ class ErrorsController extends BaseController
         );
     }
 
-    /**
-     * Parse the recovered log files
-     *
-     * @return array
-     */
     private function processErrorsLogs(): array
     {
         // list of log files
@@ -107,16 +97,8 @@ class ErrorsController extends BaseController
         ];
     }
 
-    /**
-     * Get a list of the log files
-     *
-     * @return array
-     */
     private function getListOfLogFiles(): array
     {
-        $logs_path = XGP_ROOT . LOGS_PATH;
-
-        // list of log files
-        return glob($logs_path . '*.txt');
+        return glob(LOGS_PATH . '*.txt');
     }
 }

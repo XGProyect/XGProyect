@@ -3,7 +3,7 @@
 use App\Core\Common;
 
 define('IN_INSTALL', true);
-define('XGP_ROOT', realpath(dirname(__DIR__)) . DIRECTORY_SEPARATOR);
+define('XGP_ROOT', base_path('legacy') . DIRECTORY_SEPARATOR);
 
 require XGP_ROOT . 'app' . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'Common.php';
 

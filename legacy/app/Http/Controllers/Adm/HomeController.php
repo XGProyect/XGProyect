@@ -156,15 +156,8 @@ class HomeController extends BaseController
         }
     }
 
-    /**
-     * Check if there are any errors logged
-     *
-     * @return boolean
-     */
     private function getServerErrors(): bool
     {
-        $logs_path = XGP_ROOT . LOGS_PATH;
-
-        return (count(glob($logs_path . '*.txt')) > 0);
+        return (count(glob(LOGS_PATH . '*.txt')) > 0);
     }
 }
