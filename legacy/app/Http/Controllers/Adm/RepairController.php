@@ -47,14 +47,13 @@ class RepairController extends BaseController
             $parse['display'] = 'block';
             $parse['head'] = $this->template->set('adm/repair_row_head_view', $this->langs->language);
             $parse['tables'] = '';
-            $parse['np_general'] = '';
             $parse['results'] = '';
 
             foreach ($tables as $row) {
-                $row['row'] = $row['table_name'];
-                $row['data'] = FormatLib::prettyBytes($row['data_length']);
-                $row['index'] = FormatLib::prettyBytes($row['index_length']);
-                $row['overhead'] = FormatLib::prettyBytes($row['data_free']);
+                $row['row'] = $row['TABLE_NAME'];
+                $row['data'] = FormatLib::prettyBytes($row['DATA_LENGTH']);
+                $row['index'] = FormatLib::prettyBytes($row['INDEX_LENGTH']);
+                $row['overhead'] = FormatLib::prettyBytes($row['DATA_FREE']);
                 $row['status_style'] = 'text-info';
 
                 $parse['tables'] .= $this->template->set(
@@ -69,7 +68,6 @@ class RepairController extends BaseController
             $parse['display'] = 'none';
             $parse['head'] = $this->template->set('adm/repair_result_head_view', $this->langs->language);
             $parse['tables'] = '';
-            $parse['np_general'] = '';
 
             if (isset($_POST['table']) && is_array($_POST['table'])) {
                 $result_rows = '';
