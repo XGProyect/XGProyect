@@ -28,7 +28,6 @@ class ResourcesController extends BaseController
         // load Language
         parent::loadLang(['game/global', 'game/constructions', 'game/ships', 'game/resources', 'game/technologies']);
 
-        // check if session is active
         Users::checkSession();
 
         $this->resourcesModel = new Resources();

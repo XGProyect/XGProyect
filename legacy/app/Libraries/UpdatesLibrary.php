@@ -36,51 +36,41 @@ class UpdatesLibrary
         $this->updateStatistics();
     }
 
-    /**
-     * cleanUp
-     *
-     * @return void
-     */
-    private function cleanUp()
+    private function cleanUp(): void
     {
-        $last_cleanup = Functions::readConfig('last_cleanup');
-        $cleanup_interval = 6; // 6 HOURS
+        $lastCleanup = Functions::readConfig('last_cleanup');
+        $cleanupInterval = 6; // 6 HOURS
 
-        if ((time() >= ($last_cleanup + (3600 * $cleanup_interval)))) {
+        if ((time() >= ($lastCleanup + (3600 * $cleanupInterval)))) {
             // TIMERS
-            $del_planets = time() - ONE_DAY;
-            $del_before = time() - ONE_WEEK;
-            $del_inactive = time() - ONE_MONTH;
-            $del_deleted = time() - ONE_WEEK;
+            $delPlanets = time() - ONE_DAY;
+            $delBefore = time() - ONE_WEEK;
+            $delInactive = time() - ONE_MONTH;
+            $delDeleted = time() - ONE_WEEK;
 
             // USERS TO DELETE
-            $ChooseToDelete = $this->updatesModel->deleteUsersByDeletedAndInactive($del_deleted, $del_inactive);
+            $chooseToDelete = $this->updatesModel->deleteUsersByDeletedAndInactive($delDeleted, $delInactive);
 
             $users = new Users();
 
-            if ($ChooseToDelete) {
-                foreach ($ChooseToDelete as $delete) {
+            if ($chooseToDelete) {
+                foreach ($chooseToDelete as $delete) {
                     $users->deleteUser($delete['user_id']);
                 }
             }
 
             // Misc deletions
-            $this->updatesModel->deleteMessages($del_before);
-            $this->updatesModel->deleteReports($del_before);
-            $this->updatesModel->deleteSessions(date('Y-m-d H:i:s', $del_planets));
-            $this->updatesModel->deleteDestroyedPlanets($del_planets);
+            $this->updatesModel->deleteMessages($delBefore);
+            $this->updatesModel->deleteReports($delBefore);
+            $this->updatesModel->deleteSessions($delPlanets);
+            $this->updatesModel->deleteDestroyedPlanets($delPlanets);
             $this->updatesModel->deleteExpiredAcs();
 
             Functions::updateConfig('last_cleanup', time());
         }
     }
 
-    /**
-     * createBackup
-     *
-     * @return void
-     */
-    private function createBackup()
+    private function createBackup(): void
     {
         // LAST UPDATE AND UPDATE INTERVAL, EX: 15 MINUTES
         $auto_backup = Functions::readConfig('auto_backup');

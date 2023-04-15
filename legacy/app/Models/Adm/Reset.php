@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Adm;
 
+use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Model;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;
@@ -331,7 +332,7 @@ class Reset extends Model
             $this->db->query("TRUNCATE TABLE `" . PREFERENCES . "`");
             $this->db->query("TRUNCATE TABLE `" . PREMIUM . "`");
             $this->db->query("TRUNCATE TABLE `" . RESEARCH . "`");
-            $this->db->query("TRUNCATE TABLE `" . SESSIONS . "`");
+            DB::table('sessions')->truncate();
             $this->db->query("TRUNCATE TABLE `" . SHIPS . "`");
 
             // new creator

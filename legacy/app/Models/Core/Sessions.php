@@ -8,97 +8,80 @@ use Xgp\App\Core\Model;
 
 class Sessions extends Model
 {
-    /**
-     * Check if the connection is open
-     *
-     * @return boolean
-     */
     public function openConnection(): bool
     {
-        // connection must be already open so return the status
-        // only to fulfil session_set_save_handler requirements
         return $this->db->testConnection();
     }
 
-    /**
-     * Close connection
-     *
-     * @return boolean
-     */
     public function closeConnection(): bool
     {
         return $this->db->closeConnection();
     }
 
-    /**
-     * Get session data by ID
-     *
-     * @param string $sid
-     * @return array
-     */
     public function getSessionDataById(string $sid): string
     {
         $sessions = $this->db->query(
             "SELECT
-                `session_data`
+                `payload`
             FROM `" . SESSIONS . "`
-            WHERE `session_id` = '" . $this->db->escapeValue($sid) . "'
+            WHERE `id` = '" . $this->db->escapeValue($sid) . "'
             LIMIT 1"
         );
 
         if ($this->db->numRows($sessions) == 1) {
             $fields = $this->db->fetchAssoc($sessions);
 
-            return $fields['session_data'];
+            return $fields['payload'];
         } else {
             return '';
         }
     }
 
-    /**
-     * Insert new sesson data
-     *
-     * @param string $sid
-     * @param string $data
-     * @return boolean
-     */
     public function insertNewSessionData(string $sid, string $data): bool
     {
+        $userId =  null;
+
+        if (!empty($_SESSION['user_id'])) {
+            $userId = $this->db->escapeValue($_SESSION['user_id']);
+        }
+
         $this->db->query(
-            "REPLACE INTO `" . SESSIONS . "` (`session_id`, `session_data`)
-            VALUES ('" . $this->db->escapeValue($sid) . "', '" . $this->db->escapeValue($data) . "')"
+            "REPLACE INTO `" . SESSIONS . "` (
+                `id`,
+                `user_id`,
+                `ip_address`,
+                `user_agent`,
+                `payload`,
+                `last_activity`
+            )
+            VALUES (
+                '" . $this->db->escapeValue($sid) . "',
+                " . (empty($userId) ? 'NULL,' : "'" . $userId . "',") .  "
+                '" . $this->db->escapeValue($_SERVER['REMOTE_ADDR']) . "',
+                '" . $this->db->escapeValue($_SERVER['HTTP_USER_AGENT']) . "',
+                '" . $this->db->escapeValue($data) . "',
+                '" . time() . "'
+            )"
         );
 
         return ($this->db->affectedRows() > 0);
     }
 
-    /**
-     * Delete session data by ID
-     *
-     * @param string $sid
-     * @return string
-     */
     public function deleteSessionDataById(string $sid): bool
     {
         $this->db->query(
             "DELETE FROM `" . SESSIONS . "`
-            WHERE `session_id` = '" . $this->db->escapeValue($sid) . "'"
+            WHERE `id` = '" . $this->db->escapeValue($sid) . "'"
         );
 
         return ($this->db->affectedRows() > 0);
     }
 
-    /**
-     * Clean expired session data
-     *
-     * @param integer $expire
-     * @return string
-     */
     public function cleanSessionData(int $expire): bool
     {
         $this->db->query(
             "DELETE FROM `" . SESSIONS . "`
-            WHERE DATE_ADD(`session_last_accessed`, INTERVAL " . $expire . " SECOND) < NOW()"
+            WHERE DATE_ADD(`last_activity`, INTERVAL " . $expire . " SECOND) < NOW()"
         );
 
         return ($this->db->affectedRows() > 0);

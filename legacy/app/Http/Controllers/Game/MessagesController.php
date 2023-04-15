@@ -30,7 +30,6 @@ class MessagesController extends BaseController
     {
         parent::__construct();
 
-        // check if session is active
         Users::checkSession();
 
         // load Language

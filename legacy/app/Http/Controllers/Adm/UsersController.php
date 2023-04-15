@@ -29,7 +29,6 @@ class UsersController extends BaseController
     {
         parent::__construct();
 
-        // check if session is active
         Administration::checkSession();
 
 

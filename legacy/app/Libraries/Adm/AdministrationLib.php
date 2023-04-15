@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Libraries\Adm;
 
 use Xgp\App\Core\Language;
@@ -11,77 +13,37 @@ use Xgp\App\Libraries\Users;
 
 class AdministrationLib
 {
-    /**
-     * Return a new instance of Template
-     *
-     * @return Template
-     */
     public static function getTemplate(): Template
     {
         return new Template();
     }
 
-    /**
-     * haveAccess
-     *
-     * @param int $user_level User level
-     *
-     * @return void
-     */
-    public static function haveAccess($user_level)
+    public static function haveAccess($userLevel): bool
     {
-        return ($user_level >= 1);
+        return ($userLevel >= 1);
     }
 
-    /**
-     * noAccessMessage
-     *
-     * @param string $mes Message
-     *
-     * @return void
-     */
-    public static function noAccessMessage($mes = '')
+    public static function noAccessMessage(string $mes = ''): void
     {
         (new Page(new Users()))->displayAdmin(
             self::saveMessage('error', $mes, false)
         );
     }
 
-    /**
-     * installDirExists
-     *
-     * @return boolean
-     */
-    public static function installDirExists()
+    public static function installDirExists(): bool
     {
         return (file_exists(PUBLIC_PATH . 'install.php'));
     }
 
-    /**
-     * authorization
-     *
-     * @param int    $user_level User level
-     * @param string $permission Permission
-     *
-     * @return array
-     */
-    public static function authorization(string $module, int $user_level)
+    public static function authorization(string $module, int $userLevel): bool
     {
         $cleaned_module_name = strtolower(substr(strrchr($module, "\\"), 1));
         $permissions = new Permissions(Functions::readConfig('admin_permissions'));
 
-        return $permissions->isAccessAllowed($cleaned_module_name, $user_level);
+        return $permissions->isAccessAllowed($cleaned_module_name, $userLevel);
     }
 
-    /**
-     * saveMessage
-     *
-     * @param string $result  Result
-     * @param string $message Message
-     *
-     * @return string
-     */
-    public static function saveMessage($result, $message, $dismissible = true)
+    public static function saveMessage(string $result, string $message, bool $dismissible = true): string
     {
         $lang = new Language();
         $lang = $lang->loadLang('adm/global', true);
@@ -117,14 +79,7 @@ class AdministrationLib
         );
     }
 
-    /**
-     * showPopUp
-     *
-     * @param string $message Message
-     *
-     * @return string
-     */
-    public static function showPopUp($message)
+    public static function showPopUp(string $message): string
     {
         $parse['message'] = $message;
 
@@ -158,12 +113,7 @@ class AdministrationLib
         }
     }
 
-    /**
-     * checkSession
-     *
-     * @return void
-     */
-    public static function checkSession()
+    public static function checkSession(): void
     {
         if (!self::isSessionSet()) {
             $page = filter_input(INPUT_GET, 'page', FILTER_UNSAFE_RAW);
@@ -174,33 +124,19 @@ class AdministrationLib
         }
     }
 
-    /**
-     * closeSession
-     *
-     * @return boolean
-     */
-    public static function closeSession()
+    public static function closeSession(): void
     {
         unset($_SESSION['admin_id']);
         unset($_SESSION['admin_password']);
     }
 
-    /**
-     * isSessionSet
-     *
-     * @return boolean
-     */
-    private static function isSessionSet()
+
+    private static function isSessionSet(): bool
     {
         return !(!isset($_SESSION['admin_id']) or !isset($_SESSION['admin_password']));
     }
 
-    /**
-     * Check if an update is required
-     *
-     * @return void
-     */
-    public static function updateRequired()
+    public static function updateRequired(): void
     {
         if (SYSTEM_VERSION != Functions::readConfig('version')) {
             $exclude_pages = ['', 'home', 'update', 'logout'];

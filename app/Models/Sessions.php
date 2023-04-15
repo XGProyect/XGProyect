@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property string $session_data
- * @property int    $session_last_accessed
+ * @property string $payload
+ * @property int    $last_activity
  */
 class Sessions extends Model
 {
@@ -22,7 +22,7 @@ class Sessions extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'session_id';
+    protected $primaryKey = 'id';
 
     /**
      * Attributes that should be mass-assignable.
@@ -30,7 +30,7 @@ class Sessions extends Model
      * @var array
      */
     protected $fillable = [
-        'session_data', 'session_last_accessed'
+        'payload', 'last_activity'
     ];
 
     /**
@@ -48,7 +48,7 @@ class Sessions extends Model
      * @var array
      */
     protected $casts = [
-        'session_data' => 'string', 'session_last_accessed' => 'timestamp'
+        'payload' => 'string', 'last_activity' => 'timestamp'
     ];
 
     /**
@@ -57,7 +57,7 @@ class Sessions extends Model
      * @var array
      */
     protected $dates = [
-        'session_last_accessed'
+        'last_activity'
     ];
 
     /**

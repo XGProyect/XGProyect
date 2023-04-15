@@ -85,7 +85,7 @@ class Users extends Model
     {
         $this->db->query(
             "DELETE FROM `" . SESSIONS . "`
-            WHERE `session_data`
+            WHERE `payload`
             LIKE '%user_id|s:1:\"" . $user_id . "\"%'"
         );
     }

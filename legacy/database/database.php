@@ -369,13 +369,6 @@ PRIMARY KEY (`research_id`),
 UNIQUE KEY `research_user_id` (`research_user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;";
 
-$tables['sessions'] = "CREATE TABLE `" . SESSIONS . "` (
-`session_id` CHAR(32) NOT NULL,
-`session_data` longtext NOT NULL,
-`session_last_accessed` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-PRIMARY KEY  (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-
 $tables['ships'] = "CREATE TABLE `" . SHIPS . "` (
 `ship_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 `ship_planet_id` int(11) unsigned NOT NULL,

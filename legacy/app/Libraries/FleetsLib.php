@@ -2,6 +2,7 @@
 
 namespace Xgp\App\Libraries;
 
+use CiLang;
 use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Language;
@@ -14,7 +15,6 @@ use Xgp\App\Libraries\OfficiersLib;
 use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\Users;
-use CiLang;
 
 class FleetsLib
 {
@@ -48,7 +48,7 @@ class FleetsLib
         return (35000 / $percentage * sqrt($distance * 10 / $maxFleetSpeed) + 10) / $speedFactor;
     }
 
-    public static function fleetMaxSpeed(string $fleetArray, int $fleet, array $user): int
+    public static function fleetMaxSpeed(array $fleetArray, int $fleet, array $user): int
     {
         $pricelist = Objects::getInstance()->getPrice();
         $speed_all = [];

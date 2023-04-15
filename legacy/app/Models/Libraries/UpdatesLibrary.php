@@ -2,19 +2,12 @@
 
 namespace Xgp\App\Models\Libraries;
 
+use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Model;
 
 class UpdatesLibrary extends Model
 {
-    /**
-     * Delete deleted users and inactive users
-     *
-     * @param int $del_deleted  Delete deleted users
-     * @param int $del_inactive Delete inactive users
-     *
-     * @return void
-     */
-    public function deleteUsersByDeletedAndInactive($del_deleted, $del_inactive)
+    public function deleteUsersByDeletedAndInactive(int $del_deleted, int $del_inactive): ?array
     {
         return $this->db->queryFetchAll(
             "SELECT u.`user_id`
@@ -50,16 +43,9 @@ class UpdatesLibrary extends Model
         $this->db->query("DELETE FROM " . REPORTS . " WHERE `report_time` < '" . $del_before . "';");
     }
 
-    /**
-     * Delete old sessions
-     *
-     * @param int $del_before Delete time
-     *
-     * @return void
-     */
-    public function deleteSessions($del_before)
+    public function deleteSessions($delBefore): void
     {
-        $this->db->query("DELETE FROM " . SESSIONS . " WHERE `session_last_accessed` < '" . $del_before . "';");
+        DB::table('sessions')->where('last_activity', '<', $delBefore)->delete();
     }
 
     /**

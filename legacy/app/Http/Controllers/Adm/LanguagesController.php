@@ -16,7 +16,6 @@ class LanguagesController extends BaseController
     {
         parent::__construct();
 
-        // check if session is active
         Administration::checkSession();
 
         // load Language

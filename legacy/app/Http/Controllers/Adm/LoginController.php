@@ -17,7 +17,6 @@ class LoginController extends BaseController
     {
         parent::__construct();
 
-        // check if session is active
         Administration::checkSession();
 
         // load Language
@@ -52,7 +51,7 @@ class LoginController extends BaseController
 
             if ($login) {
                 if (password_verify($loginData['inputPassword'], $login['user_password'])
-                    && Administration::adminLogin($login['user_id'], $login['user_password'])) {
+                    && Administration::adminLogin((int) $login['user_id'], $login['user_password'])) {
                     $redirect = filter_input(INPUT_GET, 'redirect', FILTER_UNSAFE_RAW) ?? 'home';
 
                     if ($redirect == '') {

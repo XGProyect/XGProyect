@@ -31,7 +31,6 @@ class AllianceController extends BaseController
     {
         parent::__construct();
 
-        // check if session is active
         Users::checkSession();
 
         // Check module access

@@ -27,7 +27,6 @@ class Fleet3Controller extends BaseController
     {
         parent::__construct();
 
-        // check if session is active
         Users::checkSession();
 
         // load Language
