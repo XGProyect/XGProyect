@@ -4,9 +4,9 @@ $lang = [
     'lang_code' => 'en',
 
     // messages
-    'ins_no_server_requirements' => 'Your server / hosting does not meet the minimum requirements needed to run XG Proyect.<br /><br />Requirements: <br />- PHP 7.3+<br />- MySQL 5.5+',
+    'ins_no_server_requirements' => 'Your server / hosting does not meet the minimum requirements needed to run XG Proyect.<br /><br />Requirements: <br />- PHP 8.1+<br />- MySQL 5.7+',
     'ins_not_writable' => 'You must provide write permission (chmod 777) to the config directory to continue with the installation.',
-    'ins_already_installed' => 'XG Proyect is already installed. Select an option: <br /><br /> - <a href="../admin.php?page=update">Update</a> <br /> - <a href="../admin.php?page=migrate">Migrate</a> <br /> - <a href="../">Back to the game</a> <br /><br />In case you do not want to take any action, for safety, we recommend <span style="color:red;text-decoration:underline;">DELETE</span> the install directory.',
+    'ins_already_installed' => 'XG Proyect is already installed. Select an option: <br /><br /> - <a href="../admin.php?page=update">Update</a> <br /> - <a href="../">Back to the game</a> <br /><br />In case you do not want to take any action, for safety, we recommend <span style="color:red;text-decoration:underline;">DELETE</span> the install directory.',
 
     // error headers
     'ins_error_title' => 'Alert!',
@@ -25,7 +25,7 @@ $lang = [
     'ins_welcome' => 'Welcome to XG Proyect!',
     'ins_welcome_first_line' => 'XG Proyect is the best OGame clones around. XG Proyect 3 is the latest and most stable package never before developed. As any other version, XG Proyect receives support from the team known as Xtreme-gameZ, always making sure to get the best quality care and the stability of the release. XG Proyect 3 day by day looks forward and seeks growth, stability, flexibility, dynamism, quality and user confidence. We\'re always expecting that XG Proyect is better than your expectations.',
     'ins_welcome_second_line' => 'The installation system will guide you through the installation or upgrading from a previous version to the latest. For doubts, problems o queries, do not hesitate to see our <a href="https://www.xgproyect.org/"><em>support and development community</em></a>.',
-    'ins_welcome_third_line' => 'XG Proyect is an OpenSource project, to see the license specifications click over license in the main menu. To start the installation click on the install button, to update or migrate log into the ADMIN CP.',
+    'ins_welcome_third_line' => 'XG Proyect is an OpenSource project, to see the license specifications click over license in the main menu. To start the installation click on the install button, to update log into the ADMIN CP.',
     'ins_install_license' => 'License',
 
     // installation - general

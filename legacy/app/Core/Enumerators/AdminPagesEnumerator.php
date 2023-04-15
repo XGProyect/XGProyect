@@ -46,7 +46,6 @@ abstract class AdminPagesEnumerator
         'ban',
         'rebuildhighscores',
         'update',
-        'migrate',
     ];
 
     public const MAINTENANCE = [

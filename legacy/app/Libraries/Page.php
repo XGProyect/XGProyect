@@ -2,6 +2,7 @@
 
 namespace Xgp\App\Libraries;
 
+use CiLang;
 use Xgp\App\Core\Database;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Language;
@@ -13,7 +14,6 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\OfficiersLib;
 use Xgp\App\Libraries\ProductionLib as Production;
 use Xgp\App\Libraries\TimingLibrary as Timing;
-use CiLang;
 
 class Page
 {
@@ -237,7 +237,6 @@ class Page
             ['ban', '5'],
             ['rebuildhighscores', '5'],
             ['update', '5'],
-            ['migrate', '5'],
             ['repair', '6'],
             ['reset', '6'],
         ];

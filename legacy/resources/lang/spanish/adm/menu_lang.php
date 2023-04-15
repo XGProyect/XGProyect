@@ -33,7 +33,6 @@ $lang = [
     'ban' => 'Suspensiones',
     'rebuildhighscores' => 'Regenerar clasificación',
     'update' => 'Actualizar',
-    'migrate' => 'Migrar',
     'repair' => 'Reparar / Optimizar tablas',
     'reset' => 'Reiniciar universo',
 

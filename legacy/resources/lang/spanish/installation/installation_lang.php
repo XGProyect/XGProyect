@@ -4,9 +4,9 @@ $lang = [
     'lang_code' => 'es',
 
     // messages
-    'ins_no_server_requirements' => 'Tu servidor/hosting no cumple con los requisitos m&iacute;nimos que requiere XG Proyect para funcionar.<br /><br />Requisitos: <br />- PHP 7.3+<br />- MySQL 5.5+',
+    'ins_no_server_requirements' => 'Tu servidor/hosting no cumple con los requisitos m&iacute;nimos que requiere XG Proyect para funcionar.<br /><br />Requisitos: <br />- PHP 8.1+<br />- MySQL 5.7+',
     'ins_not_writable' => 'Debes dar permisos de escritura (chmod 777) al directorio config para poder continuar con la instalación.',
-    'ins_already_installed' => 'XG Proyect ya se encuentra instalado. Selecciona una opci&oacute;n: <br /><br /> - <a href="../admin.php?page=update">Actualizar</a> <br /> - <a href="../admin.php?page=migrate">Migrar</a> <br /> - <a href="../">Volver al juego</a> <br /><br />En el caso de que no desees realizar ninguna acci&oacute;n, por seguridad, te recomendamos <span style="color:red;text-decoration:underline;">BORRAR</span> el directorio install.',
+    'ins_already_installed' => 'XG Proyect ya se encuentra instalado. Selecciona una opci&oacute;n: <br /><br /> - <a href="../admin.php?page=update">Actualizar</a> <br /> - <a href="../">Volver al juego</a> <br /><br />En el caso de que no desees realizar ninguna acci&oacute;n, por seguridad, te recomendamos <span style="color:red;text-decoration:underline;">BORRAR</span> el directorio install.',
 
     // error headers
     'ins_error_title' => '¡Alerta!',
@@ -24,7 +24,7 @@ $lang = [
     'ins_welcome' => '&iexcl;Bienvenido a XG Proyect!',
     'ins_welcome_first_line' => 'XG Proyect es el mejor clon de OGame existente hasta el momento. XG Proyect 3 es el &uacute;ltimo y m&aacute;s estable paquete nunca antes desarrollado. Tal cual como las otras versiones, XG Proyect recibe soporte del equipo antes conocido como Xtreme-gameZ, asegur&aacute;ndonos siempre de lograr la mejor calidad en atenci&oacute;n y la estabilidad de la versi&oacute;n. XG Proyect 3 d&iacute;a a d&iacute;a busca: crecimiento, estabilidad, flexibilidad, dinamismo, calidad y la confianza del usuario en que es su mejor opci&oacute;n y elecci&oacute;n. Siempre esperamos que XG Proyect sea mejor que tus expectativas.',
     'ins_welcome_second_line' => 'El sistema de instalaci&oacute;n te guiar&aacute; a trav&eacute;s de la instalaci&oacute;n del mismo, o la actualizaci&oacute;n de una versi&oacute;n anterior a la m&aacute;s reciente. Cualquier duda, problema o consulta no dudes en consulta nuestra <a href="https://www.xgproyect.org/"><em>comunidad de desarrollo y soporte</em></a>.',
-    'ins_welcome_third_line' => 'XG Proyect es un proyecto OpenSource (c&oacute;digo abierto), para ver las especificaciones de la licencia haz click en licencia en la barra superior. Para comenzar la instalaci&oacute;n haz click en el bot&oacute;n instalar, para actualizar a la versi&oacute;n m&aacute;s reciente o migrar deber&aacute;s iniciar sesi&oacute;n en el ADMIN CP.',
+    'ins_welcome_third_line' => 'XG Proyect es un proyecto OpenSource (c&oacute;digo abierto), para ver las especificaciones de la licencia haz click en licencia en la barra superior. Para comenzar la instalaci&oacute;n haz click en el bot&oacute;n instalar, para actualizar a la versi&oacute;n m&aacute;s reciente deber&aacute;s iniciar sesi&oacute;n en el ADMIN CP.',
     'ins_install_license' => 'Licencia',
 
     // installation - general
