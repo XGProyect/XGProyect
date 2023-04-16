@@ -14,13 +14,13 @@ About
 
 XG Proyect (XGP) is a web browser game based on the famous OGame. Our goal is to offer a package that is as similar as possible to the original.
 
-Official Website: https://www.xgproyect.org/
-Live Server: https://www.xgproyect.net/
+Official Website: https://www.xgproyect.org/  
+Live Server: https://www.xgproyect.net/  
 
 ## Requirements
 
-PHP 8.1 or greater
-MySQLi 5.5 or greater
+PHP 8.1 or greater  
+MySQLi 5.5 or greater  
 
 ## How to get XG Proyect?
 
