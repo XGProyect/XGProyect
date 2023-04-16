@@ -5,6 +5,7 @@ namespace Xgp\App\Core;
 use CiParser;
 use Exception;
 use Illuminate\Support\Facades\View;
+use Xgp\App\Libraries\Functions;
 
 class Template
 {
@@ -14,10 +15,20 @@ class Template
      * @deprecated 4.0.0
      */
     private $ciParser = null;
+    private static ?Template $instance = null;
 
     public function __construct()
     {
         $this->createNewParser();
+    }
+
+    public static function getInstance(): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new Template();
+        }
+
+        return self::$instance;
     }
 
     public function get(string $template_name): ?string
@@ -40,18 +51,21 @@ class Template
 
     public function set(string $template = '', array $data = [], bool $return = false): string
     {
-        $route = VIEWS_DIR . strtr($template, ['/' => DIRECTORY_SEPARATOR, '.' => DIRECTORY_SEPARATOR]) . '.blade.php';
-
-        if (file_exists($route)) {
-            return $this->setBlade($template, $data);
-        }
-
         return $this->ciParser->parse($this->get($template), $data, $return);
     }
 
-    private function setBlade(string $template = '', array $data = []): string
+    public static function view(string $template = '', array $data = []): void
     {
-        return View::make(strtr($template, ['/' => '.']), $data)->render();
+        $bladeFile = resource_path('views') . DIRECTORY_SEPARATOR . strtr($template, ['/' => DIRECTORY_SEPARATOR, '.' => DIRECTORY_SEPARATOR]) . '.blade.php';
+
+        if (!file_exists($bladeFile)) {
+            return;
+        }
+
+        View::share('gameTitle', Functions::readConfig('game_name'));
+        View::share('version', SYSTEM_VERSION);
+
+        die(View::make($template, $data)->render());
     }
 
     private function createNewParser(): void

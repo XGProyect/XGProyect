@@ -46,34 +46,27 @@ class OfficiersLib
         return 1 + $computer_tech + (1 * (self::isOfficierActive($amiral_level) ? AMIRAL : 0));
     }
 
-    /**
-     * Get the officer time left as string
-     *
-     * @param int $expiration
-     * @param array $lang
-     * @return string
-     */
-    public static function getOfficierTimeLeft(int $expiration, array $lang): string
+    public static function getOfficierTimeLeft(int $expiration): string
     {
-        $lang_line = 'of_time_remaining_many';
-        $time_left = strtr(
+        $langLine = 'of_time_remaining_many';
+        $timeLeft = strtr(
             Format::prettyTimeAgo(Timing::formatShortDate($expiration)),
-            $lang['timing']
+            __('game/global.timing')
         );
 
         if (Timing::getDaysLeft($expiration) <= 1) {
-            $lang_line = 'of_time_remaining_less';
-            $time_left = Timing::formatHoursMinutesLeft($expiration);
+            $langLine = 'of_time_remaining_less';
+            $timeLeft = Timing::formatHoursMinutesLeft($expiration);
         }
 
         if (Timing::getDaysLeft($expiration) > 1 && Timing::getDaysLeft($expiration) < 2) {
-            $lang_line = 'of_time_remaining_one';
-            $time_left = '';
+            $langLine = 'of_time_remaining_one';
+            $timeLeft = '';
         }
 
         return StringsHelper::parseReplacements(
-            $lang[$lang_line],
-            [$time_left]
+            __('game/officier.' . $langLine),
+            [$timeLeft]
         );
     }
 }

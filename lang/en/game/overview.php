@@ -13,7 +13,7 @@ return [
     'ov_distance_unit' => 'km',
     'ov_temperature' => 'Temperature',
     'ov_aprox' => 'approx.',
-    'ov_temp_unit' => '&#186;C',
+    'ov_temp_unit' => 'ºC',
     'ov_to' => 'to',
     'ov_position' => 'Position',
     'ov_points' => 'Points',

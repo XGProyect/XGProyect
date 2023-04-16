@@ -7,7 +7,6 @@ namespace Xgp\App\Core;
 use Exception;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use Xgp\App\Core\ErrorHandler;
 use Xgp\App\Core\Language;
 use Xgp\App\Core\Sessions;
 use Xgp\App\Helpers\StringsHelper;
@@ -18,9 +17,7 @@ use Xgp\App\Libraries\UpdatesLibrary;
 use Xgp\App\Libraries\Users;
 
 // Require some stuff
-
 require_once XGP_ROOT . 'config' . DIRECTORY_SEPARATOR . 'constants.php';
-require_once base_path('vendor') . DIRECTORY_SEPARATOR . 'autoload.php';
 
 class Common
 {
@@ -43,7 +40,6 @@ class Common
     {
 
         // overall loads
-        $this->setErrorHandler();
         $this->isServerInstalled();
 
         // specific pages load or executions
@@ -59,12 +55,6 @@ class Common
     public function getSession(): Sessions
     {
         return $this->sessions;
-    }
-
-    private function setErrorHandler(): void
-    {
-        // XGP error handler
-        new ErrorHandler();
     }
 
     private function isServerInstalled(): void

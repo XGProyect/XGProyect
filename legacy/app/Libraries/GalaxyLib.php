@@ -2,6 +2,7 @@
 
 namespace Xgp\App\Libraries;
 
+use CiLang;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
@@ -14,7 +15,6 @@ use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
-use CiLang;
 
 class GalaxyLib
 {
@@ -411,10 +411,10 @@ class GalaxyLib
         $user_status = [];
         foreach ($statuses as $status => $details) {
             if (empty($user_name)) {
-                $user_name = FormatLib::spanElement($this->row_data['user_name'], $details['class']);
+                $user_name = FormatLib::spanClassElement($this->row_data['user_name'], $details['class']);
             }
 
-            $user_status[] = FormatLib::spanElement($details['shortcut'], $details['class']);
+            $user_status[] = FormatLib::spanClassElement($details['shortcut'], $details['class']);
         }
 
         if (count($user_status) > 0) {

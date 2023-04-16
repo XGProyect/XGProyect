@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property string $user_name
@@ -96,5 +97,20 @@ class Users extends Model
     public function planets(): HasMany
     {
         return $this->hasMany(Planets::class, 'planet_user_id');
+    }
+
+    public function preferences(): HasOne
+    {
+        return $this->hasOne(Preferences::class, 'preference_user_id');
+    }
+
+    public function premium(): HasOne
+    {
+        return $this->hasOne(Premium::class, 'premium_user_id');
+    }
+
+    public function stats(): HasOne
+    {
+        return $this->hasOne(UsersStatistics::class, 'user_statistic_user_id');
     }
 }

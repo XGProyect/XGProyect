@@ -7,7 +7,7 @@
                 <table class="header">
                     <tr class="header">
                         <td class="header">
-                            <img src="{{ $dpath }}planets/small/s_{{ $image }}.jpg" height="50" width="50">
+                            <img src="{{ asset('upload/skins/xgproyect/planets/small/s_' . $image . '.jpg') }}" height="50" width="50">
                         </td>
                         <td class="header">
                             <table class="header">
@@ -23,19 +23,19 @@
                 <table class="header" id="resources" cellspacing="0" cellpadding="0" padding-right="30">
                     <tr class="header" style="text-align:center">
                         <td width="85" class="header">
-                            <img src="{{ $dpath }}resources/metal.gif" width="42" height="22">
+                            <img src="{{ asset('upload/skins/xgproyect/resources/metal.gif') }}" width="42" height="22">
                         </td>
                         <td width="85" class="header">
-                            <img src="{{ $dpath }}resources/crystal.gif" width="42" height="22">
+                            <img src="{{ asset('upload/skins/xgproyect/resources/crystal.gif') }}" width="42" height="22">
                         </td>
                         <td width="85" class="header">
-                            <img src="{{ $dpath }}resources/deuterium.gif" width="42" height="22">
+                            <img src="{{ asset('upload/skins/xgproyect/resources/deuterium.gif') }}" width="42" height="22">
                         </td>
                         <td width="85" class="header">
-                            <img src="{{ $dpath }}resources/darkmatter.jpg" width="42" height="22" title="Dark Matter">
+                            <img src="{{ asset('upload/skins/xgproyect/resources/darkmatter.jpg') }}" width="42" height="22" title="Dark Matter">
                         </td>
                         <td width="85" class="header">
-                            <img src="{{ $dpath }}resources/energy.gif" width="42" height="22">
+                            <img src="{{ asset('upload/skins/xgproyect/resources/energy.gif') }}" width="42" height="22">
                         </td>
                     </tr>
                     <tr class="header" style="text-align:center">
@@ -64,32 +64,33 @@
                     </tr>
                 </table>
             </td>
+
             <td class="header">
                 <table class="header">
                     <tr class="header">
                         <td style="margin: 0 auto;" width="35px" class='header'>
                             <a href="game.php?page=officier" accesskey="o">
-                                <img style="border:0;" src="{{ $dpath }}premium/commander_ikon{{ $img_premium_officier_commander }}.gif" width="32" height="32" alt="{{ $of_hire_commander }}" onmouseover="return overlib('<table width=390px><tr><td class=c>{{ $of_hire_commander }}</td></tr><tr><th style=text-align:left>{{ $add_premium_officier_commander }}</th></tr></table>');" onmouseout="return nd();">
+                                <img style="border:0;" src="{{ asset('upload/skins/xgproyect/premium/commander_ikon' . $imgPremiumOfficierCommander . '.gif') }}" width="32" height="32" alt="{{ __('game/officier.of_hire_commander') }}" onmouseover="return overlib('<table width=390px><tr><td class=c>{{ __('game/officier.of_hire_commander') }}</td></tr><tr><th style=text-align:left>{{ __('game/officier.of_add_premium_officier_commander') }}</th></tr></table>');" onmouseout="return nd();">
                             </a>
                         </td>
                         <td style="margin: 0 auto;" width="35" class="header">
                             <a href="game.php?page=officier" accesskey="o">
-                                <img style="border:0;" src="{{ $dpath }}premium/admiral_ikon{{ $img_premium_officier_admiral }}.gif" width="32" height="32" alt="{{ $of_hire_admiral }}" onmouseover="return overlib('<table width=390px><tr><td class=c>{{ $of_hire_admiral }}</td></tr><tr><th style=text-align:left>{{ $add_premium_officier_admiral }}</th></tr></table>');" onmouseout="return nd();">
+                                <img style="border:0;" src="{{ asset('upload/skins/xgproyect/premium/admiral_ikon' . $imgPremiumOfficierAdmiral . '.gif') }}" width="32" height="32" alt="{{ __('game/officier.of_hire_admiral') }}" onmouseover="return overlib('<table width=390px><tr><td class=c>{{ __('game/officier.of_hire_admiral') }}</td></tr><tr><th style=text-align:left>{{ __('game/officier.of_add_premium_officier_admiral') }}</th></tr></table>');" onmouseout="return nd();">
                             </a>
                         </td>
                         <td style="margin: 0 auto;" width="35" class="header">
                             <a href="game.php?page=officier" accesskey="o">
-                                <img style="border:0;" src="{{ $dpath }}premium/ingenieur_ikon{{ $img_premium_officier_engineer }}.gif" width="32" height="32" alt="{{ $of_hire_engineer }}" onmouseover="return overlib('<table width=310px><tr><td class=c>{{ $of_hire_engineer }}</td></tr><tr><th style=text-align:left>{{ $add_premium_officier_engineer }}</th></tr></table>');" onmouseout="return nd();">
+                                <img style="border:0;" src="{{ asset('upload/skins/xgproyect/premium/ingenieur_ikon' . $imgPremiumOfficierEngineer . '.gif') }}" width="32" height="32" alt="{{ __('game/officier.of_hire_engineer') }}" onmouseover="return overlib('<table width=310px><tr><td class=c>{{ __('game/officier.of_hire_engineer') }}</td></tr><tr><th style=text-align:left>{{ __('game/officier.of_add_premium_officier_engineer') }}</th></tr></table>');" onmouseout="return nd();">
                             </a>
                         </td>
                         <td style="margin: 0 auto;" width="35" class="header">
                             <a href="game.php?page=officier" accesskey="o">
-                                <img style="border:0;" src="{{ $dpath }}premium/geologe_ikon{{ $img_premium_officier_geologist }}.gif" width="32" height="32" alt="{{ $of_hire_geologist }}" onmouseover="return overlib('<table width=200px><tr><td class=c>{{ $of_hire_geologist }}</td></tr><tr><th style=text-align:left>{{ $add_premium_officier_geologist }}</th></tr></table>');" onmouseout="return nd();">
+                                <img style="border:0;" src="{{ asset('upload/skins/xgproyect/premium/geologe_ikon' . $imgPremiumOfficierGeologist . '.gif') }}" width="32" height="32" alt="{{ __('game/officier.of_hire_geologist') }}" onmouseover="return overlib('<table width=200px><tr><td class=c>{{ __('game/officier.of_hire_geologist') }}</td></tr><tr><th style=text-align:left>{{ __('game/officier.of_add_premium_officier_geologist') }}</th></tr></table>');" onmouseout="return nd();">
                             </a>
                         </td>
                         <td style="margin: 0 auto;" width="35" class="header">
                             <a href="game.php?page=officier" accesskey="o">
-                                <img style="border:0;" src="{{ $dpath }}premium/technokrat_ikon{{ $img_premium_officier_technocrat }}.gif" width="32" height="32" alt="{{ $of_hire_technocrat }}" onmouseover="return overlib('<table width=275px><tr><td class=c>{{ $of_hire_technocrat }}</td></tr><tr><th style=text-align:left>{{ $add_premium_officier_technocrat }}</th></tr></table>');" onmouseout="return nd();">
+                                <img style="border:0;" src="{{ asset('upload/skins/xgproyect/premium/technokrat_ikon' . $imgPremiumOfficierTechnocrat . '.gif') }}" width="32" height="32" alt="{{ __('game/officier.of_hire_technocrat') }}" onmouseover="return overlib('<table width=275px><tr><td class=c>{{ __('game/officier.of_hire_technocrat') }}</td></tr><tr><th style=text-align:left>{{ __('game/officier.of_add_premium_officier_technocrat') }}</th></tr></table>');" onmouseout="return nd();">
                             </a>
                         </td>
                     </tr>

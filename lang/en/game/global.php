@@ -7,7 +7,7 @@ return [
     'metal' => 'Metal',
     'crystal' => 'Crystal',
     'deuterium' => 'Deuterium',
-    'dark_matter' => 'Dark Matter',
+    'darkmatter' => 'Dark Matter',
     'energy' => 'Energy',
 
     // types of planets or galaxy objects

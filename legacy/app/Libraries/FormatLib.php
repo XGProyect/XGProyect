@@ -2,9 +2,9 @@
 
 namespace Xgp\App\Libraries;
 
+use DateTime;
 use Xgp\App\Core\Enumerators\ImportanceEnumerator as Importance;
 use Xgp\App\Helpers\UrlHelper;
-use DateTime;
 
 class FormatLib
 {
@@ -190,16 +190,14 @@ class FormatLib
         return '<font color="' . $color . '">' . $string . '</font>';
     }
 
-    /**
-     * Create a new span HTML element
-     *
-     * @param string $content
-     * @param string|null $class
-     * @return string
-     */
-    public static function spanElement(string $content, ?string $class = ''): string
+    public static function spanClassElement(string $content, ?string $class = ''): string
     {
         return '<span class="' . $class . '">' . $content . '</span>';
+    }
+
+    public static function spanStyleElement(string $content, ?string $style = ''): string
+    {
+        return '<span style="' . $style . '">' . $content . '</span>';
     }
 
     /**
@@ -291,25 +289,13 @@ class FormatLib
 
     /**
      * Return the coords in format [g:s:p]
-     *
-     * @param integer $galaxy
-     * @param integer $system
-     * @param integer $planet
-     * @return string
      */
     public static function formatCoords(int $galaxy, int $system, int $planet): string
     {
         return sprintf('[%d:%d:%d]', $galaxy, $system, $planet);
     }
 
-    /**
-     * strongText
-     *
-     * @param string $value Value
-     *
-     * @return string
-     */
-    public static function strongText($value)
+    public static function strongText(string $value): string
     {
         return '<strong>' . $value . '</strong>';
     }

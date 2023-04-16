@@ -9,32 +9,40 @@
         <div id="menu">
             <p style="width:110px;">
                 <NOBR>
-                    {{ $lm_players }} <strong>{!! $user_name !!}</strong>
+                    {{ __('game/menu.lm_players') }} <strong>{!! $userName !!}</strong>
                 </NOBR>
             </p>
             <table width="110" cellspacing="0" cellpadding="0">
+                @foreach ($blocks as $blockIndex => $block)
                 <tr>
                     <td>
-                        <img src="{{ $dpath }}menu/ogame-produktion.jpg" width="110" height="40" />
+                        <img src="{{ asset('upload/skins/xgproyect/menu/' . $block[0]) }}" width="{{ $block[1] }}" height="{{ $block[2] }}" />
                     </td>
                 </tr>
-                {!! $menu_block1 !!}
+                @foreach ($menu[$blockIndex] as $item)
                 <tr>
                     <td>
-                        <img src="{{ $dpath }}menu/info-help.jpg" width="110" height="19">
+                        <div align="center">
+                            {!! $item['link'] !!}
+                        </div>
                     </td>
                 </tr>
-                {!! $menu_block2 !!}
+                @endforeach
+                @endforeach
+                @if ($isAdmin)
                 <tr>
                     <td>
-                        <img src="{{ $dpath }}menu/user-menu.jpg" width="110" height="35">
+                        <div align="center">
+                            <a href="admin.php" target="_blank" title="{{ __('game/menu.lm_administration') }}">
+                                <span style="color: lime;">{{ __('game/menu.lm_administration') }}</span>
+                            </a>
+                        </div>
                     </td>
                 </tr>
-                {!! $menu_block3 !!}
-                {!! $admin_link !!}
+                @endif
                 <tr>
                     <td>
-                        <img src="{{ $dpath }}menu/info-help.jpg" width="110" height="19">
+                        <img src="{{ asset('upload/skins/xgproyect/menu/info-help.jpg') }}" width="110" height="19">
                     </td>
                 </tr>
                 <tr>
@@ -57,4 +65,3 @@
         </div>
     </center>
 </div>
-<!-- END LEFTMENU -->
