@@ -38,6 +38,9 @@ class Database
         $this->openConnection();
     }
 
+    /**
+     * @return mixed
+     */
     public function openConnection()
     {
         if (isset($this->db_data['host']) && $this->db_data['port'] && isset($this->db_data['user']) && isset($this->db_data['pass']) && isset($this->db_data['name'])) {
