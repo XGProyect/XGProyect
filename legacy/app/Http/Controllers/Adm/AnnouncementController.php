@@ -29,7 +29,7 @@ class AnnouncementController extends BaseController
         $this->announcementModel = new Announcement();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // check if the user is allowed to access
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {

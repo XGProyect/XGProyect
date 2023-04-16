@@ -25,7 +25,7 @@ class RenameplanetController extends BaseController
         $this->renameplanetModel = new Renameplanet();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));

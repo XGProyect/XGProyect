@@ -45,7 +45,7 @@ class InfosController extends BaseController
         $this->_element_id = isset($_GET['gid']) ? (int) $_GET['gid'] : null;
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));

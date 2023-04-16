@@ -14,7 +14,7 @@ class InfoController extends BaseController
         parent::loadLang(['ajax/info']);
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // build the page
         $this->buildPage();

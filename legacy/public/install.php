@@ -18,5 +18,5 @@ if (file_exists($file_name)) {
 
     $class_name = 'Xgp\App\Http\Controllers\Install\\' . ucfirst($page) . 'Controller';
 
-    (new $class_name())->index();
+    (new $class_name())->__invoke();
 }

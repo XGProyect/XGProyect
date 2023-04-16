@@ -14,7 +14,7 @@ class HomeController extends BaseController
         parent::loadLang(['ajax/home']);
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // build the page
         $this->buildPage();

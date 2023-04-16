@@ -18,6 +18,6 @@ if (isset($_GET['content'])) {
 
         $class_name = 'Xgp\App\Http\Controllers\Ajax\\' . ucfirst($_GET['content']) . 'Controller';
 
-        (new $class_name())->index();
+        (new $class_name())->__invoke();
     }
 }

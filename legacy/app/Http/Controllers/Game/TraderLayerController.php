@@ -24,7 +24,7 @@ class TraderLayerController extends BaseController
         $this->buildPage();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));

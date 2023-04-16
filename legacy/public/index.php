@@ -23,5 +23,5 @@ if (file_exists($file_name)) {
 
     $class_name = 'Xgp\App\Http\Controllers\Home\\' . ucfirst($page) . 'Controller';
 
-    (new $class_name())->index();
+    (new $class_name())->__invoke();
 }

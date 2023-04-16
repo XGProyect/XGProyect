@@ -38,7 +38,7 @@ class MessagesController extends BaseController
         $this->messagesModel = new Messages();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));

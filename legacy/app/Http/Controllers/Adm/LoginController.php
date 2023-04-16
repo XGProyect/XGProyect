@@ -25,7 +25,7 @@ class LoginController extends BaseController
         $this->loginModel = new Login();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // time to do something
         $this->runAction();

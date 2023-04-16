@@ -36,7 +36,7 @@ class ResourcesController extends BaseController
         $this->reslist = $this->objects->getObjectsList();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));

@@ -31,7 +31,7 @@ class InstallationController extends BaseController
         $this->installationModel = new Installation();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // build the page
         $this->buildPage();

@@ -27,7 +27,7 @@ class MailController extends BaseController
         $this->setUpData();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // time to do something
         $this->runAction();

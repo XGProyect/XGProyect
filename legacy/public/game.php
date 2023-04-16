@@ -45,7 +45,7 @@ if (isset($page)) {
 
         $class_name = 'Xgp\App\Http\Controllers\Game\\' . ucfirst($page) . 'Controller';
 
-        (new $class_name())->index();
+        (new $class_name())->__invoke();
     }
 }
 

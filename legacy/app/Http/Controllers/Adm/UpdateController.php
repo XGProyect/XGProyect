@@ -27,7 +27,7 @@ class UpdateController extends BaseController
         $this->updateModel = new Update();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // check if the user is allowed to access
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {

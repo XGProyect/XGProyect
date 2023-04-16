@@ -20,7 +20,7 @@ class HomeController extends BaseController
         $this->homeModel = new Home();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // time to do something
         $this->runAction();

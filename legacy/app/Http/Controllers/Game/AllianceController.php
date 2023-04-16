@@ -47,7 +47,7 @@ class AllianceController extends BaseController
         $this->setUpAlliances();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // build the page
         $this->buildPage();

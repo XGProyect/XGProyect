@@ -34,7 +34,7 @@ if (file_exists($file_name)) {
 
     $class_name = 'Xgp\App\Http\Controllers\Adm\\' . ucfirst($page) . 'Controller';
 
-    (new $class_name())->index();
+    (new $class_name())->__invoke();
 } else {
     Functions::redirect(ADM_URL . 'admin.php');
 }

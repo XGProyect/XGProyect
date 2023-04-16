@@ -29,7 +29,7 @@ class EmpireController extends BaseController
         $this->empireModel = new Empire();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

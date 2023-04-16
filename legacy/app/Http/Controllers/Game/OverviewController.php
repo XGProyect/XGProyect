@@ -37,17 +37,11 @@ class OverviewController extends BaseController
         $this->noob = new NoobsProtectionLib();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        // build the page
-        $this->buildPage();
-    }
-
-    private function buildPage(): void
-    {
         $moon = $this->getPlanetMoon();
 
         Template::getInstance()->view(

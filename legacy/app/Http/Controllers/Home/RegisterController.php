@@ -22,7 +22,7 @@ class RegisterController extends BaseController
         $this->registerModel = new Register();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         if (Functions::readConfig('reg_enable') != 1) {
             die(Functions::message($this->langs->line('re_disabled'), 'index.php', '5', false, false));

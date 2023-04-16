@@ -28,7 +28,7 @@ class PhalanxController extends BaseController
         $this->phalanxModel = new Phalanx();
     }
 
-    public function index(): void
+    public function __invoke(): void
     {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
