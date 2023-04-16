@@ -57,12 +57,6 @@
             contentbox.style.height = parseInt(document.body.offsetHeight) - messagebox.offsetHeight - headerHeight - errorbox.offsetHeight - 20;
             document.getElementById('resources').style.width = (document.body.offsetWidth * 0.4);
         }
-
-        for (var i = 0; i < document.links.length; ++i) {
-            if (document.links[i].href.search(/.*redir\.php\?url=.*/) != -1) {
-                document.links[i].target = "_blank";
-            }
-        }
         </script>
     </body>
 </html>
