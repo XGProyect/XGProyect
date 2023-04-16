@@ -123,38 +123,27 @@ class TraderController extends BaseController
         );
     }
 
-    /**
-     * Display the message block
-     *
-     * @return array
-     */
     private function setMessageDisplay(): array
     {
         $message = [
-            'status_message' => [],
+            'color' => '',
+            'message' => '',
         ];
 
         if ($this->error != '') {
             $message = [
-                'status_message' => '',
-                '/status_message' => '',
-                'error_color' => '#FF0000',
-                'error_text' => $this->error,
+                'color' => '#ff0000',
+                'message' => $this->error,
             ];
         }
 
         return $message;
     }
 
-    /**
-     * Get the kind of trader that we are requesting
-     *
-     * @return array
-     */
     private function getPage(): array
     {
         return [
-            'current_mode' => $this->template->set(
+            'currentMode' => $this->template->set(
                 'game/trader_resources_view',
                 array_merge(
                     $this->langs->language,

@@ -259,7 +259,7 @@ class TraderLayerController extends BaseController
         }
 
         return [
-            'current_mode' => $template,
+            'currentMode' => $template,
         ];
     }
 

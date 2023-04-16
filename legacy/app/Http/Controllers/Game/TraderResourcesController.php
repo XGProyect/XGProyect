@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\ResourceMarket;
@@ -23,48 +24,31 @@ class TraderResourcesController extends BaseController
     {
         parent::__construct();
 
-        Users::checkSession();
-
-        // load Language
-        parent::loadLang(['game/global', 'game/trader']);
-
         $this->traderModel = new Trader();
 
-        // init a new trader object
-        $this->setUpTrader();
-    }
-
-    public function __invoke(): void
-    {
-        // Check module access
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
-
-        // time to do something
-        $this->runAction();
-
-        // build the page
-        $this->buildPage();
-    }
-
-    /**
-     * Creates a new trader object that will handle all the trader
-     * creation methods and actions
-     *
-     * @return void
-     */
-    private function setUpTrader(): void
-    {
         $this->trader = new ResourceMarket(
             $this->user,
             $this->planet
         );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
+    public function __invoke(): void
+    {
+        Users::checkSession();
+
+        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->runAction();
+
+        Template::getInstance()->view(
+            'trader.overview',
+            array_merge(
+                $this->setMessageDisplay(),
+                $this->getPage()
+            )
+        );
+    }
+
     private function runAction(): void
     {
         $refill = filter_input_array(INPUT_POST);
@@ -81,13 +65,6 @@ class TraderResourcesController extends BaseController
         }
     }
 
-    /**
-     * Refill resources
-     *
-     * @param string $resource
-     * @param integer $percentage
-     * @return void
-     */
     private function refillResource(string $resource, int $percentage): void
     {
         if ($this->trader->{'is' . $resource . 'StorageFillable'}($percentage)) {
@@ -102,127 +79,88 @@ class TraderResourcesController extends BaseController
 
                 Functions::redirect('game.php?page=traderResources');
             } else {
-                $this->error = $this->langs->line('tr_no_enough_dark_matter');
+                $this->error = __('game/trader.tr_no_enough_dark_matter');
             }
         } else {
-            $this->error = $this->langs->line('tr_no_enough_storage');
+            $this->error = __('game/trader.tr_no_enough_storage');
         }
     }
 
-    private function buildPage(): void
-    {
-        $this->page->display(
-            $this->template->set(
-                'game/trader_overview_view',
-                array_merge(
-                    $this->langs->language,
-                    $this->setMessageDisplay(),
-                    $this->getPage()
-                )
-            )
-        );
-    }
-
-    /**
-     * Display the message block
-     *
-     * @return array
-     */
     private function setMessageDisplay(): array
     {
         $message = [
-            'status_message' => [],
+            'color' => '',
+            'message' => '',
         ];
 
         if ($this->error != '') {
             $message = [
-                'status_message' => '',
-                '/status_message' => '',
-                'error_color' => '#FF0000',
-                'error_text' => $this->error,
+                'color' => '#ff0000',
+                'message' => $this->error,
             ];
         }
 
         return $message;
     }
 
-    /**
-     * Get the kind of trader that we are requesting
-     *
-     * @return array
-     */
     private function getPage(): array
     {
         return [
-            'current_mode' => $this->template->set(
-                'game/trader_resources_view',
+            'currentMode' => Template::render(
+                'trader.resources',
                 array_merge(
-                    $this->langs->language,
                     [
-                        'list_of_resources' => $this->buildResourcesSection(),
+                        'resourcesList' => $this->buildResourcesSection(),
                     ]
                 )
             ),
         ];
     }
 
-    /**
-     * Build resources section
-     *
-     * @return array
-     */
     private function buildResourcesSection(): array
     {
-        $list_of_resources = [];
+        $resourcesList = [];
 
         foreach (self::RESOURCES as $resource) {
-            $list_of_resources[] = array_merge(
-                $this->langs->language,
+            $resourcesList[] = array_merge(
                 [
-                    'dpath' => DPATH,
                     'resource' => $resource,
-                    'resource_name' => $this->langs->line($resource),
-                    'current_resource' => Format::shortlyNumber($this->planet['planet_' . $resource]),
-                    'max_resource' => Format::shortlyNumber($this->planet['planet_' . $resource . '_max']),
-                    'refill_options' => $this->setRefillOptions($resource),
+                    'resourceName' => __('game/global.' . $resource),
+                    'currentResource' => Format::shortlyNumber($this->planet['planet_' . $resource]),
+                    'maxResource' => Format::shortlyNumber($this->planet['planet_' . $resource . '_max']),
+                    'refillOptions' => $this->setRefillOptions($resource),
                 ]
             );
         }
 
-        return $list_of_resources;
+        return $resourcesList;
     }
 
-    /**
-     * Set the different refill options
-     *
-     * @param string $resource
-     * @return array
-     */
     private function setRefillOptions(string $resource): array
     {
         $refillOptions = [];
 
         foreach (self::PERCENTAGES as $percentage) {
-            $dm_price = $this->trader->{'getPriceToFill' . $percentage . 'Percent'}($resource);
+            $dmPrice = $this->trader->{'getPriceToFill' . $percentage . 'Percent'}($resource);
 
             if (
                 !$this->trader->{'is' . ucfirst($resource) . 'StorageFillable'}($percentage)
-                || $dm_price == 0
+                || $dmPrice == 0
             ) {
                 $price = Format::colorRed('-');
                 $button = '';
             } else {
                 $price = Format::customColor(
-                    Format::prettyNumber($dm_price),
+                    Format::prettyNumber($dmPrice),
                     '#2cbef2'
-                ) . ' ' . $this->langs->line('dark_matter_short');
-                $button = '<input type="submit" name="' . $resource . '-' . $percentage . '" value="' . $this->langs->line('tr_refill_button') . '">';
+                ) . ' ' . __('game/global.dark_matter_short');
+                $button = '<input type="submit" name="' . $resource . '-' . $percentage . '" value="' . __('game/trader.tr_refill_button') . '">';
             }
 
             $refillOptions[] = [
-                'label' => (self::PERCENTAGES == 100) ? $this->langs->line('tr_refill_to') : $this->langs->line('tr_refill_by'),
+                'label' => (self::PERCENTAGES == 100) ? __('game/trader.tr_refill_to') : __('game/trader.tr_refill_by'),
                 'percentage' => $percentage,
-                'tr_requires' => $this->langs->line('tr_requires'),
+                'tr_requires' => __('game/trader.tr_requires'),
                 'price' => $price,
                 'button' => $button,
             ];

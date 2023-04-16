@@ -3,13 +3,11 @@
 namespace App\View\Components;
 
 use App\Models\Planets;
-use App\Models\User;
 use App\Models\Users;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
-use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\OfficiersLib;
 use Xgp\App\Libraries\ProductionLib;

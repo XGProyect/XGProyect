@@ -3,49 +3,32 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Xgp\App\Core\BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 
 class TraderOverviewController extends BaseController
 {
-    /**
-     * The module ID
-     *
-     * @var int
-     */
     public const MODULE_ID = 5;
 
     public function __construct()
     {
         parent::__construct();
-
-        Users::checkSession();
-
-        // load Language
-        parent::loadLang(['game/trader']);
-
-        // Check module access
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
-
-        // build the page
-        $this->buildPage();
     }
 
-    private function buildPage(): void
+    public function __invoke(): void
     {
-        $this->page->display(
-            $this->template->set(
-                'game/trader_overview_view',
-                array_merge(
-                    $this->langs->language,
-                    [
-                        'status_message' => [],
-                        'error_color' => '',
-                        'error_text' => '',
-                        'current_mode' => '',
-                    ]
-                )
-            )
+        Users::checkSession();
+
+        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        Template::getInstance()->view(
+            'trader.overview',
+            [
+                'color' => '',
+                'message' => '',
+                'currentMode' => '',
+            ]
         );
     }
 }

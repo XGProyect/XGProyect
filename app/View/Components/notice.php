@@ -12,6 +12,7 @@ class notice extends Component
      * Create a new component instance.
      */
     public function __construct(
+        public string $width,
         public string $message,
         public string $color
     ) {

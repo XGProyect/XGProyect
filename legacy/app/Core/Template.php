@@ -56,6 +56,11 @@ class Template
 
     public static function view(string $template = '', array $data = []): void
     {
+        die(self::render($template, $data));
+    }
+
+    public static function render(string $template = '', array $data = [])
+    {
         $bladeFile = resource_path('views') . DIRECTORY_SEPARATOR . strtr($template, ['/' => DIRECTORY_SEPARATOR, '.' => DIRECTORY_SEPARATOR]) . '.blade.php';
 
         if (!file_exists($bladeFile)) {
@@ -65,7 +70,7 @@ class Template
         View::share('gameTitle', Functions::readConfig('game_name'));
         View::share('version', SYSTEM_VERSION);
 
-        die(View::make($template, $data)->render());
+        return View::make($template, $data)->render();
     }
 
     private function createNewParser(): void

@@ -62,5 +62,5 @@
             </td>
         </tr>
     </table>
-    <x-notice :color="$color" :message="$message" />
+    <x-notice width="100%" :color="$color" :message="$message" />
 </div>
