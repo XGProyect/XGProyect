@@ -7,19 +7,14 @@ use Xgp\App\Core\Language;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Libraries\PlanetLib as PlanetLibModel;
-use CiLang;
 
 class PlanetLib
 {
-    private CiLang $langs;
     private PlanetLibModel $planetslibModel;
 
     public function __construct()
     {
         $this->planetslibModel = new PlanetLibModel();
-
-        // load Language
-        $this->loadLanguage();
     }
 
     /**
@@ -129,13 +124,5 @@ class PlanetLib
         }
 
         return false;
-    }
-
-    private function loadLanguage(): void
-    {
-        $lang = new Language();
-        $lang = $lang->loadLang('game/global', true);
-
-        $this->langs = $lang;
     }
 }

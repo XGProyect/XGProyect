@@ -2,7 +2,6 @@
 
 namespace Xgp\App\Libraries;
 
-use CiLang;
 use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Language;
@@ -239,7 +238,6 @@ class FleetsLib
      */
     public static function fleetShipsPopup($fleetRow, $text, $fleet_type, $current_user = '')
     {
-        $lang = static::loadLanguage(['game/events', 'game/ships']);
         $objects = Objects::getInstance()->getObjects();
 
         $ships = self::getFleetShipsArray($fleetRow['fleet_array']);
@@ -322,8 +320,6 @@ class FleetsLib
      */
     public static function flyingFleetsTable($fleetRow, $Status, $Owner, $Label, $Record, $current_user, $acs_owner = false)
     {
-        $lang = static::loadLanguage(['game/events', 'game/missions']);
-
         $FleetStyle = [
             1 => 'attack',
             2 => 'federation',
@@ -563,17 +559,5 @@ class FleetsLib
     private static function getTemplate(): Template
     {
         return new Template();
-    }
-
-    /**
-     * Load CI language
-     *
-     * @return void
-     */
-    private static function loadLanguage(array $requiredLang): CiLang
-    {
-        $lang = new Language();
-
-        return $lang->loadLang($requiredLang, true);
     }
 }

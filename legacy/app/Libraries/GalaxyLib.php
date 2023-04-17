@@ -2,7 +2,6 @@
 
 namespace Xgp\App\Libraries;
 
-use CiLang;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
@@ -22,7 +21,6 @@ class GalaxyLib
     public const DEBRIS_TYPE = 2;
     public const MOON_TYPE = 3;
 
-    protected ?CiLang $langs;
     private $current_user;
     private $current_planet;
     private $row_data;
@@ -35,9 +33,8 @@ class GalaxyLib
     private $template;
     private bool $no_popup = false;
 
-    public function __construct($user = '', $planet = '', $galaxy = '', $system = '', ?CiLang $langs = null)
+    public function __construct($user = '', $planet = '', $galaxy = '', $system = '')
     {
-        $this->langs = $langs;
         $this->current_user = $user;
         $this->current_planet = $planet;
         $this->galaxy = $galaxy;

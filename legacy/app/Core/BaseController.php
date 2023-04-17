@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xgp\App\Core;
 
-use CiLang;
 use Exception;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
@@ -19,7 +18,6 @@ abstract class BaseController
     protected Objects $objects;
     protected ?Page $page = null;
     protected ?Template $template = null;
-    protected CiLang $langs;
 
     public function __construct()
     {
@@ -30,35 +28,5 @@ abstract class BaseController
         $this->objects = new Objects();
         $this->page = new Page($this->userLibrary);
         $this->template = new Template();
-    }
-
-    /**
-     * @param string|array $languageFile
-     */
-    public function loadLang($languageFile): void
-    {
-        try {
-            // require langugage library
-            $langPath = LIB_PATH . 'Ci' . DIRECTORY_SEPARATOR . 'CiLang.php';
-
-            if (!file_exists($langPath)) {
-                // not found
-                throw new Exception('Language file "' . $languageFile . '" not defined');
-                return;
-            }
-
-            // required by the library
-            if (!defined('BASEPATH')) {
-                define('BASEPATH', RESOURCES_PATH);
-            }
-
-            // use CI library
-            require_once $langPath;
-
-            $this->langs = new CiLang();
-            $this->langs->load($languageFile, DEFAULT_LANG);
-        } catch (Exception $e) {
-            die('Fatal error: ' . $e->getMessage());
-        }
     }
 }

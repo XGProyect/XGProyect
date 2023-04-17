@@ -4,7 +4,6 @@ namespace Xgp\App\Libraries\Missions;
 
 use Battle;
 use BattleReport;
-use CiLang;
 use DebugManager;
 use Defense;
 use Fleet;
@@ -31,7 +30,6 @@ class Attack extends Missions
     public const DEFENSE_MAX_ID = 408;
 
     private array $hyperspace_technology = [];
-    protected CiLang $langs;
 
     public function __construct()
     {
