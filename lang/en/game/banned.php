@@ -1,8 +1,7 @@
 <?php
 
 return [
-    'bn_no_players_banned' => 'No banned players',
-    'bn_exists_players_banned' => 'Exists %s player/s banned/s',
+    'bn_players_banned' => '{0} No banned players|{1} Exists :count banned player|[2,*] Exists :count banned players',
     'bn_players_banned_list' => 'List of banned players',
     'bn_player' => 'Player',
     'bn_reason' => 'Reason',
