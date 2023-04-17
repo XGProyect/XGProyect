@@ -7,51 +7,29 @@ use Xgp\App\Libraries\Functions;
 
 abstract class Formulas
 {
-    /**
-     * phalanxRange
-     *
-     * @param int $phalanx_level Phalanx level
-     *
-     * return int
-     */
-    public static function phalanxRange($phalanx_level)
+    public static function phalanxRange(int $phalanxLevel): int
     {
         $range = 0;
 
-        if ($phalanx_level > 1) {
-            $range = pow($phalanx_level, 2) - 1;
-        } elseif ($phalanx_level == 1) {
+        if ($phalanxLevel > 1) {
+            $range = pow($phalanxLevel, 2) - 1;
+        } elseif ($phalanxLevel == 1) {
             $range = 1;
         }
 
         return $range;
     }
 
-    /**
-     * missileRange
-     *
-     * @param int $impulse_drive_level Impulse drive level
-     *
-     * return int
-     */
-    public static function missileRange($impulse_drive_level)
+    public static function missileRange(int $impulseDriveLevel): int
     {
-        if ($impulse_drive_level > 0) {
-            return ($impulse_drive_level * 5) - 1;
+        if ($impulseDriveLevel > 0) {
+            return ($impulseDriveLevel * 5) - 1;
         }
 
         return 0;
     }
 
-    /**
-     * getPlanetSize
-     *
-     * @param int     $position Position
-     * @param boolean $main     Home world
-     *
-     * @return void
-     */
-    public static function getPlanetSize($position, $main = false)
+    public static function getPlanetSize(int $position, $main = false): array
     {
         // THIS DIAMETERS ARE CALCULATED TO RETURN THE CORRECT AMOUNT OF FIELDS, IT SHOULD WORK AS OGAME.
         $min = [
@@ -82,27 +60,12 @@ abstract class Formulas
         return $return;
     }
 
-    /**
-     * getPlanetFields
-     *
-     * @param int $diameter Diameter
-     *
-     * @return int
-     */
-    public static function calculatePlanetFields($diameter)
+    public static function calculatePlanetFields(int $diameter): int
     {
         return (int) pow(($diameter / 1000), 2);
     }
 
-    /**
-     * setPlanetImage
-     *
-     * @param int $system   Planet system
-     * @param int $position Planet position
-     *
-     * @return string
-     */
-    public static function setPlanetImage($system, $position)
+    public static function setPlanetImage(int $system, int $position): string
     {
         // Formula based on original game values
         // How many images do we have for each planet type
@@ -160,14 +123,7 @@ abstract class Formulas
         return $type[$even] . 'planet' . $image_id;
     }
 
-    /**
-     * setPlanetTemp
-     *
-     * @param int $position Planet position
-     *
-     * @return array
-     */
-    public static function setPlanetTemp($position)
+    public static function setPlanetTemp(int $position): array
     {
         // Based on original game values
         $temp_avilable = [
@@ -198,28 +154,20 @@ abstract class Formulas
 
     /**
      * Get moon destruction chance
-     *
-     * @param int $planet_diameter
-     * @param int $death_stars
-     *
-     * @return int
      */
-    public static function getMoonDestructionChance(int $planet_diameter, int $death_stars): int
+    public static function getMoonDestructionChance(int $planetDiameter, int $deathStars): int
     {
-        $prob = (100 - sqrt($planet_diameter)) * sqrt($death_stars);
+        $prob = (100 - sqrt($planetDiameter)) * sqrt($deathStars);
 
         return ($prob > 100) ? 100 : round($prob);
     }
 
     /**
      * Get Death Stars destruction chance
-     *
-     * @param int $planet_diameter
-     * @return type
      */
-    public static function getDeathStarsDestructionChance(int $planet_diameter)
+    public static function getDeathStarsDestructionChance(int $planetDiameter)
     {
-        return round(sqrt($planet_diameter) / 2);
+        return round(sqrt($planetDiameter) / 2);
     }
 
     /**
@@ -246,10 +194,6 @@ abstract class Formulas
 
     /**
      * Get the base cost to tear down, without influence of the ion technology
-     *
-     * @param int $price
-     * @param float $factor
-     * @param int $level
      */
     public static function getTearDownBaseCost(int $price, float $factor, int $level): int
     {
@@ -258,11 +202,6 @@ abstract class Formulas
 
     /**
      * Get the cost to tear down
-     *
-     * @param int $price
-     * @param float $factor
-     * @param int $level
-     * @param int $ion_technology_level
      */
     public static function getTearDownCost(int $price, float $factor, int $level, int $ion_technology_level): int
     {
@@ -271,10 +210,6 @@ abstract class Formulas
 
     /**
      * Get the cost to develop something
-     *
-     * @param int $price
-     * @param float $factor
-     * @param int $level
      */
     public static function getDevelopmentCost(int $price, float $factor, int $level): float
     {
@@ -283,9 +218,6 @@ abstract class Formulas
 
     /**
      * Check if the building is for destroy and calculate
-     *
-     * @param integer $time
-     * @return integer
      */
     public static function getTearDownTime(int $metal_cost, int $cystal_cost, int $building, int $robotics_factory, int $nanite_factory, int $level): float
     {
@@ -296,13 +228,6 @@ abstract class Formulas
 
     /**
      * Get the time to produce ships and defenses
-     *
-     * @param integer $metal_cost
-     * @param integer $cystal_cost
-     * @param integer $ship_defense
-     * @param integer $shipyard_level
-     * @param integer $nanite_factory_level
-     * @return float
      */
     public static function getShipyardProductionTime(int $metal_cost, int $cystal_cost, int $ship_defense, int $shipyard_level, int $nanite_factory_level): float
     {
@@ -311,14 +236,6 @@ abstract class Formulas
 
     /**
      * Get the time to build
-     *
-     * @param integer $metal_cost
-     * @param integer $cystal_cost
-     * @param integer $building
-     * @param integer $robotics_factory
-     * @param integer $nanite_factory
-     * @param integer $level
-     * @return float
      */
     public static function getBuildingTime(float $metal_cost, float $cystal_cost, int $building, int $robotics_factory, int $nanite_factory, int $level): float
     {
@@ -327,12 +244,6 @@ abstract class Formulas
 
     /**
      * Get research time
-     *
-     * @param integer $metal_cost
-     * @param integer $cystal_cost
-     * @param integer $total_lab_level
-     * @param integer $expedition_level
-     * @return float
      */
     public static function getResearchTime(int $metal_cost, int $cystal_cost, int $total_lab_level, int $expedition_level): float
     {
@@ -343,15 +254,6 @@ abstract class Formulas
 
     /**
      * Get the time to develop something
-     *
-     * @param integer $metal_cost
-     * @param integer $cystal_cost
-     * @param integer $object
-     * @param integer $first_boost
-     * @param integer $second_boost
-     * @param integer $level
-     * @param boolean $reduce
-     * @return float
      */
     private static function getDevelopmentTime(float $metal_cost, float $cystal_cost, int $object, int $first_boost, int $second_boost, int $level = 0, bool $reduce = true): float
     {
