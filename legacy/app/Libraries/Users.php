@@ -10,9 +10,10 @@ use Xgp\App\Models\Libraries\UsersLibrary;
 
 class Users
 {
-    private $user_data;
-    private $planet_data;
+    private array $userData = [];
+    private array $planetData = [];
     private UsersLibrary $usersModel;
+    private static ?Users $instance = null;
 
     public function __construct()
     {
@@ -30,26 +31,35 @@ class Users
                 $this->setPlanetData();
 
                 // Update resources, ships, defenses & technologies
-                UpdatesLibrary::updatePlanetResources($this->user_data, $this->planet_data, time());
+                UpdatesLibrary::updatePlanetResources($this->userData, $this->planetData, time());
 
                 // Update buildings queue
-                UpdatesLibrary::updateBuildingsQueue($this->planet_data, $this->user_data);
+                UpdatesLibrary::updateBuildingsQueue($this->planetData, $this->userData);
             }
         }
+    }
+
+    public static function getInstance(): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new Users();
+        }
+
+        return self::$instance;
     }
 
     /**
      * userLogin
      *
-     * @param int    $user_id   User ID
+     * @param int    $userId   User ID
      * @param string $password  Password
      *
      * @return void
      */
-    public function userLogin($user_id = 0, $password = '')
+    public function userLogin($userId = 0, $password = '')
     {
-        if ($user_id != 0 && !empty($password) && (strlen($password) == 60)) {
-            $_SESSION['user_id'] = $user_id;
+        if ($userId != 0 && !empty($password) && (strlen($password) == 60)) {
+            $_SESSION['user_id'] = $userId;
             $_SESSION['user_password'] = Functions::hash($password . '-' . config('SECRETWORD'));
 
             return true;
@@ -58,51 +68,29 @@ class Users
         }
     }
 
-    /**
-     * getUserData
-     *
-     * @return array
-     */
-    public function getUserData()
+    public function getUserData(): array
     {
-        return $this->user_data;
+        return $this->userData;
     }
 
-    /**
-     * getPlanetData
-     *
-     * @return array
-     */
-    public function getPlanetData()
+    public function getPlanetData(): array
     {
-        return $this->planet_data;
+        return $this->planetData;
     }
 
-    /**
-     * checkSession
-     *
-     * @return void
-     */
-    public static function checkSession()
+    public static function checkSession(): void
     {
         if (!self::isSessionSet()) {
             Functions::redirect(SYSTEM_ROOT);
         }
     }
 
-    /**
-     * deleteUser
-     *
-     * @param int $user_id User ID
-     *
-     * @return void
-     */
-    public function deleteUser($user_id)
+    public function deleteUser(int $userId): void
     {
-        $user_data = $this->usersModel->getAllyIdByUserId($user_id);
+        $userData = $this->usersModel->getAllyIdByUserId($userId);
 
-        if ($user_data['user_ally_id'] != 0) {
-            $alliance = $this->usersModel->getAllianceDataByAllianceId($user_data['user_ally_id']);
+        if ($userData['user_ally_id'] != 0) {
+            $alliance = $this->usersModel->getAllianceDataByAllianceId($userData['user_ally_id']);
 
             if ($alliance['ally_members'] > 1 && (isset($alliance['alliance_ranks']) && !is_null($alliance['alliance_ranks']))) {
                 $ranks = new Ranks($alliance['alliance_ranks']);
@@ -127,61 +115,32 @@ class Users
             }
         }
 
-        $this->usersModel->deletePlanetsAndRelatedDataByUserId($user_id);
-        $this->usersModel->deleteMessagesByUserId($user_id);
-        $this->usersModel->deleteBuddysByUserId($user_id);
-        $this->usersModel->deleteUserDataById($user_id);
+        $this->usersModel->deletePlanetsAndRelatedDataByUserId($userId);
+        $this->usersModel->deleteMessagesByUserId($userId);
+        $this->usersModel->deleteBuddysByUserId($userId);
+        $this->usersModel->deleteUserDataById($userId);
     }
 
-    /**
-     * Check if user is on vacations
-     *
-     * @param array $user User data
-     *
-     * @return boolean
-     */
-    public function isOnVacations($user)
+    public function isOnVacations(array $user): bool
     {
         return ($user['preference_vacation_mode'] > 0);
     }
 
-    /**
-     * Check if user is inactive
-     *
-     * @param array $user User data
-     *
-     * @return boolean
-     */
-    public function isInactive($user)
+    public function isInactive(array $user): bool
     {
         return ($user['user_onlinetime'] < (time() - ONE_WEEK));
     }
-    ###########################################################################
-    #
-    # Private Methods
-    #
-    ###########################################################################
 
-    /**
-     * isSessionSet
-     *
-     * @return boolean
-     */
-    private static function isSessionSet()
+    private static function isSessionSet(): bool
     {
         return !(!isset($_SESSION['user_id']) or !isset($_SESSION['user_password']));
     }
 
-    /**
-     * Set the user data after some session and security validations
-     *
-     * @return void
-     */
-    private function setUserData()
+    private function setUserData(): void
     {
-        $user_row = $this->usersModel->setUserDataByUserId($_SESSION['user_id']);
+        $userRow = $this->usersModel->setUserDataByUserId($_SESSION['user_id']);
 
-        $this->displayLoginErrors($user_row);
+        $this->displayLoginErrors($userRow);
 
         // update user activity data
         $this->usersModel->updateUserActivityData(
@@ -192,96 +151,69 @@ class Users
         );
 
         // pass the data
-        $this->user_data = $user_row;
+        $this->userData = $userRow;
 
         // unset the old data
-        unset($user_row);
+        unset($userRow);
     }
 
-    /**
-     * Display login errors
-     *
-     * @param array $user_row User Row
-     *
-     * @return void
-     */
-    private function displayLoginErrors($user_row)
+    private function displayLoginErrors(array $userRow): void
     {
-        if ($user_row['user_id'] != $_SESSION['user_id'] && !defined('IN_LOGIN')) {
+        if ($userRow['user_id'] != $_SESSION['user_id'] && !defined('IN_LOGIN')) {
             Functions::redirect(SYSTEM_ROOT);
         }
 
-        if (!password_verify(($user_row['user_password'] . "-" . config('SECRETWORD')), $_SESSION['user_password']) && !defined('IN_LOGIN')) {
+        if (!password_verify(($userRow['user_password'] . "-" . config('SECRETWORD')), $_SESSION['user_password']) && !defined('IN_LOGIN')) {
             Functions::redirect(SYSTEM_ROOT);
         }
     }
 
-    /**
-     * setPlanetData
-     *
-     * @return void
-     */
-    private function setPlanetData()
+    private function setPlanetData(): void
     {
-        $this->planet_data = $this->usersModel->setPlanetData(
-            $this->user_data['user_current_planet'],
+        $this->planetData = $this->usersModel->setPlanetData(
+            $this->userData['user_current_planet'],
             Functions::readConfig('stat_admin_level')
         );
     }
 
-    /**
-     * setPlanet
-     *
-     * @return void
-     */
-    private function setPlanet()
+    private function setPlanet(): void
     {
         $select = isset($_GET['cp']) ? (int) $_GET['cp'] : '';
         $restore = isset($_GET['re']) ? (int) $_GET['re'] : '';
 
         if (isset($select) && is_numeric($select) && isset($restore) && $restore == 0 && $select != 0) {
-            $owned = $this->usersModel->getUserPlanetByIdAndUserId($select, $this->user_data['user_id']);
+            $owned = $this->usersModel->getUserPlanetByIdAndUserId($select, $this->userData['user_id']);
 
             if ($owned) {
-                $this->user_data['current_planet'] = $select;
-                $this->usersModel->changeUserPlanetByUserId($select, $this->user_data['user_id']);
+                $this->userData['current_planet'] = $select;
+                $this->usersModel->changeUserPlanetByUserId($select, $this->userData['user_id']);
             }
         }
     }
 
-    /**
-     * createUserWithOptions
-     *
-     * @param array   $data        The data as an array
-     * @param boolean $full_insert Insert all the required tables
-     *
-     * @return void
-     */
-    public function createUserWithOptions($data, $full_insert = true)
+    public function createUserWithOptions(array $data, $full_insert = true): int
     {
-        if (is_array($data)) {
-            $insert_query = 'INSERT INTO ' . USERS . ' SET ';
+        $insert_query = 'INSERT INTO ' . USERS . ' SET ';
 
-            foreach ($data as $column => $value) {
-                $insert_query .= "`" . $column . "` = '" . $value . "', ";
-            }
-
-            // Remove last comma
-            $insert_query = substr_replace($insert_query, '', -2) . ';';
-
-            // get the last inserted user id
-            $user_id = $this->usersModel->createNewUser($insert_query);
-
-            // insert extra required tables
-            if ($full_insert) {
-                // create the buildings, defenses and ships tables
-                $this->usersModel->createPremium($user_id);
-                $this->usersModel->createResearch($user_id);
-                $this->usersModel->createSettings($user_id);
-                $this->usersModel->createUserStatistics($user_id);
-            }
-
-            return $user_id;
+        foreach ($data as $column => $value) {
+            $insert_query .= "`" . $column . "` = '" . $value . "', ";
         }
+
+        // Remove last comma
+        $insert_query = substr_replace($insert_query, '', -2) . ';';
+
+        // get the last inserted user id
+        $userId = $this->usersModel->createNewUser($insert_query);
+
+        // insert extra required tables
+        if ($full_insert) {
+            // create the buildings, defenses and ships tables
+            $this->usersModel->createPremium($userId);
+            $this->usersModel->createResearch($userId);
+            $this->usersModel->createSettings($userId);
+            $this->usersModel->createUserStatistics($userId);
+        }
+
+        return $userId;
     }
 }

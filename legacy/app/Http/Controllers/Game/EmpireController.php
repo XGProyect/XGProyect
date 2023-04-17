@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use Exception;
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib;
@@ -19,19 +20,18 @@ class EmpireController extends BaseController
     public const MODULE_ID = 2;
 
     private Empire $empireModel;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        Users::checkSession();
-
-        $this->empireModel = new Empire();
-    }
+    private array $user = [];
+    private Objects $objects;
 
     public function __invoke(): void
     {
+        Users::checkSession();
+
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->objects = Objects::getInstance();
+        $this->empireModel = new Empire();
 
         Template::getInstance()->view(
             'empire.body',

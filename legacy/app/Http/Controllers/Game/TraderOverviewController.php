@@ -2,7 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Game;
 
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
@@ -10,11 +10,6 @@ use Xgp\App\Libraries\Users;
 class TraderOverviewController extends BaseController
 {
     public const MODULE_ID = 5;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function __invoke(): void
     {

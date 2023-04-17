@@ -2,7 +2,8 @@
 
 namespace Xgp\App\Http\Controllers\Game;
 
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
@@ -19,24 +20,23 @@ class TraderResourcesController extends BaseController
     private ?ResourceMarket $trader;
     private string $error = '';
     private Trader $traderModel;
+    private array $user = [];
+    private array $planet = [];
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->traderModel = new Trader();
-
-        $this->trader = new ResourceMarket(
-            $this->user,
-            $this->planet
-        );
-    }
 
     public function __invoke(): void
     {
         Users::checkSession();
 
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+        $this->traderModel = new Trader();
+        $this->trader = new ResourceMarket(
+            $this->user,
+            $this->planet
+        );
 
         $this->runAction();
 
