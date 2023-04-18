@@ -24,20 +24,20 @@ class Home extends Model
         );
     }
 
-    public function setUserHomeCurrentPlanet(int $user_id): void
+    public function setUserHomeCurrentPlanet(int $userId): void
     {
         $this->db->query(
             "UPDATE `" . USERS . "` SET
                 `user_current_planet` = `user_home_planet_id`
-            WHERE `user_id` ='" . $user_id . "'"
+            WHERE `user_id` ='" . $userId . "'"
         );
     }
 
-    public function removeBan(string $user_name): void
+    public function removeBan(string $username): void
     {
         $this->db->query(
             "DELETE FROM `" . BANNED . "`
-            WHERE `banned_who` = '" . $user_name . "'"
+            WHERE `banned_who` = '" . $username . "'"
         );
     }
 }

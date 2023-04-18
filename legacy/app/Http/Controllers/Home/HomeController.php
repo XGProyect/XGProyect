@@ -1,39 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Http\Controllers\Home;
 
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Home\Home;
 
 class HomeController extends BaseController
 {
     private Home $homeModel;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        // load Language
-        parent::loadLang(['home/home']);
-
-        $this->homeModel = new Home();
-    }
+    private Users $userLibrary;
 
     public function __invoke(): void
     {
+        $this->homeModel = new Home();
+        $this->userLibrary = Users::getInstance();
+
         // time to do something
         $this->runAction();
 
-        // build the page
-        $this->buildPage();
+        Template::getInstance()->view(
+            'home.view',
+            array_merge(
+                $this->getErrors(),
+                $this->getPageData()
+            )
+        );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $loginData = filter_input_array(INPUT_POST, [
@@ -49,8 +47,8 @@ class HomeController extends BaseController
                     $this->homeModel->removeBan($login['user_name']);
                 }
 
-                if ($this->userLibrary->userLogin($login['user_id'], $login['user_password'])) {
-                    $this->homeModel->setUserHomeCurrentPlanet($login['user_id']);
+                if ($this->userLibrary->userLogin((int) $login['user_id'], $login['user_password'])) {
+                    $this->homeModel->setUserHomeCurrentPlanet((int) $login['user_id']);
 
                     // redirect to game
                     Functions::redirect('game.php?page=overview');
@@ -62,51 +60,21 @@ class HomeController extends BaseController
         }
     }
 
-    private function buildPage(): void
-    {
-        $this->page->display(
-            $this->template->set(
-                'home/index_body',
-                array_merge(
-                    $this->langs->language,
-                    $this->getErrors(),
-                    $this->getPageData()
-                )
-            ),
-            false,
-            '',
-            false
-        );
-    }
-
-    /**
-     * Get the page data to fully parse it
-     *
-     * @return array
-     */
     private function getPageData(): array
     {
         return [
-            'servername' => strtr($this->langs->line('hm_title'), ['%s' => Functions::readConfig('game_name')]),
-            'css_path' => CSS_PATH . 'home/',
-            'js_path' => JS_PATH . 'home/',
-            'game_logo' => Functions::readConfig('game_logo'),
-            'extra_js_error' => $this->getErrors(),
-            'img_path' => IMG_PATH . 'home/',
-            'base_path' => BASE_PATH,
-            'user_name' => isset($_GET['character']) ? $_GET['character'] : '',
-            'user_email' => isset($_GET['email']) ? $_GET['email'] : '',
-            'forum_url' => Functions::readConfig('forum_url'),
+            'servername' => __('home/home.hm_title', ['game' => Functions::readConfig('game_name')]),
+            'gameLogo' => Functions::readConfig('game_logo'),
+            'extraJsError' => $this->getErrors(),
+            'basePath' => BASE_PATH,
+            'userName' => isset($_GET['character']) ? $_GET['character'] : '',
+            'userEmail' => isset($_GET['email']) ? $_GET['email'] : '',
+            'forumUrl' => Functions::readConfig('forum_url'),
             'version' => SYSTEM_VERSION,
             'year' => date('Y'),
         ];
     }
 
-    /**
-     * Get the error data
-     *
-     * @return string
-     */
     private function getErrors(): array
     {
         $errors = filter_input(INPUT_GET, 'error', FILTER_VALIDATE_INT, [
@@ -120,12 +88,12 @@ class HomeController extends BaseController
         switch ($errors) {
             case 1:
                 $div_id = '#username';
-                $message = $this->langs->line('hm_username_not_available');
+                $message = __('home/home.hm_username_not_available');
                 break;
 
             case 2:
                 $div_id = '#email';
-                $message = $this->langs->line('hm_email_not_available');
+                $message = __('home/home.hm_email_not_available');
                 break;
 
             case 0:
@@ -136,7 +104,7 @@ class HomeController extends BaseController
         }
 
         return [
-            'div_id' => $div_id,
+            'divId' => $div_id,
             'message' => $message,
         ];
     }
