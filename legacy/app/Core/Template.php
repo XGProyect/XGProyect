@@ -75,6 +75,10 @@ class Template
 
     private function createNewParser(): void
     {
+        if (!defined('LIB_PATH')) {
+            return;
+        }
+
         // require email library
         $parser_library_path = LIB_PATH . 'Ci' . DIRECTORY_SEPARATOR . 'CiParser.php';
 

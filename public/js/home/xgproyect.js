@@ -19,7 +19,7 @@ function changeAction(type,formular)
     }
     else if(type == "getpw")
     {
-        document.forms[formular].action = "//"+uniUrl+"/index.php?page=mail";
+        document.forms[formular].action = "//"+uniUrl+"/account/recover";
     }
     else if(type == "register")
     {

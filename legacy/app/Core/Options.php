@@ -2,47 +2,41 @@
 
 namespace Xgp\App\Core;
 
-use Xgp\App\Models\Core\Options as OptionsModel;
+use App\Models\Options as ModelsOptions;
+use Illuminate\Support\Facades\DB;
 
 class Options
 {
     private static $instance = null;
-    private OptionsModel $optionsModel;
-
-    public function __construct()
-    {
-        $this->optionsModel = new OptionsModel();
-    }
 
     public static function getInstance(): Options
     {
         if (self::$instance == null) {
-            //make new istance of this class and save it to field for next usage
-            $class = __class__;
-            self::$instance = new $class();
+            self::$instance = new Options();
         }
 
         return self::$instance;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOptions(string $option = '')
+    public function getOptions(string $option)
     {
         if ($option == '') {
-            return $this->optionsModel->getAllOptions();
+            return ModelsOptions::all()->toArray();
         } else {
-            return $this->optionsModel->getOption($option);
+            return ModelsOptions::where('option_name', $option)->firstOrFail()->option_value;
         }
     }
 
     public function writeOptions(string $option, string $value = ''): bool
     {
         if ($option != '') {
-            if ($this->optionsModel->writeOption($option, $value)) {
-                return true;
-            }
+            DB::table('options')
+                ->updateOrInsert(
+                    ['option_name' => $option, 'option_value' => $value],
+                    ['option_name' => $option, 'option_value' => $value]
+                );
+
+            return true;
         }
 
         return false;
@@ -56,9 +50,9 @@ class Options
     public function deleteOption(string $option): bool
     {
         if ($option != '') {
-            if ($this->optionsModel->deleteOption($option)) {
-                return true;
-            }
+            ModelsOptions::where('option_name', $option)->delete();
+
+            return true;
         }
 
         return false;

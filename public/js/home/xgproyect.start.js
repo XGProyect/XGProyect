@@ -72,7 +72,7 @@ $(document).ready(function(){
 	//PASSWORDLOST generate
 	$('#pwLost').click(function(){
         //$(this).attr("href","http://" + $("#serverLogin").val() + "/game/reg/mail.php");
-        $(this).attr("href",$(location).attr('href') + "index.php?page=mail");
+        $(this).attr("href",$(location).attr('href') + "account/recover");
 	});
 	//RESENDLINK generate
 	$('#resendAct').click(function(){
