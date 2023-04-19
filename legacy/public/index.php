@@ -13,7 +13,7 @@ $system->bootUp('home');
 $page = filter_input(INPUT_GET, 'page');
 
 if (is_null($page)) {
-    $page = 'home';
+    $page = 'welcome';
 }
 
 $file_name = HOME_PATH . ucfirst($page) . 'Controller.php';

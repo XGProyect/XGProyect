@@ -2,14 +2,6 @@
 
 return [
     're_disabled' => 'En estos momentos el registro a nuevos usuarios se encuentra cerrado.',
-    're_mail_text_part1' => '¡Bienvenido a %s, gracias por unirte en nuestro juego!<br/> En este email encontrarás toda la información que necesitarás para acceder a tu cuenta',
-    're_mail_text_part2' => '<strong>Datos de acceso al juego</strong>',
-    're_mail_text_part3' => 'Tu nombre de usuario',
-    're_mail_text_part4' => 'Tu clave',
-    're_mail_text_part5' => 'Enlace al juego',
-    're_mail_text_part6' => '&iexcl;Disfrut&aacute; del juego!',
-    're_mail_text_part7' => 'Atentamente,<br/>El equipo de %s.-',
-    're_mail_register_at' => 'Registro en XG Proyect',
     're_welcome_message_from' => 'Admin',
     're_welcome_message_subject' => '¡Te damos la bienvenida a XGProyect!',
     're_welcome_message_content' => 'Hola %s - ¡Bienvenido a XGProyect!

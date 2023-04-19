@@ -2,14 +2,6 @@
 
 return [
     're_disabled' => 'New user registration is not currently available.',
-    're_mail_text_part1' => 'Welcome to %s, thanks for joining our game!<br/> In this email you\'ll find all the information that you need to login into your account.',
-    're_mail_text_part2' => '<strong>Data to access the game</strong>',
-    're_mail_text_part3' => 'Your username',
-    're_mail_text_part4' => 'Your password',
-    're_mail_text_part5' => 'Game link',
-    're_mail_text_part6' => 'Enjoy the game!',
-    're_mail_text_part7' => 'Regards,<br/>The %s Team.-',
-    're_mail_register_at' => 'Joined to XG Proyect',
     're_welcome_message_from' => 'Admin',
     're_welcome_message_subject' => 'Welcome to XG Proyect!',
     're_welcome_message_content' => 'Greetings, emperor %s!

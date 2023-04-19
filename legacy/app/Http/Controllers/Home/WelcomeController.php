@@ -10,7 +10,7 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Home\Home;
 
-class HomeController extends BaseController
+class WelcomeController extends BaseController
 {
     private Home $homeModel;
     private Users $userLibrary;
@@ -24,7 +24,7 @@ class HomeController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'home.view',
+            'home.welcome',
             array_merge(
                 $this->getErrors(),
                 $this->getPageData()

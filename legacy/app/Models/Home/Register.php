@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Home;
 
+use Exception;
 use Xgp\App\Core\Model;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;
@@ -11,42 +12,11 @@ use Xgp\App\Libraries\Users;
 
 class Register extends Model
 {
-    /**
-     * Contains the ID of the new user
-     *
-     * @var integer
-     */
-    private $user_id = 0;
+    private int $userId = 0;
+    private string $userName = '';
+    private string $userEmail = '';
+    private string $userPassword = '';
 
-    /**
-     * Contains the user name of the new user
-     *
-     * @var string
-     */
-    private $user_name = '';
-
-    /**
-     * Contains the email of the new user
-     *
-     * @var string
-     */
-    private $user_email = '';
-
-    /**
-     * Contains the password of the new user
-     *
-     * @var string
-     */
-    private $user_password = '';
-
-    /**
-     * Get planet by coords
-     *
-     * @param integer $galaxy
-     * @param integer $system
-     * @param integer $planet
-     * @return bool
-     */
     public function checkIfPlanetExists(int $galaxy, int $system, int $planet): bool
     {
         $planet = $this->db->queryFetch(
@@ -62,29 +32,21 @@ class Register extends Model
         return isset($planet['planet_id']);
     }
 
-    /**
-     * Register a new user
-     *
-     * @param Users $user
-     * @param array $new_user_data
-     * @param array $coords
-     * @return void
-     */
-    public function createNewUser(Users $user, array $new_user_data, array $coords): void
+    public function createNewUser(Users $user, array $newUserData, array $coords): void
     {
         try {
             $this->db->beginTransaction();
 
-            $this->user_name = $this->db->escapeValue(strip_tags($new_user_data['new_user_name']));
-            $this->user_email = $this->db->escapeValue($new_user_data['new_user_email']);
-            $this->user_password = Functions::hash($new_user_data['new_user_password']);
+            $this->userName = $this->db->escapeValue(strip_tags($newUserData['new_user_name']));
+            $this->userEmail = $this->db->escapeValue($newUserData['new_user_email']);
+            $this->userPassword = Functions::hash($newUserData['new_user_password']);
 
             // create the new user
-            $this->user_id = $user->createUserWithOptions(
+            $this->userId = $user->createUserWithOptions(
                 [
-                    'user_name' => $this->user_name,
-                    'user_password' => $this->user_password,
-                    'user_email' => $this->user_email,
+                    'user_name' => $this->userName,
+                    'user_password' => $this->userPassword,
+                    'user_email' => $this->userEmail,
                     'user_lastip' => $_SERVER['REMOTE_ADDR'],
                     'user_ip_at_reg' => $_SERVER['REMOTE_ADDR'],
                     'user_agent' => $_SERVER['HTTP_USER_AGENT'],
@@ -95,10 +57,10 @@ class Register extends Model
             );
 
             // create a new planet
-            $this->createNewPlanet($coords, $this->user_id);
+            $this->createNewPlanet($coords, $this->userId);
 
             // assign the new planet to the new user
-            $this->updateUserPlanet($coords, $this->user_id);
+            $this->updateUserPlanet($coords, $this->userId);
 
             $this->db->commitTransaction();
         } catch (Exception $e) {
@@ -106,26 +68,12 @@ class Register extends Model
         }
     }
 
-    /**
-     * Create a new planet
-     *
-     * @param array $coords
-     * @param integer $new_user_id
-     * @return void
-     */
     private function createNewPlanet(array $coords, int $new_user_id): void
     {
         $creator = new PlanetLib();
         $creator->setNewPlanet($coords['galaxy'], $coords['system'], $coords['planet'], $new_user_id, '', true);
     }
 
-    /**
-     * Assign the newly created planet to the newly registered user
-     *
-     * @param array $coords
-     * @param integer $new_user_id
-     * @return void
-     */
     private function updateUserPlanet(array $coords, int $new_user_id): void
     {
         $this->db->query(
@@ -151,44 +99,27 @@ class Register extends Model
         );
     }
 
-    /**
-     * Get the new user ID
-     *
-     * @return array
-     */
     public function getNewUserData(): array
     {
         return [
-            'user_id' => $this->user_id,
-            'user_name' => $this->user_name,
-            'user_email' => $this->user_email,
-            'user_hashed_password' => $this->user_password,
+            'user_id' => $this->userId,
+            'user_name' => $this->userName,
+            'user_email' => $this->userEmail,
+            'user_hashed_password' => $this->userPassword,
         ];
     }
 
-    /**
-     * Check if the username exists
-     *
-     * @param string $user_name
-     * @return array|null
-     */
-    public function checkUser(string $user_name): ?array
+    public function checkUser(string $userName): ?array
     {
         return $this->db->queryFetch(
             "SELECT
                 u.`user_name`
             FROM `" . USERS . "` AS u
-            WHERE `user_name` = '" . $this->db->escapeValue($user_name) . "'
+            WHERE `user_name` = '" . $this->db->escapeValue($userName) . "'
             LIMIT 1;"
         );
     }
 
-    /**
-     * Check if the email exists
-     *
-     * @param string $email
-     * @return array|null
-     */
     public function checkEmail(string $email): ?array
     {
         return $this->db->queryFetch(

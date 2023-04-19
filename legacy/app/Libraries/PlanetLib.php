@@ -31,15 +31,15 @@ class PlanetLib
      */
     public function setNewPlanet($galaxy, $system, $position, $owner, $name = '', $main = false)
     {
-        $planet_exist = $this->planetslibModel->checkPlanetExists($galaxy, $system, $position);
+        $planetExists = $this->planetslibModel->checkPlanetExists($galaxy, $system, $position);
 
-        if (!$planet_exist) {
+        if (!$planetExists) {
             $planet = Formulas::getPlanetSize($position, $main);
             $temp = Formulas::setPlanetTemp($position);
-            $name = ($name == '') ? $this->langs->line('colony') : $name;
+            $name = ($name == '') ? __('game/global.colony') : $name;
 
             if ($main == true) {
-                $name = $this->langs->line('homeworld');
+                $name = __('game/global.homeworld');
             }
 
             $this->planetslibModel->createNewPlanet(
