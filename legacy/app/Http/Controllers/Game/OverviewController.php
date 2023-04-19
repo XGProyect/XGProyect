@@ -2,8 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Game;
 
-use Illuminate\Support\Facades\View;
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
@@ -23,58 +22,53 @@ class OverviewController extends BaseController
 
     private Overview $overviewModel;
     private NoobsProtectionLib $noob;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        Users::checkSession();
-
-        // load Language
-        parent::loadLang(['game/global', 'game/overview', 'game/buildings', 'game/constructions']);
-
-        $this->overviewModel = new Overview();
-        $this->noob = new NoobsProtectionLib();
-    }
+    private array $user = [];
+    private array $planet = [];
 
     public function __invoke(): void
     {
+        Users::checkSession();
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+        $this->overviewModel = new Overview();
+        $this->noob = new NoobsProtectionLib();
+
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        $moon = $this->getPlanetMoon();
-
         Template::getInstance()->view(
             'overview.body',
-            [
-                'dpath' => DPATH,
-                'planetName' => $this->planet['planet_name'],
-                'username' => $this->user['user_name'],
-                'dateTime' => Timing::formatExtendedDate(time()),
-                'newMessage' => $this->getMessages(),
-                'fleetList' => $this->getFleetMovements(),
-                'planetImage' => $this->planet['planet_image'],
-                'building' => $this->getCurrentWork($this->planet),
-                'moonImg' => $moon['moon_img'],
-                'moon' => $moon['moon'],
-                'otherPlanets' => $this->getPlanets(),
-                'planetDiameter' => FormatLib::prettyNumber($this->planet['planet_diameter']),
-                'planetCurrentFields' => $this->planet['planet_field_current'],
-                'planetMaxFields' => DevelopmentsLib::maxFields($this->planet),
-                'planetMinTemp' => $this->planet['planet_temp_min'],
-                'planetMaxTemp' => $this->planet['planet_temp_max'],
-                'galaxyGalaxy' => $this->planet['planet_galaxy'],
-                'galaxySystem' => $this->planet['planet_system'],
-                'galaxyPlanet' => $this->planet['planet_planet'],
-                'userRank' => $this->getUserRank(),
-            ]
+            array_merge(
+                [
+                    'dpath' => DPATH,
+                    'planetName' => $this->planet['planet_name'],
+                    'username' => $this->user['user_name'],
+                    'dateTime' => Timing::formatExtendedDate(time()),
+                    'newMessage' => $this->getMessages(),
+                    'fleetList' => $this->getFleetMovements(),
+                    'planetImage' => $this->planet['planet_image'],
+                    'building' => $this->getCurrentWork($this->planet),
+                    'otherPlanets' => $this->getPlanets(),
+                    'planetDiameter' => FormatLib::prettyNumber($this->planet['planet_diameter']),
+                    'planetCurrentFields' => $this->planet['planet_field_current'],
+                    'planetMaxFields' => DevelopmentsLib::maxFields($this->planet),
+                    'planetMinTemp' => $this->planet['planet_temp_min'],
+                    'planetMaxTemp' => $this->planet['planet_temp_max'],
+                    'galaxyGalaxy' => $this->planet['planet_galaxy'],
+                    'galaxySystem' => $this->planet['planet_system'],
+                    'galaxyPlanet' => $this->planet['planet_planet'],
+                    'userRank' => $this->getUserRank(),
+                ],
+                $this->getPlanetMoon()
+            )
         );
     }
 
     private function getCurrentWork(array $user_planet, $is_current_planet = true): string
     {
         // THE PLANET IS "FREE" BY DEFAULT
-        $building_block = $this->langs->line('ov_free');
+        $building_block = __('game/overview.ov_free');
 
         if (!$is_current_planet) {
             // UPDATE THE PLANET INFORMATION FIRST, MAY BE SOMETHING HAS JUST FINISHED
@@ -119,11 +113,11 @@ class OverviewController extends BaseController
             $new_message = '<tr>';
 
             if ($this->user['new_message'] == 1) {
-                $new_message .= '<th role="cell" colspan="4">' . UrlHelper::setUrl('game.php?page=messages', $this->langs->line('ov_have_new_message'), $this->langs->line('ov_have_new_message')) . '</th>';
+                $new_message .= '<th role="cell" colspan="4">' . UrlHelper::setUrl('game.php?page=messages', __('game/overview.ov_have_new_message'), __('game/overview.ov_have_new_message')) . '</th>';
             }
 
             if ($this->user['new_message'] > 1) {
-                $link_text = str_replace('%m', FormatLib::prettyNumber($this->user['new_message']), $this->langs->line('ov_have_new_messages'));
+                $link_text = str_replace('%m', FormatLib::prettyNumber($this->user['new_message']), __('game/overview.ov_have_new_messages'));
                 $new_message .= '<th role="cell" colspan="4">' . UrlHelper::setUrl('game.php?page=messages', $link_text, $link_text) . '</th>';
             }
 
@@ -289,16 +283,16 @@ class OverviewController extends BaseController
 
     private function getPlanetMoon(): array
     {
-        $return['moon_img'] = '';
+        $return['moonImg'] = '';
         $return['moon'] = '';
 
         if ($this->planet['moon_id'] != 0 && $this->planet['moon_destroyed'] == 0 && $this->planet['planet_type'] == PlanetTypesEnumerator::PLANET) {
-            $moon_name = $this->planet['moon_name'] . " (" . $this->langs->line('moon') . ")";
+            $moon_name = $this->planet['moon_name'] . " (" . __('game/global.moon') . ")";
             $url = 'game.php?page=overview&cp=' . $this->planet['moon_id'] . '&re=0';
             $image = asset('upload/skins/xgproyect/planets/' . $this->planet['moon_image'] . '.jpg');
             $attributes = 'height="50" width="50"';
 
-            $return['moon_img'] = UrlHelper::setUrl($url, Functions::setImage($image, $moon_name, $attributes), $moon_name);
+            $return['moonImg'] = UrlHelper::setUrl($url, Functions::setImage($image, $moon_name, $attributes), $moon_name);
             $return['moon'] = $moon_name;
         }
 
@@ -342,13 +336,17 @@ class OverviewController extends BaseController
 
     private function getUserRank(): string
     {
-        $user_rank = '-';
-        $total_rank = $this->user['user_statistic_total_rank'] == '' ? $this->planet['stats_users'] : $this->user['user_statistic_total_rank'];
+        $userRank = '-';
+        $totalRank = $this->user['user_statistic_total_rank'] == '' ? $this->planet['stats_users'] : $this->user['user_statistic_total_rank'];
 
         if ($this->noob->isRankVisible($this->user['user_authlevel'])) {
-            $user_rank = FormatLib::prettyNumber($this->user['user_statistic_total_points']) . " (" . $this->langs->line('ov_place') . ' ' . UrlHelper::setUrl('game.php?page=statistics&range=' . $total_rank, $total_rank, $total_rank) . ' ' . $this->langs->line('ov_of') . ' ' . $this->planet['stats_users'] . ")";
+            $userRank = __('game/overview.ov_place', [
+                'points' => FormatLib::prettyNumber($this->user['user_statistic_total_points']),
+                'url' => UrlHelper::setUrl('game.php?page=statistics&range=' . $totalRank, $totalRank, $totalRank),
+                'total' => $this->planet['stats_users'],
+            ]);
         }
 
-        return $user_rank;
+        return $userRank;
     }
 }

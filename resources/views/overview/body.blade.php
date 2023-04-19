@@ -43,7 +43,7 @@
             </tr>
             <tr>
                 <th scope="row">{{ __('game/overview.ov_points') }}</th>
-                <th role="cell" colspan="3">{{ $userRank }}</th>
+                <th role="cell" colspan="3">{!! $userRank !!}</th>
             </tr>
         </table>
     </div>
