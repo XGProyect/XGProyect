@@ -2,11 +2,8 @@
 
 namespace Xgp\App\Libraries;
 
-use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\PHPMailer;
 use Xgp\App\Core\Database;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
-use Xgp\App\Core\Language;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\StringsHelper;
@@ -26,29 +23,6 @@ abstract class Functions
     public static function getTemplate(): Template
     {
         return new Template();
-    }
-
-    /**
-     * loadLibrary
-     *
-     * @param string $library Library
-     *
-     * @return boolean
-     */
-    public static function loadLibrary($library = '')
-    {
-        if (!empty($library)) {
-            // Require file
-            require_once LIB_PATH . $library . '.php';
-
-            $class_name = 'Xgp\App\Libraries\\' . $library;
-
-            // Create new $library object
-            return new $class_name();
-        } else {
-            // ups!
-            return false;
-        }
     }
 
     /**
@@ -79,50 +53,27 @@ abstract class Functions
         );
     }
 
-    /**
-     * readConfig
-     *
-     * @param string  $config_name Config name
-     * @param boolean $all         All
-     *
-     * @return string
-     */
-    public static function readConfig($config_name = '', $all = false)
+    public static function readConfig(?string $name, $all = false): array|string
     {
         $configs = Options::getInstance();
 
         if ($all) {
-            foreach ($configs->getOptions() as $row) {
+            foreach ($configs->getOptions(null) as $row) {
                 $return[$row['option_name']] = $row['option_value'];
             }
 
             return $return;
         } else {
-            return $configs->getOptions($config_name);
+            return $configs->getOptions($name);
         }
     }
 
-    /**
-     * updateConfig
-     *
-     * @param string $config_name  Config name
-     * @param string $config_value Config value
-     *
-     * @return string
-     */
-    public static function updateConfig($config_name, $config_value)
+    public static function updateConfig($name, $value)
     {
-        return Options::getInstance()->writeOptions($config_name, $config_value);
+        return Options::getInstance()->writeOptions($name, $value);
     }
 
-    /**
-     * validEmail
-     *
-     * @param string $address Email address
-     *
-     * @return string
-     */
-    public static function validEmail($address)
+    public static function validEmail(string $address): bool
     {
         return (!preg_match(
             "/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix",
@@ -130,29 +81,12 @@ abstract class Functions
         )) ? false : true;
     }
 
-    /**
-     * fleetSpeedFactor
-     *
-     * @return string
-     */
-    public static function fleetSpeedFactor()
+    public static function fleetSpeedFactor(): string
     {
         return self::readConfig('fleet_speed') / 2500;
     }
 
-    /**
-     * message
-     *
-     * @param string  $mes    Message
-     * @param string  $dest   Redirect destination
-     * @param string  $time   Time to redirect
-     * @param boolean $topnav Show top navigation
-     * @param boolean $menu   Show menu
-     * @param boolean $center Center message
-     *
-     * @return void
-     */
-    public static function message($mes, $dest = '', $time = '3', $topnav = false, $menu = true, $center = true)
+    public static function message($mes, $dest = '', $time = '3', $topnav = false, $menu = true, $center = true): void
     {
         define('IN_MESSAGE', true);
 
@@ -172,38 +106,22 @@ abstract class Functions
             $menu
         );
     }
-
-    /**
-     * isModuleAccesible
-     *
-     * @param int $module_id Module ID
-     *
-     * @return array
-     */
-    public static function isModuleAccesible($module_id = 0)
+    public static function isModuleAccesible($module = 0): array|int
     {
-        $modules_array = self::readConfig('modules');
-        $modules_array = explode(';', $modules_array);
+        $modules = self::readConfig('modules');
+        $modules = explode(';', $modules);
 
-        if ($module_id == 0) {
-            return $modules_array;
+        if ($module == 0) {
+            return $modules;
         } else {
-            return $modules_array[$module_id];
+            return $modules[$module];
         }
     }
 
-    /**
-     * moduleMessage
-     *
-     * @param int $access_level Access level
-     *
-     * @return void
-     */
-    public static function moduleMessage($access_level)
+    public static function moduleMessage(int $accessLevel): void
     {
-        if ($access_level == 0) {
-            $lang = new Language();
-            die(self::message($lang->loadLang('game/global', true)->line('module_not_accesible'), '', '', true));
+        if ($accessLevel == 0) {
+            die(self::message(__('game/global.module_not_accesible'), '', '', true));
         }
     }
 

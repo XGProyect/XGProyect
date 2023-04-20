@@ -18,9 +18,9 @@ class Options
         return self::$instance;
     }
 
-    public function getOptions(string $option)
+    public function getOptions(?string $option)
     {
-        if ($option == '') {
+        if (empty($option)) {
             return ModelsOptions::all()->toArray();
         } else {
             return ModelsOptions::where('option_name', $option)->firstOrFail()->option_value;
@@ -32,8 +32,8 @@ class Options
         if ($option != '') {
             DB::table('options')
                 ->updateOrInsert(
-                    ['option_name' => $option, 'option_value' => $value],
-                    ['option_name' => $option, 'option_value' => $value]
+                    ['option_name' => $option],
+                    ['option_value' => $value]
                 );
 
             return true;
