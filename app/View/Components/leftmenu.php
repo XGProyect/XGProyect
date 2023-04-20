@@ -56,7 +56,7 @@ class leftmenu extends Component
             ['game.php?page=search', 'lm_search', '', '#ffffff', false, '2', '17'],
             ['game.php?page=preferences', 'lm_options', '', '#ffffff', false, '2', '21'],
             ['game.php?page=logout', 'lm_logout', '', '#ffffff', false, '2', ''],
-            ['game.php?page=forums', 'lm_forums', '', '#ffffff', false, '3', '14'],
+            [Functions::readConfig('forum_url'), 'lm_forums', '', '#ffffff', false, '3', '14'],
         ];
         $blocks = [
             '1' => ['ogame-produktion.jpg', '110', '40'],
