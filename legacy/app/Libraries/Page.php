@@ -13,7 +13,6 @@ class Page
 {
     private ?array $current_user;
     private string $current_year;
-    private Template $template;
     private static ?Page $instance = null;
 
     public static function getInstance(): self
@@ -25,20 +24,13 @@ class Page
         return self::$instance;
     }
 
-    public function __construct(object $users)
+    public function __construct(Users $users)
     {
         $this->current_user = $users->getUserData();
         $this->current_year = date('Y');
-
-        $this->setTemplate();
     }
 
-    private function setTemplate(): void
-    {
-        $this->template = new Template();
-    }
-
-    public function display(string $current_page, bool $topnav = true, $metatags = '', $menu = true): void
+    public function display(string $current_page): void
     {
         $page = '';
 
@@ -84,71 +76,6 @@ class Page
 
         // Show result page
         die($page);
-    }
-
-    /**
-     * Display the admin page
-     *
-     * @param string $current_page
-     * @param boolean $sidebar
-     * @param boolean $navigation
-     * @param boolean $footer
-     * @return void
-     */
-    public function displayAdmin(string $current_page, bool $sidebar = true, bool $navigation = true, bool $footer = true): void
-    {
-        if ($sidebar) {
-            $parse['sidebar'] = $this->adminSidebar();
-        }
-
-        if ($navigation) {
-            $parse['navigation'] = $this->adminNavigation();
-        }
-
-        if ($footer) {
-            $parse['footer'] = $this->adminFooter();
-        }
-
-        $page = $this->adminSimpleHeader();
-        $page .= $this->adminPage($current_page, ($parse ?? []), ($sidebar && $navigation && $footer));
-        $page .= $this->adminSimpleFooter();
-
-        // Show result page
-        die($page);
-    }
-
-    /**
-     * Set the admin page
-     *
-     * @param string $page
-     * @param array $parse
-     * @return string
-     */
-    private function adminPage(string $page, array $parse, bool $full): string
-    {
-        return Template::getInstance()->render(
-            ($full ? 'admin.admin_page_view' : 'admin.simple_admin_page_view'),
-            array_merge(
-                $parse,
-                ['page_content' => $page]
-            )
-        );
-    }
-
-    /**
-     * Set the admin meta header
-     *
-     * @return string
-     */
-    private function adminSimpleHeader(): string
-    {
-        return Template::getInstance()->render(
-            'admin.simple_header',
-            [
-                'title' => 'Admin CP',
-                'admin_public_path' => ADMIN_PUBLIC_PATH,
-            ]
-        );
     }
 
     private function adminSidebar(): string
@@ -249,38 +176,6 @@ class Page
             [
                 'user_name' => $this->current_user['user_name'],
                 'current_date' => Timing::formatShortDate(time()),
-            ]
-        );
-    }
-
-    /**
-     * Set the admin footer
-     *
-     * @return string
-     */
-    private function adminFooter(): string
-    {
-        return Template::getInstance()->render(
-            'admin.footer_view',
-            [
-                'version' => SYSTEM_VERSION,
-                'year' => $this->current_year,
-            ]
-        );
-    }
-
-    /**
-     * Set admin simple footer
-     *
-     * @return string
-     */
-    private function adminSimpleFooter(): string
-    {
-        return Template::getInstance()->render(
-            'admin.simple_footer',
-            [
-                'admin_public_path' => ADMIN_PUBLIC_PATH,
-                'version' => SYSTEM_VERSION,
             ]
         );
     }
