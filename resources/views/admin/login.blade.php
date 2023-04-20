@@ -13,23 +13,23 @@
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-white mb-4">{lg_welcome_back}</h1>
+                                    <h1 class="h4 text-white mb-4">{{ __('lg_welcome_back.lg_welcome_back') }}</h1>
                                 </div>
-                                <form class="user" method="post" action="admin.php?page=login&redirect={redirect}">
+                                <form class="user" method="post" action="admin.php?page=login&redirect={{ $redirect }}">
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user" id="inputEmail"
                                             name="inputEmail" aria-describedby="emailHelp"
-                                            placeholder="{lg_enter_email_address}">
+                                            placeholder="{{ __('lg_welcome_back.lg_enter_email_address') }}">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
-                                            id="inputPassword" name="inputPassword" placeholder="{lg_password}">
+                                            id="inputPassword" name="inputPassword" placeholder="{{ __('lg_welcome_back.lg_password') }}">
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block"
-                                        name="signin">{lg_login}</button>
+                                        name="signin">{{ __('lg_welcome_back.lg_login') }}</button>
                                 </form>
                                 <br>
-                                {alert}
+                                {{ $alert }}
                             </div>
                         </div>
                     </div>
