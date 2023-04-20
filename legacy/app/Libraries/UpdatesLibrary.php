@@ -469,9 +469,9 @@ class UpdatesLibrary
             $energy_prod = eval($ProdGrid[$ProdID]['formule']['energy']);
 
             // PLASMA BOOST
-            $metalBoost = Formulas::getPlasmaTechnologyBonus($current_user['research_plasma_technology'], 'metal');
-            $crystalBoost = Formulas::getPlasmaTechnologyBonus($current_user['research_plasma_technology'], 'crystal');
-            $deuteriumBoost = Formulas::getPlasmaTechnologyBonus($current_user['research_plasma_technology'], 'deuterium');
+            $metalBoost = Formulas::getPlasmaTechnologyBonus((int) $current_user['research_plasma_technology'], 'metal');
+            $crystalBoost = Formulas::getPlasmaTechnologyBonus((int) $current_user['research_plasma_technology'], 'crystal');
+            $deuteriumBoost = Formulas::getPlasmaTechnologyBonus((int) $current_user['research_plasma_technology'], 'deuterium');
 
             // PRODUCTION BOOST WITH OFFICERS
             $Caps['planet_metal_perhour'] += Production::currentProduction(

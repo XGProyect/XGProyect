@@ -108,9 +108,9 @@ class ResourcesController extends BaseController
                 $resourcesTotal['deuterium'] += ProductionLib::productionAmount($deuterium_prod, $geologe_boost, $game_resource_multiplier);
 
                 // PLASMA BOOST
-                $metalBoost = Formulas::getPlasmaTechnologyBonus($this->user['research_plasma_technology'], 'metal');
-                $crystalBoost = Formulas::getPlasmaTechnologyBonus($this->user['research_plasma_technology'], 'crystal');
-                $deuteriumBoost = Formulas::getPlasmaTechnologyBonus($this->user['research_plasma_technology'], 'deuterium');
+                $metalBoost = Formulas::getPlasmaTechnologyBonus((int) $this->user['research_plasma_technology'], 'metal');
+                $crystalBoost = Formulas::getPlasmaTechnologyBonus((int) $this->user['research_plasma_technology'], 'crystal');
+                $deuteriumBoost = Formulas::getPlasmaTechnologyBonus((int) $this->user['research_plasma_technology'], 'deuterium');
 
                 // PRODUCTION
                 $plasmaBoostMetal = ProductionLib::productionAmount($metal_prod, $metalBoost, $game_resource_multiplier);
