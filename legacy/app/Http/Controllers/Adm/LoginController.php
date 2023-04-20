@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Login;
 
 class LoginController extends BaseController
@@ -23,21 +22,16 @@ class LoginController extends BaseController
 
         $this->runAction();
 
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.login',
-                [
-                    'alert' => $this->getAlert(),
-                    'redirect' => filter_input(INPUT_GET, 'redirect', FILTER_UNSAFE_RAW),
-                ]
-            ),
-            false,
-            false,
-            false
+        Template::getInstance()->view(
+            'admin.login',
+            [
+                'alert' => $this->getAlert(),
+                'redirect' => filter_input(INPUT_GET, 'redirect', FILTER_UNSAFE_RAW),
+            ]
         );
     }
 
-    private function runAction()
+    private function runAction(): void
     {
         $loginData = filter_input_array(INPUT_POST, [
             'inputEmail' => FILTER_VALIDATE_EMAIL,
@@ -71,7 +65,7 @@ class LoginController extends BaseController
         $error = filter_input(INPUT_GET, 'error', FILTER_VALIDATE_INT);
 
         if ($error == 1) {
-            return Administration::saveMessage('error', __('admin.login.lg_error_wrong_data'), false);
+            return Administration::saveMessage('error', __('admin/login.lg_error_wrong_data'), false);
         }
 
         return '';
