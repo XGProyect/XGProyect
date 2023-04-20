@@ -28,9 +28,6 @@ class PremiumController extends BaseController
         parent::__construct();
 
         Administration::checkSession();
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/premium']);
     }
 
     public function __invoke(): void

@@ -34,9 +34,6 @@ class Attack extends Missions
     public function __construct()
     {
         parent::__construct();
-
-        // load Language
-        parent::loadLang(['game/missions', 'game/attack', 'game/combatreport', 'game/defenses', 'game/ships']);
     }
 
     /**

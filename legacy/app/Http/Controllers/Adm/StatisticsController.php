@@ -40,9 +40,6 @@ class StatisticsController extends BaseController
         parent::__construct();
 
         Administration::checkSession();
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/statistics']);
     }
 
     public function __invoke(): void

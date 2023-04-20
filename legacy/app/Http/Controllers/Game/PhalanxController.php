@@ -22,9 +22,6 @@ class PhalanxController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/phalanx']);
-
         $this->phalanxModel = new Phalanx();
     }
 

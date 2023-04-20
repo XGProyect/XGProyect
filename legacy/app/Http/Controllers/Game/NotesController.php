@@ -25,9 +25,6 @@ class NotesController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/notes']);
-
         $this->notesModel = new Notes();
 
         // init a new notes object

@@ -209,7 +209,7 @@ class FleetsLib
             $resources_popup = (new Page(new Users()))->jsReady(
                 self::getTemplate()->set(
                     'general/fleet_resources_popup_view',
-                    array_merge($popup, self::loadLanguage(['game/global'])->language)
+                    $popup
                 )
             );
         } else {

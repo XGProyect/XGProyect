@@ -231,8 +231,6 @@ class UpdatesLibrary
     public static function setFirstElement(&$current_planet, $current_user): void
     {
         $db = new UpdatesLibraryModel();
-        $lang = new Language();
-        $lang = $lang->loadLang(['game/global', 'game/constructions', 'game/buildings'], true);
         $resource = Objects::getInstance()->getObjects();
 
         if ($current_planet['planet_b_building'] == 0) {
@@ -314,7 +312,7 @@ class UpdatesLibrary
 
                         $loop = false;
                     } else {
-                        $element_name = $lang->language[$resource[$element]];
+                        $element_name = __('game/constructions.' . $resource[$element]);
 
                         if ($no_more_level == true) {
                             $message = '';
@@ -330,20 +328,20 @@ class UpdatesLibrary
                             $insufficient = [];
 
                             if ($price['metal'] > $current_planet['planet_metal']) {
-                                $insufficient[] = $lang->line('metal');
+                                $insufficient[] = __('game/global.metal');
                             }
 
                             if ($price['crystal'] > $current_planet['planet_crystal']) {
-                                $insufficient[] = $lang->line('crystal');
+                                $insufficient[] = __('game/global.crystal');
                             }
 
                             if ($price['deuterium'] > $current_planet['planet_deuterium']) {
-                                $insufficient[] = $lang->line('deuterium');
+                                $insufficient[] = __('game/global.deuterium');
                             }
 
                             $message = sprintf(
-                                $lang->line('bd_building_queue_not_enough_resources'),
-                                $lang->line('bd_building_queue_' . $build_mode . '_order'),
+                                __('game/buildings.bd_building_queue_not_enough_resources'),
+                                __('game/buildings.bd_building_queue_' . $build_mode . '_order'),
                                 $element_name,
                                 $level,
                                 UrlHelper::setUrl(
@@ -364,8 +362,8 @@ class UpdatesLibrary
                                 0,
                                 '',
                                 5,
-                                $lang->line('bd_building_queue_not_enough_resources_from'),
-                                $lang->line('bd_building_queue_not_enough_resources_subject'),
+                                __('game/buildings.bd_building_queue_not_enough_resources_from'),
+                                __('game/buildings.bd_building_queue_not_enough_resources_subject'),
                                 $message,
                                 true
                             );

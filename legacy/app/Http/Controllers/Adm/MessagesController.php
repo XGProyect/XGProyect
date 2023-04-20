@@ -22,9 +22,6 @@ class MessagesController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/global', 'adm/messages']);
-
         $this->messagesModel = new Messages();
     }
 

@@ -32,9 +32,6 @@ class GalaxyController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/global', 'game/defenses', 'game/missions', 'game/galaxy']);
-
         $this->fleetModel = new Fleet();
         $this->galaxyModel = new Galaxy();
         $this->_resource = $this->objects->getObjects();

@@ -2,6 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use Exception;
 use Xgp\App\Core\BaseController;
 use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
@@ -11,7 +12,6 @@ use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Shipyard;
-use Exception;
 
 class ShipyardController extends BaseController
 {
@@ -34,9 +34,6 @@ class ShipyardController extends BaseController
         parent::__construct();
 
         Users::checkSession();
-
-        // load Language
-        parent::loadLang(['game/global', 'game/shipyard', 'game/defenses', 'game/ships']);
 
         $this->shipyardModel = new Shipyard();
 

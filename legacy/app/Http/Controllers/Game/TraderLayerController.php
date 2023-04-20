@@ -17,9 +17,6 @@ class TraderLayerController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/global', 'game/trader']);
-
         // build the page
         $this->buildPage();
     }

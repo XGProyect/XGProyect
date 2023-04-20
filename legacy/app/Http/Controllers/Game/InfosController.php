@@ -34,9 +34,6 @@ class InfosController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/global', 'game/infos', 'game/constructions', 'game/defenses', 'game/ships', 'game/technologies']);
-
         $this->infosModel = new Infos();
         $this->_resource = $this->objects->getObjects();
         $this->_pricelist = $this->objects->getPrice();

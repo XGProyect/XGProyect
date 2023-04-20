@@ -12,7 +12,6 @@ class Page
     private ?array $current_user;
     private string $current_year;
     private Template $template;
-    private Language $langs;
 
     public function __construct(object $users)
     {
@@ -20,17 +19,11 @@ class Page
         $this->current_year = date('Y');
 
         $this->setTemplate();
-        $this->setLanguage();
     }
 
     private function setTemplate(): void
     {
         $this->template = new Template();
-    }
-
-    private function setLanguage(): void
-    {
-        $this->langs = new Language();
     }
 
     public function display(string $current_page, bool $topnav = true, $metatags = '', $menu = true): void
@@ -123,7 +116,10 @@ class Page
     {
         return $this->template->set(
             ($full ? 'adm/admin_page_view' : 'adm/simple_admin_page_view'),
-            array_merge($this->langs->loadLang('adm/popups', true)->language, $parse, ['page_content' => $page])
+            array_merge(
+                $parse,
+                ['page_content' => $page]
+            )
         );
     }
 
@@ -143,15 +139,8 @@ class Page
         );
     }
 
-    /**
-     * Set the admin sidebar
-     *
-     * @return string
-     */
     private function adminSidebar(): string
     {
-        $lang = $this->langs->loadLang('adm/menu', true);
-
         $current_page = isset($_GET['page']) ? $_GET['page'] : null;
         $items = '';
         $flag = '';
@@ -245,13 +234,10 @@ class Page
     {
         return $this->template->set(
             'adm/navigation_view',
-            array_merge(
-                $this->langs->loadLang('adm/navigation', true)->language,
-                [
-                    'user_name' => $this->current_user['user_name'],
-                    'current_date' => Timing::formatShortDate(time()),
-                ]
-            )
+            [
+                'user_name' => $this->current_user['user_name'],
+                'current_date' => Timing::formatShortDate(time()),
+            ]
         );
     }
 
@@ -287,20 +273,13 @@ class Page
         );
     }
 
-    /**
-     * installHeader
-     *
-     * @return string
-     */
-    private function installHeader()
+    private function installHeader(): string
     {
-        $lang = $this->langs->loadLang(['installation/installation'], true);
-
         return $this->template->set(
             'install/simple_header',
             [
                 'title' => 'Install',
-                'lang_code' => $lang->line('lang_code'),
+                'lang_code' => __('installation/installation.lang_code'),
                 'js_path' => '../js/',
                 'css_path' => '../css/',
             ]

@@ -23,9 +23,6 @@ class MakerController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/global', 'adm/maker']);
-
         $this->makerModel = new Maker();
     }
 

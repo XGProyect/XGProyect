@@ -31,10 +31,6 @@ class UsersController extends BaseController
 
         Administration::checkSession();
 
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/users']);
-
         // set data
         $this->_stats = new StatisticsLibrary();
         $this->usersModel = new Users();

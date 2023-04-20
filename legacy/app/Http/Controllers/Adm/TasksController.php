@@ -18,9 +18,6 @@ class TasksController extends BaseController
         parent::__construct();
 
         Administration::checkSession();
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/tasks']);
     }
 
     public function __invoke(): void

@@ -18,9 +18,6 @@ class RepairController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/global', 'adm/repair']);
-
         $this->repairModel = new Repair();
     }
 

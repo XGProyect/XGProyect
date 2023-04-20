@@ -21,9 +21,6 @@ class HomeController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/global', 'adm/home']);
-
         $this->homeModel = new Home();
     }
 

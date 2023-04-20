@@ -17,9 +17,6 @@ class LanguagesController extends BaseController
         parent::__construct();
 
         Administration::checkSession();
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/languages']);
     }
 
     public function __invoke(): void

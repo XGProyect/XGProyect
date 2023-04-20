@@ -26,9 +26,6 @@ class AlliancesController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/global', 'adm/alliances']);
-
         $this->alliancesModel = new Alliances();
     }
 

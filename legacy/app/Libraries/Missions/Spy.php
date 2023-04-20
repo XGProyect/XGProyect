@@ -15,9 +15,6 @@ class Spy extends Missions
     public function __construct()
     {
         parent::__construct();
-
-        // load Language
-        parent::loadLang(['game/global', 'game/missions', 'game/spy', 'game/constructions', 'game/defenses', 'game/ships', 'game/technologies']);
     }
 
     /**

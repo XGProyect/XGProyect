@@ -19,9 +19,6 @@ class LoginController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/login']);
-
         $this->loginModel = new Login();
     }
 

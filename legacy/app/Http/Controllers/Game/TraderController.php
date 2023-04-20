@@ -25,9 +25,6 @@ class TraderController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/global', 'game/trader']);
-
         $this->traderModel = new Trader();
 
         // init a new trader object

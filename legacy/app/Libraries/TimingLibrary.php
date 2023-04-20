@@ -2,34 +2,23 @@
 
 namespace Xgp\App\Libraries;
 
-use Xgp\App\Core\Language;
 use Xgp\App\Libraries\Functions;
 
 abstract class TimingLibrary
 {
-    /**
-     * Return an string with the online time formatted
-     *
-     * @param int $online_time Online Time
-     *
-     * @return string
-     */
-    public static function setOnlineStatus($online_time)
+    public static function setOnlineStatus($onlineTime): string
     {
-        $lang = new Language();
-        $lang = $lang->loadLang('game/global', true);
-
         $color = 'red';
-        $status = $lang->line('offline');
+        $status = __('game/global.offline');
 
-        if ($online_time + 60 * 15 >= time()) {
+        if ($onlineTime + 60 * 15 >= time()) {
             $color = 'yellow';
-            $status = $lang->line('minutes');
+            $status = __('game/global.minutes');
         }
 
-        if ($online_time + 60 * 10 >= time()) {
+        if ($onlineTime + 60 * 10 >= time()) {
             $color = 'lime';
-            $status = $lang->line('online');
+            $status = __('game/global.online');
         }
 
         return FormatLib::customColor($status, $color);

@@ -30,9 +30,6 @@ class FederationController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/fleet']);
-
         $this->fleetModel = new Fleet();
         $this->buddiesModel = new Buddies();
 

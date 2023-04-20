@@ -21,9 +21,6 @@ class CombatreportController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/combatreport']);
-
         $this->combatreportModel = new Combatreport();
 
         // init a new report object

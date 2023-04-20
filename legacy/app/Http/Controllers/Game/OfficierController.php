@@ -22,9 +22,6 @@ class OfficierController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/global', 'game/officier']);
-
         $this->officierModel = new Officier();
     }
 

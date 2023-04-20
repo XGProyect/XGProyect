@@ -2,6 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use Exception;
 use Xgp\App\Core\BaseController;
 use Xgp\App\Core\Entity\BuddyEntity;
 use Xgp\App\Core\Enumerators\BuddiesStatusEnumerator as BuddiesStatus;
@@ -10,7 +11,6 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Buddies;
-use Exception;
 
 class BuddiesController extends BaseController
 {
@@ -24,9 +24,6 @@ class BuddiesController extends BaseController
         parent::__construct();
 
         Users::checkSession();
-
-        // load Language
-        parent::loadLang(['game/buddies']);
 
         $this->buddiesModel = new Buddies();
 

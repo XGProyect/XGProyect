@@ -29,9 +29,6 @@ class TechtreeController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/global', 'game/constructions', 'game/defenses', 'game/ships', 'game/technologies']);
-
         // requirements
         $this->_resource = $this->objects->getObjects();
 

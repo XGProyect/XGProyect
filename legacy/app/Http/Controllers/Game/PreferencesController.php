@@ -29,9 +29,6 @@ class PreferencesController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/preferences']);
-
         $this->preferencesModel = new Preferences();
 
         // init a new preferences object

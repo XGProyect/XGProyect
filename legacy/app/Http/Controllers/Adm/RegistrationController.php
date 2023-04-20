@@ -23,9 +23,6 @@ class RegistrationController extends BaseController
         parent::__construct();
 
         Administration::checkSession();
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/registration']);
     }
 
     public function __invoke(): void

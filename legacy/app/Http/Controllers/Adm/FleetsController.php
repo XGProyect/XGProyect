@@ -21,9 +21,6 @@ class FleetsController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/global', 'adm/objects', 'adm/fleets']);
-
         $this->fleetsModel = new Fleets();
     }
 

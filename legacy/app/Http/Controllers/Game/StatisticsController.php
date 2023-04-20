@@ -21,9 +21,6 @@ class StatisticsController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/global', 'game/statistics']);
-
         $this->statisticsModel = new Statistics();
     }
 

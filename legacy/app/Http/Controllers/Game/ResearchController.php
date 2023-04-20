@@ -29,9 +29,6 @@ class ResearchController extends BaseController
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        // load Language
-        parent::loadLang(['game/global', 'game/research', 'game/technologies']);
-
         $this->researchModel = new Research();
         $this->_resource = $this->objects->getObjects();
         $this->_reslist = $this->objects->getObjectsList();

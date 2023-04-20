@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use DateTime;
+use DateTimeZone;
 use Xgp\App\Core\BaseController;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Adm\Server;
-use DateTime;
-use DateTimeZone;
 
 class ServerController extends BaseController
 {
@@ -22,9 +22,6 @@ class ServerController extends BaseController
         parent::__construct();
 
         Administration::checkSession();
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/server']);
 
         $this->serverModel = new Server();
     }

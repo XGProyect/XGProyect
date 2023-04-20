@@ -24,9 +24,6 @@ class FleetshortcutsController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/global', 'game/fleet']);
-
         $this->shortcutsModel = new ShortcutsModel();
 
         // init a new shortcut object

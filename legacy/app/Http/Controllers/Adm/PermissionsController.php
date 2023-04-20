@@ -21,9 +21,6 @@ class PermissionsController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/global', 'adm/permissions', 'adm/menu']);
-
         // init a new permissions object
         $this->setUpPermissions();
     }

@@ -45,21 +45,18 @@ class AdministrationLib
 
     public static function saveMessage(string $result, string $message, bool $dismissible = true): string
     {
-        $lang = new Language();
-        $lang = $lang->loadLang('adm/global', true);
-
         switch ($result) {
             case 'ok':
                 $parse['color'] = 'alert-success';
-                $parse['status'] = $lang->line('gn_ok_title');
+                $parse['status'] = __('adm/global.gn_ok_title');
                 break;
             case 'error':
                 $parse['color'] = 'alert-danger';
-                $parse['status'] = $lang->line('gn_error_title');
+                $parse['status'] = __('adm/global.gn_error_title');
                 break;
             case 'warning':
                 $parse['color'] = 'alert-warning';
-                $parse['status'] = $lang->line('gn_warning_title');
+                $parse['status'] = __('adm/global.gn_warning_title');
                 break;
             case 'info':
                 $parse['color'] = 'alert-info';

@@ -32,9 +32,6 @@ class MessagesController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/messages']);
-
         $this->messagesModel = new Messages();
     }
 

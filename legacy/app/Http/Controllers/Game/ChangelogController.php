@@ -20,9 +20,6 @@ class ChangelogController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/changelog']);
-
         $this->changelogModel = new Changelog();
     }
 

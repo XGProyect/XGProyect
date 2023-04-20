@@ -21,9 +21,6 @@ class UpdateController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/global', 'adm/update']);
-
         $this->updateModel = new Update();
     }
 

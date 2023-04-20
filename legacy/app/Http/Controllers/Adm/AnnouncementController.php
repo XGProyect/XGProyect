@@ -23,9 +23,6 @@ class AnnouncementController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/global', 'adm/announcement']);
-
         $this->announcementModel = new Announcement();
     }
 

@@ -28,9 +28,6 @@ class Recycle extends Missions
     public function __construct()
     {
         parent::__construct();
-
-        // load Language
-        parent::loadLang(['game/missions', 'game/recycle']);
     }
 
     /**

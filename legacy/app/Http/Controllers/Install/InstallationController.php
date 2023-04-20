@@ -24,9 +24,6 @@ class InstallationController extends BaseController
     {
         parent::__construct();
 
-        // load Language
-        parent::loadLang(['installation/installation']);
-
         $this->_planet = new PlanetLib();
         $this->installationModel = new Installation();
     }

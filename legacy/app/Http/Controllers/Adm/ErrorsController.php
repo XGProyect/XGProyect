@@ -14,9 +14,6 @@ class ErrorsController extends BaseController
         parent::__construct();
 
         Administration::checkSession();
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/errors']);
     }
 
     public function __invoke(): void

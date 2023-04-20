@@ -60,9 +60,6 @@ class Fleet4Controller extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/fleet']);
-
         $this->fleetModel = new Fleet();
 
         // init a new fleets object

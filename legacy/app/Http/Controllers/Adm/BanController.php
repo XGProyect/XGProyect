@@ -21,9 +21,6 @@ class BanController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/global', 'adm/ban']);
-
         $this->banModel = new Ban();
     }
 

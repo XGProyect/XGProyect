@@ -27,9 +27,6 @@ class MailingController extends BaseController
         parent::__construct();
 
         Administration::checkSession();
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/mailing']);
     }
 
     public function __invoke(): void

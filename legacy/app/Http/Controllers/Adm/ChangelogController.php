@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use DateTime;
+use Exception;
 use Xgp\App\Core\BaseController;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Adm\Changelog;
-use DateTime;
-use Exception;
 
 class ChangelogController extends BaseController
 {
@@ -20,9 +20,6 @@ class ChangelogController extends BaseController
         parent::__construct();
 
         Administration::checkSession();
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/changelog']);
 
         $this->changelogModel = new Changelog();
     }

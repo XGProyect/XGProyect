@@ -2,6 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use Exception;
 use Xgp\App\Core\BaseController;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator;
 use Xgp\App\Helpers\UrlHelper;
@@ -14,7 +15,6 @@ use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\UpdatesLibrary;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Buildings;
-use Exception;
 
 class BuildingsController extends BaseController
 {
@@ -30,9 +30,6 @@ class BuildingsController extends BaseController
         parent::__construct();
 
         Users::checkSession();
-
-        // load Language
-        parent::loadLang(['game/global', 'game/buildings', 'game/constructions']);
 
         $this->buildingsModel = new Buildings();
 

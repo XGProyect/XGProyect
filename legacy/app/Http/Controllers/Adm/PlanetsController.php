@@ -25,9 +25,6 @@ class PlanetsController extends BaseController
         parent::__construct();
 
         Administration::checkSession();
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/planets']);
     }
 
     public function __invoke(): void

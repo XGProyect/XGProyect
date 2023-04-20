@@ -24,9 +24,6 @@ class BackupController extends BaseController
 
         Administration::checkSession();
 
-        // load Language
-        parent::loadLang(['adm/global', 'adm/backup']);
-
         $this->backupModel = new Backup();
     }
 

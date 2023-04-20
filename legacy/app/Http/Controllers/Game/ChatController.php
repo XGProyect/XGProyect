@@ -22,9 +22,6 @@ class ChatController extends BaseController
 
         Users::checkSession();
 
-        // load Language
-        parent::loadLang(['game/chat']);
-
         $this->messagesModel = new Messages();
     }
 

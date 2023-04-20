@@ -18,9 +18,6 @@ class EncrypterController extends BaseController
         parent::__construct();
 
         Administration::checkSession();
-
-        // load Language
-        parent::loadLang(['adm/global', 'adm/encrypter']);
     }
 
     public function __invoke(): void

@@ -144,7 +144,7 @@ class Common
 
         if ($user['user_banned'] > 0) {
             die(Functions::message(StringsHelper::parseReplacements(
-                (new Language())->loadLang('game/global', true)->language['bg_banned'],
+                __('game/global.bg_banned'),
                 [Timing::formatShortDate($user['user_banned'])]
             ), '', '', false, false));
         }

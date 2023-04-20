@@ -16,8 +16,6 @@ class Deploy extends Missions
     {
         parent::__construct();
 
-        // load Language
-        parent::loadLang(['game/missions', 'game/deploy']);
     }
 
     /**

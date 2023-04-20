@@ -36,9 +36,6 @@ class AllianceController extends BaseController
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        // load Language
-        parent::loadLang(['game/alliance', 'game/global']);
-
         // load Library
         $this->bbcode = Functions::loadLibrary('BBCodeLib');
         $this->allianceModel = new Alliance();

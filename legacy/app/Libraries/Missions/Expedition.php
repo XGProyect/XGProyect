@@ -25,9 +25,6 @@ class Expedition extends Missions
     public function __construct()
     {
         parent::__construct();
-
-        // load Language
-        parent::loadLang(['game/global', 'game/missions', 'game/expedition', 'game/ships']);
     }
 
     /**
