@@ -20,21 +20,15 @@ class AlliancesController extends BaseController
     private ?Ranks $ranks = null;
     private Alliances $alliancesModel;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        Administration::checkSession();
-
-        $this->alliancesModel = new Alliances();
-    }
-
     public function __invoke(): void
     {
-        // check if the user is allowed to access
+        Administration::checkSession();
+
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage($this->langs->line('no_permissions')));
+            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
         }
+
+        $this->alliancesModel = new Alliances();
 
         // build the page
         $this->buildPage();
@@ -42,7 +36,6 @@ class AlliancesController extends BaseController
 
     private function buildPage(): void
     {
-        $parse = $this->langs->language;
         $parse['alert'] = '';
         $alliance = isset($_GET['alliance']) ? trim($_GET['alliance']) : null;
         $type = isset($_GET['type']) ? trim($_GET['type']) : null;

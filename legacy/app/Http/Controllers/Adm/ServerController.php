@@ -17,24 +17,18 @@ class ServerController extends BaseController
     private $game_config = [];
     private Server $serverModel;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        Administration::checkSession();
-
-        $this->serverModel = new Server();
-    }
-
     public function __invoke(): void
     {
-        // check if the user is allowed to access
+        Administration::checkSession();
+
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage($this->langs->line('no_permissions')));
+            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
         }
 
+        $this->serverModel = new Server();
+
         // time to do something
-        //$this->runAction();
+        $this->runAction();
 
         // build the page
         $this->buildPage();

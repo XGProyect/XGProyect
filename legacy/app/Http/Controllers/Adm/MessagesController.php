@@ -16,21 +16,15 @@ class MessagesController extends BaseController
     private array $results = [];
     private Messages $messagesModel;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        Administration::checkSession();
-
-        $this->messagesModel = new Messages();
-    }
-
     public function __invoke(): void
     {
-        // check if the user is allowed to access
+        Administration::checkSession();
+
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage($this->langs->line('no_permissions')));
+            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
         }
+
+        $this->messagesModel = new Messages();
 
         // time to do something
         $this->runAction();

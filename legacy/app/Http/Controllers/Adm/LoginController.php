@@ -13,17 +13,12 @@ class LoginController extends BaseController
 {
     private Login $loginModel;
 
-    public function __construct()
+    public function __invoke(): void
     {
-        parent::__construct();
-
         Administration::checkSession();
 
         $this->loginModel = new Login();
-    }
 
-    public function __invoke(): void
-    {
         // time to do something
         $this->runAction();
 

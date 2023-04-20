@@ -25,23 +25,16 @@ class UsersController extends BaseController
     private $_stats;
     private Users $usersModel;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        Administration::checkSession();
-
-        // set data
-        $this->_stats = new StatisticsLibrary();
-        $this->usersModel = new Users();
-    }
-
     public function __invoke(): void
     {
-        // check if the user is allowed to access
+        Administration::checkSession();
+
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage($this->langs->line('no_permissions')));
+            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
         }
+
+        $this->_stats = new StatisticsLibrary();
+        $this->usersModel = new Users();
 
         // build the page
         $this->buildPage();

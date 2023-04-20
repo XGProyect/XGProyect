@@ -15,21 +15,15 @@ class BanController extends BaseController
     private int $_banned_count = 0;
     private Ban $banModel;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        Administration::checkSession();
-
-        $this->banModel = new Ban();
-    }
-
     public function __invoke(): void
     {
-        // check if the user is allowed to access
+        Administration::checkSession();
+
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage($this->langs->line('no_permissions')));
+            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
         }
+
+        $this->banModel = new Ban();
 
         // build the page
         $this->buildPage();

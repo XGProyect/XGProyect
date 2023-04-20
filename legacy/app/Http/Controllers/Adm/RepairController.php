@@ -12,21 +12,15 @@ class RepairController extends BaseController
 {
     private Repair $repairModel;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        Administration::checkSession();
-
-        $this->repairModel = new Repair();
-    }
-
     public function __invoke(): void
     {
-        // check if the user is allowed to access
+        Administration::checkSession();
+
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage($this->langs->line('no_permissions')));
+            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
         }
+
+        $this->repairModel = new Repair();
 
         // build the page
         $this->buildPage();

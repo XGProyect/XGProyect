@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Adm;
 
-use JsonException;
 use Illuminate\Routing\Controller as BaseController;
+use JsonException;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
@@ -15,21 +15,16 @@ class HomeController extends BaseController
 {
     private Home $homeModel;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        Administration::checkSession();
-
-        $this->homeModel = new Home();
-    }
-
     public function __invoke(): void
     {
-        // check if the user is allowed to access
+        Administration::checkSession();
+
+
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage($this->langs->line('no_permissions')));
+            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
         }
+
+        $this->homeModel = new Home();
 
         // build the page
         $this->buildPage();
