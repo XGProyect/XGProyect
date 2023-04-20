@@ -3,7 +3,9 @@
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Reset;
 
 class ResetController extends BaseController
@@ -147,11 +149,10 @@ class ResetController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/reset_view',
                 array_merge(
-                    $this->langs->language,
                     [
                         'alert' => $this->alert ? $this->alert : '',
                     ]

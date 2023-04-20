@@ -109,7 +109,7 @@ class TraderController extends BaseController
     private function buildPage(): void
     {
         $this->page->display(
-            $this->template->set(
+            Template::getInstance()->set(
                 'game/trader_overview_view',
                 array_merge(
                     $this->langs->language,
@@ -140,7 +140,7 @@ class TraderController extends BaseController
     private function getPage(): array
     {
         return [
-            'currentMode' => $this->template->set(
+            'currentMode' => Template::getInstance()->set(
                 'game/trader_resources_view',
                 array_merge(
                     $this->langs->language,

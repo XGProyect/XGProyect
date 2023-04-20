@@ -92,8 +92,8 @@ class CombatreportController extends BaseController
         $content = str_replace($search, $replace, $content);
         }
 
-        $no_fleet = $this->template->set('combatreport/combatreport_no_fleet_view', $this->langs->language);
-        $destroyed = $this->template->set('combatreport/combatreport_destroyed_view', $this->langs->language);
+        $no_fleet = Template::getInstance()->set('combatreport/combatreport_no_fleet_view', $this->langs->language);
+        $destroyed = Template::getInstance()->set('combatreport/combatreport_destroyed_view', $this->langs->language);
 
         $search = [$no_fleet];
         $replace = [$destroyed];

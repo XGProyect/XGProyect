@@ -94,7 +94,7 @@ class Fleet1Controller extends BaseController
 
         // display the page
         $this->page->display(
-            $this->template->set(
+            Template::getInstance()->set(
                 'fleet/fleet1_view',
                 array_merge(
                     $this->langs->language,
@@ -113,7 +113,7 @@ class Fleet1Controller extends BaseController
     private function buildNoSlotBlock()
     {
         if (!$this->checkAvailableSlot()) {
-            return $this->template->set('fleet/fleet1_noslots_row', $this->langs->language);
+            return Template::getInstance()->set('fleet/fleet1_noslots_row', $this->langs->language);
         }
 
         return null;
@@ -229,7 +229,7 @@ class Fleet1Controller extends BaseController
     {
         if ($this->_ship_count > 0
             && $this->checkAvailableSlot()) {
-            return $this->template->set('fleet/fleet1_selector_row', $this->langs->language);
+            return Template::getInstance()->set('fleet/fleet1_selector_row', $this->langs->language);
         }
 
         return '';
@@ -243,7 +243,7 @@ class Fleet1Controller extends BaseController
     private function buildNoShipsBlock()
     {
         if ($this->_ship_count <= 0) {
-            return $this->template->set('fleet/fleet1_noships_row', $this->langs->language);
+            return Template::getInstance()->set('fleet/fleet1_noships_row', $this->langs->language);
         }
 
         return '';
@@ -258,7 +258,7 @@ class Fleet1Controller extends BaseController
     {
         if ($this->_ship_count > 0
             && $this->checkAvailableSlot()) {
-            return $this->template->set('fleet/fleet1_button', $this->langs->language);
+            return Template::getInstance()->set('fleet/fleet1_button', $this->langs->language);
         }
 
         return '';

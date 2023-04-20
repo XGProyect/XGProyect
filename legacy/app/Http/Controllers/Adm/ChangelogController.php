@@ -7,8 +7,10 @@ namespace Xgp\App\Http\Controllers\Adm;
 use DateTime;
 use Exception;
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Changelog;
 
 class ChangelogController extends BaseController
@@ -56,16 +58,13 @@ class ChangelogController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/changelog_view',
-                array_merge(
-                    $this->langs->language,
-                    [
-                        'changelog' => $this->buildListOfEntries(),
-                        'alert' => $this->getAlertMessage(),
-                    ]
-                )
+                [
+                    'changelog' => $this->buildListOfEntries(),
+                    'alert' => $this->getAlertMessage(),
+                ]
             )
         );
     }
@@ -119,8 +118,8 @@ class ChangelogController extends BaseController
     {
         $this->saveAction();
 
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/changelog_form_view',
                 array_merge(
                     $this->getActionData('add')
@@ -139,8 +138,8 @@ class ChangelogController extends BaseController
     {
         $this->saveAction();
 
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/changelog_form_view',
                 $this->getActionData('edit', $changelog_id)
             )

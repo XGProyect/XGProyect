@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Ban;
 
 class BanController extends BaseController
@@ -44,7 +46,8 @@ class BanController extends BaseController
                 break;
         }
 
-        $this->page->displayAdmin($view);
+
+        Page::getInstance()->displayAdmin($view);
     }
 
     /**
@@ -54,7 +57,6 @@ class BanController extends BaseController
      */
     private function showDefault()
     {
-        $parse = $this->langs->language;
         $parse['js_path'] = JS_PATH;
         $parse['alert'] = '';
         $parse['bn_sub_title'] = '';
@@ -73,7 +75,7 @@ class BanController extends BaseController
         $parse['users_amount'] = $this->_users_count;
         $parse['banned_amount'] = $this->_banned_count;
 
-        return $this->template->set('adm/ban_view', $parse);
+        return Template::getInstance()->set('adm/ban_view', $parse);
     }
 
     /**
@@ -83,7 +85,6 @@ class BanController extends BaseController
      */
     private function showBan()
     {
-        $parse = $this->langs->language;
         $parse['js_path'] = JS_PATH;
         $parse['alert'] = '';
         $parse['bn_sub_title'] = '';
@@ -151,7 +152,7 @@ class BanController extends BaseController
             Functions::redirect('admin.php?page=ban');
         }
 
-        return $this->template->set("adm/ban_result_view", $parse);
+        return Template::getInstance()->set("adm/ban_result_view", $parse);
     }
 
     /**

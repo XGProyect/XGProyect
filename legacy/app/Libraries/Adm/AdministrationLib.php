@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Adm;
 
-use Xgp\App\Core\Language;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\Permissions;
 use Xgp\App\Libraries\Functions;

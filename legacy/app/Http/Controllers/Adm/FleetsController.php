@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib as Format;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Models\Adm\Fleets;
 
@@ -93,13 +95,10 @@ class FleetsController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/fleets_view',
-                array_merge(
-                    $this->langs->language,
-                    $this->buildFleetMovementsBlock()
-                )
+                $this->buildFleetMovementsBlock()
             )
         );
     }
@@ -116,7 +115,6 @@ class FleetsController extends BaseController
 
         foreach ($fleets as $fleet) {
             $fleet_movements[] = array_merge(
-                $this->langs->language,
                 $this->buildMissionBlock($fleet),
                 $this->buildAmountBlock($fleet),
                 $this->buildBeginningBlock($fleet),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Core;
 
 use CiParser;
@@ -54,12 +56,12 @@ class Template
         return $this->ciParser->parse($this->get($template), $data, $return);
     }
 
-    public static function view(string $template = '', array $data = []): void
+    public function view(string $template = '', array $data = []): void
     {
         die(self::render($template, $data));
     }
 
-    public static function render(string $template = '', array $data = [])
+    public function render(string $template = '', array $data = [])
     {
         $bladeFile = resource_path('views') . DIRECTORY_SEPARATOR . strtr($template, ['/' => DIRECTORY_SEPARATOR, '.' => DIRECTORY_SEPARATOR]) . '.blade.php';
 

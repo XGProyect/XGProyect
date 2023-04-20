@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 
 class MailingController extends BaseController
 {
@@ -59,11 +61,10 @@ class MailingController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/mailing_view',
                 array_merge(
-                    $this->langs->language,
                     $this->getMailingSettings(),
                     $this->buildProtocolsDropdown(),
                     $this->buildCryptoDropdown(),
@@ -75,11 +76,6 @@ class MailingController extends BaseController
         );
     }
 
-    /**
-     * Get mailing settings
-     *
-     * @return void
-     */
     private function getMailingSettings(): array
     {
         return array_filter(
@@ -91,11 +87,6 @@ class MailingController extends BaseController
         );
     }
 
-    /**
-     * Build the list of available protocol options
-     *
-     * @return array
-     */
     private function buildProtocolsDropdown(): array
     {
         $options = [];
@@ -111,11 +102,6 @@ class MailingController extends BaseController
         return ['protocol_options' => $options];
     }
 
-    /**
-     * Build the list of available encryption options
-     *
-     * @return array
-     */
     private function buildCryptoDropdown(): array
     {
         $options = [];

@@ -3,9 +3,11 @@
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Repair;
 
 class RepairController extends BaseController
@@ -28,14 +30,13 @@ class RepairController extends BaseController
 
     private function buildPage(): void
     {
-        $parse = $this->langs->language;
         $parse['alert'] = '';
 
         if (!$_POST) {
             $tables = $this->repairModel->getAllTables();
 
             $parse['display'] = 'block';
-            $parse['head'] = $this->template->set('adm/repair_row_head_view', $this->langs->language);
+            $parse['head'] = Template::getInstance()->set('adm/repair_row_head_view', $this->langs->language);
             $parse['tables'] = '';
             $parse['results'] = '';
 
@@ -46,17 +47,14 @@ class RepairController extends BaseController
                 $row['overhead'] = FormatLib::prettyBytes($row['DATA_FREE']);
                 $row['status_style'] = 'text-info';
 
-                $parse['tables'] .= $this->template->set(
+                $parse['tables'] .= Template::getInstance()->set(
                     'adm/repair_row_view',
-                    array_merge(
-                        $row,
-                        $this->langs->language
-                    )
+                    $row
                 );
             }
         } else {
             $parse['display'] = 'none';
-            $parse['head'] = $this->template->set('adm/repair_result_head_view', $this->langs->language);
+            $parse['head'] = Template::getInstance()->set('adm/repair_result_head_view', $this->langs->language);
             $parse['tables'] = '';
 
             if (isset($_POST['table']) && is_array($_POST['table'])) {
@@ -67,18 +65,18 @@ class RepairController extends BaseController
 
                     $this->repairModel->checkTable($table);
                     $parse['result'] = $this->langs->line('db_check_ok');
-                    $result_rows .= $this->template->set('adm/repair_result_view', $parse);
+                    $result_rows .= Template::getInstance()->set('adm/repair_result_view', $parse);
 
                     if (isset($_POST['Optimize']) && $_POST['Optimize'] == 'yes') {
                         $this->repairModel->optimizeTable($table);
                         $parse['result'] = $this->langs->line('db_opt');
-                        $result_rows .= $this->template->set('adm/repair_result_view', $parse);
+                        $result_rows .= Template::getInstance()->set('adm/repair_result_view', $parse);
                     }
 
                     if (isset($_POST['Repair']) && $_POST['Repair'] == 'yes') {
                         $this->repairModel->repairTable($table);
                         $parse['result'] = $this->langs->line('db_rep');
-                        $result_rows .= $this->template->set('adm/repair_result_view', $parse);
+                        $result_rows .= Template::getInstance()->set('adm/repair_result_view', $parse);
                     }
                 }
 
@@ -88,8 +86,8 @@ class RepairController extends BaseController
             }
         }
 
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/repair_view',
                 $parse
             )

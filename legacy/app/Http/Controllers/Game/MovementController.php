@@ -109,7 +109,7 @@ class MovementController extends BaseController
 
         // display the page
         $this->page->display(
-            $this->template->set(
+            Template::getInstance()->set(
                 'game/movements_view',
                 array_merge(
                     $this->langs->language,

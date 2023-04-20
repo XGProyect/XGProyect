@@ -5,9 +5,11 @@ namespace Xgp\App\Http\Controllers\Adm;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\StatisticsLibrary;
 use Xgp\App\Libraries\Users\Shortcuts;
 use Xgp\App\Models\Adm\Users;
@@ -48,7 +50,6 @@ class UsersController extends BaseController
 
     private function buildPage(): void
     {
-        $parse = $this->langs->language;
         $user = isset($_GET['user']) ? trim($_GET['user']) : null;
         $type = isset($_GET['type']) ? trim($_GET['type']) : null;
         $this->_edit = isset($_GET['edit']) ? trim($_GET['edit']) : '';
@@ -95,8 +96,8 @@ class UsersController extends BaseController
         $parse['user_rank'] = $this->langs->language['user_level'][$this->_authlevel];
         $parse['content'] = ($user != '' && $type != '') ? $this->getData($type) : '';
 
-        $this->page->displayAdmin(
-            $this->template->set('adm/users_view', $parse)
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set('adm/users_view', $parse)
         );
     }
 
@@ -260,7 +261,6 @@ class UsersController extends BaseController
      */
     private function getDataInfo(): string
     {
-        $parse = $this->langs->language;
         $parse += (array) $this->_user_query;
         $parse['information'] = str_replace('%s', $this->_user_query['user_name'], $this->langs->line('us_user_information'));
         $parse['main_planet'] = $this->buildPlanetCombo($this->_user_query, 'user_home_planet_id');
@@ -274,7 +274,7 @@ class UsersController extends BaseController
         $parse['user_fleet_shortcuts'] = $this->buildShortcutsCombo($this->_user_query['user_fleet_shortcuts']);
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return $this->template->set('adm/users_information_view', $parse);
+        return Template::getInstance()->set('adm/users_information_view', $parse);
     }
 
     /**
@@ -284,7 +284,6 @@ class UsersController extends BaseController
      */
     private function getDataSettings(): string
     {
-        $parse = $this->langs->language;
         $parse['settings'] = str_replace('%s', $this->_user_query['user_name'], $this->langs->line('us_user_settings'));
         $parse['preference_planet_sort'] = $this->planetSortCombo();
         $parse['preference_planet_sort_sequence'] = $this->planetOrderCombo();
@@ -294,39 +293,27 @@ class UsersController extends BaseController
         $parse['preference_delete_mode'] = ($this->_user_query['preference_delete_mode']) ? ' checked="checked" ' : '';
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return $this->template->set('adm/users_settings_view', $parse);
+        return Template::getInstance()->set('adm/users_settings_view', $parse);
     }
 
-    /**
-     * method get_research_info
-     * param
-     * return the research page for the current user
-     */
     private function getDataResearch()
     {
-        $parse = $this->langs->language;
-        $parse += (array) $this->_user_query;
+        $parse = (array) $this->_user_query;
         $parse['research'] = str_replace(['%s', '%d'], [$this->_user_query['user_name'], $this->_id], $this->langs->line('us_user_research'));
         $parse['technologies_list'] = $this->researchTable();
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return $this->template->set('adm/users_research_view', $parse);
+        return Template::getInstance()->set('adm/users_research_view', $parse);
     }
 
-    /**
-     * method getDataPremium
-     * param
-     * return the premium page for the current user
-     */
     private function getDataPremium()
     {
-        $parse = $this->langs->language;
         $parse['premium'] = str_replace('%s', $this->_user_query['user_name'], $this->langs->line('us_user_premium'));
         $parse['premium_dark_matter'] = $this->_user_query['premium_dark_matter'];
         $parse['premium_list'] = $this->premiumTable();
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return $this->template->set('adm/users_premium_view', $parse);
+        return Template::getInstance()->set('adm/users_premium_view', $parse);
     }
 
     /**
@@ -337,7 +324,6 @@ class UsersController extends BaseController
     private function getDataPlanets()
     {
         $planets_query = $this->usersModel->getAllPlanetsData($this->_id, $this->_planet, $this->_edit);
-        $parse = $this->langs->language;
         $parse['planets'] = str_replace('%s', $this->_user_query['user_name'], $this->langs->line('us_user_planets'));
 
         // CHOOSE THE ACTION
@@ -376,7 +362,7 @@ class UsersController extends BaseController
 
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return $this->template->set($view, $parse);
+        return Template::getInstance()->set($view, $parse);
     }
 
     /**
@@ -387,7 +373,6 @@ class UsersController extends BaseController
     private function getDataMoons()
     {
         $moons_query = $this->usersModel->getAllMoonsData($this->_id, $this->_moon, $this->_edit);
-        $parse = $this->langs->language;
         $parse['moons'] = str_replace('%s', $this->_user_query['user_name'], $this->langs->line('us_user_moons'));
 
         // CHOOSE THE ACTION
@@ -426,7 +411,7 @@ class UsersController extends BaseController
 
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return $this->template->set($view, $parse);
+        return Template::getInstance()->set($view, $parse);
     }
     ######################################
     #
@@ -962,7 +947,6 @@ class UsersController extends BaseController
      */
     private function planetsTable($planets_data): array
     {
-        $parse = $this->langs->language;
         $parse['image_path'] = DEFAULT_SKINPATH . "planets/small/s_";
         $parse['user'] = $this->_user_query['user_name'];
         $prepare_table = [];
@@ -1013,7 +997,6 @@ class UsersController extends BaseController
      */
     private function moonsTable($moons_data): array
     {
-        $parse = $this->langs->language;
         $parse['image_path'] = DEFAULT_SKINPATH . 'planets/small/s_';
         $parse['user'] = $this->_user_query['user_name'];
         $prepare_table = [];
@@ -1049,8 +1032,7 @@ class UsersController extends BaseController
      */
     private function editMain($planets_data)
     {
-        $parse = $this->langs->language;
-        $parse += $planets_data;
+        $parse = $planets_data;
         $parse['planet_user_id'] = $this->buildUsersCombo($parse['planet_user_id']);
         $parse['planet_last_update'] = date(Functions::readConfig('date_format_extended'), $parse['planet_last_update']);
         $parse['type1'] = $parse['planet_type'] == PlanetTypesEnumerator::PLANET ? ' selected' : '';

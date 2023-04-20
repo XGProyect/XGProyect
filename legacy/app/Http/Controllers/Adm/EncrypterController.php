@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 
 class EncrypterController extends BaseController
 {
@@ -45,16 +47,13 @@ class EncrypterController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/encrypter_view',
-                array_merge(
-                    $this->langs->language,
-                    [
-                        'unencrypted' => $this->unencrypted ?? '',
-                        'encrypted' => $this->encrypted ?? '',
-                    ]
-                )
+                [
+                    'unencrypted' => $this->unencrypted ?? '',
+                    'encrypted' => $this->encrypted ?? '',
+                ]
             )
         );
     }

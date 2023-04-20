@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 
 class RegistrationController extends BaseController
 {
@@ -33,11 +35,6 @@ class RegistrationController extends BaseController
         $this->buildPage();
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $data = filter_input_array(INPUT_POST, self::REGISTRATION_SETTINGS, true);
@@ -53,11 +50,10 @@ class RegistrationController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/registration_view',
                 array_merge(
-                    $this->langs->language,
                     $this->getNewUserRegistrationSettings(),
                     [
                         'alert' => $this->alert ?? '',
@@ -67,12 +63,7 @@ class RegistrationController extends BaseController
         );
     }
 
-    /**
-     * Get new user registration settings
-     *
-     * @return void
-     */
-    private function getNewUserRegistrationSettings()
+    private function getNewUserRegistrationSettings(): array
     {
         return $this->setChecked(
             array_filter(
@@ -85,12 +76,6 @@ class RegistrationController extends BaseController
         );
     }
 
-    /**
-     * Coverts the setting value from an int to a "checked"
-     *
-     * @param array $settings
-     * @return array
-     */
     private function setChecked(array $settings): array
     {
         foreach ($settings as $key => $value) {

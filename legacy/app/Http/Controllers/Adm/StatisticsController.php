@@ -6,8 +6,10 @@ namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 
 class StatisticsController extends BaseController
 {
@@ -27,12 +29,6 @@ class StatisticsController extends BaseController
     ];
 
     private string $alert = '';
-
-    /**
-     * Contains the current setting
-     *
-     * @var integer
-     */
     private $user_level = 0;
 
     public function __invoke(): void
@@ -43,18 +39,10 @@ class StatisticsController extends BaseController
             die(Administration::noAccessMessage(__('adm/global.no_permissions')));
         }
 
-        // time to do something
         $this->runAction();
-
-        // build the page
         $this->buildPage();
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $data = filter_input_array(INPUT_POST, self::STATISTICS_SETTINGS);
@@ -72,11 +60,10 @@ class StatisticsController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/statistics_view',
                 array_merge(
-                    $this->langs->language,
                     $this->getStatisticsSettings(),
                     $this->userLevels(),
                     [
@@ -87,11 +74,6 @@ class StatisticsController extends BaseController
         );
     }
 
-    /**
-     * Get statistics settings
-     *
-     * @return void
-     */
     private function getStatisticsSettings(): array
     {
         return array_filter(
@@ -107,12 +89,7 @@ class StatisticsController extends BaseController
         );
     }
 
-    /**
-     * Build the user level block
-     *
-     * @return void
-     */
-    private function userLevels()
+    private function userLevels(): array
     {
         $user_levels = [];
         $ranks = [

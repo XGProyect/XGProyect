@@ -6,9 +6,11 @@ namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
 use JsonException;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Home;
 
 class HomeController extends BaseController
@@ -34,11 +36,10 @@ class HomeController extends BaseController
     {
         $server_stats = $this->homeModel->getUsersStats();
 
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/home_view',
                 array_merge(
-                    $this->langs->language,
                     $server_stats,
                     [
                         'alert' => [$this->buildAlertsBlock()],

@@ -60,7 +60,7 @@ class TechtreeController extends BaseController
 
         // display the page
         $this->page->display(
-            $this->template->set(
+            Template::getInstance()->set(
                 'game/techtree_view',
                 array_merge(
                     $this->langs->language,

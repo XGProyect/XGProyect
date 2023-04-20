@@ -7,9 +7,11 @@ namespace Xgp\App\Http\Controllers\Adm;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Announcement;
 
 class AnnouncementController extends BaseController
@@ -158,11 +160,10 @@ class AnnouncementController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/announcement_view',
                 array_merge(
-                    $this->langs->language,
                     $this->buildColorPicker(),
                     [
                         'js_path' => JS_PATH,

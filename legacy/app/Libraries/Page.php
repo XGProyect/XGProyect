@@ -1,17 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Libraries;
 
-use Xgp\App\Core\Language;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\TimingLibrary as Timing;
+use Xgp\App\Libraries\Users;
 
 class Page
 {
     private ?array $current_user;
     private string $current_year;
     private Template $template;
+    private static ?Page $instance = null;
+
+    public static function getInstance(): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new Page(new Users());
+        }
+
+        return self::$instance;
+    }
 
     public function __construct(object $users)
     {
@@ -65,7 +77,7 @@ class Page
         $page .= $this->installMenu($langs); // MENU
         $page .= $this->installNavbar($langs); // TOP NAVIGATION BAR
         $page .= $current_page;
-        $page .= $this->template->set(
+        $page .= Template::getInstance()->set(
             'install/simple_footer',
             ['year' => $this->current_year]
         );
@@ -114,7 +126,7 @@ class Page
      */
     private function adminPage(string $page, array $parse, bool $full): string
     {
-        return $this->template->set(
+        return Template::getInstance()->set(
             ($full ? 'adm/admin_page_view' : 'adm/simple_admin_page_view'),
             array_merge(
                 $parse,
@@ -130,7 +142,7 @@ class Page
      */
     private function adminSimpleHeader(): string
     {
-        return $this->template->set(
+        return Template::getInstance()->set(
             'adm/simple_header',
             [
                 'title' => 'Admin CP',
@@ -219,7 +231,7 @@ class Page
         $parse['active_' . $active_block] = ' active';
         $parse['active_' . $active_block . '_show'] = ' show';
 
-        return $this->template->set(
+        return Template::getInstance()->set(
             'adm/sidebar_view',
             $parse
         );
@@ -232,7 +244,7 @@ class Page
      */
     private function adminNavigation(): string
     {
-        return $this->template->set(
+        return Template::getInstance()->set(
             'adm/navigation_view',
             [
                 'user_name' => $this->current_user['user_name'],
@@ -248,7 +260,7 @@ class Page
      */
     private function adminFooter(): string
     {
-        return $this->template->set(
+        return Template::getInstance()->set(
             'adm/footer_view',
             [
                 'version' => SYSTEM_VERSION,
@@ -264,7 +276,7 @@ class Page
      */
     private function adminSimpleFooter(): string
     {
-        return $this->template->set(
+        return Template::getInstance()->set(
             'adm/simple_footer',
             [
                 'admin_public_path' => ADMIN_PUBLIC_PATH,
@@ -275,7 +287,7 @@ class Page
 
     private function installHeader(): string
     {
-        return $this->template->set(
+        return Template::getInstance()->set(
             'install/simple_header',
             [
                 'title' => 'Install',
@@ -326,7 +338,7 @@ class Page
         $parse['menu_items'] = $items;
         $parse['language_select'] = Functions::getLanguages(Functions::getCurrentLanguage());
 
-        return $this->template->set(
+        return Template::getInstance()->set(
             'install/topnav_view',
             $parse
         );
@@ -360,7 +372,7 @@ class Page
         $parse = $langs;
         $parse['menu_items'] = $items;
 
-        return $this->template->set(
+        return Template::getInstance()->set(
             'install/menu_view',
             $parse
         );

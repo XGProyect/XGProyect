@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Login;
 
 class LoginController extends BaseController
@@ -62,16 +64,13 @@ class LoginController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/login_view',
-                array_merge(
-                    $this->langs->language,
-                    [
-                        'alert' => $this->getAlert(),
-                        'redirect' => filter_input(INPUT_GET, 'redirect', FILTER_UNSAFE_RAW),
-                    ]
-                )
+                [
+                    'alert' => $this->getAlert(),
+                    'redirect' => filter_input(INPUT_GET, 'redirect', FILTER_UNSAFE_RAW),
+                ]
             ),
             false,
             false,

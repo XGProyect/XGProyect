@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Models\Adm\Backup;
 
@@ -112,11 +114,10 @@ class BackupController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/backup_view',
                 array_merge(
-                    $this->langs->language,
                     $this->getBackupSettings(),
                     $this->getBackupList()
                 )
@@ -124,12 +125,7 @@ class BackupController extends BaseController
         );
     }
 
-    /**
-     * Get new user registration settings
-     *
-     * @return void
-     */
-    private function getBackupSettings()
+    private function getBackupSettings(): array
     {
         return $this->setChecked(
             array_filter(
@@ -157,12 +153,7 @@ class BackupController extends BaseController
         return $settings;
     }
 
-    /**
-     * Build the list of available backups
-     *
-     * @return void
-     */
-    private function getBackupList()
+    private function getBackupList(): array
     {
         $backup_list = [];
 

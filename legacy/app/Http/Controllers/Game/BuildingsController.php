@@ -129,7 +129,7 @@ class BuildingsController extends BaseController
 
         // display the page
         $this->page->display(
-            $this->template->set(
+            Template::getInstance()->set(
                 'buildings/buildings_builds',
                 array_merge($page, $this->buildQueueBlock())
             )
@@ -354,7 +354,7 @@ class BuildingsController extends BaseController
                 'call_program' => $this->getCurrentPage(),
             ];
 
-            return $this->template->set(
+            return Template::getInstance()->set(
                 'buildings/buildings_build_script',
                 array_merge($block, $this->langs->language)
             );

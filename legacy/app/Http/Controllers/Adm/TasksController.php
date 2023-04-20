@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class TasksController extends BaseController
@@ -27,22 +29,14 @@ class TasksController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/tasks_view',
-                array_merge(
-                    $this->langs->language,
-                    $this->buildUpdatesBlock()
-                )
+                $this->buildUpdatesBlock()
             )
         );
     }
 
-    /**
-     * Build the tasks list
-     *
-     * @return array
-     */
     private function buildUpdatesBlock(): array
     {
         $update_tasks = ['stat_last_update', 'last_backup', 'last_cleanup'];
@@ -55,11 +49,6 @@ class TasksController extends BaseController
         return ['tasks_list' => $update_blocks];
     }
 
-    /**
-     * Get the task information
-     *
-     * @return array
-     */
     private function getTaskData(string $task): array
     {
         $next_run = '-';
@@ -79,22 +68,11 @@ class TasksController extends BaseController
         ];
     }
 
-    /**
-     * Check if the task is scheduled, return true if it is
-     *
-     * @param string $task
-     * @return boolean
-     */
     private function isTaskScheduled(string $task): bool
     {
         return !($task == 'last_backup' && Functions::readConfig('auto_backup') == 0);
     }
 
-    /**
-     * Get actions for the points update task
-     *
-     * @return string
-     */
     private function getStatLastUpdateActions(): string
     {
         return UrlHelper::setUrl(
@@ -105,11 +83,6 @@ class TasksController extends BaseController
         );
     }
 
-    /**
-     * Get actions for the backup task
-     *
-     * @return string
-     */
     private function getLastBackupActions(): string
     {
         return UrlHelper::setUrl(
@@ -120,11 +93,6 @@ class TasksController extends BaseController
         );
     }
 
-    /**
-     * Get actions for clean up task
-     *
-     * @return string
-     */
     private function getLastCleanupActions(): string
     {
         return '';

@@ -59,7 +59,7 @@ class StatisticsController extends BaseController
             $MaxAllys = $this->statisticsModel->countAlliances();
 
             $parse['range'] = $this->build_range_list($MaxAllys, $range);
-            $parse['stat_header'] = $this->template->set(
+            $parse['stat_header'] = Template::getInstance()->set(
                 'stat/stat_alliancetable_header',
                 $parse
             );
@@ -82,7 +82,7 @@ class StatisticsController extends BaseController
                 $parse['ally_action'] = $StatRow['alliance_request_notallow'] == 1 ? '<a href="game.php?page=alliance&mode=apply&allyid=' . $StatRow['alliance_id'] . '"><img src="' . DPATH . 'img/m.gif" border="0" title="' . $this->langs->line('st_ally_request') . '" /></a>' : '';
                 $parse['ally_points'] = FormatLib::prettyNumber($StatRow['alliance_statistic_' . $Order]);
                 $parse['ally_members_points'] = FormatLib::prettyNumber(floor($StatRow['alliance_statistic_' . $Order] / $StatRow['ally_members']));
-                $parse['stat_values'] .= $this->template->set(
+                $parse['stat_values'] .= Template::getInstance()->set(
                     'stat/stat_alliancetable',
                     $parse
                 );
@@ -91,7 +91,7 @@ class StatisticsController extends BaseController
             }
         } else {
             $parse['range'] = $this->build_range_list($this->planet['stats_users'], $range);
-            $parse['stat_header'] = $this->template->set(
+            $parse['stat_header'] = Template::getInstance()->set(
                 'stat/stat_playertable_header',
                 $parse
             );
@@ -132,7 +132,7 @@ class StatisticsController extends BaseController
 
                 $parse['player_rankplus'] = $this->rank_difference($ranking);
                 $parse['player_points'] = FormatLib::prettyNumber($StatRow['user_statistic_' . $Order]);
-                $parse['stat_values'] .= $this->template->set(
+                $parse['stat_values'] .= Template::getInstance()->set(
                     'stat/stat_playertable',
                     $parse
                 );
@@ -141,7 +141,7 @@ class StatisticsController extends BaseController
         }
 
         $this->page->display(
-            $this->template->set(
+            Template::getInstance()->set(
                 'stat/stat_body',
                 $parse
             )

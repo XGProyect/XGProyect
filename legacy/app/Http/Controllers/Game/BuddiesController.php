@@ -251,7 +251,7 @@ class BuddiesController extends BaseController
         }
 
         $this->page->display(
-            $this->template->set(
+            Template::getInstance()->set(
                 'game/buddies_request',
                 array_merge(
                     ['js_path' => JS_PATH],
@@ -274,7 +274,7 @@ class BuddiesController extends BaseController
 
         // display the page
         $this->page->display(
-            $this->template->set(
+            Template::getInstance()->set(
                 'game/buddies_view',
                 array_merge($page, $this->langs->language)
             )

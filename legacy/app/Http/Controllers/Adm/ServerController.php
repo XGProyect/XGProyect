@@ -7,9 +7,11 @@ namespace Xgp\App\Http\Controllers\Adm;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Server;
 
 class ServerController extends BaseController
@@ -171,7 +173,6 @@ class ServerController extends BaseController
     private function buildPage(): void
     {
         $this->game_config = $this->serverModel->readAllConfigs();
-        $parse = $this->langs->language;
         $parse['alert'] = '';
 
         if (isset($_POST['opt_save']) && $_POST['opt_save'] == '1') {
@@ -204,8 +205,8 @@ class ServerController extends BaseController
         $parse['noobprot2'] = $this->game_config['noobprotectiontime'];
         $parse['noobprot3'] = $this->game_config['noobprotectionmulti'];
 
-        $this->page->displayAdmin(
-            $this->template->set('adm/server_view', $parse)
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set('adm/server_view', $parse)
         );
     }
 

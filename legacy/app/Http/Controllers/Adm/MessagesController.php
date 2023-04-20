@@ -6,7 +6,9 @@ namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Models\Adm\Messages;
 
@@ -74,11 +76,10 @@ class MessagesController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/messages_view',
                 array_merge(
-                    $this->langs->language,
                     $this->buildMessageTypeBlock(),
                     [
                         'alert' => $this->alert,

@@ -3,8 +3,10 @@
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Update;
 
 class UpdateController extends BaseController
@@ -31,7 +33,6 @@ class UpdateController extends BaseController
 
     private function buildPage(): void
     {
-        $parse = $this->langs->language;
         $continue = true;
 
         $this->system_version = SYSTEM_VERSION;
@@ -60,8 +61,8 @@ class UpdateController extends BaseController
                 if ($this->demo) {
                     $parse['result'] = print_r($this->output, true);
 
-                    $this->page->displayAdmin(
-                        $this->template->set(
+                    Page::getInstance()->displayAdmin(
+                        Template::getInstance()->set(
                             'adm/update_result_view',
                             $parse
                         )
@@ -74,8 +75,8 @@ class UpdateController extends BaseController
             }
         }
 
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/update_view',
                 $parse
             )

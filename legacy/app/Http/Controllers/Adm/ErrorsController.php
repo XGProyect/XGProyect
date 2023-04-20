@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
+use Xgp\App\Libraries\Page;
 
 class ErrorsController extends BaseController
 {
@@ -41,13 +43,10 @@ class ErrorsController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/errors_view',
-                array_merge(
-                    $this->langs->language,
-                    $this->processErrorsLogs()
-                )
+                $this->processErrorsLogs()
             )
         );
     }

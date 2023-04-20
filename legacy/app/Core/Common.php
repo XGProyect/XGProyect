@@ -7,7 +7,6 @@ namespace Xgp\App\Core;
 use Exception;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use Xgp\App\Core\Language;
 use Xgp\App\Core\Sessions;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Libraries\Functions;

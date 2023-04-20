@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Page;
 
 class ModulesController extends BaseController
 {
@@ -51,16 +53,13 @@ class ModulesController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->displayAdmin(
-            $this->template->set(
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->set(
                 'adm/modules_view',
-                array_merge(
-                    $this->langs->language,
-                    [
-                        'alert' => $this->alert ?? '',
-                        'modules' => $this->buildModulesList(),
-                    ]
-                )
+                [
+                    'alert' => $this->alert ?? '',
+                    'modules' => $this->buildModulesList(),
+                ]
             )
         );
     }

@@ -120,13 +120,13 @@ class GalaxyController extends BaseController
         $parse['current_planet'] = $this->planet['planet_planet'];
         $parse['coords'] = FormatLib::prettyCoords((int) $this->_galaxy, (int) $this->_system, (int) $planet);
         $parse['planet_type'] = $this->planet['planet_type'];
-        $parse['mip'] = ($mode == 2) ? $this->template->set(
+        $parse['mip'] = ($mode == 2) ? Template::getInstance()->set(
             'galaxy/galaxy_missile_selector',
             array_merge($parse, $this->langs->language)
         ) : ' ';
 
         $this->page->display(
-            $this->template->set(
+            Template::getInstance()->set(
                 'game/galaxy_view',
                 array_merge(
                     $this->langs->language,
