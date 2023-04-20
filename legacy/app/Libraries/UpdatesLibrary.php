@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Libraries;
 
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
-use Xgp\App\Core\Language;
 use Xgp\App\Core\Objects;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib as Developments;

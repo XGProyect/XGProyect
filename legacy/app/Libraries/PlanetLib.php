@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Libraries;
 
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
-use Xgp\App\Core\Language;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Libraries\PlanetLib as PlanetLibModel;

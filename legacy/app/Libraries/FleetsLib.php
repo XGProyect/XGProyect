@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Libraries;
 
 use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
-use Xgp\App\Core\Language;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
