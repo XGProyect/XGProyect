@@ -47,7 +47,7 @@ abstract class Functions
         $parse['ref'] = $ref;
         $parse['value'] = $value;
 
-        return self::getTemplate()->set(
+        return Template::getInstance()->render(
             $template,
             $parse
         );
@@ -100,7 +100,7 @@ abstract class Functions
         }
 
         (new Page(new Users()))->display(
-            self::getTemplate()->set('general/message_body', $parse),
+            Template::getInstance()->render('general/message_body', $parse),
             $topnav,
             (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ""),
             $menu
@@ -331,12 +331,12 @@ abstract class Functions
      */
     public static function messageBox($title, $message, $goto = '', $button = ' ok ', $two_lines = false)
     {
-        return self::getTemplate()->set(
+        return Template::getInstance()->render(
             'alliance/alliance_message_box',
             [
                 'goto' => $goto,
                 'title' => $title,
-                'message_box_row' => self::getTemplate()->set(
+                'message_box_row' => Template::getInstance()->render(
                     'alliance/alliance_message_box_row_' . ($two_lines ? 'two' : 'one'),
                     [
                         'message' => $message,

@@ -22,7 +22,7 @@ class UpdateController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage(__('admin.global.no_permissions')));
+            die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
         $this->updateModel = new Update();

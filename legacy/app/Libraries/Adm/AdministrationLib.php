@@ -47,15 +47,15 @@ class AdministrationLib
         switch ($result) {
             case 'ok':
                 $parse['color'] = 'alert-success';
-                $parse['status'] = __('admin.global.gn_ok_title');
+                $parse['status'] = __('admin/global.gn_ok_title');
                 break;
             case 'error':
                 $parse['color'] = 'alert-danger';
-                $parse['status'] = __('admin.global.gn_error_title');
+                $parse['status'] = __('admin/global.gn_error_title');
                 break;
             case 'warning':
                 $parse['color'] = 'alert-warning';
-                $parse['status'] = __('admin.global.gn_warning_title');
+                $parse['status'] = __('admin/global.gn_warning_title');
                 break;
             case 'info':
                 $parse['color'] = 'alert-info';
@@ -69,7 +69,7 @@ class AdministrationLib
             $parse['dismissible'] = 'd-none';
         }
 
-        return self::getTemplate()->set(
+        return Template::getInstance()->render(
             'admin.save_message_view',
             $parse
         );
@@ -79,7 +79,7 @@ class AdministrationLib
     {
         $parse['message'] = $message;
 
-        return self::getTemplate()->set(
+        return Template::getInstance()->render(
             'admin.popup_view',
             $parse
         );

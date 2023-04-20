@@ -281,7 +281,7 @@ class DevelopmentsLib
         $parse['call_program'] = $call_program;
         $parse['current_page'] = ($element_id != 0) ? DevelopmentsLib::setBuildingPage($element_id) : $call_program;
 
-        return self::getTemplate()->set(
+        return Template::getInstance()->render(
             'buildings/buildings_buildlist_script',
             array_merge($parse, $lang)
         );
