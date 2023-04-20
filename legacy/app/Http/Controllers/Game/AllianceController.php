@@ -2,7 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Game;
 
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Helpers\StringsHelper;

@@ -3,7 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Exception;
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
 use Xgp\App\Libraries\DevelopmentsLib;

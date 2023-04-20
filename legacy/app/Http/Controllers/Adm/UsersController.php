@@ -2,7 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Adm;
 
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;

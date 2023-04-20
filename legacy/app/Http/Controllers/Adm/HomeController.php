@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use JsonException;
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;

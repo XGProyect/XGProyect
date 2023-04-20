@@ -6,7 +6,7 @@ namespace Xgp\App\Http\Controllers\Adm;
 
 use DateTime;
 use DateTimeZone;
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;

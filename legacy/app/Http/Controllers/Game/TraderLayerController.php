@@ -2,7 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Game;
 
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;

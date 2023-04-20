@@ -2,7 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Game;
 
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\Formulas;

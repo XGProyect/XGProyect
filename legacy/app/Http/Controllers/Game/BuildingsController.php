@@ -3,7 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Exception;
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Buildings\Building;

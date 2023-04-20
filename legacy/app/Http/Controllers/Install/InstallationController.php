@@ -3,7 +3,7 @@
 namespace Xgp\App\Http\Controllers\Install;
 
 use Illuminate\Support\Facades\Artisan;
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;

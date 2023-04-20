@@ -2,7 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Game;
 
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
 use Xgp\App\Helpers\StringsHelper;

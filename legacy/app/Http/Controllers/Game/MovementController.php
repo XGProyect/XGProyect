@@ -2,7 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Game;
 
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Entity\FleetEntity;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Helpers\UrlHelper;

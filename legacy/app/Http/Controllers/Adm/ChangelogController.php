@@ -6,7 +6,7 @@ namespace Xgp\App\Http\Controllers\Adm;
 
 use DateTime;
 use Exception;
-use Xgp\App\Core\BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Adm\Changelog;
