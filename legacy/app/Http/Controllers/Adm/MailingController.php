@@ -29,7 +29,7 @@ class MailingController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
+            die(Administration::noAccessMessage(__('admin.global.no_permissions')));
         }
 
         // time to do something
@@ -62,8 +62,8 @@ class MailingController extends BaseController
     private function buildPage(): void
     {
         Page::getInstance()->displayAdmin(
-            Template::getInstance()->set(
-                'adm/mailing_view',
+            Template::getInstance()->render(
+                'admin.mailing_view',
                 array_merge(
                     $this->getMailingSettings(),
                     $this->buildProtocolsDropdown(),

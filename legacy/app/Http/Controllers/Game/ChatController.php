@@ -101,7 +101,7 @@ class ChatController extends BaseController
     private function buildPage(): void
     {
         $this->page->display(
-            Template::getInstance()->set(
+            Template::getInstance()->render(
                 'game/chat_view',
                 array_merge(
                     $this->langs->language,

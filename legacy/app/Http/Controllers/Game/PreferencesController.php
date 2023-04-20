@@ -128,7 +128,7 @@ class PreferencesController extends BaseController
     private function buildPage(): void
     {
         $this->page->display(
-            Template::getInstance()->set(
+            Template::getInstance()->render(
                 'game/preferences_view',
                 array_merge(
                     $this->langs->language,

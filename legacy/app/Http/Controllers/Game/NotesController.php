@@ -111,7 +111,7 @@ class NotesController extends BaseController
 
         // display the page
         $this->page->display(
-            Template::getInstance()->set(
+            Template::getInstance()->render(
                 $page['template'],
                 array_merge(
                     $this->langs->language,

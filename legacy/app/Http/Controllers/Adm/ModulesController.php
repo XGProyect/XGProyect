@@ -19,7 +19,7 @@ class ModulesController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
+            die(Administration::noAccessMessage(__('admin.global.no_permissions')));
         }
 
         // time to do something
@@ -54,8 +54,8 @@ class ModulesController extends BaseController
     private function buildPage(): void
     {
         Page::getInstance()->displayAdmin(
-            Template::getInstance()->set(
-                'adm/modules_view',
+            Template::getInstance()->render(
+                'admin.modules_view',
                 [
                     'alert' => $this->alert ?? '',
                     'modules' => $this->buildModulesList(),

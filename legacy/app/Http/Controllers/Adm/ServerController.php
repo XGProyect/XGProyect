@@ -24,7 +24,7 @@ class ServerController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
+            die(Administration::noAccessMessage(__('admin.global.no_permissions')));
         }
 
         $this->serverModel = new Server();
@@ -206,7 +206,7 @@ class ServerController extends BaseController
         $parse['noobprot3'] = $this->game_config['noobprotectionmulti'];
 
         Page::getInstance()->displayAdmin(
-            Template::getInstance()->set('adm/server_view', $parse)
+            Template::getInstance()->render('admin.server_view', $parse)
         );
     }
 

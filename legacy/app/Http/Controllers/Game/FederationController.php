@@ -107,7 +107,7 @@ class FederationController extends BaseController
 
         // display the page
         $this->page->display(
-            Template::getInstance()->set(
+            Template::getInstance()->render(
                 'fleet/fleet_federation_view',
                 array_merge(
                     $this->langs->language,

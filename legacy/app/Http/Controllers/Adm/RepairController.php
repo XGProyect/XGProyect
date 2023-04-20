@@ -19,7 +19,7 @@ class RepairController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
+            die(Administration::noAccessMessage(__('admin.global.no_permissions')));
         }
 
         $this->repairModel = new Repair();
@@ -36,7 +36,7 @@ class RepairController extends BaseController
             $tables = $this->repairModel->getAllTables();
 
             $parse['display'] = 'block';
-            $parse['head'] = Template::getInstance()->set('adm/repair_row_head_view', $this->langs->language);
+            $parse['head'] = Template::getInstance()->render('admin.repair_row_head_view', $this->langs->language);
             $parse['tables'] = '';
             $parse['results'] = '';
 
@@ -47,14 +47,14 @@ class RepairController extends BaseController
                 $row['overhead'] = FormatLib::prettyBytes($row['DATA_FREE']);
                 $row['status_style'] = 'text-info';
 
-                $parse['tables'] .= Template::getInstance()->set(
-                    'adm/repair_row_view',
+                $parse['tables'] .= Template::getInstance()->render(
+                    'admin.repair_row_view',
                     $row
                 );
             }
         } else {
             $parse['display'] = 'none';
-            $parse['head'] = Template::getInstance()->set('adm/repair_result_head_view', $this->langs->language);
+            $parse['head'] = Template::getInstance()->render('admin.repair_result_head_view', $this->langs->language);
             $parse['tables'] = '';
 
             if (isset($_POST['table']) && is_array($_POST['table'])) {
@@ -65,18 +65,18 @@ class RepairController extends BaseController
 
                     $this->repairModel->checkTable($table);
                     $parse['result'] = $this->langs->line('db_check_ok');
-                    $result_rows .= Template::getInstance()->set('adm/repair_result_view', $parse);
+                    $result_rows .= Template::getInstance()->render('admin.repair_result_view', $parse);
 
                     if (isset($_POST['Optimize']) && $_POST['Optimize'] == 'yes') {
                         $this->repairModel->optimizeTable($table);
                         $parse['result'] = $this->langs->line('db_opt');
-                        $result_rows .= Template::getInstance()->set('adm/repair_result_view', $parse);
+                        $result_rows .= Template::getInstance()->render('admin.repair_result_view', $parse);
                     }
 
                     if (isset($_POST['Repair']) && $_POST['Repair'] == 'yes') {
                         $this->repairModel->repairTable($table);
                         $parse['result'] = $this->langs->line('db_rep');
-                        $result_rows .= Template::getInstance()->set('adm/repair_result_view', $parse);
+                        $result_rows .= Template::getInstance()->render('admin.repair_result_view', $parse);
                     }
                 }
 
@@ -87,8 +87,8 @@ class RepairController extends BaseController
         }
 
         Page::getInstance()->displayAdmin(
-            Template::getInstance()->set(
-                'adm/repair_view',
+            Template::getInstance()->render(
+                'admin.repair_view',
                 $parse
             )
         );

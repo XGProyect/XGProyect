@@ -23,7 +23,7 @@ class MessagesController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
+            die(Administration::noAccessMessage(__('admin.global.no_permissions')));
         }
 
         $this->messagesModel = new Messages();
@@ -77,8 +77,8 @@ class MessagesController extends BaseController
     private function buildPage(): void
     {
         Page::getInstance()->displayAdmin(
-            Template::getInstance()->set(
-                'adm/messages_view',
+            Template::getInstance()->render(
+                'admin.messages_view',
                 array_merge(
                     $this->buildMessageTypeBlock(),
                     [

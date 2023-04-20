@@ -149,7 +149,7 @@ class PhalanxController extends BaseController
         $parse['phl_pl_name'] = $TargetName;
 
         $this->page->display(
-            Template::getInstance()->set(
+            Template::getInstance()->render(
                 'galaxy/phalanx_body',
                 $parse
             ),

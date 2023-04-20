@@ -120,7 +120,7 @@ class FleetshortcutsController extends BaseController
 
         // display the page
         $this->page->display(
-            Template::getInstance()->set(
+            Template::getInstance()->render(
                 'shortcuts/shortcuts_view',
                 array_merge(
                     $this->langs->language,
@@ -246,7 +246,7 @@ class FleetshortcutsController extends BaseController
     {
         // display the page
         $this->page->display(
-            Template::getInstance()->set(
+            Template::getInstance()->render(
                 'shortcuts/shortcuts_edit_view',
                 array_merge(
                     $this->langs->language,

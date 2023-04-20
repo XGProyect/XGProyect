@@ -77,8 +77,8 @@ class Page
         $page .= $this->installMenu($langs); // MENU
         $page .= $this->installNavbar($langs); // TOP NAVIGATION BAR
         $page .= $current_page;
-        $page .= Template::getInstance()->set(
-            'install/simple_footer',
+        $page .= Template::getInstance()->render(
+            'install.simple_footer',
             ['year' => $this->current_year]
         );
 
@@ -126,8 +126,8 @@ class Page
      */
     private function adminPage(string $page, array $parse, bool $full): string
     {
-        return Template::getInstance()->set(
-            ($full ? 'adm/admin_page_view' : 'adm/simple_admin_page_view'),
+        return Template::getInstance()->render(
+            ($full ? 'admin.admin_page_view' : 'admin.simple_admin_page_view'),
             array_merge(
                 $parse,
                 ['page_content' => $page]
@@ -142,8 +142,8 @@ class Page
      */
     private function adminSimpleHeader(): string
     {
-        return Template::getInstance()->set(
-            'adm/simple_header',
+        return Template::getInstance()->render(
+            'admin.simple_header',
             [
                 'title' => 'Admin CP',
                 'admin_public_path' => ADMIN_PUBLIC_PATH,
@@ -231,8 +231,8 @@ class Page
         $parse['active_' . $active_block] = ' active';
         $parse['active_' . $active_block . '_show'] = ' show';
 
-        return Template::getInstance()->set(
-            'adm/sidebar_view',
+        return Template::getInstance()->render(
+            'admin.sidebar_view',
             $parse
         );
     }
@@ -244,8 +244,8 @@ class Page
      */
     private function adminNavigation(): string
     {
-        return Template::getInstance()->set(
-            'adm/navigation_view',
+        return Template::getInstance()->render(
+            'admin.navigation_view',
             [
                 'user_name' => $this->current_user['user_name'],
                 'current_date' => Timing::formatShortDate(time()),
@@ -260,8 +260,8 @@ class Page
      */
     private function adminFooter(): string
     {
-        return Template::getInstance()->set(
-            'adm/footer_view',
+        return Template::getInstance()->render(
+            'admin.footer_view',
             [
                 'version' => SYSTEM_VERSION,
                 'year' => $this->current_year,
@@ -276,8 +276,8 @@ class Page
      */
     private function adminSimpleFooter(): string
     {
-        return Template::getInstance()->set(
-            'adm/simple_footer',
+        return Template::getInstance()->render(
+            'admin.simple_footer',
             [
                 'admin_public_path' => ADMIN_PUBLIC_PATH,
                 'version' => SYSTEM_VERSION,
@@ -287,8 +287,8 @@ class Page
 
     private function installHeader(): string
     {
-        return Template::getInstance()->set(
-            'install/simple_header',
+        return Template::getInstance()->render(
+            'install.simple_header',
             [
                 'title' => 'Install',
                 'lang_code' => __('installation/installation.lang_code'),
@@ -338,7 +338,7 @@ class Page
         $parse['menu_items'] = $items;
         $parse['language_select'] = Functions::getLanguages(Functions::getCurrentLanguage());
 
-        return Template::getInstance()->set(
+        return Template::getInstance()->render(
             'install/topnav_view',
             $parse
         );
@@ -372,7 +372,7 @@ class Page
         $parse = $langs;
         $parse['menu_items'] = $items;
 
-        return Template::getInstance()->set(
+        return Template::getInstance()->render(
             'install/menu_view',
             $parse
         );

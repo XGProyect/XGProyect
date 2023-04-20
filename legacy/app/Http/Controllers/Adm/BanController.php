@@ -22,7 +22,7 @@ class BanController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
+            die(Administration::noAccessMessage(__('admin.global.no_permissions')));
         }
 
         $this->banModel = new Ban();
@@ -75,7 +75,7 @@ class BanController extends BaseController
         $parse['users_amount'] = $this->_users_count;
         $parse['banned_amount'] = $this->_banned_count;
 
-        return Template::getInstance()->set('adm/ban_view', $parse);
+        return Template::getInstance()->render('admin.ban_view', $parse);
     }
 
     /**
@@ -152,7 +152,7 @@ class BanController extends BaseController
             Functions::redirect('admin.php?page=ban');
         }
 
-        return Template::getInstance()->set("adm/ban_result_view", $parse);
+        return Template::getInstance()->render("admin.ban_result_view", $parse);
     }
 
     /**

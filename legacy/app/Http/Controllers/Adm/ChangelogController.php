@@ -23,7 +23,7 @@ class ChangelogController extends BaseController
 
 
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
+            die(Administration::noAccessMessage(__('admin.global.no_permissions')));
         }
 
         $this->changelogModel = new Changelog();
@@ -59,8 +59,8 @@ class ChangelogController extends BaseController
     private function buildPage(): void
     {
         Page::getInstance()->displayAdmin(
-            Template::getInstance()->set(
-                'adm/changelog_view',
+            Template::getInstance()->render(
+                'admin.changelog_view',
                 [
                     'changelog' => $this->buildListOfEntries(),
                     'alert' => $this->getAlertMessage(),
@@ -119,8 +119,8 @@ class ChangelogController extends BaseController
         $this->saveAction();
 
         Page::getInstance()->displayAdmin(
-            Template::getInstance()->set(
-                'adm/changelog_form_view',
+            Template::getInstance()->render(
+                'admin.changelog_form_view',
                 array_merge(
                     $this->getActionData('add')
                 )
@@ -139,8 +139,8 @@ class ChangelogController extends BaseController
         $this->saveAction();
 
         Page::getInstance()->displayAdmin(
-            Template::getInstance()->set(
-                'adm/changelog_form_view',
+            Template::getInstance()->render(
+                'admin.changelog_form_view',
                 $this->getActionData('edit', $changelog_id)
             )
         );

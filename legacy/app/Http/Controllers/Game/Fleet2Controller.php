@@ -84,7 +84,7 @@ class Fleet2Controller extends BaseController
 
         // display the page
         $this->page->display(
-            Template::getInstance()->set(
+            Template::getInstance()->render(
                 'fleet/fleet2_view',
                 array_merge(
                     $this->langs->language,
@@ -219,7 +219,7 @@ class Fleet2Controller extends BaseController
                 }
             }
 
-            $shortcut_row = Template::getInstance()->set(
+            $shortcut_row = Template::getInstance()->render(
                 'fleet/fleet2_shortcuts_row',
                 [
                     'select' => 'shortcuts',
@@ -227,13 +227,13 @@ class Fleet2Controller extends BaseController
                 ]
             );
         } else {
-            $shortcut_row = Template::getInstance()->set(
+            $shortcut_row = Template::getInstance()->render(
                 'fleet/fleet2_shortcuts_noshortcuts_row',
                 ['shorcut_message' => $this->langs->line('fl_no_shortcuts')]
             );
         }
 
-        return Template::getInstance()->set(
+        return Template::getInstance()->render(
             'fleet/fleet2_shortcuts',
             array_merge($this->langs->language, ['shortcuts_rows' => $shortcut_row])
         );
@@ -262,7 +262,7 @@ class Fleet2Controller extends BaseController
                 ];
             }
 
-            return Template::getInstance()->set(
+            return Template::getInstance()->render(
                 'fleet/fleet2_shortcuts_row',
                 [
                     'select' => 'colonies',
@@ -271,7 +271,7 @@ class Fleet2Controller extends BaseController
             );
         }
 
-        return Template::getInstance()->set(
+        return Template::getInstance()->render(
             'fleet/fleet2_shortcuts_noshortcuts_row',
             ['shorcut_message' => $this->langs->line('fl_no_colony')]
         );

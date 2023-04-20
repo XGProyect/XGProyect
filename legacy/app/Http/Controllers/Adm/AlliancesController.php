@@ -27,7 +27,7 @@ class AlliancesController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
+            die(Administration::noAccessMessage(__('admin.global.no_permissions')));
         }
 
         $this->alliancesModel = new Alliances();
@@ -67,7 +67,7 @@ class AlliancesController extends BaseController
         $parse['content'] = ($alliance != '' && $type != '') ? $this->getData($type) : '';
 
         Page::getInstance()->displayAdmin(
-            Template::getInstance()->set('adm/alliances_view', $parse)
+            Template::getInstance()->render('admin.alliances_view', $parse)
         );
     }
 
@@ -149,7 +149,7 @@ class AlliancesController extends BaseController
         $parse['sel0'] = $this->_alliance_query['alliance_request_notallow'] == 0 ? 'selected' : '';
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->set("adm/alliances_information_view", $parse);
+        return Template::getInstance()->render("admin.alliances_information_view", $parse);
     }
 
     /**
@@ -183,14 +183,14 @@ class AlliancesController extends BaseController
                 $rank_data['rechtehand'] = (($details['rights'][AllianceRanks::RIGHT_HAND] == SwitchInt::on) ? ' checked="checked"' : '');
                 $rank_data['i'] = $i++;
 
-                $rank_row .= Template::getInstance()->set("adm/alliances_ranks_row_view", $rank_data);
+                $rank_row .= Template::getInstance()->render("admin.alliances_ranks_row_view", $rank_data);
             }
         }
 
         $parse['ranks_table'] = empty($rank_row) ? $this->langs->line('al_no_ranks') : $rank_row;
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->set("adm/alliances_ranks_view", $parse);
+        return Template::getInstance()->render("admin.alliances_ranks_view", $parse);
     }
 
     /**
@@ -222,14 +222,14 @@ class AlliancesController extends BaseController
                     $member['ally_rank'] = $this->langs->line('al_rank_not_defined');
                 }
 
-                $members .= Template::getInstance()->set('adm/alliances_members_row_view', $member);
+                $members .= Template::getInstance()->render('admin.alliances_members_row_view', $member);
             }
         }
 
         $parse['members_table'] = empty($members) ? '<tr><td colspan="6" class="align_center text-error">' . $this->langs->line('al_no_ranks') . '</td></tr>' : $members;
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->set("adm/alliances_members_view", $parse);
+        return Template::getInstance()->render("admin.alliances_members_view", $parse);
     }
     ######################################
     #

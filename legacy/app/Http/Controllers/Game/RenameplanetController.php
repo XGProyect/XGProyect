@@ -59,7 +59,7 @@ class RenameplanetController extends BaseController
 
         // SET THE VIEW
         $this->page->display(
-            Template::getInstance()->set(
+            Template::getInstance()->render(
                 $current_view,
                 $parse
             )

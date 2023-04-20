@@ -25,7 +25,7 @@ class MakerController extends BaseController
 
 
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
+            die(Administration::noAccessMessage(__('admin.global.no_permissions')));
         }
 
         $this->makerModel = new Maker();
@@ -37,8 +37,8 @@ class MakerController extends BaseController
     private function buildPage(): void
     {
         Page::getInstance()->displayAdmin(
-            Template::getInstance()->set(
-                'adm/maker_view',
+            Template::getInstance()->render(
+                'admin.maker_view',
                 array_merge(
                     $this->makeUser(),
                     $this->makeAlliace(),

@@ -22,7 +22,7 @@ class UpdateController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
-            die(Administration::noAccessMessage(__('adm/global.no_permissions')));
+            die(Administration::noAccessMessage(__('admin.global.no_permissions')));
         }
 
         $this->updateModel = new Update();
@@ -62,8 +62,8 @@ class UpdateController extends BaseController
                     $parse['result'] = print_r($this->output, true);
 
                     Page::getInstance()->displayAdmin(
-                        Template::getInstance()->set(
-                            'adm/update_result_view',
+                        Template::getInstance()->render(
+                            'admin.update_result_view',
                             $parse
                         )
                     );
@@ -76,8 +76,8 @@ class UpdateController extends BaseController
         }
 
         Page::getInstance()->displayAdmin(
-            Template::getInstance()->set(
-                'adm/update_view',
+            Template::getInstance()->render(
+                'admin.update_view',
                 $parse
             )
         );

@@ -49,7 +49,7 @@ class ChangelogController extends BaseController
         }
 
         $this->page->display(
-            Template::getInstance()->set('game/changelog_view', array_merge(
+            Template::getInstance()->render('game/changelog_view', array_merge(
                 $this->langs->language,
                 ['list_of_changes' => $changes]
             ))

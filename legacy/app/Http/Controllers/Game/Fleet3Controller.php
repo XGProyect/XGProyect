@@ -75,7 +75,7 @@ class Fleet3Controller extends BaseController
 
         // display the page
         $this->page->display(
-            Template::getInstance()->set(
+            Template::getInstance()->render(
                 'fleet/fleet3_view',
                 array_merge(
                     $this->langs->language,
@@ -215,7 +215,7 @@ class Fleet3Controller extends BaseController
         }
 
         if (count($options) > 0) {
-            return Template::getInstance()->set(
+            return Template::getInstance()->render(
                 'fleet/fleet3_stay_row',
                 array_merge(
                     $this->langs->language,

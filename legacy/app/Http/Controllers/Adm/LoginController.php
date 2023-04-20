@@ -21,18 +21,22 @@ class LoginController extends BaseController
 
         $this->loginModel = new Login();
 
-        // time to do something
         $this->runAction();
 
-        // build the page
-        $this->buildPage();
+        Page::getInstance()->displayAdmin(
+            Template::getInstance()->render(
+                'admin.login',
+                [
+                    'alert' => $this->getAlert(),
+                    'redirect' => filter_input(INPUT_GET, 'redirect', FILTER_UNSAFE_RAW),
+                ]
+            ),
+            false,
+            false,
+            false
+        );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction()
     {
         $loginData = filter_input_array(INPUT_POST, [
@@ -62,33 +66,12 @@ class LoginController extends BaseController
         }
     }
 
-    private function buildPage(): void
-    {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->set(
-                'adm/login_view',
-                [
-                    'alert' => $this->getAlert(),
-                    'redirect' => filter_input(INPUT_GET, 'redirect', FILTER_UNSAFE_RAW),
-                ]
-            ),
-            false,
-            false,
-            false
-        );
-    }
-
-    /**
-     * Get the alert view
-     *
-     * @return string
-     */
     private function getAlert(): string
     {
         $error = filter_input(INPUT_GET, 'error', FILTER_VALIDATE_INT);
 
         if ($error == 1) {
-            return Administration::saveMessage('error', $this->langs->line('lg_error_wrong_data'), false);
+            return Administration::saveMessage('error', __('admin.login.lg_error_wrong_data'), false);
         }
 
         return '';
