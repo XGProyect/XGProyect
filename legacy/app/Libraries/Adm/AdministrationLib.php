@@ -7,7 +7,6 @@ namespace Xgp\App\Libraries\Adm;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\Permissions;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\Users;
 
 class AdministrationLib
@@ -24,9 +23,7 @@ class AdministrationLib
 
     public static function noAccessMessage(string $mes = ''): void
     {
-        (new Page(new Users()))->displayAdmin(
-            self::saveMessage('error', $mes, false)
-        );
+        self::saveMessage('error', $mes, false);
     }
 
     public static function installDirExists(): bool
@@ -34,15 +31,15 @@ class AdministrationLib
         return (file_exists(PUBLIC_PATH . 'install.php'));
     }
 
-    public static function authorization(string $module, int $userLevel): bool
+    public static function authorization(string $module): bool
     {
         $cleaned_module_name = strtolower(substr(strrchr($module, "\\"), 1));
         $permissions = new Permissions(Functions::readConfig('admin_permissions'));
 
-        return $permissions->isAccessAllowed($cleaned_module_name, $userLevel);
+        return $permissions->isAccessAllowed($cleaned_module_name, (int) Users::getInstance()->getUserData()['user_authlevel']);
     }
 
-    public static function saveMessage(string $result, string $message, bool $dismissible = true): string
+    public static function saveMessage(string $result, string $message, bool $dismissible = true): void
     {
         switch ($result) {
             case 'ok':
@@ -69,7 +66,7 @@ class AdministrationLib
             $parse['dismissible'] = 'd-none';
         }
 
-        return Template::getInstance()->render(
+        Template::getInstance()->view(
             'admin.save_message_view',
             $parse
         );

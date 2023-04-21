@@ -19,7 +19,7 @@ class EncrypterController extends BaseController
     {
         Administration::checkSession();
 
-        if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
+        if (!Administration::authorization(__CLASS__)) {
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
