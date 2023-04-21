@@ -8,7 +8,7 @@
     <!-- Topbar Search -->
     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
         <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="{nv_search_for}"
+            <input type="text" class="form-control bg-light border-0 small" placeholder="{{ __('admin/navigation.nv_search_for') }}"
                 aria-label="Search" aria-describedby="basic-addon2">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="button">
@@ -56,18 +56,18 @@
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
-                    {nv_alert_center}
+                    {{ __('admin/navigation.nv_alert_center') }}
                 </h6>
                 <a class="dropdown-item d-flex align-items-center"
-                    href="https://github.com/XGProyect/XG-Proyect-v3.x.x/releases" target="_blank">
+                    href="https://github.com/XGProyect/XGProyect/releases" target="_blank">
                     <div class="mr-3">
                         <div class="icon-circle bg-success">
                             <i class="fas fa-download text-white"></i>
                         </div>
                     </div>
                     <div>
-                        <div class="small text-gray-500">{current_date}</div>
-                        <span class="font-weight-bold">{nv_new_download}</span>
+                        <div class="small text-gray-500">{{ $currentDate }}</div>
+                        <span class="font-weight-bold">{{ __('admin/navigation.nv_new_download') }}</span>
                     </div>
                 </a>
                 <!--<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>-->
@@ -80,7 +80,7 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{user_name}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ $username }}</span>
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -99,11 +99,9 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    {nv_logout}
+                    {{ __('admin/navigation.nv_logout') }}
                 </a>
             </div>
         </li>
-
     </ul>
-
 </nav>

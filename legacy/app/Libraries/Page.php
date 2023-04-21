@@ -6,12 +6,10 @@ namespace Xgp\App\Libraries;
 
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\Users;
 
 class Page
 {
-    private ?array $current_user;
     private string $current_year;
     private static ?Page $instance = null;
 
@@ -26,34 +24,7 @@ class Page
 
     public function __construct(Users $users)
     {
-        $this->current_user = $users->getUserData();
         $this->current_year = date('Y');
-    }
-
-    public function display(string $current_page): void
-    {
-        $page = '';
-
-        if (!defined('IN_MESSAGE')) {
-            // For the Home page
-            if (defined('IN_LOGIN')) {
-                die($current_page);
-            }
-        }
-
-        // Merge: Header + Topnav + Menu + Page
-        if (!defined('IN_INSTALL')) {
-            $page .= "\n<center>\n" . $current_page . "\n</center>\n";
-        } else {
-            if (defined('IN_MESSAGE')) {
-                $page .= "\n<center>\n" . $current_page . "\n</center>\n";
-            } else {
-                $page .= $current_page;
-            }
-        }
-
-        // Show result page
-        die($page);
     }
 
     /**
@@ -76,108 +47,6 @@ class Page
 
         // Show result page
         die($page);
-    }
-
-    private function adminSidebar(): string
-    {
-        $current_page = isset($_GET['page']) ? $_GET['page'] : null;
-        $items = '';
-        $flag = '';
-        $pages = [
-            ['server', '2'],
-            ['mailing', '2'],
-            ['modules', '2'],
-            ['planets', '2'],
-            ['registration', '2'],
-            ['statistics', '2'],
-            ['premium', '2'],
-            ['tasks', '3'],
-            ['errors', '3'],
-            ['fleets', '3'],
-            ['messages', '3'],
-            ['maker', '4'],
-            ['users', '4'],
-            ['alliances', '4'],
-            ['languages', '4'],
-            ['changelog', '4'],
-            ['permissions', '4'],
-            ['backup', '5'],
-            ['encrypter', '5'],
-            ['announcement', '5'],
-            ['ban', '5'],
-            ['rebuildhighscores', '5'],
-            ['update', '5'],
-            ['repair', '6'],
-            ['reset', '6'],
-        ];
-        $active_block = 1;
-
-        // BUILD THE MENU
-        foreach ($pages as $key => $data) {
-            $extra = '';
-            $active = '';
-
-            if ($data[1] != $flag) {
-                $flag = $data[1];
-                $items = '';
-            }
-
-            if ($data[0] == 'rebuildhighscores') {
-                $extra = 'onClick="return confirm(\'' . $lang->line('tools_manual_update_confirm') . '\');"';
-            }
-
-            if ($data[0] == $current_page) {
-                $active = ' active';
-                $active_block = $data[1];
-            }
-
-            $items .= '<a class="collapse-item' . $active . '" href="' . ADM_URL . 'admin.php?page=' . $data[0] . '"  ' . $extra . '>' . $lang->line($data[0]) . '</a>';
-
-            $parse_block[$data[1]] = $items;
-        }
-
-        // PARSE THE MENU AND OTHER DATA
-        $parse = $lang->language;
-        $parse['menu_block_2'] = $parse_block[2];
-        $parse['menu_block_3'] = $parse_block[3];
-        $parse['menu_block_4'] = $parse_block[4];
-        $parse['menu_block_5'] = $parse_block[5];
-        $parse['menu_block_6'] = $parse_block[6];
-        $parse['active_1'] = '';
-        $parse['active_1_show'] = '';
-        $parse['active_2'] = '';
-        $parse['active_2_show'] = '';
-        $parse['active_3'] = '';
-        $parse['active_3_show'] = '';
-        $parse['active_4'] = '';
-        $parse['active_4_show'] = '';
-        $parse['active_5'] = '';
-        $parse['active_5_show'] = '';
-        $parse['active_6'] = '';
-        $parse['active_6_show'] = '';
-        $parse['active_' . $active_block] = ' active';
-        $parse['active_' . $active_block . '_show'] = ' show';
-
-        return Template::getInstance()->render(
-            'admin.sidebar_view',
-            $parse
-        );
-    }
-
-    /**
-     * Set the admin navigation
-     *
-     * @return string
-     */
-    private function adminNavigation(): string
-    {
-        return Template::getInstance()->render(
-            'admin.navigation_view',
-            [
-                'user_name' => $this->current_user['user_name'],
-                'current_date' => Timing::formatShortDate(time()),
-            ]
-        );
     }
 
     private function installHeader(): string

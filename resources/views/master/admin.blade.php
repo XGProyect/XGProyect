@@ -37,13 +37,7 @@
             </div>
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Powered by XG Proyect&reg; Version {{ $version }} Copyright &copy; {{ $year }}</span>
-                    </div>
-                </div>
-            </footer>
+            <x-footer />
             <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->
@@ -61,15 +55,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="logoutModal">{{ $ready_to_leave }}</h5>
+                    <h5 class="modal-title" id="logoutModal">{{ __('admin/popups.ready_to_leave') }}</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">{{ $ready_to_leave_instructions }}</div>
+                <div class="modal-body">{{ __('admin/popups.ready_to_leave_instructions') }}</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ $ready_to_leave_cancel }}</button>
-                    <a class="btn btn-primary" href="admin.php?page=logout">{{ $ready_to_leave_logout }}</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ __('admin/popups.ready_to_leave_cancel') }}</button>
+                    <a class="btn btn-primary" href="admin.php?page=logout">{{ __('admin/popups.ready_to_leave_logout') }}</a>
                 </div>
             </div>
         </div>
@@ -120,7 +114,7 @@
 
             $.getJSON('//updates.xgproyect.org/latest.php', function (data) {
                 $.each(data, function (index, element) {
-                    if (compareversion('{version}', element)) {
+                    if (compareversion('{{ $version }}', element)) {
                         $('.badge-counter').html('1');
                         $('.dropdown-list').css('display', '')
                     }
@@ -139,10 +133,10 @@
                 }
 
                 for (var i = 0; i < (Math.max(version1.length, version2.length)); i++) {
-
                     if (version1[i] == undefined) {
                         version1[i] = 0;
                     }
+
                     if (version2[i] == undefined) {
                         version2[i] = 0;
                     }
