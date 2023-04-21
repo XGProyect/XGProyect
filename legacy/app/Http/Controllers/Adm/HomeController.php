@@ -10,114 +10,104 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
+use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Adm\Home;
 
 class HomeController extends BaseController
 {
     private Home $homeModel;
+    private array $user;
 
     public function __invoke(): void
     {
         Administration::checkSession();
 
-
-        if (!Administration::authorization(__CLASS__, (int) $this->user['user_authlevel'])) {
+        if (!Administration::authorization(__CLASS__)) {
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
         $this->homeModel = new Home();
+        $this->user = Users::getInstance()->getUserData();
 
-        // build the page
-        $this->buildPage();
-    }
+        $userStats = $this->homeModel->getUsersStats();
 
-    private function buildPage(): void
-    {
-        $server_stats = $this->homeModel->getUsersStats();
+        Template::getInstance()->view(
+            'admin.home',
+            array_merge(
+                $userStats,
+                $this->buildAlertsBlock(),
+                [
+                    'numberUsers' => Format::prettyNumber($userStats['number_users']),
+                    'numberAlliances' => Format::prettyNumber($userStats['number_alliances']),
+                    'numberPlanets' => Format::prettyNumber($userStats['number_planets']),
+                    'numberMoons' => Format::prettyNumber($userStats['number_moons']),
+                    'numberFleets' => Format::prettyNumber($userStats['number_fleets']),
+                    'numberReports' => Format::prettyNumber($userStats['number_reports']),
+                    'averageUserPoints' => Format::shortlyNumber($userStats['average_user_points']),
+                    'averageAlliancePoints' => Format::shortlyNumber($userStats['average_alliance_points']),
 
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.home_view',
-                array_merge(
-                    $server_stats,
-                    [
-                        'alert' => [$this->buildAlertsBlock()],
-                        'average_user_points' => Format::shortlyNumber($server_stats['average_user_points']),
-                        'average_alliance_points' => Format::shortlyNumber($server_stats['average_alliance_points']),
-                        'database_size' => Format::prettyBytes($this->homeModel->getDbSize()['db_size']),
-                        'database_server' => $this->homeModel->getDbVersion(),
-                        'php_version' => PHP_VERSION,
-                        'server_version' => SYSTEM_VERSION,
-                    ]
-                )
+                    'databaseSize' => Format::prettyBytes($this->homeModel->getDbSize()['db_size']),
+                    'databaseServer' => $this->homeModel->getDbVersion(),
+                    'phpVersion' => PHP_VERSION,
+                    'serverVersion' => SYSTEM_VERSION,
+                ]
             )
         );
     }
 
-    /**
-     * Build the alerts block based on our current server status
-     *
-     * @return array
-     */
     private function buildAlertsBlock(): array
     {
         $alert = [];
 
         if ($this->user['user_authlevel'] >= 3) {
             if ((bool) (@fileperms(CONFIGS_PATH . 'xgp-db-config.php') & 0x0002)) {
-                $alert[] = $this->langs->line('hm_config_file_writable');
+                $alert[] = __('admin/home.hm_config_file_writable');
             }
 
             if ($this->getServerErrors()) {
-                $alert[] = $this->langs->line('hm_errors');
+                $alert[] = __('admin/home.hm_errors');
             }
 
             if ($this->checkUpdates()) {
-                $alert[] = $this->langs->line('hm_old_version');
+                $alert[] = __('admin/home.hm_old_version');
             }
 
             if (Administration::installDirExists()) {
-                $alert[] = $this->langs->line('hm_install_file_detected');
+                $alert[] = __('admin/home.hm_install_file_detected');
             }
 
             if (Functions::readConfig('version') != SYSTEM_VERSION) {
-                $alert[] = $this->langs->line('hm_update_required');
+                $alert[] = __('admin/home.hm_update_required');
             }
         }
 
         $alerts_count = count($alert);
-        $messages = $second_style = $error_type = null;
+        $messages = $secondStyle = $errorType = null;
 
         if ($alerts_count > 1) {
             $messages = join('<br>', $alert);
-            $second_style = 'alert-danger';
-            $error_type = $this->langs->line('hm_error');
+            $secondStyle = 'alert-danger';
+            $errorType = __('admin/home.hm_error');
         }
 
         if ($alerts_count == 1) {
             $messages = join('<br>', $alert);
-            $second_style = 'alert-warning';
-            $error_type = $this->langs->line('hm_warning');
+            $secondStyle = 'alert-warning';
+            $errorType = __('admin/home.hm_warning');
         }
 
         return [
-            'error_message' => $messages ?? $this->langs->line('hm_all_ok'),
-            'second_style' => $second_style ?? 'alert-success',
-            'error_type' => $error_type ?? $this->langs->line('hm_ok'),
+            'errorMessage' => $messages ?? __('admin/home.hm_all_ok'),
+            'secondStyle' => $secondStyle ?? 'alert-success',
+            'errorType' => $errorType ?? __('admin/home.hm_ok'),
         ];
     }
 
-    /**
-     * Check if there's any new version available
-     *
-     * @return boolean
-     */
     private function checkUpdates(): bool
     {
         try {
             if (function_exists('file_get_contents')) {
-                $file_data = @file_get_contents(
+                $fileData = @file_get_contents(
                     'https://updates.xgproyect.org/latest.php',
                     false,
                     stream_context_create(
@@ -129,16 +119,16 @@ class HomeController extends BaseController
                     )
                 );
 
-                if ($file_data) {
-                    $system_v = Functions::readConfig('version');
-                    $last_v = @json_decode(
-                        $file_data,
+                if ($fileData) {
+                    $systemVersion = Functions::readConfig('version');
+                    $lastestVersion = @json_decode(
+                        $fileData,
                         false,
                         512,
                         JSON_THROW_ON_ERROR
                     )->version;
 
-                    return version_compare($system_v, $last_v, '<');
+                    return version_compare($systemVersion, $lastestVersion, '<');
                 }
             }
 

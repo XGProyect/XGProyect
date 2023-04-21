@@ -1,23 +1,26 @@
+@extends('master.admin')
+
+@section('content')
 <div class="container-fluid">
 
-    {alert}
-    <div class="alert {second_style}">
+    @if ($secondStyle && $errorType && $errorMessage)
+    <div class="alert {{ $secondStyle }}">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>{error_type}</strong>
+        <strong>{{ $errorType }}</strong>
         <br>
-        {error_message}
+        {{ $errorMessage }}
     </div>
-    {/alert}
+    @endif
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-0 text-gray-800">{hm_title}</h1>
-    <p class="mb-4">{hm_sub_title}</p>
+    <h1 class="h3 mb-0 text-gray-800">{{ __('admin/home.hm_title') }}</h1>
+    <p class="mb-4">{{ __('admin/home.hm_sub_title') }}</p>
 
     <div class="card shadow mb-4">
         <!-- Card Header - Accordion -->
         <a href="#collapseStatistics" class="d-block card-header py-3" data-toggle="collapse" role="button"
             aria-expanded="true" aria-controls="collapseStatistics">
-            <h6 class="m-0 font-weight-bold text-primary">{hm_server_statistics}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/home.hm_server_statistics') }}</h6>
         </a>
         <!-- Card Content - Collapse -->
         <div class="collapse show" id="collapseStatistics" style="">
@@ -26,40 +29,40 @@
                     <table class="table table-bordered" width="100%" cellspacing="0">
                         <tbody>
                             <tr>
-                                <td>{hm_number_users}:</td>
-                                <td>{number_users}</td>
-                                <td>{hm_number_alliances}:</td>
-                                <td>{number_alliances}</td>
+                                <td>{{ __('admin/home.hm_number_users') }}:</td>
+                                <td>{{ $numberUsers }}</td>
+                                <td>{{ __('admin/home.hm_number_alliances') }}:</td>
+                                <td>{{ $numberAlliances }}</td>
                             </tr>
                             <tr>
-                                <td>{hm_number_planets}:</td>
-                                <td>{number_planets}</td>
-                                <td>{hm_number_moons}:</td>
-                                <td>{number_moons}</td>
+                                <td>{{ __('admin/home.hm_number_planets') }}:</td>
+                                <td>{{ $numberPlanets }}</td>
+                                <td>{{ __('admin/home.hm_number_moons') }}:</td>
+                                <td>{{ $numberMoons }}</td>
                             </tr>
                             <tr>
-                                <td>{hm_number_fleets}:</td>
-                                <td>{number_fleets}</td>
-                                <td>{hm_number_reports}:</td>
-                                <td>{number_reports}</td>
+                                <td>{{ __('admin/home.hm_number_fleets') }}:</td>
+                                <td>{{ $numberFleets }}</td>
+                                <td>{{ __('admin/home.hm_number_reports') }}:</td>
+                                <td>{{ $numberReports }}</td>
                             </tr>
                             <tr>
-                                <td>{hm_average_user_points}:</td>
-                                <td>≃{average_user_points}</td>
-                                <td>{hm_average_alliance_points}:</td>
-                                <td>≃{average_alliance_points}</td>
+                                <td>{{ __('admin/home.hm_average_user_points') }}:</td>
+                                <td>≃{{ $averageUserPoints }}</td>
+                                <td>{{ __('admin/home.hm_average_alliance_points') }}:</td>
+                                <td>≃{{ $averageAlliancePoints }}</td>
                             </tr>
                             <tr>
-                                <td>{hm_database_size}:</td>
-                                <td>{database_size}</td>
-                                <td>{hm_database_server}</td>
-                                <td>{database_server}</td>
+                                <td>{{ __('admin/home.hm_database_size') }}:</td>
+                                <td>{{ $databaseSize }}</td>
+                                <td>{{ __('admin/home.hm_database_server') }}</td>
+                                <td>{{ $databaseServer }}</td>
                             </tr>
                             <tr>
-                                <td>{hm_php_version}:</td>
-                                <td>{php_version}</td>
-                                <td>{hm_server_version}</td>
-                                <td>{server_version}</td>
+                                <td>{{ __('admin/home.hm_php_version') }}:</td>
+                                <td>{{ $phpVersion }}</td>
+                                <td>{{ __('admin/home.hm_server_version') }}</td>
+                                <td>{{ $serverVersion }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -72,23 +75,23 @@
         <!-- Card Header - Accordion -->
         <a href="#collapseCredits" class="d-block card-header py-3" data-toggle="collapse" role="button"
             aria-expanded="true" aria-controls="collapseCredits">
-            <h6 class="m-0 font-weight-bold text-primary">{hm_credits}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/home.hm_credits') }}</h6>
         </a>
         <!-- Card Content - Collapse -->
         <div class="collapse show" id="collapseCredits">
             <div class="card-body text-center">
                 <p>
-                    <strong>{hm_proyect_leader}</strong>
+                    <strong>{{ __('admin/home.hm_proyect_leader') }}</strong>
                     <br>
                     <a href="https://github.com/LucasKovacs" target="_blank">lucky</a>
                     <br>
                     <a href="https://github.com/BeReal86" target="_blank">BeReal</a>
                     <br><br>
-                    <strong>{hm_principal_contributors}</strong>
+                    <strong>{{ __('admin/home.hm_principal_contributors') }}</strong>
                     <br>
                     <a href="https://github.com/FGServers" target="_blank">JonaMix</a>
                     <br><br>
-                    <strong>{hm_extensions}</strong>
+                    <strong>{{ __('admin/home.hm_extensions') }}</strong>
                     <br>
                     <a href="https://laravel.com/" target="_blank">Laravel | Core</a>
                     <br>
@@ -98,7 +101,7 @@
                     <br>
                     <a href="https://github.com/mailhog/MailHog" target="_blank">MailHog</a>
                     <br><br>
-                    <strong>{hm_thanks_to}</strong>
+                    <strong>{{ __('admin/home.hm_thanks_to') }}</strong>
                     <br>
                     adri93, Alberto14, angelus_ira, Anghelito, Arali, Borboco, Calzon, cyberghoser1, cyberrichy,
                     duhow, edering, Gmir17, Green, jtsamper, Kloud, LordPretender, Loucouss, medel, MSW,
@@ -109,3 +112,4 @@
         </div>
     </div>
 </div>
+@endsection
