@@ -22,7 +22,7 @@ return [
     'hm_install_file_detected' => 'Se detecto el directorio install/. Por razones se seguridad recomendamos eliminarlo.',
     'hm_config_file_writable' => 'Tu archivo xgp-db-config.php puede ser escrito. Te recomendamos que cambies los permisos a 640 o al menos a 644.',
     'hm_errors' => 'Hay errores en tu servidor. Puedes verlos haciendo <a href="admin.php?page=errors">click aquí</a>',
-    'hm_old_version' => 'Hay una nueva versión disponible. Haz click <a href="https://github.com/XGProyect/XG-Proyect-v3.x.x/releases" target="_blank">aquí</a> para descargarla',
+    'hm_old_version' => 'Hay una nueva versión disponible. Haz click <a href="https://github.com/XGProyect/XGProyect/releases" target="_blank">aquí</a> para descargarla',
     'hm_all_ok' => 'No hay actualizaciones ni advertencias',
     'hm_update_required' => 'La versión del sistema y la de tu DB no coinciden, <a href="admin.php?page=update"><strong>¡Actualiza ahora!</strong></a> para evitar errores.',
     'hm_credits' => 'Créditos',
