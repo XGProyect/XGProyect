@@ -68,6 +68,7 @@ class CombatreportController extends BaseController
 
     private function buildPage(): void
     {
+        // view with no topvar and no leftmenu
         Template::getInstance()->view(
             $this->getReportTemplate()
         );

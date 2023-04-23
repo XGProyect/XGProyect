@@ -148,6 +148,7 @@ class PhalanxController extends BaseController
         $parse['phl_pl_place'] = $Planet;
         $parse['phl_pl_name'] = $TargetName;
 
+        // view with no topvar and no leftmenu
         Template::getInstance()->view(
             'galaxy/phalanx_body',
             $parse

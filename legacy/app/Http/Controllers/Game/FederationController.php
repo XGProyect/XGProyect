@@ -105,6 +105,7 @@ class FederationController extends BaseController
             'add_error_messages' => $this->_message,
         ];
 
+        // view with no topvar and no leftmenu
         Template::getInstance()->view(
             'fleet/fleet_federation_view',
             $page
