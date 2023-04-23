@@ -27,7 +27,6 @@ class ChangelogController extends BaseController
 
         $this->changelogModel = new Changelog();
 
-        // time to do something
         $this->runAction();
 
         $this->buildPage();

@@ -28,7 +28,6 @@ class AnnouncementController extends BaseController
 
         $this->announcementModel = new Announcement();
 
-        // time to do something
         $this->runAction();
 
         $this->buildPage();

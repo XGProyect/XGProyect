@@ -20,7 +20,6 @@ class WelcomeController extends BaseController
         $this->homeModel = new Home();
         $this->userLibrary = Users::getInstance();
 
-        // time to do something
         $this->runAction();
 
         Template::getInstance()->view(

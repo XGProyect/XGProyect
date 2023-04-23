@@ -29,7 +29,6 @@ class BackupController extends BaseController
 
         $this->backupModel = new Backup();
 
-        // time to do something
         $this->runAction();
 
         $this->buildPage();

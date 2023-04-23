@@ -26,7 +26,6 @@ class FleetsController extends BaseController
 
         $this->fleetsModel = new Fleets();
 
-        // time to do something
         $this->runAction();
 
         $this->buildPage();

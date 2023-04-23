@@ -31,7 +31,6 @@ class MailingController extends BaseController
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
-        // time to do something
         $this->runAction();
 
         $this->buildPage();

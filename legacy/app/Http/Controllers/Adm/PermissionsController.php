@@ -26,7 +26,6 @@ class PermissionsController extends BaseController
 
         $this->setUpPermissions();
 
-        // time to do something
         $this->runAction();
 
         $this->buildPage();

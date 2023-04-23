@@ -54,7 +54,6 @@ class ResearchController extends BaseController
     {
         $technology_list = '';
 
-        // time to do something
         $this->doCommand();
 
         foreach ($this->_reslist['tech'] as $tech) {

@@ -37,7 +37,6 @@ class TraderController extends BaseController
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        // time to do something
         $this->runAction();
 
         $this->buildPage();

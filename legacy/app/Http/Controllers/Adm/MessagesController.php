@@ -27,7 +27,6 @@ class MessagesController extends BaseController
 
         $this->messagesModel = new Messages();
 
-        // time to do something
         $this->runAction();
 
         $this->buildPage();

@@ -28,7 +28,6 @@ class ServerController extends BaseController
 
         $this->serverModel = new Server();
 
-        // time to do something
         $this->runAction();
 
         $this->buildPage();
