@@ -15,7 +15,7 @@ use Xgp\App\Models\Adm\Server;
 
 class ServerController extends BaseController
 {
-    private $game_config = [];
+    private $gameConfig = [];
     private Server $serverModel;
 
     public function __invoke(): void
@@ -33,70 +33,59 @@ class ServerController extends BaseController
         $this->buildPage();
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
-        /*
-         * SERVER SETTINGS
-         */
-
         // NAME
         if (isset($_POST['game_logo']) && $_POST['game_logo'] != '') {
-            $this->game_config['game_logo'] = $_POST['game_logo'];
+            $this->gameConfig['game_logo'] = $_POST['game_logo'];
         }
 
         // LOGO
         if (isset($_POST['game_name']) && $_POST['game_name'] != '') {
-            $this->game_config['game_name'] = $_POST['game_name'];
+            $this->gameConfig['game_name'] = $_POST['game_name'];
         }
 
         // LANGUAGE
         if (isset($_POST['language'])) {
-            $this->game_config['lang'] = $_POST['language'];
-        } else {
-            $this->game_config['lang'];
+            $this->gameConfig['lang'] = $_POST['language'];
         }
 
         // GENERAL RATE
         if (isset($_POST['game_speed']) && is_numeric($_POST['game_speed'])) {
-            $this->game_config['game_speed'] = (2500 * $_POST['game_speed']);
+            $this->gameConfig['game_speed'] = (2500 * $_POST['game_speed']);
         }
 
         // SPEED OF FLEET
 
         if (isset($_POST['fleet_speed']) && is_numeric($_POST['fleet_speed'])) {
-            $this->game_config['fleet_speed'] = (2500 * $_POST['fleet_speed']);
+            $this->gameConfig['fleet_speed'] = (2500 * $_POST['fleet_speed']);
         }
 
         // SPEED OF PRODUCTION
         if (isset($_POST['resource_multiplier']) && is_numeric($_POST['resource_multiplier'])) {
-            $this->game_config['resource_multiplier'] = $_POST['resource_multiplier'];
+            $this->gameConfig['resource_multiplier'] = $_POST['resource_multiplier'];
         }
 
         // ADMIN EMAIL CONTACT
         if (isset($_POST['admin_email']) && $_POST['admin_email'] != '' && Functions::validEmail($_POST['admin_email'])) {
-            $this->game_config['admin_email'] = $_POST['admin_email'];
+            $this->gameConfig['admin_email'] = $_POST['admin_email'];
         }
 
         // FORUM LINK
         if (isset($_POST['forum_url']) && $_POST['forum_url'] != '') {
-            $this->game_config['forum_url'] = UrlHelper::prepUrl($_POST['forum_url']);
+            $this->gameConfig['forum_url'] = UrlHelper::prepUrl($_POST['forum_url']);
         }
 
         // ACTIVATE SERVER
         if (isset($_POST['closed']) && $_POST['closed'] == 'on') {
-            $this->game_config['game_enable'] = 1;
+            $this->gameConfig['game_enable'] = 1;
         } else {
-            $this->game_config['game_enable'] = 0;
+            $this->gameConfig['game_enable'] = 0;
         }
 
         // OFF-LINE MESSAGE
         if (isset($_POST['close_reason']) && $_POST['close_reason'] != '') {
-            $this->game_config['close_reason'] = addslashes($_POST['close_reason']);
+            $this->gameConfig['close_reason'] = addslashes($_POST['close_reason']);
         }
 
         /*
@@ -104,16 +93,16 @@ class ServerController extends BaseController
          */
         // SHORT DATE
         if (isset($_POST['date_time_zone']) && $_POST['date_time_zone'] != '') {
-            $this->game_config['date_time_zone'] = $_POST['date_time_zone'];
+            $this->gameConfig['date_time_zone'] = $_POST['date_time_zone'];
         }
 
         if (isset($_POST['date_format']) && $_POST['date_format'] != '') {
-            $this->game_config['date_format'] = $_POST['date_format'];
+            $this->gameConfig['date_format'] = $_POST['date_format'];
         }
 
         // EXTENDED DATE
         if (isset($_POST['date_format_extended']) && $_POST['date_format_extended'] != '') {
-            $this->game_config['date_format_extended'] = $_POST['date_format_extended'];
+            $this->gameConfig['date_format_extended'] = $_POST['date_format_extended'];
         }
 
         /*
@@ -122,54 +111,50 @@ class ServerController extends BaseController
 
         // PROTECTION
         if (isset($_POST['adm_attack']) && $_POST['adm_attack'] == 'on') {
-            $this->game_config['adm_attack'] = 1;
+            $this->gameConfig['adm_attack'] = 1;
         } else {
-            $this->game_config['adm_attack'] = 0;
+            $this->gameConfig['adm_attack'] = 0;
         }
 
         // SHIPS TO DEBRIS
         if (isset($_POST['Fleet_Cdr']) && is_numeric($_POST['Fleet_Cdr'])) {
             if ($_POST['Fleet_Cdr'] < 0) {
-                $this->game_config['fleet_cdr'] = 0;
-                $Number2 = 0;
+                $this->gameConfig['fleet_cdr'] = 0;
             } else {
-                $this->game_config['fleet_cdr'] = $_POST['Fleet_Cdr'];
-                $Number2 = $_POST['Fleet_Cdr'];
+                $this->gameConfig['fleet_cdr'] = $_POST['Fleet_Cdr'];
             }
         }
 
         // DEFENSES TO DEBRIS
         if (isset($_POST['Defs_Cdr']) && is_numeric($_POST['Defs_Cdr'])) {
             if ($_POST['Defs_Cdr'] < 0) {
-                $this->game_config['defs_cdr'] = 0;
-                $Number = 0;
+                $this->gameConfig['defs_cdr'] = 0;
             } else {
-                $this->game_config['defs_cdr'] = $_POST['Defs_Cdr'];
-                $Number = $_POST['Defs_Cdr'];
+                $this->gameConfig['defs_cdr'] = $_POST['Defs_Cdr'];
             }
         }
 
         // PROTECTION FOR NOVICES
         if (isset($_POST['noobprotection']) && $_POST['noobprotection'] == 'on') {
-            $this->game_config['noobprotection'] = 1;
+            $this->gameConfig['noobprotection'] = 1;
         } else {
-            $this->game_config['noobprotection'] = 0;
+            $this->gameConfig['noobprotection'] = 0;
         }
 
         // PROTECTION N. POINTS
         if (isset($_POST['noobprotectiontime']) && is_numeric($_POST['noobprotectiontime'])) {
-            $this->game_config['noobprotectiontime'] = $_POST['noobprotectiontime'];
+            $this->gameConfig['noobprotectiontime'] = $_POST['noobprotectiontime'];
         }
 
         // PROTECCION N. LIMIT POINTS
         if (isset($_POST['noobprotectionmulti']) && is_numeric($_POST['noobprotectionmulti'])) {
-            $this->game_config['noobprotectionmulti'] = $_POST['noobprotectionmulti'];
+            $this->gameConfig['noobprotectionmulti'] = $_POST['noobprotectionmulti'];
         }
     }
 
     private function buildPage(): void
     {
-        $this->game_config = $this->serverModel->readAllConfigs();
+        $this->gameConfig = $this->serverModel->readAllConfigs();
         $parse['alert'] = '';
 
         if (isset($_POST['opt_save']) && $_POST['opt_save'] == '1') {
@@ -177,30 +162,30 @@ class ServerController extends BaseController
             $this->runAction();
 
             // update all the settings
-            $this->serverModel->updateConfigs($this->game_config);
+            $this->serverModel->updateConfigs($this->gameConfig);
 
             $parse['alert'] = Administration::saveMessage('ok', __('admin/server.se_all_ok_message'));
         }
 
-        $parse['game_name'] = $this->game_config['game_name'];
-        $parse['game_logo'] = $this->game_config['game_logo'];
-        $parse['language_settings'] = Functions::getLanguages($this->game_config['lang']);
-        $parse['game_speed'] = $this->game_config['game_speed'] / 2500;
-        $parse['fleet_speed'] = $this->game_config['fleet_speed'] / 2500;
-        $parse['resource_multiplier'] = $this->game_config['resource_multiplier'];
-        $parse['admin_email'] = $this->game_config['admin_email'];
-        $parse['forum_url'] = $this->game_config['forum_url'];
-        $parse['closed'] = $this->game_config['game_enable'] == 1 ? " checked = 'checked' " : '';
-        $parse['close_reason'] = stripslashes($this->game_config['close_reason']);
+        $parse['game_name'] = $this->gameConfig['game_name'];
+        $parse['game_logo'] = $this->gameConfig['game_logo'];
+        $parse['language_settings'] = Functions::getLanguages($this->gameConfig['lang']);
+        $parse['game_speed'] = $this->gameConfig['game_speed'] / 2500;
+        $parse['fleet_speed'] = $this->gameConfig['fleet_speed'] / 2500;
+        $parse['resource_multiplier'] = $this->gameConfig['resource_multiplier'];
+        $parse['admin_email'] = $this->gameConfig['admin_email'];
+        $parse['forum_url'] = $this->gameConfig['forum_url'];
+        $parse['closed'] = $this->gameConfig['game_enable'] == 1 ? " checked = 'checked' " : '';
+        $parse['close_reason'] = stripslashes($this->gameConfig['close_reason']);
         $parse['date_time_zone'] = $this->timeZonePicker();
-        $parse['date_format'] = $this->game_config['date_format'];
-        $parse['date_format_extended'] = $this->game_config['date_format_extended'];
-        $parse['adm_attack'] = $this->game_config['adm_attack'] == 1 ? " checked = 'checked' " : '';
-        $parse['ships'] = $this->percentagePicker($this->game_config['fleet_cdr']);
-        $parse['defenses'] = $this->percentagePicker($this->game_config['defs_cdr']);
-        $parse['noobprot'] = $this->game_config['noobprotection'] == 1 ? " checked = 'checked' " : '';
-        $parse['noobprot2'] = $this->game_config['noobprotectiontime'];
-        $parse['noobprot3'] = $this->game_config['noobprotectionmulti'];
+        $parse['date_format'] = $this->gameConfig['date_format'];
+        $parse['date_format_extended'] = $this->gameConfig['date_format_extended'];
+        $parse['adm_attack'] = $this->gameConfig['adm_attack'] == 1 ? " checked = 'checked' " : '';
+        $parse['ships'] = $this->percentagePicker($this->gameConfig['fleet_cdr']);
+        $parse['defenses'] = $this->percentagePicker($this->gameConfig['defs_cdr']);
+        $parse['noobprot'] = $this->gameConfig['noobprotection'] == 1 ? " checked = 'checked' " : '';
+        $parse['noobprot2'] = $this->gameConfig['noobprotectiontime'];
+        $parse['noobprot3'] = $this->gameConfig['noobprotectionmulti'];
 
         Template::getInstance()->view(
             'admin.server',
