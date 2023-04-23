@@ -49,7 +49,7 @@ class LanguagesController extends BaseController
     private function doSaveAction(string $file_data): void
     {
         // get the file
-        $file = LANG_PATH . DIRECTORY_SEPARATOR . $this->current_file;
+        $file = lang_path($this->current_file);
 
         // open the file
         $fs = @fopen($file, 'w');
@@ -86,7 +86,7 @@ class LanguagesController extends BaseController
             ];
         }
 
-        $file = LANG_PATH . $this->current_file;
+        $file = lang_path($this->current_file);
 
         // open the file
         $fs = @fopen($file, 'a+');
@@ -111,7 +111,7 @@ class LanguagesController extends BaseController
 
     private function getFiles(): array
     {
-        chdir(LANG_PATH);
+        chdir(lang_path());
 
         $langs_files = glob('{,*/,*/*/,*/*/*/}*.php', GLOB_BRACE);
         $lang_options = [];

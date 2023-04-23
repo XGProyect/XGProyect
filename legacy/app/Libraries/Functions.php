@@ -276,7 +276,7 @@ abstract class Functions
      */
     public static function getLanguagesList()
     {
-        $langs_dir = opendir(LANG_PATH);
+        $langs_dir = opendir(lang_path());
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store'];
         $langs = [];
 
@@ -298,7 +298,7 @@ abstract class Functions
      */
     public static function getLanguages($current_lang)
     {
-        $langs_dir = opendir(LANG_PATH);
+        $langs_dir = opendir(lang_path());
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store'];
         $lang_options = '';
 
