@@ -71,7 +71,6 @@ class Fleet4Controller extends BaseController
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        // build the page
         $this->buildPage();
     }
 

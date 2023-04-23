@@ -17,7 +17,6 @@ class TraderLayerController extends BaseController
 
         Users::checkSession();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -26,7 +25,6 @@ class TraderLayerController extends BaseController
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        // build the page
         $this->buildPage();
     }
 

@@ -33,7 +33,6 @@ class OfficierController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -137,8 +136,8 @@ class OfficierController extends BaseController
         $item_to_parse['week_price'] = FormatLib::prettyNumber($this->getOfficierPrice($item_id, 'darkmatter_week'));
         $item_to_parse['img_big'] = $this->getOfficierImage($item_id, 'img_big');
         $item_to_parse['img_small'] = $this->getOfficierImage($item_id, 'img_small');
-        $item_to_parse['link_month'] = "game.php?page=officier&offi=" . $item_id . "&time=month";
-        $item_to_parse['link_week'] = "game.php?page=officier&offi=" . $item_id . "&time=week";
+        $item_to_parse['link_month'] = 'game.php?page=officier&offi=' . $item_id . '&time=month';
+        $item_to_parse['link_week'] = 'game.php?page=officier&offi=' . $item_id . '&time=week';
 
         return $item_to_parse;
     }

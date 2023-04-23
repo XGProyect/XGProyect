@@ -46,7 +46,6 @@ class AllianceController extends BaseController
 
     public function __invoke(): void
     {
-        // build the page
         $this->buildPage();
     }
 
@@ -350,7 +349,7 @@ class AllianceController extends BaseController
             $message = str_replace(['%s', '%d'], [$alliance_name, $alliance_tag], $this->langs->line('al_created'));
             return Functions::messageBox(
                 $message,
-                $message . "<br/><br/>",
+                $message . '<br/><br/>',
                 'game.php?page=alliance',
                 $this->langs->line('al_continue')
             );
@@ -502,7 +501,7 @@ class AllianceController extends BaseController
 
             return Functions::messageBox(
                 $this->langs->line('al_circular_sended'),
-                join("<br/>", $members_list),
+                join('<br/>', $members_list),
                 'game.php?page=alliance',
                 $this->langs->line('al_continue'),
                 true
@@ -1003,7 +1002,7 @@ class AllianceController extends BaseController
 
         if (is_array($ranks->getAllRanksAsArray())) {
             foreach ($ranks->getAllRanksAsArray() as $rank_id => $details) {
-                $delete = '<a href="game.php?page=alliance&mode=admin&edit=rights&d=' . $rank_id . '"><img src="' . DPATH . 'alliance/abort.gif" border="0" alt="'.$this->langs->line('al_rank_delete').'"/></a>';
+                $delete = '<a href="game.php?page=alliance&mode=admin&edit=rights&d=' . $rank_id . '"><img src="' . DPATH . 'alliance/abort.gif" border="0" alt="' . $this->langs->line('al_rank_delete') . '"/></a>';
                 $disabled = '';
                 if ($rank_id == 0 or $rank_id == 1) {
                     $delete = '';

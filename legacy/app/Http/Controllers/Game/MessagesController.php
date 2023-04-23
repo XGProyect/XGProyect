@@ -43,7 +43,6 @@ class MessagesController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -403,7 +402,7 @@ class MessagesController extends BaseController
                 break;
             case 'deletemarked':
                 foreach ($messages_to_delete as $message => $checked) {
-                    if (preg_match("/delmes/i", $message) && $checked == 'on') {
+                    if (preg_match('/delmes/i', $message) && $checked == 'on') {
                         $message_id = str_replace('delmes', '', $message);
 
                         $message_ids[] = $message_id;

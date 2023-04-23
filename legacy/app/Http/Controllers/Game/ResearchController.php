@@ -46,7 +46,6 @@ class ResearchController extends BaseController
             Functions::message($this->langs->line('re_lab_required'), '', '', true);
         }
 
-        // build the page
         $this->buildPage();
     }
 
@@ -58,7 +57,6 @@ class ResearchController extends BaseController
         // time to do something
         $this->doCommand();
 
-        // build the page
         foreach ($this->_reslist['tech'] as $tech) {
             if (DevelopmentsLib::isDevelopmentAllowed($this->user, $this->planet, $tech)) {
                 $RowParse['dpath'] = DPATH;
@@ -101,7 +99,7 @@ class ResearchController extends BaseController
                             $bloc
                         );
                     } else {
-                        $action_link = "<center>-</center>";
+                        $action_link = '<center>-</center>';
                     }
                 }
                 $RowParse['tech_link'] = $action_link;
@@ -232,7 +230,7 @@ class ResearchController extends BaseController
 
                 for ($i = 0; $i < MAX_BUILDING_QUEUE_SIZE; $i++) {
                     if (isset($queue[$i])) {
-                        $element_data = explode(",", $queue[$i]);
+                        $element_data = explode(',', $queue[$i]);
                         $element_id = $element_data[0];
 
                         if ($element_id == 31) {

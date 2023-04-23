@@ -43,7 +43,6 @@ class PreferencesController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 

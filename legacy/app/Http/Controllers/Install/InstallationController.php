@@ -30,7 +30,6 @@ class InstallationController extends BaseController
 
     public function __invoke(): void
     {
-        // build the page
         $this->buildPage();
     }
 
@@ -380,7 +379,7 @@ class InstallationController extends BaseController
     private function writeConfigFile()
     {
         $configFile = CONFIGS_PATH . 'xgp-db-config.php';
-        $laravelConfigFile = @fopen($configFile, "w");
+        $laravelConfigFile = @fopen($configFile, 'w');
 
         if (!$laravelConfigFile) {
             return false;
@@ -403,7 +402,7 @@ class InstallationController extends BaseController
         $newData .= "    'DB_DATABASE' => '" . $this->db_name . "',\n";
         $newData .= "    'DB_PREFIX' => '" . $this->db_prefix . "',\n";
         $newData .= "    'SECRETWORD' => 'xgp-" . StringsHelper::randomString(16) . "',\n";
-        $newData .= "]);";
+        $newData .= ']);';
         $newData .= "\n";
 
         // create the new file
