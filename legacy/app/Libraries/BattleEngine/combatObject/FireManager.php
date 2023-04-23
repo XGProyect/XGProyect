@@ -28,7 +28,7 @@
  */
 class FireManager extends IterableUtil
 {
-    protected $array = array();
+    protected $array = [];
 
     public function add(Fire $fire)
     {

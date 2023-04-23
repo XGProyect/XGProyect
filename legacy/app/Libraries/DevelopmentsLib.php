@@ -6,9 +6,6 @@ use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib;
-use Xgp\App\Libraries\Formulas;
-use Xgp\App\Libraries\OfficiersLib;
 
 class DevelopmentsLib
 {
@@ -127,7 +124,7 @@ class DevelopmentsLib
 
         foreach ($array as $res_type => $ResTitle) {
             if (isset($pricelist[$element][$res_type]) && $pricelist[$element][$res_type] != 0) {
-                $text .= $ResTitle . ": ";
+                $text .= $ResTitle . ': ';
 
                 if ($userfactor) {
                     $cost = Formulas::getDevelopmentCost($pricelist[$element][$res_type], $pricelist[$element]['factor'], $level);
@@ -136,12 +133,12 @@ class DevelopmentsLib
                 }
 
                 if ($cost > $current_planet['planet_' . $res_type]) {
-                    $text .= "<b style=\"color:red;\"> <t title=\"-" . FormatLib::prettyNumber(
+                    $text .= '<b style="color:red;"> <t title="-' . FormatLib::prettyNumber(
                         $cost - $current_planet['planet_' . $res_type]
-                    ) . "\">";
-                    $text .= "<span class=\"noresources\">" . FormatLib::prettyNumber($cost) . "</span></t></b> ";
+                    ) . '">';
+                    $text .= '<span class="noresources">' . FormatLib::prettyNumber($cost) . '</span></t></b> ';
                 } else {
-                    $text .= "<b style=\"color:lime;\">" . FormatLib::prettyNumber($cost) . "</b> ";
+                    $text .= '<b style="color:lime;">' . FormatLib::prettyNumber($cost) . '</b> ';
                 }
             }
         }
@@ -232,7 +229,7 @@ class DevelopmentsLib
      */
     public static function formatedDevelopmentTime($time, $lang_line)
     {
-        return "<br>" . $lang_line . FormatLib::prettyTime($time);
+        return '<br>' . $lang_line . FormatLib::prettyTime($time);
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace Xgp\App\Libraries\Buildings;
 
-use Xgp\App\Libraries\Buildings\Queue;
-use Xgp\App\Libraries\Buildings\QueueElements;
 use Xgp\App\Libraries\DevelopmentsLib;
 use Xgp\App\Libraries\OfficiersLib;
 

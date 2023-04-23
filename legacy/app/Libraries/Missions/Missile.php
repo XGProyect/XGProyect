@@ -58,7 +58,7 @@ class Missile extends Missions
                 if ($target_data['defense_anti-ballistic_missile'] > 0) {
                     $result[502] = $target_data['defense_anti-ballistic_missile'];
                     $message = $target_data['defense_anti-ballistic_missile'] .
-                    $this->langs->line('mis_some_destroyed') . " <br>";
+                    $this->langs->line('mis_some_destroyed') . ' <br>';
                 }
 
                 $attack = floor(
@@ -83,7 +83,7 @@ class Missile extends Missions
 
                         if ($destroyed != 0) {
                             $result[$n] = $destroyed;
-                            $destroyed_query .= "`" . $this->resource[$n] . "` = `" . $this->resource[$n] . "` - " . $destroyed . ",";
+                            $destroyed_query .= '`' . $this->resource[$n] . '` = `' . $this->resource[$n] . '` - ' . $destroyed . ',';
                         }
                     }
                 }

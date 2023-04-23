@@ -18,8 +18,6 @@ use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Missions\Attack_lang;
-use Xgp\App\Libraries\Missions\Missions;
 use Xgp\App\Libraries\UpdatesLibrary;
 
 class Destroy extends Missions
@@ -762,7 +760,7 @@ class Destroy extends Missions
         ]);
 
         // Updating flying fleets
-        $id_string = join(",", $emptyFleets);
+        $id_string = join(',', $emptyFleets);
 
         if (!empty($id_string)) {
             $this->missionsModel->deleteMultipleFleetsByIds($id_string);
@@ -894,7 +892,7 @@ class Destroy extends Missions
 
         $raport[] = sprintf($this->langs->line('des_moon_ds_chances'), $this->_destruction['moon_chance'], $this->_destruction['ds_chance']);
 
-        return join("<br/>", $raport);
+        return join('<br/>', $raport);
     }
 
     /**

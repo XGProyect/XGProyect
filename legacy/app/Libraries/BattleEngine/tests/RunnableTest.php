@@ -27,8 +27,8 @@
  * @link https://github.com/jstar88/opbe
  */
 
-require(dirname(__DIR__) . DIRECTORY_SEPARATOR ."utils".DIRECTORY_SEPARATOR."includer.php");
-require(OPBEPATH . "tests".DIRECTORY_SEPARATOR."runnable".DIRECTORY_SEPARATOR."langs".DIRECTORY_SEPARATOR."XGLangImplementation.php");
+require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'includer.php';
+require OPBEPATH . 'tests' . DIRECTORY_SEPARATOR . 'runnable' . DIRECTORY_SEPARATOR . 'langs' . DIRECTORY_SEPARATOR . 'XGLangImplementation.php';
 
 class RunnableTest
 {
@@ -41,6 +41,7 @@ class RunnableTest
     public static $requeriments;
     public static $resource;
     public static $CombatCaps;
+
     public function __construct($debug = false)
     {
         if (empty(self::$reslist)) {
@@ -55,7 +56,7 @@ class RunnableTest
         $micro1 = microtime();
 
         $engine = new Battle($attackers, $defenders);
-        $startBattle = DebugManager::runDebugged(array($engine,'startBattle'), array('RunnableTest', 'myErrorHandler'), array('RunnableTest', 'save'));
+        $startBattle = DebugManager::runDebugged([$engine, 'startBattle'], ['RunnableTest', 'myErrorHandler'], ['RunnableTest', 'save']);
         $startBattle($debug);
 
         $micro1 = microtime() - $micro1;
@@ -67,23 +68,27 @@ class RunnableTest
         $this->memory = round($memory1 / 1000);
         echo $this;
     }
+
     public function getShipType($id, $count)
     {
         $rf = self::$CombatCaps[$id]['sd'];
         $shield = self::$CombatCaps[$id]['shield'];
-        $cost = array(self::$pricelist[$id]['metal'], self::$pricelist[$id]['crystal']);
+        $cost = [self::$pricelist[$id]['metal'], self::$pricelist[$id]['crystal']];
         $power = self::$CombatCaps[$id]['attack'];
         if (in_array($id, self::$reslist['fleet'])) {
             return new Ship($id, $count, $rf, $shield, $cost, $power);
         }
         return new Defense($id, $count, $rf, $shield, $cost, $power);
     }
+
     public function getAttachers()
     {
     }
+
     public function getDefenders()
     {
     }
+
     public static function myErrorHandler($errno, $errstr, $errfile, $errline)
     {
         $error = '';
@@ -105,11 +110,12 @@ class RunnableTest
                 break;
         }
         $error .= "Error on line $errline in file $errfile";
-        $error .= ", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />";
+        $error .= ', PHP ' . PHP_VERSION . ' (' . PHP_OS . ')<br />';
         self::save($error);
         /* Don't execute PHP internal error handler */
         return true;
     }
+
     public static function save($other)
     {
         date_default_timezone_set(TIMEZONE);
@@ -117,18 +123,20 @@ class RunnableTest
         $post = '$_POST =' . var_export($_POST);
         $get = '$_GET =' . var_export($_GET);
         $output = ob_get_clean();
-        $path = OPBEPATH.'tests'.DIRECTORY_SEPARATOR.'runnable'.DIRECTORY_SEPARATOR.'errors'.DIRECTORY_SEPARATOR.'internals';
+        $path = OPBEPATH . 'tests' . DIRECTORY_SEPARATOR . 'runnable' . DIRECTORY_SEPARATOR . 'errors' . DIRECTORY_SEPARATOR . 'internals';
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
         }
-        file_put_contents($path.DIRECTORY_SEPARATOR . date('d-m-y__H-i-s') . '.html', $time . PHP_EOL . self::br2nl($other) . PHP_EOL . $post . PHP_EOL . $get . PHP_EOL . self::br2nl($output));
+        file_put_contents($path . DIRECTORY_SEPARATOR . date('d-m-y__H-i-s') . '.html', $time . PHP_EOL . self::br2nl($other) . PHP_EOL . $post . PHP_EOL . $get . PHP_EOL . self::br2nl($output));
         die('An error occurred, we will resolve it soon as possible');
     }
+
     private static function br2nl($text)
     {
         $x = preg_replace('/<br\\\\s*?\\/??>/i', PHP_EOL, $text);
         return str_ireplace('<br />', '', $x);
     }
+
     public function __toString()
     {
         $micro = $this->time;
@@ -144,23 +152,23 @@ _______________________________________________<br>
 EOT;
     }
 
-
     public static function includeVars($name)
     {
-        require(OPBEPATH."tests".DIRECTORY_SEPARATOR."runnable".DIRECTORY_SEPARATOR."vars".DIRECTORY_SEPARATOR."$name.php");
+        require OPBEPATH . 'tests' . DIRECTORY_SEPARATOR . 'runnable' . DIRECTORY_SEPARATOR . 'vars' . DIRECTORY_SEPARATOR . "$name.php";
         RunnableTest::$reslist = $reslist;
         RunnableTest::$pricelist = $pricelist;
         RunnableTest::$requeriments = $requeriments;
         RunnableTest::$resource = $resource;
         RunnableTest::$CombatCaps = $CombatCaps;
     }
+
     public static function getVarsList()
     {
-        $list = array();
-        if ($handle = opendir(OPBEPATH."tests".DIRECTORY_SEPARATOR."runnable".DIRECTORY_SEPARATOR."vars")) {
+        $list = [];
+        if ($handle = opendir(OPBEPATH . 'tests' . DIRECTORY_SEPARATOR . 'runnable' . DIRECTORY_SEPARATOR . 'vars')) {
             while (false !== ($entry = readdir($handle))) {
-                if ($entry != "." && $entry != "..") {
-                    $list[] = basename($entry, ".php");
+                if ($entry != '.' && $entry != '..') {
+                    $list[] = basename($entry, '.php');
                 }
             }
             closedir($handle);

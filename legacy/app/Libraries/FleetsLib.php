@@ -9,12 +9,7 @@ use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
-use Xgp\App\Libraries\FormatLib;
-use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\OfficiersLib;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\TimingLibrary as Timing;
-use Xgp\App\Libraries\Users;
 
 class FleetsLib
 {
@@ -169,8 +164,8 @@ class FleetsLib
             $fleetRow['fleet_start_planet']
         );
 
-        $link = "game.php?page=galaxy&mode=3&galaxy=" .
-            $fleetRow['fleet_start_galaxy'] . "&system=" . $fleetRow['fleet_start_system'];
+        $link = 'game.php?page=galaxy&mode=3&galaxy=' .
+            $fleetRow['fleet_start_galaxy'] . '&system=' . $fleetRow['fleet_start_system'];
 
         return UrlHelper::setUrl($link, $coords, '', $fleetType);
     }
@@ -183,8 +178,8 @@ class FleetsLib
             $fleetRow['fleet_end_planet']
         );
 
-        $link = "game.php?page=galaxy&mode=3&galaxy=" .
-            $fleetRow['fleet_end_galaxy'] . "&system=" . $fleetRow['fleet_end_system'];
+        $link = 'game.php?page=galaxy&mode=3&galaxy=' .
+            $fleetRow['fleet_end_galaxy'] . '&system=' . $fleetRow['fleet_end_system'];
 
         return UrlHelper::setUrl($link, $coords, '', $fleetType);
     }
@@ -219,9 +214,9 @@ class FleetsLib
 
         if ($resources_popup != '') {
             $pop_up = "<a href='#' onmouseover=\"return overlib('" . $resources_popup . "');";
-            $pop_up .= "\" onmouseout=\"return nd();\" class=\"" . $fleet_type . "\">" . $text . "</a>";
+            $pop_up .= '" onmouseout="return nd();" class="' . $fleet_type . '">' . $text . '</a>';
         } else {
-            $pop_up = $text . "";
+            $pop_up = $text . '';
         }
 
         return $pop_up;
@@ -243,7 +238,7 @@ class FleetsLib
 
         $ships = self::getFleetShipsArray($fleetRow['fleet_array']);
         $pop_up = "<a href='#' onmouseover=\"return overlib('";
-        $pop_up .= "<table width=200>";
+        $pop_up .= '<table width=200>';
 
         $espionage_tech = OfficiersLib::getMaxEspionage(
             $current_user['research_espionage_technology'],
@@ -251,42 +246,42 @@ class FleetsLib
         );
 
         if ($espionage_tech < 2 && $fleetRow['fleet_owner'] != $current_user['user_id']) {
-            $pop_up .= "<tr><td width=50% align=left><font color=white>" .
-            $lang->line('ev_no_fleet_data') . "</font></td></tr>";
+            $pop_up .= '<tr><td width=50% align=left><font color=white>' .
+            $lang->line('ev_no_fleet_data') . '</font></td></tr>';
         } elseif ($espionage_tech >= 2 && $espionage_tech < 4 && $fleetRow['fleet_owner'] != $current_user['user_id']) {
-            $pop_up .= "<tr><td width=50% align=left><font color=white>" .
+            $pop_up .= '<tr><td width=50% align=left><font color=white>' .
             $lang->line('ev_aproaching') . $fleetRow['fleet_amount'] .
-            $lang->line('ev_ships') . "</font></td></tr>";
+            $lang->line('ev_ships') . '</font></td></tr>';
         } else {
             if ($fleetRow['fleet_owner'] != $current_user['user_id']) {
-                $pop_up .= "<tr><td width=100% align=left><font color=white>" .
+                $pop_up .= '<tr><td width=100% align=left><font color=white>' .
                 $lang->line('ev_aproaching') . $fleetRow['fleet_amount'] . $lang->line('ev_ships') .
-                    ":</font></td></tr>";
+                    ':</font></td></tr>';
             }
 
             foreach ($ships as $ship => $amount) {
                 if ($fleetRow['fleet_owner'] == $current_user['user_id']) {
-                    $pop_up .= "<tr><td width=50% align=left><font color=white>" .
+                    $pop_up .= '<tr><td width=50% align=left><font color=white>' .
                     $lang->language[$objects[$ship]] .
-                    ":</font></td><td width=50% align=right><font color=white>" .
-                    FormatLib::prettyNumber($amount) . "</font></td></tr>";
+                    ':</font></td><td width=50% align=right><font color=white>' .
+                    FormatLib::prettyNumber($amount) . '</font></td></tr>';
                 } elseif ($fleetRow['fleet_owner'] != $current_user['user_id']) {
                     if ($espionage_tech >= 4 && $espionage_tech < 8) {
-                        $pop_up .= "<tr><td width=50% align=left><font color=white>" .
+                        $pop_up .= '<tr><td width=50% align=left><font color=white>' .
                         $lang->language[$objects[$ship]] .
-                            "</font></td></tr>";
+                            '</font></td></tr>';
                     } elseif ($espionage_tech >= 8) {
-                        $pop_up .= "<tr><td width=50% align=left><font color=white>" .
+                        $pop_up .= '<tr><td width=50% align=left><font color=white>' .
                         $lang->language[$objects[$ship]] .
-                        ":<font></td><td width=50% align=right><font color=white>" .
-                        FormatLib::prettyNumber($amount) . "</font></td></tr>";
+                        ':<font></td><td width=50% align=right><font color=white>' .
+                        FormatLib::prettyNumber($amount) . '</font></td></tr>';
                     }
                 }
             }
         }
 
-        $pop_up .= "</table>";
-        $pop_up .= "');\" onmouseout=\"return nd();\" class=\"" . $fleet_type . "\">" . $text . "</a>";
+        $pop_up .= '</table>';
+        $pop_up .= "');\" onmouseout=\"return nd();\" class=\"" . $fleet_type . '">' . $text . '</a>';
 
         return $pop_up;
     }
@@ -361,7 +356,7 @@ class FleetsLib
                 $StartID = $lang->line('ev_from_the_moon');
             }
 
-            $StartID .= $fleetRow['start_planet_name'] . " ";
+            $StartID .= $fleetRow['start_planet_name'] . ' ';
             $StartID .= FleetsLib::startLink($fleetRow, $FleetPrefix . $FleetStyle[$MissionType]);
 
             if ($MissionType != Missions::EXPEDITION) {
@@ -382,7 +377,7 @@ class FleetsLib
                 $TargetID = $lang->line('ev_the_position');
             }
 
-            $TargetID .= $fleetRow['target_planet_name'] . " ";
+            $TargetID .= $fleetRow['target_planet_name'] . ' ';
             $TargetID .= FleetsLib::targetLink($fleetRow, $FleetPrefix . $FleetStyle[$MissionType]);
         } else {
             if ($StartType == 1) {
@@ -391,7 +386,7 @@ class FleetsLib
                 $StartID = $lang->line('ev_the_moon');
             }
 
-            $StartID .= $fleetRow['start_planet_name'] . " ";
+            $StartID .= $fleetRow['start_planet_name'] . ' ';
             $StartID .= FleetsLib::startLink($fleetRow, $FleetPrefix . $FleetStyle[$MissionType]);
 
             if ($MissionType != Missions::EXPEDITION) {
@@ -412,20 +407,20 @@ class FleetsLib
                 $TargetID = $lang->line('ev_from_position');
             }
 
-            $TargetID .= $fleetRow['target_planet_name'] . " ";
+            $TargetID .= $fleetRow['target_planet_name'] . ' ';
             $TargetID .= FleetsLib::targetLink($fleetRow, $FleetPrefix . $FleetStyle[$MissionType]);
         }
 
         if ($MissionType == Missions::MISSILE) {
             $EventString = $lang->line('ev_missile_attack') .
-            " ( " . FleetsLib::getFleetShipsArray($fleetRow['fleet_array'])[Defenses::defense_interplanetary_missile] . " ) ";
+            ' ( ' . FleetsLib::getFleetShipsArray($fleetRow['fleet_array'])[Defenses::defense_interplanetary_missile] . ' ) ';
             $Time = $fleetRow['fleet_start_time'];
             $Rest = $Time - time();
 
             $EventString .= $StartID;
             $EventString .= $lang->line('ev_to');
             $EventString .= $TargetID;
-            $EventString .= ".";
+            $EventString .= '.';
         } else {
             if ($Owner == true) {
                 $EventString = $lang->line('ev_one_of_your');

@@ -10,9 +10,9 @@ class UpdatesLibrary extends Model
     public function deleteUsersByDeletedAndInactive(int $del_deleted, int $del_inactive): ?array
     {
         return $this->db->queryFetchAll(
-            "SELECT u.`user_id`
-            FROM `" . USERS . "` AS u
-            INNER JOIN `" . PREFERENCES . "` AS p ON p.preference_user_id = u.user_id
+            'SELECT u.`user_id`
+            FROM `' . USERS . '` AS u
+            INNER JOIN `' . PREFERENCES . "` AS p ON p.preference_user_id = u.user_id
             WHERE (p.`preference_delete_mode` < '" . $del_deleted . "'
                 AND p.`preference_delete_mode` <> 0)
                 OR (u.`user_onlinetime` < '" . $del_inactive . "' AND u.`user_onlinetime` <> 0 AND u.`user_authlevel` <> 3)"
@@ -28,7 +28,7 @@ class UpdatesLibrary extends Model
      */
     public function deleteMessages($del_before)
     {
-        $this->db->query("DELETE FROM " . MESSAGES . " WHERE `message_time` < '" . $del_before . "';");
+        $this->db->query('DELETE FROM ' . MESSAGES . " WHERE `message_time` < '" . $del_before . "';");
     }
 
     /**
@@ -40,7 +40,7 @@ class UpdatesLibrary extends Model
      */
     public function deleteReports($del_before)
     {
-        $this->db->query("DELETE FROM " . REPORTS . " WHERE `report_time` < '" . $del_before . "';");
+        $this->db->query('DELETE FROM ' . REPORTS . " WHERE `report_time` < '" . $del_before . "';");
     }
 
     public function deleteSessions($delBefore): void
@@ -58,10 +58,10 @@ class UpdatesLibrary extends Model
     public function deleteDestroyedPlanets($del_before)
     {
         $this->db->query(
-            "DELETE p,b,d,s FROM `" . PLANETS . "` AS p
-            INNER JOIN `" . BUILDINGS . "` AS b ON b.building_planet_id = p.`planet_id`
-            INNER JOIN `" . DEFENSES . "` AS d ON d.defense_planet_id = p.`planet_id`
-            INNER JOIN `" . SHIPS . "` AS s ON s.ship_planet_id = p.`planet_id`
+            'DELETE p,b,d,s FROM `' . PLANETS . '` AS p
+            INNER JOIN `' . BUILDINGS . '` AS b ON b.building_planet_id = p.`planet_id`
+            INNER JOIN `' . DEFENSES . '` AS d ON d.defense_planet_id = p.`planet_id`
+            INNER JOIN `' . SHIPS . "` AS s ON s.ship_planet_id = p.`planet_id`
             WHERE `planet_destroyed` < '" . $del_before . "'
                 AND `planet_destroyed` <> 0;"
         );
@@ -75,11 +75,11 @@ class UpdatesLibrary extends Model
     public function deleteExpiredAcs()
     {
         $this->db->query(
-            "DELETE a,m1,m2 FROM `" . ACS . "` AS a
-            INNER JOIN `" . ACS_MEMBERS . "` m1 ON m1.`acs_group_id` = a.`acs_id`
-            RIGHT JOIN `" . ACS_MEMBERS . "` m2 ON m2.`acs_group_id` = a.`acs_id`
-			LEFT JOIN `" . FLEETS . "` f ON f.`fleet_group` = a.`acs_id`
-            WHERE f.`fleet_id` IS NULL"
+            'DELETE a,m1,m2 FROM `' . ACS . '` AS a
+            INNER JOIN `' . ACS_MEMBERS . '` m1 ON m1.`acs_group_id` = a.`acs_id`
+            RIGHT JOIN `' . ACS_MEMBERS . '` m2 ON m2.`acs_group_id` = a.`acs_id`
+			LEFT JOIN `' . FLEETS . '` f ON f.`fleet_group` = a.`acs_id`
+            WHERE f.`fleet_id` IS NULL'
         );
     }
 
@@ -105,10 +105,10 @@ class UpdatesLibrary extends Model
     public function updatePlanet($building_name, $amount, $planet)
     {
         $this->db->query(
-            "UPDATE " . PLANETS . " AS p
-            INNER JOIN " . USERS_STATISTICS . " AS s ON s.user_statistic_user_id = p.planet_user_id
-            INNER JOIN " . BUILDINGS . " AS b ON b.building_planet_id = p.`planet_id` SET
-            `" . $building_name . "` = '" . $amount . "',
+            'UPDATE ' . PLANETS . ' AS p
+            INNER JOIN ' . USERS_STATISTICS . ' AS s ON s.user_statistic_user_id = p.planet_user_id
+            INNER JOIN ' . BUILDINGS . ' AS b ON b.building_planet_id = p.`planet_id` SET
+            `' . $building_name . "` = '" . $amount . "',
             `user_statistic_buildings_points` = `user_statistic_buildings_points` + '" .
             $planet['building_points'] . "',
             `planet_b_building` = '" . $planet['planet_b_building'] . "',
@@ -129,7 +129,7 @@ class UpdatesLibrary extends Model
     public function updateBuildingsQueue($planet)
     {
         $this->db->query(
-            "UPDATE " . PLANETS . " SET
+            'UPDATE ' . PLANETS . " SET
             `planet_b_building` = '" . $planet['planet_b_building'] . "',
             `planet_b_building_id` = '" . $planet['planet_b_building_id'] . "'
             WHERE `planet_id` = '" . $planet['planet_id'] . "';"
@@ -145,7 +145,7 @@ class UpdatesLibrary extends Model
     public function updateQueueResources($planet)
     {
         $this->db->query(
-            "UPDATE `" . PLANETS . "` SET
+            'UPDATE `' . PLANETS . "` SET
                 `planet_metal` = '" . $planet['planet_metal'] . "',
                 `planet_crystal` = '" . $planet['planet_crystal'] . "',
                 `planet_deuterium` = '" . $planet['planet_deuterium'] . "',
@@ -166,11 +166,11 @@ class UpdatesLibrary extends Model
     {
         if (is_array($data)) {
             $this->db->query(
-                "UPDATE " . PLANETS . " AS p
-                INNER JOIN " . USERS_STATISTICS . " AS us ON us.user_statistic_user_id = p.planet_user_id
-                INNER JOIN " . DEFENSES . " AS d ON d.defense_planet_id = p.`planet_id`
-                INNER JOIN " . SHIPS . " AS s ON s.ship_planet_id = p.`planet_id`
-                INNER JOIN " . RESEARCH . " AS r ON r.research_user_id = p.planet_user_id SET
+                'UPDATE ' . PLANETS . ' AS p
+                INNER JOIN ' . USERS_STATISTICS . ' AS us ON us.user_statistic_user_id = p.planet_user_id
+                INNER JOIN ' . DEFENSES . ' AS d ON d.defense_planet_id = p.`planet_id`
+                INNER JOIN ' . SHIPS . ' AS s ON s.ship_planet_id = p.`planet_id`
+                INNER JOIN ' . RESEARCH . " AS r ON r.research_user_id = p.planet_user_id SET
                     `planet_metal` = '" . $data['planet']['planet_metal'] . "',
                     `planet_crystal` = '" . $data['planet']['planet_crystal'] . "',
                     `planet_deuterium` = '" . $data['planet']['planet_deuterium'] . "',

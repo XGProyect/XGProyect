@@ -3,7 +3,6 @@
 namespace Xgp\App\Libraries;
 
 use Xgp\App\Core\Enumerators\ErrorTypesEnumerator as ErrorTypes;
-use Xgp\App\Libraries\Functions;
 
 class DebugLib
 {
@@ -177,11 +176,11 @@ class DebugLib
         $file = LOGS_PATH . $file_name . '-' . $file_code . '.txt';
 
         if (!file_exists($file)) {
-            @fopen($file, "w+");
-            @fclose(fopen($file, "w+"));
+            @fopen($file, 'w+');
+            @fclose(fopen($file, 'w+'));
         }
 
-        $fp = @fopen($file, "a");
+        $fp = @fopen($file, 'a');
         $date = $text;
         $date .= date('Y/m/d H:i:s', time()) . "|\n";
 

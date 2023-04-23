@@ -5,7 +5,6 @@ namespace Xgp\App\Libraries;
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Libraries\Alliance\Ranks;
-use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Libraries\UsersLibrary;
 
 class Users
@@ -163,7 +162,7 @@ class Users
             Functions::redirect(SYSTEM_ROOT);
         }
 
-        if (!password_verify(($userRow['user_password'] . "-" . config('SECRETWORD')), $_SESSION['user_password']) && !defined('IN_LOGIN')) {
+        if (!password_verify(($userRow['user_password'] . '-' . config('SECRETWORD')), $_SESSION['user_password']) && !defined('IN_LOGIN')) {
             Functions::redirect(SYSTEM_ROOT);
         }
     }
@@ -196,7 +195,7 @@ class Users
         $insert_query = 'INSERT INTO ' . USERS . ' SET ';
 
         foreach ($data as $column => $value) {
-            $insert_query .= "`" . $column . "` = '" . $value . "', ";
+            $insert_query .= '`' . $column . "` = '" . $value . "', ";
         }
 
         // Remove last comma

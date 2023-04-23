@@ -2,7 +2,6 @@
 
 namespace Xgp\App\Libraries\Messenger;
 
-use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Libraries\Messenger\Messenger as MessengerModel;
 
 final class Messenger

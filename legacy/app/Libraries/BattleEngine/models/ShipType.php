@@ -366,7 +366,7 @@ class ShipType extends Type
             return;
         }
         if ($shotsToThisShipType < 0) {
-            throw new Exception("Negative amount of shotsToThisShipType!");
+            throw new Exception('Negative amount of shotsToThisShipType!');
         }
 
         log_var('Defender single hull', $this->singleLife);

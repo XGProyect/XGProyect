@@ -8,14 +8,12 @@ use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Libraries\FleetsLib as Fleets;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Missions\Missions;
 
 class Deploy extends Missions
 {
     public function __construct()
     {
         parent::__construct();
-
     }
 
     /**

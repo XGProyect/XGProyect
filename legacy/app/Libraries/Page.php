@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Xgp\App\Libraries;
 
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Users;
 
 class Page
 {

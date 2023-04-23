@@ -17,8 +17,6 @@ use Xgp\App\Libraries\Combatreport\Report;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Missions\Attack_lang;
-use Xgp\App\Libraries\Missions\Missions;
 use Xgp\App\Libraries\PlanetLib;
 use Xgp\App\Libraries\UpdatesLibrary;
 
@@ -715,7 +713,7 @@ class Attack extends Missions
         ]);
 
         // Updating flying fleets
-        $id_string = join(",", $emptyFleets);
+        $id_string = join(',', $emptyFleets);
 
         if (!empty($id_string)) {
             $this->missionsModel->deleteMultipleFleetsByIds($id_string);

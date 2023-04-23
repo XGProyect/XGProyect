@@ -28,12 +28,12 @@
  */
 class PlayerGroup extends IterableUtil
 {
-    protected $array = array();
+    protected $array = [];
     public $battleResult;
     private static $id_count = 0;
     private $id;
 
-    public function __construct($players = array())
+    public function __construct($players = [])
     {
         $this->id = ++self::$id_count;
         foreach ($players as $player) {
@@ -94,14 +94,14 @@ class PlayerGroup extends IterableUtil
     {
         ob_start();
         $_playerGroup = $this;
-        $_st = "";
-        require(OPBEPATH . "views/playerGroup.html");
+        $_st = '';
+        require OPBEPATH . 'views/playerGroup.html';
         return ob_get_clean();
     }
 
     public function inflictDamage(FireManager $fire)
     {
-        $physicShots = array();
+        $physicShots = [];
         foreach ($this->array as $idPlayer => $player) {
             echo "---------** firing to player with ID = $idPlayer **---------- <br>";
             $ps = $player->inflictDamage($fire);
@@ -112,7 +112,7 @@ class PlayerGroup extends IterableUtil
 
     public function cleanShips()
     {
-        $shipsCleaners = array();
+        $shipsCleaners = [];
         foreach ($this->array as $idPlayer => $player) {
             echo "---------** cleanShips to player with ID = $idPlayer **---------- <br>";
             $sc = $player->cleanShips();

@@ -1,450 +1,450 @@
 <?php
 
-$resource = array(
-    1 => "metal_mine",
-    2 => "crystal_mine",
-    3 => "deuterium_sintetizer",
-    4 => "solar_plant",
-    12 => "fusion_plant",
-    14 => "robot_factory",
-    15 => "nano_factory",
-    21 => "hangar",
-    22 => "metal_store",
-    23 => "crystal_store",
-    24 => "deuterium_store",
-    31 => "laboratory",
-    33 => "terraformer",
-    34 => "ally_deposit",
-    41 => "mondbasis",
-    42 => "phalanx",
-    43 => "sprungtor",
-    44 => "silo",
+$resource = [
+    1 => 'metal_mine',
+    2 => 'crystal_mine',
+    3 => 'deuterium_sintetizer',
+    4 => 'solar_plant',
+    12 => 'fusion_plant',
+    14 => 'robot_factory',
+    15 => 'nano_factory',
+    21 => 'hangar',
+    22 => 'metal_store',
+    23 => 'crystal_store',
+    24 => 'deuterium_store',
+    31 => 'laboratory',
+    33 => 'terraformer',
+    34 => 'ally_deposit',
+    41 => 'mondbasis',
+    42 => 'phalanx',
+    43 => 'sprungtor',
+    44 => 'silo',
 
-    106 => "spy_tech",
-    108 => "computer_tech",
-    109 => "military_tech",
-    110 => "defence_tech",
-    111 => "shield_tech",
-    113 => "energy_tech",
-    114 => "hyperspace_tech",
-    115 => "combustion_tech",
-    117 => "impulse_motor_tech",
-    118 => "hyperspace_motor_tech",
-    120 => "laser_tech",
-    121 => "ionic_tech",
-    122 => "buster_tech",
-    123 => "intergalactic_tech",
-    124 => "expedition_tech",
-    125 => "dominio",
-    199 => "graviton_tech",
+    106 => 'spy_tech',
+    108 => 'computer_tech',
+    109 => 'military_tech',
+    110 => 'defence_tech',
+    111 => 'shield_tech',
+    113 => 'energy_tech',
+    114 => 'hyperspace_tech',
+    115 => 'combustion_tech',
+    117 => 'impulse_motor_tech',
+    118 => 'hyperspace_motor_tech',
+    120 => 'laser_tech',
+    121 => 'ionic_tech',
+    122 => 'buster_tech',
+    123 => 'intergalactic_tech',
+    124 => 'expedition_tech',
+    125 => 'dominio',
+    199 => 'graviton_tech',
 
-    202 => "small_ship_cargo",
-    203 => "big_ship_cargo",
-    204 => "light_hunter",
-    205 => "heavy_hunter",
-    206 => "crusher",
-    207 => "battle_ship",
-    208 => "colonizer",
-    209 => "recycler",
-    210 => "spy_sonde",
-    211 => "bomber_ship",
-    212 => "solar_satelit",
-    213 => "destructor",
-    214 => "dearth_star",
-    215 => "battle_cruiser",
-    216 => "supernova",
-    217 => "supercargo",
+    202 => 'small_ship_cargo',
+    203 => 'big_ship_cargo',
+    204 => 'light_hunter',
+    205 => 'heavy_hunter',
+    206 => 'crusher',
+    207 => 'battle_ship',
+    208 => 'colonizer',
+    209 => 'recycler',
+    210 => 'spy_sonde',
+    211 => 'bomber_ship',
+    212 => 'solar_satelit',
+    213 => 'destructor',
+    214 => 'dearth_star',
+    215 => 'battle_cruiser',
+    216 => 'supernova',
+    217 => 'supercargo',
 
-    401 => "misil_launcher",
-    402 => "small_laser",
-    403 => "big_laser",
-    404 => "gauss_cannon",
-    405 => "ionic_cannon",
-    406 => "plasma_cannon",
-    407 => "small_protection_shield",
-    408 => "big_protection_shield",
-    409 => "planet_protector",
-    502 => "interceptor_misil",
-    503 => "interplanetary_misil",
+    401 => 'misil_launcher',
+    402 => 'small_laser',
+    403 => 'big_laser',
+    404 => 'gauss_cannon',
+    405 => 'ionic_cannon',
+    406 => 'plasma_cannon',
+    407 => 'small_protection_shield',
+    408 => 'big_protection_shield',
+    409 => 'planet_protector',
+    502 => 'interceptor_misil',
+    503 => 'interplanetary_misil',
 
-    601 => "rpg_geologue",
-    602 => "rpg_amiral",
-    603 => "rpg_ingenieur",
-    604 => "rpg_technocrate",
-    605 => "rpg_constructeur",
-    606 => "rpg_scientifique",
-    607 => "rpg_stockeur",
-    608 => "rpg_defenseur",
-    609 => "rpg_bunker",
-    610 => "rpg_espion",
-    611 => "rpg_commandant",
-    612 => "rpg_destructeur",
-    613 => "rpg_general",
-    614 => "rpg_raideur",
-    615 => "rpg_empereur",
-    );
+    601 => 'rpg_geologue',
+    602 => 'rpg_amiral',
+    603 => 'rpg_ingenieur',
+    604 => 'rpg_technocrate',
+    605 => 'rpg_constructeur',
+    606 => 'rpg_scientifique',
+    607 => 'rpg_stockeur',
+    608 => 'rpg_defenseur',
+    609 => 'rpg_bunker',
+    610 => 'rpg_espion',
+    611 => 'rpg_commandant',
+    612 => 'rpg_destructeur',
+    613 => 'rpg_general',
+    614 => 'rpg_raideur',
+    615 => 'rpg_empereur',
+];
 
-$requeriments = array(
-    12 => array(3 => 5, 113 => 3),
-    15 => array(14 => 10, 108 => 10),
-    21 => array(14 => 2),
-    33 => array(15 => 1, 113 => 12),
+$requeriments = [
+    12 => [3 => 5, 113 => 3],
+    15 => [14 => 10, 108 => 10],
+    21 => [14 => 2],
+    33 => [15 => 1, 113 => 12],
 
-    42 => array(41 => 1),
-    43 => array(41 => 1, 114 => 7),
-    44 => array(21 => 1),
+    42 => [41 => 1],
+    43 => [41 => 1, 114 => 7],
+    44 => [21 => 1],
 
-    106 => array(31 => 3),
-    108 => array(31 => 1),
-    109 => array(31 => 4),
-    110 => array(113 => 3, 31 => 6),
-    111 => array(31 => 2),
-    113 => array(31 => 1),
-    114 => array(
+    106 => [31 => 3],
+    108 => [31 => 1],
+    109 => [31 => 4],
+    110 => [113 => 3, 31 => 6],
+    111 => [31 => 2],
+    113 => [31 => 1],
+    114 => [
         113 => 5,
         110 => 5,
-        31 => 7),
-    115 => array(113 => 1, 31 => 1),
-    117 => array(113 => 1, 31 => 2),
-    118 => array(114 => 3, 31 => 7),
-    120 => array(31 => 1, 113 => 2),
-    121 => array(
+        31 => 7],
+    115 => [113 => 1, 31 => 1],
+    117 => [113 => 1, 31 => 2],
+    118 => [114 => 3, 31 => 7],
+    120 => [31 => 1, 113 => 2],
+    121 => [
         31 => 4,
         120 => 5,
-        113 => 4),
-    122 => array(
+        113 => 4],
+    122 => [
         31 => 5,
         113 => 8,
         120 => 10,
-        121 => 5),
-    123 => array(
+        121 => 5],
+    123 => [
         31 => 10,
         108 => 8,
-        114 => 8),
-    124 => array(
+        114 => 8],
+    124 => [
         31 => 3,
         108 => 4,
-        117 => 3),
-    125 => array(124 => 4, 614 => 1),
-    199 => array(31 => 12),
+        117 => 3],
+    125 => [124 => 4, 614 => 1],
+    199 => [31 => 12],
 
-    202 => array(21 => 2, 115 => 2),
-    203 => array(21 => 4, 115 => 6),
-    204 => array(21 => 1, 115 => 1),
-    205 => array(
+    202 => [21 => 2, 115 => 2],
+    203 => [21 => 4, 115 => 6],
+    204 => [21 => 1, 115 => 1],
+    205 => [
         21 => 3,
         111 => 2,
-        117 => 2),
-    206 => array(
+        117 => 2],
+    206 => [
         21 => 5,
         117 => 4,
-        121 => 2),
-    207 => array(21 => 7, 118 => 4),
-    208 => array(21 => 4, 117 => 3),
-    209 => array(
+        121 => 2],
+    207 => [21 => 7, 118 => 4],
+    208 => [21 => 4, 117 => 3],
+    209 => [
         21 => 4,
         115 => 6,
-        110 => 2),
-    210 => array(
+        110 => 2],
+    210 => [
         21 => 3,
         115 => 3,
-        106 => 2),
-    211 => array(
+        106 => 2],
+    211 => [
         117 => 6,
         21 => 8,
-        122 => 5),
-    212 => array(21 => 1),
-    213 => array(
+        122 => 5],
+    212 => [21 => 1],
+    213 => [
         21 => 9,
         118 => 6,
-        114 => 5),
-    214 => array(
+        114 => 5],
+    214 => [
         21 => 12,
         118 => 7,
         114 => 6,
-        199 => 1),
-    215 => array(
+        199 => 1],
+    215 => [
         114 => 5,
         120 => 12,
         118 => 5,
-        21 => 8),
-    216 => array(
+        21 => 8],
+    216 => [
         21 => 12,
         118 => 7,
         114 => 6,
         199 => 1,
-        614 => 1),
-    217 => array(
+        614 => 1],
+    217 => [
         21 => 6,
         115 => 10,
-        607 => 2),
+        607 => 2],
 
-    401 => array(21 => 1),
-    402 => array(
+    401 => [21 => 1],
+    402 => [
         113 => 1,
         21 => 2,
-        120 => 3),
-    403 => array(
+        120 => 3],
+    403 => [
         113 => 3,
         21 => 4,
-        120 => 6),
-    404 => array(
+        120 => 6],
+    404 => [
         21 => 6,
         113 => 6,
         109 => 3,
-        110 => 1),
-    405 => array(21 => 4, 121 => 4),
-    406 => array(21 => 8, 122 => 7),
-    407 => array(110 => 2, 21 => 1),
-    408 => array(110 => 6, 21 => 6),
-    409 => array(609 => 1),
-    502 => array(44 => 2, 21 => 1),
-    503 => array(
+        110 => 1],
+    405 => [21 => 4, 121 => 4],
+    406 => [21 => 8, 122 => 7],
+    407 => [110 => 2, 21 => 1],
+    408 => [110 => 6, 21 => 6],
+    409 => [609 => 1],
+    502 => [44 => 2, 21 => 1],
+    503 => [
         44 => 4,
         21 => 1,
-        117 => 1),
+        117 => 1],
 
-    603 => array(601 => 5),
-    604 => array(602 => 5),
-    605 => array(601 => 10, 603 => 2),
-    606 => array(601 => 10, 603 => 2),
-    607 => array(605 => 1),
-    608 => array(606 => 1),
-    609 => array(
+    603 => [601 => 5],
+    604 => [602 => 5],
+    605 => [601 => 10, 603 => 2],
+    606 => [601 => 10, 603 => 2],
+    607 => [605 => 1],
+    608 => [606 => 1],
+    609 => [
         601 => 20,
         603 => 10,
         605 => 3,
         606 => 3,
         607 => 2,
-        608 => 2),
-    610 => array(602 => 10, 604 => 5),
-    611 => array(602 => 10, 604 => 5),
-    612 => array(610 => 1),
-    613 => array(611 => 1),
-    614 => array(
+        608 => 2],
+    610 => [602 => 10, 604 => 5],
+    611 => [602 => 10, 604 => 5],
+    612 => [610 => 1],
+    613 => [611 => 1],
+    614 => [
         602 => 20,
         604 => 10,
         610 => 2,
         611 => 2,
         612 => 1,
-        613 => 3),
-    615 => array(614 => 1, 609 => 1),
-    );
+        613 => 3],
+    615 => [614 => 1, 609 => 1],
+];
 
-$pricelist = array(
-    1 => array(
+$pricelist = [
+    1 => [
         'metal' => 60,
         'crystal' => 15,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 3 / 2),
-    2 => array(
+        'factor' => 3 / 2],
+    2 => [
         'metal' => 48,
         'crystal' => 24,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 1.6),
-    3 => array(
+        'factor' => 1.6],
+    3 => [
         'metal' => 225,
         'crystal' => 75,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 3 / 2),
-    4 => array(
+        'factor' => 3 / 2],
+    4 => [
         'metal' => 75,
         'crystal' => 30,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 3 / 2),
-    12 => array(
+        'factor' => 3 / 2],
+    12 => [
         'metal' => 900,
         'crystal' => 360,
         'deuterium' => 180,
         'energy' => 0,
-        'factor' => 1.8),
-    14 => array(
+        'factor' => 1.8],
+    14 => [
         'metal' => 400,
         'crystal' => 120,
         'deuterium' => 200,
         'energy' => 0,
-        'factor' => 2),
-    15 => array(
+        'factor' => 2],
+    15 => [
         'metal' => 1000000,
         'crystal' => 500000,
         'deuterium' => 100000,
         'energy' => 0,
-        'factor' => 2),
-    21 => array(
+        'factor' => 2],
+    21 => [
         'metal' => 400,
         'crystal' => 200,
         'deuterium' => 100,
         'energy' => 0,
-        'factor' => 2),
-    22 => array(
+        'factor' => 2],
+    22 => [
         'metal' => 2000,
         'crystal' => 0,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 2),
-    23 => array(
+        'factor' => 2],
+    23 => [
         'metal' => 2000,
         'crystal' => 1000,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 2),
-    24 => array(
+        'factor' => 2],
+    24 => [
         'metal' => 2000,
         'crystal' => 2000,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 2),
-    31 => array(
+        'factor' => 2],
+    31 => [
         'metal' => 200,
         'crystal' => 400,
         'deuterium' => 200,
         'energy' => 0,
-        'factor' => 2),
-    33 => array(
+        'factor' => 2],
+    33 => [
         'metal' => 0,
         'crystal' => 50000,
         'deuterium' => 100000,
         'energy_max' => 1000,
-        'factor' => 2),
-    34 => array(
+        'factor' => 2],
+    34 => [
         'metal' => 20000,
         'crystal' => 40000,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 2),
-    41 => array(
+        'factor' => 2],
+    41 => [
         'metal' => 20000,
         'crystal' => 40000,
         'deuterium' => 20000,
         'energy' => 0,
-        'factor' => 2),
-    42 => array(
+        'factor' => 2],
+    42 => [
         'metal' => 20000,
         'crystal' => 40000,
         'deuterium' => 20000,
         'energy' => 0,
-        'factor' => 2),
-    43 => array(
+        'factor' => 2],
+    43 => [
         'metal' => 2000000,
         'crystal' => 4000000,
         'deuterium' => 2000000,
         'energy' => 0,
-        'factor' => 2),
-    44 => array(
+        'factor' => 2],
+    44 => [
         'metal' => 20000,
         'crystal' => 20000,
         'deuterium' => 1000,
         'energy' => 0,
-        'factor' => 2),
+        'factor' => 2],
 
-    106 => array(
+    106 => [
         'metal' => 200,
         'crystal' => 1000,
         'deuterium' => 200,
         'energy' => 0,
-        'factor' => 2),
-    108 => array(
+        'factor' => 2],
+    108 => [
         'metal' => 0,
         'crystal' => 400,
         'deuterium' => 600,
         'energy' => 0,
-        'factor' => 2),
-    109 => array(
+        'factor' => 2],
+    109 => [
         'metal' => 800,
         'crystal' => 200,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 2),
-    110 => array(
+        'factor' => 2],
+    110 => [
         'metal' => 200,
         'crystal' => 600,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 2),
-    111 => array(
+        'factor' => 2],
+    111 => [
         'metal' => 1000,
         'crystal' => 0,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 2),
-    113 => array(
+        'factor' => 2],
+    113 => [
         'metal' => 0,
         'crystal' => 800,
         'deuterium' => 400,
         'energy' => 0,
-        'factor' => 2),
-    114 => array(
+        'factor' => 2],
+    114 => [
         'metal' => 0,
         'crystal' => 4000,
         'deuterium' => 2000,
         'energy' => 0,
-        'factor' => 2),
-    115 => array(
+        'factor' => 2],
+    115 => [
         'metal' => 400,
         'crystal' => 0,
         'deuterium' => 600,
         'energy' => 0,
-        'factor' => 2),
-    117 => array(
+        'factor' => 2],
+    117 => [
         'metal' => 2000,
         'crystal' => 4000,
         'deuterium' => 600,
         'energy' => 0,
-        'factor' => 2),
-    118 => array(
+        'factor' => 2],
+    118 => [
         'metal' => 10000,
         'crystal' => 20000,
         'deuterium' => 6000,
         'energy' => 0,
-        'factor' => 2),
-    120 => array(
+        'factor' => 2],
+    120 => [
         'metal' => 200,
         'crystal' => 100,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 2),
-    121 => array(
+        'factor' => 2],
+    121 => [
         'metal' => 1000,
         'crystal' => 300,
         'deuterium' => 100,
         'energy' => 0,
-        'factor' => 2),
-    122 => array(
+        'factor' => 2],
+    122 => [
         'metal' => 2000,
         'crystal' => 4000,
         'deuterium' => 1000,
         'energy' => 0,
-        'factor' => 2),
-    123 => array(
+        'factor' => 2],
+    123 => [
         'metal' => 240000,
         'crystal' => 400000,
         'deuterium' => 160000,
         'energy' => 0,
-        'factor' => 2),
-    124 => array(
+        'factor' => 2],
+    124 => [
         'metal' => 4000,
         'crystal' => 8000,
         'deuterium' => 4000,
         'energy' => 0,
-        'factor' => 2),
-    125 => array(
+        'factor' => 2],
+    125 => [
         'metal' => 10000000,
         'crystal' => 20000000,
         'deuterium' => 10000000,
         'energy' => 20000,
-        'factor' => 2),
-    199 => array(
+        'factor' => 2],
+    199 => [
         'metal' => 0,
         'crystal' => 0,
         'deuterium' => 0,
         'energy_max' => 300000,
-        'factor' => 3),
+        'factor' => 3],
 
-    202 => array(
+    202 => [
         'metal' => 2000,
         'crystal' => 2000,
         'deuterium' => 0,
@@ -454,8 +454,8 @@ $pricelist = array(
         'consumption2' => 10,
         'speed' => 5000,
         'speed2' => 10000,
-        'capacity' => 5000),
-    203 => array(
+        'capacity' => 5000],
+    203 => [
         'metal' => 6000,
         'crystal' => 6000,
         'deuterium' => 0,
@@ -465,8 +465,8 @@ $pricelist = array(
         'consumption2' => 25,
         'speed' => 7500,
         'speed2' => 7500,
-        'capacity' => 25000),
-    204 => array(
+        'capacity' => 25000],
+    204 => [
         'metal' => 3000,
         'crystal' => 1000,
         'deuterium' => 0,
@@ -476,8 +476,8 @@ $pricelist = array(
         'consumption2' => 10,
         'speed' => 12500,
         'speed2' => 12500,
-        'capacity' => 50),
-    205 => array(
+        'capacity' => 50],
+    205 => [
         'metal' => 6000,
         'crystal' => 4000,
         'deuterium' => 0,
@@ -487,8 +487,8 @@ $pricelist = array(
         'consumption2' => 30,
         'speed' => 10000,
         'speed2' => 15000,
-        'capacity' => 100),
-    206 => array(
+        'capacity' => 100],
+    206 => [
         'metal' => 20000,
         'crystal' => 7000,
         'deuterium' => 2000,
@@ -498,8 +498,8 @@ $pricelist = array(
         'consumption2' => 150,
         'speed' => 15000,
         'speed2' => 15000,
-        'capacity' => 800),
-    207 => array(
+        'capacity' => 800],
+    207 => [
         'metal' => 45000,
         'crystal' => 15000,
         'deuterium' => 0,
@@ -509,8 +509,8 @@ $pricelist = array(
         'consumption2' => 250,
         'speed' => 10000,
         'speed2' => 10000,
-        'capacity' => 1500),
-    208 => array(
+        'capacity' => 1500],
+    208 => [
         'metal' => 10000,
         'crystal' => 20000,
         'deuterium' => 10000,
@@ -520,8 +520,8 @@ $pricelist = array(
         'consumption2' => 500,
         'speed' => 2500,
         'speed2' => 2500,
-        'capacity' => 7500),
-    209 => array(
+        'capacity' => 7500],
+    209 => [
         'metal' => 10000,
         'crystal' => 6000,
         'deuterium' => 2000,
@@ -531,8 +531,8 @@ $pricelist = array(
         'consumption2' => 300,
         'speed' => 2000,
         'speed2' => 2000,
-        'capacity' => 20000),
-    210 => array(
+        'capacity' => 20000],
+    210 => [
         'metal' => 0,
         'crystal' => 1000,
         'deuterium' => 0,
@@ -542,8 +542,8 @@ $pricelist = array(
         'consumption2' => 1,
         'speed' => 100000000,
         'speed2' => 100000000,
-        'capacity' => 5),
-    211 => array(
+        'capacity' => 5],
+    211 => [
         'metal' => 50000,
         'crystal' => 25000,
         'deuterium' => 15000,
@@ -553,8 +553,8 @@ $pricelist = array(
         'consumption2' => 500,
         'speed' => 4000,
         'speed2' => 5000,
-        'capacity' => 500),
-    212 => array(
+        'capacity' => 500],
+    212 => [
         'metal' => 0,
         'crystal' => 2000,
         'deuterium' => 500,
@@ -564,8 +564,8 @@ $pricelist = array(
         'consumption2' => 0,
         'speed' => 0,
         'speed2' => 0,
-        'capacity' => 0),
-    213 => array(
+        'capacity' => 0],
+    213 => [
         'metal' => 60000,
         'crystal' => 50000,
         'deuterium' => 15000,
@@ -575,8 +575,8 @@ $pricelist = array(
         'consumption2' => 500,
         'speed' => 5000,
         'speed2' => 5000,
-        'capacity' => 2000),
-    214 => array(
+        'capacity' => 2000],
+    214 => [
         'metal' => 5000000,
         'crystal' => 4000000,
         'deuterium' => 1000000,
@@ -586,8 +586,8 @@ $pricelist = array(
         'consumption2' => 1,
         'speed' => 200,
         'speed2' => 200,
-        'capacity' => 1000000),
-    215 => array(
+        'capacity' => 1000000],
+    215 => [
         'metal' => 30000,
         'crystal' => 40000,
         'deuterium' => 15000,
@@ -597,8 +597,8 @@ $pricelist = array(
         'consumption2' => 125,
         'speed' => 10000,
         'speed2' => 10000,
-        'capacity' => 750),
-    216 => array(
+        'capacity' => 750],
+    216 => [
         'metal' => 15000000,
         'crystal' => 12000000,
         'deuterium' => 6000000,
@@ -608,8 +608,8 @@ $pricelist = array(
         'consumption2' => 3000,
         'speed' => 600,
         'speed2' => 600,
-        'capacity' => 2000000),
-    217 => array(
+        'capacity' => 2000000],
+    217 => [
         'metal' => 100000,
         'crystal' => 100000,
         'deuterium' => 0,
@@ -619,98 +619,98 @@ $pricelist = array(
         'consumption2' => 150,
         'speed' => 7000,
         'speed2' => 7000,
-        'capacity' => 500000),
+        'capacity' => 500000],
 
-    401 => array(
+    401 => [
         'metal' => 2000,
         'crystal' => 0,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 1),
-    402 => array(
+        'factor' => 1],
+    402 => [
         'metal' => 1500,
         'crystal' => 500,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 1),
-    403 => array(
+        'factor' => 1],
+    403 => [
         'metal' => 6000,
         'crystal' => 2000,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 1),
-    404 => array(
+        'factor' => 1],
+    404 => [
         'metal' => 20000,
         'crystal' => 15000,
         'deuterium' => 2000,
         'energy' => 0,
-        'factor' => 1),
-    405 => array(
+        'factor' => 1],
+    405 => [
         'metal' => 2000,
         'crystal' => 6000,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 1),
-    406 => array(
+        'factor' => 1],
+    406 => [
         'metal' => 50000,
         'crystal' => 50000,
         'deuterium' => 30000,
         'energy' => 0,
-        'factor' => 1),
-    407 => array(
+        'factor' => 1],
+    407 => [
         'metal' => 10000,
         'crystal' => 10000,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 1),
-    408 => array(
+        'factor' => 1],
+    408 => [
         'metal' => 50000,
         'crystal' => 50000,
         'deuterium' => 0,
         'energy' => 0,
-        'factor' => 1),
-    409 => array(
+        'factor' => 1],
+    409 => [
         'metal' => 10000000,
         'crystal' => 5000000,
         'deuterium' => 2500000,
         'energy' => 0,
-        'factor' => 1),
+        'factor' => 1],
 
-    502 => array(
+    502 => [
         'metal' => 8000,
         'crystal' => 0,
         'deuterium' => 2000,
         'energy' => 0,
-        'factor' => 1),
-    503 => array(
+        'factor' => 1],
+    503 => [
         'metal' => 12500,
         'crystal' => 2500,
         'deuterium' => 10000,
         'energy' => 0,
-        'factor' => 1),
+        'factor' => 1],
 
-    601 => array('max' => 20),
-    602 => array('max' => 20),
-    603 => array('max' => 10),
-    604 => array('max' => 10),
-    605 => array('max' => 3),
-    606 => array('max' => 3),
-    607 => array('max' => 2),
-    608 => array('max' => 2),
-    609 => array('max' => 1),
-    610 => array('max' => 2),
-    611 => array('max' => 3),
-    612 => array('max' => 1),
-    613 => array('max' => 3),
-    614 => array('max' => 1),
-    615 => array('max' => 1),
-    );
+    601 => ['max' => 20],
+    602 => ['max' => 20],
+    603 => ['max' => 10],
+    604 => ['max' => 10],
+    605 => ['max' => 3],
+    606 => ['max' => 3],
+    607 => ['max' => 2],
+    608 => ['max' => 2],
+    609 => ['max' => 1],
+    610 => ['max' => 2],
+    611 => ['max' => 3],
+    612 => ['max' => 1],
+    613 => ['max' => 3],
+    614 => ['max' => 1],
+    615 => ['max' => 1],
+];
 
-$CombatCaps = array(
-    202 => array(
+$CombatCaps = [
+    202 => [
         'shield' => 10,
         'attack' => 5,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -734,11 +734,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 1)),
-    203 => array(
+            409 => 1]],
+    203 => [
         'shield' => 25,
         'attack' => 5,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -762,11 +762,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    204 => array(
+            409 => 0]],
+    204 => [
         'shield' => 10,
         'attack' => 50,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -790,11 +790,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    205 => array(
+            409 => 0]],
+    205 => [
         'shield' => 25,
         'attack' => 150,
-        'sd' => array(
+        'sd' => [
             202 => 3,
             203 => 0,
             204 => 0,
@@ -818,11 +818,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    206 => array(
+            409 => 0]],
+    206 => [
         'shield' => 50,
         'attack' => 400,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 6,
@@ -846,11 +846,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    207 => array(
+            409 => 0]],
+    207 => [
         'shield' => 200,
         'attack' => 1000,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -874,11 +874,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    208 => array(
+            409 => 0]],
+    208 => [
         'shield' => 100,
         'attack' => 50,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -902,11 +902,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    209 => array(
+            409 => 0]],
+    209 => [
         'shield' => 10,
         'attack' => 1,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -930,11 +930,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    210 => array(
+            409 => 0]],
+    210 => [
         'shield' => 0,
         'attack' => 0,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -958,11 +958,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    211 => array(
+            409 => 0]],
+    211 => [
         'shield' => 500,
         'attack' => 1000,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -986,11 +986,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    212 => array(
+            409 => 0]],
+    212 => [
         'shield' => 1,
         'attack' => 1,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1014,11 +1014,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    213 => array(
+            409 => 0]],
+    213 => [
         'shield' => 500,
         'attack' => 2000,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1042,11 +1042,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    214 => array(
+            409 => 0]],
+    214 => [
         'shield' => 50000,
         'attack' => 200000,
-        'sd' => array(
+        'sd' => [
             202 => 250,
             203 => 250,
             204 => 200,
@@ -1071,11 +1071,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    215 => array(
+            409 => 0]],
+    215 => [
         'shield' => 400,
         'attack' => 700,
-        'sd' => array(
+        'sd' => [
             202 => 3,
             203 => 3,
             204 => 0,
@@ -1100,11 +1100,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    216 => array(
+            409 => 0]],
+    216 => [
         'shield' => 400000,
         'attack' => 600000,
-        'sd' => array(
+        'sd' => [
             202 => 270,
             203 => 270,
             204 => 220,
@@ -1129,11 +1129,11 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
-    217 => array(
+            409 => 0]],
+    217 => [
         'shield' => 30,
         'attack' => 10,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1157,12 +1157,12 @@ $CombatCaps = array(
             406 => 0,
             407 => 0,
             408 => 0,
-            409 => 0)),
+            409 => 0]],
 
-    401 => array(
+    401 => [
         'shield' => 20,
         'attack' => 80,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1177,11 +1177,11 @@ $CombatCaps = array(
             213 => 0,
             214 => 0,
             215 => 0,
-            216 => 0)),
-    402 => array(
+            216 => 0]],
+    402 => [
         'shield' => 25,
         'attack' => 100,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1196,11 +1196,11 @@ $CombatCaps = array(
             213 => 0,
             214 => 0,
             215 => 0,
-            216 => 0)),
-    403 => array(
+            216 => 0]],
+    403 => [
         'shield' => 100,
         'attack' => 250,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1215,11 +1215,11 @@ $CombatCaps = array(
             213 => 0,
             214 => 0,
             215 => 0,
-            216 => 0)),
-    404 => array(
+            216 => 0]],
+    404 => [
         'shield' => 200,
         'attack' => 1100,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1234,11 +1234,11 @@ $CombatCaps = array(
             213 => 0,
             214 => 0,
             215 => 0,
-            216 => 0)),
-    405 => array(
+            216 => 0]],
+    405 => [
         'shield' => 500,
         'attack' => 150,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1253,11 +1253,11 @@ $CombatCaps = array(
             213 => 0,
             214 => 0,
             215 => 0,
-            216 => 0)),
-    406 => array(
+            216 => 0]],
+    406 => [
         'shield' => 300,
         'attack' => 3000,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1272,11 +1272,11 @@ $CombatCaps = array(
             213 => 0,
             214 => 0,
             215 => 0,
-            216 => 0)),
-    407 => array(
+            216 => 0]],
+    407 => [
         'shield' => 2000,
         'attack' => 1,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1291,11 +1291,11 @@ $CombatCaps = array(
             213 => 0,
             214 => 0,
             215 => 0,
-            216 => 0)),
-    408 => array(
+            216 => 0]],
+    408 => [
         'shield' => 10000,
         'attack' => 1,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1310,11 +1310,11 @@ $CombatCaps = array(
             213 => 0,
             214 => 0,
             215 => 0,
-            216 => 0)),
-    409 => array(
+            216 => 0]],
+    409 => [
         'shield' => 1000000,
         'attack' => 10000,
-        'sd' => array(
+        'sd' => [
             202 => 0,
             203 => 0,
             204 => 0,
@@ -1329,86 +1329,86 @@ $CombatCaps = array(
             213 => 0,
             214 => 0,
             215 => 0,
-            216 => 0)),
+            216 => 0]],
 
-    502 => array('shield' => 1, 'attack' => 1),
-    503 => array('shield' => 1, 'attack' => 12000));
+    502 => ['shield' => 1, 'attack' => 1],
+    503 => ['shield' => 1, 'attack' => 12000]];
 
-$ProdGrid = array(
+$ProdGrid = [
 
-    1 => array(
+    1 => [
         'metal' => 40,
         'crystal' => 10,
         'deuterium' => 0,
         'energy' => 0,
         'factor' => 3 / 2,
-        'formule' => array(
+        'formule' => [
             'metal' => 'return   (30 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);',
             'crystal' => 'return   "0";',
             'deuterium' => 'return   "0";',
-            'energy' => 'return - (10 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')),
+            'energy' => 'return - (10 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);']],
 
-    2 => array(
+    2 => [
         'metal' => 30,
         'crystal' => 15,
         'deuterium' => 0,
         'energy' => 0,
         'factor' => 1.6,
-        'formule' => array(
+        'formule' => [
             'metal' => 'return   "0";',
             'crystal' => 'return   (20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);',
             'deuterium' => 'return   "0";',
-            'energy' => 'return - (10 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')),
+            'energy' => 'return - (10 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);']],
 
-    3 => array(
+    3 => [
         'metal' => 150,
         'crystal' => 50,
         'deuterium' => 0,
         'energy' => 0,
         'factor' => 3 / 2,
-        'formule' => array(
+        'formule' => [
             'metal' => 'return   "0";',
             'crystal' => 'return   "0";',
             'deuterium' => 'return  ((10 * $BuildLevel * pow((1.1), $BuildLevel)) * (-0.002 * $BuildTemp + 1.28))  * (0.1 * $BuildLevelFactor);',
-            'energy' => 'return - (30 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')),
+            'energy' => 'return - (30 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);']],
 
-    4 => array(
+    4 => [
         'metal' => 50,
         'crystal' => 20,
         'deuterium' => 0,
         'energy' => 0,
         'factor' => 3 / 2,
-        'formule' => array(
+        'formule' => [
             'metal' => 'return   "0";',
             'crystal' => 'return   "0";',
             'deuterium' => 'return   "0";',
-            'energy' => 'return   (20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')),
+            'energy' => 'return   (20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);']],
 
-    12 => array(
+    12 => [
         'metal' => 500,
         'crystal' => 200,
         'deuterium' => 100,
         'energy' => 0,
         'factor' => 1.8,
-        'formule' => array(
+        'formule' => [
             'metal' => 'return   "0";',
             'crystal' => 'return   "0";',
             'deuterium' => 'return - (05 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);',
-            'energy' => 'return   (50 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')),
+            'energy' => 'return   (50 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);']],
 
-    212 => array(
+    212 => [
         'metal' => 0,
         'crystal' => 2000,
         'deuterium' => 500,
         'energy' => 0,
         'factor' => 0.5,
-        'formule' => array(
+        'formule' => [
             'metal' => 'return   "0";',
             'crystal' => 'return   "0";',
             'deuterium' => 'return   "0";',
-            'energy' => 'return  (($BuildTemp / 4) + 20) * $BuildLevel * (0.1 * $BuildLevelFactor);')));
+            'energy' => 'return  (($BuildTemp / 4) + 20) * $BuildLevel * (0.1 * $BuildLevelFactor);']]];
 
-$reslist['build'] = array(
+$reslist['build'] = [
     1,
     2,
     3,
@@ -1426,8 +1426,8 @@ $reslist['build'] = array(
     41,
     42,
     43,
-    44);
-$reslist['tech'] = array(
+    44];
+$reslist['tech'] = [
     106,
     108,
     109,
@@ -1444,8 +1444,8 @@ $reslist['tech'] = array(
     123,
     124,
     125,
-    199);
-$reslist['fleet'] = array(
+    199];
+$reslist['fleet'] = [
     202,
     203,
     204,
@@ -1461,8 +1461,8 @@ $reslist['fleet'] = array(
     214,
     215,
     216,
-    217);
-$reslist['defense'] = array(
+    217];
+$reslist['defense'] = [
     401,
     402,
     403,
@@ -1473,8 +1473,8 @@ $reslist['defense'] = array(
     408,
     409,
     502,
-    503);
-$reslist['officier'] = array(
+    503];
+$reslist['officier'] = [
     601,
     602,
     603,
@@ -1489,11 +1489,11 @@ $reslist['officier'] = array(
     612,
     613,
     614,
-    615);
-$reslist['prod'] = array(
+    615];
+$reslist['prod'] = [
     1,
     2,
     3,
     4,
     12,
-    212);
+    212];

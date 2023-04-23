@@ -1,15 +1,14 @@
 <?php
 
 if ($handle = opendir('.')) {
-    $thelist ="";
+    $thelist = '';
     while (false !== ($file = readdir($handle))) {
-        if ($file != "index.php" && $file != "." && $file != ".." && strtolower(substr($file, strrpos($file, '.') + 1)) == 'php') {
-            $thelist .= '<li><a href="'.$file.'">'.$file.'</a></li>';
+        if ($file != 'index.php' && $file != '.' && $file != '..' && strtolower(substr($file, strrpos($file, '.') + 1)) == 'php') {
+            $thelist .= '<li><a href="' . $file . '">' . $file . '</a></li>';
         }
     }
     closedir($handle);
 }
-
 
 echo "
 <!DOCTYPE HTML>

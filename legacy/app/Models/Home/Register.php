@@ -20,9 +20,9 @@ class Register extends Model
     public function checkIfPlanetExists(int $galaxy, int $system, int $planet): bool
     {
         $planet = $this->db->queryFetch(
-            "SELECT
+            'SELECT
                 `planet_id`
-            FROM `" . PLANETS . "`
+            FROM `' . PLANETS . "`
             WHERE `planet_galaxy` = '" . $galaxy . "'
                 AND `planet_system` = '" . $system . "'
                 AND `planet_planet` = '" . $planet . "'
@@ -77,11 +77,11 @@ class Register extends Model
     private function updateUserPlanet(array $coords, int $new_user_id): void
     {
         $this->db->query(
-            "UPDATE `" . USERS . "` SET
+            'UPDATE `' . USERS . '` SET
             `user_home_planet_id` = (
                 SELECT
                     `planet_id`
-                FROM `" . PLANETS . "`
+                FROM `' . PLANETS . "`
                 WHERE `planet_user_id` = '" . $new_user_id . "'
                 LIMIT 1
             ),
@@ -112,9 +112,9 @@ class Register extends Model
     public function checkUser(string $userName): ?array
     {
         return $this->db->queryFetch(
-            "SELECT
+            'SELECT
                 u.`user_name`
-            FROM `" . USERS . "` AS u
+            FROM `' . USERS . "` AS u
             WHERE `user_name` = '" . $this->db->escapeValue($userName) . "'
             LIMIT 1;"
         );
@@ -123,9 +123,9 @@ class Register extends Model
     public function checkEmail(string $email): ?array
     {
         return $this->db->queryFetch(
-            "SELECT
+            'SELECT
                 u.`user_email`
-            FROM `" . USERS . "` AS u
+            FROM `' . USERS . "` AS u
             WHERE `user_email` = '" . $this->db->escapeValue($email) . "'
             LIMIT 1;"
         );

@@ -26,20 +26,21 @@
  * @version beta(26-10-2013)
  * @link https://github.com/jstar88/opbe
  */
-require("../../RunnableTest.php");
+require '../../RunnableTest.php';
 class Htechs extends RunnableTest
 {
     public function getAttachers()
     {
-        $fleet = new Fleet(1, array($this->getShipType(207, 400)));
-        $player = new Player(1, array($fleet), 16, 16, 16);
-        return new PlayerGroup(array($player));
+        $fleet = new Fleet(1, [$this->getShipType(207, 400)]);
+        $player = new Player(1, [$fleet], 16, 16, 16);
+        return new PlayerGroup([$player]);
     }
+
     public function getDefenders()
     {
-        $fleet = new Fleet(2, array($this->getShipType(215, 300)));
-        $player = new Player(2, array($fleet), 16, 16, 16);
-        return new PlayerGroup(array($player));
+        $fleet = new Fleet(2, [$this->getShipType(215, 300)]);
+        $player = new Player(2, [$fleet], 16, 16, 16);
+        return new PlayerGroup([$player]);
     }
 }
 new Htechs();

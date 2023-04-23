@@ -4,7 +4,6 @@ namespace Xgp\App\Libraries\Alliance;
 
 use Xgp\App\Core\Entity\AllianceEntity;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator;
-use Xgp\App\Libraries\Alliance\Ranks;
 
 class Alliances
 {

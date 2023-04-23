@@ -70,7 +70,7 @@ class ShipsCleaner
             $prob = 0;
         }
         if ($prob < 0) {
-            throw new Exception("Negative prob");
+            throw new Exception('Negative prob');
         }
         //if most of ships are hitten,then we can apply the more realistic way
         if (USE_BIEXPLOSION_SYSTEM && $this->lastShipHit >= $this->fighters->getCount() / PROB_TO_REAL_MAGIC) {
@@ -87,7 +87,6 @@ class ShipsCleaner
             $probToExplode = $prob * (1 - MIN_PROB_TO_EXPLODE);
         }
 
-
         /*         * * calculating the amount of exploded ships ** */
 
         $teoricExploded = round($this->fighters->getCount() * $probToExplode);
@@ -95,7 +94,6 @@ class ShipsCleaner
             $teoricExploded = min($teoricExploded, $this->lastShots);
         }
         $this->exploded = $teoricExploded; //bounded by the total shots fired to simulate a real combat :)
-
 
         /*         * * calculating the life of destroyed ships ** */
 

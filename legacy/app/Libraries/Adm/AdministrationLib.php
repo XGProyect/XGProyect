@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Xgp\App\Libraries\Adm;
 
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\Adm\Permissions;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 
@@ -33,7 +32,7 @@ class AdministrationLib
 
     public static function authorization(string $module): bool
     {
-        $cleaned_module_name = strtolower(substr(strrchr($module, "\\"), 1));
+        $cleaned_module_name = strtolower(substr(strrchr($module, '\\'), 1));
         $permissions = new Permissions(Functions::readConfig('admin_permissions'));
 
         return $permissions->isAccessAllowed($cleaned_module_name, (int) Users::getInstance()->getUserData()['user_authlevel']);
@@ -119,10 +118,8 @@ class AdministrationLib
 
     public static function closeSession(): void
     {
-        unset($_SESSION['admin_id']);
-        unset($_SESSION['admin_password']);
+        unset($_SESSION['admin_id'], $_SESSION['admin_password']);
     }
-
 
     private static function isSessionSet(): bool
     {

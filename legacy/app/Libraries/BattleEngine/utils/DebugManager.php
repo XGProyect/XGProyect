@@ -98,7 +98,7 @@ class DebugManager
                 break;
         }
         $error .= "Error on line $errline in file $errfile";
-        $error .= ", PHP " . PHP_VERSION . " (" . PHP_OS . ")" . PHP_EOL;
+        $error .= ', PHP ' . PHP_VERSION . ' (' . PHP_OS . ')' . PHP_EOL;
         DebugManager::save($error);
         /* Don't execute PHP internal error handler */
         return true;

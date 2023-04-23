@@ -72,7 +72,7 @@ class EmpireController extends BaseController
 
                 foreach ($this->objects->getObjectsList($element) as $elementId) {
                     if (!isset($empire[$element][$this->objects->getObjects($elementId)])) {
-                        $empire[$element][$this->objects->getObjects($elementId)]['element'] =  __('game/' . $langLine . '.' . $this->objects->getObjects($elementId));
+                        $empire[$element][$this->objects->getObjects($elementId)]['element'] = __('game/' . $langLine . '.' . $this->objects->getObjects($elementId));
                     }
 
                     $empire[$element][$this->objects->getObjects($elementId)]['amount'] = $this->setStructureData($planet, $source, $element, $elementId);

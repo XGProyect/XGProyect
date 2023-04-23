@@ -21,9 +21,9 @@ class Sessions extends Model
     public function getSessionDataById(string $sid): string
     {
         $sessions = $this->db->query(
-            "SELECT
+            'SELECT
                 `payload`
-            FROM `" . SESSIONS . "`
+            FROM `' . SESSIONS . "`
             WHERE `id` = '" . $this->db->escapeValue($sid) . "'
             LIMIT 1"
         );
@@ -39,14 +39,14 @@ class Sessions extends Model
 
     public function insertNewSessionData(string $sid, string $data): bool
     {
-        $userId =  null;
+        $userId = null;
 
         if (!empty($_SESSION['user_id'])) {
             $userId = $this->db->escapeValue($_SESSION['user_id']);
         }
 
         $this->db->query(
-            "REPLACE INTO `" . SESSIONS . "` (
+            'REPLACE INTO `' . SESSIONS . "` (
                 `id`,
                 `user_id`,
                 `ip_address`,
@@ -56,7 +56,7 @@ class Sessions extends Model
             )
             VALUES (
                 '" . $this->db->escapeValue($sid) . "',
-                " . (empty($userId) ? 'NULL,' : "'" . $userId . "',") .  "
+                " . (empty($userId) ? 'NULL,' : "'" . $userId . "',") . "
                 '" . $this->db->escapeValue($_SERVER['REMOTE_ADDR']) . "',
                 '" . $this->db->escapeValue($_SERVER['HTTP_USER_AGENT']) . "',
                 '" . $this->db->escapeValue($data) . "',
@@ -70,7 +70,7 @@ class Sessions extends Model
     public function deleteSessionDataById(string $sid): bool
     {
         $this->db->query(
-            "DELETE FROM `" . SESSIONS . "`
+            'DELETE FROM `' . SESSIONS . "`
             WHERE `id` = '" . $this->db->escapeValue($sid) . "'"
         );
 
@@ -80,8 +80,8 @@ class Sessions extends Model
     public function cleanSessionData(int $expire): bool
     {
         $this->db->query(
-            "DELETE FROM `" . SESSIONS . "`
-            WHERE DATE_ADD(`last_activity`, INTERVAL " . $expire . " SECOND) < NOW()"
+            'DELETE FROM `' . SESSIONS . '`
+            WHERE DATE_ADD(`last_activity`, INTERVAL ' . $expire . ' SECOND) < NOW()'
         );
 
         return ($this->db->affectedRows() > 0);

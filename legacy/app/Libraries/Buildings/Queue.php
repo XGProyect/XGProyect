@@ -2,8 +2,6 @@
 
 namespace Xgp\App\Libraries\Buildings;
 
-use Xgp\App\Libraries\Buildings\QueueElements;
-
 final class Queue
 {
     public const QUEUE_SEPARATOR = ';';

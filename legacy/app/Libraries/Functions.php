@@ -10,8 +10,6 @@ use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Libraries\Messenger\MessagesFormat;
 use Xgp\App\Libraries\Messenger\MessagesOptions;
 use Xgp\App\Libraries\Messenger\Messenger;
-use Xgp\App\Libraries\Page;
-use Xgp\App\Libraries\Users;
 
 abstract class Functions
 {
@@ -102,10 +100,11 @@ abstract class Functions
         (new Page(new Users()))->display(
             Template::getInstance()->render('general/message_body', $parse),
             $topnav,
-            (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ""),
+            (($dest != '') ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ''),
             $menu
         );
     }
+
     public static function isModuleAccesible($module = 0): array|int
     {
         $modules = self::readConfig('modules');

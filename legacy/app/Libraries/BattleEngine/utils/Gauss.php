@@ -68,7 +68,7 @@ class Gauss
     {
         $i = 0;
         if ($min > $m || $max < $m) {
-            throw new Exception("Mean is not bounded by min and max");
+            throw new Exception('Mean is not bounded by min and max');
         }
         while (true) {
             $n = self::getNextMs($m, $s);

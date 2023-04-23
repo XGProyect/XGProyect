@@ -3,7 +3,6 @@
 namespace Xgp\App\Libraries;
 
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
-use Xgp\App\Libraries\Functions;
 
 abstract class Formulas
 {

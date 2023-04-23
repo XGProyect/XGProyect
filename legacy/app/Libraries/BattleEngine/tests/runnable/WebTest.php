@@ -26,17 +26,18 @@
  * @version beta(26-10-2013)
  * @link https://github.com/jstar88/opbe
  */
-require(".." . DIRECTORY_SEPARATOR . "RunnableTest.php");
+require '..' . DIRECTORY_SEPARATOR . 'RunnableTest.php';
 
 class WebTest extends RunnableTest
 {
     public function getAttachers()
     {
-        return $this->buildPlayerGroup($_POST["attacker_tech"], $_POST["attacker_fleet"]);
+        return $this->buildPlayerGroup($_POST['attacker_tech'], $_POST['attacker_fleet']);
     }
+
     public function getDefenders()
     {
-        return $this->buildPlayerGroup($_POST["defender_tech"], $_POST["defender_fleet"]);
+        return $this->buildPlayerGroup($_POST['defender_tech'], $_POST['defender_fleet']);
     }
 
     private function buildPlayerGroup($tech, $fleets)
@@ -58,7 +59,7 @@ class WebTest extends RunnableTest
             }
         }
         if ($playerObj->isEmpty()) {
-            die("<meta http-equiv=\"refresh\" content=2;\"WebTest.php\">There should be at least an attacker and defender");
+            die('<meta http-equiv="refresh" content=2;"WebTest.php">There should be at least an attacker and defender');
         }
         $playerGroupObj = new PlayerGroup();
         $playerGroupObj->addPlayer($playerObj);
@@ -79,7 +80,6 @@ if ($selectedVar == 'XG') {
 } else {
     LangManager::getInstance()->setImplementation(new XGLangImplementation());
 }
-
 
 if (isset($_GET['good'])) {
     session_start();
@@ -163,7 +163,7 @@ if ($_POST) {
     $form->setAttribute('method', 'POST');
     $form->appendChild($fieldset);
 
-    $body = $dom->getElementsByTagName("body")->item(0);
+    $body = $dom->getElementsByTagName('body')->item(0);
     $body->insertBefore($form, $body->firstChild);
 
     echo $dom->saveHTML();
@@ -175,5 +175,5 @@ if ($_POST) {
     $reslist = WebTest::$reslist;
     $combatCaps = WebTest::$CombatCaps;
     $pricelist = WebTest::$pricelist;
-    require('WebTestGui.html');
+    require 'WebTestGui.html';
 }

@@ -19,7 +19,7 @@ class Reset extends Model
     public function resetDefenses(): void
     {
         $this->db->query(
-            "UPDATE `" . DEFENSES . "` SET
+            'UPDATE `' . DEFENSES . "` SET
             `defense_rocket_launcher` = '0',
             `defense_light_laser` = '0',
             `defense_heavy_laser` = '0',
@@ -41,7 +41,7 @@ class Reset extends Model
     public function resetShips(): void
     {
         $this->db->query(
-            "UPDATE `" . SHIPS . "` SET
+            'UPDATE `' . SHIPS . "` SET
                 `ship_small_cargo_ship` = '0',
                 `ship_big_cargo_ship` = '0',
                 `ship_light_fighter` = '0',
@@ -67,7 +67,7 @@ class Reset extends Model
     public function resetShipyardQueues(): void
     {
         $this->db->query(
-            "UPDATE `" . PLANETS . "` SET
+            'UPDATE `' . PLANETS . "` SET
                 `planet_b_hangar` = '0',
                 `planet_b_hangar_id` = ''"
         );
@@ -101,7 +101,7 @@ class Reset extends Model
     public function resetBuildingsQueues(): void
     {
         $this->db->query(
-            "UPDATE `" . PLANETS . "` SET
+            'UPDATE `' . PLANETS . "` SET
                 `planet_b_building` = '0',
                 `planet_b_building_id` = ''"
         );
@@ -115,7 +115,7 @@ class Reset extends Model
     public function resetResearch(): void
     {
         $this->db->query(
-            "UPDATE `" . RESEARCH . "` SET
+            'UPDATE `' . RESEARCH . "` SET
                 `research_espionage_technology` = '0',
                 `research_computer_technology` = '0',
                 `research_weapons_technology` = '0',
@@ -143,13 +143,13 @@ class Reset extends Model
     public function resetResearchQueues(): void
     {
         $this->db->query(
-            "UPDATE `" . PLANETS . "` SET
+            'UPDATE `' . PLANETS . "` SET
                 `planet_b_tech` = '0',
                 `planet_b_tech_id` = '0'"
         );
 
         $this->db->query(
-            "UPDATE `" . RESEARCH . "` SET
+            'UPDATE `' . RESEARCH . "` SET
                 `research_current_research` = '0'"
         );
     }
@@ -162,7 +162,7 @@ class Reset extends Model
     public function resetOfficiers(): void
     {
         $this->db->query(
-            "UPDATE `" . PREMIUM . "` SET
+            'UPDATE `' . PREMIUM . "` SET
                 `premium_officier_commander` = '0',
                 `premium_officier_admiral` = '0',
                 `premium_officier_engineer` = '0',
@@ -179,7 +179,7 @@ class Reset extends Model
     public function resetDarkMatter(): void
     {
         $this->db->query(
-            "UPDATE `" . PREMIUM . "` SET
+            'UPDATE `' . PREMIUM . "` SET
                 `premium_dark_matter` = '0'"
         );
     }
@@ -192,7 +192,7 @@ class Reset extends Model
     public function resetResources(): void
     {
         $this->db->query(
-            "UPDATE `" . PLANETS . "` SET
+            'UPDATE `' . PLANETS . "` SET
                 `planet_metal` = '0',
                 `planet_crystal` = '0',
                 `planet_deuterium` = '0'"
@@ -206,7 +206,7 @@ class Reset extends Model
      */
     public function resetNotes(): void
     {
-        $this->db->query("TRUNCATE TABLE `" . NOTES . "`");
+        $this->db->query('TRUNCATE TABLE `' . NOTES . '`');
     }
 
     /**
@@ -216,7 +216,7 @@ class Reset extends Model
      */
     public function resetReports(): void
     {
-        $this->db->query("TRUNCATE TABLE `" . REPORTS . "`");
+        $this->db->query('TRUNCATE TABLE `' . REPORTS . '`');
     }
 
     /**
@@ -226,7 +226,7 @@ class Reset extends Model
      */
     public function resetFriends(): void
     {
-        $this->db->query("TRUNCATE TABLE `" . BUDDY . "`");
+        $this->db->query('TRUNCATE TABLE `' . BUDDY . '`');
     }
 
     /**
@@ -236,10 +236,10 @@ class Reset extends Model
      */
     public function resetAlliances(): void
     {
-        $this->db->query("TRUNCATE TABLE `" . ALLIANCE . "`");
-        $this->db->query("TRUNCATE TABLE `" . ALLIANCE_STATISTICS . "`");
+        $this->db->query('TRUNCATE TABLE `' . ALLIANCE . '`');
+        $this->db->query('TRUNCATE TABLE `' . ALLIANCE_STATISTICS . '`');
         $this->db->query(
-            "UPDATE `" . USERS . "` SET
+            'UPDATE `' . USERS . "` SET
                 `user_ally_id` = '0',
                 `user_ally_request` = '0',
                 `user_ally_request_text` = 'NULL',
@@ -255,9 +255,9 @@ class Reset extends Model
      */
     public function resetFleets(): void
     {
-        $this->db->query("TRUNCATE TABLE `" . ACS . "`");
-        $this->db->query("TRUNCATE TABLE `" . ACS_MEMBERS . "`");
-        $this->db->query("TRUNCATE TABLE `" . FLEETS . "`");
+        $this->db->query('TRUNCATE TABLE `' . ACS . '`');
+        $this->db->query('TRUNCATE TABLE `' . ACS_MEMBERS . '`');
+        $this->db->query('TRUNCATE TABLE `' . FLEETS . '`');
     }
 
     /**
@@ -267,9 +267,9 @@ class Reset extends Model
      */
     public function resetBanned(): void
     {
-        $this->db->query("TRUNCATE TABLE `" . BANNED . "`");
+        $this->db->query('TRUNCATE TABLE `' . BANNED . '`');
         $this->db->query(
-            "UPDATE `" . USERS . "` SET
+            'UPDATE `' . USERS . "` SET
                 `user_banned` = '0'
                 WHERE `user_id` > '1'"
         );
@@ -282,7 +282,7 @@ class Reset extends Model
      */
     public function resetMessages(): void
     {
-        $this->db->query("TRUNCATE TABLE `" . MESSAGES . "`");
+        $this->db->query('TRUNCATE TABLE `' . MESSAGES . '`');
     }
 
     /**
@@ -292,8 +292,8 @@ class Reset extends Model
      */
     public function resetStatistics(): void
     {
-        $this->db->query("TRUNCATE TABLE `" . USERS_STATISTICS . "`");
-        $this->db->query("TRUNCATE TABLE `" . ALLIANCE_STATISTICS . "`");
+        $this->db->query('TRUNCATE TABLE `' . USERS_STATISTICS . '`');
+        $this->db->query('TRUNCATE TABLE `' . ALLIANCE_STATISTICS . '`');
     }
 
     /**
@@ -303,7 +303,7 @@ class Reset extends Model
      */
     public function resetMoons(): void
     {
-        $this->db->query("DELETE FROM `" . PLANETS . "` WHERE `planet_type` = '3'");
+        $this->db->query('DELETE FROM `' . PLANETS . "` WHERE `planet_type` = '3'");
     }
 
     /**
@@ -325,28 +325,28 @@ class Reset extends Model
             $this->resetStatistics();
 
             // other resets
-            $this->db->query("TRUNCATE TABLE `" . ALLIANCE . "`");
-            $this->db->query("TRUNCATE TABLE `" . BANNED . "`");
-            $this->db->query("TRUNCATE TABLE `" . BUILDINGS . "`");
-            $this->db->query("TRUNCATE TABLE `" . DEFENSES . "`");
-            $this->db->query("TRUNCATE TABLE `" . PREFERENCES . "`");
-            $this->db->query("TRUNCATE TABLE `" . PREMIUM . "`");
-            $this->db->query("TRUNCATE TABLE `" . RESEARCH . "`");
+            $this->db->query('TRUNCATE TABLE `' . ALLIANCE . '`');
+            $this->db->query('TRUNCATE TABLE `' . BANNED . '`');
+            $this->db->query('TRUNCATE TABLE `' . BUILDINGS . '`');
+            $this->db->query('TRUNCATE TABLE `' . DEFENSES . '`');
+            $this->db->query('TRUNCATE TABLE `' . PREFERENCES . '`');
+            $this->db->query('TRUNCATE TABLE `' . PREMIUM . '`');
+            $this->db->query('TRUNCATE TABLE `' . RESEARCH . '`');
             DB::table('sessions')->truncate();
-            $this->db->query("TRUNCATE TABLE `" . SHIPS . "`");
+            $this->db->query('TRUNCATE TABLE `' . SHIPS . '`');
 
             // new creator
             $creator = $this->newCreator();
 
             // users and planets resets
-            $this->db->query("RENAME TABLE `" . USERS . "` TO `" . USERS . "_s`");
-            $this->db->query("RENAME TABLE `" . PLANETS . "` TO `" . PLANETS . "_s`");
+            $this->db->query('RENAME TABLE `' . USERS . '` TO `' . USERS . '_s`');
+            $this->db->query('RENAME TABLE `' . PLANETS . '` TO `' . PLANETS . '_s`');
 
-            $this->db->query("CREATE TABLE IF NOT EXISTS `" . USERS . "` ( LIKE `" . USERS . "_s` );");
-            $this->db->query("CREATE TABLE IF NOT EXISTS `" . PLANETS . "` ( LIKE `" . PLANETS . "_s` );");
+            $this->db->query('CREATE TABLE IF NOT EXISTS `' . USERS . '` ( LIKE `' . USERS . '_s` );');
+            $this->db->query('CREATE TABLE IF NOT EXISTS `' . PLANETS . '` ( LIKE `' . PLANETS . '_s` );');
 
             $all_users = $this->db->query(
-                "SELECT
+                'SELECT
                     `user_name`,
                     `user_password`,
                     `user_email`,
@@ -357,8 +357,8 @@ class Reset extends Model
                     `user_onlinetime`,
                     `user_register_time`,
                     `user_home_planet_id`
-                FROM `" . USERS . "_s`
-                WHERE 1;"
+                FROM `' . USERS . '_s`
+                WHERE 1;'
             );
 
             $limit_time = time() - (ONE_WEEK * 2 + ONE_DAY); // 15 days
@@ -368,7 +368,7 @@ class Reset extends Model
                     $time = time();
 
                     $this->db->query(
-                        "INSERT INTO `" . USERS . "` SET
+                        'INSERT INTO `' . USERS . "` SET
                             `user_name` = '" . $user['user_name'] . "',
                             `user_email` = '" . $user['user_email'] . "',
                             `user_home_planet_id` = '0',
@@ -385,22 +385,22 @@ class Reset extends Model
                     $new_user = $last_id;
 
                     $this->db->query(
-                        "INSERT INTO `" . RESEARCH . "` SET
+                        'INSERT INTO `' . RESEARCH . "` SET
                             `research_user_id` = '" . $last_id . "';"
                     );
 
                     $this->db->query(
-                        "INSERT INTO `" . USERS_STATISTICS . "` SET
+                        'INSERT INTO `' . USERS_STATISTICS . "` SET
                             `user_statistic_user_id` = '" . $last_id . "';"
                     );
 
                     $this->db->query(
-                        "INSERT INTO `" . PREMIUM . "` (`premium_user_id`, `premium_dark_matter`)
+                        'INSERT INTO `' . PREMIUM . "` (`premium_user_id`, `premium_dark_matter`)
                         VALUES('" . $last_id . "', '" . Functions::readConfig('registration_dark_matter') . "');"
                     );
 
                     $this->db->query(
-                        "INSERT INTO `" . PREFERENCES . "` SET
+                        'INSERT INTO `' . PREFERENCES . "` SET
                             `preference_user_id` = '" . $last_id . "';"
                     );
 
@@ -414,7 +414,7 @@ class Reset extends Model
                     );
 
                     $this->db->query(
-                        "UPDATE `" . USERS . "` SET
+                        'UPDATE `' . USERS . "` SET
                         `user_home_planet_id` = '" . $new_user . "',
                         `user_current_planet` = '" . $new_user . "'
                         WHERE `user_id` = '" . $new_user . "';"
@@ -422,8 +422,8 @@ class Reset extends Model
                 }
             }
 
-            $this->db->query("DROP TABLE `" . PLANETS . "_s`");
-            $this->db->query("DROP TABLE `" . USERS . "_s`");
+            $this->db->query('DROP TABLE `' . PLANETS . '_s`');
+            $this->db->query('DROP TABLE `' . USERS . '_s`');
 
             $this->db->commitTransaction();
         } catch (Exception $e) {
@@ -440,8 +440,8 @@ class Reset extends Model
     private function resetBuildingsByType(int $planet_type): void
     {
         $this->db->query(
-            "UPDATE `" . BUILDINGS . "` AS b
-                INNER JOIN `" . PLANETS . "` AS p ON b.`building_planet_id` = p.`planet_id` SET
+            'UPDATE `' . BUILDINGS . '` AS b
+                INNER JOIN `' . PLANETS . "` AS p ON b.`building_planet_id` = p.`planet_id` SET
                 `building_metal_mine` = '0',
                 `building_crystal_mine` = '0',
                 `building_deuterium_sintetizer` = '0',

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Xgp\App\Core;
 
-use Xgp\App\Core\Database;
-
 abstract class Model
 {
     protected Database $db;

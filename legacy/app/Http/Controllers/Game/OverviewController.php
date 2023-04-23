@@ -85,9 +85,9 @@ class OverviewController extends BaseController
 
                 // THE BUILDING BLOCK
                 if ($is_current_planet) {
-                    $building_block = DevelopmentsLib::currentBuilding("overview", $this->langs->language, $building);
+                    $building_block = DevelopmentsLib::currentBuilding('overview', $this->langs->language, $building);
                     $building_block .= $this->langs->language[$this->objects->getObjects($building)] . ' (' . $level . ')';
-                    $building_block .= "<br /><div id=\"blc\" class=\"z\">" . FormatLib::prettyTime($time_to_end) . "</div>";
+                    $building_block .= '<br /><div id="blc" class="z">' . FormatLib::prettyTime($time_to_end) . '</div>';
                     $building_block .= "\n<script language=\"JavaScript\">";
                     $building_block .= "\n	pp = \"" . $time_to_end . "\";\n";
                     $building_block .= "\n	pk = \"" . 1 . "\";\n";
@@ -136,11 +136,11 @@ class OverviewController extends BaseController
         $own_fleets = $this->overviewModel->getOwnFleets($this->user['user_id']);
 
         foreach ($own_fleets as $fleets) {
-            ######################################
-            #
-            # own fleets
-            #
-            ######################################
+            //#####################################
+            //
+            // own fleets
+            //
+            //#####################################
 
             $start_time = $fleets['fleet_start_time'];
             $stay_time = $fleets['fleet_end_stay'];
@@ -185,11 +185,11 @@ class OverviewController extends BaseController
                 }
             }
 
-            ######################################
-            #
-            # incoming fleets
-            #
-            ######################################
+            //#####################################
+            //
+            // incoming fleets
+            //
+            //#####################################
             if ($fleets['fleet_owner'] != $this->user['user_id']) {
                 if ($fleets['fleet_mission'] == 2) {
                     $record++;
@@ -228,11 +228,11 @@ class OverviewController extends BaseController
                 }
             }
 
-            ######################################
-            #
-            # other fleets
-            #
-            ######################################
+            //#####################################
+            //
+            // other fleets
+            //
+            //#####################################
 
             if ($fleets['fleet_owner'] != $this->user['user_id']) {
                 $acs_member = false;
@@ -287,7 +287,7 @@ class OverviewController extends BaseController
         $return['moon'] = '';
 
         if ($this->planet['moon_id'] != 0 && $this->planet['moon_destroyed'] == 0 && $this->planet['planet_type'] == PlanetTypesEnumerator::PLANET) {
-            $moon_name = $this->planet['moon_name'] . " (" . __('game/global.moon') . ")";
+            $moon_name = $this->planet['moon_name'] . ' (' . __('game/global.moon') . ')';
             $url = 'game.php?page=overview&cp=' . $this->planet['moon_id'] . '&re=0';
             $image = asset('upload/skins/xgproyect/planets/' . $this->planet['moon_image'] . '.jpg');
             $attributes = 'height="50" width="50"';

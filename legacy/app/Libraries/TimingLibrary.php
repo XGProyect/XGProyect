@@ -2,8 +2,6 @@
 
 namespace Xgp\App\Libraries;
 
-use Xgp\App\Libraries\Functions;
-
 abstract class TimingLibrary
 {
     public static function setOnlineStatus($onlineTime): string
@@ -67,7 +65,7 @@ abstract class TimingLibrary
     {
         $days = floor((time() - $time) / (3600 * 24));
 
-        return strtr("%s d", ["%s" => $days]);
+        return strtr('%s d', ['%s' => $days]);
     }
 
     /**
