@@ -34,7 +34,7 @@ class RepairController extends BaseController
             $tables = $this->repairModel->getAllTables();
 
             $parse['display'] = 'block';
-            $parse['head'] = Template::getInstance()->render('admin.repair_row_head_view');
+            $parse['head'] = Template::getInstance()->render('admin.repair_row_head');
             $parse['tables'] = '';
             $parse['results'] = '';
 
@@ -46,13 +46,13 @@ class RepairController extends BaseController
                 $row['status_style'] = 'text-info';
 
                 $parse['tables'] .= Template::getInstance()->render(
-                    'admin.repair_row_view',
+                    'admin.repair_row',
                     $row
                 );
             }
         } else {
             $parse['display'] = 'none';
-            $parse['head'] = Template::getInstance()->render('admin.repair_result_head_view');
+            $parse['head'] = Template::getInstance()->render('admin.repair_result_head');
             $parse['tables'] = '';
 
             if (isset($_POST['table']) && is_array($_POST['table'])) {
@@ -63,18 +63,18 @@ class RepairController extends BaseController
 
                     $this->repairModel->checkTable($table);
                     $parse['result'] = __('admin/repair.db_check_ok');
-                    $result_rows .= Template::getInstance()->render('admin.repair_result_view', $parse);
+                    $result_rows .= Template::getInstance()->render('admin.repair_result', $parse);
 
                     if (isset($_POST['Optimize']) && $_POST['Optimize'] == 'yes') {
                         $this->repairModel->optimizeTable($table);
                         $parse['result'] = __('admin/repair.db_opt');
-                        $result_rows .= Template::getInstance()->render('admin.repair_result_view', $parse);
+                        $result_rows .= Template::getInstance()->render('admin.repair_result', $parse);
                     }
 
                     if (isset($_POST['Repair']) && $_POST['Repair'] == 'yes') {
                         $this->repairModel->repairTable($table);
                         $parse['result'] = __('admin/repair.db_rep');
-                        $result_rows .= Template::getInstance()->render('admin.repair_result_view', $parse);
+                        $result_rows .= Template::getInstance()->render('admin.repair_result', $parse);
                     }
                 }
 
@@ -85,7 +85,7 @@ class RepairController extends BaseController
         }
 
         Template::getInstance()->view(
-            'admin.repair_view',
+            'admin.repair',
             $parse
         );
     }

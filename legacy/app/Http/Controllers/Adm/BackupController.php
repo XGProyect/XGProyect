@@ -112,7 +112,7 @@ class BackupController extends BaseController
     private function buildPage(): void
     {
         Template::getInstance()->view(
-            'admin.backup_view',
+            'admin.backup',
             array_merge(
                 $this->getBackupSettings(),
                 $this->getBackupList()

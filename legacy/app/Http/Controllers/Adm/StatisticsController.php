@@ -60,7 +60,7 @@ class StatisticsController extends BaseController
     private function buildPage(): void
     {
         Template::getInstance()->view(
-            'admin.statistics_view',
+            'admin.statistics',
             array_merge(
                 $this->getStatisticsSettings(),
                 $this->userLevels(),

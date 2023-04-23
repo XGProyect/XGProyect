@@ -30,7 +30,7 @@ class RegistrationController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'admin.registration_view',
+            'admin.registration',
             array_merge(
                 $this->getNewUserRegistrationSettings(),
                 [

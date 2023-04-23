@@ -35,7 +35,7 @@ class PremiumController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'admin.premium_view',
+            'admin.premium',
             array_merge(
                 $this->getPremiumSettings(),
                 [

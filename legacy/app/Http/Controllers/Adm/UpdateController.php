@@ -60,7 +60,7 @@ class UpdateController extends BaseController
                     $parse['result'] = print_r($this->output, true);
 
                     Template::getInstance()->view(
-                        'admin.update_result_view',
+                        'admin.update_result',
                         $parse
                     );
                 } else {
@@ -72,7 +72,7 @@ class UpdateController extends BaseController
         }
 
         Template::getInstance()->view(
-            'admin.update_view',
+            'admin.update',
             $parse
         );
     }

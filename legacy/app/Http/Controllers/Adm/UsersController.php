@@ -96,7 +96,7 @@ class UsersController extends BaseController
         $parse['content'] = ($user != '' && $type != '') ? $this->getData($type) : '';
 
         Template::getInstance()->view(
-            'admin.users_view',
+            'admin.users',
             $parse
         );
     }
@@ -274,7 +274,7 @@ class UsersController extends BaseController
         $parse['user_fleet_shortcuts'] = $this->buildShortcutsCombo($this->_user_query['user_fleet_shortcuts']);
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->render('admin.users_information_view', $parse);
+        return Template::getInstance()->render('admin.users_information', $parse);
     }
 
     /**
@@ -293,7 +293,7 @@ class UsersController extends BaseController
         $parse['preference_delete_mode'] = ($this->_user_query['preference_delete_mode']) ? ' checked="checked" ' : '';
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->render('admin.users_settings_view', $parse);
+        return Template::getInstance()->render('admin.users_settings', $parse);
     }
 
     private function getDataResearch()
@@ -303,7 +303,7 @@ class UsersController extends BaseController
         $parse['technologies_list'] = $this->researchTable();
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->render('admin.users_research_view', $parse);
+        return Template::getInstance()->render('admin.users_research', $parse);
     }
 
     private function getDataPremium()
@@ -313,7 +313,7 @@ class UsersController extends BaseController
         $parse['premium_list'] = $this->premiumTable();
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->render('admin.users_premium_view', $parse);
+        return Template::getInstance()->render('admin.users_premium', $parse);
     }
 
     /**
@@ -330,22 +330,22 @@ class UsersController extends BaseController
         switch (true) {
             case ($this->_edit == 'planet' && $planets_query):
                 $parse += $this->editMain($planets_query[0]);
-                $view = 'admin.users_planets_main_view';
+                $view = 'admin.users_planets_main';
                 break;
 
             case ($this->_edit == 'buildings' && $planets_query):
                 $parse['buildings_list'] = $this->editBuildings($planets_query[0], 1);
-                $view = 'admin.users_planets_buildings_view';
+                $view = 'admin.users_planets_buildings';
                 break;
 
             case ($this->_edit == 'ships' && $planets_query):
                 $parse['ships_list'] = $this->editShips($planets_query[0]);
-                $view = 'admin.users_planets_ships_view';
+                $view = 'admin.users_planets_ships';
                 break;
 
             case ($this->_edit == 'defenses' && $planets_query):
                 $parse['defenses_list'] = $this->editDefenses($planets_query[0], 1);
-                $view = 'admin.users_planets_defenses_view';
+                $view = 'admin.users_planets_defenses';
                 break;
 
             case ($this->_edit == 'delete'):
@@ -356,7 +356,7 @@ class UsersController extends BaseController
             case '':
             default:
                 $parse['planets_list'] = $this->planetsTable($planets_query);
-                $view = 'admin.users_planets_view';
+                $view = 'admin.users_planets';
                 break;
         } // SWITCH
 
@@ -379,22 +379,22 @@ class UsersController extends BaseController
         switch (true) {
             case ($this->_edit == 'moon' && $moons_query):
                 $parse += $this->editMain($moons_query[0]);
-                $view = 'admin.users_moons_main_view';
+                $view = 'admin.users_moons_main';
                 break;
 
             case ($this->_edit == 'buildings' && $moons_query):
                 $parse['buildings_list'] = $this->editBuildings($moons_query[0], 3);
-                $view = 'admin.users_planets_buildings_view';
+                $view = 'admin.users_planets_buildings';
                 break;
 
             case ($this->_edit == 'ships' && $moons_query):
                 $parse['ships_list'] = $this->editShips($moons_query[0]);
-                $view = 'admin.users_planets_ships_view';
+                $view = 'admin.users_planets_ships';
                 break;
 
             case ($this->_edit == 'defenses' && $moons_query):
                 $parse['defenses_list'] = $this->editDefenses($moons_query[0], 3);
-                $view = 'admin.users_planets_defenses_view';
+                $view = 'admin.users_planets_defenses';
                 break;
 
             case ($this->_edit == 'delete'):
@@ -405,7 +405,7 @@ class UsersController extends BaseController
             case '':
             default:
                 $parse['moons_list'] = $this->moonsTable($moons_query);
-                $view = 'admin.users_moons_view';
+                $view = 'admin.users_moons';
                 break;
         } // SWITCH
 

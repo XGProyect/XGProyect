@@ -74,7 +74,7 @@ class MessagesController extends BaseController
     private function buildPage(): void
     {
         Template::getInstance()->view(
-            'admin.messages_view',
+            'admin.messages',
             array_merge(
                 $this->buildMessageTypeBlock(),
                 [

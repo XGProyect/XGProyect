@@ -32,7 +32,7 @@ class PlanetsController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'admin.planets_view',
+            'admin.planets',
             array_merge(
                 $this->getNewPlanetSettings(),
                 [

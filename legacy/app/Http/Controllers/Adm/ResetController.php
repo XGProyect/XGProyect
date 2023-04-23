@@ -25,7 +25,7 @@ class ResetController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'admin.reset_view',
+            'admin.reset',
             array_merge(
                 [
                     'alert' => $this->alert ? $this->alert : '',

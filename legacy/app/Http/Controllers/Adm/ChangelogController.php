@@ -56,7 +56,7 @@ class ChangelogController extends BaseController
     private function buildPage(): void
     {
         Template::getInstance()->view(
-            'admin.changelog_view',
+            'admin.changelog',
             [
                 'changelog' => $this->buildListOfEntries(),
                 'alert' => $this->getAlertMessage(),
@@ -111,7 +111,7 @@ class ChangelogController extends BaseController
         $this->saveAction();
 
         Template::getInstance()->view(
-            'admin.changelog_form_view',
+            'admin.changelog_form',
             array_merge(
                 $this->getActionData('add')
             )
@@ -129,7 +129,7 @@ class ChangelogController extends BaseController
         $this->saveAction();
 
         Template::getInstance()->view(
-            'admin.changelog_form_view',
+            'admin.changelog_form',
             $this->getActionData('edit', $changelog_id)
         );
     }

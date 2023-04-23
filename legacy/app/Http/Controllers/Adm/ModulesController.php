@@ -51,7 +51,7 @@ class ModulesController extends BaseController
     private function buildPage(): void
     {
         Template::getInstance()->view(
-            'admin.modules_view',
+            'admin.modules',
             [
                 'alert' => $this->alert ?? '',
                 'modules' => $this->buildModulesList(),

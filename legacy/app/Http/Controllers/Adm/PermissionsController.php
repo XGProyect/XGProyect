@@ -78,7 +78,7 @@ class PermissionsController extends BaseController
     private function buildPage(): void
     {
         Template::getInstance()->view(
-            'admin.permissions_view',
+            'admin.permissions',
             array_merge(
                 ['alert' => $this->alert ?? ''],
                 $this->buildListOfPermissions()

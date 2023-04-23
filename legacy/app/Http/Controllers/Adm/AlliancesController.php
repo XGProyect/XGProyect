@@ -66,7 +66,7 @@ class AlliancesController extends BaseController
         $parse['content'] = ($alliance != '' && $type != '') ? $this->getData($type) : '';
 
         Template::getInstance()->view(
-            'admin.alliances_view',
+            'admin.alliances',
             $parse
         );
     }
@@ -148,7 +148,7 @@ class AlliancesController extends BaseController
         $parse['sel0'] = $this->_alliance_query['alliance_request_notallow'] == 0 ? 'selected' : '';
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->render('admin.alliances_information_view', $parse);
+        return Template::getInstance()->render('admin.alliances_information', $parse);
     }
 
     /**
@@ -181,14 +181,14 @@ class AlliancesController extends BaseController
                 $rank_data['rechtehand'] = (($details['rights'][AllianceRanks::RIGHT_HAND] == SwitchInt::on) ? ' checked="checked"' : '');
                 $rank_data['i'] = $i++;
 
-                $rank_row .= Template::getInstance()->render('admin.alliances_ranks_row_view', $rank_data);
+                $rank_row .= Template::getInstance()->render('admin.alliances_ranks_row', $rank_data);
             }
         }
 
         $parse['ranks_table'] = empty($rank_row) ? __('game/alliances.al_no_ranks') : $rank_row;
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->render('admin.alliances_ranks_view', $parse);
+        return Template::getInstance()->render('admin.alliances_ranks', $parse);
     }
 
     /**
@@ -219,14 +219,14 @@ class AlliancesController extends BaseController
                     $member['ally_rank'] = __('game/alliances.al_rank_not_defined');
                 }
 
-                $members .= Template::getInstance()->render('admin.alliances_members_row_view', $member);
+                $members .= Template::getInstance()->render('admin.alliances_members_row', $member);
             }
         }
 
         $parse['members_table'] = empty($members) ? '<tr><td colspan="6" class="align_center text-error">' . __('game/alliances.al_no_ranks') . '</td></tr>' : $members;
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->render('admin.alliances_members_view', $parse);
+        return Template::getInstance()->render('admin.alliances_members', $parse);
     }
     //#####################################
     //

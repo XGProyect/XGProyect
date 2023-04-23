@@ -21,7 +21,7 @@ class ErrorsController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'admin.errors_view',
+            'admin.errors',
             $this->processErrorsLogs()
         );
     }

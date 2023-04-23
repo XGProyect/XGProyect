@@ -93,7 +93,7 @@ class FleetsController extends BaseController
     private function buildPage(): void
     {
         Template::getInstance()->view(
-            'admin.fleets_view',
+            'admin.fleets',
             $this->buildFleetMovementsBlock()
         );
     }

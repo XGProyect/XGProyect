@@ -158,7 +158,7 @@ class AnnouncementController extends BaseController
     private function buildPage(): void
     {
         Template::getInstance()->view(
-            'admin.announcement_view',
+            'admin.announcement',
             array_merge(
                 $this->buildColorPicker(),
                 [

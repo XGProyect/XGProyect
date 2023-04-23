@@ -73,7 +73,7 @@ class BanController extends BaseController
         $parse['users_amount'] = $this->_users_count;
         $parse['banned_amount'] = $this->_banned_count;
 
-        return Template::getInstance()->render('admin.ban_view', $parse);
+        return Template::getInstance()->render('admin.ban', $parse);
     }
 
     /**
@@ -150,7 +150,7 @@ class BanController extends BaseController
             Functions::redirect('admin.php?page=ban');
         }
 
-        return Template::getInstance()->render('admin.ban_result_view', $parse);
+        return Template::getInstance()->render('admin.ban_result', $parse);
     }
 
     /**

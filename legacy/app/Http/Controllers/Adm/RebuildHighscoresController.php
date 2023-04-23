@@ -26,7 +26,7 @@ class RebuildHighscoresController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'admin.rebuildhighscores_view',
+            'admin.rebuildhighscores',
             $this->getStatisticsResult()
         );
     }

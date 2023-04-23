@@ -203,7 +203,7 @@ class ServerController extends BaseController
         $parse['noobprot3'] = $this->game_config['noobprotectionmulti'];
 
         Template::getInstance()->view(
-            'admin.server_view',
+            'admin.server',
             $parse
         );
     }

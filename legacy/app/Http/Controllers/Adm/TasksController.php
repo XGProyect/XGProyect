@@ -23,7 +23,7 @@ class TasksController extends BaseController
         }
 
         Template::getInstance()->view(
-            'admin.tasks_view',
+            'admin.tasks',
             $this->buildUpdatesBlock()
         );
     }

@@ -66,7 +66,7 @@ class LanguagesController extends BaseController
     private function buildPage(): void
     {
         Template::getInstance()->view(
-            'admin.languages_view',
+            'admin.languages',
             array_merge(
                 $this->getFiles(),
                 $this->getContents(),

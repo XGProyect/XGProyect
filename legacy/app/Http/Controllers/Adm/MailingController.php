@@ -59,7 +59,7 @@ class MailingController extends BaseController
     private function buildPage(): void
     {
         Template::getInstance()->view(
-            'admin.mailing_view',
+            'admin.mailing',
             array_merge(
                 $this->getMailingSettings(),
                 $this->buildProtocolsDropdown(),

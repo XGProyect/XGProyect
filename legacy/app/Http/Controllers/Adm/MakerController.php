@@ -34,7 +34,7 @@ class MakerController extends BaseController
     private function buildPage(): void
     {
         Template::getInstance()->view(
-            'admin.maker_view',
+            'admin.maker',
             array_merge(
                 $this->makeUser(),
                 $this->makeAlliace(),
