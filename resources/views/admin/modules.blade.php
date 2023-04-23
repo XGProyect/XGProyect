@@ -1,3 +1,6 @@
+@extends('master.admin')
+
+@section('content')
 <div class="container-fluid">
     {alert}
     <form name="frm_modules" method="POST" action="admin.php?page=modules">
@@ -41,3 +44,4 @@
         </div>
     </form>
 </div>
+@endsection

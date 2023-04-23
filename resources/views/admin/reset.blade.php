@@ -1,3 +1,6 @@
+@extends('master.admin')
+
+@section('content')
 <div class="container-fluid">
     {alert}
     <form name="frm_reset" action="" method="post">
@@ -224,3 +227,4 @@
         </div>
     </form>
 </div>
+@endsection

@@ -1,3 +1,6 @@
+@extends('master.admin')
+
+@section('content')
 <div class="container-fluid">
     <form name="frm_encrypter" method="POST" action="?page=encrypter">
         <!-- Page Heading -->
@@ -62,3 +65,4 @@
         </div>
     </form>
 </div>
+@endsection

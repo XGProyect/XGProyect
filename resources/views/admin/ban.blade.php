@@ -1,3 +1,6 @@
+@extends('master.admin')
+
+@section('content')
 <script type="text/javascript" src="{js_path}filterlist-min.js"></script>
 <div class="container-fluid">
     {alert}
@@ -254,3 +257,4 @@
         </div>
     </div>
 </div>
+@endsection

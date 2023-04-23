@@ -1,4 +1,6 @@
+@extends('master.admin')
 
+@section('content')
 <div class="container-fluid">
     {alert}
     <form action="" method="POST" name="changelog">
@@ -60,3 +62,4 @@
         {/sections_list}
     </form>
 </div>
+@endsection

@@ -1,3 +1,6 @@
+@extends('master.admin')
+
+@section('content')
 <div class="container-fluid">
     {alert}
     <!-- Page Heading -->
@@ -123,3 +126,4 @@
         </div>
     </div>
 </div>
+@endsection

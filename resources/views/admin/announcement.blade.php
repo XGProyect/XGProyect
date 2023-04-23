@@ -1,3 +1,6 @@
+@extends('master.admin')
+
+@section('content')
 <script src="{js_path}cntchar-min.js" type="text/javascript"></script>
 <div class="container-fluid">
     {alert}
@@ -79,3 +82,4 @@
         </div>
     </form>
 </div>
+@endsection
