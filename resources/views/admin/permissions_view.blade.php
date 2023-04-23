@@ -4,15 +4,15 @@
     <form action="" method="POST" name="changelog">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{pr_title}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/permissions.pr_title') }}</h1>
             <button type="submit" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-save"></i>
                 </span>
-                <span class="text">{pr_save_all}</span>
+                <span class="text">{{ __('admin/permissions.pr_save_all') }}</span>
             </button>
         </div>
-        <p class="mb-4">{pr_sub_title}</p>
+        <p class="mb-4">{{ __('admin/permissions.pr_sub_title') }}</p>
 
         {sections_list}
         <div class="row">

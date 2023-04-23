@@ -2,15 +2,15 @@
     {alert}
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{up_title}</h1>
+        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/update.up_title') }}</h1>
         <button type="submit" class="btn btn-primary btn-icon-split" onclick="window.location.href='admin.php?page=update'; return false;">
             <span class="icon text-white-50">
                 <i class="fas fa-chevron-left"></i>
             </span>
-            <span class="text">{up_back}</span>
+            <span class="text">{{ __('admin/update.up_back') }}</span>
         </button>
     </div>
-    <p class="mb-4">{up_sub_title}</p>
+    <p class="mb-4">{{ __('admin/update.up_sub_title') }}</p>
 
     <div class="row">
         <div class="col-lg-12">
@@ -18,7 +18,7 @@
                 <!-- Card Header - Accordion -->
                 <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                     aria-expanded="true" aria-controls="collapseGeneral">
-                    <h6 class="m-0 font-weight-bold text-primary">{up_test_mode}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/update.up_test_mode') }}</h6>
                 </a>
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseGeneral" style="">

@@ -3,7 +3,7 @@
     <form action="" method="POST">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{db_opt_db}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/repair.db_opt_db') }}</h1>
         </div>
         <p class="mb-4"></p>
 
@@ -13,7 +13,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                         aria-expanded="true" aria-controls="collapseGeneral">
-                        <h6 class="m-0 font-weight-bold text-primary">{db_general}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/repair.db_general') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show" id="collapseGeneral" style="">
@@ -28,12 +28,12 @@
                                     <tr>
                                         <td colspan="5">
                                             <div align="center" style="display: {display}">
-                                                <input type="radio" name="Optimize" value="yes" checked="on"> {db_yes}
-                                                <input type="radio" name="Optimize" value="no"> {db_no}
-                                                <strong>{db_optimize}</strong><br>
-                                                <input type="radio" name="Repair" value="yes" checked="on"> {db_yes}
-                                                <input type="radio" name="Repair" value="no"> {db_no}
-                                                <strong>{db_repair}</strong><br><br>
+                                                <input type="radio" name="Optimize" value="yes" checked="on"> {{ __('admin/repair.db_yes') }}
+                                                <input type="radio" name="Optimize" value="no"> {{ __('admin/repair.db_no') }}
+                                                <strong>{{ __('admin/repair.db_optimize') }}</strong><br>
+                                                <input type="radio" name="Repair" value="yes" checked="on"> {{ __('admin/repair.db_yes') }}
+                                                <input type="radio" name="Repair" value="no"> {{ __('admin/repair.db_no') }}
+                                                <strong>{{ __('admin/repair.db_repair') }}</strong><br><br>
                                                 <input type="submit" class="btn btn-primary">
                                             </div>
                                         </td>

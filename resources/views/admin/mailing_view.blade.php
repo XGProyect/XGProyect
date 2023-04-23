@@ -3,15 +3,15 @@
     <form action="" method="POST">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{ma_title}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/mailing.ma_title') }}</h1>
             <button type="submit" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-save"></i>
                 </span>
-                <span class="text">{ma_save_changes}</span>
+                <span class="text">{{ __('admin/mailing.ma_save_changes') }}</span>
             </button>
         </div>
-        <p class="mb-4">{ma_sub_title}</p>
+        <p class="mb-4">{{ __('admin/mailing.ma_sub_title') }}</p>
 
         <div class="row">
             <div class="col-lg-6">
@@ -19,7 +19,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                         aria-expanded="true" aria-controls="collapseGeneral">
-                        <h6 class="m-0 font-weight-bold text-primary">{ma_general}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/mailing.ma_general') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show" id="collapseGeneral" style="">
@@ -30,7 +30,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {ma_mailing_protocol}
+                                                    {{ __('admin/mailing.ma_mailing_protocol') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -53,7 +53,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseOtherParameters" class="d-block card-header py-3" data-toggle="collapse"
                         role="button" aria-expanded="true" aria-controls="collapseOtherParameters">
-                        <h6 class="m-0 font-weight-bold text-primary">{ma_smtp_title}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/mailing.ma_smtp_title') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show" id="collapseOtherParameters" style="">
@@ -62,12 +62,12 @@
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tbody>
                                         <tr>
-                                            <td colspan="2">{ma_smtp_warning}</td>
+                                            <td colspan="2">{{ __('admin/mailing.ma_smtp_warning') }}</td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {ma_smtp_host}
+                                                    {{ __('admin/mailing.ma_smtp_host') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -78,7 +78,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {ma_smtp_user}
+                                                    {{ __('admin/mailing.ma_smtp_user') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -90,7 +90,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {ma_smtp_pass}
+                                                    {{ __('admin/mailing.ma_smtp_pass') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -102,7 +102,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {ma_smtp_port}
+                                                    {{ __('admin/mailing.ma_smtp_port') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -113,7 +113,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {ma_smtp_timeout}
+                                                    {{ __('admin/mailing.ma_smtp_timeout') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -125,7 +125,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {ma_smtp_crypto}
+                                                    {{ __('admin/mailing.ma_smtp_crypto') }}
                                                 </span>
                                             </td>
                                             <td>

@@ -24,7 +24,7 @@
                             <span class="icon text-white-50">
                                 <i class="fas fa-save"></i>
                             </span>
-                            <span class="text">{us_send_data}</span>
+                            <span class="text">{{ __('admin/users.us_send_data') }}</span>
                         </button>
                     </div>
                 </form>

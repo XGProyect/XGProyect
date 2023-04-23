@@ -1,18 +1,18 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{bku_title}</h1>
+        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/backup.bku_title') }}</h1>
         <form name="frm_backup_now" method="POST" action="admin.php?page=backup">
             <input type="hidden" name="backup" value="1">
             <button type="submit" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-download"></i>
                 </span>
-                <span class="text">{bku_now}</span>
+                <span class="text">{{ __('admin/backup.bku_now') }}</span>
             </button>
         </form>
     </div>
-    <p class="mb-4">{bku_sub_title}</p>
+    <p class="mb-4">{{ __('admin/backup.bku_sub_title') }}</p>
 
     <div class="row">
         <div class="col-lg-6">
@@ -20,7 +20,7 @@
                 <!-- Card Header - Accordion -->
                 <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                     aria-expanded="true" aria-controls="collapseGeneral">
-                    <h6 class="m-0 font-weight-bold text-primary">{bku_general}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/backup.bku_general') }}</h6>
                 </a>
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseGeneral" style="">
@@ -33,9 +33,9 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {bku_auto}
+                                                    {{ __('admin/backup.bku_auto') }}
                                                     <i class="fas fa-question-circle" data-toggle="popover"
-                                                        data-trigger="hover" data-content="{bku_auto_legend}"
+                                                        data-trigger="hover" data-content="{{ __('admin/backup.bku_auto_legend') }}"
                                                         data-html="true"></i>
                                                 </span>
                                             </td>
@@ -51,7 +51,7 @@
                                         <span class="icon text-white-50">
                                             <i class="fas fa-save"></i>
                                         </span>
-                                        <span class="text">{bku_save}</span>
+                                        <span class="text">{{ __('admin/backup.bku_save') }}</span>
                                     </button>
                                 </div>
                             </form>
@@ -65,7 +65,7 @@
                 <!-- Card Header - Accordion -->
                 <a href="#collapseList" class="d-block card-header py-3" data-toggle="collapse" role="button"
                     aria-expanded="true" aria-controls="collapseList">
-                    <h6 class="m-0 font-weight-bold text-primary">{bku_list}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/backup.bku_list') }}</h6>
                 </a>
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseList" style="">

@@ -2,9 +2,9 @@
     {alert}
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{mg_title}</h1>
+        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/messages.mg_title') }}</h1>
     </div>
-    <p class="mb-4">{mg_sub_title}</p>
+    <p class="mb-4">{{ __('admin/messages.mg_sub_title') }}</p>
 
     <div class="row">
         <div class="col-lg-12">
@@ -14,7 +14,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseFilter" class="d-block card-header py-3" data-toggle="collapse" role="button"
                         aria-expanded="true" aria-controls="collapseFilter">
-                        <h6 class="m-0 font-weight-bold text-primary">{mg_filter_by}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/messages.mg_filter_by') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse {show_search}" id="collapseFilter" style="">
@@ -24,11 +24,11 @@
                                     <tr>
                                         <td>
                                             <input class="form-control" type="text" name="message_user"
-                                                placeholder="{mg_filter_user}">
+                                                placeholder="{{ __('admin/messages.mg_filter_user') }}">
                                         </td>
                                         <td>
                                             <input class="form-control" type="text" name="message_subject"
-                                                placeholder="{mg_filter_planet}">
+                                                placeholder="{{ __('admin/messages.mg_filter_planet') }}">
                                         </td>
                                         <td>
                                             <input class="form-control" type="date" name="message_date" min="1000-01-01"
@@ -36,7 +36,7 @@
                                         </td>
                                         <td>
                                             <select class="form-control" name="message_type">
-                                                <option value="">{mg_filter_type}</option>
+                                                <option value="">{{ __('admin/messages.mg_filter_type') }}</option>
                                                 {type_options}
                                                 <option value="{value}">{name}</option>
                                                 {/type_options}
@@ -46,14 +46,14 @@
                                     <tr>
                                         <td colspan="3">
                                             <input class="form-control" type="text" name="message_text"
-                                                placeholder="{mg_filter_content}">
+                                                placeholder="{{ __('admin/messages.mg_filter_content') }}">
                                         </td>
                                         <td class="text-center">
                                             <button type="submit" class="btn btn-primary btn-icon-split">
                                                 <span class="icon text-white-50">
                                                     <i class="fas fa-search"></i>
                                                 </span>
-                                                <span class="text">{mg_filter_start_search}</span>
+                                                <span class="text">{{ __('admin/messages.mg_filter_start_search') }}</span>
                                             </button>
                                         </td>
                                     </tr>
@@ -68,7 +68,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseResults" class="d-block card-header py-3" data-toggle="collapse" role="button"
                         aria-expanded="true" aria-controls="collapseResults">
-                        <h6 class="m-0 font-weight-bold text-primary">{mg_search_results}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/messages.mg_search_results') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse {show_results}" id="collapseResults" style="">
@@ -81,7 +81,7 @@
                                                 <span class="icon text-white-50">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </span>
-                                                <span class="text">{mg_delete_selected}</span>
+                                                <span class="text">{{ __('admin/messages.mg_delete_selected') }}</span>
                                             </button>
                                         </td>
                                     </tr>
@@ -90,13 +90,13 @@
                                             <input class="form-check-input" type="checkbox" name="checkall"
                                                 id="checkall">
                                         </th>
-                                        <th>{mg_sender}</th>
-                                        <th>{mg_receiver}</th>
-                                        <th>{mg_time}</th>
-                                        <th>{mg_type}</th>
-                                        <th>{mg_from}</th>
-                                        <th>{mg_subject}</th>
-                                        <th>{mg_actions}</th>
+                                        <th>{{ __('admin/messages.mg_sender') }}</th>
+                                        <th>{{ __('admin/messages.mg_receiver') }}</th>
+                                        <th>{{ __('admin/messages.mg_time') }}</th>
+                                        <th>{{ __('admin/messages.mg_type') }}</th>
+                                        <th>{{ __('admin/messages.mg_from') }}</th>
+                                        <th>{{ __('admin/messages.mg_subject') }}</th>
+                                        <th>{{ __('admin/messages.mg_actions') }}</th>
                                     </tr>
                                     {results}
                                     <tr data-toggle="collapse" data-target="#toggle{message_id}" aria-expanded="false"
@@ -127,7 +127,7 @@
                                                 <div class="card shadow mb-4">
                                                     <div
                                                         class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                        <h6 class="m-0 font-weight-bold text-primary">{mg_the_message}
+                                                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/messages.mg_the_message') }}
                                                         </h6>
                                                         <div class="dropdown no-arrow">
                                                             <a class="dropdown-toggle" href="#" role="button"
@@ -140,9 +140,9 @@
                                                                 aria-labelledby="dropdownMenuLink"
                                                                 x-placement="bottom-end"
                                                                 style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(17px, 19px, 0px);">
-                                                                <div class="dropdown-header">{mg_actions}</div>
+                                                                <div class="dropdown-header">{{ __('admin/messages.mg_actions') }}</div>
                                                                 <a class="dropdown-item"
-                                                                    href="admin.php?page=messages&action=delete&messageId={message_id}">{mg_delete_this}</a>
+                                                                    href="admin.php?page=messages&action=delete&messageId={message_id}">{{ __('admin/messages.mg_delete_this') }}</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -161,7 +161,7 @@
                                                 <span class="icon text-white-50">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </span>
-                                                <span class="text">{mg_delete_selected}</span>
+                                                <span class="text">{{ __('admin/messages.mg_delete_selected') }}</span>
                                             </button>
                                         </td>
                                     </tr>

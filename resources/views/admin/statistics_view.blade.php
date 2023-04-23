@@ -3,15 +3,15 @@
     <form method="post" action="">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{cs_title}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/statistics.cs_title') }}</h1>
             <button type="submit" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-save"></i>
                 </span>
-                <span class="text">{cs_save_changes}</span>
+                <span class="text">{{ __('admin/statistics.cs_save_changes') }}</span>
             </button>
         </div>
-        <p class="mb-4">{cs_sub_title}</p>
+        <p class="mb-4">{{ __('admin/statistics.cs_sub_title') }}</p>
 
         <div class="row">
             <div class="col-lg-6">
@@ -19,7 +19,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                         aria-expanded="true" aria-controls="collapseGeneral">
-                        <h6 class="m-0 font-weight-bold text-primary">{cs_general}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/statistics.cs_general') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show" id="collapseGeneral" style="">
@@ -30,7 +30,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {cs_point_per_resources_used}
+                                                    {{ __('admin/statistics.cs_point_per_resources_used') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -41,7 +41,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {cs_time_between_updates}
+                                                    {{ __('admin/statistics.cs_time_between_updates') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -52,7 +52,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {cs_access_lvl}
+                                                    {{ __('admin/statistics.cs_access_lvl') }}
                                                 </span>
                                             </td>
                                             <td>

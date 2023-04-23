@@ -2,9 +2,9 @@
     <form name="frm_encrypter" method="POST" action="?page=encrypter">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{et_title}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/encrypter.et_title') }}</h1>
         </div>
-        <p class="mb-4">{et_sub_title}</p>
+        <p class="mb-4">{{ __('admin/encrypter.et_sub_title') }}</p>
 
         <div class="row">
             <div class="col-lg-6">
@@ -12,7 +12,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                         aria-expanded="true" aria-controls="collapseGeneral">
-                        <h6 class="m-0 font-weight-bold text-primary">{et_general}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/encrypter.et_general') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show" id="collapseGeneral" style="">
@@ -23,7 +23,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {et_pass}
+                                                    {{ __('admin/encrypter.et_pass') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -34,7 +34,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {et_result}
+                                                    {{ __('admin/encrypter.et_result') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -49,7 +49,7 @@
                                         <span class="icon text-white-50">
                                             <i class="fas fa-save"></i>
                                         </span>
-                                        <span class="text">{et_encript}</span>
+                                        <span class="text">{{ __('admin/encrypter.et_encript') }}</span>
                                     </button>
                                 </div>
                             </div>

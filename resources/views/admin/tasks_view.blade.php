@@ -1,9 +1,9 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{ta_title}</h1>
+        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/tasks.ta_title') }}</h1>
     </div>
-    <p class="mb-4">{ta_sub_title}</p>
+    <p class="mb-4">{{ __('admin/tasks.ta_sub_title') }}</p>
 
     <div class="row">
         <div class="col-lg-6">
@@ -11,7 +11,7 @@
                 <!-- Card Header - Accordion -->
                 <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                     aria-expanded="true" aria-controls="collapseGeneral">
-                    <h6 class="m-0 font-weight-bold text-primary">{ta_general}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/tasks.ta_general') }}</h6>
                 </a>
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseGeneral" style="">
@@ -20,10 +20,10 @@
                             <table class="table table-borderless" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>{ta_task}</th>
-                                        <th>{ta_next_run}</th>
-                                        <th>{ta_last_run}</th>
-                                        <th>{ta_actions}</th>
+                                        <th>{{ __('admin/tasks.ta_task') }}</th>
+                                        <th>{{ __('admin/tasks.ta_next_run') }}</th>
+                                        <th>{{ __('admin/tasks.ta_last_run') }}</th>
+                                        <th>{{ __('admin/tasks.ta_actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

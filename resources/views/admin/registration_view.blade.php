@@ -4,15 +4,15 @@
         <input type="hidden" name="save" value="1">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{ur_title}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/registration.ur_title') }}</h1>
             <button type="submit" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-save"></i>
                 </span>
-                <span class="text">{ur_save_parameters}</span>
+                <span class="text">{{ __('admin/registration.ur_save_parameters') }}</span>
             </button>
         </div>
-        <p class="mb-4">{ur_sub_title}</p>
+        <p class="mb-4">{{ __('admin/registration.ur_sub_title') }}</p>
 
         <div class="row">
             <div class="col-lg-6">
@@ -20,7 +20,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                         aria-expanded="true" aria-controls="collapseGeneral">
-                        <h6 class="m-0 font-weight-bold text-primary">{ur_general}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/registration.ur_general') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show" id="collapseGeneral" style="">
@@ -31,7 +31,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {ur_open_close}
+                                                    {{ __('admin/registration.ur_open_close') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -42,7 +42,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {ur_welcome_message}
+                                                    {{ __('admin/registration.ur_welcome_message') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -53,7 +53,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {ur_welcome_email}
+                                                    {{ __('admin/registration.ur_welcome_email') }}
                                                 </span>
                                             </td>
                                             <td>

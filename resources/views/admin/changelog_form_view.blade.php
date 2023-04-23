@@ -5,9 +5,9 @@
         <input type="hidden" name="changelog_id" value="{changelog_id}">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{ch_title}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/changelog.ch_title') }}</h1>
         </div>
-        <p class="mb-4">{ch_sub_title}</p>
+        <p class="mb-4">{{ __('admin/changelog.ch_sub_title') }}</p>
 
         <div class="row">
             <div class="col-lg-12">
@@ -31,20 +31,20 @@
                                             <div class="row">
                                                 <div class="col-11">
                                                     <input class="form-control" type="text" name="changelog_version"
-                                                        value="{changelog_version}" placeholder="{ch_version}"
+                                                        value="{changelog_version}" placeholder="{{ __('admin/changelog.ch_version') }}"
                                                         pattern="^(0|[1-9]\d*)\.((0|[1-9]\d*)\.)?(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z][0-9a-zA-Z]*))?$"
                                                         required>
                                                 </div>
                                                 <div class="col-1">
                                                     <i class="fas fa-question-circle" data-toggle="popover"
-                                                        data-trigger="hover" data-content="{ch_version_info}"
+                                                        data-trigger="hover" data-content="{{ __('admin/changelog.ch_version_info') }}"
                                                         data-html="true"></i>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <select class="form-control" name="changelog_language" required>
-                                                <option value="">{ch_pick_language}</option>
+                                                <option value="">{{ __('admin/changelog.ch_pick_language') }}</option>
                                                 {languages}
                                                 <option value="{language_id}" {selected}>{language_name}</option>
                                                 {/languages}
@@ -56,7 +56,7 @@
                                             <textarea class="form-control" name="text" rows="10"
                                                 onkeyup="javascript:cntChars('changelog', 5000);"
                                                 required>{changelog_description}</textarea>
-                                            (<span id="cntChars">0</span> / 5000 {ch_characters})
+                                            (<span id="cntChars">0</span> / 5000 {{ __('admin/changelog.ch_characters') }})
                                         </td>
                                     </tr>
                                 </table>
@@ -65,7 +65,7 @@
                                         <span class="icon text-white-50">
                                             <i class="fas fa-save"></i>
                                         </span>
-                                        <span class="text">{ch_save}</span>
+                                        <span class="text">{{ __('admin/changelog.ch_save') }}</span>
                                     </button>
                                 </div>
                             </div>

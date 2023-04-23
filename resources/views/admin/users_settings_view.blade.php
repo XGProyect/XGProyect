@@ -12,10 +12,10 @@
                 <form name="save_info" method="post" action="">
                     <table class="table table-borderless" width="100%" cellspacing="0">
                         <tr>
-                            <td colspan="2">{us_user_settings_general_title}</td>
+                            <td colspan="2">{{ __('admin/users.us_user_settings_general_title') }}</td>
                         </tr>
                         <tr>
-                            <td>{us_user_preference_planet_sort}</td>
+                            <td>{{ __('admin/users.us_user_preference_planet_sort') }}</td>
                             <td>
                                 <select name="preference_planet_sort" class="form-control">
                                     {preference_planet_sort}
@@ -23,7 +23,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>{us_user_preference_planet_sort_sequence}</td>
+                            <td>{{ __('admin/users.us_user_preference_planet_sort_sequence') }}</td>
                             <td>
                                 <select name="preference_planet_sort_sequence" class="form-control">
                                     {preference_planet_sort_sequence}
@@ -31,24 +31,24 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">{us_user_settings_galaxy_title}</td>
+                            <td colspan="2">{{ __('admin/users.us_user_settings_galaxy_title') }}</td>
                         </tr>
                         <tr>
-                            <td>{us_user_preference_spy_probes}</td>
+                            <td>{{ __('admin/users.us_user_preference_spy_probes') }}</td>
                             <td><input type="text" class="form-control" name="preference_spy_probes"
                                     value="{preference_spy_probes}"></td>
                         </tr>
                         <tr>
-                            <td colspan="2">{us_user_settings_other_title}</td>
+                            <td colspan="2">{{ __('admin/users.us_user_settings_other_title') }}</td>
                         </tr>
                         <tr>
-                            <td>{us_user_preference_vacations_status}</td>
+                            <td>{{ __('admin/users.us_user_preference_vacations_status') }}</td>
                             <td><input type="checkbox" class="form-input-check" name="preference_vacations_status"
                                     {preference_vacations_status}>
                                 <span class="small_font">{preference_vacation_mode}</span></td>
                         </tr>
                         <tr>
-                            <td>{us_user_preference_delete_mode}</td>
+                            <td>{{ __('admin/users.us_user_preference_delete_mode') }}</td>
                             <td><input type="checkbox" class="form-input-check" name="preference_delete_mode"
                                     {preference_delete_mode}></td>
                         </tr>
@@ -59,7 +59,7 @@
                             <span class="icon text-white-50">
                                 <i class="fas fa-save"></i>
                             </span>
-                            <span class="text">{us_send_data}</span>
+                            <span class="text">{{ __('admin/users.us_send_data') }}</span>
                         </button>
                     </div>
                 </form>

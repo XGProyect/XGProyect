@@ -12,7 +12,7 @@
                 <form name="save_info" method="post" action="">
                     <table class="table table-borderless" width="100%" cellspacing="0">
                         <tr>
-                            <td>{us_user_premium_dark_matter}</td>
+                            <td>{{ __('admin/users.us_user_premium_dark_matter') }}</td>
                             <td>
                                 <input type="number" class="form-control" name="premium_dark_matter"
                                     value="{premium_dark_matter}">
@@ -39,7 +39,7 @@
                             <span class="icon text-white-50">
                                 <i class="fas fa-save"></i>
                             </span>
-                            <span class="text">{us_send_data}</span>
+                            <span class="text">{{ __('admin/users.us_send_data') }}</span>
                         </button>
                     </div>
                 </form>

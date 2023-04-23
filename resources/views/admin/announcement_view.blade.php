@@ -4,15 +4,15 @@
     <form action="" method="POST" name="announcement">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{an_title}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/announcement.an_title') }}</h1>
             <button type="submit" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-envelope"></i>
                 </span>
-                <span class="text">{an_send_message}</span>
+                <span class="text">{{ __('admin/announcement.an_send_message') }}</span>
             </button>
         </div>
-        <p class="mb-4">{an_sub_title}</p>
+        <p class="mb-4">{{ __('admin/announcement.an_sub_title') }}</p>
 
         <div class="row">
             <div class="col-lg-12">
@@ -20,7 +20,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                         aria-expanded="true" aria-controls="collapseGeneral">
-                        <h6 class="m-0 font-weight-bold text-primary">{an_general}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/announcement.an_general') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show" id="collapseGeneral" style="">
@@ -31,7 +31,7 @@
                                         <tr>
                                             <td>
                                                 <input class="form-control" name="subject" maxlength="100"
-                                                    value="{an_none}" type="text" placeholder="{an_subject}">
+                                                    value="{{ __('admin/announcement.an_none') }}" type="text" placeholder="{{ __('admin/announcement.an_subject') }}">
                                             </td>
                                             <td width="20%">
                                                 <!--<input class="form-control" name="color-picker" type="color">-->
@@ -46,15 +46,15 @@
                                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                                     <tr>
                                                         <td>
-                                                            {an_send_as}
+                                                            {{ __('admin/announcement.an_send_as') }}
                                                         </td>
                                                         <td>
                                                             <input class="form-check-input" type="checkbox"
-                                                                name="message" checked> {an_send_as_message}
+                                                                name="message" checked> {{ __('admin/announcement.an_send_as_message') }}
                                                         </td>
                                                         <td>
                                                             <input class="form-check-input" type="checkbox" name="mail">
-                                                            {an_send_as_email}
+                                                            {{ __('admin/announcement.an_send_as_email') }}
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -63,10 +63,10 @@
                                         <tr>
                                             <td colspan="3">
                                                 <i class="fas fa-question-circle" data-toggle="popover"
-                                                    data-trigger="hover" data-content="{an_info}" data-html="true"></i>
+                                                    data-trigger="hover" data-content="{{ __('admin/announcement.an_info') }}" data-html="true"></i>
                                                 <textarea class="form-control" name="text" rows="10"
                                                     onkeyup="javascript:cntChars('announcement', 5000);"></textarea>
-                                                (<span id="cntChars">0</span> / 5000 {an_characters})
+                                                (<span id="cntChars">0</span> / 5000 {{ __('admin/announcement.an_characters') }})
                                             </td>
                                         </tr>
                                     </tbody>

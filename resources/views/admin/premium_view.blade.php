@@ -3,15 +3,15 @@
     <form action="" method="POST">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{pr_title}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/premium.pr_title') }}</h1>
             <button type="submit" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-save"></i>
                 </span>
-                <span class="text">{pr_save_changes}</span>
+                <span class="text">{{ __('admin/premium.pr_save_changes') }}</span>
             </button>
         </div>
-        <p class="mb-4">{pr_sub_title}</p>
+        <p class="mb-4">{{ __('admin/premium.pr_sub_title') }}</p>
 
         <div class="row">
             <div class="col-lg-6">
@@ -19,7 +19,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                         aria-expanded="true" aria-controls="collapseGeneral">
-                        <h6 class="m-0 font-weight-bold text-primary">{pr_general}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/premium.pr_general') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show" id="collapseGeneral" style="">
@@ -30,7 +30,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {pr_pay_url}
+                                                    {{ __('admin/premium.pr_pay_url') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -41,7 +41,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {pr_registration_dark_matter}
+                                                    {{ __('admin/premium.pr_registration_dark_matter') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -61,7 +61,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseOtherParameters" class="d-block card-header py-3" data-toggle="collapse"
                         role="button" aria-expanded="true" aria-controls="collapseOtherParameters">
-                        <h6 class="m-0 font-weight-bold text-primary">{pr_trader}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/premium.pr_trader') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show" id="collapseOtherParameters" style="">
@@ -72,7 +72,7 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {pr_trader_price}
+                                                    {{ __('admin/premium.pr_trader_price') }}
                                                 </span>
                                             </td>
                                             <td>
@@ -83,9 +83,9 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {pr_merchant_base_min_exchange_rate}
+                                                    {{ __('admin/premium.pr_merchant_base_min_exchange_rate') }}
                                                     <i class="fas fa-question-circle" data-toggle="popover"
-                                                        data-trigger="hover" data-content="{pr_merchant_explanation}"
+                                                        data-trigger="hover" data-content="{{ __('admin/premium.pr_merchant_explanation') }}"
                                                         data-html="true"></i>
                                                 </span>
                                             </td>
@@ -98,9 +98,9 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {pr_merchant_base_max_exchange_rate}
+                                                    {{ __('admin/premium.pr_merchant_base_max_exchange_rate') }}
                                                     <i class="fas fa-question-circle" data-toggle="popover"
-                                                        data-trigger="hover" data-content="{pr_merchant_explanation}"
+                                                        data-trigger="hover" data-content="{{ __('admin/premium.pr_merchant_explanation') }}"
                                                         data-html="true"></i>
                                                 </span>
                                             </td>
@@ -113,9 +113,9 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {pr_merchant_metal_multiplier}
+                                                    {{ __('admin/premium.pr_merchant_metal_multiplier') }}
                                                     <i class="fas fa-question-circle" data-toggle="popover"
-                                                        data-trigger="hover" data-content="{pr_merchant_explanation}"
+                                                        data-trigger="hover" data-content="{{ __('admin/premium.pr_merchant_explanation') }}"
                                                         data-html="true"></i>
                                                 </span>
                                             </td>
@@ -127,9 +127,9 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {pr_merchant_crystal_multiplier}
+                                                    {{ __('admin/premium.pr_merchant_crystal_multiplier') }}
                                                     <i class="fas fa-question-circle" data-toggle="popover"
-                                                        data-trigger="hover" data-content="{pr_merchant_explanation}"
+                                                        data-trigger="hover" data-content="{{ __('admin/premium.pr_merchant_explanation') }}"
                                                         data-html="true"></i>
                                                 </span>
                                             </td>
@@ -142,9 +142,9 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    {pr_merchant_deuterium_multiplier}
+                                                    {{ __('admin/premium.pr_merchant_deuterium_multiplier') }}
                                                     <i class="fas fa-question-circle" data-toggle="popover"
-                                                        data-trigger="hover" data-content="{pr_merchant_explanation}"
+                                                        data-trigger="hover" data-content="{{ __('admin/premium.pr_merchant_explanation') }}"
                                                         data-html="true"></i>
                                                 </span>
                                             </td>

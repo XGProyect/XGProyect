@@ -2,15 +2,15 @@
     {alert}
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{sb_title}</h1>
+        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/rebuildhighscores.sb_title') }}</h1>
         <button onclick="javascript:location.reload();" class="btn btn-primary btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-sync-alt"></i>
             </span>
-            <span class="text">{sb_rebuild}</span>
+            <span class="text">{{ __('admin/rebuildhighscores.sb_rebuild') }}</span>
         </button>
     </div>
-    <p class="mb-4">{sb_sub_title}</p>
+    <p class="mb-4">{{ __('admin/rebuildhighscores.sb_sub_title') }}</p>
 
     <div class="row">
         <div class="col-lg-6">
@@ -18,7 +18,7 @@
                 <!-- Card Header - Accordion -->
                 <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                     aria-expanded="true" aria-controls="collapseGeneral">
-                    <h6 class="m-0 font-weight-bold text-primary">{sb_stats_updated}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/rebuildhighscores.sb_stats_updated') }}</h6>
                 </a>
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseGeneral" style="">
@@ -29,7 +29,7 @@
                                     <tr>
                                         <td>
                                             <span>
-                                                {sb_top_memory}
+                                                {{ __('admin/rebuildhighscores.sb_top_memory') }}
                                             </span>
                                         </td>
                                         <td>
@@ -39,7 +39,7 @@
                                     <tr>
                                         <td>
                                             <span>
-                                                {sb_start_memory}
+                                                {{ __('admin/rebuildhighscores.sb_start_memory') }}
                                             </span>
                                         </td>
                                         <td>
@@ -49,7 +49,7 @@
                                     <tr>
                                         <td>
                                             <span>
-                                                {sb_final_memory}
+                                                {{ __('admin/rebuildhighscores.sb_final_memory') }}
                                             </span>
                                         </td>
                                         <td>

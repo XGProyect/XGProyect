@@ -3,15 +3,15 @@
     <form name="frm_modules" method="POST" action="admin.php?page=modules">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{mdl_title}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/modules.mdl_title') }}</h1>
             <button type="submit" name="save" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-save"></i>
                 </span>
-                <span class="text">{mdl_save}</span>
+                <span class="text">{{ __('admin/modules.mdl_save') }}</span>
             </button>
         </div>
-        <p class="mb-4">{mdl_sub_title}</p>
+        <p class="mb-4">{{ __('admin/modules.mdl_sub_title') }}</p>
 
         <div class="row">
             <div class="col-lg-12">
