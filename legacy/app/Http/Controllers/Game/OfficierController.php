@@ -127,7 +127,6 @@ class OfficierController extends BaseController
     private function setOfficier(int $item_id): array
     {
         $item_to_parse = [];
-        $item_to_parse = $this->langs->language;
         $item_to_parse['dpath'] = DPATH;
         $item_to_parse['status'] = $this->setOfficierStatusWithFormat($item_id);
         $item_to_parse['name'] = $this->langs->language['officiers'][$item_id]['name'];
@@ -155,13 +154,12 @@ class OfficierController extends BaseController
             return FormatLib::customColor(
                 OfficiersLib::getOfficierTimeLeft(
                     $this->user[$this->objects->getObjects($item_id)],
-                    $this->langs->language
                 ),
                 'lime'
             );
         }
 
-        return FormatLib::colorRed($this->langs->line('of_inactive'));
+        return FormatLib::colorRed(__('game/officier.of_inactive'));
     }
 
     /**

@@ -86,7 +86,7 @@ class Expedition extends Missions
             if (!$this->all_destroyed) {
                 $this->expeditionMessage(
                     $fleet_row['fleet_owner'],
-                    $this->langs->line('exp_back_home'),
+                    __('game/expedition.exp_back_home'),
                     $fleet_row['fleet_end_time']
                 );
 
@@ -114,7 +114,7 @@ class Expedition extends Missions
 
             $this->expeditionMessage(
                 $fleet_row['fleet_owner'],
-                $this->langs->line('exp_blackholl_2'),
+                __('game/expedition.exp_blackholl_2'),
                 $fleet_row['fleet_end_stay']
             );
 
@@ -136,7 +136,7 @@ class Expedition extends Missions
             if (!$this->all_destroyed) {
                 $this->expeditionMessage(
                     $fleet_row['fleet_owner'],
-                    $this->langs->line('exp_blackholl_1'),
+                    __('game/expedition.exp_blackholl_1'),
                     $fleet_row['fleet_end_stay']
                 );
 
@@ -148,7 +148,7 @@ class Expedition extends Missions
             } else {
                 $this->expeditionMessage(
                     $fleet_row['fleet_owner'],
-                    $this->langs->line('exp_blackholl_2'),
+                    __('game/expedition.exp_blackholl_2'),
                     $fleet_row['fleet_end_stay']
                 );
 
@@ -169,7 +169,7 @@ class Expedition extends Missions
     {
         $this->expeditionMessage(
             $fleet_row['fleet_owner'],
-            $this->langs->line('exp_nothing_' . mt_rand(1, 6)),
+            __('game/expedition.exp_nothing_' . mt_rand(1, 6)),
             $fleet_row['fleet_end_stay']
         );
 
@@ -210,15 +210,15 @@ class Expedition extends Missions
             ]);
 
             $message = sprintf(
-                $this->langs->line('exp_found_goods'),
+                __('game/expedition.exp_found_goods'),
                 FormatLib::prettyNumber($found_metal),
-                $this->langs->line('metal'),
+                __('game/global.metal'),
                 FormatLib::prettyNumber($found_crystal),
-                $this->langs->line('crystal'),
+                __('game/global.crystal'),
                 FormatLib::prettyNumber($found_deuterium),
-                $this->langs->line('deuterium'),
+                __('game/global.deuterium'),
                 FormatLib::prettyNumber($found_darkmatter),
-                $this->langs->line('dark_matter')
+                __('game/global.dark_matter')
             );
 
             $this->expeditionMessage($fleet_row['fleet_owner'], $message, $fleet_row['fleet_end_stay']);
@@ -261,7 +261,7 @@ class Expedition extends Missions
         if ($found_ship != null) {
             foreach ($found_ship as $ship => $count) {
                 if ($count != 0) {
-                    $found_ship_message .= $this->langs->line($this->resource[$ship]) . ': ' . $count . '<br>';
+                    $found_ship_message .= __('game/ships.' . $this->resource[$ship]) . ': ' . $count . '<br>';
                 }
             }
         }
@@ -271,7 +271,7 @@ class Expedition extends Missions
             'fleet_id' => $fleet_row['fleet_id'],
         ]);
 
-        $message = sprintf($this->langs->line('exp_new_ships_' . mt_rand(1, 5)), $found_ship_message);
+        $message = sprintf(__('game/expedition.exp_new_ships_' . mt_rand(1, 5)), $found_ship_message);
 
         $this->expeditionMessage($fleet_row['fleet_owner'], $message, $fleet_row['fleet_end_stay']);
     }
@@ -320,8 +320,8 @@ class Expedition extends Missions
             '',
             $time,
             5,
-            $this->langs->line('mi_fleet_command'),
-            $this->langs->line('exp_report_title'),
+            __('game/missions.mi_fleet_command'),
+            __('game/expedition.exp_report_title'),
             $message
         );
     }

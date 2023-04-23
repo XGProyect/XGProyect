@@ -61,7 +61,7 @@ class LanguagesController extends BaseController
             fclose($fs);
         }
 
-        $this->alert = Administration::saveMessage('ok', $this->langs->line('le_all_ok_message'));
+        $this->alert = Administration::saveMessage('ok', __('admin/languages.le_all_ok_message'));
     }
 
     private function buildPage(): void
@@ -102,7 +102,7 @@ class LanguagesController extends BaseController
         }
 
         if (!$contents && $this->current_file != '') {
-            $this->alert = Administration::saveMessage('error', $this->langs->line('le_all_error_reading'));
+            $this->alert = Administration::saveMessage('error', __('admin/languages.le_all_error_reading'));
         }
 
         return [

@@ -158,8 +158,8 @@ class PreferencesController extends BaseController
             $message = [
                 'status_message' => '',
                 '/status_message' => '',
-                'error_color' => ($this->error == '' ? '#00FF00' : '#FF0000'),
-                'error_text' => ($this->error == '' ? $this->langs->line('pr_ok_settings_saved') : $this->error),
+                'error_color' => ($this->error == '' ? '#00ff00' : '#ff0000'),
+                'error_text' => ($this->error == '' ? __('game/preferences.pr_ok_settings_saved') : $this->error),
             ];
         }
 
@@ -195,7 +195,7 @@ class PreferencesController extends BaseController
                 'selected' => (
                     $value == $this->preferences->getCurrentPreference()->getPreferencePlanetSort() ? 'selected="selected"' : ''
                 ),
-                'text' => $this->langs->line('pr_order_' . $order),
+                'text' => __('game/preferences.pr_order_' . $order),
             ];
         }
 
@@ -217,7 +217,7 @@ class PreferencesController extends BaseController
                 'selected' => (
                     $value == $this->preferences->getCurrentPreference()->getPreferencePlanetSortSequence() ? 'selected="selected"' : ''
                 ),
-                'text' => $this->langs->line('pr_sorting_sequence_' . $sequence),
+                'text' => __('game/preferences.pr_sorting_sequence_' . $sequence),
             ];
         }
 
@@ -235,7 +235,7 @@ class PreferencesController extends BaseController
             return [
                 'hide_vacation_invalid' => 'style="display: none"',
                 'pr_vacation_mode_active' => Format::strongText(
-                    Format::colorRed($this->langs->line('pr_vacation_mode_active'))
+                    Format::colorRed(__('game/preferences.pr_vacation_mode_active'))
                 ),
                 'disabled' => ($this->preferences->isVacationModeRemovalAllowed() ? '' : 'style="display: none"'),
             ];
@@ -245,7 +245,7 @@ class PreferencesController extends BaseController
             return [
                 'disabled' => 'style="display: none"',
                 'pr_vacation_mode_active' => Format::strongText(
-                    Format::colorRed($this->langs->line('pr_empire_active') . $this->langs->line('pr_empire_active_fleet'))
+                    Format::colorRed(__('game/preferences.pr_empire_active') . __('game/preferences.pr_empire_active_fleet'))
                 ),
             ];
         }
@@ -266,7 +266,7 @@ class PreferencesController extends BaseController
         if ($this->preferences->getCurrentPreference()->getPreferenceDeleteMode() > 0) {
             return [
                 'pr_delete_account' => Format::colorRed(strtr(
-                    $this->langs->line('pr_delete_mode_active'),
+                    __('game/preferences.pr_delete_mode_active'),
                     [
                         '%s' => Timing::formatExtendedDate(
                             $this->preferences->getCurrentPreference()->getPreferenceDeleteMode() + ONE_WEEK
@@ -300,16 +300,16 @@ class PreferencesController extends BaseController
                         $this->fields_to_update['user_name'] = $preferences['new_user_name'];
                         $this->fields_to_update['preference_nickname_change'] = time();
                     } else {
-                        $this->error = $this->langs->line('pr_error_nick_in_use');
+                        $this->error = __('game/preferences.pr_error_nick_in_use');
                     }
                 } else {
                     $this->error = strtr(
-                        $this->langs->line('pr_error_user_invalid_characters'),
+                        __('game/preferences.pr_error_user_invalid_characters'),
                         ['%s' => $preferences['new_user_name']]
                     );
                 }
             } else {
-                $this->error = $this->langs->line('pr_error_wrong_password');
+                $this->error = __('game/preferences.pr_error_wrong_password');
             }
         }
     }
@@ -327,7 +327,7 @@ class PreferencesController extends BaseController
             if (password_verify($preferences['current_user_password'], $this->user['user_password'])) {
                 $this->fields_to_update['user_password'] = Functions::hash(trim($preferences['new_user_password']));
             } else {
-                $this->error = $this->langs->line('pr_error_wrong_password');
+                $this->error = __('game/preferences.pr_error_wrong_password');
             }
         }
     }
@@ -349,16 +349,16 @@ class PreferencesController extends BaseController
                     if (!$this->preferencesModel->checkIfEmailExists($preferences['new_user_email'])) {
                         $this->fields_to_update['user_email'] = $preferences['new_user_email'];
                     } else {
-                        $this->error = $this->langs->line('pr_error_email_in_use');
+                        $this->error = __('game/preferences.pr_error_email_in_use');
                     }
                 } else {
                     $this->error = strtr(
-                        $this->langs->line('pr_error_email_invalid_characters'),
+                        __('game/preferences.pr_error_email_invalid_characters'),
                         ['%s' => $preferences['new_user_email']]
                     );
                 }
             } else {
-                $this->error = $this->langs->line('pr_error_wrong_password');
+                $this->error = __('game/preferences.pr_error_wrong_password');
             }
         }
     }

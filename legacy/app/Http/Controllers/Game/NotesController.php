@@ -167,7 +167,7 @@ class NotesController extends BaseController
             'template' => 'game/notes_view',
             'data' => [
                 'list_of_notes' => $this->buildNotesListBlock(),
-                'no_notes' => $this->notes->hasNotes() ? '' : '<tr><th colspan="4">' . $this->langs->line('nt_no_notes_found') . '</th>',
+                'no_notes' => $this->notes->hasNotes() ? '' : '<tr><th colspan="4">' . __('game/notes.nt_no_notes_found') . '</th>',
             ],
         ];
     }
@@ -203,7 +203,7 @@ class NotesController extends BaseController
                 return array_merge([
                     's' => 2,
                     'note_id' => '<input type="hidden" name="n" value=' . $note_data->getNoteById($note_id)->getNoteId() . '>',
-                    'title' => $this->langs->line('nt_edit_note'),
+                    'title' => __('game/notes.nt_edit_note'),
                     'subject' => $note_data->getNoteById($note_id)->getNoteTitle(),
                     'text' => $note_data->getNoteById($note_id)->getNoteText(),
                 ], $selected);
@@ -214,8 +214,8 @@ class NotesController extends BaseController
         return array_merge([
             's' => 1,
             'note_id' => '',
-            'title' => $this->langs->line('nt_add_note'),
-            'subject' => $this->langs->line('nt_your_subject'),
+            'title' => __('game/notes.nt_add_note'),
+            'subject' => __('game/notes.nt_your_subject'),
             'text' => '',
         ], $selected);
     }
@@ -234,7 +234,7 @@ class NotesController extends BaseController
                 'note_owner' => $this->user['user_id'],
                 'note_time' => time(),
                 'note_priority' => is_int($data['u']) ? $data['u'] : Importance::important,
-                'note_title' => !empty($data['title']) ? $data['title'] : $this->langs->line('nt_your_subject'),
+                'note_title' => !empty($data['title']) ? $data['title'] : __('game/notes.nt_your_subject'),
                 'note_text' => !empty($data['text']) ? $data['text'] : '',
             ]
         );
@@ -255,7 +255,7 @@ class NotesController extends BaseController
             [
                 'note_time' => time(),
                 'note_priority' => is_int($data['u']) ? $data['u'] : Importance::important,
-                'note_title' => !empty($data['title']) ? $data['title'] : $this->langs->line('nt_your_subject'),
+                'note_title' => !empty($data['title']) ? $data['title'] : __('game/notes.nt_your_subject'),
                 'note_text' => !empty($data['text']) ? $data['text'] : '',
             ]
         );

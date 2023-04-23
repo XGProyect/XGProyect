@@ -109,7 +109,7 @@ class Fleet1Controller extends BaseController
     private function buildNoSlotBlock()
     {
         if (!$this->checkAvailableSlot()) {
-            return Template::getInstance()->render('fleet/fleet1_noslots_row', $this->langs->language);
+            return Template::getInstance()->render('fleet/fleet1_noslots_row');
         }
 
         return null;
@@ -167,9 +167,9 @@ class Fleet1Controller extends BaseController
      */
     private function buildShipName($ship_name, $ship_id)
     {
-        $title = $this->langs->line('fl_speed_title') . FleetsLib::fleetMaxSpeed(null, $ship_id, $this->user);
+        $title = __('game/fleet.fl_speed_title') . FleetsLib::fleetMaxSpeed(null, $ship_id, $this->user);
 
-        return UrlHelper::setUrl('', $this->langs->line($ship_name), $title);
+        return UrlHelper::setUrl('', __('game/ships.' . $ship_name), $title);
     }
 
     /**
@@ -197,7 +197,7 @@ class Fleet1Controller extends BaseController
             return null;
         }
 
-        return UrlHelper::setUrl('#', $this->langs->line('fl_max'), '', 'onclick="javascript:maxShip(\'ship' . $ship_id . '\');"');
+        return UrlHelper::setUrl('#', __('game/fleet.fl_max'), '', 'onclick="javascript:maxShip(\'ship' . $ship_id . '\');"');
     }
 
     /**
@@ -225,7 +225,7 @@ class Fleet1Controller extends BaseController
     {
         if ($this->_ship_count > 0
             && $this->checkAvailableSlot()) {
-            return Template::getInstance()->render('fleet/fleet1_selector_row', $this->langs->language);
+            return Template::getInstance()->render('fleet/fleet1_selector_row');
         }
 
         return '';
@@ -239,7 +239,7 @@ class Fleet1Controller extends BaseController
     private function buildNoShipsBlock()
     {
         if ($this->_ship_count <= 0) {
-            return Template::getInstance()->render('fleet/fleet1_noships_row', $this->langs->language);
+            return Template::getInstance()->render('fleet/fleet1_noships_row');
         }
 
         return '';
@@ -254,7 +254,7 @@ class Fleet1Controller extends BaseController
     {
         if ($this->_ship_count > 0
             && $this->checkAvailableSlot()) {
-            return Template::getInstance()->render('fleet/fleet1_button', $this->langs->language);
+            return Template::getInstance()->render('fleet/fleet1_button');
         }
 
         return '';

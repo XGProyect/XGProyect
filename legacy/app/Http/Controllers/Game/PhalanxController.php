@@ -36,7 +36,6 @@ class PhalanxController extends BaseController
 
     private function buildPage(): void
     {
-        $parse = $this->langs->language;
         /* range */
         $radar_limit_inf = $this->planet['planet_system'] - Formulas::phalanxRange($this->planet['building_phalanx']);
         $radar_limit_sup = $this->planet['planet_system'] + Formulas::phalanxRange($this->planet['building_phalanx']);
@@ -140,7 +139,7 @@ class PhalanxController extends BaseController
             $parse['phl_er_deuter'] = '';
         } else {
             $parse['phl_fleets_table'] = '';
-            $parse['phl_er_deuter'] = $this->langs->line('px_no_deuterium');
+            $parse['phl_er_deuter'] = __('game/phalanx.px_no_deuterium');
         }
 
         $parse['phl_pl_galaxy'] = $Galaxy;

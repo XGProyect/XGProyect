@@ -65,7 +65,7 @@ class BanController extends BaseController
 
             $this->banModel->unbanUser($username);
 
-            $parse['alert'] = Administration::saveMessage('ok', (str_replace('%s', $username, $this->langs->line('bn_lift_ban_success'))));
+            $parse['alert'] = Administration::saveMessage('ok', (str_replace('%s', $username, __('admin/ban.bn_lift_ban_success'))));
         }
 
         $parse['users_list'] = $this->getUsersList();
@@ -92,21 +92,21 @@ class BanController extends BaseController
         if (isset($_GET['banuser']) && isset($ban_name)) {
             $parse['name'] = $ban_name;
             $parse['banned_until'] = '';
-            $parse['changedate'] = $this->langs->line('bn_auto_lift_ban_message');
+            $parse['changedate'] = __('admin/ban.bn_auto_lift_ban_message');
             $parse['vacation'] = '';
 
             $banned_user = $this->banModel->getBannedUserData($ban_name);
 
             if ($banned_user) {
-                $parse['banned_until'] = $this->langs->line('bn_banned_until') . ' (' . date(Functions::readConfig('date_format_extended'), $banned_user['banned_longer']) . ')';
+                $parse['banned_until'] = __('admin/ban.bn_banned_until') . ' (' . date(Functions::readConfig('date_format_extended'), $banned_user['banned_longer']) . ')';
                 $parse['reason'] = $banned_user['banned_theme'];
-                $parse['changedate'] = '<div style="float:left">' . $this->langs->line('bn_change_date') . '</div><div style="float:right">' . Administration::showPopUp($this->langs->line('bn_edit_ban_help')) . '</div>';
+                $parse['changedate'] = '<div style="float:left">' . __('admin/ban.bn_change_date') . '</div><div style="float:right">' . Administration::showPopUp(__('admin/ban.bn_edit_ban_help')) . '</div>';
                 $parse['vacation'] = $banned_user['preference_vacation_mode'] ? 'checked="checked"' : '';
             }
 
             if (isset($_POST['bannow']) && $_POST['bannow']) {
                 if (!is_numeric($_POST['days']) or !is_numeric($_POST['hour'])) {
-                    $parse['alert'] = Administration::saveMessage('warning', $this->langs->line('bn_all_fields_required'));
+                    $parse['alert'] = Administration::saveMessage('warning', __('admin/ban.bn_all_fields_required'));
                 } else {
                     $reas = (string) $_POST['text'];
                     $days = (int) $_POST['days'];
@@ -143,7 +143,7 @@ class BanController extends BaseController
                         $vacation_mode
                     );
 
-                    $parse['alert'] = Administration::saveMessage('ok', (str_replace('%s', $ban_name, $this->langs->line('bn_ban_success'))));
+                    $parse['alert'] = Administration::saveMessage('ok', (str_replace('%s', $ban_name, __('admin/ban.bn_ban_success'))));
                 }
             }
         } else {
@@ -184,7 +184,7 @@ class BanController extends BaseController
             $status = '';
 
             if ($user['user_banned'] == 1) {
-                $status = $this->langs->line('bn_status');
+                $status = __('admin/ban.bn_status');
             }
 
             $users_list .= '<option value="' . $user['user_name'] . '">' . $user['user_name'] . '&nbsp;&nbsp;(ID:&nbsp;' . $user['user_id'] . ')' . $status . '</option>';

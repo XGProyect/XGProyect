@@ -86,7 +86,7 @@ class OverviewController extends BaseController
                 // THE BUILDING BLOCK
                 if ($is_current_planet) {
                     $building_block = DevelopmentsLib::currentBuilding('overview', $building);
-                    $building_block .= $this->langs->language[$this->objects->getObjects($building)] . ' (' . $level . ')';
+                    $building_block .= __('game/constructions.' . $this->objects->getObjects($building)) . ' (' . $level . ')';
                     $building_block .= '<br /><div id="blc" class="z">' . FormatLib::prettyTime($time_to_end) . '</div>';
                     $building_block .= "\n<script language=\"JavaScript\">";
                     $building_block .= "\n	pp = \"" . $time_to_end . "\";\n";
@@ -96,7 +96,7 @@ class OverviewController extends BaseController
                     $building_block .= "\n	t();\n";
                     $building_block .= "\n</script>\n";
                 } else {
-                    $building_block = '' . $this->langs->language[$this->objects->getObjects($building)] . ' (' . $level . ')';
+                    $building_block = '' . __('game/constructions.' . $this->objects->getObjects($building)) . ' (' . $level . ')';
                     $building_block .= '<br><font color="#7f7f7f">(' . FormatLib::prettyTime($time_to_end) . ')</font>';
                 }
             }

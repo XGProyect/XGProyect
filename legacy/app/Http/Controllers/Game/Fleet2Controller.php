@@ -171,7 +171,7 @@ class Fleet2Controller extends BaseController
                 $list_of_options[] = [
                     'value' => $value,
                     'selected' => ($value == $data['planet_type']) ? 'selected' : '',
-                    'title' => $this->langs->line($label),
+                    'title' => __('game/fleet.fl_' . $label),
                 ];
             }
         }
@@ -225,7 +225,7 @@ class Fleet2Controller extends BaseController
         } else {
             $shortcut_row = Template::getInstance()->render(
                 'fleet/fleet2_shortcuts_noshortcuts_row',
-                ['shorcut_message' => $this->langs->line('fl_no_shortcuts')]
+                ['shorcut_message' => __('game/fleet.fl_no_shortcuts')]
             );
         }
 
@@ -256,7 +256,7 @@ class Fleet2Controller extends BaseController
                         $planet['planet_galaxy'],
                         $planet['planet_system'],
                         $planet['planet_planet']
-                    ) . ($planet['planet_type'] == PlanetTypes::MOON ? ' (' . $this->langs->line('moon') . ')' : ''),
+                    ) . ($planet['planet_type'] == PlanetTypes::MOON ? ' (' . __('game/global.moon') . ')' : ''),
                 ];
             }
 
@@ -271,7 +271,7 @@ class Fleet2Controller extends BaseController
 
         return Template::getInstance()->render(
             'fleet/fleet2_shortcuts_noshortcuts_row',
-            ['shorcut_message' => $this->langs->line('fl_no_colony')]
+            ['shorcut_message' => __('game/fleet.fl_no_colony')]
         );
     }
 

@@ -96,9 +96,9 @@ class Transport extends Missions
             '',
             $fleet['fleet_start_time'],
             5,
-            $this->langs->line('mi_fleet_command'),
-            $this->langs->line('tra_reaching'),
-            StringsHelper::parseReplacements($this->langs->line('tra_delivered_resources'), [
+            __('game/missions.mi_fleet_command'),
+            __('game/transport.tra_reaching'),
+            StringsHelper::parseReplacements(__('game/transport.tra_delivered_resources'), [
                 $trading_planets['start_name'],
                 Fleets::startLink($fleet, ''),
                 $trading_planets['target_name'],
@@ -126,9 +126,9 @@ class Transport extends Missions
                 '',
                 $fleet['fleet_start_time'],
                 5,
-                $this->langs->line('tra_incoming_from'),
-                $this->langs->line('tra_incoming_title'),
-                StringsHelper::parseReplacements($this->langs->line('tra_incoming_delivery'), [
+                __('game/transport.tra_incoming_from'),
+                __('game/transport.tra_incoming_title'),
+                StringsHelper::parseReplacements(__('game/transport.tra_incoming_delivery'), [
                     $trading_planets['start_user_name'],
                     $trading_planets['start_name'],
                     Fleets::startLink($fleet, ''),
@@ -157,7 +157,7 @@ class Transport extends Missions
      */
     private function sendReturnMessage(array $fleet, array $trading_planets): void
     {
-        $text = $this->langs->line('mi_fleet_back_without_resources');
+        $text = __('game/missions.mi_fleet_back_without_resources');
         $replacements = [
             $trading_planets['target_name'],
             Fleets::targetLink($fleet, ''),
@@ -166,7 +166,7 @@ class Transport extends Missions
         ];
 
         if (Fleets::hasResources($fleet)) {
-            $text = $this->langs->line('mi_fleet_back_with_resources');
+            $text = __('game/missions.mi_fleet_back_with_resources');
             $replacements = [
                 $fleet['planet_end_name'],
                 Fleets::targetLink($fleet, ''),
@@ -184,8 +184,8 @@ class Transport extends Missions
             '',
             $fleet['fleet_end_time'],
             5,
-            $this->langs->line('mi_fleet_command'),
-            $this->langs->line('mi_fleet_back_title'),
+            __('game/missions.mi_fleet_command'),
+            __('game/missions.mi_fleet_back_title'),
             StringsHelper::parseReplacements($text, $replacements)
         );
     }

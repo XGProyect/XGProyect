@@ -247,32 +247,32 @@ class FleetsLib
 
         if ($espionage_tech < 2 && $fleetRow['fleet_owner'] != $current_user['user_id']) {
             $pop_up .= '<tr><td width=50% align=left><font color=white>' .
-            $lang->line('ev_no_fleet_data') . '</font></td></tr>';
+            __('game/events.ev_no_fleet_data') . '</font></td></tr>';
         } elseif ($espionage_tech >= 2 && $espionage_tech < 4 && $fleetRow['fleet_owner'] != $current_user['user_id']) {
             $pop_up .= '<tr><td width=50% align=left><font color=white>' .
-            $lang->line('ev_aproaching') . $fleetRow['fleet_amount'] .
-            $lang->line('ev_ships') . '</font></td></tr>';
+            __('game/events.ev_aproaching') . $fleetRow['fleet_amount'] .
+            __('game/events.ev_ships') . '</font></td></tr>';
         } else {
             if ($fleetRow['fleet_owner'] != $current_user['user_id']) {
                 $pop_up .= '<tr><td width=100% align=left><font color=white>' .
-                $lang->line('ev_aproaching') . $fleetRow['fleet_amount'] . $lang->line('ev_ships') .
+                __('game/events.ev_aproaching') . $fleetRow['fleet_amount'] . __('game/events.ev_ships') .
                     ':</font></td></tr>';
             }
 
             foreach ($ships as $ship => $amount) {
                 if ($fleetRow['fleet_owner'] == $current_user['user_id']) {
                     $pop_up .= '<tr><td width=50% align=left><font color=white>' .
-                    $lang->language[$objects[$ship]] .
+                    __('game/ships.' . $objects[$ship]) .
                     ':</font></td><td width=50% align=right><font color=white>' .
                     FormatLib::prettyNumber($amount) . '</font></td></tr>';
                 } elseif ($fleetRow['fleet_owner'] != $current_user['user_id']) {
                     if ($espionage_tech >= 4 && $espionage_tech < 8) {
                         $pop_up .= '<tr><td width=50% align=left><font color=white>' .
-                        $lang->language[$objects[$ship]] .
+                        __('game/ships.' . $objects[$ship]) .
                             '</font></td></tr>';
                     } elseif ($espionage_tech >= 8) {
                         $pop_up .= '<tr><td width=50% align=left><font color=white>' .
-                        $lang->language[$objects[$ship]] .
+                        __('game/ships.' . $objects[$ship]) .
                         ':<font></td><td width=50% align=right><font color=white>' .
                         FormatLib::prettyNumber($amount) . '</font></td></tr>';
                     }
@@ -340,7 +340,7 @@ class FleetsLib
         if ($MissionType != Missions::MISSILE) {
             $FleetContent = self::fleetShipsPopup(
                 $fleetRow,
-                $lang->line('ev_fleet'),
+                __('game/events.ev_fleet'),
                 $FleetPrefix . $FleetStyle[$MissionType],
                 $current_user
             );
@@ -351,9 +351,9 @@ class FleetsLib
 
         if ($Status != 2) {
             if ($StartType == 1) {
-                $StartID = $lang->line('ev_from_the_planet');
+                $StartID = __('game/events.ev_from_the_planet');
             } elseif ($StartType == 3) {
-                $StartID = $lang->line('ev_from_the_moon');
+                $StartID = __('game/events.ev_from_the_moon');
             }
 
             $StartID .= $fleetRow['start_planet_name'] . ' ';
@@ -362,28 +362,28 @@ class FleetsLib
             if ($MissionType != Missions::EXPEDITION) {
                 switch ($TargetType) {
                     case 1:
-                        $TargetID = $lang->line('ev_the_planet');
+                        $TargetID = __('game/events.ev_the_planet');
                         break;
 
                     case 2:
-                        $TargetID = $lang->line('ev_debris_field');
+                        $TargetID = __('game/events.ev_debris_field');
                         break;
 
                     case 3:
-                        $TargetID = $lang->line('ev_to_the_moon');
+                        $TargetID = __('game/events.ev_to_the_moon');
                         break;
                 }
             } else {
-                $TargetID = $lang->line('ev_the_position');
+                $TargetID = __('game/events.ev_the_position');
             }
 
             $TargetID .= $fleetRow['target_planet_name'] . ' ';
             $TargetID .= FleetsLib::targetLink($fleetRow, $FleetPrefix . $FleetStyle[$MissionType]);
         } else {
             if ($StartType == 1) {
-                $StartID = $lang->line('ev_to_the_planet');
+                $StartID = __('game/events.ev_to_the_planet');
             } elseif ($StartType == 3) {
-                $StartID = $lang->line('ev_the_moon');
+                $StartID = __('game/events.ev_the_moon');
             }
 
             $StartID .= $fleetRow['start_planet_name'] . ' ';
@@ -392,19 +392,19 @@ class FleetsLib
             if ($MissionType != Missions::EXPEDITION) {
                 switch ($TargetType) {
                     case 1:
-                        $TargetID = $lang->line('ev_from_planet');
+                        $TargetID = __('game/events.ev_from_planet');
                         break;
 
                     case 2:
-                        $TargetID = $lang->line('ev_from_debris_field');
+                        $TargetID = __('game/events.ev_from_debris_field');
                         break;
 
                     case 3:
-                        $TargetID = $lang->line('ev_from_the_moon');
+                        $TargetID = __('game/events.ev_from_the_moon');
                         break;
                 }
             } else {
-                $TargetID = $lang->line('ev_from_position');
+                $TargetID = __('game/events.ev_from_position');
             }
 
             $TargetID .= $fleetRow['target_planet_name'] . ' ';
@@ -412,23 +412,23 @@ class FleetsLib
         }
 
         if ($MissionType == Missions::MISSILE) {
-            $EventString = $lang->line('ev_missile_attack') .
+            $EventString = __('game/events.ev_missile_attack') .
             ' ( ' . FleetsLib::getFleetShipsArray($fleetRow['fleet_array'])[Defenses::defense_interplanetary_missile] . ' ) ';
             $Time = $fleetRow['fleet_start_time'];
             $Rest = $Time - time();
 
             $EventString .= $StartID;
-            $EventString .= $lang->line('ev_to');
+            $EventString .= __('game/events.ev_to');
             $EventString .= $TargetID;
             $EventString .= '.';
         } else {
             if ($Owner == true) {
-                $EventString = $lang->line('ev_one_of_your');
+                $EventString = __('game/events.ev_one_of_your');
                 $EventString .= $FleetContent;
             } else {
-                $EventString = $lang->line('ev_a');
+                $EventString = __('game/events.ev_a');
                 $EventString .= $FleetContent;
-                $EventString .= $lang->line('ev_of');
+                $EventString .= __('game/events.ev_of');
                 $EventString .= self::enemyLink($fleetRow);
             }
 
@@ -437,32 +437,32 @@ class FleetsLib
                     $Time = $fleetRow['fleet_start_time'];
                     $Rest = $Time - time();
 
-                    $EventString .= $lang->line('ev_goes');
+                    $EventString .= __('game/events.ev_goes');
                     $EventString .= $StartID;
-                    $EventString .= $lang->line('ev_toward');
+                    $EventString .= __('game/events.ev_toward');
                     $EventString .= $TargetID;
-                    $EventString .= $lang->line('ev_with_the_mission_of');
+                    $EventString .= __('game/events.ev_with_the_mission_of');
                     break;
 
                 case 1:
                     $Time = $fleetRow['fleet_end_stay'];
                     $Rest = $Time - time();
 
-                    $EventString .= $lang->line('ev_goes');
+                    $EventString .= __('game/events.ev_goes');
                     $EventString .= $StartID;
-                    $EventString .= $lang->line('ev_to_explore');
+                    $EventString .= __('game/events.ev_to_explore');
                     $EventString .= $TargetID;
-                    $EventString .= $lang->line('ev_with_the_mission_of');
+                    $EventString .= __('game/events.ev_with_the_mission_of');
                     break;
 
                 case 2:
                     $Time = $fleetRow['fleet_end_time'];
                     $Rest = $Time - time();
 
-                    $EventString .= $lang->line('ev_comming_back');
+                    $EventString .= __('game/events.ev_comming_back');
                     $EventString .= $TargetID;
                     $EventString .= $StartID;
-                    $EventString .= $lang->line('ev_with_the_mission_of');
+                    $EventString .= __('game/events.ev_with_the_mission_of');
                     break;
             }
 

@@ -111,7 +111,6 @@ class TechtreeController extends BaseController
             $list_of_requirements[] = FormatLib::{'color' . $color}(
                 FormatLib::formatLevel(
                     $this->langs->language[$this->_resource[$requirement]],
-                    $this->langs->line('level'),
                     $level
                 )
             );

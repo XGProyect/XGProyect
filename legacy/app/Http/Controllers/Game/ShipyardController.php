@@ -147,7 +147,7 @@ class ShipyardController extends BaseController
     private function showShipyardUpgradeMessage()
     {
         if ($this->building_in_progress) {
-            return FormatLib::colorRed($this->langs->line('sy_building_shipyard'));
+            return FormatLib::colorRed(__('game/shipyard.sy_building_shipyard'));
         }
 
         return '';
@@ -225,7 +225,6 @@ class ShipyardController extends BaseController
             $this->user,
             $this->planet,
             $item_id,
-            $this->langs,
             false
         );
     }
@@ -241,7 +240,7 @@ class ShipyardController extends BaseController
     {
         return DevelopmentsLib::formatedDevelopmentTime(
             $this->getItemTime($item_id),
-            $this->langs->line('sy_time')
+            __('game/shipyard.sy_time')
         );
     }
 
@@ -276,7 +275,7 @@ class ShipyardController extends BaseController
             return '';
         }
 
-        return ' (' . $this->langs->line('sy_available') . FormatLib::prettyNumber($amount) . ')';
+        return ' (' . __('game/shipyard.sy_available') . FormatLib::prettyNumber($amount) . ')';
     }
 
     /**
@@ -291,7 +290,7 @@ class ShipyardController extends BaseController
         if (!$this->building_in_progress && !$this->userLibrary->isOnVacations($this->user)
         ) {
             if ($this->isShieldDomeAvailable($item_id)) {
-                return FormatLib::colorRed($this->langs->line('sy_protection_shield_only_one'));
+                return FormatLib::colorRed(__('game/shipyard.sy_protection_shield_only_one'));
             } else {
                 $box_data = [];
                 $box_data['item_id'] = $item_id;
@@ -328,8 +327,7 @@ class ShipyardController extends BaseController
     {
         if (!$this->building_in_progress && !$this->userLibrary->isOnVacations($this->user)) {
             return Template::getInstance()->render(
-                'shipyard/shipyard_build_button',
-                $this->langs->language
+                'shipyard/shipyard_build_button'
             );
         }
 
@@ -366,7 +364,6 @@ class ShipyardController extends BaseController
                 }
             }
 
-            $block = $this->langs->language;
             $block['a'] = $item_amount_per_type;
             $block['b'] = $item_name_per_type;
             $block['c'] = $item_time_per_type;
@@ -457,7 +454,7 @@ class ShipyardController extends BaseController
     private function showShipyardRequiredMessage()
     {
         if ($this->planet[$this->objects->getObjects(21)] == 0) {
-            Functions::message($this->langs->line('sy_shipyard_required'), '', '', true);
+            Functions::message(__('game/shipyard.sy_shipyard_required'), '', '', true);
         }
     }
 

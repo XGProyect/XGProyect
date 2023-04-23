@@ -259,7 +259,7 @@ class TraderLayerController extends BaseController
             $list_of_resources[] = [
                 'dpath' => DPATH,
                 'resource' => $resource,
-                'resource_name' => $this->langs->line($resource),
+                'resource_name' => __('game/global' . $resource),
                 'current_resource' => Format::shortlyNumber($this->planet['planet_' . $resource]),
                 'max_resource' => Format::shortlyNumber($this->planet['planet_' . $resource . '_max']),
                 'dark_matter_price_10' => Format::prettyNumber($price),

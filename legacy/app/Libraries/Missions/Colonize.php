@@ -33,15 +33,15 @@ class Colonize extends Missions
             ]);
 
             // some required values
-            $target_coords = sprintf($this->langs->line('mi_planet_coordinates'), $fleet_row['fleet_end_galaxy'], $fleet_row['fleet_end_system'], $fleet_row['fleet_end_planet']);
+            $target_coords = sprintf(__('game/missions.mi_planet_coordinates'), $fleet_row['fleet_end_galaxy'], $fleet_row['fleet_end_system'], $fleet_row['fleet_end_planet']);
             $max_colonies = FleetsLib::getMaxColonies($colonization_check['astro_level']);
             $planet_count = $colonization_check['planet_count'] - 1; // the total amount of planets minus 1 (because the main planet is not considered)
 
             // different types of messages
-            $message[1] = sprintf($this->langs->line('col_max_colonies'), $target_coords, ($max_colonies + 1));
-            $message[2] = sprintf($this->langs->line('col_successful'), $target_coords);
-            $message[3] = sprintf($this->langs->line('col_occupied'), $target_coords);
-            $message[4] = sprintf($this->langs->line('col_astro_level'), $target_coords);
+            $message[1] = sprintf(__('game/colonize.col_max_colonies'), $target_coords, ($max_colonies + 1));
+            $message[2] = sprintf(__('game/colonize.col_successful'), $target_coords);
+            $message[3] = sprintf(__('game/colonize.col_occupied'), $target_coords);
+            $message[4] = sprintf(__('game/colonize.col_astro_level'), $target_coords);
 
             if ($colonization_check['galaxy_count'] == 0) {
                 if ($planet_count >= $max_colonies) {
@@ -151,7 +151,7 @@ class Colonize extends Missions
      */
     private function colonizeMessage($owner, $message, $time)
     {
-        Functions::sendMessage($owner, '', $time, 5, $this->langs->line('col_report_from'), $this->langs->line('col_report_title'), $message);
+        Functions::sendMessage($owner, '', $time, 5, __('game/colonize.col_report_from'), __('game/colonize.col_report_title'), $message);
     }
 
     /**

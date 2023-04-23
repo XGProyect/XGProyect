@@ -244,7 +244,7 @@ class Fleet4Controller extends BaseController
             && $this->_target_data['user_authlevel'] >= 1
             && $this->user['user_authlevel'] == 0) {
             $this->showMessage(
-                $this->langs->line('fl_admins_cannot_be_attacked')
+                __('game/fleet.fl_admins_cannot_be_attacked')
             );
         }
 
@@ -259,7 +259,7 @@ class Fleet4Controller extends BaseController
     private function validateOwnVacations()
     {
         if ($this->userLibrary->isOnVacations($this->user)) {
-            $this->showMessage($this->langs->line('fl_vacation_mode_active'));
+            $this->showMessage(__('game/fleet.fl_vacation_mode_active'));
         }
 
         // set owner
@@ -284,7 +284,7 @@ class Fleet4Controller extends BaseController
         if (isset($this->_target_data)
             && $this->userLibrary->isOnVacations($this->_target_data)
             && $this->_clean_input_data['mission'] != Missions::RECYCLE) {
-            $this->showMessage($this->langs->line('fl_in_vacation_player'));
+            $this->showMessage(__('game/fleet.fl_in_vacation_player'));
         }
 
         return true;
@@ -405,7 +405,7 @@ class Fleet4Controller extends BaseController
             && !$this->_own_planet
         ) {
             $this->showMessage(
-                FormatLib::colorRed($this->langs->line('fl_deploy_only_your_planets'))
+                FormatLib::colorRed(__('game/fleet.fl_deploy_only_your_planets'))
             );
         }
 
@@ -417,7 +417,7 @@ class Fleet4Controller extends BaseController
 
             if ($this->_target_data['user_ally_id'] != $this->user['user_ally_id'] && !$is_buddy) {
                 $this->showMessage(
-                    FormatLib::colorRed($this->langs->line('fl_stay_not_on_enemy'))
+                    FormatLib::colorRed(__('game/fleet.fl_stay_not_on_enemy'))
                 );
             }
         }
@@ -429,7 +429,7 @@ class Fleet4Controller extends BaseController
 
             if ($this->_occupied_planet) {
                 $this->showMessage(
-                    FormatLib::colorRed($this->langs->line('fl_planet_populed'))
+                    FormatLib::colorRed(__('game/fleet.fl_planet_populed'))
                 );
             }
         }
@@ -463,13 +463,13 @@ class Fleet4Controller extends BaseController
 
             if ($max_expeditions <= 0) {
                 $this->showMessage(
-                    FormatLib::colorRed($this->langs->line('fl_expedition_tech_required'))
+                    FormatLib::colorRed(__('game/fleet.fl_expedition_tech_required'))
                 );
             }
 
             if ($max_expeditions <= $expeditions) {
                 $this->showMessage(
-                    FormatLib::colorRed($this->langs->line('fl_expedition_fleets_limit'))
+                    FormatLib::colorRed(__('game/fleet.fl_expedition_fleets_limit'))
                 );
             }
         } else {
@@ -524,14 +524,14 @@ class Fleet4Controller extends BaseController
             if ($noob->isWeak(intval($user_points), intval($target_points))
                 && in_array($this->_clean_input_data['mission'], $disallow_weak)) {
                 $this->showMessage(
-                    FormatLib::customColor($this->langs->line('fl_week_player'), 'lime')
+                    FormatLib::customColor(__('game/fleet.fl_week_player'), 'lime')
                 );
             }
 
             if ($noob->isStrong(intval($user_points), intval($target_points))
                 && in_array($this->_clean_input_data['mission'], $disallow_strong)) {
                 $this->showMessage(
-                    FormatLib::colorRed($this->langs->line('fl_strong_player'))
+                    FormatLib::colorRed(__('game/fleet.fl_strong_player'))
                 );
             }
         }
@@ -555,7 +555,7 @@ class Fleet4Controller extends BaseController
 
         if ($max_fleets <= $fleets) {
             $this->showMessage(
-                $this->langs->line('fl_no_slots')
+                __('game/fleet.fl_no_slots')
             );
         }
 
@@ -576,7 +576,7 @@ class Fleet4Controller extends BaseController
         if ($metal + $crystal + $deuterium < 1
             && $this->_clean_input_data['mission'] == Missions::TRANSPORT) {
             $this->showMessage(
-                FormatLib::customColor($this->langs->line('fl_empty_transport'), 'lime')
+                FormatLib::customColor(__('game/fleet.fl_empty_transport'), 'lime')
             );
         }
 
@@ -627,13 +627,13 @@ class Fleet4Controller extends BaseController
 
         if (!$stock_valid) {
             $this->showMessage(
-                FormatLib::colorRed($this->langs->line('fl_no_enought_deuterium') . FormatLib::prettyNumber($consumption))
+                FormatLib::colorRed(__('game/fleet.fl_no_enought_deuterium') . FormatLib::prettyNumber($consumption))
             );
         }
 
         if ($storage_needed > $this->_fleet_storage) {
             $this->showMessage(
-                FormatLib::colorRed($this->langs->line('fl_no_enought_cargo_capacity') . FormatLib::prettyNumber($storage_needed - $this->_fleet_storage))
+                FormatLib::colorRed(__('game/fleet.fl_no_enought_cargo_capacity') . FormatLib::prettyNumber($storage_needed - $this->_fleet_storage))
             );
         }
 

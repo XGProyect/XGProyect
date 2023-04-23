@@ -61,7 +61,7 @@ class UsersController extends BaseController
             $checked_user = $this->usersModel->checkUser($user);
 
             if (!$checked_user) {
-                $parse['alert'] = Administration::saveMessage('error', $this->langs->line('us_nothing_found'));
+                $parse['alert'] = Administration::saveMessage('error', __('admin/users.us_nothing_found'));
                 $user = '';
             } else {
                 $this->_id = $checked_user['user_id'];
@@ -84,7 +84,7 @@ class UsersController extends BaseController
         if (isset($_GET['mode']) && $_GET['mode'] == 'delete' && $this->_user_query['user_authlevel'] != 3) {
             $this->userLibrary->deleteUser($this->_user_query['user_id']);
 
-            $parse['alert'] = Administration::saveMessage('ok', $this->langs->line('us_user_deleted'));
+            $parse['alert'] = Administration::saveMessage('ok', __('admin/users.us_user_deleted'));
         }
 
         $parse['type'] = ($type != '') ? $type : 'info';
@@ -261,16 +261,16 @@ class UsersController extends BaseController
      */
     private function getDataInfo(): string
     {
-        $parse += (array) $this->_user_query;
-        $parse['information'] = str_replace('%s', $this->_user_query['user_name'], $this->langs->line('us_user_information'));
+        $parse = (array) $this->_user_query;
+        $parse['information'] = str_replace('%s', $this->_user_query['user_name'], __('admin/users.us_user_information'));
         $parse['main_planet'] = $this->buildPlanetCombo($this->_user_query, 'user_home_planet_id');
         $parse['current_planet'] = $this->buildPlanetCombo($this->_user_query, 'user_current_planet');
         $parse['alliances'] = $this->buildAllianceCombo($this->_user_query);
         $parse['user_register_time'] = ($this->_user_query['user_register_time'] == 0) ? '-' : date(Functions::readConfig('date_format_extended'), $this->_user_query['user_register_time']);
         $parse['user_onlinetime'] = $this->lastActivity($this->_user_query['user_onlinetime']);
         $parse['user_roles'] = $this->buildUsersRolesList();
-        $parse['user_banned'] = ($this->_user_query['user_banned'] <= 0) ? '<p class="text-error">' . $this->langs->line('ge_no') : '<p class="text-success">' . $this->langs->line('ge_yes');
-        $parse['user_banned'] .= ($this->_user_query['user_banned'] > 0) ? $this->langs->line('us_user_information_banned_until') . date(Functions::readConfig('date_format'), $this->_user_query['user_banned']) . '</p>' : '</p>';
+        $parse['user_banned'] = ($this->_user_query['user_banned'] <= 0) ? '<p class="text-error">' . __('admin/global.ge_no') : '<p class="text-success">' . __('admin/global.ge_yes');
+        $parse['user_banned'] .= ($this->_user_query['user_banned'] > 0) ? __('admin/users.us_user_information_banned_until') . date(Functions::readConfig('date_format'), $this->_user_query['user_banned']) . '</p>' : '</p>';
         $parse['user_fleet_shortcuts'] = $this->buildShortcutsCombo($this->_user_query['user_fleet_shortcuts']);
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
@@ -284,7 +284,7 @@ class UsersController extends BaseController
      */
     private function getDataSettings(): string
     {
-        $parse['settings'] = str_replace('%s', $this->_user_query['user_name'], $this->langs->line('us_user_settings'));
+        $parse['settings'] = str_replace('%s', $this->_user_query['user_name'], __('admin/users.us_user_settings'));
         $parse['preference_planet_sort'] = $this->planetSortCombo();
         $parse['preference_planet_sort_sequence'] = $this->planetOrderCombo();
         $parse['preference_spy_probes'] = $this->_user_query['preference_spy_probes'];
@@ -299,7 +299,7 @@ class UsersController extends BaseController
     private function getDataResearch()
     {
         $parse = (array) $this->_user_query;
-        $parse['research'] = str_replace(['%s', '%d'], [$this->_user_query['user_name'], $this->_id], $this->langs->line('us_user_research'));
+        $parse['research'] = str_replace(['%s', '%d'], [$this->_user_query['user_name'], $this->_id], __('admin/users.us_user_research'));
         $parse['technologies_list'] = $this->researchTable();
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
@@ -308,7 +308,7 @@ class UsersController extends BaseController
 
     private function getDataPremium()
     {
-        $parse['premium'] = str_replace('%s', $this->_user_query['user_name'], $this->langs->line('us_user_premium'));
+        $parse['premium'] = str_replace('%s', $this->_user_query['user_name'], __('admin/users.us_user_premium'));
         $parse['premium_dark_matter'] = $this->_user_query['premium_dark_matter'];
         $parse['premium_list'] = $this->premiumTable();
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
@@ -324,7 +324,7 @@ class UsersController extends BaseController
     private function getDataPlanets()
     {
         $planets_query = $this->usersModel->getAllPlanetsData($this->_id, $this->_planet, $this->_edit);
-        $parse['planets'] = str_replace('%s', $this->_user_query['user_name'], $this->langs->line('us_user_planets'));
+        $parse['planets'] = str_replace('%s', $this->_user_query['user_name'], __('admin/users.us_user_planets'));
 
         // CHOOSE THE ACTION
         switch (true) {
@@ -373,7 +373,7 @@ class UsersController extends BaseController
     private function getDataMoons()
     {
         $moons_query = $this->usersModel->getAllMoonsData($this->_id, $this->_moon, $this->_edit);
-        $parse['moons'] = str_replace('%s', $this->_user_query['user_name'], $this->langs->line('us_user_moons'));
+        $parse['moons'] = str_replace('%s', $this->_user_query['user_name'], __('admin/users.us_user_moons'));
 
         // CHOOSE THE ACTION
         switch (true) {
@@ -442,7 +442,7 @@ class UsersController extends BaseController
         $errors = '';
 
         if ($username == '' or $this->usersModel->checkUsername($username, $this->_id)) {
-            $errors .= $this->langs->line('us_error_username') . '<br />';
+            $errors .= __('admin/users.us_error_username') . '<br />';
         }
 
         if ($password != '') {
@@ -452,23 +452,23 @@ class UsersController extends BaseController
         }
 
         if ($email == '' or $this->usersModel->checkEmail($email, $this->_id)) {
-            $errors .= $this->langs->line('us_error_email') . '<br />';
+            $errors .= __('admin/users.us_error_email') . '<br />';
         }
 
         if ($authlevel < 0 or $authlevel > 3) {
-            $errors .= $this->langs->line('us_error_authlevel') . '<br />';
+            $errors .= __('admin/users.us_error_authlevel') . '<br />';
         }
 
         if ($id_planet <= 0) {
-            $errors .= $this->langs->line('us_error_idplanet') . '<br />';
+            $errors .= __('admin/users.us_error_idplanet') . '<br />';
         }
 
         if ($cur_planet <= 0) {
-            $errors .= $this->langs->line('us_error_current_planet') . '<br />';
+            $errors .= __('admin/users.us_error_current_planet') . '<br />';
         }
 
         if ($ally_id < 0) {
-            $errors .= $this->langs->line('us_error_ally_id') . '<br />';
+            $errors .= __('admin/users.us_error_ally_id') . '<br />';
         }
 
         if ($errors != '') {
@@ -490,7 +490,7 @@ class UsersController extends BaseController
                 $this->usersModel->deleteSessionByUserId($this->_id);
             }
 
-            $this->_alert_info = $this->langs->line('us_all_ok_message');
+            $this->_alert_info = __('admin/users.us_all_ok_message');
             $this->_alert_type = 'ok';
         }
     }
@@ -504,7 +504,7 @@ class UsersController extends BaseController
     {
         $this->usersModel->saveUserPreferences($_POST, $this->_id, $this->_user_query);
 
-        $this->_alert_info = $this->langs->line('us_all_ok_message');
+        $this->_alert_info = __('admin/users.us_all_ok_message');
         $this->_alert_type = 'ok';
     }
 
@@ -521,7 +521,7 @@ class UsersController extends BaseController
         $this->_stats->rebuildPoints($this->_id, 0, 'research');
 
         // alert
-        $this->_alert_info = $this->langs->line('us_all_ok_message');
+        $this->_alert_info = __('admin/users.us_all_ok_message');
         $this->_alert_type = 'ok';
     }
 
@@ -535,7 +535,7 @@ class UsersController extends BaseController
         $this->usersModel->savePremium($_POST, $this->_id, $this->_user_query);
 
         // alert
-        $this->_alert_info = $this->langs->line('us_all_ok_message');
+        $this->_alert_info = __('admin/users.us_all_ok_message');
         $this->_alert_type = 'ok';
     }
 
@@ -559,7 +559,7 @@ class UsersController extends BaseController
         $this->usersModel->savePlanet($_POST, $id_get);
 
         // alert
-        $this->_alert_info = $this->langs->line('us_all_ok_message');
+        $this->_alert_info = __('admin/users.us_all_ok_message');
         $this->_alert_type = 'ok';
     }
 
@@ -584,7 +584,7 @@ class UsersController extends BaseController
         $this->_stats->rebuildPoints($this->_id, $id_get, 'buildings');
 
         // alert
-        $this->_alert_info = $this->langs->line('us_all_ok_message');
+        $this->_alert_info = __('admin/users.us_all_ok_message');
         $this->_alert_type = 'ok';
     }
 
@@ -607,7 +607,7 @@ class UsersController extends BaseController
         $this->_stats->rebuildPoints($this->_id, $id_get, 'ships');
 
         // alert
-        $this->_alert_info = $this->langs->line('us_all_ok_message');
+        $this->_alert_info = __('admin/users.us_all_ok_message');
         $this->_alert_type = 'ok';
     }
 
@@ -630,7 +630,7 @@ class UsersController extends BaseController
         $this->_stats->rebuildPoints($this->_id, $id_get, 'defenses');
 
         // alert
-        $this->_alert_info = $this->langs->line('us_all_ok_message');
+        $this->_alert_info = __('admin/users.us_all_ok_message');
         $this->_alert_type = 'ok';
     }
     //#####################################
@@ -714,13 +714,13 @@ class UsersController extends BaseController
 
                 switch ($value['pt']) {
                     case 1:
-                        $shortcut['description'] .= $this->langs->line('us_planet_shortcut');
+                        $shortcut['description'] .= __('admin/users.us_planet_shortcut');
                         break;
                     case 2:
-                        $shortcut['description'] .= $this->langs->line('us_debris_shortcut');
+                        $shortcut['description'] .= __('admin/users.us_debris_shortcut');
                         break;
                     case 3:
-                        $shortcut['description'] .= $this->langs->line('us_moon_shortcut');
+                        $shortcut['description'] .= __('admin/users.us_moon_shortcut');
                         break;
                     default:
                         $shortcut['description'] .= '';
@@ -748,11 +748,11 @@ class UsersController extends BaseController
     {
         $sort = '';
         $sort_types = [
-            0 => $this->langs->line('us_user_preference_planet_sort_op1'),
-            1 => $this->langs->line('us_user_preference_planet_sort_op2'),
-            2 => $this->langs->line('us_user_preference_planet_sort_op3'),
-            3 => $this->langs->line('us_user_preference_planet_sort_op4'),
-            4 => $this->langs->line('us_user_preference_planet_sort_op5'),
+            0 => __('admin/users.us_user_preference_planet_sort_op1'),
+            1 => __('admin/users.us_user_preference_planet_sort_op2'),
+            2 => __('admin/users.us_user_preference_planet_sort_op3'),
+            3 => __('admin/users.us_user_preference_planet_sort_op4'),
+            4 => __('admin/users.us_user_preference_planet_sort_op5'),
         ];
 
         foreach ($sort_types as $id => $name) {
@@ -771,8 +771,8 @@ class UsersController extends BaseController
     {
         $order = '';
         $order_types = [
-            0 => $this->langs->line('us_user_preference_planet_sort_sequence_op1'),
-            1 => $this->langs->line('us_user_preference_planet_sort_sequence_op2'),
+            0 => __('admin/users.us_user_preference_planet_sort_sequence_op1'),
+            1 => __('admin/users.us_user_preference_planet_sort_sequence_op2'),
         ];
 
         foreach ($order_types as $id => $name) {
@@ -792,9 +792,9 @@ class UsersController extends BaseController
         $premium = '';
         $premium_types = [
             0 => '-',
-            1 => $this->langs->line('us_user_premium_deactivate'),
-            2 => $this->langs->line('us_user_premium_activate_one_week'),
-            3 => $this->langs->line('us_user_premium_activate_three_month'),
+            1 => __('admin/users.us_user_premium_deactivate'),
+            2 => __('admin/users.us_user_premium_activate_one_week'),
+            3 => __('admin/users.us_user_premium_activate_three_month'),
         ];
 
         foreach ($premium_types as $id => $name) {
@@ -895,7 +895,7 @@ class UsersController extends BaseController
                     $flag++;
                 } else {
                     $prepare_table[] = [
-                        'technology' => $this->langs->line('us_user_' . $tech),
+                        'technology' => __('admin/users.us_user_' . $tech),
                         'field' => $tech,
                         'level' => $level,
                     ];
@@ -921,13 +921,13 @@ class UsersController extends BaseController
                 if ($flag <= 2) { // SKIP NOT REQUIRED FIELDS
                     $flag++;
                 } else {
-                    if (null === $this->langs->line('us_user_' . $officier)) {
+                    if (null === __('admin/users.us_user_' . $officier)) {
                         continue;
                     }
 
                     $prepare_table[] = [
-                        'premium' => $this->langs->line('us_user_' . $officier),
-                        'status' => ($expire == 0) ? $this->langs->line('us_user_premium_inactive') : ($this->langs->line('us_user_premium_active_until') . date(Functions::readConfig('date_format'), $expire)),
+                        'premium' => __('admin/users.us_user_' . $officier),
+                        'status' => ($expire == 0) ? __('admin/users.us_user_premium_inactive') : (__('admin/users.us_user_premium_active_until') . date(Functions::readConfig('date_format'), $expire)),
                         'status_style' => ($expire == 0) ? 'text-danger' : 'text-success',
                         'field' => $officier,
                         'combo' => $this->premiumCombo($expire),
@@ -960,8 +960,8 @@ class UsersController extends BaseController
             $style = '';
 
             if ($planets['planet_destroyed'] != 0) {
-                $parse['planet_status'] = '<strong><a title="' . $this->langs->line('us_user_planets_destroyed') . '">
-                (' . $this->langs->line('us_user_planets_destroyed_short') . ')</a></strong>';
+                $parse['planet_status'] = '<strong><a title="' . __('admin/users.us_user_planets_destroyed') . '">
+                (' . __('admin/users.us_user_planets_destroyed_short') . ')</a></strong>';
                 $parse['planet_image_style'] = 'class="greyout"';
             }
 
@@ -972,11 +972,11 @@ class UsersController extends BaseController
 
             if (isset($planets['moon_id'])) {
                 $parse['moon_id'] = $planets['moon_id'];
-                $parse['moon_name'] = str_replace('%s', $planets['moon_name'], $this->langs->line('us_user_moon_title'));
+                $parse['moon_name'] = str_replace('%s', $planets['moon_name'], __('admin/users.us_user_moon_title'));
 
                 if ($planets['moon_destroyed'] != 0) {
-                    $parse['moon_status'] = '<strong><a title="' . $this->langs->line('us_user_planets_destroyed') . '">
-                    (' . $this->langs->line('us_user_planets_destroyed_short') . ')</a></strong>';
+                    $parse['moon_status'] = '<strong><a title="' . __('admin/users.us_user_planets_destroyed') . '">
+                    (' . __('admin/users.us_user_planets_destroyed_short') . ')</a></strong>';
                     $style = 'class="greyout"';
                 }
 
@@ -1003,13 +1003,13 @@ class UsersController extends BaseController
 
         foreach ($moons_data as $moons) {
             $parse['moon_id'] = $moons['planet_id'];
-            $parse['moon_name'] = str_replace('%s', $moons['planet_name'], $this->langs->line('us_user_moon_title'));
+            $parse['moon_name'] = str_replace('%s', $moons['planet_name'], __('admin/users.us_user_moon_title'));
             $parse['moon_image'] = $moons['planet_image'];
             $parse['moon_status'] = '';
 
             if ($moons['planet_destroyed'] != 0) {
-                $parse['moon_status'] = '<strong><a title="' . $this->langs->line('us_user_planets_destroyed') . '">
-                (' . $this->langs->line('us_user_planets_destroyed_short') . ')</a></strong>';
+                $parse['moon_status'] = '<strong><a title="' . __('admin/users.us_user_planets_destroyed') . '">
+                (' . __('admin/users.us_user_planets_destroyed_short') . ')</a></strong>';
                 $parse['moon_image_style'] = 'class="greyout"';
             }
 
@@ -1080,7 +1080,7 @@ class UsersController extends BaseController
                 if ($flag <= 2) { // SKIP NOT REQUIRED FIELDS
                     $flag++;
                 } else {
-                    $parse['building'] = $this->langs->line('us_user_' . $building);
+                    $parse['building'] = __('admin/users.us_user_' . $building);
                     $parse['field'] = $building;
                     $parse['level'] = $level;
 
@@ -1108,7 +1108,7 @@ class UsersController extends BaseController
                 if ($flag <= 2) { // SKIP NOT REQUIRED FIELDS
                     $flag++;
                 } else {
-                    $parse['ship'] = $this->langs->line('us_user_' . $ship);
+                    $parse['ship'] = __('admin/users.us_user_' . $ship);
                     $parse['field'] = $ship;
                     $parse['amount'] = $amount;
 
@@ -1143,7 +1143,7 @@ class UsersController extends BaseController
                 if ($flag <= 2) { // SKIP NOT REQUIRED FIELDS
                     $flag++;
                 } else {
-                    $parse['defense'] = $this->langs->line('us_user_' . $defense);
+                    $parse['defense'] = __('admin/users.us_user_' . $defense);
                     $parse['field'] = $defense;
                     $parse['amount'] = $amount;
 
@@ -1208,14 +1208,14 @@ class UsersController extends BaseController
     private function lastActivity(int $time): string
     {
         if ($time + 60 * 10 >= time()) {
-            return '<p class="text-success">' . $this->langs->line('us_online') . '</p>';
+            return '<p class="text-success">' . __('admin/users.us_online') . '</p>';
         }
 
         if ($time + 60 * 15 >= time()) {
-            return '<p class="text-warning">' . $this->langs->line('us_minutes') . '</p>';
+            return '<p class="text-warning">' . __('admin/users.us_minutes') . '</p>';
         }
 
-        return '<p class="text-danger">' . $this->langs->line('us_offline') . '</p>';
+        return '<p class="text-danger">' . __('admin/users.us_offline') . '</p>';
     }
 
     /**
@@ -1251,6 +1251,6 @@ class UsersController extends BaseController
      */
     private function vacationSet(): string
     {
-        return $this->langs->line('us_user_preference_vacations_until') . date(Functions::readConfig('date_format_extended'), $this->_user_query['preference_vacation_mode']);
+        return __('admin/users.us_user_preference_vacations_until') . date(Functions::readConfig('date_format_extended'), $this->_user_query['preference_vacation_mode']);
     }
 }

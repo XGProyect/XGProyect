@@ -42,7 +42,7 @@ class FleetshortcutsController extends BaseController
             'shortcuts/shortcuts_view',
             [
                 'shortcuts' => $this->buildShortcuts(),
-                'no_shortcuts' => $this->_shortcuts_count <= 0 ? '<th colspan="2">' . $this->langs->line('fl_no_shortcuts') . '</th>' : '',
+                'no_shortcuts' => $this->_shortcuts_count <= 0 ? '<th colspan="2">' . __('game/fleet.fl_no_shortcuts') . '</th>' : '',
             ]
         );
     }

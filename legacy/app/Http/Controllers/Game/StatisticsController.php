@@ -35,19 +35,18 @@ class StatisticsController extends BaseController
 
     private function buildPage(): void
     {
-        $parse = $this->langs->language;
         $who = (isset($_POST['who'])) ? $_POST['who'] : ((isset($_GET['who'])) ? $_GET['who'] : 1);
         $type = (isset($_POST['type'])) ? $_POST['type'] : ((isset($_GET['type'])) ? $_GET['type'] : 1);
         $range = (isset($_POST['range'])) ? $_POST['range'] : ((isset($_GET['range'])) ? $_GET['range'] : 1);
 
-        $parse['who'] = '<option value="1"' . (($who == '1') ? ' SELECTED' : '') . '>' . $this->langs->line('st_player') . '</option>';
-        $parse['who'] .= '<option value="2"' . (($who == '2') ? ' SELECTED' : '') . '>' . $this->langs->line('st_alliance') . '</option>';
+        $parse['who'] = '<option value="1"' . (($who == '1') ? ' SELECTED' : '') . '>' . __('game/statistics.st_player') . '</option>';
+        $parse['who'] .= '<option value="2"' . (($who == '2') ? ' SELECTED' : '') . '>' . __('game/statistics.st_alliance') . '</option>';
 
-        $parse['type'] = '<option value="1"' . (($type == '1') ? ' SELECTED' : '') . '>' . $this->langs->line('st_points') . '</option>';
-        $parse['type'] .= '<option value="2"' . (($type == '2') ? ' SELECTED' : '') . '>' . $this->langs->line('st_fleets') . '</option>';
-        $parse['type'] .= '<option value="3"' . (($type == '3') ? ' SELECTED' : '') . '>' . $this->langs->line('st_researh') . '</option>';
-        $parse['type'] .= '<option value="4"' . (($type == '4') ? ' SELECTED' : '') . '>' . $this->langs->line('st_buildings') . '</option>';
-        $parse['type'] .= '<option value="5"' . (($type == '5') ? ' SELECTED' : '') . '>' . $this->langs->line('st_defenses') . '</option>';
+        $parse['type'] = '<option value="1"' . (($type == '1') ? ' SELECTED' : '') . '>' . __('game/statistics.st_points') . '</option>';
+        $parse['type'] .= '<option value="2"' . (($type == '2') ? ' SELECTED' : '') . '>' . __('game/statistics.st_fleets') . '</option>';
+        $parse['type'] .= '<option value="3"' . (($type == '3') ? ' SELECTED' : '') . '>' . __('game/statistics.st_researh') . '</option>';
+        $parse['type'] .= '<option value="4"' . (($type == '4') ? ' SELECTED' : '') . '>' . __('game/statistics.st_buildings') . '</option>';
+        $parse['type'] .= '<option value="5"' . (($type == '5') ? ' SELECTED' : '') . '>' . __('game/statistics.st_defenses') . '</option>';
 
         $data = $this->ranking_type($type);
         $Order = $data['order'];
@@ -79,7 +78,7 @@ class StatisticsController extends BaseController
                 $parse['ally_id'] = $StatRow['alliance_id'];
                 $parse['alliance_name'] = $StatRow['alliance_name'];
                 $parse['ally_members'] = $StatRow['ally_members'];
-                $parse['ally_action'] = $StatRow['alliance_request_notallow'] == 1 ? '<a href="game.php?page=alliance&mode=apply&allyid=' . $StatRow['alliance_id'] . '"><img src="' . DPATH . 'img/m.gif" border="0" title="' . $this->langs->line('st_ally_request') . '" /></a>' : '';
+                $parse['ally_action'] = $StatRow['alliance_request_notallow'] == 1 ? '<a href="game.php?page=alliance&mode=apply&allyid=' . $StatRow['alliance_id'] . '"><img src="' . DPATH . 'img/m.gif" border="0" title="' . __('game/statistics.st_ally_request') . '" /></a>' : '';
                 $parse['ally_points'] = FormatLib::prettyNumber($StatRow['alliance_statistic_' . $Order]);
                 $parse['ally_members_points'] = FormatLib::prettyNumber(floor($StatRow['alliance_statistic_' . $Order] / $StatRow['ally_members']));
                 $parse['stat_values'] .= Template::getInstance()->render(
@@ -115,7 +114,7 @@ class StatisticsController extends BaseController
                 }
 
                 if ($StatRow['user_id'] != $this->user['user_id']) {
-                    $parse['player_mes'] = '<a href="game.php?page=chat&playerId=' . $StatRow['user_id'] . '"><img src="' . DPATH . 'img/m.gif" border="0" title="' . $this->langs->line('write_message') . '" /></a>';
+                    $parse['player_mes'] = '<a href="game.php?page=chat&playerId=' . $StatRow['user_id'] . '"><img src="' . DPATH . 'img/m.gif" border="0" title="' . __('game/global.write_message') . '" /></a>';
                 } else {
                     $parse['player_mes'] = '';
                 }

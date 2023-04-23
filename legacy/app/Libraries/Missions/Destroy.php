@@ -79,12 +79,8 @@ class Destroy extends Missions
                 'BattleEngine' . DIRECTORY_SEPARATOR .
                 'utils' . DIRECTORY_SEPARATOR . 'includer.php';
 
-            // require language implementation
-            require LIB_PATH .
-                'missions' . DIRECTORY_SEPARATOR . 'Attack_lang.php';
-
             // set language for the reports
-            LangManager::getInstance()->setImplementation(new Attack_lang($this->langs, $this->resource));
+            LangManager::getInstance()->setImplementation(new AttackLang($this->resource));
 
             if ($fleet_row['fleet_group'] > 0) {
                 $this->missionsModel->deleteAcsFleetById($fleet_row['fleet_group']);
@@ -223,7 +219,7 @@ class Destroy extends Missions
             }
         } elseif ($fleet_row['fleet_mess'] == 1 && $fleet_row['fleet_end_time'] <= time()) {
             $message = sprintf(
-                $this->langs->line('mi_fleet_back_with_resources'),
+                __('game/missions.mi_fleet_back_with_resources'),
                 $fleet_row['planet_end_name'],
                 FleetsLib::targetLink($fleet_row, ''),
                 $fleet_row['planet_start_name'],
@@ -238,8 +234,8 @@ class Destroy extends Missions
                 '',
                 $fleet_row['fleet_end_time'],
                 1,
-                $this->langs->line('mi_fleet_command'),
-                $this->langs->line('mi_fleet_back_title'),
+                __('game/missions.mi_fleet_command'),
+                __('game/missions.mi_fleet_back_title'),
                 $message
             );
 
@@ -532,7 +528,7 @@ class Destroy extends Missions
                 '',
                 $fleet_row['fleet_start_time'],
                 1,
-                $this->langs->line('mi_fleet_command'),
+                __('game/missions.mi_fleet_command'),
                 $raport,
                 ''
             );
@@ -561,7 +557,7 @@ class Destroy extends Missions
                 '',
                 $fleet_row['fleet_start_time'],
                 1,
-                $this->langs->line('mi_fleet_command'),
+                __('game/missions.mi_fleet_command'),
                 $raport,
                 ''
             );
@@ -846,7 +842,7 @@ class Destroy extends Missions
     {
         $style = 'style="color:' . $color . ';"';
         $js = "OnClick=\'f(\"game.php?page=combatreport&report=" . $rid . "\", \"\");\'";
-        $content = $this->langs->line('des_report_title') . ' ' . FormatLib::prettyCoords($g, $s, $p);
+        $content = __('game/destroy.des_report_title') . ' ' . FormatLib::prettyCoords($g, $s, $p);
 
         return UrlHelper::setUrl(
             '',
@@ -867,7 +863,7 @@ class Destroy extends Missions
     private function buildDestroyReport(array $fleet_row, $report): string
     {
         $destruction_info = sprintf(
-            $this->langs->line('des_report_start'),
+            __('game/destroy.des_report_start'),
             $fleet_row['planet_start_name'],
             FormatLib::prettyCoords(
                 (int) $fleet_row['fleet_start_galaxy'],
@@ -885,12 +881,12 @@ class Destroy extends Missions
         $raport[] = $destruction_info;
 
         if ($report->attackerHasWin()) {
-            $raport[] = $this->langs->line('des_result_' . $this->_destruction['destroyed']);
+            $raport[] = __('game/destroy.des_result_' . $this->_destruction['destroyed']);
         } else {
-            $raport[] = $this->langs->line('des_report_defender');
+            $raport[] = __('game/destroy.des_report_defender');
         }
 
-        $raport[] = sprintf($this->langs->line('des_moon_ds_chances'), $this->_destruction['moon_chance'], $this->_destruction['ds_chance']);
+        $raport[] = sprintf(__('game/destroy.des_moon_ds_chances'), $this->_destruction['moon_chance'], $this->_destruction['ds_chance']);
 
         return join('<br/>', $raport);
     }

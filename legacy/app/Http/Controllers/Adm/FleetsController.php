@@ -134,7 +134,7 @@ class FleetsController extends BaseController
     private function buildMissionBlock(array $fleet): array
     {
         return [
-            'mission' => $this->langs->language['ff_type_mission'][$fleet['fleet_mission']] . ' ' . (FleetsLib::isFleetReturning($fleet['fleet_mess']) ? $this->langs->line('ff_r') : $this->langs->line('ff_a')),
+            'mission' => $this->langs->language['ff_type_mission'][$fleet['fleet_mission']] . ' ' . (FleetsLib::isFleetReturning($fleet['fleet_mess']) ? __('admin/fleets.ff_r') : __('admin/fleets.ff_a')),
             'metal' => Format::prettyNumber($fleet['fleet_resource_metal']),
             'crystal' => Format::prettyNumber($fleet['fleet_resource_crystal']),
             'deuterium' => Format::prettyNumber($fleet['fleet_resource_deuterium']),
@@ -156,7 +156,7 @@ class FleetsController extends BaseController
         }
 
         return [
-            'amount' => $this->langs->line('ff_ships'),
+            'amount' => __('admin/fleets.ff_ships'),
             'amount_content' => join('<br>', $pop_up),
         ];
     }

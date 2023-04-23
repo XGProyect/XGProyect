@@ -53,7 +53,7 @@ class StatisticsController extends BaseController
                 Functions::updateConfig($option, $value);
             }
 
-            $this->alert = Administration::saveMessage('ok', $this->langs->line('cs_all_ok_message'));
+            $this->alert = Administration::saveMessage('ok', __('admin/statistics.cs_all_ok_message'));
         }
     }
 

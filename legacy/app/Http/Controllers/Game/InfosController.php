@@ -62,7 +62,6 @@ class InfosController extends BaseController
         $TableHeadTPL = '';
         $TableFooterTPL = '';
 
-        $parse = $this->langs->language;
         $parse['dpath'] = DPATH;
         $parse['name'] = $this->langs->language[$this->_resource[$this->_element_id]];
         $parse['image'] = $this->_element_id;
@@ -155,7 +154,7 @@ class InfosController extends BaseController
         }
 
         if ($TableHeadTPL != '') {
-            $parse['table_head'] = Template::getInstance()->render($TableHeadTPL, $this->langs->language);
+            $parse['table_head'] = Template::getInstance()->render($TableHeadTPL);
 
             if ($this->_element_id >= 22 && $this->_element_id <= 24) {
                 $parse['table_data'] = $this->storage_table($TableTPL);
@@ -170,7 +169,7 @@ class InfosController extends BaseController
 
         $parse['table_footer'] = '';
         if ($TableFooterTPL != '') {
-            $parse['table_footer'] = Template::getInstance()->render($TableFooterTPL, $this->langs->language);
+            $parse['table_footer'] = Template::getInstance()->render($TableFooterTPL);
         }
 
         $page = Template::getInstance()->render($PageTPL, $parse);
@@ -299,7 +298,7 @@ class InfosController extends BaseController
                 $TargetPlanet = isset($_POST['jmpto']) ? $_POST['jmpto'] : '';
 
                 if (!is_int($TargetPlanet)) {
-                    $RetMessage = $this->langs->line('in_jump_gate_error_data');
+                    $RetMessage = __('game/infos.in_jump_gate_error_data');
                 }
 
                 $TargetGate = $this->infosModel->getTargetGate($TargetPlanet);
@@ -343,21 +342,21 @@ class InfosController extends BaseController
                             $this->planet['planet_last_jump_time'] = $JumpTime;
 
                             $RestString = $this->GetNextJumpWaitTime($this->planet);
-                            $RetMessage = $this->langs->line('in_jump_gate_done') . $RestString['string'];
+                            $RetMessage = __('game/infos.in_jump_gate_done') . $RestString['string'];
                         } else {
-                            $RetMessage = $this->langs->line('in_jump_gate_error_data');
+                            $RetMessage = __('game/infos.in_jump_gate_error_data');
                         }
                     } else {
-                        $RetMessage = $this->langs->line('in_jump_gate_not_ready_target') . $RestString['string'];
+                        $RetMessage = __('game/infos.in_jump_gate_not_ready_target') . $RestString['string'];
                     }
                 } else {
-                    $RetMessage = $this->langs->line('in_jump_gate_doesnt_have_one');
+                    $RetMessage = __('game/infos.in_jump_gate_doesnt_have_one');
                 }
             } else {
-                $RetMessage = $this->langs->line('in_jump_gate_already_used') . $RestString['string'];
+                $RetMessage = __('game/infos.in_jump_gate_already_used') . $RestString['string'];
             }
         } else {
-            $RetMessage = $this->langs->line('in_jump_gate_error_data');
+            $RetMessage = __('game/infos.in_jump_gate_error_data');
         }
 
         return $RetMessage;
@@ -378,7 +377,7 @@ class InfosController extends BaseController
                     $bloc['fleet_id'] = $Ship;
                     $bloc['fleet_name'] = $this->langs->language[$this->_resource[$Ship]];
                     $bloc['fleet_max'] = FormatLib::prettyNumber($this->planet[$this->_resource[$Ship]]);
-                    $bloc['gate_ship_dispo'] = $this->langs->line('in_jump_gate_available');
+                    $bloc['gate_ship_dispo'] = __('game/infos.in_jump_gate_available');
                     $Result .= Template::getInstance()->render($RowsTPL, $bloc);
                     $CurrIdx++;
                 }
@@ -573,7 +572,7 @@ class InfosController extends BaseController
         $ResultString = '';
         for ($Type = 200; $Type < 500; $Type++) {
             if (isset($this->_combat_caps[$this->_element_id]['sd'][$Type]) && $this->_combat_caps[$this->_element_id]['sd'][$Type] > 1) {
-                $ResultString .= $this->langs->line('in_rf_again') . ' ' . $this->langs->language[$this->_resource[$Type]] . ' <font color="#00ff00">' . $this->_combat_caps[$this->_element_id]['sd'][$Type] . '</font><br>';
+                $ResultString .= __('game/infos.in_rf_again') . ' ' . $this->langs->language[$this->_resource[$Type]] . ' <font color="#00ff00">' . $this->_combat_caps[$this->_element_id]['sd'][$Type] . '</font><br>';
             }
         }
         return $ResultString;
@@ -587,7 +586,7 @@ class InfosController extends BaseController
         $ResultString = '';
         for ($Type = 200; $Type < 500; $Type++) {
             if (isset($this->_combat_caps[$Type]['sd'][$this->_element_id]) && $this->_combat_caps[$Type]['sd'][$this->_element_id] > 1) {
-                $ResultString .= $this->langs->line('in_rf_from') . ' ' . $this->langs->language[$this->_resource[$Type]] . ' <font color="#ff0000">' . $this->_combat_caps[$Type]['sd'][$this->_element_id] . '</font><br>';
+                $ResultString .= __('game/infos.in_rf_from') . ' ' . $this->langs->language[$this->_resource[$Type]] . ' <font color="#ff0000">' . $this->_combat_caps[$Type]['sd'][$this->_element_id] . '</font><br>';
             }
         }
         return $ResultString;
@@ -619,7 +618,7 @@ class InfosController extends BaseController
 
             if ($ion_tech_percentage > 0) {
                 $tech_bonus = StringsHelper::parseReplacements(
-                    $this->langs->line('in_ion_tech_bonus'),
+                    __('game/infos.in_ion_tech_bonus'),
                     [FormatLib::colorGreen('-' . $ion_tech_percentage . '%')]
                 );
             }
@@ -641,7 +640,7 @@ class InfosController extends BaseController
                     'tear_down_url' => UrlHelper::setUrl(
                         $tear_down_url,
                         StringsHelper::parseReplacements(
-                            $this->langs->line('in_destroy'),
+                            __('game/infos.in_destroy'),
                             [$this->langs->language[$this->_resource[$this->_element_id]]]
                         )
                     ),

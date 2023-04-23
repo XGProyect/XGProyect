@@ -48,7 +48,7 @@ class Missile extends Missions
             }
 
             if ($target_data['defense_anti-ballistic_missile'] >= $fleet_row['fleet_amount']) {
-                $message = $this->langs->line('mis_all_destroyed') . '<br>';
+                $message = __('game/missile.mis_all_destroyed') . '<br>';
                 $amount = $fleet_row['fleet_amount'];
             } else {
                 $destroyed_query = '';
@@ -58,7 +58,7 @@ class Missile extends Missions
                 if ($target_data['defense_anti-ballistic_missile'] > 0) {
                     $result[502] = $target_data['defense_anti-ballistic_missile'];
                     $message = $target_data['defense_anti-ballistic_missile'] .
-                    $this->langs->line('mis_some_destroyed') . ' <br>';
+                    __('game/missile.mis_some_destroyed') . ' <br>';
                 }
 
                 $attack = floor(
@@ -114,7 +114,7 @@ class Missile extends Missions
 
             if (isset($result) && count($result) > 0) {
                 foreach (parent::$objects->getObjectsList('defense') as $defense_id) {
-                    $message .= FormatLib::prettyNumber($target_data[$this->resource[$defense_id]]) . ' ' . $this->langs->line($this->resource[$defense_id]);
+                    $message .= FormatLib::prettyNumber($target_data[$this->resource[$defense_id]]) . ' ' . __('game/defenses.' . $this->resource[$defense_id]);
                     if (isset($result[$defense_id])) {
                         $message .= ' (-' . FormatLib::prettyNumber($result[$defense_id]) . ')';
                     }
@@ -123,7 +123,7 @@ class Missile extends Missions
             }
 
             if (empty($message)) {
-                $message = $this->langs->line('mis_planet_without_defenses');
+                $message = __('game/missile.mis_planet_without_defenses');
             }
 
             // send messages
@@ -133,9 +133,9 @@ class Missile extends Missions
                 '',
                 $fleet_row['fleet_end_time'],
                 5,
-                $this->langs->line('mi_fleet_command'),
-                $this->langs->line('mis_attack'),
-                str_replace($search, $replace, $this->langs->line('mis_result_own' . $single)) . $message
+                __('game/missions.mi_fleet_command'),
+                __('game/missile.mis_attack'),
+                str_replace($search, $replace, __('game/missile.mis_result_own' . $single)) . $message
             );
 
             // enemy
@@ -144,9 +144,9 @@ class Missile extends Missions
                 '',
                 $fleet_row['fleet_end_time'],
                 5,
-                $this->langs->line('mi_fleet_command'),
-                $this->langs->line('mis_attack'),
-                str_replace($search, $replace, $this->langs->line('mis_result' . $single)) . $message
+                __('game/missions.mi_fleet_command'),
+                __('game/missile.mis_attack'),
+                str_replace($search, $replace, __('game/missile.mis_result' . $single)) . $message
             );
 
             parent::removeFleet($fleet_row['fleet_id']);

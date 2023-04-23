@@ -142,8 +142,6 @@ class GalaxyLib
             $action['phalanx'] = $this->phalanxLink(self::PLANET_TYPE);
         }
 
-        // PARSE THE DATA
-        $parse = $this->langs->language;
         $parse['name'] = $this->row_data['planet_name'];
         $parse['galaxy'] = $this->galaxy;
         $parse['system'] = $this->system;
@@ -160,7 +158,7 @@ class GalaxyLib
 
         $this->row_data['planet_type'] = self::PLANET_TYPE;
         if (Functions::isCurrentPlanet($this->current_planet, $this->row_data)) {
-            $parse['links'] = $this->langs->line('gl_no_action');
+            $parse['links'] = __('game/galaxy.gl_no_action');
         }
 
         if ($this->row_data['user_authlevel'] >= UserRanks::GO
@@ -169,7 +167,7 @@ class GalaxyLib
         }
 
         if ($this->row_data['preference_vacation_mode'] > 0) {
-            $parse['links'] = $this->langs->line('gl_player_vacation_mode');
+            $parse['links'] = __('game/galaxy.gl_player_vacation_mode');
         }
 
         return $parse;
@@ -204,7 +202,7 @@ class GalaxyLib
                 }
             }
         } else {
-            $planetname = $this->langs->line('gl_planet_destroyed');
+            $planetname = __('game/galaxy.gl_planet_destroyed');
         }
 
         return $planetname;
@@ -252,8 +250,6 @@ class GalaxyLib
             $action['deploy'] = $this->deployLink(self::MOON_TYPE);
         }
 
-        // CHECK MOON STATUS AND COMPLETE DATA IF REQUIRED
-        $parse = $this->langs->language;
         $parse['name_moon'] = $this->row_data['name_moon'];
         $parse['galaxy'] = $this->galaxy;
         $parse['system'] = $this->system;
@@ -271,7 +267,7 @@ class GalaxyLib
         }
         $this->row_data['planet_type'] = self::MOON_TYPE;
         if (Functions::isCurrentPlanet($this->current_planet, $this->row_data)) {
-            $parse['links'] = $this->langs->line('gl_no_action');
+            $parse['links'] = __('game/galaxy.gl_no_action');
         }
 
         if ($this->row_data['user_authlevel'] >= UserRanks::GO
@@ -280,7 +276,7 @@ class GalaxyLib
         }
 
         if ($this->row_data['preference_vacation_mode'] > 0) {
-            $parse['links'] = $this->langs->line('gl_player_vacation_mode');
+            $parse['links'] = __('game/galaxy.gl_player_vacation_mode');
         }
 
         return $parse;
@@ -309,7 +305,6 @@ class GalaxyLib
                 $recyclers_sended = $this->current_planet['ship_recycler'];
             }
 
-            $parse = $this->langs->language;
             $parse['galaxy'] = $this->galaxy;
             $parse['system'] = $this->system;
             $parse['planet'] = $this->planet;
@@ -352,35 +347,35 @@ class GalaxyLib
 
             $statuses['admin'] = [
                 'class' => $this->getUserStatusClass('a'),
-                'shortcut' => $this->langs->line('gl_a'),
+                'shortcut' => __('game/galaxy.gl_a'),
             ];
         }
 
         if ($this->row_data['user_banned']) {
             $statuses['banned'] = [
                 'class' => $this->getUserStatusClass('b'),
-                'shortcut' => $this->langs->line('gl_b'),
+                'shortcut' => __('game/galaxy.gl_b'),
             ];
         }
 
         if ($this->row_data['preference_vacation_mode'] > 0) {
             $statuses['vacation'] = [
                 'class' => $this->getUserStatusClass('v'),
-                'shortcut' => $this->langs->line('gl_v'),
+                'shortcut' => __('game/galaxy.gl_v'),
             ];
         }
 
         if ($this->row_data['user_onlinetime'] < (time() - ONE_WEEK)) {
             $statuses['inactive'] = [
                 'class' => $this->getUserStatusClass('i'),
-                'shortcut' => $this->langs->line('gl_i'),
+                'shortcut' => __('game/galaxy.gl_i'),
             ];
         }
 
         if ($this->row_data['user_onlinetime'] < (time() - ONE_DAY * 28)) {
             $statuses['inactive'] = [
                 'class' => $this->getUserStatusClass('I'),
-                'shortcut' => $this->langs->line('gl_I'),
+                'shortcut' => __('game/galaxy.gl_I'),
             ];
         }
 
@@ -388,14 +383,14 @@ class GalaxyLib
             if ($this->noob->isWeak(intval($current_user_points), intval($row_user_points))) {
                 $statuses['protection'] = [
                     'class' => $this->getUserStatusClass('w'),
-                    'shortcut' => $this->langs->line('gl_w'),
+                    'shortcut' => __('game/galaxy.gl_w'),
                 ];
             }
 
             if ($this->noob->isStrong(intval($current_user_points), intval($row_user_points))) {
                 $statuses['protection'] = [
                     'class' => $this->getUserStatusClass('s'),
-                    'shortcut' => $this->langs->line('gl_s'),
+                    'shortcut' => __('game/galaxy.gl_s'),
                 ];
             }
         }
@@ -420,25 +415,22 @@ class GalaxyLib
         $actions = '<td>';
         $actions .= str_replace('"', '', UrlHelper::setUrl(
             'game.php?page=chat&playerId=' . $this->row_data['user_id'],
-            $this->langs->line('write_message')
+            __('game/global.write_message')
         ));
         $actions .= '</td></tr><tr><td>';
         $actions .= str_replace('"', '', UrlHelper::setUrl(
             'game.php?page=buddies&mode=2&u=' . $this->row_data['user_id'],
-            $this->langs->line('gl_buddy_request')
+            __('game/galaxy.gl_buddy_request')
         ));
         $actions .= '</td></tr><tr>';
 
-        return array_merge(
-            [
-                'status' => $formated_username ?? $this->row_data['user_name'],
-                'username' => $this->row_data['user_name'],
-                'current_rank' => $this->row_data['user_statistic_total_rank'],
-                'start' => (floor($this->row_data['user_statistic_total_rank'] / 100) * 100) + 1,
-                'actions' => $actions,
-            ],
-            $this->langs->language
-        );
+        return [
+            'status' => $formated_username ?? $this->row_data['user_name'],
+            'username' => $this->row_data['user_name'],
+            'current_rank' => $this->row_data['user_statistic_total_rank'],
+            'start' => (floor($this->row_data['user_statistic_total_rank'] / 100) * 100) + 1,
+            'actions' => $actions,
+        ];
     }
 
     /**
@@ -453,10 +445,9 @@ class GalaxyLib
 
         if ($this->row_data['user_ally_id'] != 0) {
             if ($this->row_data['ally_members'] > 1) {
-                $add = $this->langs->line('gl_member_add');
+                $add = __('game/galaxy.gl_member_add');
             }
 
-            $parse = $this->langs->language;
             $parse['alliance_name'] = str_replace(
                 "'",
                 "\'",
@@ -471,7 +462,7 @@ class GalaxyLib
             if ($this->row_data['alliance_web'] != '') {
                 $web_url = UrlHelper::setUrl(
                     UrlHelper::prepUrl($this->row_data['alliance_web']),
-                    $this->langs->line('gl_alliance_web_page'),
+                    __('game/galaxy.gl_alliance_web_page'),
                     '',
                     'target="_new"'
                 );
@@ -504,19 +495,19 @@ class GalaxyLib
         $links = [];
         $actions = [
             'spy' => [
-                'image' => Functions::setImage(DPATH . 'img/e.gif', $this->langs->line('gl_spy')),
+                'image' => Functions::setImage(DPATH . 'img/e.gif', __('game/galaxy.gl_spy')),
                 'attributes' => 'onclick="javascript:doit(6, ' . $this->galaxy . ', ' . $this->system . ', ' . $this->planet . ', 1, ' . $this->current_user['preference_spy_probes'] . ');"',
             ],
             'write' => [
-                'image' => Functions::setImage(DPATH . 'img/m.gif', $this->langs->line('write_message')),
+                'image' => Functions::setImage(DPATH . 'img/m.gif', __('game/global.write_message')),
                 'url' => 'game.php?page=chat&playerId=' . $this->row_data['user_id'],
             ],
             'buddy' => [
-                'image' => Functions::setImage(DPATH . 'img/b.gif', $this->langs->line('gl_buddy_request')),
+                'image' => Functions::setImage(DPATH . 'img/b.gif', __('game/galaxy.gl_buddy_request')),
                 'url' => 'game.php?page=buddies&mode=2&u=' . $this->row_data['user_id'],
             ],
             'missile' => [
-                'image' => Functions::setImage(DPATH . 'img/r.gif', $this->langs->line('gl_missile_attack')),
+                'image' => Functions::setImage(DPATH . 'img/r.gif', __('game/galaxy.gl_missile_attack')),
                 'url' => 'game.php?page=galaxy&mode=2&galaxy=' . $this->galaxy . '&system=' . $this->system . '&planet=' . $this->planet . '&current=' . $this->current_user['user_current_planet'],
             ],
         ];
@@ -660,7 +651,7 @@ class GalaxyLib
     {
         $attributes = 'onclick=fenster(&#039;game.php?page=phalanx&galaxy=' . $this->galaxy . '&amp;system=' .
         $this->system . '&amp;planet=' . $this->planet . '&amp;planettype=' . $planet_type . '&#039;)';
-        return str_replace('"', '', UrlHelper::setUrl('', $this->langs->line('gl_phalanx'), '', $attributes));
+        return str_replace('"', '', UrlHelper::setUrl('', __('game/galaxy.gl_phalanx'), '', $attributes));
     }
     //#####################################
     //

@@ -197,8 +197,8 @@ class MessagesController extends BaseController
         if ($from > 0) {
             return UrlHelper::setUrl(
                 'game.php?page=chat&playerId=' . $from,
-                Functions::setImage(DPATH . '/img/m.gif', $this->langs->line('mg_send_message')),
-                $this->langs->line('mg_send_message')
+                Functions::setImage(DPATH . '/img/m.gif', __('game/messages.mg_send_message')),
+                __('game/messages.mg_send_message')
             );
         }
 

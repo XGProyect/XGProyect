@@ -46,7 +46,7 @@ class Stay extends Missions
 
         // DIFFERENT TYPES OF MESSAGES
         $message[1] = sprintf(
-            $this->langs->line('stay_mess_owner'),
+            __('game/stay.stay_mess_owner'),
             $target_name,
             FleetsLib::targetLink($fleet_row, ''),
             $fleet_row['fleet_resource_metal'],
@@ -55,7 +55,7 @@ class Stay extends Missions
         );
 
         $message[2] = sprintf(
-            $this->langs->line('stay_mess_user'),
+            __('game/stay.stay_mess_user'),
             $start_name,
             FleetsLib::startLink($fleet_row, ''),
             $target_name,
@@ -66,7 +66,7 @@ class Stay extends Missions
         );
 
         $message[3] = sprintf(
-            $this->langs->line('mi_fleet_back_without_resources'),
+            __('game/missions.mi_fleet_back_without_resources'),
             $target_name,
             FleetsLib::targetLink($fleet_row, ''),
             $start_name,
@@ -79,14 +79,14 @@ class Stay extends Missions
                     $start_owner_id,
                     $message[1],
                     $fleet_row['fleet_start_time'],
-                    $this->langs->line('stay_report_title')
+                    __('game/stay.stay_report_title')
                 );
 
                 $this->stayMessage(
                     $target_owner_id,
                     $message[2],
                     $fleet_row['fleet_start_time'],
-                    $this->langs->line('stay_report_title')
+                    __('game/stay.stay_report_title')
                 );
 
                 $this->startStay($fleet_row['fleet_id']);
@@ -100,7 +100,7 @@ class Stay extends Missions
                 $start_owner_id,
                 $message[3],
                 $fleet_row['fleet_end_time'],
-                $this->langs->line('mi_fleet_back_title')
+                __('game/missions.mi_fleet_back_title')
             );
 
             parent::restoreFleet($fleet_row, true);
@@ -132,6 +132,6 @@ class Stay extends Missions
      */
     private function stayMessage($owner, $message, $time, $status_message)
     {
-        Functions::sendMessage($owner, '', $time, 5, $this->langs->line('mi_fleet_command'), $status_message, $message);
+        Functions::sendMessage($owner, '', $time, 5, __('game/missions.mi_fleet_command'), $status_message, $message);
     }
 }

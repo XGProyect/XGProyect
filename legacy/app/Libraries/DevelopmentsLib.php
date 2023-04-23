@@ -105,7 +105,7 @@ class DevelopmentsLib
      *
      * @return string
      */
-    public static function formatedDevelopmentPrice($current_user, $current_planet, $element, $lang, $userfactor = true, $level = false)
+    public static function formatedDevelopmentPrice($current_user, $current_planet, $element, $userfactor = true, $level = false)
     {
         $resource = Objects::getInstance()->getObjects();
         $pricelist = Objects::getInstance()->getPrice();
@@ -114,12 +114,12 @@ class DevelopmentsLib
             $level = (isset($current_planet[$resource[$element]])) ? $current_planet[$resource[$element]] : $current_user[$resource[$element]];
         }
 
-        $text = $lang->line('require');
+        $text = __('game/global.require');
         $array = [
-            'metal' => $lang->line('metal'),
-            'crystal' => $lang->line('crystal'),
-            'deuterium' => $lang->line('deuterium'),
-            'energy_max' => $lang->line('energy'),
+            'metal' => __('game/global.metal'),
+            'crystal' => __('game/global.crystal'),
+            'deuterium' => __('game/global.deuterium'),
+            'energy_max' => __('game/global.energy'),
         ];
 
         foreach ($array as $res_type => $ResTitle) {
@@ -220,16 +220,9 @@ class DevelopmentsLib
         return Formulas::getTearDownTime($metal_cost, $crystal_cost, $building, $robotics_factory, $nanite_factory, $level);
     }
 
-    /**
-     * formatedDevelopmentTime
-     *
-     * @param int $time Time
-     *
-     * @return string
-     */
-    public static function formatedDevelopmentTime($time, $lang_line)
+    public static function formatedDevelopmentTime(int $time, string $prefix): string
     {
-        return '<br>' . $lang_line . FormatLib::prettyTime($time);
+        return '<br>' . $prefix . FormatLib::prettyTime($time);
     }
 
     /**
@@ -293,13 +286,13 @@ class DevelopmentsLib
      *
      * @return void
      */
-    public static function setLevelFormat($level, $lang, $element = '', $current_user = '')
+    public static function setLevelFormat($level, $element = '', $current_user = '')
     {
         $return_level = '';
 
         // check if is base level
         if ($level != 0) {
-            $return_level = ' (' . $lang->line('level') . $level . ')';
+            $return_level = ' (' . __('game/global.level') . $level . ')';
         }
 
         // check a commander plus
@@ -307,7 +300,7 @@ class DevelopmentsLib
             case 106:
                 if (OfficiersLib::isOfficierActive($current_user['premium_officier_technocrat'])) {
                     $return_level .= FormatLib::strongText(
-                        FormatLib::colorGreen(' +' . TECHNOCRATE_SPY . $lang->line('re_spy'))
+                        FormatLib::colorGreen(' +' . TECHNOCRATE_SPY . __('game/research.re_spy'))
                     );
                 }
 
@@ -316,7 +309,7 @@ class DevelopmentsLib
             case 108:
                 if (OfficiersLib::isOfficierActive($current_user['premium_officier_admiral'])) {
                     $return_level .= FormatLib::strongText(
-                        FormatLib::colorGreen(' +' . AMIRAL . $lang->line('re_commander'))
+                        FormatLib::colorGreen(' +' . AMIRAL . __('game/research.re_commander'))
                     );
                 }
 

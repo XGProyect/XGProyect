@@ -178,10 +178,10 @@ class MovementController extends BaseController
     private function buildTitleBlock(int $fleet_mess): string
     {
         if (FleetsLib::isFleetReturning($fleet_mess)) {
-            return $this->langs->line('fl_r');
+            return __('game/fleet.fl_r');
         }
 
-        return $this->langs->line('fl_a');
+        return __('game/fleet.fl_a');
     }
 
     /**
@@ -194,10 +194,10 @@ class MovementController extends BaseController
     private function buildToolTipBlock(int $fleet_mess): string
     {
         if (FleetsLib::isFleetReturning($fleet_mess)) {
-            return $this->langs->line('fl_returning');
+            return __('game/fleet.fl_returning');
         }
 
-        return $this->langs->line('fl_onway');
+        return __('game/fleet.fl_onway');
     }
 
     /**
@@ -214,7 +214,7 @@ class MovementController extends BaseController
         $tooltips = [];
 
         foreach ($ships as $ship => $amount) {
-            $tooltips[] = $this->langs->language[$objects[$ship]] . ' :' . $amount;
+            $tooltips[] = __('game/ships.' . $objects[$ship]) . ' :' . $amount;
         }
 
         return count($tooltips) > 0 ? join("\n", $tooltips) : '';
@@ -234,11 +234,11 @@ class MovementController extends BaseController
         if ($fleet->getFleetMess() == 0) {
             $actions = '<form action="game.php?page=movement&action=return" method="post">';
             $actions .= '<input type="hidden" name="fleetid" value="' . $fleet->getFleetId() . '">';
-            $actions .= '<input type="submit" name="send" value="' . $this->langs->line('fl_send_back') . '">';
+            $actions .= '<input type="submit" name="send" value="' . __('game/fleet.fl_send_back') . '">';
             $actions .= '</form>';
 
             if ($fleet->getFleetMission() == Missions::ATTACK) {
-                $content = '<input type="button" value="' . $this->langs->line('fl_acs') . '">';
+                $content = '<input type="button" value="' . __('game/fleet.fl_acs') . '">';
                 $attributes = 'onClick="f(\'game.php?page=federationlayer&fleet=' . $fleet->getFleetId() . '\', \'\')"';
 
                 $actions .= UrlHelper::setUrl('#', $content, '', $attributes);

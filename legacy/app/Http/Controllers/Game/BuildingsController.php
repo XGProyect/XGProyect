@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Exception;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator;
+use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Buildings\Building;
 use Xgp\App\Libraries\DevelopmentsLib as Developments;
@@ -164,7 +165,7 @@ class BuildingsController extends BaseController
         $queue = $this->showQueue();
 
         if ($this->_commander_active && $queue['lenght'] > 0) {
-            $return['BuildListScript'] = Developments::currentBuilding($this->getCurrentPage(), $this->langs->language);
+            $return['BuildListScript'] = Developments::currentBuilding($this->getCurrentPage());
             $return['BuildList'] = $queue['buildlist'];
         }
 
@@ -203,10 +204,7 @@ class BuildingsController extends BaseController
      */
     private function getBuildingLevelWithFormat($building_id)
     {
-        return Developments::setLevelFormat(
-            $this->getBuildingLevel($building_id),
-            $this->langs
-        );
+        return Developments::setLevelFormat($this->getBuildingLevel($building_id));
     }
 
     /**
@@ -222,7 +220,6 @@ class BuildingsController extends BaseController
             $this->user,
             $this->planet,
             $building_id,
-            $this->langs,
             true,
             $this->getBuildingLevel($building_id)
         );
@@ -239,7 +236,7 @@ class BuildingsController extends BaseController
     {
         return Developments::formatedDevelopmentTime(
             $this->getBuildingTime($building_id),
-            $this->langs->line('bd_time')
+            __('game/buildings.bd_time')
         );
     }
 
@@ -353,7 +350,7 @@ class BuildingsController extends BaseController
 
             return Template::getInstance()->render(
                 'buildings/buildings_build_script',
-                array_merge($block, $this->langs->language)
+                $block
             );
         }
 
@@ -406,7 +403,7 @@ class BuildingsController extends BaseController
         ];
 
         $color = ucfirst($listOfButtons[$button_code]['color']);
-        $text = $this->langs->language[$listOfButtons[$button_code]['lang']];
+        $text = __('game/buddies.' . $listOfButtons[$button_code]['lang'])
         $methodName = 'color' . $color;
 
         return FormatLib::$methodName($text);
@@ -736,7 +733,6 @@ class BuildingsController extends BaseController
      */
     private function showQueue(&$Sprice = false)
     {
-        $lang = $this->langs->language;
         $CurrentQueue = $this->planet['planet_b_building_id'];
         $QueueID = 0;
         $to_destroy = 0;
@@ -780,13 +776,13 @@ class BuildingsController extends BaseController
                         if ($BuildMode == 'build') {
                             $ListIDRow .= '	<td class="l" colspan="2">' . $ListID . '.: ' . $ElementTitle . ' ' . $BuildLevel . '</td>';
                         } else {
-                            $ListIDRow .= '	<td class="l" colspan="2">' . $ListID . '.: ' . $ElementTitle . ' ' . $BuildLevel . ' ' . $this->langs->line('bd_dismantle') . '</td>';
+                            $ListIDRow .= '	<td class="l" colspan="2">' . $ListID . '.: ' . $ElementTitle . ' ' . $BuildLevel . ' ' . __('game/buildings.bd_dismantle') . '</td>';
                         }
                         $ListIDRow .= '	<td class="k">';
 
                         if ($ListID == 1) {
                             $ListIDRow .= '		<div id="blc" class="z">' . $BuildTime . '<br>';
-                            $ListIDRow .= '		<a href="game.php?page=' . $this->getCurrentPage() . '&listid=' . $ListID . '&amp;cmd=cancel&amp;planet=' . $PlanetID . '">' . $this->langs->line('bd_interrupt') . '</a></div>';
+                            $ListIDRow .= '		<a href="game.php?page=' . $this->getCurrentPage() . '&listid=' . $ListID . '&amp;cmd=cancel&amp;planet=' . $PlanetID . '">' . __('game/buildings.bd_interrupt') . '</a></div>';
                             $ListIDRow .= '		<script language="JavaScript">';
                             $ListIDRow .= '			pp = "' . $BuildTime . "\";\n";
                             $ListIDRow .= '			pk = "' . $ListID . "\";\n";
@@ -797,7 +793,7 @@ class BuildingsController extends BaseController
                             $ListIDRow .= '		<strong color="lime"><br><font color="lime">' . Timing::formatExtendedDate($BuildEndTime) . '</font></strong>';
                         } else {
                             $ListIDRow .= '		<font color="red">';
-                            $ListIDRow .= '		<a href="game.php?page=' . $this->getCurrentPage() . '&listid=' . $ListID . '&amp;cmd=remove&amp;planet=' . $PlanetID . '">' . $this->langs->line('bd_cancel') . '</a></font>';
+                            $ListIDRow .= '		<a href="game.php?page=' . $this->getCurrentPage() . '&listid=' . $ListID . '&amp;cmd=remove&amp;planet=' . $PlanetID . '">' . __('game/buildings.bd_cancel') . '</a></font>';
                         }
 
                         $ListIDRow .= '	</td>';

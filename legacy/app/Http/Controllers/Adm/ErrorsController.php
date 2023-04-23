@@ -72,7 +72,7 @@ class ErrorsController extends BaseController
 
         return [
             'errors_list' => $list_of_errors,
-            'errors_list_resume' => strtr($this->langs->line('er_errors'), ['%s' => $error_count]),
+            'errors_list_resume' => strtr(__('admin/errors.er_errors'), ['%s' => $error_count]),
         ];
     }
 

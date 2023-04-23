@@ -138,14 +138,14 @@ class FederationController extends BaseController
                         $own_fleet->getFleetGroup()
                     );
 
-                    $invite_message = $this->langs->line('fl_player') . $this->user['user_name'] . $this->langs->line('fl_acs_invitation_message');
+                    $invite_message = __('game/fleet.fl_player') . $this->user['user_name'] . __('game/fleet.fl_acs_invitation_message');
                     Functions::sendMessage(
                         $member,
                         $this->user['user_id'],
                         '',
                         5,
                         $this->user['user_name'],
-                        $this->langs->line('fl_acs_invitation_title'),
+                        __('game/fleet.fl_acs_invitation_title'),
                         $invite_message
                     );
                 }
@@ -200,12 +200,12 @@ class FederationController extends BaseController
                 $this->addAcsMember($user_id);
 
                 $this->_message = FormatLib::customColor(
-                    $this->langs->line('fl_player') . ' ' . $user_name . ' ' . $this->langs->line('fl_add_to_attack'),
+                    __('game/fleet.fl_player') . ' ' . $user_name . ' ' . __('game/fleet.fl_add_to_attack'),
                     'lime'
                 );
             } else {
                 $this->_message = FormatLib::colorRed(
-                    $this->langs->line('fl_player') . ' ' . $user_name . ' ' . $this->langs->line('fl_dont_exist')
+                    __('game/fleet.fl_player') . ' ' . $user_name . ' ' . __('game/fleet.fl_dont_exist')
                 );
             }
         }

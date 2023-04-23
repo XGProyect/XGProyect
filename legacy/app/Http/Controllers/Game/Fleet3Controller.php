@@ -160,7 +160,7 @@ class Fleet3Controller extends BaseController
                 $missiongSelector[] = [
                     'value' => $mission,
                     'mission' => $this->langs->language['type_mission'][$mission],
-                    'expedition_message' => $mission == Missions::EXPEDITION ? $this->langs->line('fl_expedition_alert_message') : '',
+                    'expedition_message' => $mission == Missions::EXPEDITION ? __('game/fleet.fl_expedition_alert_message') : '',
                     'id' => $mission == Missions::EXPEDITION ? ' ' : 'inpuT_' . $mission,
                     'checked' => $mission == $this->_current_mission ? ' checked="checked"' : '',
                 ];

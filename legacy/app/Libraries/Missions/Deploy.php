@@ -59,9 +59,9 @@ class Deploy extends Missions
             '',
             $fleet['fleet_start_time'],
             5,
-            $this->langs->line('mi_fleet_command'),
-            $this->langs->line('dep_report_title'),
-            StringsHelper::parseReplacements($this->langs->line('dep_report_deployed'), [
+            __('game/missions.mi_fleet_command'),
+            __('game/deploy.dep_report_title'),
+            StringsHelper::parseReplacements(__('game/deploy.dep_report_deployed'), [
                 $fleet['planet_start_name'],
                 Fleets::startLink($fleet, ''),
                 $fleet['planet_end_name'],
@@ -81,7 +81,7 @@ class Deploy extends Missions
      */
     private function sendReturnMessage(array $fleet): void
     {
-        $text = $this->langs->line('dep_report_back');
+        $text = __('game/deploy.dep_report_back');
         $replacements = [
             $fleet['planet_end_name'],
             Fleets::targetLink($fleet, ''),
@@ -90,7 +90,7 @@ class Deploy extends Missions
         ];
 
         if (Fleets::hasResources($fleet)) {
-            $text = $this->langs->line('dep_report_deployed');
+            $text = __('game/deploy.dep_report_deployed');
             $replacements = [
                 $fleet['planet_end_name'],
                 Fleets::targetLink($fleet, ''),
@@ -108,8 +108,8 @@ class Deploy extends Missions
             '',
             $fleet['fleet_end_time'],
             5,
-            $this->langs->line('mi_fleet_command'),
-            $this->langs->line('dep_report_title'),
+            __('game/missions.mi_fleet_command'),
+            __('game/deploy.dep_report_title'),
             StringsHelper::parseReplacements($text, $replacements)
         );
     }

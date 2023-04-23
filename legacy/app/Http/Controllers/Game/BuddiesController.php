@@ -175,7 +175,7 @@ class BuddiesController extends BaseController
         }
 
         if (!is_null($buddy) && $buddy->getBuddyId() != 0) {
-            Functions::message($this->langs->line('bu_request_exists'), 'game.php?page=buddies', 3, true);
+            Functions::message(__('game/buddies.bu_request_exists'), 'game.php?page=buddies', 3, true);
         }
 
         $this->sendMessage($user, 4);
@@ -222,11 +222,11 @@ class BuddiesController extends BaseController
             '',
             5,
             $this->user['user_name'],
-            $this->langs->line($types[$type]['title']),
+            __('game/buddies.' . $types[$type]['title']),
             str_replace(
                 '%u',
                 $this->user['user_name'],
-                $this->langs->line($types[$type]['text'])
+                __('game/buddies.' . $types[$type]['text'])
             )
         );
     }
@@ -241,7 +241,7 @@ class BuddiesController extends BaseController
         $user = filter_input(INPUT_GET, 'u', FILTER_VALIDATE_INT);
 
         if ($user == $this->user['user_id']) {
-            Functions::message($this->langs->line('bu_cannot_request_yourself'), 'game.php?page=buddies', 2, true);
+            Functions::message(__('game/buddies.bu_cannot_request_yourself'), 'game.php?page=buddies', 2, true);
         }
 
         $user = $this->buddiesModel->checkIfBuddyExists($user);
@@ -392,42 +392,26 @@ class BuddiesController extends BaseController
         $bid = $buddy->getBuddyId();
 
         if ($buddy->getBuddyStatus() == BuddiesStatus::isBuddy) {
-            $url = $this->generateUrl($bid, 1, $this->langs->line('bu_delete'));
+            $url = $this->generateUrl($bid, 1, __('game/buddies.bu_delete'));
         } else {
             if ($buddy->getBuddySender() == $this->user['user_id']) {
-                $url = $this->generateUrl($bid, 1, $this->langs->line('bu_cancel_request'));
+                $url = $this->generateUrl($bid, 1, __('game/buddies.bu_cancel_request'));
             } else {
-                $url = $this->generateUrl($bid, 2, $this->langs->line('bu_accept'));
+                $url = $this->generateUrl($bid, 2, __('game/buddies.bu_accept'));
                 $url .= '<br/>';
-                $url .= $this->generateUrl($bid, 1, $this->langs->line('bu_decline'));
+                $url .= $this->generateUrl($bid, 1, __('game/buddies.bu_decline'));
             }
         }
 
         return $url;
     }
 
-    /**
-     * Generate the URL
-     *
-     * @param int    $buddy_id  Buddy ID
-     * @param int    $sm        Action
-     * @param string $lang_line Lang Line
-     *
-     * @return string
-     */
-    private function generateUrl($buddy_id, $sm, $lang_line)
+    private function generateUrl(int $buddyId, int $sm, string $text): string
     {
-        return '<a href="game.php?page=buddies&mode=1&sm=' . $sm . '&bid=' . $buddy_id . '">' . $lang_line . '</a>';
+        return '<a href="game.php?page=buddies&mode=1&sm=' . $sm . '&bid=' . $buddyId . '">' . $text . '</a>';
     }
 
-    /**
-     * Check if there's anything
-     *
-     * @param array $array Array
-     *
-     * @return boolean
-     */
-    private function hasAny($array)
+    private function hasAny(array $array): bool
     {
         return (count($array) > 0);
     }

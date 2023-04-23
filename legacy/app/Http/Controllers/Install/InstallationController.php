@@ -2,8 +2,9 @@
 
 namespace Xgp\App\Http\Controllers\Install;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Artisan;
+use Xgp\App\Core\Template;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;
@@ -35,23 +36,22 @@ class InstallationController extends BaseController
 
     private function buildPage(): void
     {
-        $parse = $this->langs->language;
         $continue = true;
 
         if (!$this->serverRequirementes()) {
-            $alert = $this->saveMessage($this->langs->line('ins_no_server_requirements'), 'error');
+            $alert = $this->saveMessage(__('installation/installation.ins_no_server_requirements'), 'error');
             $continue = false;
         }
 
         // VERIFICATION - WE NEED THE config DIR WRITABLE
         if (!$this->isWritable()) {
-            $alert = $this->saveMessage($this->langs->line('ins_not_writable'), 'error');
+            $alert = $this->saveMessage(__('installation/installation.ins_not_writable'), 'error');
             $continue = false;
         }
 
         // VERIFICATION - WE DON'T WANT ANOTHER INSTALLATION
         if ($this->isInstalled()) {
-            $alert = $this->saveMessage($this->langs->line('ins_already_installed'), 'error');
+            $alert = $this->saveMessage(__('installation/installation.ins_already_installed'), 'error');
             $continue = false;
         }
 
@@ -61,10 +61,8 @@ class InstallationController extends BaseController
                     'install/in_welcome_view',
                     array_merge(
                         ['alert' => $alert],
-                        $this->langs->language
                     )
                 ),
-                $this->langs->language
             );
         }
 
@@ -81,22 +79,22 @@ class InstallationController extends BaseController
                 $this->db_prefix = isset($_POST['prefix']) ? $_POST['prefix'] : null;
 
                 if (!$this->validateDbData()) {
-                    $alerts = $this->langs->line('ins_empty_fields_error');
+                    $alerts = __('installation/installation.ins_empty_fields_error');
                     $continue = false;
                 }
 
                 if ($continue && !$this->tryConnection()) {
-                    $alerts = $this->langs->line('ins_not_connected_error');
+                    $alerts = __('installation/installation.ins_not_connected_error');
                     $continue = false;
                 }
 
                 if ($continue && !$this->tryDatabase()) {
-                    $alerts = $this->langs->line('ins_db_not_exists');
+                    $alerts = __('installation/installation.ins_db_not_exists');
                     $continue = false;
                 }
 
                 if ($continue && !$this->writeConfigFile()) {
-                    $alerts = $this->langs->line('ins_write_config_error');
+                    $alerts = __('installation/installation.ins_write_config_error');
                     $continue = false;
                 }
 
@@ -133,7 +131,7 @@ class InstallationController extends BaseController
 
             case 'step3':
                 if (!$this->insertDbData()) {
-                    $alerts = $this->langs->line('ins_insert_tables_error');
+                    $alerts = __('installation/installation.ins_insert_tables_error');
                     $continue = false;
                 }
 
@@ -158,9 +156,9 @@ class InstallationController extends BaseController
                 if ($create_account_status < 0) {
                     // Failure
                     if ($create_account_status == -1) {
-                        $error_message = $this->langs->line('ins_adm_empty_fields_error');
+                        $error_message = __('installation/installation.ins_adm_empty_fields_error');
                     } else {
-                        $error_message = $this->langs->line('ins_adm_invalid_email_address');
+                        $error_message = __('installation/installation.ins_adm_invalid_email_address');
                     }
 
                     $parse['alert'] = $this->saveMessage($error_message, 'warning');
@@ -182,7 +180,7 @@ class InstallationController extends BaseController
 
                     $current_page = Template::getInstance()->render(
                         'install/in_create_admin_done_view',
-                        array_merge($parse, $this->langs->language)
+                        $parse
                     );
 
                     // This will continue on false meaning "This is the end of the installation, no else where to go"
@@ -200,17 +198,14 @@ class InstallationController extends BaseController
                 case 'step1':
                     $current_page = Template::getInstance()->render(
                         'install/in_database_view',
-                        array_merge(
-                            [
-                                'alert' => '',
-                                'v_host' => '',
-                                'v_port' => '3306',
-                                'v_user' => '',
-                                'v_db' => '',
-                                'v_prefix' => 'xgp_',
-                            ],
-                            $this->langs->language
-                        )
+                        [
+                            'alert' => '',
+                            'v_host' => '',
+                            'v_port' => '3306',
+                            'v_user' => '',
+                            'v_db' => '',
+                            'v_prefix' => 'xgp_',
+                        ]
                     );
 
                     break;
@@ -218,7 +213,7 @@ class InstallationController extends BaseController
                 case 'step2':
                     $parse['step'] = 'step2';
                     $parse['done_config'] = '';
-                    $parse['done_connected'] = $this->langs->line('ins_done_connected');
+                    $parse['done_connected'] = __('installation/installation.ins_done_connected');
                     $parse['done_insert'] = '';
                     $current_page = Template::getInstance()->render(
                         'install/in_done_actions_view',
@@ -229,7 +224,7 @@ class InstallationController extends BaseController
 
                 case 'step3':
                     $parse['step'] = 'step3';
-                    $parse['done_config'] = $this->langs->line('ins_done_config');
+                    $parse['done_config'] = __('installation/installation.ins_done_config');
                     $parse['done_connected'] = '';
                     $parse['done_insert'] = '';
                     $current_page = Template::getInstance()->render(
@@ -243,7 +238,7 @@ class InstallationController extends BaseController
                     $parse['step'] = 'step4';
                     $parse['done_config'] = '';
                     $parse['done_connected'] = '';
-                    $parse['done_insert'] = $this->langs->line('ins_done_insert');
+                    $parse['done_insert'] = __('installation/installation.ins_done_insert');
                     $current_page = Template::getInstance()->render(
                         'install/in_done_actions_view',
                         $parse
@@ -262,8 +257,7 @@ class InstallationController extends BaseController
 
                 case 'license':
                     $current_page = Template::getInstance()->render(
-                        'install/in_license_view',
-                        $this->langs->language
+                        'install/in_license_view'
                     );
 
                     break;
@@ -273,14 +267,14 @@ class InstallationController extends BaseController
                 default:
                     $current_page = Template::getInstance()->render(
                         'install/in_welcome_view',
-                        array_merge($parse, $this->langs->language)
+                        $parse
                     );
 
                     break;
             }
         }
 
-        $this->page->displayInstall($current_page, $this->langs->language);
+        $this->page->displayInstall($current_page);
     }
 
     private function serverRequirementes()
@@ -556,17 +550,17 @@ class InstallationController extends BaseController
         switch ($result) {
             case 'ok':
                 $parse['color'] = 'alert-success';
-                $parse['status'] = $this->langs->line('ins_ok_title');
+                $parse['status'] = __('installation/installation.ins_ok_title');
                 break;
 
             case 'error':
                 $parse['color'] = 'alert-error';
-                $parse['status'] = $this->langs->line('ins_error_title');
+                $parse['status'] = __('installation/installation.ins_error_title');
                 break;
 
             case 'warning':
                 $parse['color'] = 'alert-block';
-                $parse['status'] = $this->langs->line('ins_warning_title');
+                $parse['status'] = __('installation/installation.ins_warning_title');
                 break;
         }
 

@@ -44,7 +44,7 @@ class AlliancesController extends BaseController
 
         if ($alliance != '') {
             if (!$this->checkAlliance($alliance)) {
-                $parse['alert'] = Administration::saveMessage('error', $this->langs->line('al_nothing_found'));
+                $parse['alert'] = Administration::saveMessage('error', __('game/alliances.al_nothing_found'));
                 $alliance = '';
             } else {
                 $this->_alliance_query = $this->alliancesModel->getAllAllianceDataById($this->_id);
@@ -140,9 +140,8 @@ class AlliancesController extends BaseController
      */
     private function getDataInfo()
     {
-        $parse = $this->langs->language;
-        $parse += (array) $this->_alliance_query;
-        $parse['al_alliance_information'] = str_replace('%s', $this->_alliance_query['alliance_name'], $this->langs->line('al_alliance_information'));
+        $parse = (array) $this->_alliance_query;
+        $parse['al_alliance_information'] = str_replace('%s', $this->_alliance_query['alliance_name'], __('game/alliances.al_alliance_information'));
         $parse['alliance_register_time'] = ($this->_alliance_query['alliance_register_time'] == 0) ? '-' : date(Functions::readConfig('date_format_extended'), $this->_alliance_query['alliance_register_time']);
         $parse['alliance_owner_picker'] = $this->buildUsersCombo($this->_alliance_query['alliance_owner']);
         $parse['sel1'] = $this->_alliance_query['alliance_request_notallow'] == 1 ? 'selected' : '';
@@ -159,8 +158,7 @@ class AlliancesController extends BaseController
      */
     private function getDataRanks()
     {
-        $parse = $this->langs->language;
-        $parse['al_alliance_ranks'] = str_replace('%s', $this->_alliance_query['alliance_name'], $this->langs->line('al_alliance_ranks'));
+        $parse['al_alliance_ranks'] = str_replace('%s', $this->_alliance_query['alliance_name'], __('game/alliances.al_alliance_ranks'));
         $parse['image_path'] = DEFAULT_SKINPATH;
         $alliance_ranks = $this->ranks->getAllRanksAsArray();
         $i = 0;
@@ -187,7 +185,7 @@ class AlliancesController extends BaseController
             }
         }
 
-        $parse['ranks_table'] = empty($rank_row) ? $this->langs->line('al_no_ranks') : $rank_row;
+        $parse['ranks_table'] = empty($rank_row) ? __('game/alliances.al_no_ranks') : $rank_row;
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
         return Template::getInstance()->render('admin.alliances_ranks_view', $parse);
@@ -200,11 +198,10 @@ class AlliancesController extends BaseController
      */
     private function getDataMembers()
     {
-        $parse = $this->langs->language;
         $parse['al_alliance_members'] = str_replace(
             '%s',
             $this->_alliance_query['alliance_name'],
-            $this->langs->line('al_alliance_members')
+            __('game/alliances.al_alliance_members')
         );
         $all_members = $this->alliancesModel->getAllianceMembers($this->_id);
 
@@ -212,21 +209,21 @@ class AlliancesController extends BaseController
 
         if (!empty($all_members)) {
             foreach ($all_members as $member) {
-                $member['alliance_request'] = ($member['user_ally_request']) ? $this->langs->line('al_request_yes') : $this->langs->line('al_request_no');
-                $member['ally_request_text'] = ($member['user_ally_request_text']) ? $this->langs->line('ally_request_text') : '-';
+                $member['alliance_request'] = ($member['user_ally_request']) ? __('game/alliances.al_request_yes') : __('game/alliances.al_request_no');
+                $member['ally_request_text'] = ($member['user_ally_request_text']) ? $member['user_ally_request_text'] : '-';
                 $member['alliance_register_time'] = date(Functions::readConfig('date_format_extended'), $member['user_ally_register_time']);
 
                 if (isset($member['user_ally_rank_id'])) {
                     $member['ally_rank'] = $this->ranks->getRankById($member['user_ally_rank_id'])['rank'];
                 } else {
-                    $member['ally_rank'] = $this->langs->line('al_rank_not_defined');
+                    $member['ally_rank'] = __('game/alliances.al_rank_not_defined');
                 }
 
                 $members .= Template::getInstance()->render('admin.alliances_members_row_view', $member);
             }
         }
 
-        $parse['members_table'] = empty($members) ? '<tr><td colspan="6" class="align_center text-error">' . $this->langs->line('al_no_ranks') . '</td></tr>' : $members;
+        $parse['members_table'] = empty($members) ? '<tr><td colspan="6" class="align_center text-error">' . __('game/alliances.al_no_ranks') . '</td></tr>' : $members;
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
         return Template::getInstance()->render('admin.alliances_members_view', $parse);
@@ -263,19 +260,19 @@ class AlliancesController extends BaseController
 
         if ($alliance_name != $alliance_name_orig) {
             if ($alliance_name == '' or !$this->alliancesModel->checkAllianceName($alliance_name)) {
-                $errors .= $this->langs->line('al_error_alliance_name') . '<br />';
+                $errors .= __('game/alliances.al_error_alliance_name') . '<br />';
             }
         }
 
         if ($alliance_tag != $alliance_tag_orig) {
             if ($alliance_tag == '' or !$this->alliancesModel->checkAllianceTag($alliance_tag)) {
-                $errors .= $this->langs->line('al_error_alliance_tag') . '<br />';
+                $errors .= __('game/alliances.al_error_alliance_tag') . '<br />';
             }
         }
 
         if ($alliance_owner != $alliance_owner_orig) {
             if ($alliance_owner <= 0 or $this->alliancesModel->checkAllianceFounder($alliance_owner)) {
-                $errors .= $this->langs->line('al_error_founder') . '<br />';
+                $errors .= __('game/alliances.al_error_founder') . '<br />';
             }
         }
 
@@ -296,7 +293,7 @@ class AlliancesController extends BaseController
                 'alliance_id' => $this->_id,
             ]);
 
-            $this->_alert_info = $this->langs->line('al_all_ok_message');
+            $this->_alert_info = __('game/alliances.al_all_ok_message');
             $this->_alert_type = 'ok';
         }
     }
@@ -319,10 +316,10 @@ class AlliancesController extends BaseController
                     $this->ranks->getAllRanksAsJsonString()
                 );
 
-                $this->_alert_info = $this->langs->line('al_rank_added');
+                $this->_alert_info = __('game/alliances.al_rank_added');
                 $this->_alert_type = 'ok';
             } else {
-                $this->_alert_info = $this->langs->line('al_required_name');
+                $this->_alert_info = __('game/alliances.al_required_name');
                 $this->_alert_type = 'warning';
             }
         }
@@ -351,7 +348,7 @@ class AlliancesController extends BaseController
                 $this->ranks->getAllRanksAsJsonString()
             );
 
-            $this->_alert_info = $this->langs->line('al_rank_saved');
+            $this->_alert_info = __('game/alliances.al_rank_saved');
             $this->_alert_type = 'ok';
         }
 
@@ -366,7 +363,7 @@ class AlliancesController extends BaseController
                 $this->ranks->getAllRanksAsJsonString()
             );
 
-            $this->_alert_info = $this->langs->line('al_rank_removed');
+            $this->_alert_info = __('game/alliances.al_rank_removed');
             $this->_alert_type = 'ok';
         }
 
@@ -396,11 +393,11 @@ class AlliancesController extends BaseController
                     $this->alliancesModel->removeAllianceMembers($ids_string);
 
                     // RETURN THE ALERT
-                    $this->_alert_info = $this->langs->line('us_all_ok_message');
+                    $this->_alert_info = __('admin/users.us_all_ok_message');
                     $this->_alert_type = 'ok';
                 } else {
                     // RETURN THE ALERT
-                    $this->_alert_info = $this->langs->line('al_cant_delete_last_one');
+                    $this->_alert_info = __('game/alliances.al_cant_delete_last_one');
                     $this->_alert_type = 'warning';
                 }
             }

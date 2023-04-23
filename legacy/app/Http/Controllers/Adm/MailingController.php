@@ -53,7 +53,7 @@ class MailingController extends BaseController
                 }
             }
 
-            $this->alert = Administration::saveMessage('ok', $this->langs->line('pr_all_ok_message'));
+            $this->alert = Administration::saveMessage('ok', __('admin/preferences.pr_all_ok_message'));
         }
     }
 

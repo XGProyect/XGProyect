@@ -44,8 +44,6 @@ class ResourcesController extends BaseController
 
     private function buildPage(): void
     {
-        $parse = $this->langs->language;
-
         $game_metal_basic_income = Functions::readConfig('metal_basic_income');
         $game_crystal_basic_income = Functions::readConfig('crystal_basic_income');
         $game_deuterium_basic_income = Functions::readConfig('deuterium_basic_income');
@@ -151,7 +149,7 @@ class ResourcesController extends BaseController
                 $CurrRow['percent'] = $this->planet[$Field];
                 $CurrRow['option'] = $this->build_options($CurrRow['percent']);
                 $CurrRow['type'] = $this->langs->language[$this->resource[$ProdID]];
-                $CurrRow['level'] = ($ProdID > 200) ? $this->langs->line('rs_amount') : $this->langs->line('level');
+                $CurrRow['level'] = ($ProdID > 200) ? __('game/resources.rs_amount') : __('game/global.level');
                 $CurrRow['level_type'] = $this->planet[$this->resource[$ProdID]];
                 $CurrRow['metal_type'] = FormatLib::prettyNumber($metal);
                 $CurrRow['crystal_type'] = FormatLib::prettyNumber($crystal);
@@ -168,7 +166,7 @@ class ResourcesController extends BaseController
             }
         }
 
-        $parse['Production_of_resources_in_the_planet'] = str_replace('%s', $this->planet['planet_name'], $this->langs->line('rs_production_on_planet'));
+        $parse['Production_of_resources_in_the_planet'] = str_replace('%s', $this->planet['planet_name'], __('game/resources.rs_production_on_planet'));
 
         $parse['production_level'] = $this->prod_level($this->planet['planet_energy_used'], $this->planet['planet_energy_max']);
         $parse['metal_basic_income'] = $game_metal_basic_income;

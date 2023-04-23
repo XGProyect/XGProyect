@@ -95,7 +95,7 @@ class ChangelogController extends BaseController
         if ($action_type) {
             $alert = Administration::saveMessage(
                 'ok',
-                $this->langs->line('ch_action_' . $action_type . '_done')
+                __('admin/changelog.ch_action_' . $action_type . '_done')
             );
         }
 
@@ -165,7 +165,7 @@ class ChangelogController extends BaseController
             'action' => $action,
             'changelog_id' => $changelog_id,
             'current_action' => strtr(
-                $this->langs->line('ch_' . $action . '_action'),
+                __('admin/changelog.ch_' . $action . '_action'),
                 ['%s' => $changelog_date]
             ),
             'changelog_date' => $changelog_date,

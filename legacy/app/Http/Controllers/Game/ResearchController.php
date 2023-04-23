@@ -44,7 +44,7 @@ class ResearchController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         if ($this->planet[$this->_resource[31]] == 0) {
-            Functions::message($this->langs->line('re_lab_required'), '', '', true);
+            Functions::message(__('game/research.re_lab_required'), '', '', true);
         }
 
         $this->buildPage();
@@ -52,7 +52,6 @@ class ResearchController extends BaseController
 
     private function buildPage(): void
     {
-        $parse = $this->langs->language;
         $technology_list = '';
 
         // time to do something
@@ -63,30 +62,28 @@ class ResearchController extends BaseController
                 $RowParse['dpath'] = DPATH;
                 $RowParse['tech_id'] = $tech;
                 $building_level = $this->user[$this->_resource[$tech]];
-                $RowParse['tech_level'] = DevelopmentsLib::setLevelFormat($building_level, $this->langs, $tech, $this->user);
-                $RowParse['tech_name'] = $this->langs->line($this->_resource[$tech]);
+                $RowParse['tech_level'] = DevelopmentsLib::setLevelFormat($building_level, $tech, $this->user);
+                $RowParse['tech_name'] = __('game/technologies.' . $this->_resource[$tech]);
                 $RowParse['tech_descr'] = $this->langs->language['descriptions'][$this->_resource[$tech]];
-                $RowParse['tech_price'] = DevelopmentsLib::formatedDevelopmentPrice($this->user, $this->planet, $tech, $this->langs);
+                $RowParse['tech_price'] = DevelopmentsLib::formatedDevelopmentPrice($this->user, $this->planet, $tech);
                 $SearchTime = DevelopmentsLib::developmentTime($this->user, $this->planet, $tech, false, $this->_lab_level);
-                $RowParse['search_time'] = DevelopmentsLib::formatedDevelopmentTime($SearchTime, $this->langs->line('re_time'));
+                $RowParse['search_time'] = DevelopmentsLib::formatedDevelopmentTime($SearchTime, __('game/research.re_time'));
 
                 if (!$this->_is_working['is_working']) {
                     if (DevelopmentsLib::isDevelopmentPayable($this->user, $this->planet, $tech) && !$this->userLibrary->isOnVacations($this->user)) {
                         if (!$this->isLaboratoryInQueue()) {
-                            $action_link = FormatLib::colorRed($this->langs->line('re_research'));
+                            $action_link = FormatLib::colorRed(__('game/research.re_research'));
                         } else {
-                            $action_link = UrlHelper::setUrl('game.php?page=research&cmd=search&tech=' . $tech, FormatLib::colorGreen($this->langs->line('re_research')));
+                            $action_link = UrlHelper::setUrl('game.php?page=research&cmd=search&tech=' . $tech, FormatLib::colorGreen(__('game/research.re_research')));
                         }
                     } else {
-                        $action_link = FormatLib::colorRed($this->langs->line('re_research'));
+                        $action_link = FormatLib::colorRed(__('game/research.re_research'));
                     }
                 } else {
                     if ($this->_is_working['working_on']['planet_b_tech_id'] == $tech) {
-                        $bloc = $this->langs->language;
-
                         if ($this->_is_working['working_on']['planet_id'] != $this->planet['planet_id']) {
                             $bloc['tech_time'] = $this->_is_working['working_on']['planet_b_tech'] - time();
-                            $bloc['tech_name'] = $this->langs->line('re_from') . $this->_is_working['working_on']['planet_name'] . '<br /> ' . FormatLib::prettyCoords($this->_is_working['working_on']['planet_galaxy'], $this->_is_working['working_on']['planet_system'], $this->_is_working['working_on']['planet_planet']);
+                            $bloc['tech_name'] = __('game/research.re_from') . $this->_is_working['working_on']['planet_name'] . '<br /> ' . FormatLib::prettyCoords($this->_is_working['working_on']['planet_galaxy'], $this->_is_working['working_on']['planet_system'], $this->_is_working['working_on']['planet_planet']);
                             $bloc['tech_home'] = $this->_is_working['working_on']['planet_id'];
                             $bloc['tech_id'] = $this->_is_working['working_on']['planet_b_tech_id'];
                         } else {
@@ -111,7 +108,7 @@ class ResearchController extends BaseController
             }
         }
 
-        $parse['noresearch'] = (!$this->isLaboratoryInQueue() ? $this->langs->line('re_building_lab') : '');
+        $parse['noresearch'] = (!$this->isLaboratoryInQueue() ? __('game/research.re_building_lab') : '');
         $parse['technolist'] = $technology_list;
 
         Template::getInstance()->view(

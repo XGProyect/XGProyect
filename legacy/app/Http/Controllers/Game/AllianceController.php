@@ -183,7 +183,7 @@ class AllianceController extends BaseController
      */
     private function getDefaultPublicSection()
     {
-        return Template::getInstance()->render('alliance/alliance_default_menu_view', $this->langs->language);
+        return Template::getInstance()->render('alliance/alliance_default_menu_view');
     }
 
     /**
@@ -194,24 +194,21 @@ class AllianceController extends BaseController
     private function getDefaultAwaitingApprovalSection()
     {
         $cancel = filter_input(INPUT_POST, 'bcancel');
-        $request_text = $this->langs->line('al_request_wait_message');
-        $button_text = $this->langs->line('al_delete_request');
+        $request_text = __('game/alliance.al_request_wait_message');
+        $button_text = __('game/alliance.al_delete_request');
 
         if (!empty($cancel)) {
             $this->allianceModel->cancelUserRequestById($this->user['user_id']);
-            $request_text = $this->langs->line('al_request_deleted');
-            $button_text = $this->langs->line('al_continue');
+            $request_text = __('game/alliance.al_request_deleted');
+            $button_text = __('game/alliance.al_continue');
         }
 
         return Template::getInstance()->render(
             'alliance/alliance_awaiting_view',
-            array_merge(
-                [
-                    'request_text' => str_replace('%s', $this->alliance->getCurrentAlliance()->getAllianceTag(), $request_text),
-                    'button_text' => $button_text,
-                ],
-                $this->langs->language
-            )
+            [
+                'request_text' => str_replace('%s', $this->alliance->getCurrentAlliance()->getAllianceTag(), $request_text),
+                'button_text' => $button_text,
+            ]
         );
     }
 
@@ -280,7 +277,9 @@ class AllianceController extends BaseController
         $search_string = filter_input(INPUT_POST, 'searchtext');
         $search_page = Template::getInstance()->render(
             'alliance/alliance_search_form_view',
-            array_merge(['searchtext' => $search_string], $this->langs->language)
+            [
+                'searchtext' => $search_string
+            ]
         );
 
         if (!empty($search_string)) {
@@ -300,7 +299,9 @@ class AllianceController extends BaseController
 
             $search_page .= Template::getInstance()->render(
                 'alliance/alliance_search_results_view',
-                array_merge(['list_of_results' => $list_of_results], $this->langs->language)
+                [
+                    'list_of_results' => $list_of_results
+                ]
             );
         }
 
@@ -321,38 +322,38 @@ class AllianceController extends BaseController
             $alliance_name = $action['aname'];
 
             if (strlen($alliance_tag) < 3 or strlen($alliance_tag) > 8) {
-                Functions::message($this->langs->line('al_tag_required'), 'game.php?page=alliance&mode=make', 3);
+                Functions::message(__('game/alliance.al_tag_required'), 'game.php?page=alliance&mode=make', 3);
             }
 
             if ($this->allianceTagExists($alliance_tag)) {
-                Functions::message(strtr($this->langs->line('al_tag_already_exists'), ['%s' => $alliance_tag]), 'game.php?page=alliance&mode=make', 3);
+                Functions::message(strtr(__('game/alliance.al_tag_already_exists'), ['%s' => $alliance_tag]), 'game.php?page=alliance&mode=make', 3);
             }
 
             if (strlen($alliance_name) < 3 or strlen($alliance_name) > 30) {
-                Functions::message($this->langs->line('al_name_required'), 'game.php?page=alliance&mode=make', 3);
+                Functions::message(__('game/alliance.al_name_required'), 'game.php?page=alliance&mode=make', 3);
             }
 
             if ($this->allianceNameExists($alliance_name)) {
-                Functions::message(strtr($this->langs->line('al_name_already_exists'), ['%s' => $alliance_name]), 'game.php?page=alliance&mode=make', 3);
+                Functions::message(strtr(__('game/alliance.al_name_already_exists'), ['%s' => $alliance_name]), 'game.php?page=alliance&mode=make', 3);
             }
 
             $this->allianceModel->createNewAlliance(
                 $alliance_name,
                 $alliance_tag,
                 $this->user['user_id'],
-                $this->langs->line('al_founder_rank_text'),
-                $this->langs->line('al_new_member_rank_text')
+                __('game/alliance.al_founder_rank_text'),
+                __('game/alliance.al_new_member_rank_text')
             );
 
-            $message = str_replace(['%s', '%d'], [$alliance_name, $alliance_tag], $this->langs->line('al_created'));
+            $message = str_replace(['%s', '%d'], [$alliance_name, $alliance_tag], __('game/alliance.al_created'));
             return Functions::messageBox(
                 $message,
                 $message . '<br/><br/>',
                 'game.php?page=alliance',
-                $this->langs->line('al_continue')
+                __('game/alliance.al_continue')
             );
         } else {
-            return Template::getInstance()->render('alliance/alliance_make_view', $this->langs->language);
+            return Template::getInstance()->render('alliance/alliance_make_view');
         }
     }
 
@@ -364,7 +365,7 @@ class AllianceController extends BaseController
     private function getApplySection()
     {
         if (!$this->alliance->getCurrentAlliance()->getAllianceRequestNotAllow()) {
-            Functions::message($this->langs->line('al_alliance_closed'), 'game.php?page=alliance', 3);
+            Functions::message(__('game/alliance.al_alliance_closed'), 'game.php?page=alliance', 3);
         }
 
         $request = filter_input_array(INPUT_POST);
@@ -377,7 +378,7 @@ class AllianceController extends BaseController
                     $this->user['user_id']
                 );
 
-                Functions::message($this->langs->line('al_request_confirmation_message'), 'game.php?page=alliance', 3);
+                Functions::message(__('game/alliance.al_request_confirmation_message'), 'game.php?page=alliance', 3);
             }
         }
 
@@ -386,9 +387,9 @@ class AllianceController extends BaseController
             [
                 'js_path' => JS_PATH,
                 'allyid' => $this->getAllianceId(),
-                'text_apply' => (!empty($this->alliance->getCurrentAlliance()->getAllianceRequest())) ? $this->alliance->getCurrentAlliance()->getAllianceRequest() : $this->langs->line('al_default_request_text'),
+                'text_apply' => (!empty($this->alliance->getCurrentAlliance()->getAllianceRequest())) ? $this->alliance->getCurrentAlliance()->getAllianceRequest() : __('game/alliance.al_default_request_text'),
                 'write_to_alliance' => strtr(
-                    $this->langs->line('al_write_request'),
+                    __('game/alliance.al_write_request'),
                     ['%s' => $this->alliance->getCurrentAlliance()->getAllianceTag()]
                 ),
             ]
@@ -427,7 +428,7 @@ class AllianceController extends BaseController
                 'user_name' => $member['user_name'],
                 'user_id' => $member['user_id'],
                 'dpath' => DPATH,
-                'write_message' => $this->langs->line('write_message'),
+                'write_message' => __('game/global.write_message'),
                 'user_ally_range' => $this->getUserRank($member['user_id'], $member['user_ally_rank_id']),
                 'points' => FormatLib::prettyNumber($member['user_statistic_total_points']),
                 'user_galaxy' => $member['user_galaxy'],
@@ -495,10 +496,10 @@ class AllianceController extends BaseController
             }
 
             return Functions::messageBox(
-                $this->langs->line('al_circular_sended'),
+                __('game/alliance.al_circular_sended'),
                 join('<br/>', $members_list),
                 'game.php?page=alliance',
-                $this->langs->line('al_continue'),
+                __('game/alliance.al_continue'),
                 true
             );
         }
@@ -533,7 +534,7 @@ class AllianceController extends BaseController
     private function getExitSection()
     {
         if ($this->alliance->isOwner()) {
-            Functions::message($this->langs->line('al_founder_cant_leave_alliance'), 'game.php?page=alliance', 3);
+            Functions::message(__('game/alliance.al_founder_cant_leave_alliance'), 'game.php?page=alliance', 3);
         }
 
         if ((bool) filter_input(INPUT_GET, 'yes', FILTER_VALIDATE_INT)) {
@@ -543,18 +544,18 @@ class AllianceController extends BaseController
             );
 
             return Functions::messageBox(
-                strtr($this->langs->line('al_leave_sucess'), ['%s' => $this->alliance->getCurrentAlliance()->getAllianceName()]),
+                strtr(__('game/alliance.al_leave_sucess'), ['%s' => $this->alliance->getCurrentAlliance()->getAllianceName()]),
                 '<br>',
                 'game.php?page=alliance',
-                $this->langs->line('al_continue')
+                __('game/alliance.al_continue')
             );
         }
 
         return Functions::messageBox(
-            strtr($this->langs->line('al_do_you_really_want_to_go_out'), ['%s' => $this->alliance->getCurrentAlliance()->getAllianceName()]),
+            strtr(__('game/alliance.al_do_you_really_want_to_go_out'), ['%s' => $this->alliance->getCurrentAlliance()->getAllianceName()]),
             '<br/>',
             'game.php?page=alliance&mode=exit&yes=1',
-            $this->langs->line('al_go_out_yes')
+            __('game/alliance.al_go_out_yes')
         );
     }
 
@@ -676,9 +677,9 @@ class AllianceController extends BaseController
         }
 
         $request_type = [
-            1 => $this->langs->line('al_outside_text'),
-            2 => $this->langs->line('al_inside_text'),
-            3 => $this->langs->line('al_request_text'),
+            1 => __('game/alliance.al_outside_text'),
+            2 => __('game/alliance.al_inside_text'),
+            3 => __('game/alliance.al_request_text'),
         ];
 
         $text = [
@@ -771,7 +772,7 @@ class AllianceController extends BaseController
                 'user_name' => $member['user_name'],
                 'user_id' => $member['user_id'],
                 'dpath' => DPATH,
-                'write_message' => $this->langs->line('write_message'),
+                'write_message' => __('game/global.write_message'),
                 'user_ally_range' => $this->buildAdminMembersRankBlock($member['user_id'], $member['user_ally_rank_id'], $rank),
                 'points' => FormatLib::prettyNumber($member['user_statistic_total_points']),
                 'user_galaxy' => $member['user_galaxy'],
@@ -804,11 +805,11 @@ class AllianceController extends BaseController
 
         if (isset($name)) {
             if (strlen($name) < 3 or strlen($name) > 30) {
-                Functions::message($this->langs->line('al_name_required'), 'game.php?page=alliance&mode=admin&edit=name', 3);
+                Functions::message(__('game/alliance.al_name_required'), 'game.php?page=alliance&mode=admin&edit=name', 3);
             }
 
             if ($this->allianceNameExists($name)) {
-                Functions::message(strtr($this->langs->line('al_name_already_exists'), ['%s' => $name]), 'game.php?page=alliance&mode=admin&edit=name', 3);
+                Functions::message(strtr(__('game/alliance.al_name_already_exists'), ['%s' => $name]), 'game.php?page=alliance&mode=admin&edit=name', 3);
             }
 
             $this->allianceModel->updateAllianceName(
@@ -823,10 +824,10 @@ class AllianceController extends BaseController
             'alliance/alliance_admin_rename',
             [
                 'case' => strtr(
-                    $this->langs->line('al_change_title'),
+                    __('game/alliance.al_change_title'),
                     ['%s' => $this->alliance->getCurrentAlliance()->getAllianceName()]
                 ),
-                'title' => $this->langs->line('al_new_name'),
+                'title' => __('game/alliance.al_new_name'),
             ]
         );
     }
@@ -852,8 +853,8 @@ class AllianceController extends BaseController
                 '',
                 3,
                 $this->alliance->getCurrentAlliance()->getAllianceTag(),
-                $this->langs->line('al_you_was_acceted') . $this->alliance->getCurrentAlliance()->getAllianceName(),
-                $this->langs->line('al_hi_the_alliance') . $this->alliance->getCurrentAlliance()->getAllianceName() . $this->langs->line('al_has_accepted') . $text
+                __('game/alliance.al_you_was_acceted') . $this->alliance->getCurrentAlliance()->getAllianceName(),
+                __('game/alliance.al_hi_the_alliance') . $this->alliance->getCurrentAlliance()->getAllianceName() . __('game/alliance.al_has_accepted') . $text
             );
 
             Functions::redirect('game.php?page=alliance&mode=admin&edit=requests');
@@ -868,8 +869,8 @@ class AllianceController extends BaseController
                 '',
                 3,
                 $this->alliance->getCurrentAlliance()->getAllianceTag(),
-                $this->langs->line('al_you_was_declined') . $this->alliance->getCurrentAlliance()->getAllianceName(),
-                $this->langs->line('al_hi_the_alliance') . $this->alliance->getCurrentAlliance()->getAllianceName() . $this->langs->line('al_has_declined') . $text
+                __('game/alliance.al_you_was_declined') . $this->alliance->getCurrentAlliance()->getAllianceName(),
+                __('game/alliance.al_hi_the_alliance') . $this->alliance->getCurrentAlliance()->getAllianceName() . __('game/alliance.al_has_declined') . $text
             );
 
             Functions::redirect('game.php?page=alliance&mode=admin&edit=requests');
@@ -897,7 +898,7 @@ class AllianceController extends BaseController
                     [
                         'js_path' => JS_PATH,
                         'id' => $list_of_requests[$show]['id'],
-                        'request_from' => strtr($this->langs->line('al_request_from'), ['%s' => $list_of_requests[$show]['username']]),
+                        'request_from' => strtr(__('game/alliance.al_request_from'), ['%s' => $list_of_requests[$show]['username']]),
                         'request_text' => $list_of_requests[$show]['ally_request_text'],
                     ]
                 );
@@ -908,9 +909,9 @@ class AllianceController extends BaseController
             'alliance/alliance_admin_request_view',
             [
                 'request_form' => $request_form,
-                'pending_message' => strtr($this->langs->line('al_no_request_pending'), ['%n' => $amount_of_requests]),
+                'pending_message' => strtr(__('game/alliance.al_no_request_pending'), ['%n' => $amount_of_requests]),
                 'list_of_requests' => $list_of_requests,
-                'no_requests' => $amount_of_requests <= 0 ? '<tr><th role="cell" colspan="2">' . $this->langs->line('al_no_requests') . '</th></tr>' : '',
+                'no_requests' => $amount_of_requests <= 0 ? '<tr><th role="cell" colspan="2">' . __('game/alliance.al_no_requests') . '</th></tr>' : '',
             ]
         );
     }
@@ -979,7 +980,7 @@ class AllianceController extends BaseController
 
         if (is_array($ranks->getAllRanksAsArray())) {
             foreach ($ranks->getAllRanksAsArray() as $rank_id => $details) {
-                $delete = '<a href="game.php?page=alliance&mode=admin&edit=rights&d=' . $rank_id . '"><img src="' . DPATH . 'alliance/abort.gif" border="0" alt="' . $this->langs->line('al_rank_delete') . '"/></a>';
+                $delete = '<a href="game.php?page=alliance&mode=admin&edit=rights&d=' . $rank_id . '"><img src="' . DPATH . 'alliance/abort.gif" border="0" alt="' . __('game/alliance.al_rank_delete') . '"/></a>';
                 $disabled = '';
                 if ($rank_id == 0 or $rank_id == 1) {
                     $delete = '';
@@ -1031,11 +1032,11 @@ class AllianceController extends BaseController
 
         if (isset($tag)) {
             if (strlen($tag) < 3 or strlen($tag) > 8) {
-                Functions::message($this->langs->line('al_tag_required'), 'game.php?page=alliance&mode=admin&edit=tag', 3);
+                Functions::message(__('game/alliance.al_tag_required'), 'game.php?page=alliance&mode=admin&edit=tag', 3);
             }
 
             if ($this->allianceTagExists($tag)) {
-                Functions::message(strtr($this->langs->line('al_tag_already_exists'), ['%s' => $tag]), 'game.php?page=alliance&mode=admin&edit=tag', 3);
+                Functions::message(strtr(__('game/alliance.al_tag_already_exists'), ['%s' => $tag]), 'game.php?page=alliance&mode=admin&edit=tag', 3);
             }
 
             $this->allianceModel->updateAllianceTag(
@@ -1050,10 +1051,10 @@ class AllianceController extends BaseController
             'alliance/alliance_admin_rename',
             [
                 'case' => strtr(
-                    $this->langs->line('al_change_title'),
+                    __('game/alliance.al_change_title'),
                     ['%s' => $this->alliance->getCurrentAlliance()->getAllianceTag()]
                 ),
-                'title' => $this->langs->line('al_new_tag'),
+                'title' => __('game/alliance.al_new_tag'),
             ]
         );
     }
@@ -1130,11 +1131,11 @@ class AllianceController extends BaseController
             && $this->alliance->getCurrentAlliance()->getAllianceRequestNotAllow()) {
             $url = UrlHelper::setUrl(
                 'game.php?page=alliance&mode=apply&allyid=' . $this->getAllianceId(),
-                $this->langs->line('al_click_to_send_request'),
-                $this->langs->line('al_click_to_send_request')
+                __('game/alliance.al_click_to_send_request'),
+                __('game/alliance.al_click_to_send_request')
             );
 
-            return '<tr><th scope="row">' . $this->langs->line('al_request') . '</th><th role="cell">' . $url . '</th></tr>';
+            return '<tr><th scope="row">' . __('game/alliance.al_request') . '</th><th role="cell">' . $url . '</th></tr>';
         }
 
         return '';
@@ -1164,7 +1165,7 @@ class AllianceController extends BaseController
     private function buildTagBlock()
     {
         return [
-            'detail_title' => $this->langs->line('al_ally_info_tag'),
+            'detail_title' => __('game/alliance.al_ally_info_tag'),
             'detail_content' => $this->alliance->getCurrentAlliance()->getAllianceTag(),
         ];
     }
@@ -1177,7 +1178,7 @@ class AllianceController extends BaseController
     private function buildNameBlock()
     {
         return [
-            'detail_title' => $this->langs->line('al_ally_info_name'),
+            'detail_title' => __('game/alliance.al_ally_info_name'),
             'detail_content' => $this->alliance->getCurrentAlliance()->getAllianceName(),
         ];
     }
@@ -1192,11 +1193,11 @@ class AllianceController extends BaseController
         $list_of_members = '';
 
         if ($this->alliance->hasAccess(AllianceRanks::VIEW_MEMBER_LIST)) {
-            $list_of_members = ' (' . UrlHelper::setUrl('game.php?page=alliance&mode=memberslist', $this->langs->line('al_user_list')) . ')';
+            $list_of_members = ' (' . UrlHelper::setUrl('game.php?page=alliance&mode=memberslist', __('game/alliance.al_user_list')) . ')';
         }
 
         return [
-            'detail_title' => $this->langs->line('al_ally_info_members'),
+            'detail_title' => __('game/alliance.al_ally_info_members'),
             'detail_content' => $this->alliance->getCurrentAlliance()->getAllianceMembers() . $list_of_members,
         ];
     }
@@ -1212,11 +1213,11 @@ class AllianceController extends BaseController
         $admin_area = '';
 
         if ($this->alliance->hasAccess(AllianceRanks::ADMINISTRATION)) {
-            $admin_area = ' (' . UrlHelper::setUrl('game.php?page=alliance&mode=admin&edit=ally', $this->langs->line('al_manage_alliance')) . ')';
+            $admin_area = ' (' . UrlHelper::setUrl('game.php?page=alliance&mode=admin&edit=ally', __('game/alliance.al_manage_alliance')) . ')';
         }
 
         return [
-            'detail_title' => $this->langs->line('al_rank'),
+            'detail_title' => __('game/alliance.al_rank'),
             'detail_content' => $rank . $admin_area,
         ];
     }
@@ -1236,12 +1237,12 @@ class AllianceController extends BaseController
         if ($this->alliance->hasAccess(AllianceRanks::APPLICATION_MANAGEMENT) && $count != 0) {
             $requests = UrlHelper::setUrl(
                 'game.php?page=alliance&mode=admin&edit=requests',
-                $count . ' ' . $this->langs->line('al_new_requests')
+                $count . ' ' . __('game/alliance.al_new_requests')
             );
         }
 
         return [
-            'detail_title' => $this->langs->line('al_requests'),
+            'detail_title' => __('game/alliance.al_requests'),
             'detail_content' => $requests,
         ];
     }
@@ -1255,8 +1256,8 @@ class AllianceController extends BaseController
     {
         if ($this->alliance->hasAccess(AllianceRanks::SEND_CIRCULAR)) {
             return [
-                'detail_title' => $this->langs->line('al_circular_message'),
-                'detail_content' => UrlHelper::setUrl('game.php?page=alliance&mode=circular', $this->langs->line('al_send_circular_message')),
+                'detail_title' => __('game/alliance.al_circular_message'),
+                'detail_content' => UrlHelper::setUrl('game.php?page=alliance&mode=circular', __('game/alliance.al_send_circular_message')),
             ];
         }
     }
@@ -1268,7 +1269,7 @@ class AllianceController extends BaseController
      */
     private function buildDescriptionBlock()
     {
-        $description = $this->langs->line('al_description_message');
+        $description = __('game/alliance.al_description_message');
         $alliance_description = $this->alliance->getCurrentAlliance()->getAllianceDescription();
 
         if ($alliance_description != '') {
@@ -1294,7 +1295,7 @@ class AllianceController extends BaseController
         }
 
         return [
-            'detail_title' => $this->langs->line('al_web_text'),
+            'detail_title' => __('game/alliance.al_web_text'),
             'detail_content' => $alliance_web,
         ];
     }
@@ -1317,7 +1318,7 @@ class AllianceController extends BaseController
     private function buildLeaveBlock()
     {
         if (!$this->alliance->isOwner()) {
-            return Template::getInstance()->render('alliance/alliance_leave_view', $this->langs->language);
+            return Template::getInstance()->render('alliance/alliance_leave_view');
         }
 
         return '';
@@ -1365,9 +1366,9 @@ class AllianceController extends BaseController
 
         if (!isset($ranks->getRankById($member_rank_id)['rank'])) {
             if ($this->alliance->getCurrentAlliance()->getAllianceOwner() == $member_id) {
-                return $this->langs->line('al_founder_rank_text');
+                return __('game/alliance.al_founder_rank_text');
             } else {
-                return $this->langs->line('al_new_member_rank_text');
+                return __('game/alliance.al_new_member_rank_text');
             }
         }
 
@@ -1437,7 +1438,7 @@ class AllianceController extends BaseController
         if ($this->alliance->hasAccess(AllianceRanks::KICK)) {
             $action = 'game.php?page=alliance&mode=admin&edit=members&kick=' . $member_id;
             $content = Functions::setImage(DPATH . 'alliance/abort.gif');
-            $attributes = 'onclick="javascript:return confirm(\'' . strtr($this->langs->line('al_confirm_remove_member'), ['%s' => $member_name]) . '\');"';
+            $attributes = 'onclick="javascript:return confirm(\'' . strtr(__('game/alliance.al_confirm_remove_member'), ['%s' => $member_name]) . '\');"';
             $kick_user = UrlHelper::setUrl($action, $content, '', $attributes);
         }
 

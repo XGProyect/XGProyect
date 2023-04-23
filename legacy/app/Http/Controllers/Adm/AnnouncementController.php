@@ -69,7 +69,7 @@ class AnnouncementController extends BaseController
                     $this->doEmailAction($action);
                 }
             } else {
-                $this->alerts[] = Administration::saveMessage('warning', $this->langs->line('an_not_sent'));
+                $this->alerts[] = Administration::saveMessage('warning', __('admin/announcement.an_not_sent'));
             }
         }
     }
@@ -94,7 +94,7 @@ class AnnouncementController extends BaseController
         $time = time();
 
         $from = Format::customColor($level, $color);
-        $subject = Format::customColor(($post['subject'] ?? $this->langs->line('an_none')), $color);
+        $subject = Format::customColor(($post['subject'] ?? __('admin/announcement.an_none')), $color);
         $message = Format::customColor($post['text'], $color);
 
         foreach ($players as $player) {
@@ -110,7 +110,7 @@ class AnnouncementController extends BaseController
             );
         }
 
-        $this->alerts[] = Administration::saveMessage('ok', $this->langs->line('an_sent'));
+        $this->alerts[] = Administration::saveMessage('ok', __('admin/announcement.an_sent'));
     }
 
     /**
@@ -132,12 +132,12 @@ class AnnouncementController extends BaseController
         foreach ($players as $player) {
             $result = Functions::sendEmail(
                 $player['user_email'],
-                ($post['subject'] ?? $this->langs->line('an_none')),
+                ($post['subject'] ?? __('admin/announcement.an_none')),
                 strtr($post['text'], ['%player%' => Format::strongText($player['user_name'])]),
                 $from
             );
 
-            $results[] = $player['user_name'] . ': ' . ($result ? $this->langs->line('an_email_sent') : $this->langs->line('an_email_failed'));
+            $results[] = $player['user_name'] . ': ' . ($result ? __('admin/announcement.an_email_sent') : __('admin/announcement.an_email_failed'));
 
             // 20 per row
             if ($sent_count % 20 == 0) {
@@ -150,7 +150,7 @@ class AnnouncementController extends BaseController
         $this->alerts[] = Administration::saveMessage(
             'info',
             strtr(
-                $this->langs->line('an_delivery_result'),
+                __('admin/announcement.an_delivery_result'),
                 ['%s' => join('<br>', $results)]
             )
         );

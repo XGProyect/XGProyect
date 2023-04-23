@@ -45,7 +45,7 @@ class ModulesController extends BaseController
 
             Functions::updateConfig('modules', join(';', $modules_set));
 
-            $this->alert = Administration::saveMessage('ok', $this->langs->line('mdl_all_ok_message'));
+            $this->alert = Administration::saveMessage('ok', __('admin/modules.mdl_all_ok_message'));
         }
     }
 

@@ -142,7 +142,7 @@ class ResetController extends BaseController
                 $this->resetModel->resetAll();
             }
 
-            $this->alert = Administration::saveMessage('ok', $this->langs->line('re_reset_excess'));
+            $this->alert = Administration::saveMessage('ok', __('admin/reset.re_reset_excess'));
         }
     }
 }

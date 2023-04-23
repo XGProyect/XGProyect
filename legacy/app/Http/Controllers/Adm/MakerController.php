@@ -72,35 +72,35 @@ class MakerController extends BaseController
             $check_planet = $this->makerModel->checkPlanet($galaxy, $system, $planet);
 
             if (!is_numeric($galaxy) && !is_numeric($system) && !is_numeric($planet)) {
-                $error = $this->langs->line('mk_user_only_numbers');
+                $error = __('admin/maker.mk_user_only_numbers');
                 $i++;
             } elseif ($galaxy > MAX_GALAXY_IN_WORLD or $system > MAX_SYSTEM_IN_GALAXY || $planet > MAX_PLANET_IN_SYSTEM || $galaxy < 1 || $system < 1 || $planet < 1) {
-                $error = $this->langs->line('mk_user_wrong_coords');
+                $error = __('admin/maker.mk_user_wrong_coords');
                 $i++;
             }
 
             if (!$name or !$email or !$galaxy or !$system or !$planet) {
-                $error .= $this->langs->line('mk_user_complete_all');
+                $error .= __('admin/maker.mk_user_complete_all');
                 $i++;
             }
 
             if (!Functions::validEmail(strip_tags($email))) {
-                $error .= $this->langs->line('mk_user_invalid_email');
+                $error .= __('admin/maker.mk_user_invalid_email');
                 $i++;
             }
 
             if ($check_user) {
-                $error .= $this->langs->line('mk_user_existing_name');
+                $error .= __('admin/maker.mk_user_existing_name');
                 $i++;
             }
 
             if ($check_email) {
-                $error .= $this->langs->line('mk_user_existing_email');
+                $error .= __('admin/maker.mk_user_existing_email');
                 $i++;
             }
 
             if ($check_planet['count'] != 0) {
-                $error .= $this->langs->line('mk_user_existing_planet');
+                $error .= __('admin/maker.mk_user_existing_planet');
                 $i++;
             }
 
@@ -108,7 +108,7 @@ class MakerController extends BaseController
                 $pass = Functions::generatePassword();
             } else {
                 if (strlen($pass) < 4) {
-                    $error .= $this->langs->line('mk_user_invalid_password');
+                    $error .= __('admin/maker.mk_user_invalid_password');
                     $i++;
                 }
             }
@@ -116,7 +116,7 @@ class MakerController extends BaseController
             if ($i == 0) {
                 $this->makerModel->createNewUser($name, $email, $auth, $pass, $galaxy, $system, $planet);
 
-                $this->alert = Administration::saveMessage('ok', strtr($this->langs->line('mk_user_added'), ['%s' => $pass]));
+                $this->alert = Administration::saveMessage('ok', strtr(__('admin/maker.mk_user_added'), ['%s' => $pass]));
             } else {
                 $this->alert = Administration::saveMessage('warning', '<br/>' . $error);
             }
@@ -142,11 +142,11 @@ class MakerController extends BaseController
             $check_alliance = $this->makerModel->checkAlliance($alliance_name, $alliance_tag);
 
             if (!$check_alliance && !empty($alliance_founder) && $alliance_founder > 0) {
-                $this->makerModel->createAlliance($alliance_name, $alliance_tag, $alliance_founder, $this->langs->line('mk_alliance_founder_rank'));
+                $this->makerModel->createAlliance($alliance_name, $alliance_tag, $alliance_founder, __('admin/maker.mk_alliance_founder_rank'));
 
-                $this->alert = Administration::saveMessage('ok', $this->langs->line('mk_alliance_added'));
+                $this->alert = Administration::saveMessage('ok', __('admin/maker.mk_alliance_added'));
             } else {
-                $this->alert = Administration::saveMessage('warning', $this->langs->line('mk_alliance_all_fields'));
+                $this->alert = Administration::saveMessage('warning', __('admin/maker.mk_alliance_all_fields'));
             }
         }
 
@@ -176,12 +176,12 @@ class MakerController extends BaseController
 
             if ($check_planet['count'] == 0 && $user_query) {
                 if ($galaxy < 1 or $system < 1 or $planet < 1 or !is_numeric($galaxy) or !is_numeric($system) or !is_numeric($planet)) {
-                    $error = $this->langs->line('mk_planet_unavailable_coords');
+                    $error = __('admin/maker.mk_planet_unavailable_coords');
                     $i++;
                 }
 
                 if ($galaxy > MAX_GALAXY_IN_WORLD or $system > MAX_SYSTEM_IN_GALAXY or $planet > MAX_PLANET_IN_SYSTEM) {
-                    $error .= $this->langs->line('mk_planet_wrong_coords');
+                    $error .= __('admin/maker.mk_planet_wrong_coords');
                     $i++;
                 }
 
@@ -191,17 +191,17 @@ class MakerController extends BaseController
                     }
 
                     if (strlen($name) <= 0) {
-                        $name = $this->langs->line('mk_planet_default_name');
+                        $name = __('admin/maker.mk_planet_default_name');
                     }
 
                     $this->makerModel->createNewPlanet($galaxy, $system, $planet, $user_id, $field_max, $name);
 
-                    $this->alert = Administration::saveMessage('ok', $this->langs->line('mk_planet_added'));
+                    $this->alert = Administration::saveMessage('ok', __('admin/maker.mk_planet_added'));
                 } else {
                     $this->alert = Administration::saveMessage('warning', $error);
                 }
             } else {
-                $this->alert = Administration::saveMessage('warning', $this->langs->line('mk_planet_unavailable_coords'));
+                $this->alert = Administration::saveMessage('warning', __('admin/maker.mk_planet_unavailable_coords'));
             }
         }
 
@@ -244,7 +244,7 @@ class MakerController extends BaseController
                             $size = $diameter;
                         } else {
                             $errors++;
-                            $this->alert = Administration::saveMessage('warning', $this->langs->line('mk_moon_only_numbers'));
+                            $this->alert = Administration::saveMessage('warning', __('admin/maker.mk_moon_only_numbers'));
                         }
                     }
 
@@ -254,7 +254,7 @@ class MakerController extends BaseController
                             $maxtemp = $temp_max;
                         } else {
                             $errors++;
-                            $this->alert = Administration::saveMessage('warning', $this->langs->line('mk_moon_only_numbers'));
+                            $this->alert = Administration::saveMessage('warning', __('admin/maker.mk_moon_only_numbers'));
                         }
                     }
 
@@ -271,13 +271,13 @@ class MakerController extends BaseController
                             $maxtemp
                         );
 
-                        $this->alert = Administration::saveMessage('ok', $this->langs->line('mk_moon_added'));
+                        $this->alert = Administration::saveMessage('ok', __('admin/maker.mk_moon_added'));
                     }
                 } else {
-                    $this->alert = Administration::saveMessage('warning', $this->langs->line('mk_moon_add_errors'));
+                    $this->alert = Administration::saveMessage('warning', __('admin/maker.mk_moon_add_errors'));
                 }
             } else {
-                $this->alert = Administration::saveMessage('error', $this->langs->line('mk_moon_planet_doesnt_exist'));
+                $this->alert = Administration::saveMessage('error', __('admin/maker.mk_moon_planet_doesnt_exist'));
             }
         }
 

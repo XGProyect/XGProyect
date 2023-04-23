@@ -37,24 +37,24 @@ class UpdateController extends BaseController
         $this->db_version = Functions::readConfig('version');
 
         if ($this->system_version == $this->db_version) {
-            die(Administration::noAccessMessage($this->langs->line('up_no_update_required')));
+            die(Administration::noAccessMessage(__('admin/update.up_no_update_required')));
         }
 
         $parse['alert'] = '';
-        $parse['up_sub_title'] = sprintf($this->langs->line('up_sub_title'), $this->db_version, $this->system_version);
+        $parse['up_sub_title'] = sprintf(__('admin/update.up_sub_title'), $this->db_version, $this->system_version);
 
         if ($_POST && isset($_POST['send'])) {
             $this->demo = (isset($_POST['demo_mode']) && $_POST['demo_mode'] == 'on') ? true : false;
 
             if (!$this->checkVersion()) {
-                $alerts = $this->langs->line('up_no_version_file');
+                $alerts = __('admin/update.up_no_version_file');
                 $continue = false;
             }
 
             if ($continue) {
                 $this->startUpdate();
 
-                $parse['alert'] = Administration::saveMessage('ok', $this->langs->line('up_success'));
+                $parse['alert'] = Administration::saveMessage('ok', __('admin/update.up_success'));
 
                 if ($this->demo) {
                     $parse['result'] = print_r($this->output, true);
@@ -64,7 +64,7 @@ class UpdateController extends BaseController
                         $parse
                     );
                 } else {
-                    die(Administration::noAccessMessage($this->langs->line('up_success')));
+                    die(Administration::noAccessMessage(__('admin/update.up_success')));
                 }
             } else {
                 $parse['alert'] = Administration::saveMessage('warning', $alerts);

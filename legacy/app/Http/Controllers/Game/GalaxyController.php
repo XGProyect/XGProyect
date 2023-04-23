@@ -42,7 +42,7 @@ class GalaxyController extends BaseController
         $this->_galaxyLib = Functions::loadLibrary('GalaxyLib');
 
         if ($this->user['preference_vacation_mode'] > 0) {
-            Functions::message($this->langs->line('gl_no_access_vm_on'), '', '');
+            Functions::message(__('game/galaxy.gl_no_access_vm_on'), '', '');
         }
 
         // init a new galaxy object
@@ -100,7 +100,7 @@ class GalaxyController extends BaseController
         $planet = $setted_position['planet'];
 
         if ($mode == 2 && $this->planet['defense_interplanetary_missile'] < 1) {
-            die(Functions::message($this->langs->line('gl_no_missiles'), 'game.php?page=galaxy&mode=0', 2));
+            die(Functions::message(__('game/galaxy.gl_no_missiles'), 'game.php?page=galaxy&mode=0', 2));
         }
 
         $this->galaxy = $this->galaxyModel->getGalaxyDataByGalaxyAndSystem($this->_galaxy, $this->_system, $this->user['user_id']);
@@ -113,7 +113,7 @@ class GalaxyController extends BaseController
         $parse['fleetmax'] = $max_fleets;
         $parse['recyclers'] = FormatLib::prettyNumber($this->planet['ship_recycler']);
         $parse['spyprobes'] = FormatLib::prettyNumber($CurrentSP);
-        $parse['missile_count'] = sprintf($this->langs->line('gl_missil_to_launch'), $this->planet['defense_interplanetary_missile']);
+        $parse['missile_count'] = sprintf(__('game/galaxy.gl_missil_to_launch'), $this->planet['defense_interplanetary_missile']);
         $parse['current'] = isset($_GET['current']) ? $_GET['current'] : null;
         $parse['current_galaxy'] = $this->planet['planet_galaxy'];
         $parse['current_system'] = $this->planet['planet_system'];
@@ -122,7 +122,7 @@ class GalaxyController extends BaseController
         $parse['planet_type'] = $this->planet['planet_type'];
         $parse['mip'] = ($mode == 2) ? Template::getInstance()->render(
             'galaxy/galaxy_missile_selector',
-            array_merge($parse, $this->langs->language)
+            $parse
         ) : ' ';
 
         Template::getInstance()->view(
@@ -153,7 +153,6 @@ class GalaxyController extends BaseController
             $this->planet,
             $this->_galaxy,
             $this->_system,
-            $this->langs
         );
 
         // set the current planets
@@ -293,56 +292,56 @@ class GalaxyController extends BaseController
         $errors = 0;
 
         if ($this->planet['building_missile_silo'] < 4) {
-            $error .= $this->langs->line('gl_silo_level') . '<br>';
+            $error .= __('game/galaxy.gl_silo_level') . '<br>';
             $errors++;
         }
 
         if ($this->user['research_impulse_drive'] == 0) {
-            $error .= $this->langs->line('gl_impulse_drive_required') . '<br>';
+            $error .= __('game/galaxy.gl_impulse_drive_required') . '<br>';
             $errors++;
         }
 
         if ($tempvar1 >= $tempvar2 || $galaxy != $this->planet['planet_galaxy']) {
-            $error .= $this->langs->line('gl_not_send_other_galaxy') . '<br>';
+            $error .= __('game/galaxy.gl_not_send_other_galaxy') . '<br>';
             $errors++;
         }
 
         if (!$target_user) {
-            $error .= $this->langs->line('gl_planet_doesnt_exists') . '<br>';
+            $error .= __('game/galaxy.gl_planet_doesnt_exists') . '<br>';
             $errors++;
         }
 
         if ($missiles_amount > $current_missiles) {
-            $error .= $this->langs->line('gl_cant_send') . $missiles_amount . $this->langs->line('gl_missile') . $current_missiles . '<br>';
+            $error .= __('game/galaxy.gl_cant_send') . $missiles_amount . __('game/galaxy.gl_missile') . $current_missiles . '<br>';
             $errors++;
         }
 
         if (((!is_numeric($target) && $target != 'all') or ($target < 0 or $target > 8))) {
-            $error .= $this->langs->line('gl_wrong_target') . '<br>';
+            $error .= __('game/galaxy.gl_wrong_target') . '<br>';
             $errors++;
         }
 
         if ($current_missiles == 0) {
-            $error .= $this->langs->line('gl_no_missiles') . '<br>';
+            $error .= __('game/galaxy.gl_no_missiles') . '<br>';
             $errors++;
         }
 
         if ($missiles_amount == 0) {
-            $error .= $this->langs->line('gl_add_missile_number') . '<br>';
+            $error .= __('game/galaxy.gl_add_missile_number') . '<br>';
             $errors++;
         }
 
         if ($target_user['user_onlinetime'] >= (time() - 60 * 60 * 24 * 7)) {
             if ($this->noob->isWeak(intval($MyGameLevel), intval($HeGameLevel))) {
-                $error .= $this->langs->line('fl_week_player') . '<br>';
+                $error .= __('game/fleet.fl_week_player') . '<br>';
                 $errors++;
             } elseif ($this->noob->isStrong(intval($MyGameLevel), intval($HeGameLevel))) {
-                $error .= $this->langs->line('fl_strong_player') . '<br>';
+                $error .= __('game/fleet.fl_strong_player') . '<br>';
                 $errors++;
             }
         }
         if ($target_user['preference_vacation_mode'] > 0) {
-            $error .= $this->langs->line('fl_in_vacation_player') . '<br>';
+            $error .= __('game/fleet.fl_in_vacation_player') . '<br>';
             $errors++;
         }
 
@@ -353,15 +352,15 @@ class GalaxyController extends BaseController
         $flight_time = round(((30 + (60 * $tempvar1)) * 2500) / Functions::readConfig('fleet_speed'));
 
         $DefenseLabel = [
-            0 => $this->langs->line('gl_all_defenses'),
-            1 => $this->langs->line('defense_rocket_launcher'),
-            2 => $this->langs->line('defense_light_laser'),
-            3 => $this->langs->line('defense_heavy_laser'),
-            4 => $this->langs->line('defense_gauss_cannon'),
-            5 => $this->langs->line('defense_ion_cannon'),
-            6 => $this->langs->line('defense_plasma_turret'),
-            7 => $this->langs->line('defense_small_shield_dome'),
-            8 => $this->langs->line('defense_large_shield_dome'),
+            0 => __('game/galaxy.gl_all_defenses'),
+            1 => __('game/defenses.defense_rocket_launcher'),
+            2 => __('game/defenses.defense_light_laser'),
+            3 => __('game/defenses.defense_heavy_laser'),
+            4 => __('game/defenses.defense_gauss_cannon'),
+            5 => __('game/defenses.defense_ion_cannon'),
+            6 => __('game/defenses.defense_plasma_turret'),
+            7 => __('game/defenses.defense_small_shield_dome'),
+            8 => __('game/defenses.defense_large_shield_dome'),
         ];
 
         $this->fleetModel->insertNewMissilesMission([
@@ -381,7 +380,7 @@ class GalaxyController extends BaseController
             'user_current_planet' => $this->user['user_current_planet'],
         ]);
 
-        Functions::message('<b>' . $missiles_amount . '</b>' . $this->langs->line('gl_missiles_sended') . $DefenseLabel[$target], 'game.php?page=overview', 3);
+        Functions::message('<b>' . $missiles_amount . '</b>' . __('game/galaxy.gl_missiles_sended') . $DefenseLabel[$target], 'game.php?page=overview', 3);
     }
 
     /**
@@ -442,19 +441,19 @@ class GalaxyController extends BaseController
         }
 
         $errors_types = [
-            600 => $this->langs->line('gl_success'),
-            601 => $this->langs->line('gl_error'),
-            602 => $this->langs->line('gl_no_moon'),
-            603 => $this->langs->line('gl_noob_protection'),
-            604 => $this->langs->line('gl_too_strong'),
-            605 => $this->langs->line('gl_vacation_mode'),
-            610 => $this->langs->line('gl_only_amount_ships'),
-            611 => $this->langs->line('gl_no_ships'),
-            612 => $this->langs->line('gl_no_slots'),
-            613 => $this->langs->line('gl_no_deuterium'),
-            614 => $this->langs->line('gl_no_planet'),
-            615 => $this->langs->line('gl_not_enough_storage'),
-            616 => $this->langs->line('gl_multi_alarm'),
+            600 => __('game/galaxy.gl_success'),
+            601 => __('game/galaxy.gl_error'),
+            602 => __('game/galaxy.gl_no_moon'),
+            603 => __('game/galaxy.gl_noob_protection'),
+            604 => __('game/galaxy.gl_too_strong'),
+            605 => __('game/galaxy.gl_vacation_mode'),
+            610 => __('game/galaxy.gl_only_amount_ships'),
+            611 => __('game/galaxy.gl_no_ships'),
+            612 => __('game/galaxy.gl_no_slots'),
+            613 => __('game/galaxy.gl_no_deuterium'),
+            614 => __('game/galaxy.gl_no_planet'),
+            615 => __('game/galaxy.gl_not_enough_storage'),
+            616 => __('game/galaxy.gl_multi_alarm'),
         ];
 
         if ($PartialFleet == true) {

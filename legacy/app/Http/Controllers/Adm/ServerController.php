@@ -180,7 +180,7 @@ class ServerController extends BaseController
             // update all the settings
             $this->serverModel->updateConfigs($this->game_config);
 
-            $parse['alert'] = Administration::saveMessage('ok', $this->langs->line('se_all_ok_message'));
+            $parse['alert'] = Administration::saveMessage('ok', __('admin/server.se_all_ok_message'));
         }
 
         $parse['game_name'] = $this->game_config['game_name'];

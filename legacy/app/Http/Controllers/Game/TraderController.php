@@ -99,10 +99,10 @@ class TraderController extends BaseController
 
                 Functions::redirect('game.php?page=traderResources');
             } else {
-                $this->error = $this->langs->line('tr_no_enough_dark_matter');
+                $this->error = __('game/trader.tr_no_enough_dark_matter');
             }
         } else {
-            $this->error = $this->langs->line('tr_no_enough_storage');
+            $this->error = __('game/trader.tr_no_enough_storage');
         }
     }
 
@@ -159,7 +159,7 @@ class TraderController extends BaseController
             $list_of_resources[] = [
                 'dpath' => DPATH,
                 'resource' => $resource,
-                'resource_name' => $this->langs->line($resource),
+                'resource_name' => __('game/global' . $resource),
                 'current_resource' => Format::shortlyNumber($this->planet['planet_' . $resource]),
                 'max_resource' => Format::shortlyNumber($this->planet['planet_' . $resource . '_max']),
                 'refill_options' => $this->setRefillOptions($resource),
@@ -192,14 +192,14 @@ class TraderController extends BaseController
                 $price = Format::customColor(
                     Format::prettyNumber($dm_price),
                     '#2cbef2'
-                ) . ' ' . $this->langs->line('dark_matter_short');
-                $button = '<input type="submit" name="' . $resource . '-' . $percentage . '" value="' . $this->langs->line('tr_refill_button') . '">';
+                ) . ' ' . __('game/global.dark_matter_short');
+                $button = '<input type="submit" name="' . $resource . '-' . $percentage . '" value="' . __('game/trader.tr_refill_button') . '">';
             }
 
             $refillOptions[] = [
-                'label' => (self::PERCENTAGES == 100) ? $this->langs->line('tr_refill_to') : $this->langs->line('tr_refill_by'),
+                'label' => (self::PERCENTAGES == 100) ? __('game/trader.tr_refill_to') : __('game/trader.tr_refill_by'),
                 'percentage' => $percentage,
-                'tr_requires' => $this->langs->line('tr_requires'),
+                'tr_requires' => __('game/trader.tr_requires'),
                 'price' => $price,
                 'button' => $button,
             ];

@@ -56,7 +56,7 @@ class Recycle extends Missions
             ]);
 
             $message = sprintf(
-                $this->langs->line('rec_result'),
+                __('game/recycle.rec_result'),
                 FormatLib::prettyNumber($fleet_row['fleet_amount']),
                 FormatLib::prettyNumber($this->recyclers_capacity),
                 FleetsLib::targetLink($fleet_row, ''),
@@ -70,11 +70,11 @@ class Recycle extends Missions
                 $fleet_row['fleet_owner'],
                 $message,
                 $fleet_row['fleet_start_time'],
-                sprintf($this->langs->line('rec_report_title'), FleetsLib::targetLink($fleet_row, ''))
+                sprintf(__('game/recycle.rec_report_title'), FleetsLib::targetLink($fleet_row, ''))
             );
         } elseif ($fleet_row['fleet_end_time'] <= time()) {
             $message = sprintf(
-                $this->langs->line('mi_fleet_back_with_resources'),
+                __('game/missions.mi_fleet_back_with_resources'),
                 $fleet_row['planet_end_name'],
                 FleetsLib::targetLink($fleet_row, ''),
                 $fleet_row['planet_start_name'],
@@ -88,7 +88,7 @@ class Recycle extends Missions
                 $fleet_row['fleet_owner'],
                 $message,
                 $fleet_row['fleet_end_time'],
-                $this->langs->line('mi_fleet_back_title')
+                __('game/missions.mi_fleet_back_title')
             );
 
             parent::restoreFleet($fleet_row, true);
@@ -195,7 +195,7 @@ class Recycle extends Missions
             '',
             $time,
             5,
-            $this->langs->line('rec_report_from'),
+            __('game/recycle.rec_report_from'),
             $status_message,
             $message
         );

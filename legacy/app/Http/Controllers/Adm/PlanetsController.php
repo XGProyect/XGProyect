@@ -53,7 +53,7 @@ class PlanetsController extends BaseController
                 Functions::updateConfig($option, $value);
             }
 
-            $this->alert = Administration::saveMessage('ok', $this->langs->line('np_all_ok_message'));
+            $this->alert = Administration::saveMessage('ok', __('admin/planets.np_all_ok_message'));
         }
     }
 

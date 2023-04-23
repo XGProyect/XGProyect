@@ -34,7 +34,7 @@ class RepairController extends BaseController
             $tables = $this->repairModel->getAllTables();
 
             $parse['display'] = 'block';
-            $parse['head'] = Template::getInstance()->render('admin.repair_row_head_view', $this->langs->language);
+            $parse['head'] = Template::getInstance()->render('admin.repair_row_head_view');
             $parse['tables'] = '';
             $parse['results'] = '';
 
@@ -52,7 +52,7 @@ class RepairController extends BaseController
             }
         } else {
             $parse['display'] = 'none';
-            $parse['head'] = Template::getInstance()->render('admin.repair_result_head_view', $this->langs->language);
+            $parse['head'] = Template::getInstance()->render('admin.repair_result_head_view');
             $parse['tables'] = '';
 
             if (isset($_POST['table']) && is_array($_POST['table'])) {
@@ -62,18 +62,18 @@ class RepairController extends BaseController
                     $parse['row'] = $table;
 
                     $this->repairModel->checkTable($table);
-                    $parse['result'] = $this->langs->line('db_check_ok');
+                    $parse['result'] = __('admin/repair.db_check_ok');
                     $result_rows .= Template::getInstance()->render('admin.repair_result_view', $parse);
 
                     if (isset($_POST['Optimize']) && $_POST['Optimize'] == 'yes') {
                         $this->repairModel->optimizeTable($table);
-                        $parse['result'] = $this->langs->line('db_opt');
+                        $parse['result'] = __('admin/repair.db_opt');
                         $result_rows .= Template::getInstance()->render('admin.repair_result_view', $parse);
                     }
 
                     if (isset($_POST['Repair']) && $_POST['Repair'] == 'yes') {
                         $this->repairModel->repairTable($table);
-                        $parse['result'] = $this->langs->line('db_rep');
+                        $parse['result'] = __('admin/repair.db_rep');
                         $result_rows .= Template::getInstance()->render('admin.repair_result_view', $parse);
                     }
                 }

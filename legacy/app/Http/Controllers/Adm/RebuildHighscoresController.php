@@ -55,7 +55,7 @@ class RebuildHighscoresController extends BaseController
                 '%m' => Format::prettyBytes($this->result['end_memory'][0]),
             ]),
             'alert' => Administration::saveMessage('ok', strtr(
-                $this->langs->line('sb_stats_update'),
+                __('admin/rebuildhighscores.sb_stats_update'),
                 ['%t' => $this->result['totaltime']]
             )),
         ];

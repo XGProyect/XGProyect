@@ -62,7 +62,7 @@ class CombatreportController extends BaseController
         $owners = $this->report->getFirstReportOwnersAsArray();
 
         if (!isset($owners) or !in_array($this->user['user_id'], $owners)) {
-            Functions::message($this->langs->line('cr_no_access'), '', 0, false, false, false);
+            Functions::message(__('game/combatreport.cr_no_access'), '', 0, false, false, false);
         }
     }
 
@@ -84,7 +84,7 @@ class CombatreportController extends BaseController
         // any other case
         $content = stripslashes($this->report->getAllReports()[0]->getReportContent());
         /*
-        foreach ($this->langs->line('cr_tech_short') as $id => $s_name) {
+        foreach (__('game/combatreport.cr_tech_short') as $id => $s_name) {
         $search = [$id];
         $replace = [$s_name];
         $content = str_replace($search, $replace, $content);

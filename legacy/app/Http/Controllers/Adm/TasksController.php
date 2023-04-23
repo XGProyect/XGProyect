@@ -52,7 +52,7 @@ class TasksController extends BaseController
         }
 
         return [
-            'name' => $this->langs->line('ta_' . $task),
+            'name' => __('admin/tasks.ta_' . $task),
             'next_run' => $next_run,
             'last_run' => $last_run,
             'actions' => $this->{'get' . ucwords(strtr($task, ['_' => ''])) . 'Actions'}(),
@@ -69,8 +69,8 @@ class TasksController extends BaseController
         return UrlHelper::setUrl(
             'admin.php?page=rebuildhighscores',
             '<i class="fas fa-play" data-toggle="popover" data-placement="top"
-            data-trigger="hover" data-content="' . $this->langs->line('ta_buildstats_title') . '"></i>',
-            $this->langs->line('ta_buildstats_title')
+            data-trigger="hover" data-content="' . __('admin/tasks.ta_buildstats_title') . '"></i>',
+            __('admin/tasks.ta_buildstats_title')
         );
     }
 
@@ -79,8 +79,8 @@ class TasksController extends BaseController
         return UrlHelper::setUrl(
             'admin.php?page=backup',
             '<i class="fas fa-cogs" data-toggle="popover" data-placement="top"
-            data-trigger="hover" data-content="' . $this->langs->line('ta_backup_title') . '"></i>',
-            $this->langs->line('ta_backup_title')
+            data-trigger="hover" data-content="' . __('admin/tasks.ta_backup_title') . '"></i>',
+            __('admin/tasks.ta_backup_title')
         );
     }
 

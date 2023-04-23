@@ -43,7 +43,7 @@ class ChatController extends BaseController
                     $this->_receiver_data['planet_system'],
                     $this->_receiver_data['planet_planet']
                 ),
-                'subject' => ((!isset($this->_message_data['subject'])) ? $this->langs->line('pm_no_subject') : $this->_message_data['subject']),
+                'subject' => ((!isset($this->_message_data['subject'])) ? __('game/chat.pm_no_subject') : $this->_message_data['subject']),
                 'text' => ((!isset($this->_message_data['text'])) ? '' : $this->_message_data['text']),
                 'error_text' => ((!isset($this->_message_data['error_text'])) ? '' : $this->_message_data['error_text']),
                 'status_message' => (!$this->_message_data['error_block'] ? [] : ''),
@@ -73,7 +73,7 @@ class ChatController extends BaseController
         }
 
         $this->_message_data['error_block'] = false;
-        $this->_message_data['error_text'] = $this->langs->line('pm_msg_sended');
+        $this->_message_data['error_text'] = __('game/chat.pm_msg_sended');
         $this->_message_data['error_color'] = '#00FF00';
 
         if ($message_sent) {
@@ -84,13 +84,13 @@ class ChatController extends BaseController
 
             if (!$message_sent['subject']) {
                 $errors++;
-                $this->_message_data['error_text'] = $this->langs->line('pm_no_subject');
+                $this->_message_data['error_text'] = __('game/chat.pm_no_subject');
                 $this->_message_data['error_color'] = '#FF0000';
             }
 
             if (!$message_sent['text']) {
                 $errors++;
-                $this->_message_data['error_text'] = $this->langs->line('pm_no_text');
+                $this->_message_data['error_text'] = __('game/chat.pm_no_text');
                 $this->_message_data['error_color'] = '#FF0000';
             }
 

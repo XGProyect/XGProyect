@@ -49,7 +49,7 @@ class RegistrationController extends BaseController
                 Functions::updateConfig($option, ($value == 'on' ? 1 : 0));
             }
 
-            $this->alert = Administration::saveMessage('ok', $this->langs->line('ur_all_ok_message'));
+            $this->alert = Administration::saveMessage('ok', __('admin/registration.ur_all_ok_message'));
         }
     }
 
