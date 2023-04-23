@@ -5,7 +5,6 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Xgp\App\Helpers\UrlHelper;
 
 class sidebar extends Component
 {
@@ -26,7 +25,7 @@ class sidebar extends Component
 
         $sections = [
             'configuration' => [
-                'icon' =>'fa-cogs',
+                'icon' => 'fa-cogs',
                 'items' => [
                     'server' => [],
                     'mailing' => [],
@@ -38,7 +37,7 @@ class sidebar extends Component
                 ],
             ],
             'information' => [
-                'icon' =>'fa-info-circle',
+                'icon' => 'fa-info-circle',
                 'items' => [
                     'tasks' => [],
                     'errors' => [],
@@ -47,7 +46,7 @@ class sidebar extends Component
                 ]
             ],
             'edition' => [
-                'icon' =>'fa-pen',
+                'icon' => 'fa-pen',
                 'items' => [
                     'maker' => [],
                     'users' => [],
@@ -58,7 +57,7 @@ class sidebar extends Component
                 ],
             ],
             'tools' => [
-                'icon' =>'fa-tools',
+                'icon' => 'fa-tools',
                 'items' => [
                     'backup' => [],
                     'encrypter' => [],
@@ -69,7 +68,7 @@ class sidebar extends Component
                 ],
             ],
             'maintenance' => [
-                'icon' =>'fa-brush',
+                'icon' => 'fa-brush',
                 'items' => [
                     'repair' => [],
                     'reset' => [],

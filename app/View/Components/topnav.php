@@ -34,14 +34,13 @@ class topnav extends Component
             ['planet_id', '=', $user->user_current_planet],
         ])->firstOrFail();
 
-
         $metal = FormatLib::prettyNumber($planet->planet_metal);
         $crystal = FormatLib::prettyNumber($planet->planet_crystal);
         $deuterium = FormatLib::prettyNumber($planet->planet_deuterium);
         $darkmatter = FormatLib::prettyNumber($user->premium->premium_dark_matter);
         $energy = FormatLib::prettyNumber(
             $user->planet_energy_max + $user->planet_energy_used
-        )  . ' / ' .  FormatLib::prettyNumber($user->planet_energy_max);
+        ) . ' / ' . FormatLib::prettyNumber($user->planet_energy_max);
 
         if ($planet->planet_metal >= ProductionLib::maxStorable($planet->building_metal_store)) {
             $metal = FormatLib::colorRed($metal);
@@ -142,7 +141,7 @@ class topnav extends Component
         $officers = [];
 
         foreach (['commander', 'admiral', 'engineer', 'geologist', 'technocrat'] as $officer) {
-            $status =  __('game/officier.of_add_premium_officier_' . $officer);
+            $status = __('game/officier.of_add_premium_officier_' . $officer);
             $expires = $user->premium->{'premium_officier_' . $officer};
             $isActive = false;
 
@@ -152,7 +151,7 @@ class topnav extends Component
             }
 
             $officers[] = [
-                'name' =>  __('game/officier.of_hire_' . $officer),
+                'name' => __('game/officier.of_hire_' . $officer),
                 'status' => $status,
                 'icon' => $officer . '_icon' . ($isActive ? '' : '_un'),
             ];

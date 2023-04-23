@@ -11,7 +11,7 @@ class LegacyController extends BaseController
     public function __invoke(Request $request): Response
     {
         ob_start();
-        $file = strtr($request->getPathInfo(), ['/' => '', '.php' =>'']);
+        $file = strtr($request->getPathInfo(), ['/' => '', '.php' => '']);
 
         if (empty($file)) {
             $file = 'index';
