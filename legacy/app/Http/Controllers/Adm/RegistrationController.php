@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 
 class RegistrationController extends BaseController
 {
@@ -28,11 +27,17 @@ class RegistrationController extends BaseController
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
-        // time to do something
         $this->runAction();
 
-        // build the page
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.registration_view',
+            array_merge(
+                $this->getNewUserRegistrationSettings(),
+                [
+                    'alert' => $this->alert ?? '',
+                ]
+            )
+        );
     }
 
     private function runAction(): void
@@ -46,21 +51,6 @@ class RegistrationController extends BaseController
 
             $this->alert = Administration::saveMessage('ok', $this->langs->line('ur_all_ok_message'));
         }
-    }
-
-    private function buildPage(): void
-    {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.registration_view',
-                array_merge(
-                    $this->getNewUserRegistrationSettings(),
-                    [
-                        'alert' => $this->alert ?? '',
-                    ]
-                )
-            )
-        );
     }
 
     private function getNewUserRegistrationSettings(): array

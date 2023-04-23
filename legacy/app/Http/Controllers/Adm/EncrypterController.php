@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 
 class EncrypterController extends BaseController
 {
@@ -23,18 +22,17 @@ class EncrypterController extends BaseController
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
-        // time to do something
         $this->runAction();
 
-        // build the page
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.encrypter_view',
+            [
+                'unencrypted' => $this->unencrypted ?? '',
+                'encrypted' => $this->encrypted ?? '',
+            ]
+        );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $unencrypted = filter_input(INPUT_POST, 'unencrypted');
@@ -43,18 +41,5 @@ class EncrypterController extends BaseController
             $this->unencrypted = $unencrypted;
             $this->encrypted = Functions::hash($unencrypted);
         }
-    }
-
-    private function buildPage(): void
-    {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.encrypter_view',
-                [
-                    'unencrypted' => $this->unencrypted ?? '',
-                    'encrypted' => $this->encrypted ?? '',
-                ]
-            )
-        );
     }
 }

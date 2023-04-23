@@ -9,7 +9,6 @@ use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 
 class StatisticsController extends BaseController
 {
@@ -60,16 +59,14 @@ class StatisticsController extends BaseController
 
     private function buildPage(): void
     {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.statistics_view',
-                array_merge(
-                    $this->getStatisticsSettings(),
-                    $this->userLevels(),
-                    [
-                        'alert' => $this->alert ?? '',
-                    ]
-                )
+        Template::getInstance()->view(
+            'admin.statistics_view',
+            array_merge(
+                $this->getStatisticsSettings(),
+                $this->userLevels(),
+                [
+                    'alert' => $this->alert ?? '',
+                ]
             )
         );
     }

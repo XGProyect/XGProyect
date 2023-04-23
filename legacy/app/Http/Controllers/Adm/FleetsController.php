@@ -9,7 +9,6 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib as Format;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Models\Adm\Fleets;
 
@@ -30,7 +29,6 @@ class FleetsController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -95,11 +93,9 @@ class FleetsController extends BaseController
 
     private function buildPage(): void
     {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.fleets_view',
-                $this->buildFleetMovementsBlock()
-            )
+        Template::getInstance()->view(
+            'admin.fleets_view',
+            $this->buildFleetMovementsBlock()
         );
     }
 

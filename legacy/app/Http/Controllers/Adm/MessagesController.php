@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Models\Adm\Messages;
 
@@ -31,7 +30,6 @@ class MessagesController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -76,18 +74,16 @@ class MessagesController extends BaseController
 
     private function buildPage(): void
     {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.messages_view',
-                array_merge(
-                    $this->buildMessageTypeBlock(),
-                    [
-                        'alert' => $this->alert,
-                        'results' => $this->results,
-                        'show_search' => $this->results ? '' : 'show',
-                        'show_results' => $this->results ? 'show' : '',
-                    ]
-                )
+        Template::getInstance()->view(
+            'admin.messages_view',
+            array_merge(
+                $this->buildMessageTypeBlock(),
+                [
+                    'alert' => $this->alert,
+                    'results' => $this->results,
+                    'show_search' => $this->results ? '' : 'show',
+                    'show_results' => $this->results ? 'show' : '',
+                ]
             )
         );
     }

@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 
 class PlanetsController extends BaseController
 {
@@ -30,18 +29,19 @@ class PlanetsController extends BaseController
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
-        // time to do something
         $this->runAction();
 
-        // build the page
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.planets_view',
+            array_merge(
+                $this->getNewPlanetSettings(),
+                [
+                    'alert' => $this->alert ?? '',
+                ]
+            )
+        );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $data = filter_input_array(INPUT_POST, self::PLANET_SETTINGS);
@@ -57,26 +57,6 @@ class PlanetsController extends BaseController
         }
     }
 
-    private function buildPage(): void
-    {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.planets_view',
-                array_merge(
-                    $this->getNewPlanetSettings(),
-                    [
-                        'alert' => $this->alert ?? '',
-                    ]
-                )
-            )
-        );
-    }
-
-    /**
-     * Get new planet settings
-     *
-     * @return void
-     */
     private function getNewPlanetSettings(): array
     {
         return array_filter(

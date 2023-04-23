@@ -11,7 +11,6 @@ use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Server;
 
 class ServerController extends BaseController
@@ -32,7 +31,6 @@ class ServerController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -193,20 +191,21 @@ class ServerController extends BaseController
         $parse['resource_multiplier'] = $this->game_config['resource_multiplier'];
         $parse['admin_email'] = $this->game_config['admin_email'];
         $parse['forum_url'] = $this->game_config['forum_url'];
-        $parse['closed'] = $this->game_config['game_enable'] == 1 ? " checked = 'checked' " : "";
+        $parse['closed'] = $this->game_config['game_enable'] == 1 ? " checked = 'checked' " : '';
         $parse['close_reason'] = stripslashes($this->game_config['close_reason']);
         $parse['date_time_zone'] = $this->timeZonePicker();
         $parse['date_format'] = $this->game_config['date_format'];
         $parse['date_format_extended'] = $this->game_config['date_format_extended'];
-        $parse['adm_attack'] = $this->game_config['adm_attack'] == 1 ? " checked = 'checked' " : "";
+        $parse['adm_attack'] = $this->game_config['adm_attack'] == 1 ? " checked = 'checked' " : '';
         $parse['ships'] = $this->percentagePicker($this->game_config['fleet_cdr']);
         $parse['defenses'] = $this->percentagePicker($this->game_config['defs_cdr']);
-        $parse['noobprot'] = $this->game_config['noobprotection'] == 1 ? " checked = 'checked' " : "";
+        $parse['noobprot'] = $this->game_config['noobprotection'] == 1 ? " checked = 'checked' " : '';
         $parse['noobprot2'] = $this->game_config['noobprotectiontime'];
         $parse['noobprot3'] = $this->game_config['noobprotectionmulti'];
 
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render('admin.server_view', $parse)
+        Template::getInstance()->view(
+            'admin.server_view',
+            $parse
         );
     }
 

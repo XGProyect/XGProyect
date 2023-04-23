@@ -7,7 +7,6 @@ namespace Xgp\App\Http\Controllers\Adm;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
-use Xgp\App\Libraries\Page;
 
 class LanguagesController extends BaseController
 {
@@ -25,7 +24,6 @@ class LanguagesController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -68,17 +66,15 @@ class LanguagesController extends BaseController
 
     private function buildPage(): void
     {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.languages_view',
-                array_merge(
-                    $this->getFiles(),
-                    $this->getContents(),
-                    [
-                        'edit_file' => $this->current_file,
-                        'alert' => $this->alert ?? '',
-                    ]
-                )
+        Template::getInstance()->view(
+            'admin.languages_view',
+            array_merge(
+                $this->getFiles(),
+                $this->getContents(),
+                [
+                    'edit_file' => $this->current_file,
+                    'alert' => $this->alert ?? '',
+                ]
             )
         );
     }

@@ -11,7 +11,6 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Maker;
 
 class MakerController extends BaseController
@@ -23,31 +22,27 @@ class MakerController extends BaseController
     {
         Administration::checkSession();
 
-
         if (!Administration::authorization(__CLASS__)) {
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
         $this->makerModel = new Maker();
 
-        // build the page
         $this->buildPage();
     }
 
     private function buildPage(): void
     {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.maker_view',
-                array_merge(
-                    $this->makeUser(),
-                    $this->makeAlliace(),
-                    $this->makePlanet(),
-                    $this->makeMoon(),
-                    [
-                        'alert' => $this->alert ?? '',
-                    ]
-                )
+        Template::getInstance()->view(
+            'admin.maker_view',
+            array_merge(
+                $this->makeUser(),
+                $this->makeAlliace(),
+                $this->makePlanet(),
+                $this->makeMoon(),
+                [
+                    'alert' => $this->alert ?? '',
+                ]
             )
         );
     }

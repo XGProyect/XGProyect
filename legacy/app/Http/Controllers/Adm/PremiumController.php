@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 
 class PremiumController extends BaseController
 {
@@ -36,15 +35,17 @@ class PremiumController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.premium_view',
+            array_merge(
+                $this->getPremiumSettings(),
+                [
+                    'alert' => $this->alert ?? '',
+                ]
+            )
+        );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $data = filter_input_array(INPUT_POST, self::PREMIUM_SETTINGS);
@@ -60,21 +61,6 @@ class PremiumController extends BaseController
 
             $this->alert = Administration::saveMessage('ok', $this->langs->line('pr_all_ok_message'));
         }
-    }
-
-    private function buildPage(): void
-    {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.premium_view',
-                array_merge(
-                    $this->getPremiumSettings(),
-                    [
-                        'alert' => $this->alert ?? '',
-                    ]
-                )
-            )
-        );
     }
 
     private function getPremiumSettings(): array

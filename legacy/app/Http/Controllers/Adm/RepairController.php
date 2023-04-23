@@ -7,7 +7,6 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Repair;
 
 class RepairController extends BaseController
@@ -24,7 +23,6 @@ class RepairController extends BaseController
 
         $this->repairModel = new Repair();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -86,11 +84,9 @@ class RepairController extends BaseController
             }
         }
 
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.repair_view',
-                $parse
-            )
+        Template::getInstance()->view(
+            'admin.repair_view',
+            $parse
         );
     }
 }

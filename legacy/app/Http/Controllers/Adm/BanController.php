@@ -27,7 +27,6 @@ class BanController extends BaseController
 
         $this->banModel = new Ban();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -45,7 +44,6 @@ class BanController extends BaseController
 
                 break;
         }
-
 
         Page::getInstance()->displayAdmin($view);
     }
@@ -152,7 +150,7 @@ class BanController extends BaseController
             Functions::redirect('admin.php?page=ban');
         }
 
-        return Template::getInstance()->render("admin.ban_result_view", $parse);
+        return Template::getInstance()->render('admin.ban_result_view', $parse);
     }
 
     /**

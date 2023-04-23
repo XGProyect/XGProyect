@@ -9,7 +9,6 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Models\Adm\Backup;
 
@@ -33,7 +32,6 @@ class BackupController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -114,13 +112,11 @@ class BackupController extends BaseController
 
     private function buildPage(): void
     {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.backup_view',
-                array_merge(
-                    $this->getBackupSettings(),
-                    $this->getBackupList()
-                )
+        Template::getInstance()->view(
+            'admin.backup_view',
+            array_merge(
+                $this->getBackupSettings(),
+                $this->getBackupList()
             )
         );
     }

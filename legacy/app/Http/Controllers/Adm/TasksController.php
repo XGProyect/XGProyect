@@ -10,7 +10,6 @@ use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class TasksController extends BaseController
@@ -23,17 +22,9 @@ class TasksController extends BaseController
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
-        // build the page
-        $this->buildPage();
-    }
-
-    private function buildPage(): void
-    {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.tasks_view',
-                $this->buildUpdatesBlock()
-            )
+        Template::getInstance()->view(
+            'admin.tasks_view',
+            $this->buildUpdatesBlock()
         );
     }
 

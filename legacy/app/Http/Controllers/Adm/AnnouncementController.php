@@ -11,7 +11,6 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Announcement;
 
 class AnnouncementController extends BaseController
@@ -32,7 +31,6 @@ class AnnouncementController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -160,16 +158,14 @@ class AnnouncementController extends BaseController
 
     private function buildPage(): void
     {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.announcement_view',
-                array_merge(
-                    $this->buildColorPicker(),
-                    [
-                        'js_path' => JS_PATH,
-                        'alert' => $this->alerts ? join('', $this->alerts) : '',
-                    ]
-                )
+        Template::getInstance()->view(
+            'admin.announcement_view',
+            array_merge(
+                $this->buildColorPicker(),
+                [
+                    'js_path' => JS_PATH,
+                    'alert' => $this->alerts ? join('', $this->alerts) : '',
+                ]
             )
         );
     }

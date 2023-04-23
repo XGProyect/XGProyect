@@ -9,7 +9,6 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\StatisticsLibrary as Statistics;
 
 class RebuildHighscoresController extends BaseController
@@ -24,34 +23,20 @@ class RebuildHighscoresController extends BaseController
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
-        // time to do something
         $this->runAction();
 
-        // build the page
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.rebuildhighscores_view',
+            $this->getStatisticsResult()
+        );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $stObject = new Statistics();
         $this->result = $stObject->makeStats();
 
         Functions::updateConfig('stat_last_update', $this->result['stats_time']);
-    }
-
-    private function buildPage(): void
-    {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.rebuildhighscores_view',
-                $this->getStatisticsResult()
-            )
-        );
     }
 
     private function getStatisticsResult(): array

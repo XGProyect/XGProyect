@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 
 class MailingController extends BaseController
 {
@@ -35,7 +34,6 @@ class MailingController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -61,17 +59,15 @@ class MailingController extends BaseController
 
     private function buildPage(): void
     {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.mailing_view',
-                array_merge(
-                    $this->getMailingSettings(),
-                    $this->buildProtocolsDropdown(),
-                    $this->buildCryptoDropdown(),
-                    [
-                        'alert' => $this->alert ?? '',
-                    ]
-                )
+        Template::getInstance()->view(
+            'admin.mailing_view',
+            array_merge(
+                $this->getMailingSettings(),
+                $this->buildProtocolsDropdown(),
+                $this->buildCryptoDropdown(),
+                [
+                    'alert' => $this->alert ?? '',
+                ]
             )
         );
     }

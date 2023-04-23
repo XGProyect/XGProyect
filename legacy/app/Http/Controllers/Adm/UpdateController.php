@@ -27,7 +27,6 @@ class UpdateController extends BaseController
 
         $this->updateModel = new Update();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -75,32 +74,20 @@ class UpdateController extends BaseController
             }
         }
 
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.update_view',
-                $parse
-            )
+        Template::getInstance()->view(
+            'admin.update_view',
+            $parse
         );
     }
 
-    /**
-     * checkVersion
-     *
-     * @return boolean
-     */
-    private function checkVersion()
+    private function checkVersion(): bool
     {
         return file_exists(
             UPDATE_PATH . 'update_common.php'
         );
     }
 
-    /**
-     * startUpdate
-     *
-     * @return void
-     */
-    private function startUpdate()
+    private function startUpdate(): void
     {
         $updates_dir = opendir(UPDATE_PATH);
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store', 'update_common.php'];

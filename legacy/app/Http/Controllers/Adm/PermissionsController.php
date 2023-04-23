@@ -10,7 +10,6 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Adm\Permissions;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 
 class PermissionsController extends BaseController
 {
@@ -30,7 +29,6 @@ class PermissionsController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -80,13 +78,11 @@ class PermissionsController extends BaseController
 
     private function buildPage(): void
     {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.permissions_view',
-                array_merge(
-                    ['alert' => $this->alert ?? ''],
-                    $this->buildListOfPermissions()
-                )
+        Template::getInstance()->view(
+            'admin.permissions_view',
+            array_merge(
+                ['alert' => $this->alert ?? ''],
+                $this->buildListOfPermissions()
             )
         );
     }

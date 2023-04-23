@@ -5,7 +5,6 @@ namespace Xgp\App\Http\Controllers\Adm;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Reset;
 
 class ResetController extends BaseController
@@ -23,18 +22,18 @@ class ResetController extends BaseController
 
         $this->resetModel = new Reset();
 
-        // time to do something
         $this->runAction();
 
-        // build the page
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.reset_view',
+            array_merge(
+                [
+                    'alert' => $this->alert ? $this->alert : '',
+                ]
+            )
+        );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         if ($_POST) {
@@ -145,19 +144,5 @@ class ResetController extends BaseController
 
             $this->alert = Administration::saveMessage('ok', $this->langs->line('re_reset_excess'));
         }
-    }
-
-    private function buildPage(): void
-    {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.reset_view',
-                array_merge(
-                    [
-                        'alert' => $this->alert ? $this->alert : '',
-                    ]
-                )
-            )
-        );
     }
 }

@@ -21,7 +21,6 @@ class ChangelogController extends BaseController
     {
         Administration::checkSession();
 
-
         if (!Administration::authorization(__CLASS__)) {
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
@@ -31,7 +30,6 @@ class ChangelogController extends BaseController
         // time to do something
         $this->runAction();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -58,14 +56,12 @@ class ChangelogController extends BaseController
 
     private function buildPage(): void
     {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.changelog_view',
-                [
-                    'changelog' => $this->buildListOfEntries(),
-                    'alert' => $this->getAlertMessage(),
-                ]
-            )
+        Template::getInstance()->view(
+            'admin.changelog_view',
+            [
+                'changelog' => $this->buildListOfEntries(),
+                'alert' => $this->getAlertMessage(),
+            ]
         );
     }
 

@@ -7,7 +7,6 @@ namespace Xgp\App\Http\Controllers\Adm;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
-use Xgp\App\Libraries\Page;
 
 class ErrorsController extends BaseController
 {
@@ -19,11 +18,12 @@ class ErrorsController extends BaseController
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
-        // time to do something
         $this->runAction();
 
-        // build the page
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.errors_view',
+            $this->processErrorsLogs()
+        );
     }
 
     private function runAction(): void
@@ -39,16 +39,6 @@ class ErrorsController extends BaseController
                 }
             }
         }
-    }
-
-    private function buildPage(): void
-    {
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.errors_view',
-                $this->processErrorsLogs()
-            )
-        );
     }
 
     private function processErrorsLogs(): array

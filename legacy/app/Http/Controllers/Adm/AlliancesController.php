@@ -32,7 +32,6 @@ class AlliancesController extends BaseController
 
         $this->alliancesModel = new Alliances();
 
-        // build the page
         $this->buildPage();
     }
 
@@ -66,8 +65,9 @@ class AlliancesController extends BaseController
         $parse['tag'] = ($alliance != '') ? 'a' : 'button';
         $parse['content'] = ($alliance != '' && $type != '') ? $this->getData($type) : '';
 
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render('admin.alliances_view', $parse)
+        Template::getInstance()->view(
+            'admin.alliances_view',
+            $parse
         );
     }
 
@@ -127,11 +127,11 @@ class AlliancesController extends BaseController
                 break;
         }
     }
-    ######################################
-    #
-    # getData methods
-    #
-    ######################################
+    //#####################################
+    //
+    // getData methods
+    //
+    //#####################################
 
     /**
      * method getDataInfo
@@ -149,7 +149,7 @@ class AlliancesController extends BaseController
         $parse['sel0'] = $this->_alliance_query['alliance_request_notallow'] == 0 ? 'selected' : '';
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->render("admin.alliances_information_view", $parse);
+        return Template::getInstance()->render('admin.alliances_information_view', $parse);
     }
 
     /**
@@ -183,14 +183,14 @@ class AlliancesController extends BaseController
                 $rank_data['rechtehand'] = (($details['rights'][AllianceRanks::RIGHT_HAND] == SwitchInt::on) ? ' checked="checked"' : '');
                 $rank_data['i'] = $i++;
 
-                $rank_row .= Template::getInstance()->render("admin.alliances_ranks_row_view", $rank_data);
+                $rank_row .= Template::getInstance()->render('admin.alliances_ranks_row_view', $rank_data);
             }
         }
 
         $parse['ranks_table'] = empty($rank_row) ? $this->langs->line('al_no_ranks') : $rank_row;
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->render("admin.alliances_ranks_view", $parse);
+        return Template::getInstance()->render('admin.alliances_ranks_view', $parse);
     }
 
     /**
@@ -229,13 +229,13 @@ class AlliancesController extends BaseController
         $parse['members_table'] = empty($members) ? '<tr><td colspan="6" class="align_center text-error">' . $this->langs->line('al_no_ranks') . '</td></tr>' : $members;
         $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
-        return Template::getInstance()->render("admin.alliances_members_view", $parse);
+        return Template::getInstance()->render('admin.alliances_members_view', $parse);
     }
-    ######################################
-    #
-    # save / update methods
-    #
-    ######################################
+    //#####################################
+    //
+    // save / update methods
+    //
+    //#####################################
 
     /**
      * method saveInfo
@@ -406,11 +406,11 @@ class AlliancesController extends BaseController
             }
         }
     }
-    ######################################
-    #
-    # build combo methods
-    #
-    ######################################
+    //#####################################
+    //
+    // build combo methods
+    //
+    //#####################################
 
     /**
      * method buildUsersCombo
@@ -428,11 +428,11 @@ class AlliancesController extends BaseController
 
         return $combo_rows;
     }
-    ######################################
-    #
-    # other required methods
-    #
-    ######################################
+    //#####################################
+    //
+    // other required methods
+    //
+    //#####################################
 
     /**
      * method checkAlliance
