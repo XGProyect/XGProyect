@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Entity\FleetEntity;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
+use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
@@ -106,15 +107,9 @@ class MovementController extends BaseController
             'list_of_movements' => $this->buildMovements(),
         ];
 
-        // display the page
-        $this->page->display(
-            Template::getInstance()->render(
-                'game/movements_view',
-                array_merge(
-                    $this->langs->language,
-                    $page
-                )
-            )
+        Template::getInstance()->render(
+            'game/movements_view',
+            $page
         );
     }
 

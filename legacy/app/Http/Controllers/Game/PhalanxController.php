@@ -4,6 +4,7 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
@@ -147,14 +148,9 @@ class PhalanxController extends BaseController
         $parse['phl_pl_place'] = $Planet;
         $parse['phl_pl_name'] = $TargetName;
 
-        $this->page->display(
-            Template::getInstance()->render(
-                'galaxy/phalanx_body',
-                $parse
-            ),
-            false,
-            '',
-            false
+        Template::getInstance()->view(
+            'galaxy/phalanx_body',
+            $parse
         );
     }
 }

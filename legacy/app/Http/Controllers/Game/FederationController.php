@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\AcsFleets;
@@ -104,18 +105,9 @@ class FederationController extends BaseController
             'add_error_messages' => $this->_message,
         ];
 
-        // display the page
-        $this->page->display(
-            Template::getInstance()->render(
-                'fleet/fleet_federation_view',
-                array_merge(
-                    $this->langs->language,
-                    $page
-                )
-            ),
-            false,
-            '',
-            false
+        Template::getInstance()->view(
+            'fleet/fleet_federation_view',
+            $page
         );
     }
 

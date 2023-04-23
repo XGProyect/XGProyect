@@ -4,6 +4,7 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
@@ -229,11 +230,9 @@ class ResourcesController extends BaseController
             Functions::redirect('game.php?page=resourceSettings');
         }
 
-        $this->page->display(
-            Template::getInstance()->render(
-                'resources/resources',
-                $parse
-            )
+        Template::getInstance()->view(
+            'resources/resources',
+            $parse
         );
     }
 

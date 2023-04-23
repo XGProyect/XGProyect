@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\DevelopmentsLib;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
@@ -127,18 +128,14 @@ class ShipyardController extends BaseController
 
     private function buildPage(): void
     {
-        /**
-         * Parse the items
-         */
-        $page = [];
-        $page['message'] = $this->showShipyardUpgradeMessage();
-        $page['list_of_items'] = $this->buildListOfItems();
-        $page['build_button'] = $this->getBuildItemsButton();
-        $page['building_list'] = $this->buildItemsQueue();
-
-        // display the page
-        $this->page->display(
-            Template::getInstance()->render('shipyard/shipyard_table', $page)
+        Template::getInstance()->view(
+            'shipyard/shipyard_table',
+            [
+                'message' => $this->showShipyardUpgradeMessage(),
+                'list_of_items' => $this->buildListOfItems(),
+                'build_button' => $this->getBuildItemsButton(),
+                'building_list' => $this->buildItemsQueue(),
+            ]
         );
     }
 

@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
@@ -46,26 +47,15 @@ class TechtreeController extends BaseController
 
     private function buildPage(): void
     {
-        /**
-         * Parse the items
-         */
-        $page = [
-            'list_of_constructions' => $this->buildBlock('build'),
-            'list_of_research' => $this->buildBlock('tech'),
-            'list_of_ships' => $this->buildBlock('fleet'),
-            'list_of_defenses' => $this->buildBlock('defenses'),
-            'list_of_missiles' => $this->buildBlock('missiles'),
-        ];
-
-        // display the page
-        $this->page->display(
-            Template::getInstance()->render(
-                'game/techtree_view',
-                array_merge(
-                    $this->langs->language,
-                    $page
-                )
-            )
+        Template::getInstance()->view(
+            'game/techtree_view',
+            [
+                'list_of_constructions' => $this->buildBlock('build'),
+                'list_of_research' => $this->buildBlock('tech'),
+                'list_of_ships' => $this->buildBlock('fleet'),
+                'list_of_defenses' => $this->buildBlock('defenses'),
+                'list_of_missiles' => $this->buildBlock('missiles'),
+            ]
         );
     }
 

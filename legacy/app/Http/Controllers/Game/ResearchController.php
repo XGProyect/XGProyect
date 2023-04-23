@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib;
 use Xgp\App\Libraries\FormatLib;
@@ -113,11 +114,9 @@ class ResearchController extends BaseController
         $parse['noresearch'] = (!$this->isLaboratoryInQueue() ? $this->langs->line('re_building_lab') : '');
         $parse['technolist'] = $technology_list;
 
-        $this->page->display(
-            Template::getInstance()->render(
-                'buildings/buildings_research',
-                $parse
-            )
+        Template::getInstance()->view(
+            'buildings/buildings_research',
+            $parse
         );
     }
 

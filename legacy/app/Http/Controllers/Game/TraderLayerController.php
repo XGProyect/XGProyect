@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
@@ -25,27 +26,17 @@ class TraderLayerController extends BaseController
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        $this->buildPage();
-    }
-
-    private function buildPage(): void
-    {
-        $this->page->display(
-            Template::getInstance()->render(
-                'game/trader_layer_view',
-                array_merge(
-                    $this->langs->language,
-                    $this->getMode(),
-                    [
-                        'dpath' => DPATH,
-                    ]
-                )
-            ),
-            '',
-            false,
-            false
+        Template::getInstance()->render(
+            'game/trader_layer_view',
+            array_merge(
+                $this->getMode(),
+                [
+                    'dpath' => DPATH,
+                ]
+            )
         );
     }
+
     /*
     $parse = $this->langs;
 

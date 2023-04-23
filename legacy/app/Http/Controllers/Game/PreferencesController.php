@@ -6,6 +6,7 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PreferencesEnumerator as PrefEnum;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\Preferences as Pref;
@@ -126,21 +127,18 @@ class PreferencesController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->display(
-            Template::getInstance()->render(
-                'game/preferences_view',
-                array_merge(
-                    $this->langs->language,
-                    $this->setMessageDisplay(),
-                    $this->setUserData(),
-                    [
-                        'preference_spy_probes' => $this->preferences->getCurrentPreference()->getPreferenceSpyProbes(),
-                        'sort_planet' => $this->sortPlanetOptions(),
-                        'sort_sequence' => $this->sortSequenceOptions(),
-                    ],
-                    $this->setVacationMode(),
-                    $this->setDeleteMode()
-                )
+        Template::getInstance()->view(
+            'game/preferences_view',
+            array_merge(
+                $this->setMessageDisplay(),
+                $this->setUserData(),
+                [
+                    'preference_spy_probes' => $this->preferences->getCurrentPreference()->getPreferenceSpyProbes(),
+                    'sort_planet' => $this->sortPlanetOptions(),
+                    'sort_sequence' => $this->sortSequenceOptions(),
+                ],
+                $this->setVacationMode(),
+                $this->setDeleteMode()
             )
         );
     }

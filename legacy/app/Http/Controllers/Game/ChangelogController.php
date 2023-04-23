@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\Users;
@@ -47,11 +48,11 @@ class ChangelogController extends BaseController
             }
         }
 
-        $this->page->display(
-            Template::getInstance()->render('game/changelog_view', array_merge(
-                $this->langs->language,
-                ['list_of_changes' => $changes]
-            ))
+        Template::getInstance()->view(
+            'game/changelog_view',
+            [
+                'list_of_changes' => $changes
+            ]
         );
     }
 }

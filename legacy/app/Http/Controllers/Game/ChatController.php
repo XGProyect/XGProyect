@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
@@ -33,7 +34,24 @@ class ChatController extends BaseController
         // time to do something
         $this->runAction();
 
-        $this->buildPage();
+        Template::getInstance()->view(
+            'game/chat_view',
+            [
+                'id' => $this->_receiver_data['user_id'],
+                'to' => $this->_receiver_data['user_name'] . ' ' . FormatLib::prettyCoords(
+                    $this->_receiver_data['planet_galaxy'],
+                    $this->_receiver_data['planet_system'],
+                    $this->_receiver_data['planet_planet']
+                ),
+                'subject' => ((!isset($this->_message_data['subject'])) ? $this->langs->line('pm_no_subject') : $this->_message_data['subject']),
+                'text' => ((!isset($this->_message_data['text'])) ? '' : $this->_message_data['text']),
+                'error_text' => ((!isset($this->_message_data['error_text'])) ? '' : $this->_message_data['error_text']),
+                'status_message' => (!$this->_message_data['error_block'] ? [] : ''),
+                '/status_message' => (!$this->_message_data['error_block'] ? [] : ''),
+                'error_color' => ((!isset($this->_message_data['error_color'])) ? '' : $this->_message_data['error_color']),
+                'js_path' => JS_PATH
+            ]
+        );
     }
 
     /**
@@ -95,32 +113,5 @@ class ChatController extends BaseController
                 );
             }
         }
-    }
-
-    private function buildPage(): void
-    {
-        $this->page->display(
-            Template::getInstance()->render(
-                'game/chat_view',
-                array_merge(
-                    $this->langs->language,
-                    [
-                        'id' => $this->_receiver_data['user_id'],
-                        'to' => $this->_receiver_data['user_name'] . ' ' . FormatLib::prettyCoords(
-                            $this->_receiver_data['planet_galaxy'],
-                            $this->_receiver_data['planet_system'],
-                            $this->_receiver_data['planet_planet']
-                        ),
-                        'subject' => ((!isset($this->_message_data['subject'])) ? $this->langs->line('pm_no_subject') : $this->_message_data['subject']),
-                        'text' => ((!isset($this->_message_data['text'])) ? '' : $this->_message_data['text']),
-                        'error_text' => ((!isset($this->_message_data['error_text'])) ? '' : $this->_message_data['error_text']),
-                        'status_message' => (!$this->_message_data['error_block'] ? [] : ''),
-                        '/status_message' => (!$this->_message_data['error_block'] ? [] : ''),
-                        'error_color' => ((!isset($this->_message_data['error_color'])) ? '' : $this->_message_data['error_color']),
-                        'js_path' => JS_PATH
-                    ]
-                )
-            )
-        );
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Update;
 
 class UpdateController extends BaseController
@@ -60,11 +59,9 @@ class UpdateController extends BaseController
                 if ($this->demo) {
                     $parse['result'] = print_r($this->output, true);
 
-                    Page::getInstance()->displayAdmin(
-                        Template::getInstance()->render(
-                            'admin.update_result_view',
-                            $parse
-                        )
+                    Template::getInstance()->view(
+                        'admin.update_result_view',
+                        $parse
                     );
                 } else {
                     die(Administration::noAccessMessage($this->langs->line('up_success')));

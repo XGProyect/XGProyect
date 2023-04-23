@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
@@ -61,26 +62,17 @@ class Fleet3Controller extends BaseController
     {
         $inputsData = $this->setInputsData();
 
-        /**
-         * Parse the items
-         */
-        $page = [
-            'js_path' => JS_PATH,
-            'fleet_block' => $this->buildFleetBlock(),
-            'title' => $this->buildTitleBlock(),
-            'mission_selector' => $this->buildMissionBlock(),
-            'stay_block' => $this->buildStayBlock(),
-        ];
-
-        // display the page
-        $this->page->display(
-            Template::getInstance()->render(
-                'fleet/fleet3_view',
-                array_merge(
-                    $this->langs->language,
-                    $page,
-                    $inputsData
-                )
+        Template::getInstance()->view(
+            'fleet/fleet3_view',
+            array_merge(
+                [
+                    'js_path' => JS_PATH,
+                    'fleet_block' => $this->buildFleetBlock(),
+                    'title' => $this->buildTitleBlock(),
+                    'mission_selector' => $this->buildMissionBlock(),
+                    'stay_block' => $this->buildStayBlock(),
+                ],
+                $inputsData
             )
         );
     }

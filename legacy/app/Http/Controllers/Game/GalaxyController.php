@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
@@ -124,20 +125,17 @@ class GalaxyController extends BaseController
             array_merge($parse, $this->langs->language)
         ) : ' ';
 
-        $this->page->display(
-            Template::getInstance()->render(
-                'game/galaxy_view',
-                array_merge(
-                    $this->langs->language,
-                    [
-                        'js_path' => JS_PATH,
-                        'list_of_positions' => $this->buildPositionsList(),
-                        'planet_count' => $this->planet_count,
-                        'max_galaxy' => MAX_GALAXY_IN_WORLD,
-                        'max_system' => MAX_SYSTEM_IN_GALAXY,
-                    ],
-                    $parse
-                )
+        Template::getInstance()->view(
+            'game/galaxy_view',
+            array_merge(
+                [
+                    'js_path' => JS_PATH,
+                    'list_of_positions' => $this->buildPositionsList(),
+                    'planet_count' => $this->planet_count,
+                    'max_galaxy' => MAX_GALAXY_IN_WORLD,
+                    'max_system' => MAX_SYSTEM_IN_GALAXY,
+                ],
+                $parse
             )
         );
     }

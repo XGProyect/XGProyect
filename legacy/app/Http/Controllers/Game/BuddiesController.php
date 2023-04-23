@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Entity\BuddyEntity;
 use Xgp\App\Core\Enumerators\BuddiesStatusEnumerator as BuddiesStatus;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Buddies\Buddy;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\TimingLibrary as Timing;
@@ -249,14 +250,11 @@ class BuddiesController extends BaseController
             Functions::redirect('game.php?page=buddies');
         }
 
-        $this->page->display(
-            Template::getInstance()->render(
-                'game/buddies_request',
-                array_merge(
-                    ['js_path' => JS_PATH],
-                    $user,
-                    $this->langs->language
-                )
+        Template::getInstance()->view(
+            'game/buddies_request',
+            array_merge(
+                ['js_path' => JS_PATH],
+                $user,
             )
         );
     }
@@ -272,11 +270,9 @@ class BuddiesController extends BaseController
         $page['list_of_buddies'] = $this->buildListOfBuddies();
 
         // display the page
-        $this->page->display(
-            Template::getInstance()->render(
-                'game/buddies_view',
-                array_merge($page, $this->langs->language)
-            )
+        Template::getInstance()->view(
+            'game/buddies_view',
+            $page
         );
     }
 

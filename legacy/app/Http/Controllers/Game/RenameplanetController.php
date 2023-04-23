@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Renameplanet;
@@ -56,12 +57,9 @@ class RenameplanetController extends BaseController
             $this->delete_planet();
         }
 
-        // SET THE VIEW
-        $this->page->display(
-            Template::getInstance()->render(
-                $current_view,
-                $parse
-            )
+        Template::getInstance()->view(
+            $current_view,
+            $parse
         );
     }
 

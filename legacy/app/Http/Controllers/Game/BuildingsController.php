@@ -127,11 +127,9 @@ class BuildingsController extends BaseController
         $page['list_of_buildings'] = $this->buildListOfBuildings();
 
         // display the page
-        $this->page->display(
-            Template::getInstance()->render(
-                'buildings/buildings_builds',
-                array_merge($page, $this->buildQueueBlock())
-            )
+        Template::getInstance()->view(
+            'buildings/buildings_builds',
+            array_merge($page, $this->buildQueueBlock())
         );
     }
 

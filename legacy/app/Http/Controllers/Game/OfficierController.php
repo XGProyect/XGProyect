@@ -4,6 +4,7 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\OfficiersEnumerator as OE;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\OfficiersLib;
@@ -87,9 +88,9 @@ class OfficierController extends BaseController
         $page['premium_pay_url'] = Functions::readConfig('premium_url') != '' ? Functions::readConfig('premium_url') : 'game.php?page=officier';
         $page['officier_list'] = $this->buildOfficiersList();
 
-        // display the page
-        $this->page->display(
-            Template::getInstance()->render('game/officier_view', array_merge($page, $this->langs->language))
+        Template::getInstance()->view(
+            'game/officier_view',
+            $page
         );
     }
 

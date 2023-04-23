@@ -45,7 +45,7 @@ class BanController extends BaseController
                 break;
         }
 
-        Page::getInstance()->displayAdmin($view);
+        Template::getInstance()->view($view);
     }
 
     /**

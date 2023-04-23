@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Libraries\Users\Shortcuts;
@@ -35,10 +36,15 @@ class FleetshortcutsController extends BaseController
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        // time to do something
         $this->runAction();
 
-        $this->buildPage();
+        Template::getInstance()->view(
+            'shortcuts/shortcuts_view',
+            [
+                'shortcuts' => $this->buildShortcuts(),
+                'no_shortcuts' => $this->_shortcuts_count <= 0 ? '<th colspan="2">' . $this->langs->line('fl_no_shortcuts') . '</th>' : '',
+            ]
+        );
     }
 
     /**
@@ -105,28 +111,6 @@ class FleetshortcutsController extends BaseController
 
             $this->{$mode . 'Shortcut'}();
         }
-    }
-
-    private function buildPage(): void
-    {
-        /**
-         * Parse the items
-         */
-        $page = [
-            'shortcuts' => $this->buildShortcuts(),
-            'no_shortcuts' => $this->_shortcuts_count <= 0 ? '<th colspan="2">' . $this->langs->line('fl_no_shortcuts') . '</th>' : '',
-        ];
-
-        // display the page
-        $this->page->display(
-            Template::getInstance()->render(
-                'shortcuts/shortcuts_view',
-                array_merge(
-                    $this->langs->language,
-                    $page
-                )
-            )
-        );
     }
 
     /**
@@ -243,15 +227,9 @@ class FleetshortcutsController extends BaseController
      */
     private function buildEdit(array $page): void
     {
-        // display the page
-        $this->page->display(
-            Template::getInstance()->render(
-                'shortcuts/shortcuts_edit_view',
-                array_merge(
-                    $this->langs->language,
-                    $page
-                )
-            )
+        Template::getInstance()->view(
+            'shortcuts/shortcuts_edit_view',
+            $page
         );
     }
 

@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Core\Template;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Alliance\Alliances;
@@ -154,7 +155,7 @@ class AllianceController extends BaseController
             Functions::redirect('game.php?page=alliance');
         }
 
-        $this->page->display(
+        Template::getInstance()->view(
             $this->{'get' . ucfirst($this->getCurrentSection()) . 'Section'}()
         );
     }

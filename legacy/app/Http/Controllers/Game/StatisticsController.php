@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\TimingLibrary as Timing;
@@ -139,11 +140,9 @@ class StatisticsController extends BaseController
             }
         }
 
-        $this->page->display(
-            Template::getInstance()->render(
-                'stat/stat_body',
-                $parse
-            )
+        Template::getInstance()->view(
+            'stat/stat_body',
+            $parse
         );
     }
 

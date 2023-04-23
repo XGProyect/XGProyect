@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Combatreport\Report;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
@@ -67,11 +68,8 @@ class CombatreportController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->display(
-            $this->getReportTemplate(),
-            false,
-            '',
-            false
+        Template::getInstance()->view(
+            $this->getReportTemplate()
         );
     }
 

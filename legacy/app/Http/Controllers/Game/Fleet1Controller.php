@@ -4,6 +4,7 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
+use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
@@ -91,15 +92,11 @@ class Fleet1Controller extends BaseController
             'continue_button' => $this->buildContinueBlock(),
         ];
 
-        // display the page
-        $this->page->display(
-            Template::getInstance()->render(
-                'fleet/fleet1_view',
-                array_merge(
-                    $this->langs->language,
-                    $page,
-                    $this->setInputsData()
-                )
+        Template::getInstance()->view(
+            'fleet/fleet1_view',
+            array_merge(
+                $page,
+                $this->setInputsData()
             )
         );
     }

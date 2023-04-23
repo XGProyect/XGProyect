@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Entity\NotesEntity;
 use Xgp\App\Core\Enumerators\ImportanceEnumerator as Importance;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\TimingLibrary as Timing;
@@ -108,18 +109,9 @@ class NotesController extends BaseController
          */
         $page = $this->getCurrentPage();
 
-        // display the page
-        $this->page->display(
-            Template::getInstance()->render(
-                $page['template'],
-                array_merge(
-                    $this->langs->language,
-                    $page['data']
-                )
-            ),
-            false,
-            '',
-            false
+        Template::getInstance()->view(
+            $page['template'],
+            $page['data']
         );
     }
 

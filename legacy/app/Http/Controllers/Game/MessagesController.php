@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Core\Template;
 use Xgp\App\Helpers\ArraysHelper;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Functions;
@@ -76,7 +77,7 @@ class MessagesController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->display(
+        Template::getInstance()->view(
             $this->{'get' . ucfirst($this->getCurrentSection()) . 'Section'}()
         );
     }

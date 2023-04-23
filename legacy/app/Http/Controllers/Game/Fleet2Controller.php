@@ -4,6 +4,7 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
@@ -81,15 +82,11 @@ class Fleet2Controller extends BaseController
             'acs' => $this->buildAcsBlock(),
         ];
 
-        // display the page
-        $this->page->display(
-            Template::getInstance()->render(
-                'fleet/fleet2_view',
-                array_merge(
-                    $this->langs->language,
-                    $page,
-                    $this->setInputsData()
-                )
+        Template::getInstance()->view(
+            'fleet/fleet2_view',
+            array_merge(
+                $page,
+                $this->setInputsData()
             )
         );
     }

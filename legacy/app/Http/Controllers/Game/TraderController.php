@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\ResourceMarket;
@@ -107,14 +108,11 @@ class TraderController extends BaseController
 
     private function buildPage(): void
     {
-        $this->page->display(
-            Template::getInstance()->render(
-                'game/trader_overview_view',
-                array_merge(
-                    $this->langs->language,
-                    $this->setMessageDisplay(),
-                    $this->getPage()
-                )
+        Template::getInstance()->view(
+            'game/trader_overview_view',
+            array_merge(
+                $this->setMessageDisplay(),
+                $this->getPage()
             )
         );
     }
