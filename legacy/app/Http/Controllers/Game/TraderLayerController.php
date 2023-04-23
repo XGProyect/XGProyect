@@ -235,12 +235,9 @@ class TraderLayerController extends BaseController
             $view_to_get = strtolower(strtr($mode, ['trader' => '']));
             $template = Template::getInstance()->render(
                 'game/trader_' . $view_to_get . '_view',
-                array_merge(
-                    $this->langs->language,
-                    [
-                        'list_of_resources' => $this->{'build' . ucfirst($view_to_get) . 'Section'}(),
-                    ]
-                )
+                [
+                    'list_of_resources' => $this->{'build' . ucfirst($view_to_get) . 'Section'}(),
+                ]
             );
         }
 
@@ -259,19 +256,16 @@ class TraderLayerController extends BaseController
         $list_of_resources = [];
 
         foreach (['metal' => 4500, 'crystal' => 9000, 'deuterium' => 13500] as $resource => $price) {
-            $list_of_resources[] = array_merge(
-                $this->langs->language,
-                [
-                    'dpath' => DPATH,
-                    'resource' => $resource,
-                    'resource_name' => $this->langs->line($resource),
-                    'current_resource' => Format::shortlyNumber($this->planet['planet_' . $resource]),
-                    'max_resource' => Format::shortlyNumber($this->planet['planet_' . $resource . '_max']),
-                    'dark_matter_price_10' => Format::prettyNumber($price),
-                    'dark_matter_price_50' => Format::prettyNumber($price * 5),
-                    'dark_matter_price_100' => Format::prettyNumber($price * 10),
-                ]
-            );
+            $list_of_resources[] = [
+                'dpath' => DPATH,
+                'resource' => $resource,
+                'resource_name' => $this->langs->line($resource),
+                'current_resource' => Format::shortlyNumber($this->planet['planet_' . $resource]),
+                'max_resource' => Format::shortlyNumber($this->planet['planet_' . $resource . '_max']),
+                'dark_matter_price_10' => Format::prettyNumber($price),
+                'dark_matter_price_50' => Format::prettyNumber($price * 5),
+                'dark_matter_price_100' => Format::prettyNumber($price * 10),
+            ];
         }
 
         return $list_of_resources;

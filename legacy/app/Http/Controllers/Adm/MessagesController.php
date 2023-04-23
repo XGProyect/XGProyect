@@ -102,7 +102,6 @@ class MessagesController extends BaseController
         if ($search_results) {
             foreach ($search_results as $result) {
                 $results_list[] = array_merge(
-                    $this->langs->language,
                     $result,
                     [
                         'message_time' => Timing::formatExtendedDate($result['message_time']),

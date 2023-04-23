@@ -139,12 +139,9 @@ class TraderController extends BaseController
         return [
             'currentMode' => Template::getInstance()->render(
                 'game/trader_resources_view',
-                array_merge(
-                    $this->langs->language,
-                    [
-                        'list_of_resources' => $this->buildResourcesSection(),
-                    ]
-                )
+                [
+                    'list_of_resources' => $this->buildResourcesSection(),
+                ]
             ),
         ];
     }
@@ -159,17 +156,14 @@ class TraderController extends BaseController
         $list_of_resources = [];
 
         foreach (self::RESOURCES as $resource) {
-            $list_of_resources[] = array_merge(
-                $this->langs->language,
-                [
-                    'dpath' => DPATH,
-                    'resource' => $resource,
-                    'resource_name' => $this->langs->line($resource),
-                    'current_resource' => Format::shortlyNumber($this->planet['planet_' . $resource]),
-                    'max_resource' => Format::shortlyNumber($this->planet['planet_' . $resource . '_max']),
-                    'refill_options' => $this->setRefillOptions($resource),
-                ]
-            );
+            $list_of_resources[] = [
+                'dpath' => DPATH,
+                'resource' => $resource,
+                'resource_name' => $this->langs->line($resource),
+                'current_resource' => Format::shortlyNumber($this->planet['planet_' . $resource]),
+                'max_resource' => Format::shortlyNumber($this->planet['planet_' . $resource . '_max']),
+                'refill_options' => $this->setRefillOptions($resource),
+            ];
         }
 
         return $list_of_resources;

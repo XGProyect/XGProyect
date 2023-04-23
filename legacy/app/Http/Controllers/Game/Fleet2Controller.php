@@ -231,7 +231,9 @@ class Fleet2Controller extends BaseController
 
         return Template::getInstance()->render(
             'fleet/fleet2_shortcuts',
-            array_merge($this->langs->language, ['shortcuts_rows' => $shortcut_row])
+            [
+                'shortcuts_rows' => $shortcut_row
+            ]
         );
     }
 

@@ -239,13 +239,13 @@ class AllianceController extends BaseController
 
         return Template::getInstance()->render(
             'alliance/alliance_front_page_view',
-            array_merge([
+            [
                 'image' => $this->buildImageBlock(),
                 'details' => $details,
                 'description' => $this->buildDescriptionBlock(),
                 'text' => $this->buildTextBlock(),
                 'leave' => $this->buildLeaveBlock(),
-            ], $this->langs->language)
+            ]
         );
     }
 
@@ -258,18 +258,15 @@ class AllianceController extends BaseController
     {
         return Template::getInstance()->render(
             'alliance/alliance_ainfo',
-            array_merge(
-                $this->langs->language,
-                [
-                    'image' => $this->buildImageBlock(),
-                    'tag' => $this->alliance->getCurrentAlliance()->getAllianceTag(),
-                    'name' => $this->alliance->getCurrentAlliance()->getAllianceName(),
-                    'members' => $this->alliance->getCurrentAlliance()->getAllianceMembers(),
-                    'description' => $this->buildDescriptionBlock(),
-                    'web' => $this->buildWebBlock()['detail_content'],
-                    'requests' => $this->buildPublicRequestsBlock(),
-                ]
-            )
+            [
+                'image' => $this->buildImageBlock(),
+                'tag' => $this->alliance->getCurrentAlliance()->getAllianceTag(),
+                'name' => $this->alliance->getCurrentAlliance()->getAllianceName(),
+                'members' => $this->alliance->getCurrentAlliance()->getAllianceMembers(),
+                'description' => $this->buildDescriptionBlock(),
+                'web' => $this->buildWebBlock()['detail_content'],
+                'requests' => $this->buildPublicRequestsBlock(),
+            ]
         );
     }
 
@@ -384,8 +381,8 @@ class AllianceController extends BaseController
             }
         }
 
-        return Template::getInstance()->render('alliance/alliance_apply_form_view', array_merge(
-            $this->langs->language,
+        return Template::getInstance()->render(
+            'alliance/alliance_apply_form_view',
             [
                 'js_path' => JS_PATH,
                 'allyid' => $this->getAllianceId(),
@@ -395,7 +392,7 @@ class AllianceController extends BaseController
                     ['%s' => $this->alliance->getCurrentAlliance()->getAllianceTag()]
                 ),
             ]
-        ));
+        );
     }
 
     /**
@@ -443,14 +440,11 @@ class AllianceController extends BaseController
 
         return Template::getInstance()->render(
             'alliance/alliance_members_view',
-            array_merge(
-                $this->langs->language,
-                [
-                    'total' => $position,
-                    's' => isset($sort_by_order_rules[$sort_by_order]) ? $sort_by_order_rules[$sort_by_order] : 1,
-                    'list_of_members' => $members_list,
-                ]
-            )
+            [
+                'total' => $position,
+                's' => isset($sort_by_order_rules[$sort_by_order]) ? $sort_by_order_rules[$sort_by_order] : 1,
+                'list_of_members' => $members_list,
+            ]
         );
     }
 
@@ -524,13 +518,10 @@ class AllianceController extends BaseController
 
         return Template::getInstance()->render(
             'alliance/alliance_circular_view',
-            array_merge(
-                $this->langs->language,
-                [
-                    'js_path' => JS_PATH,
-                    'ranks_list' => $ranks_list,
-                ]
-            )
+            [
+                'js_path' => JS_PATH,
+                'ranks_list' => $ranks_list,
+            ]
         );
     }
 
@@ -700,22 +691,19 @@ class AllianceController extends BaseController
 
         return Template::getInstance()->render(
             'alliance/alliance_admin',
-            array_merge(
-                $this->langs->language,
-                [
-                    'js_path' => JS_PATH,
-                    'dpath' => DPATH,
-                    't' => $t,
-                    'request_type' => $request_type[$t],
-                    'text' => $text[$t],
-                    'alliance_web' => $this->alliance->getCurrentAlliance()->getAllianceWeb(),
-                    'alliance_image' => $this->alliance->getCurrentAlliance()->getAllianceImage(),
-                    'alliance_request_notallow_0' => $this->alliance->getCurrentAlliance()->getAllianceRequestNotAllow() == SwitchInt::off ? 'selected' : '',
-                    'alliance_request_notallow_1' => $this->alliance->getCurrentAlliance()->getAllianceRequestNotAllow() == SwitchInt::on ? 'selected' : '',
-                    'alliance_owner_range' => $ranks->getRankById(self::DEFAULT_RANKS['founder'])['rank'],
-                    'alliance_newcomer_range' => $ranks->getRankById(self::DEFAULT_RANKS['newcomer'])['rank'],
-                ]
-            )
+            [
+                'js_path' => JS_PATH,
+                'dpath' => DPATH,
+                't' => $t,
+                'request_type' => $request_type[$t],
+                'text' => $text[$t],
+                'alliance_web' => $this->alliance->getCurrentAlliance()->getAllianceWeb(),
+                'alliance_image' => $this->alliance->getCurrentAlliance()->getAllianceImage(),
+                'alliance_request_notallow_0' => $this->alliance->getCurrentAlliance()->getAllianceRequestNotAllow() == SwitchInt::off ? 'selected' : '',
+                'alliance_request_notallow_1' => $this->alliance->getCurrentAlliance()->getAllianceRequestNotAllow() == SwitchInt::on ? 'selected' : '',
+                'alliance_owner_range' => $ranks->getRankById(self::DEFAULT_RANKS['founder'])['rank'],
+                'alliance_newcomer_range' => $ranks->getRankById(self::DEFAULT_RANKS['newcomer'])['rank'],
+            ]
         );
     }
 
@@ -797,14 +785,11 @@ class AllianceController extends BaseController
 
         return Template::getInstance()->render(
             'alliance/alliance_admin_members_view',
-            array_merge(
-                $this->langs->language,
-                [
-                    'total' => $position,
-                    's' => isset($sort_by_order_rules[$sort_by_order]) ? $sort_by_order_rules[$sort_by_order] : 1,
-                    'list_of_members' => $members_list,
-                ]
-            )
+            [
+                'total' => $position,
+                's' => isset($sort_by_order_rules[$sort_by_order]) ? $sort_by_order_rules[$sort_by_order] : 1,
+                'list_of_members' => $members_list,
+            ]
         );
     }
 
@@ -836,16 +821,13 @@ class AllianceController extends BaseController
 
         return Template::getInstance()->render(
             'alliance/alliance_admin_rename',
-            array_merge(
-                $this->langs->language,
-                [
-                    'case' => strtr(
-                        $this->langs->line('al_change_title'),
-                        ['%s' => $this->alliance->getCurrentAlliance()->getAllianceName()]
-                    ),
-                    'title' => $this->langs->line('al_new_name'),
-                ]
-            )
+            [
+                'case' => strtr(
+                    $this->langs->line('al_change_title'),
+                    ['%s' => $this->alliance->getCurrentAlliance()->getAllianceName()]
+                ),
+                'title' => $this->langs->line('al_new_name'),
+            ]
         );
     }
 
@@ -912,30 +894,24 @@ class AllianceController extends BaseController
             if (isset($show) && isset($list_of_requests[$show])) {
                 $request_form = Template::getInstance()->render(
                     'alliance/alliance_admin_request_form',
-                    array_merge(
-                        $this->langs->language,
-                        [
-                            'js_path' => JS_PATH,
-                            'id' => $list_of_requests[$show]['id'],
-                            'request_from' => strtr($this->langs->line('al_request_from'), ['%s' => $list_of_requests[$show]['username']]),
-                            'request_text' => $list_of_requests[$show]['ally_request_text'],
-                        ]
-                    )
+                    [
+                        'js_path' => JS_PATH,
+                        'id' => $list_of_requests[$show]['id'],
+                        'request_from' => strtr($this->langs->line('al_request_from'), ['%s' => $list_of_requests[$show]['username']]),
+                        'request_text' => $list_of_requests[$show]['ally_request_text'],
+                    ]
                 );
             }
         }
 
         return Template::getInstance()->render(
             'alliance/alliance_admin_request_view',
-            array_merge(
-                $this->langs->language,
-                [
-                    'request_form' => $request_form,
-                    'pending_message' => strtr($this->langs->line('al_no_request_pending'), ['%n' => $amount_of_requests]),
-                    'list_of_requests' => $list_of_requests,
-                    'no_requests' => $amount_of_requests <= 0 ? '<tr><th role="cell" colspan="2">' . $this->langs->line('al_no_requests') . '</th></tr>' : '',
-                ]
-            )
+            [
+                'request_form' => $request_form,
+                'pending_message' => strtr($this->langs->line('al_no_request_pending'), ['%n' => $amount_of_requests]),
+                'list_of_requests' => $list_of_requests,
+                'no_requests' => $amount_of_requests <= 0 ? '<tr><th role="cell" colspan="2">' . $this->langs->line('al_no_requests') . '</th></tr>' : '',
+            ]
         );
     }
 
@@ -1037,13 +1013,10 @@ class AllianceController extends BaseController
 
         return Template::getInstance()->render(
             'alliance/alliance_admin_laws_view',
-            array_merge(
-                $this->langs->language,
-                [
-                    'dpath' => DPATH,
-                    'list_of_ranks' => $list_of_ranks,
-                ]
-            )
+            [
+                'dpath' => DPATH,
+                'list_of_ranks' => $list_of_ranks,
+            ]
         );
     }
 
@@ -1075,16 +1048,13 @@ class AllianceController extends BaseController
 
         return Template::getInstance()->render(
             'alliance/alliance_admin_rename',
-            array_merge(
-                $this->langs->language,
-                [
-                    'case' => strtr(
-                        $this->langs->line('al_change_title'),
-                        ['%s' => $this->alliance->getCurrentAlliance()->getAllianceTag()]
-                    ),
-                    'title' => $this->langs->line('al_new_tag'),
-                ]
-            )
+            [
+                'case' => strtr(
+                    $this->langs->line('al_change_title'),
+                    ['%s' => $this->alliance->getCurrentAlliance()->getAllianceTag()]
+                ),
+                'title' => $this->langs->line('al_new_tag'),
+            ]
         );
     }
 
@@ -1137,12 +1107,9 @@ class AllianceController extends BaseController
 
         return Template::getInstance()->render(
             'alliance/alliance_admin_transfer_view',
-            array_merge(
-                $this->langs->language,
-                [
-                    'list_of_members' => $list_of_members,
-                ]
-            )
+            [
+                'list_of_members' => $list_of_members,
+            ]
         );
     }
 
@@ -1441,13 +1408,10 @@ class AllianceController extends BaseController
 
         return Template::getInstance()->render(
             'alliance/alliance_admin_members_edit',
-            array_merge(
-                $this->langs->language,
-                [
-                    'user_id' => $member_id,
-                    'options' => $options,
-                ]
-            )
+            [
+                'user_id' => $member_id,
+                'options' => $options,
+            ]
         );
     }
 

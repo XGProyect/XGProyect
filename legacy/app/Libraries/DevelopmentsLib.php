@@ -273,14 +273,14 @@ class DevelopmentsLib
      *
      * @return string
      */
-    public static function currentBuilding($call_program, $lang, $element_id = 0)
+    public static function currentBuilding($call_program, $element_id = 0)
     {
         $parse['call_program'] = $call_program;
         $parse['current_page'] = ($element_id != 0) ? DevelopmentsLib::setBuildingPage($element_id) : $call_program;
 
         return Template::getInstance()->render(
             'buildings/buildings_buildlist_script',
-            array_merge($parse, $lang)
+            $parse
         );
     }
 

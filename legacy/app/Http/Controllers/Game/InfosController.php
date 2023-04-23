@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
+use Xgp\App\Core\Template;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib;
@@ -197,7 +198,9 @@ class InfosController extends BaseController
             $page .= $this->buildTearDownBlock();
         }
 
-        $this->page->display($page);
+        Template::getInstance()->view(
+            $page
+        );
     }
 
     /**
@@ -634,23 +637,20 @@ class InfosController extends BaseController
 
             $page .= Template::getInstance()->render(
                 'infos/info_buildings_destroy',
-                array_merge(
-                    $this->langs->language,
-                    [
-                        'tear_down_url' => UrlHelper::setUrl(
-                            $tear_down_url,
-                            StringsHelper::parseReplacements(
-                                $this->langs->line('in_destroy'),
-                                [$this->langs->language[$this->_resource[$this->_element_id]]]
-                            )
-                        ),
-                        'ion_tech_bonus' => $tech_bonus,
-                        'nfo_metal' => FormatLib::prettyNumber($tear_down_resources['metal']),
-                        'nfo_crystal' => FormatLib::prettyNumber($tear_down_resources['crystal']),
-                        'nfo_deuterium' => FormatLib::prettyNumber($tear_down_resources['deuterium']),
-                        'destroytime' => FormatLib::prettyTime($tear_down_time),
-                    ]
-                )
+                [
+                    'tear_down_url' => UrlHelper::setUrl(
+                        $tear_down_url,
+                        StringsHelper::parseReplacements(
+                            $this->langs->line('in_destroy'),
+                            [$this->langs->language[$this->_resource[$this->_element_id]]]
+                        )
+                    ),
+                    'ion_tech_bonus' => $tech_bonus,
+                    'nfo_metal' => FormatLib::prettyNumber($tear_down_resources['metal']),
+                    'nfo_crystal' => FormatLib::prettyNumber($tear_down_resources['crystal']),
+                    'nfo_deuterium' => FormatLib::prettyNumber($tear_down_resources['deuterium']),
+                    'destroytime' => FormatLib::prettyTime($tear_down_time),
+                ]
             );
         }
 

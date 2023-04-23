@@ -76,10 +76,7 @@ class ChangelogController extends BaseController
         $entries_list = [];
 
         foreach ($entries as $entry) {
-            $entries_list[] = array_merge(
-                $this->langs->language,
-                $entry
-            );
+            $entries_list[] = $entry;
         }
 
         return $entries_list;
@@ -114,12 +111,10 @@ class ChangelogController extends BaseController
     {
         $this->saveAction();
 
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.changelog_form_view',
-                array_merge(
-                    $this->getActionData('add')
-                )
+        Template::getInstance()->view(
+            'admin.changelog_form_view',
+            array_merge(
+                $this->getActionData('add')
             )
         );
     }
@@ -134,11 +129,9 @@ class ChangelogController extends BaseController
     {
         $this->saveAction();
 
-        Page::getInstance()->displayAdmin(
-            Template::getInstance()->render(
-                'admin.changelog_form_view',
-                $this->getActionData('edit', $changelog_id)
-            )
+        Template::getInstance()->view(
+            'admin.changelog_form_view',
+            $this->getActionData('edit', $changelog_id)
         );
     }
 
@@ -167,22 +160,19 @@ class ChangelogController extends BaseController
             }
         }
 
-        return array_merge(
-            $this->langs->language,
-            [
-                'js_path' => JS_PATH,
-                'action' => $action,
-                'changelog_id' => $changelog_id,
-                'current_action' => strtr(
-                    $this->langs->line('ch_' . $action . '_action'),
-                    ['%s' => $changelog_date]
-                ),
-                'changelog_date' => $changelog_date,
-                'changelog_version' => $changelog_version,
-                'languages' => $this->getAllLanguages($changelog_lang_id),
-                'changelog_description' => $changelog_description,
-            ]
-        );
+        return [
+            'js_path' => JS_PATH,
+            'action' => $action,
+            'changelog_id' => $changelog_id,
+            'current_action' => strtr(
+                $this->langs->line('ch_' . $action . '_action'),
+                ['%s' => $changelog_date]
+            ),
+            'changelog_date' => $changelog_date,
+            'changelog_version' => $changelog_version,
+            'languages' => $this->getAllLanguages($changelog_lang_id),
+            'changelog_description' => $changelog_description,
+        ];
     }
 
     /**

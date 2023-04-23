@@ -208,13 +208,10 @@ class Fleet3Controller extends BaseController
         if (count($options) > 0) {
             return Template::getInstance()->render(
                 'fleet/fleet3_stay_row',
-                array_merge(
-                    $this->langs->language,
-                    [
-                        'stay_type' => $stay_type,
-                        'options' => $options,
-                    ]
-                )
+                [
+                    'stay_type' => $stay_type,
+                    'options' => $options,
+                ]
             );
         }
 

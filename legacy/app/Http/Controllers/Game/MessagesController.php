@@ -94,15 +94,12 @@ class MessagesController extends BaseController
 
         return Template::getInstance()->render(
             'game/messages_default_view',
-            array_merge(
-                $this->langs->language,
-                [
-                    'message_list' => $this->getMessagesList(
-                        $this->messagesModel->getByUserId($this->user['user_id'])
-                    ),
-                    'operators_list' => $this->getOperatorsAddressBook(),
-                ]
-            )
+            [
+                'message_list' => $this->getMessagesList(
+                    $this->messagesModel->getByUserId($this->user['user_id'])
+                ),
+                'operators_list' => $this->getOperatorsAddressBook(),
+            ]
         );
     }
 
@@ -145,7 +142,6 @@ class MessagesController extends BaseController
         return Template::getInstance()->render(
             'game/messages_premium_view',
             array_merge(
-                $this->langs->language,
                 [
                     'form_submit' => 'game.php?' . $_SERVER['QUERY_STRING'],
                     'message_type_list' => $this->getMessagesTypesList($active),
