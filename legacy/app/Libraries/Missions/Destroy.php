@@ -1,18 +1,19 @@
 <?php
 
-namespace Xgp\App\Libraries\Missions;
+namespace App\Libraries\Missions;
 
-use Battle;
-use DebugManager;
-use Defense;
-use Fleet;
-use HomeFleet;
-use LangManager;
-use Player;
-use PlayerGroup;
-use Ship;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
 use Xgp\App\Helpers\UrlHelper;
+use Xgp\App\Libraries\BattleEngine\Core\Battle;
+use Xgp\App\Libraries\BattleEngine\Core\BattleReport;
+use Xgp\App\Libraries\BattleEngine\Models\Defense;
+use Xgp\App\Libraries\BattleEngine\Models\Fleet;
+use Xgp\App\Libraries\BattleEngine\Models\HomeFleet;
+use Xgp\App\Libraries\BattleEngine\Models\Player;
+use Xgp\App\Libraries\BattleEngine\Models\PlayerGroup;
+use Xgp\App\Libraries\BattleEngine\Models\Ship;
+use Xgp\App\Libraries\BattleEngine\Utils\DebugManager;
+use Xgp\App\Libraries\BattleEngine\Utils\LangManager;
 use Xgp\App\Libraries\Combatreport\Report;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
@@ -74,10 +75,7 @@ class Destroy extends Missions
         ]);
 
         if ($fleet_row['fleet_mess'] == 0 && $fleet_row['fleet_start_time'] <= time()) {
-            // require several stuff
-            require LIB_PATH .
-                'BattleEngine' . DIRECTORY_SEPARATOR .
-                'utils' . DIRECTORY_SEPARATOR . 'includer.php';
+            require XGP_ROOT . LIB_PATH . 'BattleEngine' . DIRECTORY_SEPARATOR . 'Utils' . DIRECTORY_SEPARATOR . 'Includer.php';
 
             // set language for the reports
             LangManager::getInstance()->setImplementation(new AttackLang($this->resource));
