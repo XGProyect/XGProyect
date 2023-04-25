@@ -128,62 +128,47 @@ class RegisterController extends BaseController
 
     private function calculateNewPlanetPosition(): void
     {
-        $lastGalaxy = (int) Functions::readConfig('lastsettedgalaxypos');
-        $lastSystem = (int) Functions::readConfig('lastsettedsystempos');
-        $lastPlanet = (int) Functions::readConfig('lastsettedplanetpos');
+        $this->isPlanetFree(
+            (int) Functions::readConfig('lastsettedgalaxypos'),
+            (int) Functions::readConfig('lastsettedsystempos'),
+            max((int) Functions::readConfig('lastsettedplanetpos'), 4) // new users need to start at position 4
+        );
+    }
 
-        while (true) {
-            for ($galaxy = $lastGalaxy; $galaxy <= MAX_GALAXY_IN_WORLD; $galaxy++) {
-                for ($system = $lastSystem; $system <= MAX_SYSTEM_IN_GALAXY; $system++) {
-                    for ($pos = $lastPlanet; $pos <= 4; $pos++) {
-                        $planet = mt_rand(4, 12);
+    private function isPlanetFree($galaxy, $system, $position)
+    {
+        // Check if the planet is free
+        $isFree = !$this->registerModel->checkIfPlanetExists($galaxy, $system, $position);
+        if ($isFree) {
+            Functions::updateConfig('lastsettedgalaxypos', $galaxy);
+            Functions::updateConfig('lastsettedsystempos', $system);
+            Functions::updateConfig('lastsettedplanetpos', $position);
 
-                        switch ($lastPlanet) {
-                            case 1:
-                                $lastPlanet += 1;
+            $this->available_coords = [
+                'galaxy' => $galaxy,
+                'system' => $system,
+                'planet' => $position,
+            ];
 
-                                break;
-
-                            case 2:
-                                $lastPlanet += 1;
-
-                                break;
-
-                            case 3:
-                                if ($lastSystem == MAX_SYSTEM_IN_GALAXY) {
-                                    $lastGalaxy += 1;
-                                    $lastSystem = 1;
-                                    $lastPlanet = 1;
-
-                                    break;
-                                } else {
-                                    $lastPlanet = 1;
-                                }
-
-                                $lastSystem += 1;
-
-                                break;
-                        }
-                        break;
-                    }
-                    break;
-                }
-                break;
-            }
-
-            if (!$this->registerModel->checkIfPlanetExists($galaxy, $system, $planet)) {
-                Functions::updateConfig('lastsettedgalaxypos', $lastGalaxy);
-                Functions::updateConfig('lastsettedsystempos', $lastSystem);
-                Functions::updateConfig('lastsettedplanetpos', $lastPlanet);
-
-                $this->available_coords = [
-                    'galaxy' => $galaxy,
-                    'system' => $system,
-                    'planet' => $planet,
-                ];
-
-                return;
-            }
+            return true;
         }
+
+        // If the planet is not free, try the next position
+        if ($position < 12) {
+            return $this->isPlanetFree($galaxy, $system, $position + PLANET_SEPARATION_FACTOR);
+        }
+
+        // If we've tried all positions in this system, try the next system
+        if ($system < MAX_SYSTEM_IN_GALAXY) {
+            return $this->isPlanetFree($galaxy, $system + SYSTEM_SEPARATION_FACTOR, 4);
+        }
+
+        // If we've tried all systems in this galaxy, try the next galaxy
+        if ($galaxy < MAX_GALAXY_IN_WORLD) {
+            return $this->isPlanetFree($galaxy + GALAXY_SEPARATION_FACTOR, 1, 4);
+        }
+
+        // If we've tried all galaxies and haven't found a free planet, restart the search
+        return $this->isPlanetFree(1, 1, 4);
     }
 }

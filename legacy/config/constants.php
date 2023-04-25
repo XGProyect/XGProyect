@@ -151,6 +151,15 @@ define('MAX_GALAXY_IN_WORLD', 9);
 define('MAX_SYSTEM_IN_GALAXY', 499);
 define('MAX_PLANET_IN_SYSTEM', 15);
 
+/**
+ * New accounts planet position separation
+ * By default new players are separated by just 1 galaxy and/or 1 system
+ * Changing these factors can increase the initial separation
+ */
+define('GALAXY_SEPARATION_FACTOR', 1);
+define('SYSTEM_SEPARATION_FACTOR', 1);
+define('PLANET_SEPARATION_FACTOR', 2);
+
 // FIELDS FOR EACH LEVEL OF THE LUNAR BASE
 define('FIELDS_BY_MOONBASIS_LEVEL', 3);
 
