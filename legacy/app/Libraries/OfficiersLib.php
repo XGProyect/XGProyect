@@ -38,7 +38,7 @@ class OfficiersLib
         }
 
         return StringsHelper::parseReplacements(
-            $lang[$lang_line],
+            __('game/officier.' . $lang_line),
             [$time_left]
         );
     }
