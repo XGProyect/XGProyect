@@ -3,70 +3,43 @@
 namespace Xgp\App\Libraries;
 
 use Xgp\App\Helpers\StringsHelper;
-use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class OfficiersLib
 {
-    /**
-     * isOfficierActive
-     *
-     * @param int $expire_time Expiration time
-     *
-     * @return int
-     */
-    public static function isOfficierActive($expire_time)
+    public static function isOfficierActive(int $expireTime): int
     {
-        return ($expire_time > time() && $expire_time != 0);
+        return ($expireTime > time() && $expireTime != 0);
     }
 
-    /**
-     * getMaxEspionage
-     *
-     * @param int $espionage_tech    Espionage tech level
-     * @param int $technocrate_level Technocrate level
-     *
-     * @return int
-     */
-    public static function getMaxEspionage($espionage_tech, $technocrate_level)
+    public static function getMaxEspionage(int $espionageTech, int $technocrateLevel): int
     {
-        return $espionage_tech + (1 * (self::isOfficierActive($technocrate_level) ? TECHNOCRATE_SPY : 0));
+        return $espionageTech + (1 * (self::isOfficierActive($technocrateLevel) ? TECHNOCRATE_SPY : 0));
     }
 
-    /**
-     * getMaxComputer
-     *
-     * @param int $computer_tech Computer tech level
-     * @param int $amiral_level  Amiral level
-     *
-     * @return int
-     */
-    public static function getMaxComputer($computer_tech, $amiral_level)
+    public static function getMaxComputer(int $computerTech, int $admiralLevel): int
     {
-        return 1 + $computer_tech + (1 * (self::isOfficierActive($amiral_level) ? AMIRAL : 0));
+        return 1 + $computerTech + (1 * (self::isOfficierActive($admiralLevel) ? AMIRAL : 0));
     }
 
     public static function getOfficierTimeLeft(int $expiration): string
     {
-        $langLine = 'of_time_remaining_many';
-        $timeLeft = strtr(
-            Format::prettyTimeAgo(Timing::formatShortDate($expiration)),
-            __('game/global.timing')
-        );
+        $lang_line = 'of_time_remaining_many';
+        $time_left = round(Timing::getDaysLeft($expiration));
 
         if (Timing::getDaysLeft($expiration) <= 1) {
-            $langLine = 'of_time_remaining_less';
-            $timeLeft = Timing::formatHoursMinutesLeft($expiration);
+            $lang_line = 'of_time_remaining_less';
+            $time_left = Timing::formatHoursMinutesLeft($expiration);
         }
 
         if (Timing::getDaysLeft($expiration) > 1 && Timing::getDaysLeft($expiration) < 2) {
-            $langLine = 'of_time_remaining_one';
-            $timeLeft = '';
+            $lang_line = 'of_time_remaining_one';
+            $time_left = '';
         }
 
         return StringsHelper::parseReplacements(
-            __('game/officier.' . $langLine),
-            [$timeLeft]
+            $lang[$lang_line],
+            [$time_left]
         );
     }
 }
