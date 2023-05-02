@@ -10,7 +10,7 @@ return [
     ],
     'gn_error_title' => '¡Alerta!',
     'gn_warning_title' => '¡Advertencia!',
-    'gn_ok_title' => '¡Ok!',
+    'gn_success_title' => '¡Ok!',
     'ge_yes' => 'SI',
     'ge_no' => 'NO',
 ];

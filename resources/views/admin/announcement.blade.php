@@ -3,7 +3,7 @@
 @section('content')
 <script src="{js_path}cntchar-min.js" type="text/javascript"></script>
 <div class="container-fluid">
-    {alert}
+    <x-alert/>
     <form action="" method="POST" name="announcement">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">

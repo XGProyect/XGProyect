@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    {alert}
+    <x-alert/>
     <form action="" method="POST">
         <input type="hidden" name="save" value="1">
         <!-- Page Heading -->

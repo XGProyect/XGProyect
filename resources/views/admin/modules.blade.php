@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    {alert}
+    <x-alert/>
     <form name="frm_modules" method="POST" action="admin.php?page=modules">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">

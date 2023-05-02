@@ -1,7 +1,7 @@
 <script src="{js_path}cntchar-min.js" type="text/javascript"></script>
 <script type="text/javascript" src="{js_path}filterlist-min.js"></script>
 <div class="container-fluid">
-    {alert}
+    <x-alert/>
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/ban.bn_title') }}</h1>

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    {alert}
+    <x-alert/>
     <form method="post" action="">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
