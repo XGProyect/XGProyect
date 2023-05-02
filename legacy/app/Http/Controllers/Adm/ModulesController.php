@@ -11,8 +11,6 @@ use Xgp\App\Libraries\Functions;
 
 class ModulesController extends BaseController
 {
-    private string $alert = '';
-
     public function __invoke(): void
     {
         Administration::checkSession();
@@ -23,17 +21,17 @@ class ModulesController extends BaseController
 
         $this->runAction();
 
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.modules',
+            [
+                'modules' => $this->buildModulesList(),
+            ]
+        );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
-        $modules = filter_input_array(INPUT_POST);
+        $modules = request()->all();
 
         if ($modules) {
             $modules_count = count(explode(';', Functions::readConfig('modules')));
@@ -44,26 +42,10 @@ class ModulesController extends BaseController
 
             Functions::updateConfig('modules', join(';', $modules_set));
 
-            $this->alert = Administration::saveMessage('ok', __('admin/modules.mdl_all_ok_message'));
+            session()->flash('success', __('admin/modules.mdl_all_ok_message'));
         }
     }
 
-    private function buildPage(): void
-    {
-        Template::getInstance()->view(
-            'admin.modules',
-            [
-                'alert' => $this->alert ?? '',
-                'modules' => $this->buildModulesList(),
-            ]
-        );
-    }
-
-    /**
-     * Build the list of modules
-     *
-     * @return array
-     */
     private function buildModulesList(): array
     {
         $modules_list = [];
@@ -75,7 +57,7 @@ class ModulesController extends BaseController
                 if ($status != null) {
                     $modules_list[] = [
                         'module' => $module,
-                        'module_name' => $this->langs->language['mdl_modules'][$module],
+                        'module_name' => __('admin/modules.mdl_modules')[$module],
                         'module_value' => ($status == 1) ? 'checked' : '',
                         'color' => ($status == 1) ? 'success' : 'danger',
                     ];

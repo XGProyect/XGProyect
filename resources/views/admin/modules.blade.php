@@ -19,16 +19,16 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="row">
-                    {modules}
+                    @foreach ($modules as $module)
                     <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                        <div class="card border-left-{color} shadow h-100 py-2">
+                        <div class="card border-left-{{ $module['color'] }} shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-{color} text-uppercase mb-1">
-                                            {module_name}</div>
+                                        <div class="text-xs font-weight-bold text-{{ $module['color'] }} text-uppercase mb-1">
+                                            {{ $module['module_name'] }}</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <input type="checkbox" name="status{module}" id="status" {module_value}>
+                                            <input type="checkbox" name="status{{ $module['module'] }}" id="status" {{ $module['module_value'] }}>
                                         </div>
                                     </div>
                                     <div class="col-auto">
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                    {/modules}
+                    @endforeach
                 </div>
             </div>
         </div>
