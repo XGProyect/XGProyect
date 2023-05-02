@@ -451,10 +451,10 @@ class UpdatesLibrary
 
             // BOOST
             $geologe_boost = 1 + (1 * (Officiers::isOfficierActive(
-                $current_user['premium_officier_geologist']
+                (int) $current_user['premium_officier_geologist']
             ) ? GEOLOGUE : 0));
             $engineer_boost = 1 + (1 * (Officiers::isOfficierActive(
-                $current_user['premium_officier_engineer']
+                (int) $current_user['premium_officier_engineer']
             ) ? ENGINEER_ENERGY : 0));
 
             // PRODUCTION FORMULAS
