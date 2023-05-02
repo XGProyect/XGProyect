@@ -63,7 +63,7 @@ class ResearchController extends BaseController
                 $building_level = $this->user[$this->_resource[$tech]];
                 $RowParse['tech_level'] = DevelopmentsLib::setLevelFormat($building_level, $tech, $this->user);
                 $RowParse['tech_name'] = __('game/technologies.' . $this->_resource[$tech]);
-                $RowParse['tech_descr'] = $this->langs->language['descriptions'][$this->_resource[$tech]];
+                $RowParse['tech_descr'] = __('game/research.descriptions')[$this->_resource[$tech]];
                 $RowParse['tech_price'] = DevelopmentsLib::formatedDevelopmentPrice($this->user, $this->planet, $tech);
                 $SearchTime = DevelopmentsLib::developmentTime($this->user, $this->planet, $tech, false, $this->_lab_level);
                 $RowParse['search_time'] = DevelopmentsLib::formatedDevelopmentTime($SearchTime, __('game/research.re_time'));

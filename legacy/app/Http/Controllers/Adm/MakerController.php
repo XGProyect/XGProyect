@@ -341,7 +341,7 @@ class MakerController extends BaseController
         foreach ($ranks as $rank_id) {
             $user_levels[] = [
                 'id' => $rank_id,
-                'name' => $this->langs->language['user_level'][$rank_id],
+                'name' => __('admin/global.user_level')[$rank_id],
             ];
         }
 

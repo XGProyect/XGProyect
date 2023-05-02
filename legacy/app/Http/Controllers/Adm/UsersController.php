@@ -92,7 +92,7 @@ class UsersController extends BaseController
         $parse['status'] = ($user != '') ? '' : ' disabled';
         $parse['status_box'] = ($user != '' && $this->_id != $this->user['user_id']) ? '' : ' disabled';
         $parse['tag'] = ($user != '') ? 'a' : 'button';
-        $parse['user_rank'] = $this->langs->language['user_level'][$this->_authlevel];
+        $parse['user_rank'] = __('admin/global.user_level')[$this->_authlevel];
         $parse['content'] = ($user != '' && $type != '') ? $this->getData($type) : '';
 
         Template::getInstance()->view(
@@ -841,7 +841,7 @@ class UsersController extends BaseController
                     $ready = date('i:s', $queue[3] - time());
                 }
 
-                $queue_list .= "<option value=\"{$queue[0]}\">" . $this->langs->language['tech'][$queue[0]] . ' (' . $queue[1] . '^) (' . date('i:s', $queue[2]) . ') (' . $ready . ') [' . $queue[4] . '] </option>';
+                $queue_list .= "<option value=\"{$queue[0]}\">" . __('admin/users.tech')[$queue[0]] . ' (' . $queue[1] . '^) (' . date('i:s', $queue[2]) . ') (' . $ready . ') [' . $queue[4] . '] </option>';
             }
 
             return $queue_list;
@@ -1237,7 +1237,7 @@ class UsersController extends BaseController
             $roles_list[] = [
                 'role_id' => $role,
                 'role_sel' => ($role == $this->_user_query['user_authlevel'] ? 'selected' : ''),
-                'role_name' => $this->langs->language['user_level'][$role],
+                'role_name' => __('admin/global.user_level')[$role],
             ];
         }
 

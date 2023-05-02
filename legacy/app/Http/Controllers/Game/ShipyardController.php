@@ -183,7 +183,7 @@ class ShipyardController extends BaseController
 
         $item_to_parse['dpath'] = DPATH;
         $item_to_parse['element'] = $item_id;
-        $item_to_parse['element_name'] = $this->langs->language[$this->objects->getObjects($item_id)];
+        $item_to_parse['element_name'] = __('game/ships.' . $this->objects->getObjects($item_id));
         $item_to_parse['element_description'] = $this->getItemDescription($item_id);
         $item_to_parse['element_price'] = $this->getItemPriceWithFormat($item_id);
         $item_to_parse['building_time'] = $this->getItemTimeWithFormat($item_id);
@@ -203,12 +203,12 @@ class ShipyardController extends BaseController
     {
         if ($item_id == Defenses::defense_interplanetary_missile) {
             return strtr(
-                $this->langs->language['descriptions'][$this->objects->getObjects($item_id)],
+                __('game/shipyard.descriptions')[$this->objects->getObjects($item_id)],
                 ['%s' => Formulas::missileRange($this->user['research_impulse_drive'])]
             );
         }
 
-        return $this->langs->language['descriptions'][$this->objects->getObjects($item_id)];
+        return __('game/shipyard.descriptions')[$this->objects->getObjects($item_id)];
     }
 
     /**

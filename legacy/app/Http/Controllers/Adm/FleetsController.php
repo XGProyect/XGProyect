@@ -27,7 +27,6 @@ class FleetsController extends BaseController
         $this->fleetsModel = new Fleets();
 
         $this->runAction();
-
         $this->buildPage();
     }
 
@@ -133,7 +132,7 @@ class FleetsController extends BaseController
     private function buildMissionBlock(array $fleet): array
     {
         return [
-            'mission' => $this->langs->language['ff_type_mission'][$fleet['fleet_mission']] . ' ' . (FleetsLib::isFleetReturning($fleet['fleet_mess']) ? __('admin/fleets.ff_r') : __('admin/fleets.ff_a')),
+            'mission' => __('admin/fleets.ff_type_mission')[$fleet['fleet_mission']] . ' ' . (FleetsLib::isFleetReturning($fleet['fleet_mess']) ? __('admin/fleets.ff_r') : __('admin/fleets.ff_a')),
             'metal' => Format::prettyNumber($fleet['fleet_resource_metal']),
             'crystal' => Format::prettyNumber($fleet['fleet_resource_crystal']),
             'deuterium' => Format::prettyNumber($fleet['fleet_resource_deuterium']),
@@ -151,7 +150,7 @@ class FleetsController extends BaseController
         $pop_up = [];
 
         foreach (FleetsLib::getFleetShipsArray($fleet['fleet_array']) as $ship => $amount) {
-            $pop_up[] = $this->langs->language['objects'][$ship] . ': ' . Format::prettyNumber($amount);
+            $pop_up[] = __('admin/objects.objects')[$ship] . ': ' . Format::prettyNumber($amount);
         }
 
         return [

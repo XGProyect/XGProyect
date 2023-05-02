@@ -97,7 +97,7 @@ class StatisticsController extends BaseController
             $user_levels[] = [
                 'id' => $rank_id,
                 'sel' => ($this->user_level == $rank_id ? 'selected="selected"' : ''),
-                'name' => $this->langs->language['user_level'][$rank_id],
+                'name' => __('admin/global.user_level')[$rank_id],
             ];
         }
 

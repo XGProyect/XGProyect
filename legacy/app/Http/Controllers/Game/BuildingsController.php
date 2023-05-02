@@ -186,8 +186,8 @@ class BuildingsController extends BaseController
         $item_to_parse['dpath'] = DPATH;
         $item_to_parse['i'] = $building_id;
         $item_to_parse['nivel'] = $this->getBuildingLevelWithFormat($building_id);
-        $item_to_parse['n'] = $this->langs->language[$this->objects->getObjects()[$building_id]];
-        $item_to_parse['descriptions'] = $this->langs->language['descriptions'][$this->objects->getObjects()[$building_id]];
+        $item_to_parse['n'] = __('game/buildings' . $this->objects->getObjects()[$building_id]);
+        $item_to_parse['descriptions'] = __('game/buildings.descriptions')[$this->objects->getObjects()[$building_id]];
         $item_to_parse['price'] = $this->getBuildingPriceWithFormat($building_id);
         $item_to_parse['time'] = $this->getBuildingTimeWithFormat($building_id);
         $item_to_parse['click'] = $this->getActionButton($building_id);
@@ -765,7 +765,7 @@ class BuildingsController extends BaseController
                     $BuildLevel = $BuildArray[1];
                     $BuildMode = $BuildArray[4];
                     $BuildTime = $BuildEndTime - time();
-                    $ElementTitle = $this->langs->language[$this->objects->getObjects()[$building]];
+                    $ElementTitle = __('game/buildings.' . $this->objects->getObjects()[$building]);
 
                     if (isset($Sprice[$building]) && $Sprice !== false && $BuildLevel > $Sprice[$building]) {
                         $Sprice[$building] = $BuildLevel;

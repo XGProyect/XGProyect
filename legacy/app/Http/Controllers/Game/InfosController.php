@@ -65,7 +65,7 @@ class InfosController extends BaseController
         $parse['dpath'] = DPATH;
         $parse['name'] = $this->langs->language[$this->_resource[$this->_element_id]];
         $parse['image'] = $this->_element_id;
-        $parse['description'] = $this->langs->language['info'][$this->_resource[$this->_element_id]];
+        $parse['description'] = __('game/infos.info')[$this->_resource[$this->_element_id]];
         $parse['table_head'] = '';
         $parse['table_data'] = '';
 
@@ -118,7 +118,7 @@ class InfosController extends BaseController
             $TableFooterTPL = 'infos/info_astrophysics_footer';
         } elseif ($this->_element_id >= 202 && $this->_element_id <= 250) {
             $PageTPL = 'infos/info_buildings_fleet';
-            $parse['element_typ'] = $this->langs->language['ships'];
+            $parse['element_typ'] = __('game/ships.ships')
             $parse['rf_info_to'] = $this->ShowRapidFireTo();
             $parse['rf_info_fr'] = $this->ShowRapidFireFrom();
             $parse['hull_pt'] = FormatLib::prettyNumber($this->_pricelist[$this->_element_id]['metal'] + $this->_pricelist[$this->_element_id]['crystal']);
@@ -139,7 +139,7 @@ class InfosController extends BaseController
             }
         } elseif ($this->_element_id >= 401 && $this->_element_id <= 550) {
             $PageTPL = 'infos/info_buildings_defense';
-            $parse['element_typ'] = $this->langs->language['defenses'];
+            $parse['element_typ'] = __('game/defenses.defenses');
             $parse['rf_info_to'] = '';
             $parse['rf_info_fr'] = '';
 
@@ -375,7 +375,7 @@ class InfosController extends BaseController
                 if ($this->planet[$this->_resource[$Ship]] > 0) {
                     $bloc['idx'] = $CurrIdx;
                     $bloc['fleet_id'] = $Ship;
-                    $bloc['fleet_name'] = $this->langs->language[$this->_resource[$Ship]];
+                    $bloc['fleet_name'] = __('game/ships.' . $this->_resource[$Ship]);
                     $bloc['fleet_max'] = FormatLib::prettyNumber($this->planet[$this->_resource[$Ship]]);
                     $bloc['gate_ship_dispo'] = __('game/infos.in_jump_gate_available');
                     $Result .= Template::getInstance()->render($RowsTPL, $bloc);

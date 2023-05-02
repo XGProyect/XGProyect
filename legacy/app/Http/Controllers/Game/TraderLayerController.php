@@ -38,13 +38,12 @@ class TraderLayerController extends BaseController
     }
 
     /*
-    $parse = $this->langs;
 
     if ($this->current_user['premium_dark_matter'] < $this->tr_dark_matter) {
 
     Functions::message(
     str_replace(
-    '%s', $this->tr_dark_matter, $this->langs['tr_darkmatter_needed']
+    '%s', $this->tr_dark_matter, __['tr_darkmatter_needed']
     ), '', '', true
     );
 
@@ -57,7 +56,7 @@ class TraderLayerController extends BaseController
 
     case 'metal':
     if ($_POST['cristal'] < 0 or $_POST['deut'] < 0) {
-    Functions::message($this->langs['tr_only_positive_numbers'], "game.php?page=traderOverview", 1);
+    Functions::message(__['tr_only_positive_numbers'], "game.php?page=traderOverview", 1);
     } else {
     $necessaire = (($_POST['cristal'] * 2) + ($_POST['deut'] * 4));
     $amout = array(
@@ -90,7 +89,7 @@ class TraderLayerController extends BaseController
     $this->discountDarkMatter(); // REDUCE DARKMATTER
     } else {
 
-    Functions::message($this->langs['tr_not_enought_metal'], "game.php?page=traderOverview", 1);
+    Functions::message(__['tr_not_enought_metal'], "game.php?page=traderOverview", 1);
     }
     }
     break;
@@ -98,7 +97,7 @@ class TraderLayerController extends BaseController
     case 'cristal':
     if ($_POST['metal'] < 0 or $_POST['deut'] < 0) {
 
-    Functions::message($this->langs['tr_only_positive_numbers'], "game.php?page=traderOverview", 1);
+    Functions::message(__['tr_only_positive_numbers'], "game.php?page=traderOverview", 1);
     } else {
 
     $necessaire = ((abs($_POST['metal']) * 0.5) + (abs($_POST['deut']) * 2));
@@ -132,7 +131,7 @@ class TraderLayerController extends BaseController
     $this->discountDarkMatter(); // REDUCE DARKMATTER
     } else {
 
-    Functions::message($this->langs['tr_not_enought_crystal'], "game.php?page=traderOverview", 1);
+    Functions::message(__['tr_not_enought_crystal'], "game.php?page=traderOverview", 1);
     }
     }
     break;
@@ -140,7 +139,7 @@ class TraderLayerController extends BaseController
     case 'deuterium':
     if ($_POST['cristal'] < 0 or $_POST['metal'] < 0) {
 
-    Functions::message($this->langs['tr_only_positive_numbers'], "game.php?page=traderOverview", 1);
+    Functions::message(__['tr_only_positive_numbers'], "game.php?page=traderOverview", 1);
     } else {
 
     $necessaire = ((abs($_POST['metal']) * 0.25) + (abs($_POST['cristal']) * 0.5));
@@ -174,13 +173,13 @@ class TraderLayerController extends BaseController
     $this->discountDarkMatter(); // REDUCE DARKMATTER
     } else {
 
-    Functions::message($this->langs['tr_not_enought_deuterium'], "game.php?page=traderOverview", 1);
+    Functions::message(__['tr_not_enought_deuterium'], "game.php?page=traderOverview", 1);
     }
     }
     break;
     }
 
-    Functions::message($this->langs['tr_exchange_done'], "game.php?page=traderOverview", 1);
+    Functions::message(__['tr_exchange_done'], "game.php?page=traderOverview", 1);
     } else {
 
     $template = 'trader/trader_main';

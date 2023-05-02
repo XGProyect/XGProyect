@@ -135,7 +135,7 @@ class FleetshortcutsController extends BaseController
                     'shortcut_galaxy' => $shortcut['g'],
                     'shortcut_system' => $shortcut['s'],
                     'shortcut_planet' => $shortcut['p'],
-                    'shortcut_type' => $this->langs->language['planet_type_short'][$shortcut['pt']],
+                    'shortcut_type' => __('game/global.planet_type_short')[$shortcut['pt']],
                     'row_end' => !$set_row ? '</tr>' : '',
                 ];
 

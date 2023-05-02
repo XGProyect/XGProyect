@@ -94,7 +94,7 @@ class PermissionsController extends BaseController
 
         foreach ($this->permissions->getRoles() as $role) {
             $roles_list[$role] = [
-                'role_name' => $this->langs->language['user_level'][$role],
+                'role_name' => __('admin/global.user_level')[$role],
             ];
         }
 
@@ -134,7 +134,7 @@ class PermissionsController extends BaseController
                 // put all inside
                 $modules_list[] = [
                     'page_module' => $module,
-                    'page_module_title' => $this->langs->language[$module],
+                    'page_module_title' => __('admin/menu.' . $module),
                     'permissions_list' => $permissions_list,
                 ];
 
@@ -144,7 +144,7 @@ class PermissionsController extends BaseController
             // put all inside
             $sections_list[$section_id] = [
                 'section_name' => ucfirst($section),
-                'section_title' => $this->langs->language[$section],
+                'section_title' => __('admin/menu.' . $section),
                 'roles_list' => $roles,
                 'modules_list' => $modules_list,
             ];

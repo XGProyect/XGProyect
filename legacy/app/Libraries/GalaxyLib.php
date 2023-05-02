@@ -553,7 +553,7 @@ class GalaxyLib
     {
         $url = 'game.php?page=fleet1&galaxy=' . $this->galaxy . '&amp;system=' . $this->system . '&amp;planet=' .
         $this->planet . '&amp;planettype=' . $planet_type . '&amp;target_mission=1';
-        return str_replace('"', '', UrlHelper::setUrl($url, $this->langs->language['type_mission'][Missions::ATTACK]));
+        return str_replace('"', '', UrlHelper::setUrl($url, __('game/missions.type_mission')[Missions::ATTACK]));
     }
 
     /**
@@ -567,7 +567,7 @@ class GalaxyLib
     {
         $url = 'game.php?page=fleet1&galaxy=' . $this->galaxy . '&system=' . $this->system .
         '&planet=' . $this->planet . '&planettype=' . $planet_type . '&target_mission=3';
-        return str_replace('"', '', UrlHelper::setUrl($url, $this->langs->language['type_mission'][Missions::TRANSPORT]));
+        return str_replace('"', '', UrlHelper::setUrl($url, __('game/missions.type_mission')[Missions::TRANSPORT]));
     }
 
     /**
@@ -581,7 +581,7 @@ class GalaxyLib
     {
         $url = 'game.php?page=fleet1&galaxy=' . $this->galaxy . '&system=' . $this->system .
         '&planet=' . $this->planet . '&planettype=' . $planet_type . '&target_mission=4';
-        return str_replace('"', '', UrlHelper::setUrl($url, $this->langs->language['type_mission'][Missions::DEPLOY]));
+        return str_replace('"', '', UrlHelper::setUrl($url, __('game/missions.type_mission')[Missions::DEPLOY]));
     }
 
     /**
@@ -595,7 +595,7 @@ class GalaxyLib
     {
         $url = 'game.php?page=fleet1&galaxy=' . $this->galaxy . '&system=' . $this->system .
         '&planet=' . $this->planet . '&planettype=' . $planet_type . '&target_mission=5';
-        return str_replace('"', '', UrlHelper::setUrl($url, $this->langs->language['type_mission'][Missions::STAY]));
+        return str_replace('"', '', UrlHelper::setUrl($url, __('game/missions.type_mission')[Missions::STAY]));
     }
 
     /**
@@ -609,7 +609,7 @@ class GalaxyLib
     {
         $attributes = 'onclick=&#039javascript:doit(6, ' . $this->galaxy . ', ' . $this->system . ', ' .
         $this->planet . ', ' . $planet_type . ', ' . $this->current_user['preference_spy_probes'] . ');&#039';
-        return str_replace('"', '', UrlHelper::setUrl('', $this->langs->language['type_mission'][Missions::SPY], '', $attributes));
+        return str_replace('"', '', UrlHelper::setUrl('', __('game/missions.type_mission')[Missions::SPY], '', $attributes));
     }
 
     /**
@@ -623,7 +623,7 @@ class GalaxyLib
     {
         $url = 'game.php?page=fleet1&galaxy=' . $this->galaxy . '&system=' . $this->system . '&planet=' .
         $this->planet . '&planettype=' . $planet_type . '&target_mission=9';
-        return str_replace('"', '', UrlHelper::setUrl($url, $this->langs->language['type_mission'][Missions::DESTROY]));
+        return str_replace('"', '', UrlHelper::setUrl($url, __('game/missions.type_mission')[Missions::DESTROY]));
     }
 
     /**
@@ -637,7 +637,7 @@ class GalaxyLib
     {
         $url = 'game.php?page=galaxy&mode=2&galaxy=' . $this->galaxy . '&system=' . $this->system . '&planet=' .
         $this->planet . '&current=' . $this->current_user['user_current_planet'];
-        return str_replace('"', '', UrlHelper::setUrl($url, $this->langs->language['gl_missile_attack']));
+        return str_replace('"', '', UrlHelper::setUrl($url, __('game/galaxy.gl_missile_attack')));
     }
 
     /**

@@ -22,7 +22,7 @@ class AttackLang implements Lang
      */
     public function getShipName($id)
     {
-        return $this->lang->language[$this->objects[$id]];
+        return __('game/ships.' . $this->objects[$id]);
     }
 
     /**

@@ -128,9 +128,9 @@ class OfficierController extends BaseController
         $item_to_parse = [];
         $item_to_parse['dpath'] = DPATH;
         $item_to_parse['status'] = $this->setOfficierStatusWithFormat($item_id);
-        $item_to_parse['name'] = $this->langs->language['officiers'][$item_id]['name'];
-        $item_to_parse['description'] = $this->langs->language['officiers'][$item_id]['description'];
-        $item_to_parse['benefits'] = $this->langs->language['officiers'][$item_id]['benefits'];
+        $item_to_parse['name'] = __('game/officier.officiers')[$item_id]['name'];
+        $item_to_parse['description'] = __('game/officier.officiers')[$item_id]['description'];
+        $item_to_parse['benefits'] = __('game/officier.officiers')[$item_id]['benefits'];
         $item_to_parse['month_price'] = FormatLib::prettyNumber($this->getOfficierPrice($item_id, 'darkmatter_month'));
         $item_to_parse['week_price'] = FormatLib::prettyNumber($this->getOfficierPrice($item_id, 'darkmatter_week'));
         $item_to_parse['img_big'] = $this->getOfficierImage($item_id, 'img_big');

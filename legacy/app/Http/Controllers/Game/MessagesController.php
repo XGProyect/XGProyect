@@ -246,7 +246,7 @@ class MessagesController extends BaseController
                     'message_type' => $this->message_type[$message_type['message_type']]['type_name'],
                     'checked' => (isset($active[$message_type['message_type']]) ? 'checked' : ''),
                     'checked_status' => (isset($active[$message_type['message_type']]) ? SwitchInt::on : SwitchInt::off),
-                    'message_type_name' => $this->langs->language['mg_type'][$message_type['message_type']],
+                    'message_type_name' => __('game/messages.mg_type')[$message_type['message_type']],
                     'message_amount' => isset($message_type['message_type_count']) ? $message_type['message_type_count'] : 0,
                     'message_unread' => isset($message_type['unread_count']) ? $message_type['unread_count'] : 0,
                 ];

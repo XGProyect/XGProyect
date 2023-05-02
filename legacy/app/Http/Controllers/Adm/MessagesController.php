@@ -103,7 +103,7 @@ class MessagesController extends BaseController
                     $result,
                     [
                         'message_time' => Timing::formatExtendedDate($result['message_time']),
-                        'message_type' => $this->langs->language['mg_types'][$result['message_type']],
+                        'message_type' => __('admin/messages.mg_types')[$result['message_type']],
                         'message_text' => nl2br($result['message_text']),
                     ]
                 );
@@ -170,7 +170,7 @@ class MessagesController extends BaseController
         foreach ($message_types as $type) {
             $options_list[] = [
                 'value' => $type,
-                'name' => $this->langs->language['mg_types'][$type],
+                'name' => __('admin/messages.mg_types')[$type],
             ];
         }
 

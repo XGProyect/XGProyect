@@ -468,7 +468,7 @@ class FleetsLib
 
             $EventString .= self::fleetResourcesPopup(
                 $fleetRow,
-                $lang->language['type_mission'][$MissionType],
+                __('game/missions.type_mission')[$MissionType],
                 $FleetPrefix . $FleetStyle[$MissionType]
             );
         }

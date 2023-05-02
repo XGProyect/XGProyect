@@ -138,7 +138,7 @@ class Fleet3Controller extends BaseController
             $this->planet['planet_galaxy'],
             $this->planet['planet_system'],
             $this->planet['planet_planet']
-        ) . ' - ' . $this->langs->language['planet_type'][$this->planet['planet_type']];
+        ) . ' - ' . __('game/global.planet_type')[$this->planet['planet_type']];
     }
 
     /**
@@ -159,7 +159,7 @@ class Fleet3Controller extends BaseController
             foreach ($missionsList as $mission) {
                 $missiongSelector[] = [
                     'value' => $mission,
-                    'mission' => $this->langs->language['type_mission'][$mission],
+                    'mission' => __('game/global.type_mission')[$mission],
                     'expedition_message' => $mission == Missions::EXPEDITION ? __('game/fleet.fl_expedition_alert_message') : '',
                     'id' => $mission == Missions::EXPEDITION ? ' ' : 'inpuT_' . $mission,
                     'checked' => $mission == $this->_current_mission ? ' checked="checked"' : '',
