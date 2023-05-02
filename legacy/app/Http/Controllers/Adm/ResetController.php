@@ -25,12 +25,7 @@ class ResetController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'admin.reset',
-            array_merge(
-                [
-                    'alert' => $this->alert ? $this->alert : '',
-                ]
-            )
+            'admin.reset'
         );
     }
 
@@ -142,7 +137,7 @@ class ResetController extends BaseController
                 $this->resetModel->resetAll();
             }
 
-            $this->alert = Administration::saveMessage('ok', __('admin/reset.re_reset_excess'));
+            session()->flash('success', __('admin/reset.re_reset_excess'));
         }
     }
 }

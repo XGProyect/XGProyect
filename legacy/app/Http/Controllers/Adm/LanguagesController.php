@@ -60,7 +60,7 @@ class LanguagesController extends BaseController
             fclose($fs);
         }
 
-        $this->alert = Administration::saveMessage('ok', __('admin/languages.le_all_ok_message'));
+        session()->flash('success', __('admin/languages.le_all_ok_message'));
     }
 
     private function buildPage(): void
@@ -72,7 +72,6 @@ class LanguagesController extends BaseController
                 $this->getContents(),
                 [
                     'edit_file' => $this->current_file,
-                    'alert' => $this->alert ?? '',
                 ]
             )
         );
@@ -101,7 +100,7 @@ class LanguagesController extends BaseController
         }
 
         if (!$contents && $this->current_file != '') {
-            $this->alert = Administration::saveMessage('error', __('admin/languages.le_all_error_reading'));
+            session()->flash('error', __('admin/languages.le_all_error_reading'));
         }
 
         return [

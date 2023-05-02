@@ -53,7 +53,7 @@ class StatisticsController extends BaseController
                 Functions::updateConfig($option, $value);
             }
 
-            $this->alert = Administration::saveMessage('ok', __('admin/statistics.cs_all_ok_message'));
+            session()->flash('success', __('admin/statistics.cs_all_ok_message'));
         }
     }
 
@@ -63,10 +63,7 @@ class StatisticsController extends BaseController
             'admin.statistics',
             array_merge(
                 $this->getStatisticsSettings(),
-                $this->userLevels(),
-                [
-                    'alert' => $this->alert ?? '',
-                ]
+                $this->userLevels()
             )
         );
     }

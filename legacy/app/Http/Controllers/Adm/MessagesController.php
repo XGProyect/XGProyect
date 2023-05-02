@@ -78,7 +78,6 @@ class MessagesController extends BaseController
             array_merge(
                 $this->buildMessageTypeBlock(),
                 [
-                    'alert' => $this->alert,
                     'results' => $this->results,
                     'show_search' => $this->results ? '' : 'show',
                     'show_results' => $this->results ? 'show' : '',
@@ -112,7 +111,7 @@ class MessagesController extends BaseController
 
             $this->results = $results_list;
         } else {
-            $this->alert = Administration::saveMessage('warning', __('admin/messages.mg_no_results'));
+            session()->flash('warning', __('admin/messages.mg_no_results'));
         }
     }
 
@@ -126,7 +125,7 @@ class MessagesController extends BaseController
     {
         $this->messagesModel->deleteAllMessagesByIds([$message_id]);
 
-        $this->alert = Administration::saveMessage('ok', __('admin/messages.mg_delete_ok'));
+        session()->flash('success', __('admin/messages.mg_delete_ok'));
     }
 
     /**
@@ -148,7 +147,7 @@ class MessagesController extends BaseController
 
         $this->messagesModel->deleteAllMessagesByIds($ids);
 
-        $this->alert = Administration::saveMessage('ok', __('admin/messages.mg_delete_ok'));
+        session()->flash('success', __('admin/messages.mg_delete_ok'));
     }
 
     /**

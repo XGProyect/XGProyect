@@ -36,12 +36,7 @@ class PremiumController extends BaseController
 
         Template::getInstance()->view(
             'admin.premium',
-            array_merge(
-                $this->getPremiumSettings(),
-                [
-                    'alert' => $this->alert ?? '',
-                ]
-            )
+            $this->getPremiumSettings(),
         );
     }
 
@@ -58,7 +53,7 @@ class PremiumController extends BaseController
                 }
             }
 
-            $this->alert = Administration::saveMessage('ok', __('admin/preferences.pr_all_ok_message'));
+            session()->flash('success', __('admin/preferences.pr_all_ok_message'));
         }
     }
 

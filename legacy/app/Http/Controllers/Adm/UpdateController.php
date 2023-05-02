@@ -54,7 +54,7 @@ class UpdateController extends BaseController
             if ($continue) {
                 $this->startUpdate();
 
-                $parse['alert'] = Administration::saveMessage('ok', __('admin/update.up_success'));
+                session()->flash('ok', __('admin/update.up_success'));
 
                 if ($this->demo) {
                     $parse['result'] = print_r($this->output, true);
@@ -67,7 +67,7 @@ class UpdateController extends BaseController
                     die(Administration::noAccessMessage(__('admin/update.up_success')));
                 }
             } else {
-                $parse['alert'] = Administration::saveMessage('warning', $alerts);
+                session()->flash('warning', $alerts);
             }
         }
 

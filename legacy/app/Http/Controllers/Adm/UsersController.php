@@ -61,7 +61,7 @@ class UsersController extends BaseController
             $checked_user = $this->usersModel->checkUser($user);
 
             if (!$checked_user) {
-                $parse['alert'] = Administration::saveMessage('error', __('admin/users.us_nothing_found'));
+                session()->flash('danger', __('admin/users.us_nothing_found'));
                 $user = '';
             } else {
                 $this->_id = $checked_user['user_id'];
@@ -84,7 +84,7 @@ class UsersController extends BaseController
         if (isset($_GET['mode']) && $_GET['mode'] == 'delete' && $this->_user_query['user_authlevel'] != 3) {
             $this->userLibrary->deleteUser($this->_user_query['user_id']);
 
-            $parse['alert'] = Administration::saveMessage('ok', __('admin/users.us_user_deleted'));
+            session()->flash('ok', __('admin/users.us_user_deleted'));
         }
 
         $parse['type'] = ($type != '') ? $type : 'info';

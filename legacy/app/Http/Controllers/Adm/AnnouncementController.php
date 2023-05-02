@@ -30,7 +30,15 @@ class AnnouncementController extends BaseController
 
         $this->runAction();
 
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.announcement',
+            array_merge(
+                $this->buildColorPicker(),
+                [
+                    'js_path' => JS_PATH,
+                ]
+            )
+        );
     }
 
     /**
@@ -68,7 +76,7 @@ class AnnouncementController extends BaseController
                     $this->doEmailAction($action);
                 }
             } else {
-                $this->alerts[] = Administration::saveMessage('warning', __('admin/announcement.an_not_sent'));
+                session()->flash('warning', __('admin/announcement.an_not_sent'));
             }
         }
     }
@@ -109,7 +117,7 @@ class AnnouncementController extends BaseController
             );
         }
 
-        $this->alerts[] = Administration::saveMessage('ok', __('admin/announcement.an_sent'));
+        session()->flash('success', __('admin/announcement.an_sent'));
     }
 
     /**
@@ -146,25 +154,11 @@ class AnnouncementController extends BaseController
             $sent_count++;
         }
 
-        $this->alerts[] = Administration::saveMessage(
+        session()->flash(
             'info',
             strtr(
                 __('admin/announcement.an_delivery_result'),
                 ['%s' => join('<br>', $results)]
-            )
-        );
-    }
-
-    private function buildPage(): void
-    {
-        Template::getInstance()->view(
-            'admin.announcement',
-            array_merge(
-                $this->buildColorPicker(),
-                [
-                    'js_path' => JS_PATH,
-                    'alert' => $this->alerts ? join('', $this->alerts) : '',
-                ]
             )
         );
     }

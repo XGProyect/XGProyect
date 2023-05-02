@@ -31,12 +31,7 @@ class RegistrationController extends BaseController
 
         Template::getInstance()->view(
             'admin.registration',
-            array_merge(
-                $this->getNewUserRegistrationSettings(),
-                [
-                    'alert' => $this->alert ?? '',
-                ]
-            )
+            $this->getNewUserRegistrationSettings()
         );
     }
 
@@ -49,7 +44,7 @@ class RegistrationController extends BaseController
                 Functions::updateConfig($option, ($value == 'on' ? 1 : 0));
             }
 
-            $this->alert = Administration::saveMessage('ok', __('admin/registration.ur_all_ok_message'));
+            session()->flash('success', __('admin/registration.ur_all_ok_message'));
         }
     }
 

@@ -33,12 +33,7 @@ class PlanetsController extends BaseController
 
         Template::getInstance()->view(
             'admin.planets',
-            array_merge(
-                $this->getNewPlanetSettings(),
-                [
-                    'alert' => $this->alert ?? '',
-                ]
-            )
+            $this->getNewPlanetSettings()
         );
     }
 
@@ -53,7 +48,7 @@ class PlanetsController extends BaseController
                 Functions::updateConfig($option, $value);
             }
 
-            $this->alert = Administration::saveMessage('ok', __('admin/planets.np_all_ok_message'));
+            session()->flash('success', __('admin/planets.np_all_ok_message'));
         }
     }
 

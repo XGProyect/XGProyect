@@ -55,11 +55,12 @@ class ChangelogController extends BaseController
 
     private function buildPage(): void
     {
+        $this->getAlertMessage();
+
         Template::getInstance()->view(
             'admin.changelog',
             [
                 'changelog' => $this->buildListOfEntries(),
-                'alert' => $this->getAlertMessage(),
             ]
         );
     }
@@ -81,24 +82,16 @@ class ChangelogController extends BaseController
         return $entries_list;
     }
 
-    /**
-     * Get the alert message
-     *
-     * @return string
-     */
-    private function getAlertMessage(): string
+    private function getAlertMessage(): void
     {
         $action_type = filter_input(INPUT_GET, 'success');
-        $alert = '';
 
         if ($action_type) {
-            $alert = Administration::saveMessage(
-                'ok',
+            session()->flash(
+                'success',
                 __('admin/changelog.ch_action_' . $action_type . '_done')
             );
         }
-
-        return $alert;
     }
 
     /**

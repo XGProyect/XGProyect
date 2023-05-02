@@ -52,7 +52,7 @@ class MailingController extends BaseController
                 }
             }
 
-            $this->alert = Administration::saveMessage('ok', __('admin/preferences.pr_all_ok_message'));
+            session()->flash('success', __('admin/preferences.pr_all_ok_message'));
         }
     }
 
@@ -63,10 +63,7 @@ class MailingController extends BaseController
             array_merge(
                 $this->getMailingSettings(),
                 $this->buildProtocolsDropdown(),
-                $this->buildCryptoDropdown(),
-                [
-                    'alert' => $this->alert ?? '',
-                ]
+                $this->buildCryptoDropdown()
             )
         );
     }

@@ -71,7 +71,7 @@ class PermissionsController extends BaseController
 
             $this->permissions->savePermissions();
 
-            $this->alert = Administration::saveMessage('ok', __('admin/preferences.pr_all_ok_message'));
+            session()->flash('success', __('admin/preferences.pr_all_ok_message'));
         }
     }
 
@@ -79,10 +79,7 @@ class PermissionsController extends BaseController
     {
         Template::getInstance()->view(
             'admin.permissions',
-            array_merge(
-                ['alert' => $this->alert ?? ''],
-                $this->buildListOfPermissions()
-            )
+            $this->buildListOfPermissions()
         );
     }
 

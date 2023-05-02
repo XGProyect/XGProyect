@@ -65,7 +65,7 @@ class BanController extends BaseController
 
             $this->banModel->unbanUser($username);
 
-            $parse['alert'] = Administration::saveMessage('ok', (str_replace('%s', $username, __('admin/ban.bn_lift_ban_success'))));
+            session()->flash('ok', (str_replace('%s', $username, __('admin/ban.bn_lift_ban_success'))));
         }
 
         $parse['users_list'] = $this->getUsersList();
@@ -106,7 +106,7 @@ class BanController extends BaseController
 
             if (isset($_POST['bannow']) && $_POST['bannow']) {
                 if (!is_numeric($_POST['days']) or !is_numeric($_POST['hour'])) {
-                    $parse['alert'] = Administration::saveMessage('warning', __('admin/ban.bn_all_fields_required'));
+                    session()->flash('warning', __('admin/ban.bn_all_fields_required'));
                 } else {
                     $reas = (string) $_POST['text'];
                     $days = (int) $_POST['days'];
@@ -143,7 +143,7 @@ class BanController extends BaseController
                         $vacation_mode
                     );
 
-                    $parse['alert'] = Administration::saveMessage('ok', (str_replace('%s', $ban_name, __('admin/ban.bn_ban_success'))));
+                    session()->flash('ok', (str_replace('%s', $ban_name, __('admin/ban.bn_ban_success'))));
                 }
             }
         } else {

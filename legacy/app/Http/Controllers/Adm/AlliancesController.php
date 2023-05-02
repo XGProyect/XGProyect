@@ -32,11 +32,6 @@ class AlliancesController extends BaseController
 
         $this->alliancesModel = new Alliances();
 
-        $this->buildPage();
-    }
-
-    private function buildPage(): void
-    {
         $parse['alert'] = '';
         $alliance = isset($_GET['alliance']) ? trim($_GET['alliance']) : null;
         $type = isset($_GET['type']) ? trim($_GET['type']) : null;
@@ -44,7 +39,7 @@ class AlliancesController extends BaseController
 
         if ($alliance != '') {
             if (!$this->checkAlliance($alliance)) {
-                $parse['alert'] = Administration::saveMessage('error', __('game/alliances.al_nothing_found'));
+                session()->flash('danger', __('game/alliances.al_nothing_found'));
                 $alliance = '';
             } else {
                 $this->_alliance_query = $this->alliancesModel->getAllAllianceDataById($this->_id);
@@ -71,11 +66,6 @@ class AlliancesController extends BaseController
         );
     }
 
-    /**
-     * method getData
-     * param $type
-     * return the page for the current type
-     */
     private function getData($type)
     {
         switch ($type) {
@@ -98,11 +88,6 @@ class AlliancesController extends BaseController
         }
     }
 
-    /**
-     * method saveData
-     * param $type
-     * return save data for the current type
-     */
     private function saveData($type)
     {
         switch ($type) {
@@ -127,6 +112,7 @@ class AlliancesController extends BaseController
                 break;
         }
     }
+
     //#####################################
     //
     // getData methods
@@ -146,7 +132,7 @@ class AlliancesController extends BaseController
         $parse['alliance_owner_picker'] = $this->buildUsersCombo($this->_alliance_query['alliance_owner']);
         $parse['sel1'] = $this->_alliance_query['alliance_request_notallow'] == 1 ? 'selected' : '';
         $parse['sel0'] = $this->_alliance_query['alliance_request_notallow'] == 0 ? 'selected' : '';
-        $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
+        $parse['alert_info'] = ($this->_alert_type != '') ? session()->flash($this->_alert_type, $this->_alert_info) : '';
 
         return Template::getInstance()->render('admin.alliances_information', $parse);
     }
@@ -186,7 +172,7 @@ class AlliancesController extends BaseController
         }
 
         $parse['ranks_table'] = empty($rank_row) ? __('game/alliances.al_no_ranks') : $rank_row;
-        $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
+        $parse['alert_info'] = ($this->_alert_type != '') ? session()->flash($this->_alert_type, $this->_alert_info) : '';
 
         return Template::getInstance()->render('admin.alliances_ranks', $parse);
     }
@@ -224,7 +210,7 @@ class AlliancesController extends BaseController
         }
 
         $parse['members_table'] = empty($members) ? '<tr><td colspan="6" class="align_center text-error">' . __('game/alliances.al_no_ranks') . '</td></tr>' : $members;
-        $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
+        $parse['alert_info'] = ($this->_alert_type != '') ? session()->flash($this->_alert_type, $this->_alert_info) : '';
 
         return Template::getInstance()->render('admin.alliances_members', $parse);
     }

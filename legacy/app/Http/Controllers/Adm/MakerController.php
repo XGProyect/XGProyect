@@ -40,9 +40,6 @@ class MakerController extends BaseController
                 $this->makeAlliace(),
                 $this->makePlanet(),
                 $this->makeMoon(),
-                [
-                    'alert' => $this->alert ?? '',
-                ]
             )
         );
     }
@@ -116,9 +113,9 @@ class MakerController extends BaseController
             if ($i == 0) {
                 $this->makerModel->createNewUser($name, $email, $auth, $pass, $galaxy, $system, $planet);
 
-                $this->alert = Administration::saveMessage('ok', strtr(__('admin/maker.mk_user_added'), ['%s' => $pass]));
+                session()->flash('success', strtr(__('admin/maker.mk_user_added'), ['%s' => $pass]));
             } else {
-                $this->alert = Administration::saveMessage('warning', '<br/>' . $error);
+                session()->flash('warning', '<br/>' . $error);
             }
         }
 
@@ -144,9 +141,9 @@ class MakerController extends BaseController
             if (!$check_alliance && !empty($alliance_founder) && $alliance_founder > 0) {
                 $this->makerModel->createAlliance($alliance_name, $alliance_tag, $alliance_founder, __('admin/maker.mk_alliance_founder_rank'));
 
-                $this->alert = Administration::saveMessage('ok', __('admin/maker.mk_alliance_added'));
+                session()->flash('success', __('admin/maker.mk_alliance_added'));
             } else {
-                $this->alert = Administration::saveMessage('warning', __('admin/maker.mk_alliance_all_fields'));
+                session()->flash('warning', __('admin/maker.mk_alliance_all_fields'));
             }
         }
 
@@ -196,12 +193,12 @@ class MakerController extends BaseController
 
                     $this->makerModel->createNewPlanet($galaxy, $system, $planet, $user_id, $field_max, $name);
 
-                    $this->alert = Administration::saveMessage('ok', __('admin/maker.mk_planet_added'));
+                    session()->flash('success', __('admin/maker.mk_planet_added'));
                 } else {
-                    $this->alert = Administration::saveMessage('warning', $error);
+                    session()->flash('warning', $error);
                 }
             } else {
-                $this->alert = Administration::saveMessage('warning', __('admin/maker.mk_planet_unavailable_coords'));
+                session()->flash('warning', __('admin/maker.mk_planet_unavailable_coords'));
             }
         }
 
@@ -244,7 +241,7 @@ class MakerController extends BaseController
                             $size = $diameter;
                         } else {
                             $errors++;
-                            $this->alert = Administration::saveMessage('warning', __('admin/maker.mk_moon_only_numbers'));
+                            session()->flash('warning', __('admin/maker.mk_moon_only_numbers'));
                         }
                     }
 
@@ -254,7 +251,7 @@ class MakerController extends BaseController
                             $maxtemp = $temp_max;
                         } else {
                             $errors++;
-                            $this->alert = Administration::saveMessage('warning', __('admin/maker.mk_moon_only_numbers'));
+                            session()->flash('warning', __('admin/maker.mk_moon_only_numbers'));
                         }
                     }
 
@@ -271,13 +268,13 @@ class MakerController extends BaseController
                             $maxtemp
                         );
 
-                        $this->alert = Administration::saveMessage('ok', __('admin/maker.mk_moon_added'));
+                        session()->flash('success', __('admin/maker.mk_moon_added'));
                     }
                 } else {
-                    $this->alert = Administration::saveMessage('warning', __('admin/maker.mk_moon_add_errors'));
+                    session()->flash('warning', __('admin/maker.mk_moon_add_errors'));
                 }
             } else {
-                $this->alert = Administration::saveMessage('error', __('admin/maker.mk_moon_planet_doesnt_exist'));
+                session()->flash('error', __('admin/maker.mk_moon_planet_doesnt_exist'));
             }
         }
 
