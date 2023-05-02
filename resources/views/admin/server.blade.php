@@ -43,7 +43,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" name="game_name"
-                                                    value="{game_name}" maxlength="60">
+                                                    value="{{ $game_name }}" maxlength="60">
                                             </td>
                                         </tr>
                                         <tr>
@@ -57,7 +57,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" name="game_logo"
-                                                    value="{game_logo}">
+                                                    value="{{ $game_logo }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -68,7 +68,7 @@
                                             </td>
                                             <td>
                                                 <select class="form-control" name="language">
-                                                    {language_settings}
+                                                    {!! $language_settings !!}
                                                 </select>
                                             </td>
                                         </tr>
@@ -111,7 +111,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" name="resource_multiplier"
-                                                    value="{resource_multiplier}" type="number" min="1" max="100">
+                                                    value="{{ $resource_multiplier }}" type="number" min="1" max="100">
                                             </td>
                                         </tr>
                                         <tr>
@@ -122,7 +122,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" name="admin_email" size="60"
-                                                    maxlength="254" value="{admin_email}">
+                                                    maxlength="254" value="{{ $admin_email }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -133,7 +133,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" name="forum_url" size="60"
-                                                    maxlength="254" value="{forum_url}">
+                                                    maxlength="254" value="{{ $forum_url }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -154,7 +154,7 @@
                                             </td>
                                             <td>
                                                 <textarea class="form-control" name="close_reason" cols="80" rows="5"
-                                                    size="80">{close_reason}</textarea>
+                                                    size="80">{{ $close_reason }}</textarea>
                                             </td>
                                         </tr>
                                         <tr>
@@ -165,7 +165,7 @@
                                             </td>
                                             <td>
                                                 <select class="form-control" name="date_time_zone">
-                                                    {date_time_zone}
+                                                    {{ $date_time_zone }}
                                                 </select>
                                             </td>
                                         </tr>
@@ -177,7 +177,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" name="date_format"
-                                                    value="{date_format}">
+                                                    value="{{ $date_format }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -188,7 +188,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" name="date_format_extended"
-                                                    value="{date_format_extended}">
+                                                    value="{{ $date_format_extended }}">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -229,7 +229,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <input name="adm_attack" {adm_attack} type="checkbox"
+                                                <input name="adm_attack" {!! $adm_attack !!} type="checkbox"
                                                     class="form-check-input">
                                             </td>
                                         </tr>
@@ -244,7 +244,7 @@
                                             </td>
                                             <td>
                                                 <select name="Fleet_Cdr" class="form-control">
-                                                    {ships}
+                                                    {!! $ships !!}
                                                 </select>
                                             </td>
                                         </tr>
@@ -257,7 +257,7 @@
                                             </td>
                                             <td>
                                                 <select name="Defs_Cdr" class="form-control">
-                                                    {defenses}
+                                                    {!! $defenses !!}
                                                 </select>
                                             </td>
                                         </tr>
@@ -283,7 +283,7 @@
                                         <tr>
                                             <td>{{ __('admin/server.se_noob_protect_active') }}</td>
                                             <td>
-                                                <input name="noobprotection" {noobprot} type="checkbox"
+                                                <input name="noobprotection" {{ $noobprot }} type="checkbox"
                                                     class="form-check-input">
                                             </td>
                                         </tr>
@@ -297,7 +297,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <input name="noobprotectiontime" value="{noobprot2}" type="number"
+                                                <input name="noobprotectiontime" value="{{ $noobprot2 }}" type="number"
                                                     max="999999999" class="form-control">
                                             </td>
                                         </tr>
@@ -311,7 +311,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <input name="noobprotectionmulti" value="{noobprot3}" type="number"
+                                                <input name="noobprotectionmulti" value="{{ $noobprot3 }}" type="number"
                                                     max="99" class="form-control">
                                             </td>
                                         </tr>

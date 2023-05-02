@@ -30,7 +30,32 @@ class ServerController extends BaseController
 
         $this->runAction();
 
-        $this->buildPage();
+        $this->gameConfig = $this->serverModel->readAllConfigs();
+
+        Template::getInstance()->view(
+            'admin.server',
+            [
+                'game_name' => $this->gameConfig['game_name'],
+                'game_logo' => $this->gameConfig['game_logo'],
+                'language_settings' => Functions::getLanguages($this->gameConfig['lang']),
+                'game_speed' => $this->gameConfig['game_speed'] / 2500,
+                'fleet_speed' => $this->gameConfig['fleet_speed'] / 2500,
+                'resource_multiplier' => $this->gameConfig['resource_multiplier'],
+                'admin_email' => $this->gameConfig['admin_email'],
+                'forum_url' => $this->gameConfig['forum_url'],
+                'closed' => $this->gameConfig['game_enable'] == 1 ? " checked = 'checked' " : '',
+                'close_reason' => stripslashes($this->gameConfig['close_reason']),
+                'date_time_zone' => $this->timeZonePicker(),
+                'date_format' => $this->gameConfig['date_format'],
+                'date_format_extended' => $this->gameConfig['date_format_extended'],
+                'adm_attack' => $this->gameConfig['adm_attack'] == 1 ? " checked = 'checked' " : '',
+                'ships' => $this->percentagePicker((int) $this->gameConfig['fleet_cdr']),
+                'defenses' => $this->percentagePicker((int) $this->gameConfig['defs_cdr']),
+                'noobprot' => $this->gameConfig['noobprotection'] == 1 ? " checked = 'checked' " : '',
+                'noobprot2' => $this->gameConfig['noobprotectiontime'],
+                'noobprot3' => $this->gameConfig['noobprotectionmulti'],
+            ]
+        );
     }
 
     private function runAction(): void
@@ -150,54 +175,15 @@ class ServerController extends BaseController
         if (isset($_POST['noobprotectionmulti']) && is_numeric($_POST['noobprotectionmulti'])) {
             $this->gameConfig['noobprotectionmulti'] = $_POST['noobprotectionmulti'];
         }
-    }
-
-    private function buildPage(): void
-    {
-        $this->gameConfig = $this->serverModel->readAllConfigs();
-        $parse['alert'] = '';
 
         if (isset($_POST['opt_save']) && $_POST['opt_save'] == '1') {
-            // CHECK BEFORE SAVE
-            $this->runAction();
-
             // update all the settings
             $this->serverModel->updateConfigs($this->gameConfig);
 
-            $parse['alert'] = Administration::saveMessage('ok', __('admin/server.se_all_ok_message'));
+            session()->flash('success', __('admin/server.se_all_ok_message'));
         }
-
-        $parse['game_name'] = $this->gameConfig['game_name'];
-        $parse['game_logo'] = $this->gameConfig['game_logo'];
-        $parse['language_settings'] = Functions::getLanguages($this->gameConfig['lang']);
-        $parse['game_speed'] = $this->gameConfig['game_speed'] / 2500;
-        $parse['fleet_speed'] = $this->gameConfig['fleet_speed'] / 2500;
-        $parse['resource_multiplier'] = $this->gameConfig['resource_multiplier'];
-        $parse['admin_email'] = $this->gameConfig['admin_email'];
-        $parse['forum_url'] = $this->gameConfig['forum_url'];
-        $parse['closed'] = $this->gameConfig['game_enable'] == 1 ? " checked = 'checked' " : '';
-        $parse['close_reason'] = stripslashes($this->gameConfig['close_reason']);
-        $parse['date_time_zone'] = $this->timeZonePicker();
-        $parse['date_format'] = $this->gameConfig['date_format'];
-        $parse['date_format_extended'] = $this->gameConfig['date_format_extended'];
-        $parse['adm_attack'] = $this->gameConfig['adm_attack'] == 1 ? " checked = 'checked' " : '';
-        $parse['ships'] = $this->percentagePicker($this->gameConfig['fleet_cdr']);
-        $parse['defenses'] = $this->percentagePicker($this->gameConfig['defs_cdr']);
-        $parse['noobprot'] = $this->gameConfig['noobprotection'] == 1 ? " checked = 'checked' " : '';
-        $parse['noobprot2'] = $this->gameConfig['noobprotectiontime'];
-        $parse['noobprot3'] = $this->gameConfig['noobprotectionmulti'];
-
-        Template::getInstance()->view(
-            'admin.server',
-            $parse
-        );
     }
 
-    /**
-     * method timeZonePicker
-     * param
-     * return return the select options
-     */
     private function timeZonePicker()
     {
         $utc = new DateTimeZone('UTC');
@@ -234,11 +220,6 @@ class ServerController extends BaseController
         return $time_zones;
     }
 
-    /**
-     * method formatOffset
-     * param
-     * return return the format offset
-     */
     private function formatOffset($offset)
     {
         $hours = $offset / 3600;
@@ -254,21 +235,14 @@ class ServerController extends BaseController
         return $sign . str_pad((string) $hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad((string) $minutes, 2, '0');
     }
 
-    /**
-     * Percentage picker
-     *
-     * @param string $current_percentage Current percentage for the field
-     *
-     * @return string
-     */
-    private function percentagePicker($current_percentage)
+    private function percentagePicker(int $percentage): string
     {
         $options = '';
 
         for ($i = 0; $i <= 10; $i++) {
             $selected = '';
 
-            if ($i * 10 == $current_percentage) {
+            if ($i * 10 == $percentage) {
                 $selected = ' selected = selected ';
             }
 
