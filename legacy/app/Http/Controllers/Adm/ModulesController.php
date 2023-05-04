@@ -33,7 +33,7 @@ class ModulesController extends BaseController
     {
         $modules = request()->all();
 
-        if ($modules) {
+        if (count($modules) > 1) {
             $modules_count = count(explode(';', Functions::readConfig('modules')));
 
             for ($i = 0; $i < $modules_count; $i++) {
