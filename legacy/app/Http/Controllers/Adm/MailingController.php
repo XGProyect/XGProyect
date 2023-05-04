@@ -21,8 +21,6 @@ class MailingController extends BaseController
         'mailing_smtp_crypto' => FILTER_UNSAFE_RAW,
     ];
 
-    private string $alert = '';
-
     public function __invoke(): void
     {
         Administration::checkSession();
@@ -33,14 +31,16 @@ class MailingController extends BaseController
 
         $this->runAction();
 
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.mailing',
+            array_merge(
+                $this->getMailingSettings(),
+                $this->buildProtocolsDropdown(),
+                $this->buildCryptoDropdown()
+            )
+        );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $data = filter_input_array(INPUT_POST, self::MAILING_SETTINGS);
@@ -52,20 +52,8 @@ class MailingController extends BaseController
                 }
             }
 
-            session()->flash('success', __('admin/preferences.pr_all_ok_message'));
+            session()->flash('success', __('admin/mailing.ma_all_ok_message'));
         }
-    }
-
-    private function buildPage(): void
-    {
-        Template::getInstance()->view(
-            'admin.mailing',
-            array_merge(
-                $this->getMailingSettings(),
-                $this->buildProtocolsDropdown(),
-                $this->buildCryptoDropdown()
-            )
-        );
     }
 
     private function getMailingSettings(): array

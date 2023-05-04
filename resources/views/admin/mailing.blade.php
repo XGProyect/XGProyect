@@ -38,9 +38,9 @@
                                             </td>
                                             <td>
                                                 <select class="form-control"  name="mailing_protocol">
-                                                    {protocol_options}
-                                                    <option value="{value}"{selected}>{option}</option>
-                                                    {/protocol_options}
+                                                    @foreach ($protocol_options as $item)
+                                                    <option value="{{ $item['value'] }}"{{ $item['selected'] }}>{{ $item['option'] }}</option>
+                                                    @endforeach
                                                 </select>
                                             </td>
                                         </tr>
@@ -75,7 +75,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" name="mailing_smtp_host"
-                                                    value="{mailing_smtp_host}">
+                                                    value="{{ $mailing_smtp_host }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -87,7 +87,7 @@
                                             <td>
                                                 <input class="form-control" type="text"
                                                     name="mailing_smtp_user"
-                                                    value="{mailing_smtp_user}">
+                                                    value="{{ $mailing_smtp_user }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -99,7 +99,7 @@
                                             <td>
                                                 <input class="form-control" type="text"
                                                     name="mailing_smtp_pass"
-                                                    value="{mailing_smtp_pass}">
+                                                    value="{{ $mailing_smtp_pass }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -110,7 +110,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="number" name="mailing_smtp_port"
-                                                    value="{mailing_smtp_port}">
+                                                    value="{{ $mailing_smtp_port }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -122,7 +122,7 @@
                                             <td>
                                                 <input class="form-control" type="number"
                                                     name="mailing_smtp_timeout"
-                                                    value="{mailing_smtp_timeout}">
+                                                    value="{{ $mailing_smtp_timeout }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -133,9 +133,9 @@
                                             </td>
                                             <td>
                                                 <select class="form-control" name="mailing_smtp_crypto">
-                                                    {smtp_crypto_options}
-                                                    <option value="{value}"{selected}>{option}</option>
-                                                    {/smtp_crypto_options}
+                                                    @foreach ($smtp_crypto_options as $item)
+                                                    <option value="{{ $item['value'] }}"{{ $item['selected'] }}>{{ $item['option'] }}</option>
+                                                    @endforeach
                                                 </select>
                                             </td>
                                         </tr>
