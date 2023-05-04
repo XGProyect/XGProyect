@@ -13,7 +13,7 @@ use Xgp\App\Libraries\ProductionLib;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Resources;
 
-class ResourcesController extends BaseController
+class ResourcesettingsController extends BaseController
 {
     public const MODULE_ID = 4;
 
