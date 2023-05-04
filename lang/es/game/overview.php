@@ -4,7 +4,7 @@ return [
     'ov_have_new_message' => 'Tienes 1 mensaje nuevo',
     'ov_have_new_messages' => 'Tienes %m mensajes nuevos',
     'ov_free' => 'Libre',
-    'ov_place' => ':points (Lugar :url) de :total',
+    'ov_place' => ':points (Lugar :url de :total)',
     'ov_planet' => 'Planeta',
     'ov_server_time' => 'Hora del servidor',
     'ov_events' => 'Eventos',
