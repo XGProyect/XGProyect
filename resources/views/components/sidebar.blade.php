@@ -23,7 +23,7 @@
             <i class="fas fa-fw {{ $menuItems['icon'] }}"></i>
             <span>{{ __('admin/menu.' . $sectionTitle) }}</span>
         </a>
-        <div id="collapse{{ $loop->iteration }}" class="collapse{{ $activeBlock === $sectionTitle ? ' active' : '' }}" aria-labelledby="heading{{ $loop->iteration }}" data-parent="#accordionSidebar">
+        <div id="collapse{{ $loop->iteration }}" class="collapse{{ $activeBlock === $sectionTitle ? ' show active' : '' }}" aria-labelledby="heading{{ $loop->iteration }}" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 @foreach ($menuItems['items'] as $item => $data)
                 <a class="collapse-item{{ ($item === $activePage) ? ' active' : '' }}" href="admin.php?page={{ $item }}" @isset($data[0]) {!! $data[0] !!} @endisset>
