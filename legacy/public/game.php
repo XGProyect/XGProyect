@@ -20,13 +20,8 @@ if (is_null($page)) {
 $page = strtr(
     $page,
     [
-        'resources' => 'Buildings',
-        'resourceSettings' => 'Resources',
-        'station' => 'Buildings',
         'federationlayer' => 'Federation',
         'shortcuts' => 'Fleetshortcuts',
-        'forums' => 'Forum',
-        'defense' => 'Shipyard',
     ]
 );
 

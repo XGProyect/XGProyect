@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Exception;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Buildings\Building;
@@ -17,39 +18,49 @@ use Xgp\App\Libraries\UpdatesLibrary;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Buildings;
 
-class BuildingsController extends BaseController
+class FacilitiesController extends BaseController
 {
     public const MODULE_ID = 3;
 
     private $_building = null;
     private array $_allowed_buildings = [];
     private bool $_commander_active = false;
-    protected Buildings $buildingsModel;
+    private Buildings $buildingsModel;
+    private Users $userLibrary;
+
+    private array $user = [];
+    private array $planet = [];
+    private Objects $objects;
 
     public function __invoke(): void
     {
         Users::checkSession();
 
-        $this->buildingsModel = new Buildings();
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+        $this->objects = Objects::getInstance();
 
-        // init a new building object with the current building queue
+        $this->buildingsModel = new Buildings();
+        $this->userLibrary = new Users();
+
         $this->setUpBuildings();
 
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->runAction();
 
-        $this->buildPage();
+        Template::getInstance()->view(
+            'supplies.body',
+            array_merge(
+                [
+                    'list_of_buildings' => $this->buildListOfBuildings(),
+                ],
+                $this->buildQueueBlock()
+            )
+        );
     }
 
-    /**
-     * Creates a new building object that will handle all the building
-     * creation methods and actions
-     *
-     * @return void
-     */
-    private function setUpBuildings()
+    private function setUpBuildings(): void
     {
         $this->_building = new Building(
             $this->planet,
@@ -61,12 +72,7 @@ class BuildingsController extends BaseController
         $this->_commander_active = OfficiersLib::isOfficierActive($this->user['premium_officier_commander']);
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
-    private function runAction()
+    private function runAction(): void
     {
         $action = filter_input(INPUT_GET, 'cmd');
         $reload = filter_input(INPUT_GET, 'r');
@@ -111,21 +117,6 @@ class BuildingsController extends BaseController
                 }
             }
         }
-    }
-
-    private function buildPage(): void
-    {
-        /**
-         * Parse the items
-         */
-        $page = [];
-        $page['list_of_buildings'] = $this->buildListOfBuildings();
-
-        // display the page
-        Template::getInstance()->view(
-            'buildings/buildings_builds',
-            array_merge($page, $this->buildQueueBlock())
-        );
     }
 
     /**
@@ -180,7 +171,7 @@ class BuildingsController extends BaseController
         $item_to_parse['dpath'] = DPATH;
         $item_to_parse['i'] = $building_id;
         $item_to_parse['nivel'] = $this->getBuildingLevelWithFormat($building_id);
-        $item_to_parse['n'] = __('game/buildings' . $this->objects->getObjects()[$building_id]);
+        $item_to_parse['n'] = __('game/constructions.' . $this->objects->getObjects()[$building_id]);
         $item_to_parse['descriptions'] = __('game/buildings.descriptions')[$this->objects->getObjects()[$building_id]];
         $item_to_parse['price'] = $this->getBuildingPriceWithFormat($building_id);
         $item_to_parse['time'] = $this->getBuildingTimeWithFormat($building_id);
@@ -390,7 +381,7 @@ class BuildingsController extends BaseController
         ];
 
         $color = ucfirst($listOfButtons[$buttonCode]['color']);
-        $text = __('game/buddies.' . $listOfButtons[$buttonCode]['lang']);
+        $text = __('game/buildings.' . $listOfButtons[$buttonCode]['lang']);
         $methodName = 'color' . $color;
 
         return FormatLib::$methodName($text);
@@ -429,13 +420,13 @@ class BuildingsController extends BaseController
     {
         try {
             $get_value = filter_input(INPUT_GET, 'page');
-            $allowed_pages = ['resources', 'station'];
+            $allowed_pages = ['supplies', 'facilities'];
 
             if (in_array($get_value, $allowed_pages)) {
                 return $get_value;
             }
 
-            throw new Exception('"resources" and "station" are the valid options');
+            throw new Exception('"supplies" and "facilities" are the valid options');
         } catch (Exception $e) {
             die('Caught exception: ' . $e->getMessage() . "\n");
         }
@@ -450,11 +441,11 @@ class BuildingsController extends BaseController
     private function getAllowedBuildings()
     {
         $allowed_buildings = [
-            'resources' => [
+            'supplies' => [
                 1 => [1, 2, 3, 4, 12, 22, 23, 24],
                 3 => [12, 22, 23, 24],
             ],
-            'station' => [
+            'facilities' => [
                 1 => [14, 15, 21, 31, 33, 34, 44],
                 3 => [14, 21, 41, 42, 43],
             ],

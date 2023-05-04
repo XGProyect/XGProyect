@@ -16,15 +16,15 @@ class DevelopmentsLib
 
     public static function setBuildingPage(int $element): string
     {
-        $resources_array = [1, 2, 3, 4, 12, 22, 23, 24];
-        $station_array = [14, 15, 21, 31, 33, 34, 44];
+        $supplies_array = [1, 2, 3, 4, 12, 22, 23, 24];
+        $facilities_array = [14, 15, 21, 31, 33, 34, 44];
 
-        if (in_array($element, $resources_array)) {
-            return 'resources';
+        if (in_array($element, $supplies_array)) {
+            return 'supplies';
         }
 
-        if (in_array($element, $station_array)) {
-            return 'station';
+        if (in_array($element, $facilities_array)) {
+            return 'facilities';
         }
 
         // IN CASE THE ELEMENT DOESN'T EXISTS
