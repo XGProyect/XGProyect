@@ -5,14 +5,22 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/errors.er_title') }}</h1>
-        <a href="admin.php?page=errors&deleteall=yes" class="btn btn-danger btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-trash-alt"></i>
-            </span>
-            <span class="text">{{ __('admin/errors.er_delete_all') }}</span>
-        </a>
+        <div class="align-items-right">
+            <a href="admin.php?page=errors&exportall=yes" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-file-export"></i>
+                </span>
+                <span class="text">{{ __('admin/errors.er_export') }}</span>
+            </a>
+            <a href="admin.php?page=errors&deleteall=yes" class="btn btn-danger btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-trash-alt"></i>
+                </span>
+                <span class="text">{{ __('admin/errors.er_delete_all') }}</span>
+            </a>
+        </div>
     </div>
-    <p class="mb-4">{{ __('admin/errors.er_sub_title') }}</p>
+    <p class="mb-4">{!! __('admin/errors.er_sub_title') !!}</p>
     <div class="row">
         <div class="col-lg-12">
             <div class="card shadow mb-4">
@@ -26,41 +34,29 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-borderless" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>{{ __('admin/errors.er_user_ip') }}</th>
-                                        <th>{{ __('admin/errors.er_type') }}</th>
-                                        <th>{{ __('admin/errors.er_code') }}</th>
-                                        <th>{{ __('admin/errors.er_data') }}</th>
-                                        <th>{{ __('admin/errors.er_track') }}</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
-                                    {errors_list}
+                                @foreach ($errorsList as $item)
                                     <tr>
-                                        <td colspan="5">
-                                            <div class="alert alert-{alert_type}" role="alert">
-                                                {error_message}
+                                        <th>
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $item['error_message'] }}
                                             </div>
-                                        </td>
+                                        </th>
                                     </tr>
                                     <tr>
-                                        <td>{user_ip}</td>
-                                        <td>{error_type}</td>
-                                        <td>{error_code}</td>
-                                        <td>{error_datetime}</td>
-                                        <td>{error_trace}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5">
-                                            <hr>
+                                        <td>
+                                        @foreach ($item['errors'] as $error)
+                                            {{ $error }} <br>
+                                        @endforeach
                                         </td>
                                     </tr>
-                                    {/errors_list}
+                                @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="5">{errors_list_resume}</th>
+                                        <th colspan="5">
+                                            {{ trans_choice('admin/errors.er_errors', $totalErrors, ['count' => $totalErrors]) }}
+                                        </th>
                                     </tr>
                                 </tfoot>
                             </table>

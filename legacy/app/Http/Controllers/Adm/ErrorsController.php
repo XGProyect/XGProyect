@@ -29,6 +29,7 @@ class ErrorsController extends BaseController
     private function runAction(): void
     {
         $delete_all = filter_input(INPUT_GET, 'deleteall', FILTER_DEFAULT);
+        $export_all = filter_input(INPUT_GET, 'exportall', FILTER_DEFAULT);
 
         if ($delete_all == 'yes') {
             $files = $this->getListOfLogFiles();
@@ -39,45 +40,58 @@ class ErrorsController extends BaseController
                 }
             }
         }
+
+        if ($export_all == 'yes') {
+            $files = $this->getListOfLogFiles();
+
+            if (!empty($files)) {
+                header('Content-type: text/plain');
+                header('Content-disposition: attachment; filename=xgproyect.log');
+                readfile($files[0]);
+                exit();
+            }
+        }
     }
 
     private function processErrorsLogs(): array
     {
         // list of log files
         $files = $this->getListOfLogFiles();
-        $list_of_errors = [];
-        $error_count = 0;
+        $errorsList = [];
+        $totalErrors = 0;
 
-        if ($files != '') {
-            foreach ($files as $file_name) {
-                $contents = file_get_contents($file_name);
+        if (!empty($files)) {
+            $contents = file_get_contents($files[0]);
 
-                if ($contents) {
-                    $error_count++;
+            if ($contents) {
+                foreach (explode('"} ', $contents) as $singleError) {
+                    $currentErrors = array_filter(explode(PHP_EOL, $singleError));
 
-                    $error_columns = explode('|', $contents);
+                    if (empty($currentErrors)) {
+                        continue;
+                    }
 
-                    $list_of_errors[] = [
-                        'user_ip' => $error_columns[1],
-                        'error_type' => $error_columns[2],
-                        'error_code' => $error_columns[3],
-                        'error_message' => $error_columns[4],
-                        'error_trace' => $error_columns[5],
-                        'error_datetime' => $error_columns[7],
-                        'alert_type' => ($error_columns[3] == 'E_ERROR' ? 'danger' : 'warning'),
-                    ];
+                    $errors['error_message'] = reset($currentErrors);
+
+                    unset($currentErrors[key($currentErrors)]);
+
+                    $errors['errors'] = $currentErrors;
+
+                    $errorsList[] = $errors;
+
+                    $totalErrors++;
                 }
             }
         }
 
         return [
-            'errors_list' => $list_of_errors,
-            'errors_list_resume' => strtr(__('admin/errors.er_errors'), ['%s' => $error_count]),
+            'errorsList' => $errorsList,
+            'totalErrors' => $totalErrors,
         ];
     }
 
     private function getListOfLogFiles(): array
     {
-        return glob(LOGS_PATH . '*.txt');
+        return glob(storage_path('logs') . '/xgproyect.log');
     }
 }

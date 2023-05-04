@@ -30,24 +30,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {tasks_list}
+                                    @foreach ($tasks_list as $item)
                                     <tr>
                                         <td>
                                             <span>
-                                                {name}
+                                                {{ $item['name'] }}
                                             </span>
                                         </td>
                                         <td>
-                                            {next_run}
+                                            {{ $item['next_run'] }}
                                         </td>
                                         <td>
-                                            {last_run}
+                                            {{ $item['last_run'] }}
                                         </td>
                                         <td>
-                                            {actions}
+                                            {!! $item['actions'] !!}
                                         </td>
                                     </tr>
-                                    {/tasks_list}
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
