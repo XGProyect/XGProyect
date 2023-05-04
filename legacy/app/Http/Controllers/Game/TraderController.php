@@ -20,20 +20,15 @@ class TraderController extends BaseController
     private string $error = '';
     private Trader $traderModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->traderModel = new Trader();
 
         // init a new trader object
         $this->setUpTrader();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

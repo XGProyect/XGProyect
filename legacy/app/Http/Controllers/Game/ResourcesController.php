@@ -22,20 +22,15 @@ class ResourcesController extends BaseController
     private $reslist;
     private Resources $resourcesModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->resourcesModel = new Resources();
         $this->resource = $this->objects->getObjects();
         $this->prodGrid = $this->objects->getProduction();
         $this->reslist = $this->objects->getObjectsList();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

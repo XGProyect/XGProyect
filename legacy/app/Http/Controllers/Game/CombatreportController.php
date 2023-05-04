@@ -16,20 +16,15 @@ class CombatreportController extends BaseController
     private ?Report $report = null;
     private Combatreport $combatreportModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->combatreportModel = new Combatreport();
 
         // init a new report object
         $this->setUpReport();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

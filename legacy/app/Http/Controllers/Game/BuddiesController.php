@@ -20,20 +20,15 @@ class BuddiesController extends BaseController
     private ?Buddy $buddy = null;
     private Buddies $buddiesModel;
 
-    public function __construct()
+    public function __invoke(): void
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->buddiesModel = new Buddies();
 
         // init a new buddy object
         $this->setUpBudies();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

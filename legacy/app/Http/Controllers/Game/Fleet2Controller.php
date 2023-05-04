@@ -29,20 +29,15 @@ class Fleet2Controller extends BaseController
     ];
     private Fleet $fleetModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->fleetModel = new Fleet();
 
         // init a new fleets object
         $this->setUpFleets();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

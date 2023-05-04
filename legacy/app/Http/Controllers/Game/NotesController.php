@@ -20,20 +20,15 @@ class NotesController extends BaseController
     private ?Note $notes = null;
     private Notes $notesModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->notesModel = new Notes();
 
         // init a new notes object
         $this->setUpNotes();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

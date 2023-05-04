@@ -16,17 +16,12 @@ class StatisticsController extends BaseController
 
     private Statistics $statisticsModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->statisticsModel = new Statistics();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

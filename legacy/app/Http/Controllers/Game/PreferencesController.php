@@ -24,20 +24,15 @@ class PreferencesController extends BaseController
     private bool $post = false;
     private Preferences $preferencesModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->preferencesModel = new Preferences();
 
         // init a new preferences object
         $this->setUpPreferences();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

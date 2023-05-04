@@ -21,10 +21,8 @@ class ResearchController extends BaseController
     private $_lab_level;
     private Research $researchModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         // Check module access
@@ -36,10 +34,7 @@ class ResearchController extends BaseController
 
         $this->setLabsAmount();
         $this->handleTechnologieBuild();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

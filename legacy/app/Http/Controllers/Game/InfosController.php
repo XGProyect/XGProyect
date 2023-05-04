@@ -29,10 +29,8 @@ class InfosController extends BaseController
     private $_prod_grid;
     private Infos $infosModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->infosModel = new Infos();
@@ -41,10 +39,7 @@ class InfosController extends BaseController
         $this->_combat_caps = $this->objects->getCombatSpecs();
         $this->_prod_grid = $this->objects->getProduction();
         $this->_element_id = isset($_GET['gid']) ? (int) $_GET['gid'] : null;
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

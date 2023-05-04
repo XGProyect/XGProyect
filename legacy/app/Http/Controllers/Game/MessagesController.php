@@ -27,18 +27,12 @@ class MessagesController extends BaseController
     ];
     private Messages $messagesModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->messagesModel = new Messages();
-    }
 
-    public function __invoke(): void
-    {
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->runAction();

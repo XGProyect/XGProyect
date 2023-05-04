@@ -21,16 +21,11 @@ class InstallationController extends BaseController
     private $db_prefix;
     private Installation $installationModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         $this->_planet = new PlanetLib();
         $this->installationModel = new Installation();
-    }
 
-    public function __invoke(): void
-    {
         $this->buildPage();
     }
 

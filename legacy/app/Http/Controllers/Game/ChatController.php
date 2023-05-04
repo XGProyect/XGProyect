@@ -17,18 +17,12 @@ class ChatController extends BaseController
     private array $_message_data = [];
     private Messages $messagesModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->messagesModel = new Messages();
-    }
 
-    public function __invoke(): void
-    {
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->runAction();
@@ -53,12 +47,7 @@ class ChatController extends BaseController
         );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
-    private function runAction()
+    private function runAction(): void
     {
         $write_to = filter_input(INPUT_GET, 'playerId', FILTER_VALIDATE_INT);
         $message_sent = filter_input_array(INPUT_POST);

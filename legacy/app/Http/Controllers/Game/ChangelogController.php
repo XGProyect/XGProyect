@@ -15,25 +15,14 @@ class ChangelogController extends BaseController
 
     private Changelog $changelogModel;
 
-    public function __construct()
+    public function __invoke(): void
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->changelogModel = new Changelog();
-    }
 
-    public function __invoke(): void
-    {
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        $this->buildPage();
-    }
-
-    private function buildPage(): void
-    {
         $changes = [];
         $entries = $this->changelogModel->getAllChangelogEntries();
 

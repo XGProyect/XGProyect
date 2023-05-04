@@ -17,17 +17,12 @@ class PhalanxController extends BaseController
 
     private Phalanx $phalanxModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->phalanxModel = new Phalanx();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

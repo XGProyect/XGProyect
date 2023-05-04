@@ -30,20 +30,15 @@ class ShipyardController extends BaseController
     private bool $building_in_progress = false;
     private Shipyard $shipyardModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->shipyardModel = new Shipyard();
 
         // init a new building object with the current building queue
         $this->setUpShipyard();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

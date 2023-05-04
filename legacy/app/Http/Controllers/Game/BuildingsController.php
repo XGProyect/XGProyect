@@ -26,23 +26,17 @@ class BuildingsController extends BaseController
     private bool $_commander_active = false;
     protected Buildings $buildingsModel;
 
-    public function __construct()
+    public function __invoke(): void
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->buildingsModel = new Buildings();
 
         // init a new building object with the current building queue
         $this->setUpBuildings();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
-
 
         $this->runAction();
 
@@ -385,14 +379,7 @@ class BuildingsController extends BaseController
         return true;
     }
 
-    /**
-     * Get the properties for each button type
-     *
-     * @param string $button_code Button code
-     *
-     * @return string
-     */
-    private function buildButton($button_code)
+    private function buildButton(string $buttonCode): string
     {
         $listOfButtons = [
             'all_occupied' => ['color' => 'red', 'lang' => 'bd_no_more_fields'],
@@ -402,8 +389,8 @@ class BuildingsController extends BaseController
             'work_in_progress' => ['color' => 'red', 'lang' => 'bd_working'],
         ];
 
-        $color = ucfirst($listOfButtons[$button_code]['color']);
-        $text = __('game/buddies.' . $listOfButtons[$button_code]['lang'])
+        $color = ucfirst($listOfButtons[$buttonCode]['color']);
+        $text = __('game/buddies.' . $listOfButtons[$buttonCode]['lang']);
         $methodName = 'color' . $color;
 
         return FormatLib::$methodName($text);

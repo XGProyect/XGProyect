@@ -28,10 +28,8 @@ class AllianceController extends BaseController
     private ?Alliances $alliance = null;
     private Alliance $allianceModel;
 
-    public function __construct()
+    public function __invoke(): void
     {
-        parent::__construct();
-
         Users::checkSession();
 
         // Check module access
@@ -43,10 +41,7 @@ class AllianceController extends BaseController
 
         // init a new buddy object
         $this->setUpAlliances();
-    }
 
-    public function __invoke(): void
-    {
         $this->buildPage();
     }
 

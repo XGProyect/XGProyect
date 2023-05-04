@@ -27,10 +27,8 @@ class GalaxyController extends BaseController
     private Galaxy $galaxyModel;
     private Fleet $fleetModel;
 
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
-
         Users::checkSession();
 
         $this->fleetModel = new Fleet();
@@ -47,10 +45,7 @@ class GalaxyController extends BaseController
 
         // init a new galaxy object
         //$this->setUpPreferences();
-    }
 
-    public function __invoke(): void
-    {
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
