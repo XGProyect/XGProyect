@@ -38,7 +38,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="number" name="stat_points"
-                                                    id="stat_points" value="{stat_points}" min="1">
+                                                    id="stat_points" value="{{ $stat_points }}" min="1">
                                             </td>
                                         </tr>
                                         <tr>
@@ -49,7 +49,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="number" name="stat_update_time"
-                                                    id="stat_update_time" value="{stat_update_time}" min="1">
+                                                    id="stat_update_time" value="{{ $stat_update_time }}" min="1">
                                             </td>
                                         </tr>
                                         <tr>
@@ -61,9 +61,9 @@
                                             <td>
                                                 <select class="form-control" name="stat_admin_level"
                                                     id="stat_admin_level">
-                                                    {user_levels}
-                                                    <option value="{id}" {sel}>{name}</option>
-                                                    {/user_levels}
+                                                    @foreach ($user_levels as $level)
+                                                    <option value="{{ $level['id'] }}" {{ $level['sel'] }}>{{ $level['name'] }}</option>
+                                                    @endforeach
                                                 </select>
                                             </td>
                                         </tr>

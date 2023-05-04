@@ -27,7 +27,6 @@ class StatisticsController extends BaseController
         ],
     ];
 
-    private string $alert = '';
     private $user_level = 0;
 
     public function __invoke(): void
@@ -39,7 +38,14 @@ class StatisticsController extends BaseController
         }
 
         $this->runAction();
-        $this->buildPage();
+
+        Template::getInstance()->view(
+            'admin.statistics',
+            array_merge(
+                $this->getStatisticsSettings(),
+                $this->userLevels()
+            )
+        );
     }
 
     private function runAction(): void
@@ -55,17 +61,6 @@ class StatisticsController extends BaseController
 
             session()->flash('success', __('admin/statistics.cs_all_ok_message'));
         }
-    }
-
-    private function buildPage(): void
-    {
-        Template::getInstance()->view(
-            'admin.statistics',
-            array_merge(
-                $this->getStatisticsSettings(),
-                $this->userLevels()
-            )
-        );
     }
 
     private function getStatisticsSettings(): array

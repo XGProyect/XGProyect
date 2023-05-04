@@ -39,7 +39,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-check" type="checkbox" name="reg_enable"
-                                                    {reg_enable}>
+                                                    {{ $reg_enable }}>
                                             </td>
                                         </tr>
                                         <tr>
@@ -50,7 +50,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-check" type="checkbox" name="reg_welcome_message"
-                                                    {reg_welcome_message}>
+                                                    {{ $reg_welcome_message }}>
                                             </td>
                                         </tr>
                                         <tr>
@@ -61,7 +61,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-check" type="checkbox" name="reg_welcome_email"
-                                                    {reg_welcome_email}>
+                                                    {{ $reg_welcome_email }}>
                                             </td>
                                         </tr>
                                     </tbody>

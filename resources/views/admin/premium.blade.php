@@ -38,7 +38,7 @@
                                             </td>
                                             <td>
                                                 <textarea class="form-control" name="premium_url" class="field span12"
-                                                    cols="75" rows="5" placeholder="{premium_url}">{premium_url}</textarea>
+                                                    cols="75" rows="5" placeholder="{{ $premium_url }}">{{ $premium_url }}</textarea>
                                             </td>
                                         </tr>
                                         <tr>
@@ -49,7 +49,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="number" name="registration_dark_matter" min="0"
-                                                    value="{registration_dark_matter}">
+                                                    value="{{ $registration_dark_matter }}">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -80,7 +80,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="number" name="merchant_price"
-                                                    value="{merchant_price}">
+                                                    value="{{ $merchant_price }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -95,7 +95,7 @@
                                             <td>
                                                 <input class="form-control" type="text"
                                                     name="merchant_base_min_exchange_rate"
-                                                    value="{merchant_base_min_exchange_rate}">
+                                                    value="{{ $merchant_base_min_exchange_rate }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -110,7 +110,7 @@
                                             <td>
                                                 <input class="form-control" type="text"
                                                     name="merchant_base_max_exchange_rate"
-                                                    value="{merchant_base_max_exchange_rate}">
+                                                    value="{{ $merchant_base_max_exchange_rate }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -124,7 +124,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" name="merchant_metal_multiplier"
-                                                    value="{merchant_metal_multiplier}">
+                                                    value="{{ $merchant_metal_multiplier }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -139,7 +139,7 @@
                                             <td>
                                                 <input class="form-control" type="text"
                                                     name="merchant_crystal_multiplier"
-                                                    value="{merchant_crystal_multiplier}">
+                                                    value="{{ $merchant_crystal_multiplier }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -154,7 +154,7 @@
                                             <td>
                                                 <input class="form-control" type="text"
                                                     name="merchant_deuterium_multiplier"
-                                                    value="{merchant_deuterium_multiplier}">
+                                                    value="{{ $merchant_deuterium_multiplier }}">
                                             </td>
                                         </tr>
                                     </tbody>

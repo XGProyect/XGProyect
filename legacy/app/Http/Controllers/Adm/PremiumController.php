@@ -22,8 +22,6 @@ class PremiumController extends BaseController
         'registration_dark_matter' => FILTER_VALIDATE_INT,
     ];
 
-    private string $alert = '';
-
     public function __invoke(): void
     {
         Administration::checkSession();
@@ -53,7 +51,7 @@ class PremiumController extends BaseController
                 }
             }
 
-            session()->flash('success', __('admin/preferences.pr_all_ok_message'));
+            session()->flash('success', __('admin/premium.pr_all_ok_message'));
         }
     }
 

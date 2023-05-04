@@ -19,8 +19,6 @@ class PlanetsController extends BaseController
         'energy_basic_income' => FILTER_VALIDATE_INT,
     ];
 
-    private string $alert = '';
-
     public function __invoke(): void
     {
         Administration::checkSession();

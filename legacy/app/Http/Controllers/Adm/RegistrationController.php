@@ -17,8 +17,6 @@ class RegistrationController extends BaseController
         'reg_welcome_email' => FILTER_UNSAFE_RAW,
     ];
 
-    private string $alert = '';
-
     public function __invoke(): void
     {
         Administration::checkSession();

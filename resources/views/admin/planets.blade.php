@@ -38,7 +38,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="number" name="initial_fields"
-                                                    maxlength="10" value="{initial_fields}">
+                                                    maxlength="10" value="{{ $initial_fields }}">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -69,7 +69,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="number" name="metal_basic_income"
-                                                    maxlength="10" value="{metal_basic_income}">
+                                                    maxlength="10" value="{{ $metal_basic_income }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -80,7 +80,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="number" name="crystal_basic_income"
-                                                    maxlength="10" value="{crystal_basic_income}">
+                                                    maxlength="10" value="{{ $crystal_basic_income }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -91,7 +91,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="number" name="deuterium_basic_income"
-                                                    maxlength="10" value="{deuterium_basic_income}">
+                                                    maxlength="10" value="{{ $deuterium_basic_income }}">
                                             </td>
                                         </tr>
                                         <tr>
@@ -102,7 +102,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="number" name="energy_basic_income"
-                                                    maxlength="10" value="{energy_basic_income}">
+                                                    maxlength="10" value="{{ $energy_basic_income }}">
                                             </td>
                                         </tr>
                                     </tbody>
