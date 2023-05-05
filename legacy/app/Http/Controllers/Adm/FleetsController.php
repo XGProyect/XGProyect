@@ -27,88 +27,50 @@ class FleetsController extends BaseController
         $this->fleetsModel = new Fleets();
 
         $this->runAction();
-        $this->buildPage();
-    }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
-    private function runAction(): void
-    {
-        $action = filter_input(INPUT_GET, 'action');
-        $fleet_id = filter_input(INPUT_GET, 'fleetId', FILTER_VALIDATE_INT);
-
-        if (in_array($action, ['restart', 'end', 'return', 'delete']) && $fleet_id) {
-            $this->{'do' . ucfirst($action) . 'Action'}($fleet_id);
-        }
-    }
-
-    /**
-     * * Update the fleet to simulate a mission restart
-     *
-     * @param integer $fleet_id
-     * @return void
-     */
-    private function doRestartAction(int $fleet_id): void
-    {
-        $this->fleetsModel->restartFleetById($fleet_id);
-    }
-
-    /**
-     * Update the fleet to simulate a mission completion
-     *
-     * @param integer $fleet_id
-     * @return void
-     */
-    private function doEndAction(int $fleet_id): void
-    {
-        $this->fleetsModel->endFleetById($fleet_id);
-    }
-
-    /**
-     * Update the fleet to simulate a return
-     *
-     * @param integer $fleet_id
-     * @return void
-     */
-    private function doReturnAction(int $fleet_id): void
-    {
-        $this->fleetsModel->returnFleetById($fleet_id);
-    }
-
-    /**
-     * Delete the fleet from the DB
-     *
-     * @param integer $fleet_id
-     * @return void
-     */
-    private function doDeleteAction(int $fleet_id): void
-    {
-        $this->fleetsModel->deleteFleetById($fleet_id);
-    }
-
-    private function buildPage(): void
-    {
         Template::getInstance()->view(
             'admin.fleets',
             $this->buildFleetMovementsBlock()
         );
     }
 
-    /**
-     * Build the list of fleet movements currently taking place
-     *
-     * @return array
-     */
+    private function runAction(): void
+    {
+        $action = filter_input(INPUT_GET, 'action');
+        $fleetId = filter_input(INPUT_GET, 'fleetId', FILTER_VALIDATE_INT);
+
+        if (in_array($action, ['restart', 'end', 'return', 'delete']) && $fleetId) {
+            $this->{'do' . ucfirst($action) . 'Action'}($fleetId);
+        }
+    }
+
+    private function doRestartAction(int $fleetId): void
+    {
+        $this->fleetsModel->restartFleetById($fleetId);
+    }
+
+    private function doEndAction(int $fleetId): void
+    {
+        $this->fleetsModel->endFleetById($fleetId);
+    }
+
+    private function doReturnAction(int $fleetId): void
+    {
+        $this->fleetsModel->returnFleetById($fleetId);
+    }
+
+    private function doDeleteAction(int $fleetId): void
+    {
+        $this->fleetsModel->deleteFleetById($fleetId);
+    }
+
     private function buildFleetMovementsBlock(): array
     {
         $fleets = $this->fleetsModel->getAllFleets();
-        $fleet_movements = [];
+        $fleetMovements = [];
 
         foreach ($fleets as $fleet) {
-            $fleet_movements[] = array_merge(
+            $fleetMovements[] = array_merge(
                 $this->buildMissionBlock($fleet),
                 $this->buildAmountBlock($fleet),
                 $this->buildBeginningBlock($fleet),
@@ -120,15 +82,9 @@ class FleetsController extends BaseController
             );
         }
 
-        return ['fleet_movements' => $fleet_movements];
+        return ['fleetMovements' => $fleetMovements];
     }
 
-    /**
-     * Build the mission block including the resources
-     *
-     * @param array $fleet
-     * @return array
-     */
     private function buildMissionBlock(array $fleet): array
     {
         return [
@@ -139,12 +95,6 @@ class FleetsController extends BaseController
         ];
     }
 
-    /**
-     * Build the amount of ships block including the ship type popup
-     *
-     * @param array $fleet
-     * @return array
-     */
     private function buildAmountBlock(array $fleet): array
     {
         $pop_up = [];
@@ -159,12 +109,6 @@ class FleetsController extends BaseController
         ];
     }
 
-    /**
-     * Build the fleet beginning coords block
-     *
-     * @param array $fleet
-     * @return array
-     */
     private function buildBeginningBlock(array $fleet): array
     {
         return [
@@ -176,23 +120,11 @@ class FleetsController extends BaseController
         ];
     }
 
-    /**
-     * Build the departure time from the beginning block
-     *
-     * @param array $fleet
-     * @return array
-     */
     private function buildDepartureBlock(array $fleet): array
     {
         return ['departure' => Timing::formatExtendedDate($fleet['fleet_creation'])];
     }
 
-    /**
-     * Build the fleet objective coords block
-     *
-     * @param array $fleet
-     * @return void
-     */
     private function buildObjectiveBlock(array $fleet): array
     {
         return [
@@ -204,34 +136,16 @@ class FleetsController extends BaseController
         ];
     }
 
-    /**
-     * Build the arrival time to the objective block
-     *
-     * @param array $fleet
-     * @return array
-     */
     private function buildArrivalBlock(array $fleet): array
     {
         return ['arrival' => Timing::formatExtendedDate($fleet['fleet_start_time'])];
     }
 
-    /**
-     * Build the return time to the departure block
-     *
-     * @param array $fleet
-     * @return array
-     */
     private function buildReturnBlock(array $fleet): array
     {
         return ['return' => Timing::formatExtendedDate($fleet['fleet_end_time'])];
     }
 
-    /**
-     * Build the actions block
-     *
-     * @param array $fleet
-     * @return array
-     */
     private function buildActionsBlock(array $fleet): array
     {
         return ['fleet_id' => $fleet['fleet_id']];

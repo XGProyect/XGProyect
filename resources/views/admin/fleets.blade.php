@@ -36,45 +36,45 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {fleet_movements}
+                                    @foreach ($fleetMovements as $item)
                                     <tr>
-                                        <td>{mission}</td>
+                                        <td>{{ $item['mission'] }}</td>
                                         <td>
                                             <span>
-                                                {amount}
+                                                {{ $item['amount'] }}
                                                 <i class="fas fa-question-circle" data-toggle="popover"
-                                                    data-trigger="hover" data-content="{amount_content}"
+                                                    data-trigger="hover" data-content="{{ $item['amount_content'] }}"
                                                     data-html="true"></i>
                                             </span>
                                         </td>
-                                        <td>{metal}</td>
-                                        <td>{crystal}</td>
-                                        <td>{deuterium}</td>
-                                        <td>{beginning}</td>
-                                        <td>{departure}</td>
-                                        <td>{objective}</td>
-                                        <td>{arrival}</td>
-                                        <td>{return}</td>
+                                        <td>{{ $item['metal'] }}</td>
+                                        <td>{{ $item['crystal'] }}</td>
+                                        <td>{{ $item['deuterium'] }}</td>
+                                        <td>{{ $item['beginning'] }}</td>
+                                        <td>{{ $item['departure'] }}</td>
+                                        <td>{{ $item['objective'] }}</td>
+                                        <td>{{ $item['arrival'] }}</td>
+                                        <td>{{ $item['return'] }}</td>
                                         <th>
-                                            <a href="admin.php?page=fleets&action=restart&fleetId={fleet_id}"
+                                            <a href="admin.php?page=fleets&action=restart&fleetId={{ $item['fleet_id'] }}"
                                                 class="btn btn-primary btn-circle btn-sm">
                                                 <i class="fas fa-fast-backward" title="{{ __('admin/fleets.ff_restart_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"
                                                     data-content="{{ __('admin/fleets.ff_restart_action_description') }}" data-html="true"></i>
                                             </a>
-                                            <a href="admin.php?page=fleets&action=end&fleetId={fleet_id}"
+                                            <a href="admin.php?page=fleets&action=end&fleetId={{ $item['fleet_id'] }}"
                                                 class="btn btn-success btn-circle btn-sm">
                                                 <i class="fas fa-fast-forward" title="{{ __('admin/fleets.ff_end_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"
                                                     data-content="{{ __('admin/fleets.ff_end_action_description') }}" data-html="true"></i>
                                             </a>
-                                            <a href="admin.php?page=fleets&action=return&fleetId={fleet_id}"
+                                            <a href="admin.php?page=fleets&action=return&fleetId={{ $item['fleet_id'] }}"
                                                 class="btn btn-warning btn-circle btn-sm">
                                                 <i class="fas fa-undo-alt" title="{{ __('admin/fleets.ff_return_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"
                                                     data-content="{{ __('admin/fleets.ff_return_action_description') }}" data-html="true"></i>
                                             </a>
-                                            <a href="admin.php?page=fleets&action=delete&fleetId={fleet_id}"
+                                            <a href="admin.php?page=fleets&action=delete&fleetId={{ $item['fleet_id'] }}"
                                                 class="btn btn-danger btn-circle btn-sm">
                                                 <i class="fas fa-trash-alt" title="{{ __('admin/fleets.ff_delete_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"
@@ -82,7 +82,7 @@
                                             </a>
                                         </th>
                                     </tr>
-                                    {/fleet_movements}
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
