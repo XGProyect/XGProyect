@@ -4,13 +4,11 @@ namespace Xgp\App\Core;
 
 use Exception;
 use mysqli;
-use Xgp\App\Libraries\DebugLib;
 
 class Database
 {
     private string $last_query;
     private mysqli $connection;
-    private DebugLib $debug;
     private array $db_data = [
         'host' => '',
         'port' => '',
@@ -33,7 +31,6 @@ class Database
             ];
         }
 
-        $this->debug = new DebugLib();
         $this->openConnection();
     }
 
@@ -45,18 +42,14 @@ class Database
         if (isset($this->db_data['host']) && $this->db_data['port'] && isset($this->db_data['user']) && isset($this->db_data['pass']) && isset($this->db_data['name'])) {
             if (!$this->tryConnection($this->db_data['host'], $this->db_data['port'], $this->db_data['user'], $this->db_data['pass'])) {
                 if (!defined('IN_INSTALL')) {
-                    die($this->debug->error(
-                        -1,
-                        'Database connection failed: ' . $this->connection->connect_error
-                    ));
+                    throw new Exception('Database connection failed: ' . $this->connection->connect_error, -1);
+                    return false;
                 }
             } else {
                 if (!$this->tryDatabase($this->db_data['name'])) {
                     if (!defined('IN_INSTALL')) {
-                        die($this->debug->error(
-                            -1,
-                            'Database selection failed: ' . $this->connection->connect_error
-                        ));
+                        throw new Exception('Database connection failed: ' . $this->connection->connect_error, -1);
+                        return false;
                     }
                 } else {
                     return true;
@@ -137,8 +130,6 @@ class Database
             $this->last_query = $sql;
             $result = $this->connection->query($sql);
 
-            $this->confirmQuery($result);
-
             return $result;
         }
 
@@ -151,8 +142,6 @@ class Database
             $sql = $this->prepareSql($sql);
             $this->last_query = $sql;
             $result = $this->connection->query($sql);
-
-            $this->confirmQuery($result);
 
             return $this->fetchArray($result);
         }
@@ -168,8 +157,6 @@ class Database
                 $this->last_query = $sql;
                 $result = $this->connection->query($sql);
 
-                $this->confirmQuery($result);
-
                 return $this->fetchAll($result);
             }
 
@@ -179,13 +166,6 @@ class Database
         }
     }
 
-    /**
-     * Multi Query
-     *
-     * @param string $sql SQL String
-     *
-     * @return mixed
-     */
     public function queryMulty($sql = '')
     {
         try {
@@ -193,8 +173,6 @@ class Database
                 $sql = $this->prepareSql($sql);
                 $this->last_query = $sql;
                 $result = $this->connection->multi_query($sql);
-
-                $this->confirmQuery($result);
 
                 return $result;
             }
@@ -358,21 +336,6 @@ class Database
         fclose($handle);
 
         return $writed;
-    }
-
-    private function confirmQuery($result)
-    {
-        if (!$result) {
-            $output = 'Database query failed: ' . $this->connection->error;
-
-            // uncomment below line when you want to debug your last query
-            $output .= ' Last SQL Query: ' . $this->last_query;
-
-            die($this->debug->error(-1, $output));
-        }
-
-        // DEBUG LOG
-        $this->debug->add($this->last_query);
     }
 
     private function prepareSql(string $query): string

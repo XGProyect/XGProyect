@@ -140,6 +140,6 @@ class HomeController extends BaseController
 
     private function getServerErrors(): bool
     {
-        return (count(glob(LOGS_PATH . '*.txt')) > 0);
+        return (count(glob(storage_path('logs') . '/xgproyect.log')) > 0);
     }
 }

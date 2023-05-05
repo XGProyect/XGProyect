@@ -14,15 +14,6 @@
 // GAME FILES VERSION
 define('SYSTEM_VERSION', '4.0.0');
 
-// DEBUG MODE
-define('DEBUG_MODE', false);
-
-// LOG DB AND PHP ERRORS
-define('LOG_ERRORS', true);
-
-// ERROR LOGS MAIL - If you share your errors with XG Proyect we will be able to improve the project faster.
-define('ERROR_LOGS_MAIL', 'errors@xgproyect.org');
-
 /**
  *
  * SYSTEM PATHS CONFIGURATION
@@ -108,7 +99,6 @@ define('VIEWS_DIR', RESOURCES_PATH . 'views' . DIRECTORY_SEPARATOR);
  *
  */
 define('BACKUP_PATH', storage_path('backups') . DIRECTORY_SEPARATOR);
-define('LOGS_PATH', storage_path('logs') . DIRECTORY_SEPARATOR);
 
 /**
  *
