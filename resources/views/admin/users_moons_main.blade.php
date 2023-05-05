@@ -2,24 +2,23 @@
     <!-- Card Header - Accordion -->
     <a href="#collapseMoons" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
         aria-controls="collapseMoons">
-        <h6 class="m-0 font-weight-bold text-primary">{moons}</h6>
+        <h6 class="m-0 font-weight-bold text-primary">{{ $moons }}</h6>
     </a>
     <!-- Card Content - Collapse -->
     <div class="collapse show" id="collapseMoons" style="">
         <div class="card-body">
             <div class="table-responsive">
-                {alert_info}
                 <form name="save_info" method="post" action="">
                     <table class="table table-borderless" width="100%" cellspacing="0">
                         <tr>
                             <td>{{ __('admin/users.us_user_main_name') }}</td>
-                            <td><input type="text" class="form-control" name="planet_name" value="{planet_name}"></td>
+                            <td><input type="text" class="form-control" name="planet_name" value="{{ $planet_name }}"></td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_id_owner') }}</td>
                             <td>
                                 <select name="planet_user_id" class="form-control">
-                                    {planet_user_id}
+                                    {!! $planet_user_id !!}
                                 </select>
                             </td>
                         </tr>
@@ -29,27 +28,27 @@
                                 <div class="form-group">
                                     <div class="input-group w-50">
                                         <input class="form-control" name="planet_galaxy" type="number" minlength="1"
-                                            maxlength="1" placeholder="1" value="{planet_galaxy}">
+                                            maxlength="1" placeholder="1" value="{{ $planet_galaxy }}">
                                         <span style="font-size:25.5px">:</span>
                                         <input class="form-control" name="planet_system" type="number" minlength="1"
-                                            maxlength="3" placeholder="1" value="{planet_system}">
+                                            maxlength="3" placeholder="1" value="{{ $planet_system }}">
                                         <span style="font-size:25.5px">:</span>
                                         <input class="form-control" name="planet_planet" type="number" minlength="1"
-                                            maxlength="2" placeholder="1" value="{planet_planet}">
+                                            maxlength="2" placeholder="1" value="{{ $planet_planet }}">
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_last_update') }}</td>
-                            <td>{planet_last_update}</td>
+                            <td>{{ $planet_last_update }}</td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_planet_type') }}</td>
                             <td>
                                 <select name="planet_type" class="form-control">
-                                    <option value="1" {type1}>{{ __('admin/users.us_user_main_planet') }}</option>
-                                    <option value="3" {type2}>{{ __('admin/users.us_user_main_moon') }}</option>
+                                    <option value="1" {{ $type1 }}>{{ __('admin/users.us_user_main_planet') }}</option>
+                                    <option value="3" {{ $type2 }}>{{ __('admin/users.us_user_main_moon') }}</option>
                                 </select>
                             </td>
                         </tr>
@@ -57,33 +56,33 @@
                             <td>{{ __('admin/users.us_user_main_destroyed') }}</td>
                             <td>
                                 <select name="planet_destroyed" class="form-control">
-                                    <option value="1" {dest1}>{{ __('admin/users.us_user_main_planet_destroyed_yes') }}</option>
-                                    <option value="2" {dest2}>{{ __('admin/users.us_user_main_planet_destroyed_no') }}</option>
+                                    <option value="1" {{ $dest1 }}>{{ __('admin/users.us_user_main_planet_destroyed_yes') }}</option>
+                                    <option value="2" {{ $dest2 }}>{{ __('admin/users.us_user_main_planet_destroyed_no') }}</option>
                                 </select>
-                                {planet_destroyed}
+                                {{ $planet_destroyed }}
                             </td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_b_building') }}</td>
-                            <td>{planet_b_building}</td>
+                            <td>{{ $planet_b_building }}</td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_b_building_id') }}</td>
                             <td>
                                 <select name="planet_b_building_id" class="form-control">
-                                    {planet_b_building_id}
+                                    {!! $planet_b_building_id !!}
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_b_hangar') }}</td>
-                            <td>{planet_b_hangar}</td>
+                            <td>{{ $planet_b_hangar }}</td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_b_hangar_id') }}</td>
                             <td>
                                 <select name="planet_b_hangar_id" class="form-control">
-                                    {planet_b_hangar_id}
+                                    {!! $planet_b_hangar_id !!}
                                 </select>
                             </td>
                         </tr>
@@ -91,54 +90,54 @@
                             <td>{{ __('admin/users.us_user_main_image') }}</td>
                             <td>
                                 <select name="planet_image" class="form-control">
-                                    {planet_image}
+                                    {!! $planet_image !!}
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_diameter') }}</td>
                             <td><input type="text" class="form-control" name="planet_diameter"
-                                    value="{planet_diameter}"></td>
+                                    value="{{ $planet_diameter }}"></td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_field_current') }}</td>
                             <td><input type="text" class="form-control" name="planet_field_current"
-                                    value="{planet_field_current}"></td>
+                                    value="{{ $planet_field_current }}"></td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_field_max') }}</td>
                             <td><input type="text" class="form-control" name="planet_field_max"
-                                    value="{planet_field_max}"></td>
+                                    value="{{ $planet_field_max }}"></td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_temp_min') }}</td>
                             <td><input type="text" class="form-control" name="planet_temp_min"
-                                    value="{planet_temp_min}"></td>
+                                    value="{{ $planet_temp_min }}"></td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_temp_max') }}</td>
                             <td><input type="text" class="form-control" name="planet_temp_max"
-                                    value="{planet_temp_max}"></td>
+                                    value="{{ $planet_temp_max }}"></td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_metal') }}</td>
-                            <td><input type="text" class="form-control" name="planet_metal" value="{planet_metal}"></td>
+                            <td><input type="text" class="form-control" name="planet_metal" value="{{ $planet_metal }}"></td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_crystal') }}</td>
-                            <td><input type="text" class="form-control" name="planet_crystal" value="{planet_crystal}">
+                            <td><input type="text" class="form-control" name="planet_crystal" value="{{ $planet_crystal }}">
                             </td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_deuterium') }}</td>
                             <td><input type="text" class="form-control" name="planet_deuterium"
-                                    value="{planet_deuterium}"></td>
+                                    value="{{ $planet_deuterium }}"></td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_main_ship_solar_satellite_percent') }}</td>
                             <td>
                                 <select name="planet_ship_solar_satellite_percent" class="form-control">
-                                    {planet_ship_solar_satellite_percent}
+                                    {!! $planet_ship_solar_satellite_percent !!}
                                 </select>
                             </td>
                         </tr>
@@ -147,7 +146,7 @@
                             <td>
                                 <span style="font-size:12px;" class="text-error">{{ __('admin/users.us_user_main_reset') }}</span> <input
                                     type="checkbox" class="form-input-check" name="planet_last_jump_time">
-                                {planet_last_jump_time}
+                                {{ $planet_last_jump_time }}
                             </td>
                         </tr>
                     </table>

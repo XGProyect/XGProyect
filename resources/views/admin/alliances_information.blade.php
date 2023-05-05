@@ -8,7 +8,7 @@
     <div class="collapse show" id="collapseInformation" style="">
         <div class="card-body">
             <div class="table-responsive">
-                {alert_info}
+                <x-alert/>
                 <form name="save_info" method="post" action="">
                     <input type="hidden" name="alliance_name_orig" value="{alliance_name}">
                     <input type="hidden" name="alliance_tag_orig" value="{alliance_tag}">

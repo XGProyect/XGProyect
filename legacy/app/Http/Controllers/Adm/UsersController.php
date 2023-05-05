@@ -9,23 +9,23 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Libraries\StatisticsLibrary;
+use Xgp\App\Libraries\Users as UsersLibrary;
 use Xgp\App\Libraries\Users\Shortcuts;
 use Xgp\App\Models\Adm\Users;
 
 class UsersController extends BaseController
 {
-    private string $_edit = '';
-    private int $_planet = 0;
-    private int $_moon = 0;
-    private int $_id = 0;
-    private int $_authlevel = 0;
-    private $_alert_info;
-    private $_alert_type;
-    private $_user_query;
-    private $_stats;
+    private string $edit = '';
+    private int $planet = 0;
+    private int $moon = 0;
+    private int $id = 0;
+    private int $authlevel = 0;
+    private $user_query;
+    private $stats;
     private Users $usersModel;
+    private array $user;
+    private UsersLibrary $userLibrary;
 
     public function __invoke(): void
     {
@@ -35,8 +35,10 @@ class UsersController extends BaseController
             die(Administration::noAccessMessage(__('admin/global.no_permissions')));
         }
 
-        $this->_stats = new StatisticsLibrary();
+        $this->stats = new StatisticsLibrary();
         $this->usersModel = new Users();
+        $this->user = UsersLibrary::getInstance()->getUserData();
+        $this->userLibrary = new UsersLibrary();
 
         $this->buildPage();
     }
@@ -51,11 +53,9 @@ class UsersController extends BaseController
     {
         $user = isset($_GET['user']) ? trim($_GET['user']) : null;
         $type = isset($_GET['type']) ? trim($_GET['type']) : null;
-        $this->_edit = isset($_GET['edit']) ? trim($_GET['edit']) : '';
-        $this->_planet = isset($_GET['planet']) ? trim($_GET['planet']) : 0;
-        $this->_moon = isset($_GET['moon']) ? trim($_GET['moon']) : 0;
-
-        $parse['alert'] = '';
+        $this->edit = isset($_GET['edit']) ? trim($_GET['edit']) : '';
+        $this->planet = isset($_GET['planet']) ? trim($_GET['planet']) : 0;
+        $this->moon = isset($_GET['moon']) ? trim($_GET['moon']) : 0;
 
         if ($user != '') {
             $checked_user = $this->usersModel->checkUser($user);
@@ -64,11 +64,11 @@ class UsersController extends BaseController
                 session()->flash('danger', __('admin/users.us_nothing_found'));
                 $user = '';
             } else {
-                $this->_id = $checked_user['user_id'];
-                $this->_authlevel = $checked_user['user_authlevel'];
+                $this->id = $checked_user['user_id'];
+                $this->authlevel = $checked_user['user_authlevel'];
 
                 // initial data
-                $this->_user_query = $this->usersModel->getUserDataById($this->_id);
+                $this->user_query = $this->usersModel->getUserDataById($this->id);
 
                 // save the data
                 if (isset($_POST['send_data']) && $_POST['send_data']) {
@@ -76,23 +76,23 @@ class UsersController extends BaseController
                 }
 
                 // get refreshed data
-                $this->_user_query = $this->usersModel->getUserDataById($this->_id);
+                $this->user_query = $this->usersModel->getUserDataById($this->id);
             }
         }
 
         // physical delete
-        if (isset($_GET['mode']) && $_GET['mode'] == 'delete' && $this->_user_query['user_authlevel'] != 3) {
-            $this->userLibrary->deleteUser($this->_user_query['user_id']);
+        if (isset($_GET['mode']) && $_GET['mode'] == 'delete' && $this->user_query['user_authlevel'] != 3) {
+            $this->userLibrary->deleteUser($this->user_query['user_id']);
 
-            session()->flash('ok', __('admin/users.us_user_deleted'));
+            session()->flash('success', __('admin/users.us_user_deleted'));
         }
 
         $parse['type'] = ($type != '') ? $type : 'info';
         $parse['user'] = ($user != '') ? $user : '';
         $parse['status'] = ($user != '') ? '' : ' disabled';
-        $parse['status_box'] = ($user != '' && $this->_id != $this->user['user_id']) ? '' : ' disabled';
+        $parse['status_box'] = ($user != '' && $this->id != $this->user['user_id']) ? '' : ' disabled';
         $parse['tag'] = ($user != '') ? 'a' : 'button';
-        $parse['user_rank'] = __('admin/global.user_level')[$this->_authlevel];
+        $parse['user_rank'] = __('admin/global.user_level')[$this->authlevel];
         $parse['content'] = ($user != '' && $type != '') ? $this->getData($type) : '';
 
         Template::getInstance()->view(
@@ -101,12 +101,7 @@ class UsersController extends BaseController
         );
     }
 
-    /**
-     * method getData
-     * param $type
-     * return the page for the current type
-     */
-    private function getData($type)
+    private function getData(string $type = ''): string
     {
         switch ($type) {
             case 'info':
@@ -114,35 +109,25 @@ class UsersController extends BaseController
             default:
                 return $this->getDataInfo();
                 break;
-
             case 'settings':
                 return $this->getDataSettings();
                 break;
-
             case 'research':
                 return $this->getDataResearch();
                 break;
-
             case 'premium':
                 return $this->getDataPremium();
                 break;
-
             case 'planets':
                 return $this->getDataPlanets();
                 break;
-
             case 'moons':
                 return $this->getDataMoons();
                 break;
         }
     }
 
-    /**
-     * method saveData
-     * param $type
-     * return save data for the current type
-     */
-    private function saveData($type)
+    private function saveData(string $type): void
     {
         switch ($type) {
             case 'info':
@@ -150,206 +135,161 @@ class UsersController extends BaseController
             default:
                 $this->saveInfo();
                 break;
-
             case 'settings':
                 $this->saveSettings();
                 break;
-
             case 'research':
                 $this->saveResearch();
                 break;
-
             case 'premium':
                 $this->savePremium();
                 break;
-
             case 'planets':
-                switch ($this->_edit) {
+                switch ($this->edit) {
                     case '':
                     case 'planet':
                     default:
                         $this->savePlanet(1);
                         break;
-
                     case 'buildings':
                         $this->saveBuildings(1);
                         break;
-
                     case 'ships':
                         $this->saveShips(1);
                         break;
-
                     case 'defenses':
                         $this->saveDefenses(1);
                         break;
                 }
-
                 break;
-
             case 'moons':
-                switch ($this->_edit) {
+                switch ($this->edit) {
                     case '':
                     case 'moon':
                     default:
                         $this->savePlanet(3);
                         break;
-
                     case 'buildings':
                         $this->saveBuildings(3);
                         break;
-
                     case 'ships':
                         $this->saveShips(3);
                         break;
-
                     case 'defenses':
                         $this->saveDefenses(3);
                         break;
                 }
-
                 break;
         }
+
+        session()->flash('success', __('admin/users.us_all_ok_message'));
     }
 
-    /**
-     * deleteData
-     *
-     * @param type $type Type
-     *
-     * @return void
-     */
-    private function deleteData($type)
+    private function deleteData($type): void
     {
         switch ($type) {
             case 'planet':
                 //$this->deletePlanet();
-
                 break;
 
             case 'moon':
                 //$this->deleteMoon();
-
                 break;
         }
     }
 
-    /**
-     * method refreshPage
-     * param
-     * return refresh the page
-     */
-    private function refreshPage()
+    private function refreshPage(): void
     {
-        // SET PARAMS
         $page = (isset($_GET['page']) ? '?page=' . $_GET['page'] : '');
         $type = (isset($_GET['type']) ? '&type=' . $_GET['type'] : '');
         $user = (isset($_GET['user']) ? '&user=' . $_GET['user'] : '');
 
-        // REDIRECTION
         Functions::redirect("admin.php{$page}{$type}{$user}");
     }
+
     //#####################################
     //
     // getData methods
     //
     //#####################################
 
-    /**
-     * return the information page for the current user
-     *
-     * @return void
-     */
     private function getDataInfo(): string
     {
-        $parse = (array) $this->_user_query;
-        $parse['information'] = str_replace('%s', $this->_user_query['user_name'], __('admin/users.us_user_information'));
-        $parse['main_planet'] = $this->buildPlanetCombo($this->_user_query, 'user_home_planet_id');
-        $parse['current_planet'] = $this->buildPlanetCombo($this->_user_query, 'user_current_planet');
-        $parse['alliances'] = $this->buildAllianceCombo($this->_user_query);
-        $parse['user_register_time'] = ($this->_user_query['user_register_time'] == 0) ? '-' : date(Functions::readConfig('date_format_extended'), $this->_user_query['user_register_time']);
-        $parse['user_onlinetime'] = $this->lastActivity($this->_user_query['user_onlinetime']);
+        $parse = (array) $this->user_query;
+        $parse['information'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_information'));
+        $parse['main_planet'] = $this->buildPlanetCombo($this->user_query, 'user_home_planet_id');
+        $parse['current_planet'] = $this->buildPlanetCombo($this->user_query, 'user_current_planet');
+        $parse['alliances'] = $this->buildAllianceCombo($this->user_query);
+        $parse['user_register_time'] = ($this->user_query['user_register_time'] == 0) ? '-' : date(Functions::readConfig('date_format_extended'), $this->user_query['user_register_time']);
+        $parse['user_onlinetime'] = $this->lastActivity($this->user_query['user_onlinetime']);
         $parse['user_roles'] = $this->buildUsersRolesList();
-        $parse['user_banned'] = ($this->_user_query['user_banned'] <= 0) ? '<p class="text-error">' . __('admin/global.ge_no') : '<p class="text-success">' . __('admin/global.ge_yes');
-        $parse['user_banned'] .= ($this->_user_query['user_banned'] > 0) ? __('admin/users.us_user_information_banned_until') . date(Functions::readConfig('date_format'), $this->_user_query['user_banned']) . '</p>' : '</p>';
-        $parse['user_fleet_shortcuts'] = $this->buildShortcutsCombo($this->_user_query['user_fleet_shortcuts']);
-        $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
+        $parse['user_banned'] = ($this->user_query['user_banned'] <= 0) ? '<p class="text-error">' . __('admin/global.ge_no') : '<p class="text-success">' . __('admin/global.ge_yes');
+        $parse['user_banned'] .= ($this->user_query['user_banned'] > 0) ? __('admin/users.us_user_information_banned_until') . date(Functions::readConfig('date_format'), $this->user_query['user_banned']) . '</p>' : '</p>';
+        $parse['user_fleet_shortcuts'] = $this->buildShortcutsCombo($this->user_query['user_fleet_shortcuts']);
 
         return Template::getInstance()->render('admin.users_information', $parse);
     }
 
-    /**
-     * return the settings page for the current user
-     *
-     * @return string
-     */
     private function getDataSettings(): string
     {
-        $parse['settings'] = str_replace('%s', $this->_user_query['user_name'], __('admin/users.us_user_settings'));
+        $parse['settings'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_settings'));
         $parse['preference_planet_sort'] = $this->planetSortCombo();
         $parse['preference_planet_sort_sequence'] = $this->planetOrderCombo();
-        $parse['preference_spy_probes'] = $this->_user_query['preference_spy_probes'];
-        $parse['preference_vacations_status'] = ($this->_user_query['preference_vacation_mode'] > 0) ? ' checked="checked" ' : '';
-        $parse['preference_vacation_mode'] = ($this->_user_query['preference_vacation_mode'] > 0) ? $this->vacationSet() : '';
-        $parse['preference_delete_mode'] = ($this->_user_query['preference_delete_mode']) ? ' checked="checked" ' : '';
-        $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
+        $parse['preference_spy_probes'] = $this->user_query['preference_spy_probes'];
+        $parse['preference_vacations_status'] = ($this->user_query['preference_vacation_mode'] > 0) ? ' checked="checked" ' : '';
+        $parse['preference_vacation_mode'] = ($this->user_query['preference_vacation_mode'] > 0) ? $this->vacationSet() : '';
+        $parse['preference_delete_mode'] = ($this->user_query['preference_delete_mode']) ? ' checked="checked" ' : '';
 
         return Template::getInstance()->render('admin.users_settings', $parse);
     }
 
-    private function getDataResearch()
+    private function getDataResearch(): string
     {
-        $parse = (array) $this->_user_query;
-        $parse['research'] = str_replace(['%s', '%d'], [$this->_user_query['user_name'], $this->_id], __('admin/users.us_user_research'));
+        $parse = (array) $this->user_query;
+        $parse['research'] = str_replace(['%s', '%d'], [$this->user_query['user_name'], $this->id], __('admin/users.us_user_research'));
         $parse['technologies_list'] = $this->researchTable();
-        $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
         return Template::getInstance()->render('admin.users_research', $parse);
     }
 
-    private function getDataPremium()
+    private function getDataPremium(): string
     {
-        $parse['premium'] = str_replace('%s', $this->_user_query['user_name'], __('admin/users.us_user_premium'));
-        $parse['premium_dark_matter'] = $this->_user_query['premium_dark_matter'];
+        $parse['premium'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_premium'));
+        $parse['premium_dark_matter'] = $this->user_query['premium_dark_matter'];
         $parse['premium_list'] = $this->premiumTable();
-        $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
 
         return Template::getInstance()->render('admin.users_premium', $parse);
     }
 
-    /**
-     * method getDataPlanets
-     * param
-     * return the planets page for the current user
-     */
-    private function getDataPlanets()
+    private function getDataPlanets(): string
     {
-        $planets_query = $this->usersModel->getAllPlanetsData($this->_id, $this->_planet, $this->_edit);
-        $parse['planets'] = str_replace('%s', $this->_user_query['user_name'], __('admin/users.us_user_planets'));
+        $planets_query = $this->usersModel->getAllPlanetsData($this->id, $this->planet, $this->edit);
+        $parse['planets'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_planets'));
 
         // CHOOSE THE ACTION
         switch (true) {
-            case ($this->_edit == 'planet' && $planets_query):
+            case ($this->edit == 'planet' && $planets_query):
                 $parse += $this->editMain($planets_query[0]);
                 $view = 'admin.users_planets_main';
                 break;
 
-            case ($this->_edit == 'buildings' && $planets_query):
+            case ($this->edit == 'buildings' && $planets_query):
                 $parse['buildings_list'] = $this->editBuildings($planets_query[0], 1);
                 $view = 'admin.users_planets_buildings';
                 break;
 
-            case ($this->_edit == 'ships' && $planets_query):
+            case ($this->edit == 'ships' && $planets_query):
                 $parse['ships_list'] = $this->editShips($planets_query[0]);
                 $view = 'admin.users_planets_ships';
                 break;
 
-            case ($this->_edit == 'defenses' && $planets_query):
+            case ($this->edit == 'defenses' && $planets_query):
                 $parse['defenses_list'] = $this->editDefenses($planets_query[0], 1);
                 $view = 'admin.users_planets_defenses';
                 break;
 
-            case ($this->_edit == 'delete'):
-                $this->usersModel->softDeletePlanetById($this->_planet);
+            case ($this->edit == 'delete'):
+                $this->usersModel->softDeletePlanetById($this->planet);
                 $this->refreshPage();
                 break;
 
@@ -358,47 +298,40 @@ class UsersController extends BaseController
                 $parse['planets_list'] = $this->planetsTable($planets_query);
                 $view = 'admin.users_planets';
                 break;
-        } // SWITCH
-
-        $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
+        }
 
         return Template::getInstance()->render($view, $parse);
     }
 
-    /**
-     * method getDataMoons
-     * param
-     * return the moons page for the current user
-     */
-    private function getDataMoons()
+    private function getDataMoons(): string
     {
-        $moons_query = $this->usersModel->getAllMoonsData($this->_id, $this->_moon, $this->_edit);
-        $parse['moons'] = str_replace('%s', $this->_user_query['user_name'], __('admin/users.us_user_moons'));
+        $moons_query = $this->usersModel->getAllMoonsData($this->id, $this->moon, $this->edit);
+        $parse['moons'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_moons'));
+        $parse['planets'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_moons'));
 
-        // CHOOSE THE ACTION
         switch (true) {
-            case ($this->_edit == 'moon' && $moons_query):
+            case ($this->edit == 'moon' && $moons_query):
                 $parse += $this->editMain($moons_query[0]);
                 $view = 'admin.users_moons_main';
                 break;
 
-            case ($this->_edit == 'buildings' && $moons_query):
+            case ($this->edit == 'buildings' && $moons_query):
                 $parse['buildings_list'] = $this->editBuildings($moons_query[0], 3);
                 $view = 'admin.users_planets_buildings';
                 break;
 
-            case ($this->_edit == 'ships' && $moons_query):
+            case ($this->edit == 'ships' && $moons_query):
                 $parse['ships_list'] = $this->editShips($moons_query[0]);
                 $view = 'admin.users_planets_ships';
                 break;
 
-            case ($this->_edit == 'defenses' && $moons_query):
+            case ($this->edit == 'defenses' && $moons_query):
                 $parse['defenses_list'] = $this->editDefenses($moons_query[0], 3);
                 $view = 'admin.users_planets_defenses';
                 break;
 
-            case ($this->_edit == 'delete'):
-                $this->usersModel->softDeleteMoonById($this->_moon);
+            case ($this->edit == 'delete'):
+                $this->usersModel->softDeleteMoonById($this->moon);
                 $this->refreshPage();
                 break;
 
@@ -407,24 +340,18 @@ class UsersController extends BaseController
                 $parse['moons_list'] = $this->moonsTable($moons_query);
                 $view = 'admin.users_moons';
                 break;
-        } // SWITCH
-
-        $parse['alert_info'] = ($this->_alert_type != '') ? Administration::saveMessage($this->_alert_type, $this->_alert_info) : '';
+        }
 
         return Template::getInstance()->render($view, $parse);
     }
+
     //#####################################
     //
     // save / update methods
     //
     //#####################################
 
-    /**
-     * method saveInfo
-     * param
-     * return save information for the current user
-     */
-    private function saveInfo()
+    private function saveInfo(): void
     {
         $username = isset($_POST['username']) ? $_POST['username'] : '';
         $password = isset($_POST['password']) ? $_POST['password'] : '';
@@ -441,7 +368,7 @@ class UsersController extends BaseController
 
         $errors = '';
 
-        if ($username == '' or $this->usersModel->checkUsername($username, $this->_id)) {
+        if ($username == '' or $this->usersModel->checkUsername($username, $this->id)) {
             $errors .= __('admin/users.us_error_username') . '<br />';
         }
 
@@ -451,7 +378,7 @@ class UsersController extends BaseController
             $password = '`user_password`';
         }
 
-        if ($email == '' or $this->usersModel->checkEmail($email, $this->_id)) {
+        if ($email == '' or $this->usersModel->checkEmail($email, $this->id)) {
             $errors .= __('admin/users.us_error_email') . '<br />';
         }
 
@@ -472,8 +399,7 @@ class UsersController extends BaseController
         }
 
         if ($errors != '') {
-            $this->_alert_info = $errors;
-            $this->_alert_type = 'error';
+            session()->flash('danger', $errors);
         } else {
             $this->usersModel->saveUserData([
                 'username' => $username,
@@ -483,73 +409,37 @@ class UsersController extends BaseController
                 'id_planet' => $id_planet,
                 'cur_planet' => $cur_planet,
                 'ally_id' => $ally_id,
-                'id' => $this->_id,
+                'id' => $this->id,
             ]);
 
-            if ($this->user['user_id'] != $this->_id) {
-                $this->usersModel->deleteSessionByUserId($this->_id);
+            if ($this->user['user_id'] != $this->id) {
+                $this->usersModel->deleteSessionByUserId($this->id);
             }
-
-            $this->_alert_info = __('admin/users.us_all_ok_message');
-            $this->_alert_type = 'ok';
         }
     }
 
-    /**
-     * method saveSettings
-     * param
-     * return save settings for the current user
-     */
-    private function saveSettings()
+    private function saveSettings(): void
     {
-        $this->usersModel->saveUserPreferences($_POST, $this->_id, $this->_user_query);
-
-        $this->_alert_info = __('admin/users.us_all_ok_message');
-        $this->_alert_type = 'ok';
+        $this->usersModel->saveUserPreferences($_POST, $this->id, $this->user_query);
     }
 
-    /**
-     * method saveResearch
-     * param
-     * return save research for the current user
-     */
     private function saveResearch(): void
     {
-        $this->usersModel->saveTechnologies($_POST, $this->_id);
-
-        // points rebuild
-        $this->_stats->rebuildPoints($this->_id, 0, 'research');
-
-        // alert
-        $this->_alert_info = __('admin/users.us_all_ok_message');
-        $this->_alert_type = 'ok';
+        $this->usersModel->saveTechnologies($_POST, $this->id);
+        $this->stats->rebuildPoints($this->id, 0, 'research');
     }
 
-    /**
-     * method savePremium
-     * param
-     * return save research for the current user
-     */
     private function savePremium(): void
     {
-        $this->usersModel->savePremium($_POST, $this->_id, $this->_user_query);
-
-        // alert
-        $this->_alert_info = __('admin/users.us_all_ok_message');
-        $this->_alert_type = 'ok';
+        $this->usersModel->savePremium($_POST, $this->id, $this->user_query);
     }
 
-    /**
-     * method savePlanet
-     * param $type
-     * return save planet for the current user
-     */
-    private function savePlanet($type = 1): void
+    private function savePlanet(int $type = 1): void
     {
-        $id_get = $this->_planet;
+        $id_get = $this->planet;
 
         if ($type == 3) {
-            $id_get = $this->_moon;
+            $id_get = $this->moon;
         }
 
         if ((int) $id_get <= 0) {
@@ -557,94 +447,51 @@ class UsersController extends BaseController
         }
 
         $this->usersModel->savePlanet($_POST, $id_get);
-
-        // alert
-        $this->_alert_info = __('admin/users.us_all_ok_message');
-        $this->_alert_type = 'ok';
     }
 
-    /**
-     * saveBuildings
-     *
-     * @param int $type Type
-     *
-     * @return void
-     */
-    private function saveBuildings($type = 1)
+    private function saveBuildings(int $type = 1): void
     {
-        $id_get = $this->_planet;
+        $id_get = $this->planet;
 
         if ($type == 3) {
-            $id_get = $this->_moon;
+            $id_get = $this->moon;
         }
 
         $this->usersModel->saveBuildings($_POST, $id_get);
-
-        // points rebuild
-        $this->_stats->rebuildPoints($this->_id, $id_get, 'buildings');
-
-        // alert
-        $this->_alert_info = __('admin/users.us_all_ok_message');
-        $this->_alert_type = 'ok';
+        $this->stats->rebuildPoints($this->id, $id_get, 'buildings');
     }
 
-    /**
-     * method saveShips
-     * param $type
-     * return save ships for the current planet
-     */
-    private function saveShips($type = 1)
+    private function saveShips(int $type = 1): void
     {
-        $id_get = $this->_planet;
+        $id_get = $this->planet;
 
         if ($type == 3) {
-            $id_get = $this->_moon;
+            $id_get = $this->moon;
         }
 
         $this->usersModel->saveShips($_POST, $id_get);
-
-        // points rebuild
-        $this->_stats->rebuildPoints($this->_id, $id_get, 'ships');
-
-        // alert
-        $this->_alert_info = __('admin/users.us_all_ok_message');
-        $this->_alert_type = 'ok';
+        $this->stats->rebuildPoints($this->id, $id_get, 'ships');
     }
 
-    /**
-     * method saveDefenses
-     * param $type
-     * return save defenses for the current planet
-     */
-    private function saveDefenses($type = 1)
+    private function saveDefenses(int $type = 1): void
     {
-        $id_get = $this->_planet;
+        $id_get = $this->planet;
 
         if ($type == 3) {
-            $id_get = $this->_moon;
+            $id_get = $this->moon;
         }
 
         $this->usersModel->saveDefenses($_POST, $id_get);
-
-        // points rebuild
-        $this->_stats->rebuildPoints($this->_id, $id_get, 'defenses');
-
-        // alert
-        $this->_alert_info = __('admin/users.us_all_ok_message');
-        $this->_alert_type = 'ok';
+        $this->stats->rebuildPoints($this->id, $id_get, 'defenses');
     }
+
     //#####################################
     //
     // build combo methods
     //
     //#####################################
 
-    /**
-     * method buildUsersCombo
-     * param $user_id
-     * return the list of users
-     */
-    private function buildUsersCombo($user_id)
+    private function buildUsersCombo(int $user_id): string
     {
         $combo_rows = '';
         $users = $this->usersModel->getAllUsers();
@@ -656,16 +503,10 @@ class UsersController extends BaseController
         return $combo_rows;
     }
 
-    /**
-     * method buildPlanetCombo
-     * param $user_data
-     * param $id_field
-     * return the list of the user planets
-     */
-    private function buildPlanetCombo($user_data, $id_field)
+    private function buildPlanetCombo(array $user_data, string $id_field): string
     {
         $combo_rows = '';
-        $planets = $this->usersModel->getAllPlanetsByUserId($this->_id);
+        $planets = $this->usersModel->getAllPlanetsByUserId($this->id);
 
         foreach ($planets as $planets_row) {
             if ($user_data[$id_field] == $planets_row['planet_id']) {
@@ -678,12 +519,7 @@ class UsersController extends BaseController
         return $combo_rows;
     }
 
-    /**
-     * method buildAllianceCombo
-     * param $user_data
-     * return the list of alliances
-     */
-    private function buildAllianceCombo($user_data)
+    private function buildAllianceCombo(array $user_data): string
     {
         $combo_rows = '';
         $alliances = $this->usersModel->getAllAlliances();
@@ -699,12 +535,7 @@ class UsersController extends BaseController
         return $combo_rows;
     }
 
-    /**
-     * method build_shortcuts_combo
-     * param $shortcuts
-     * return the list of shortcuts
-     */
-    private function buildShortcutsCombo($shortcuts)
+    private function buildShortcutsCombo($shortcuts): string
     {
         if ($shortcuts) {
             $user_shortcuts = new Shortcuts($shortcuts);
@@ -739,12 +570,7 @@ class UsersController extends BaseController
         }
     }
 
-    /**
-     * method planetSortCombo
-     * param
-     * return planet sort combo
-     */
-    private function planetSortCombo()
+    private function planetSortCombo(): string
     {
         $sort = '';
         $sort_types = [
@@ -756,18 +582,13 @@ class UsersController extends BaseController
         ];
 
         foreach ($sort_types as $id => $name) {
-            $sort .= "<option value =\"{$id}\"" . (($this->_user_query['preference_planet_sort'] == $id) ? ' selected' : '') . ">{$name}</option>";
+            $sort .= "<option value =\"{$id}\"" . (($this->user_query['preference_planet_sort'] == $id) ? ' selected' : '') . ">{$name}</option>";
         }
 
         return $sort;
     }
 
-    /**
-     * method planetOrderCombo
-     * param
-     * return planet order combo
-     */
-    private function planetOrderCombo()
+    private function planetOrderCombo(): string
     {
         $order = '';
         $order_types = [
@@ -776,18 +597,13 @@ class UsersController extends BaseController
         ];
 
         foreach ($order_types as $id => $name) {
-            $order .= "<option value =\"{$id}\"" . (($this->_user_query['preference_planet_sort_sequence'] == $id) ? ' selected' : '') . ">{$name}</option>";
+            $order .= "<option value =\"{$id}\"" . (($this->user_query['preference_planet_sort_sequence'] == $id) ? ' selected' : '') . ">{$name}</option>";
         }
 
         return $order;
     }
 
-    /**
-     * method premiumCombo
-     * param $expire_date
-     * return premium combo
-     */
-    private function premiumCombo($expire_date)
+    private function premiumCombo(): string
     {
         $premium = '';
         $premium_types = [
@@ -804,12 +620,7 @@ class UsersController extends BaseController
         return $premium;
     }
 
-    /**
-     * method buildPercentCombo
-     * param $current_value
-     * return percent combo
-     */
-    private function buildPercentCombo($current_value)
+    private function buildPercentCombo(int $current_value): string
     {
         $percent = '';
         $percent_values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -821,12 +632,7 @@ class UsersController extends BaseController
         return $percent;
     }
 
-    /**
-     * method buildProcessQueue
-     * param $current_queue
-     * return process queue combo
-     */
-    private function buildProcessQueue($current_queue)
+    private function buildProcessQueue(array $current_queue): string
     {
         if (!empty($current_queue)) {
             $queue_list = '';
@@ -848,12 +654,7 @@ class UsersController extends BaseController
         }
     }
 
-    /**
-     * method buildImageCombo
-     * param $current_image
-     * return image combo
-     */
-    private function buildImageCombo($current_image)
+    private function buildImageCombo(string $current_image): string
     {
         $images_dir = opendir(DEFAULT_SKINPATH . 'planets');
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store', 'small'];
@@ -873,23 +674,19 @@ class UsersController extends BaseController
 
         return $images_options;
     }
+
     //#####################################
     //
     // sub tables methods
     //
     //#####################################
 
-    /**
-     * return the builded technologies table with respective levels
-     *
-     * @return array
-     */
     private function researchTable(): array
     {
         $prepare_table = [];
         $flag = 1;
 
-        foreach ($this->_user_query as $tech => $level) {
+        foreach ($this->user_query as $tech => $level) {
             if (strpos($tech, 'research_') !== false) {
                 if ($flag <= 3) { // SKIP NOT REQUIRED FIELDS
                     $flag++;
@@ -906,17 +703,12 @@ class UsersController extends BaseController
         return $prepare_table;
     }
 
-    /**
-     * return the builded premium table with respective officiers combo and expiration
-     *
-     * @return array
-     */
     private function premiumTable(): array
     {
         $prepare_table = [];
         $flag = 1;
 
-        foreach ($this->_user_query as $officier => $expire) {
+        foreach ($this->user_query as $officier => $expire) {
             if (strpos($officier, 'premium_') !== false) {
                 if ($flag <= 2) { // SKIP NOT REQUIRED FIELDS
                     $flag++;
@@ -939,16 +731,10 @@ class UsersController extends BaseController
         return $prepare_table;
     }
 
-    /**
-     * return the builded planets table
-     *
-     * @param array $planets_data
-     * @return array
-     */
-    private function planetsTable($planets_data): array
+    private function planetsTable(array $planets_data): array
     {
-        $parse['image_path'] = DEFAULT_SKINPATH . 'planets/small/s_';
-        $parse['user'] = $this->_user_query['user_name'];
+        $imagePath = DEFAULT_SKINPATH . 'planets/small/s_';
+        $parse['user'] = $this->user_query['user_name'];
         $prepare_table = [];
 
         foreach ($planets_data as $planets) {
@@ -975,12 +761,12 @@ class UsersController extends BaseController
                 $parse['moon_name'] = str_replace('%s', $planets['moon_name'], __('admin/users.us_user_moon_title'));
 
                 if ($planets['moon_destroyed'] != 0) {
-                    $parse['moon_status'] = '<strong><a title="' . __('admin/users.us_user_planets_destroyed') . '">
+                    $parse['moon_status'] = ' <strong><a title="' . __('admin/users.us_user_planets_destroyed') . '">
                     (' . __('admin/users.us_user_planets_destroyed_short') . ')</a></strong>';
                     $style = 'class="greyout"';
                 }
 
-                $parse['moon_image'] = "<img src=\"{$parse['image_path']}{$planets['moon_image']}.jpg\" alt=\"{$planets['moon_image']}.jpg\" title=\"{$planets['moon_image']}.jpg\" border=\"0\" " . $style . '>';
+                $parse['moon_image'] = "<img src=\"{$imagePath}{$planets['moon_image']}.jpg\" alt=\"{$planets['moon_image']}.jpg\" title=\"{$planets['moon_image']}.jpg\" border=\"0\" " . $style . '>';
             }
 
             $prepare_table[] = $parse;
@@ -989,16 +775,9 @@ class UsersController extends BaseController
         return $prepare_table;
     }
 
-    /**
-     * return the builded moons table
-     *
-     * @param array $moons_data
-     * @return array
-     */
-    private function moonsTable($moons_data): array
+    private function moonsTable(array $moons_data): array
     {
-        $parse['image_path'] = DEFAULT_SKINPATH . 'planets/small/s_';
-        $parse['user'] = $this->_user_query['user_name'];
+        $parse['user'] = $this->user_query['user_name'];
         $prepare_table = [];
 
         foreach ($moons_data as $moons) {
@@ -1006,6 +785,7 @@ class UsersController extends BaseController
             $parse['moon_name'] = str_replace('%s', $moons['planet_name'], __('admin/users.us_user_moon_title'));
             $parse['moon_image'] = $moons['planet_image'];
             $parse['moon_status'] = '';
+            $parse['moon_image_style'] = '';
 
             if ($moons['planet_destroyed'] != 0) {
                 $parse['moon_status'] = '<strong><a title="' . __('admin/users.us_user_planets_destroyed') . '">
@@ -1018,19 +798,14 @@ class UsersController extends BaseController
 
         return $prepare_table;
     }
+
     //#####################################
     //
     // edition methods (pages)
     //
     //#####################################
 
-    /**
-     * Edit main planet or moon data
-     *
-     * @param array $planets_data
-     * @return void
-     */
-    private function editMain($planets_data)
+    private function editMain($planets_data): array
     {
         $parse = $planets_data;
         $parse['planet_user_id'] = $this->buildUsersCombo($parse['planet_user_id']);
@@ -1057,13 +832,6 @@ class UsersController extends BaseController
         return $parse;
     }
 
-    /**
-     * Edit planet or moon buildings
-     *
-     * @param array $planets_data
-     * @param integer $type
-     * @return void
-     */
     private function editBuildings($planets_data, $type = 1): array
     {
         $exclude_buildings = ['building_mondbasis', 'building_phalanx', 'building_jump_gate'];
@@ -1092,12 +860,6 @@ class UsersController extends BaseController
         return $prepare_table;
     }
 
-    /**
-     * return the edit main table
-     *
-     * @param array $planets_data
-     * @return array
-     */
     private function editShips($planets_data): array
     {
         $prepare_table = [];
@@ -1120,13 +882,6 @@ class UsersController extends BaseController
         return $prepare_table;
     }
 
-    /**
-     * return the edit main table
-     *
-     * @param array $planets_data
-     * @param integer $type
-     * @return array
-     */
     private function editDefenses($planets_data, $type = 1): array
     {
         $exclude_buildings = [''];
@@ -1160,17 +915,10 @@ class UsersController extends BaseController
     //
     //#####################################
 
-    /**
-     * deletePlanet
-     *
-     * @param int $id_planet Planet ID
-     *
-     * @return void
-     */
-    private function deletePlanet($id_planet = 0)
+    private function deletePlanet($id_planet = 0): void
     {
         if ($id_planet == 0) {
-            $id_planet = $this->_planet;
+            $id_planet = $this->planet;
         }
 
         $this->deleteMoon();
@@ -1178,33 +926,21 @@ class UsersController extends BaseController
         $this->usersModel->deletePlanetById($id_planet);
     }
 
-    /**
-     * deleteMoon
-     *
-     * @param int $id_moon Moon ID
-     *
-     * @return void
-     */
-    private function deleteMoon($id_moon = 0)
+    private function deleteMoon($id_moon = 0): void
     {
         if ($id_moon == 0) {
-            $id_moon = $this->_moon;
+            $id_moon = $this->moon;
         }
 
         $this->usersModel->deleteMoonById($id_moon);
     }
+
     //#####################################
     //
     // other required methods
     //
     //#####################################
 
-    /**
-     * Return an string with the online time formatted
-     *
-     * @param int $time
-     * @return string
-     */
     private function lastActivity(int $time): string
     {
         if ($time + 60 * 10 >= time()) {
@@ -1218,12 +954,7 @@ class UsersController extends BaseController
         return '<p class="text-danger">' . __('admin/users.us_offline') . '</p>';
     }
 
-    /**
-     * Build users roles list
-     *
-     * @return void
-     */
-    private function buildUsersRolesList()
+    private function buildUsersRolesList(): array
     {
         $roles_list = [];
         $roles = [
@@ -1236,7 +967,7 @@ class UsersController extends BaseController
         foreach ($roles as $role) {
             $roles_list[] = [
                 'role_id' => $role,
-                'role_sel' => ($role == $this->_user_query['user_authlevel'] ? 'selected' : ''),
+                'role_sel' => ($role == $this->user_query['user_authlevel'] ? 'selected' : ''),
                 'role_name' => __('admin/global.user_level')[$role],
             ];
         }
@@ -1244,13 +975,8 @@ class UsersController extends BaseController
         return $roles_list;
     }
 
-    /**
-     * Format vacation end date
-     *
-     * @return string
-     */
     private function vacationSet(): string
     {
-        return __('admin/users.us_user_preference_vacations_until') . date(Functions::readConfig('date_format_extended'), $this->_user_query['preference_vacation_mode']);
+        return __('admin/users.us_user_preference_vacations_until') . date(Functions::readConfig('date_format_extended'), $this->user_query['preference_vacation_mode']);
     }
 }

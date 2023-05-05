@@ -15,7 +15,6 @@ use Xgp\App\Models\Adm\Maker;
 
 class MakerController extends BaseController
 {
-    private string $alert = '';
     private Maker $makerModel;
 
     public function __invoke(): void
@@ -28,11 +27,6 @@ class MakerController extends BaseController
 
         $this->makerModel = new Maker();
 
-        $this->buildPage();
-    }
-
-    private function buildPage(): void
-    {
         Template::getInstance()->view(
             'admin.maker',
             array_merge(
@@ -44,11 +38,6 @@ class MakerController extends BaseController
         );
     }
 
-    /**
-     * Create a new user
-     *
-     * @return array
-     */
     private function makeUser(): array
     {
         $parse = $this->buildLevelCombo();

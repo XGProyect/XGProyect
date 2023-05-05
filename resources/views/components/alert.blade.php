@@ -6,7 +6,7 @@
                 <button type="button" class="close {{ $dismissible }}" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <strong>{{ $status }}</strong> {{ $message }}
+                <strong>{{ $status }}</strong> {!! $message !!}
             </div>
         </div>
     </div>

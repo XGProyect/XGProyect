@@ -44,9 +44,9 @@
                                         <td>{{ __('admin/maker.mk_user_level') }}</td>
                                         <td>
                                             <select class="form-control" name="authlevel">
-                                                {user_levels}
-                                                <option value="{id}">{name}</option>
-                                                {/user_levels}
+                                                @foreach ($user_levels as $item)
+                                                <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                                @endforeach
                                             </select>
                                         </td>
                                     </tr>
@@ -109,7 +109,7 @@
                                         <td>
                                             <select class="form-control" name="founder">
                                                 <option value="0">-</option>
-                                                {founders_combo}
+                                                {!! $founders_combo !!}
                                             </select>
                                         </td>
                                     </tr>
@@ -150,7 +150,7 @@
                                         <td>
                                             <select class="form-control" name="user">
                                                 <option value="0">-</option>
-                                                {users_combo}
+                                                {!! $users_combo !!}
                                             </select>
                                         </td>
                                     </tr>
@@ -219,7 +219,7 @@
                                         <td>
                                             <select class="form-control" name="planet">
                                                 <option value="0">-</option>
-                                                {planets_combo}
+                                                {!! $planets_combo !!}
                                             </select>
                                         </td>
                                     </tr>

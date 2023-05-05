@@ -2,36 +2,35 @@
     <!-- Card Header - Accordion -->
     <a href="#collapsePremium" class="d-block card-header py-3" data-toggle="collapse" role="button"
         aria-expanded="true" aria-controls="collapsePremium">
-        <h6 class="m-0 font-weight-bold text-primary">{premium}</h6>
+        <h6 class="m-0 font-weight-bold text-primary">{{ $premium }}</h6>
     </a>
     <!-- Card Content - Collapse -->
     <div class="collapse show" id="collapsePremium" style="">
         <div class="card-body">
             <div class="table-responsive">
-                {alert_info}
                 <form name="save_info" method="post" action="">
                     <table class="table table-borderless" width="100%" cellspacing="0">
                         <tr>
                             <td>{{ __('admin/users.us_user_premium_dark_matter') }}</td>
                             <td>
                                 <input type="number" class="form-control" name="premium_dark_matter"
-                                    value="{premium_dark_matter}">
+                                    value="{{ $premium_dark_matter }}">
                             </td>
                         </tr>
-                        {premium_list}
+                        @foreach ($premium_list as $item)
                         <tr>
                             <td>
-                                {premium}
+                                {{ $item['premium'] }}
                                 <br />
-                                <span class="small_font bold_font {status_style}">{status}</span>
+                                <span class="small_font bold_font {{ $item['status_style'] }}">{{ $item['status'] }}</span>
                             </td>
                             <td>
-                                <select name="{field}" class="form-control">
-                                    {combo}
+                                <select name="{{ $item['field'] }}" class="form-control">
+                                    {{ $item['combo'] }}
                                 </select>
                             </td>
                         </tr>
-                        {/premium_list}
+                        @endforeach
                     </table>
                     <div class="text-center">
                         <input type="hidden" name="send_data" value="1">
