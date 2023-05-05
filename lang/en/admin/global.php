@@ -8,7 +8,7 @@ return [
         2 => 'Super Operator (SGo)',
         3 => 'Administrator (GA)',
     ],
-    'gn_error_title' => 'Alert!',
+    'gn_danger_title' => 'Alert!',
     'gn_warning_title' => 'Warning!',
     'gn_success_title' => 'Ok!',
     'ge_yes' => 'YES',
