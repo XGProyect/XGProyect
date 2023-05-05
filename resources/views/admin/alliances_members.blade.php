@@ -2,13 +2,12 @@
     <!-- Card Header - Accordion -->
     <a href="#collapseMembers" class="d-block card-header py-3" data-toggle="collapse" role="button"
         aria-expanded="true" aria-controls="collapseMembers">
-        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/alliances.al_alliance_members') }}</h6>
+        <h6 class="m-0 font-weight-bold text-primary">{{ $al_alliance_members }}</h6>
     </a>
     <!-- Card Content - Collapse -->
     <div class="collapse show" id="collapseMembers" style="">
         <div class="card-body">
             <div class="table-responsive">
-                {alert_info}
                 <form name="save_ranks" method="post" action="">
                     <table class="table table-borderless" width="100%" cellspacing="0">
                         <tr>
@@ -21,16 +20,16 @@
                             <th>{{ __('admin/alliances.al_inscription_date') }}</th>
                             <th>{{ __('admin/alliances.al_alliance_member_rank') }}</th>
                         </tr>
-                        {members_table}
-                        <tr>
-                            <td colspan="11">
-                                <div align="center">
-                                    <input type="submit" name="delete_members" value="{{ __('admin/alliances.al_delete_members') }}"
-                                        class="btn btn-primary">
-                                </div>
-                            </td>
-                        </tr>
+                        {!! $members_table !!}
                     </table>
+                    <div class="text-center">
+                        <button type="submit" name="delete_members" class="btn btn-danger btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                            <span class="text">{{ __('admin/alliances.al_delete_members') }}</span>
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

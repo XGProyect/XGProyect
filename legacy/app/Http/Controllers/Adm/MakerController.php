@@ -128,7 +128,7 @@ class MakerController extends BaseController
             $check_alliance = $this->makerModel->checkAlliance($alliance_name, $alliance_tag);
 
             if (!$check_alliance && !empty($alliance_founder) && $alliance_founder > 0) {
-                $this->makerModel->createAlliance($alliance_name, $alliance_tag, $alliance_founder, __('admin/maker.mk_alliance_founder_rank'));
+                $this->makerModel->createAlliance($alliance_name, $alliance_tag, $alliance_founder);
 
                 session()->flash('success', __('admin/maker.mk_alliance_added'));
             } else {

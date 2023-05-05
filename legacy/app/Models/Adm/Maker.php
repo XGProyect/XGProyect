@@ -2,6 +2,7 @@
 
 namespace Xgp\App\Models\Adm;
 
+use Exception;
 use Xgp\App\Core\Model;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;
@@ -209,29 +210,20 @@ class Maker extends Model
         ) ?? [];
     }
 
-    /**
-     * Create a new alliance
-     *
-     * @param string $alliance_name
-     * @param string $alliance_tag
-     * @param int $alliance_founder
-     * @param string $rank
-     * @return array
-     */
-    public function createAlliance(string $alliance_name, string $alliance_tag, int $alliance_founder, string $rank): void
+    public function createAlliance(string $alliance_name, string $alliance_tag, int $alliance_founder): void
     {
         try {
             $time = time();
 
             $this->db->beginTransaction();
 
-            $rights_string = '[{"rank":"Founder","rights":{"1":1,"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1}},{"rank":"Newcomer","rights":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0}}]';
+            $rights_string = '[{"rank":"' . __('admin/maker.mk_alliance_founder_rank') . '","rights":{"1":1,"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1}},{"rank":"Newcomer","rights":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0}}]';
 
             $this->db->query(
                 'INSERT INTO `' . ALLIANCE . "` SET
                 `alliance_name` = '" . $alliance_name . "',
                 `alliance_tag` = '" . $alliance_tag . "' ,
-                `alliance_owner` = '" . (int) $user_id . "',
+                `alliance_owner` = '" . (int) $alliance_founder . "',
                 `alliance_register_time` = '" . time() . "',
                 `alliance_ranks` = '" . $rights_string . "'"
             );

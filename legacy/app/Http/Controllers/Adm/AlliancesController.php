@@ -9,16 +9,13 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Alliance\Ranks;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Alliances;
 
 class AlliancesController extends BaseController
 {
-    private $_edit;
-    private $_id;
-    private $_alert_info;
-    private $_alert_type;
-    private $_alliance_query;
+    private $edit;
+    private $id;
+    private $alliance_query;
     private ?Ranks $ranks = null;
     private Alliances $alliancesModel;
 
@@ -32,18 +29,17 @@ class AlliancesController extends BaseController
 
         $this->alliancesModel = new Alliances();
 
-        $parse['alert'] = '';
         $alliance = isset($_GET['alliance']) ? trim($_GET['alliance']) : null;
         $type = isset($_GET['type']) ? trim($_GET['type']) : null;
-        $this->_edit = isset($_GET['edit']) ? trim($_GET['edit']) : null;
+        $this->edit = isset($_GET['edit']) ? trim($_GET['edit']) : null;
 
         if ($alliance != '') {
             if (!$this->checkAlliance($alliance)) {
-                session()->flash('danger', __('game/alliances.al_nothing_found'));
+                session()->flash('danger', __('admin/alliances.al_nothing_found'));
                 $alliance = '';
             } else {
-                $this->_alliance_query = $this->alliancesModel->getAllAllianceDataById($this->_id);
-                $this->ranks = new Ranks($this->_alliance_query['alliance_ranks']);
+                $this->alliance_query = $this->alliancesModel->getAllAllianceDataById($this->id);
+                $this->ranks = new Ranks($this->alliance_query['alliance_ranks']);
 
                 if ($_POST) {
                     // save the data
@@ -66,29 +62,24 @@ class AlliancesController extends BaseController
         );
     }
 
-    private function getData($type)
+    private function getData(string $type): string
     {
         switch ($type) {
             case 'info':
             case '':
             default:
                 return $this->getDataInfo();
-
                 break;
-
             case 'ranks':
                 return $this->getDataRanks();
-
                 break;
-
             case 'members':
                 return $this->getDataMembers();
-
                 break;
         }
     }
 
-    private function saveData($type)
+    private function saveData(string $type = ''): void
     {
         switch ($type) {
             case 'info':
@@ -98,17 +89,12 @@ class AlliancesController extends BaseController
                 if (isset($_POST['send_data']) && $_POST['send_data']) {
                     $this->saveInfo();
                 }
-
                 break;
-
             case 'ranks':
                 $this->saveRanks();
-
                 break;
-
             case 'members':
                 $this->saveMembers();
-
                 break;
         }
     }
@@ -119,32 +105,21 @@ class AlliancesController extends BaseController
     //
     //#####################################
 
-    /**
-     * method getDataInfo
-     * param
-     * return the information page for the current alliance
-     */
-    private function getDataInfo()
+    private function getDataInfo(): string
     {
-        $parse = (array) $this->_alliance_query;
-        $parse['al_alliance_information'] = str_replace('%s', $this->_alliance_query['alliance_name'], __('game/alliances.al_alliance_information'));
-        $parse['alliance_register_time'] = ($this->_alliance_query['alliance_register_time'] == 0) ? '-' : date(Functions::readConfig('date_format_extended'), $this->_alliance_query['alliance_register_time']);
-        $parse['alliance_owner_picker'] = $this->buildUsersCombo($this->_alliance_query['alliance_owner']);
-        $parse['sel1'] = $this->_alliance_query['alliance_request_notallow'] == 1 ? 'selected' : '';
-        $parse['sel0'] = $this->_alliance_query['alliance_request_notallow'] == 0 ? 'selected' : '';
-        $parse['alert_info'] = ($this->_alert_type != '') ? session()->flash($this->_alert_type, $this->_alert_info) : '';
+        $parse = (array) $this->alliance_query;
+        $parse['al_alliance_information'] = str_replace('%s', $this->alliance_query['alliance_name'], __('admin/alliances.al_alliance_information'));
+        $parse['alliance_register_time'] = ($this->alliance_query['alliance_register_time'] == 0) ? '-' : date(Functions::readConfig('date_format_extended'), $this->alliance_query['alliance_register_time']);
+        $parse['alliance_owner_picker'] = $this->buildUsersCombo($this->alliance_query['alliance_owner']);
+        $parse['sel1'] = $this->alliance_query['alliance_request_notallow'] == 1 ? 'selected' : '';
+        $parse['sel0'] = $this->alliance_query['alliance_request_notallow'] == 0 ? 'selected' : '';
 
         return Template::getInstance()->render('admin.alliances_information', $parse);
     }
 
-    /**
-     * method getDataRanks
-     * param
-     * return the ranks page for the current alliance
-     */
-    private function getDataRanks()
+    private function getDataRanks(): string
     {
-        $parse['al_alliance_ranks'] = str_replace('%s', $this->_alliance_query['alliance_name'], __('game/alliances.al_alliance_ranks'));
+        $parse['al_alliance_ranks'] = str_replace('%s', $this->alliance_query['alliance_name'], __('admin/alliances.al_alliance_ranks'));
         $parse['image_path'] = DEFAULT_SKINPATH;
         $alliance_ranks = $this->ranks->getAllRanksAsArray();
         $i = 0;
@@ -154,7 +129,7 @@ class AlliancesController extends BaseController
         $rank_data = [];
 
         if (is_array($alliance_ranks)) {
-            foreach ($alliance_ranks as $rank_id => $details) {
+            foreach ($alliance_ranks as $details) {
                 $rank_data['name'] = $details['rank'];
                 $rank_data['delete'] = (($details['rights'][AllianceRanks::DELETE] == SwitchInt::on) ? ' checked="checked"' : '');
                 $rank_data['kick'] = (($details['rights'][AllianceRanks::KICK] == SwitchInt::on) ? ' checked="checked"' : '');
@@ -171,61 +146,50 @@ class AlliancesController extends BaseController
             }
         }
 
-        $parse['ranks_table'] = empty($rank_row) ? __('game/alliances.al_no_ranks') : $rank_row;
-        $parse['alert_info'] = ($this->_alert_type != '') ? session()->flash($this->_alert_type, $this->_alert_info) : '';
+        $parse['ranks_table'] = empty($rank_row) ? __('admin/alliances.al_no_ranks') : $rank_row;
 
         return Template::getInstance()->render('admin.alliances_ranks', $parse);
     }
 
-    /**
-     * method getDataMembers
-     * param
-     * return the research page for the current user
-     */
-    private function getDataMembers()
+    private function getDataMembers(): string
     {
         $parse['al_alliance_members'] = str_replace(
             '%s',
-            $this->_alliance_query['alliance_name'],
-            __('game/alliances.al_alliance_members')
+            $this->alliance_query['alliance_name'],
+            __('admin/alliances.al_alliance_members')
         );
-        $all_members = $this->alliancesModel->getAllianceMembers($this->_id);
+        $all_members = $this->alliancesModel->getAllianceMembers($this->id);
 
         $members = '';
 
         if (!empty($all_members)) {
             foreach ($all_members as $member) {
-                $member['alliance_request'] = ($member['user_ally_request']) ? __('game/alliances.al_request_yes') : __('game/alliances.al_request_no');
+                $member['alliance_request'] = ($member['user_ally_request']) ? __('admin/alliances.al_request_yes') : __('admin/alliances.al_request_no');
                 $member['ally_request_text'] = ($member['user_ally_request_text']) ? $member['user_ally_request_text'] : '-';
                 $member['alliance_register_time'] = date(Functions::readConfig('date_format_extended'), $member['user_ally_register_time']);
 
                 if (isset($member['user_ally_rank_id'])) {
                     $member['ally_rank'] = $this->ranks->getRankById($member['user_ally_rank_id'])['rank'];
                 } else {
-                    $member['ally_rank'] = __('game/alliances.al_rank_not_defined');
+                    $member['ally_rank'] = __('admin/alliances.al_rank_not_defined');
                 }
 
                 $members .= Template::getInstance()->render('admin.alliances_members_row', $member);
             }
         }
 
-        $parse['members_table'] = empty($members) ? '<tr><td colspan="6" class="align_center text-error">' . __('game/alliances.al_no_ranks') . '</td></tr>' : $members;
-        $parse['alert_info'] = ($this->_alert_type != '') ? session()->flash($this->_alert_type, $this->_alert_info) : '';
+        $parse['members_table'] = empty($members) ? '<tr><td colspan="6" class="align_center text-error">' . __('admin/alliances.al_no_ranks') . '</td></tr>' : $members;
 
         return Template::getInstance()->render('admin.alliances_members', $parse);
     }
+
     //#####################################
     //
     // save / update methods
     //
     //#####################################
 
-    /**
-     * method saveInfo
-     * param
-     * return save information for the current user
-     */
-    private function saveInfo()
+    private function saveInfo(): void
     {
         $alliance_name = isset($_POST['alliance_name']) ? $_POST['alliance_name'] : '';
         $alliance_name_orig = isset($_POST['alliance_name_orig']) ? $_POST['alliance_name_orig'] : '';
@@ -246,25 +210,24 @@ class AlliancesController extends BaseController
 
         if ($alliance_name != $alliance_name_orig) {
             if ($alliance_name == '' or !$this->alliancesModel->checkAllianceName($alliance_name)) {
-                $errors .= __('game/alliances.al_error_alliance_name') . '<br />';
+                $errors .= __('admin/alliances.al_error_alliance_name') . '<br />';
             }
         }
 
         if ($alliance_tag != $alliance_tag_orig) {
             if ($alliance_tag == '' or !$this->alliancesModel->checkAllianceTag($alliance_tag)) {
-                $errors .= __('game/alliances.al_error_alliance_tag') . '<br />';
+                $errors .= __('admin/alliances.al_error_alliance_tag') . '<br />';
             }
         }
 
         if ($alliance_owner != $alliance_owner_orig) {
             if ($alliance_owner <= 0 or $this->alliancesModel->checkAllianceFounder($alliance_owner)) {
-                $errors .= __('game/alliances.al_error_founder') . '<br />';
+                $errors .= __('admin/alliances.al_error_founder') . '<br />';
             }
         }
 
         if ($errors != '') {
-            $this->_alert_info = $errors;
-            $this->_alert_type = 'warning';
+            session()->flash('warning', $errors);
         } else {
             $this->alliancesModel->updateAllianceData([
                 'alliance_name' => $alliance_name,
@@ -276,20 +239,14 @@ class AlliancesController extends BaseController
                 'alliance_text' => $alliance_text,
                 'alliance_request' => $alliance_request,
                 'alliance_request_notallow' => $alliance_request_notallow,
-                'alliance_id' => $this->_id,
+                'alliance_id' => $this->id,
             ]);
 
-            $this->_alert_info = __('game/alliances.al_all_ok_message');
-            $this->_alert_type = 'ok';
+            session()->flash('success', __('admin/alliances.al_all_ok_message'));
         }
     }
 
-    /**
-     * method saveRanks
-     * param
-     * return save ranks for the current alliance
-     */
-    private function saveRanks()
+    private function saveRanks(): void
     {
         if (isset($_POST['create_rank'])) {
             if (!empty($_POST['rank_name'])) {
@@ -298,20 +255,18 @@ class AlliancesController extends BaseController
                 );
 
                 $this->alliancesModel->updateAllianceRanks(
-                    $this->_id,
+                    $this->id,
                     $this->ranks->getAllRanksAsJsonString()
                 );
 
-                $this->_alert_info = __('game/alliances.al_rank_added');
-                $this->_alert_type = 'ok';
+                session()->flash('success', __('admin/alliances.al_rank_added'));
             } else {
-                $this->_alert_info = __('game/alliances.al_required_name');
-                $this->_alert_type = 'warning';
+                session()->flash('warning', __('admin/alliances.al_required_name'));
             }
         }
 
         // edit rights for each rank
-        if (isset($_POST['save_ranks'])) {
+        if (isset($_POST['save_ranks']) && !empty($_POST['id'])) {
             foreach ($_POST['id'] as $id) {
                 $this->ranks->editRankById(
                     $id,
@@ -330,38 +285,31 @@ class AlliancesController extends BaseController
             }
 
             $this->alliancesModel->updateAllianceRanks(
-                $this->_id,
+                $this->id,
                 $this->ranks->getAllRanksAsJsonString()
             );
 
-            $this->_alert_info = __('game/alliances.al_rank_saved');
-            $this->_alert_type = 'ok';
+            session()->flash('success', __('admin/alliances.al_rank_saved'));
         }
 
         // delete a rank
-        if (isset($_POST['delete_ranks'])) {
-            foreach ($_POST['id'] as $rank_id) {
-                $this->ranks->deleteRankById($rank_id);
+        if (isset($_POST['delete_message'])) {
+            foreach ($_POST['delete_message'] as $rankId) {
+                $this->ranks->deleteRankById($rankId);
             }
 
             $this->alliancesModel->updateAllianceRanks(
-                $this->_id,
+                $this->id,
                 $this->ranks->getAllRanksAsJsonString()
             );
 
-            $this->_alert_info = __('game/alliances.al_rank_removed');
-            $this->_alert_type = 'ok';
+            session()->flash('success', __('admin/alliances.al_rank_removed'));
         }
 
         Functions::redirect('admin.php?' . $_SERVER['QUERY_STRING']);
     }
 
-    /**
-     * method save_research
-     * param
-     * return save research for the current user
-     */
-    private function saveMembers()
+    private function saveMembers(): void
     {
         if (isset($_POST['delete_members'])) {
             $ids_string = '';
@@ -373,34 +321,26 @@ class AlliancesController extends BaseController
                     }
                 }
 
-                $amount = $this->alliancesModel->countAllianceMembers($this->_id);
+                $amount = $this->alliancesModel->countAllianceMembers($this->id);
 
                 if ($amount['Amount'] > 1) {
                     $this->alliancesModel->removeAllianceMembers($ids_string);
 
-                    // RETURN THE ALERT
-                    $this->_alert_info = __('admin/users.us_all_ok_message');
-                    $this->_alert_type = 'ok';
+                    session()->flash('success', __('admin/alliances.us_all_ok_message'));
                 } else {
-                    // RETURN THE ALERT
-                    $this->_alert_info = __('game/alliances.al_cant_delete_last_one');
-                    $this->_alert_type = 'warning';
+                    session()->flash('warning', __('admin/alliances.al_cant_delete_last_one'));
                 }
             }
         }
     }
+
     //#####################################
     //
     // build combo methods
     //
     //#####################################
 
-    /**
-     * method buildUsersCombo
-     * param $user_id
-     * return the list of users
-     */
-    private function buildUsersCombo($user_id)
+    private function buildUsersCombo($user_id): string
     {
         $combo_rows = '';
         $users = $this->alliancesModel->getAllUsers();
@@ -411,21 +351,17 @@ class AlliancesController extends BaseController
 
         return $combo_rows;
     }
+
     //#####################################
     //
     // other required methods
     //
     //#####################################
 
-    /**
-     * method checkAlliance
-     * param $alliance
-     * return true if alliance exists, false if alliance doesn't exist
-     */
-    private function checkAlliance($alliance)
+    private function checkAlliance(string $alliance): bool
     {
         if ($alliance_query = $this->alliancesModel->checkAllianceByNameOrTag($alliance)) {
-            $this->_id = $alliance_query['alliance_id'];
+            $this->id = $alliance_query['alliance_id'];
 
             return true;
         }

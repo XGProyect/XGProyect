@@ -2,6 +2,7 @@
 
 return [
     'al_title' => 'Alliances',
+    'al_sub_title' => 'From here you will be able to edit all the alliance data, including their information, ranks and members.',
     'al_alliance_placeholder' => 'Name or tag here...',
     'al_search' => 'Search',
     'al_actions' => 'Actions',
