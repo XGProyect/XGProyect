@@ -123,14 +123,7 @@ class Preferences
         return $this->current_user_id;
     }
 
-    /**
-     * Create a new instance of PreferencesEntity
-     *
-     * @param array $preference Preference
-     *
-     * @return \PreferencesEntity
-     */
-    private function createNewPreferencesEntity($preference)
+    private function createNewPreferencesEntity(array $preference): PreferencesEntity
     {
         return new PreferencesEntity($preference);
     }

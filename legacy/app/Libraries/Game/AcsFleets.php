@@ -86,7 +86,7 @@ class AcsFleets
      *
      * @return \AcsFleetEntity
      */
-    private function createNewAcsFleetEntity($fleet)
+    private function createNewAcsFleetEntity(array $fleet)
     {
         return new AcsFleetEntity($fleet);
     }

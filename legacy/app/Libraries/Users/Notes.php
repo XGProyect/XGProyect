@@ -96,14 +96,7 @@ class Notes
         return $this->notes_count;
     }
 
-    /**
-     * Create a new instance of NotesEntity
-     *
-     * @param array $note Note
-     *
-     * @return \NotesEntity
-     */
-    private function createNewNotesEntity($note): NotesEntity
+    private function createNewNotesEntity(array $note): NotesEntity
     {
         return new NotesEntity($note);
     }

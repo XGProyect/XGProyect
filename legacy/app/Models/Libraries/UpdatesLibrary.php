@@ -155,14 +155,7 @@ class UpdatesLibrary extends Model
         );
     }
 
-    /**
-     * Update all planet data, before any action takes place
-     *
-     * @param type $data Planet data to update
-     *
-     * @return void
-     */
-    public function updateAllPlanetData($data = [])
+    public function updateAllPlanetData($data = []): void
     {
         if (is_array($data)) {
             $this->db->query(

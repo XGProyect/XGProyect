@@ -57,14 +57,7 @@ class Ships
         }
     }
 
-    /**
-     * Create a new instance of ShipsEntity
-     *
-     * @param array $ships Ships
-     *
-     * @return \ShipsEntity
-     */
-    private function createNewShipsEntity($ships)
+    private function createNewShipsEntity(array $ships): ShipsEntity
     {
         return new ShipsEntity($ships);
     }

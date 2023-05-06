@@ -151,7 +151,6 @@ class TraderController extends BaseController
 
         foreach (self::RESOURCES as $resource) {
             $list_of_resources[] = [
-                'dpath' => DPATH,
                 'resource' => $resource,
                 'resource_name' => __('game/global' . $resource),
                 'current_resource' => Format::shortlyNumber($this->planet['planet_' . $resource]),

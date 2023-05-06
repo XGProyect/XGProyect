@@ -114,32 +114,17 @@ class Buddy
         }
     }
 
-    /**
-     *
-     * @param int $user_id User Id
-     */
-    private function setUserId($user_id)
+    private function setUserId(int $user_id): void
     {
         $this->_current_user_id = $user_id;
     }
 
-    /**
-     *
-     * @return int
-     */
-    private function getUserId()
+    private function getUserId(): int
     {
         return $this->_current_user_id;
     }
 
-    /**
-     * Create a new instance of BuddyEntity
-     *
-     * @param array $buddy Buddy
-     *
-     * @return \BuddyEntity
-     */
-    private function createNewBuddyEntity($buddy)
+    private function createNewBuddyEntity(array $buddy): BuddyEntity
     {
         return new BuddyEntity($buddy);
     }

@@ -33,7 +33,13 @@ class NotesController extends BaseController
 
         $this->setUpNotes();
         $this->runAction();
-        $this->buildPage();
+
+        $page = $this->getCurrentPage();
+
+        Template::getInstance()->view(
+            $page['template'],
+            $page['data']
+        );
     }
 
     private function runAction(): void
@@ -76,38 +82,13 @@ class NotesController extends BaseController
         }
     }
 
-    /**
-     * Creates a new notes object that will handle all the notes
-     * creation methods and actions
-     *
-     * @return void
-     */
-    private function setUpNotes()
+    private function setUpNotes(): void
     {
         $this->notes = new Note(
-            $this->notesModel->getAllNotesByUserId($this->user['user_id']),
-            $this->user['user_id']
+            $this->notesModel->getAllNotesByUserId($this->user['user_id'])
         );
     }
 
-    private function buildPage(): void
-    {
-        /**
-         * Parse the items
-         */
-        $page = $this->getCurrentPage();
-
-        Template::getInstance()->view(
-            $page['template'],
-            $page['data']
-        );
-    }
-
-    /**
-     * Build list of notes block
-     *
-     * @return array
-     */
     private function buildNotesListBlock(): array
     {
         $list_of_notes = [];
@@ -130,11 +111,6 @@ class NotesController extends BaseController
         return $list_of_notes;
     }
 
-    /**
-     * Get current page
-     *
-     * @return array
-     */
     private function getCurrentPage(): array
     {
         $edit_view = filter_input(INPUT_GET, 'a', FILTER_VALIDATE_INT, [
@@ -160,13 +136,6 @@ class NotesController extends BaseController
         ];
     }
 
-    /**
-     * Build the edit view
-     *
-     * @param int $edit_view
-     *
-     * @return array
-     */
     private function buildEditBlock(int $edit_view): array
     {
         $note_id = filter_input(INPUT_GET, 'n', FILTER_VALIDATE_INT);
@@ -208,13 +177,6 @@ class NotesController extends BaseController
         ], $selected);
     }
 
-    /**
-     * Create a new note
-     *
-     * @param array $data
-     *
-     * @return void
-     */
     private function createNewNote(array $data): void
     {
         $this->notesModel->createNewNote(
@@ -228,13 +190,6 @@ class NotesController extends BaseController
         );
     }
 
-    /**
-     * Edit a note
-     *
-     * @param array $data
-     *
-     * @return void
-     */
     private function editNote(array $data): void
     {
         $this->notesModel->updateNoteById(
@@ -249,13 +204,6 @@ class NotesController extends BaseController
         );
     }
 
-    /**
-     * Delete a note or multiple
-     *
-     * @param array $data
-     *
-     * @return void
-     */
     private function deleteNote(array $data): void
     {
         $delete_string = [];

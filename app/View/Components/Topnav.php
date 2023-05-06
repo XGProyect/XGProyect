@@ -39,8 +39,8 @@ class Topnav extends Component
         $deuterium = FormatLib::prettyNumber($planet->planet_deuterium);
         $darkmatter = FormatLib::prettyNumber($user->premium->premium_dark_matter);
         $energy = FormatLib::prettyNumber(
-            $user->planet_energy_max + $user->planet_energy_used
-        ) . ' / ' . FormatLib::prettyNumber($user->planet_energy_max);
+            $planet->planet_energy_max + $planet->planet_energy_used
+        ) . ' / ' . FormatLib::prettyNumber($planet->planet_energy_max);
 
         if ($planet->planet_metal >= ProductionLib::maxStorable($planet->building_metal_store)) {
             $metal = FormatLib::colorRed($metal);

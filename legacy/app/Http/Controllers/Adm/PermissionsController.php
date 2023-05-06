@@ -139,7 +139,7 @@ class PermissionsController extends BaseController
                     'permissions_list' => $permissions_list,
                 ];
 
-                unset($permissions_list); // reset
+                $permissions_list = []; // reset
             }
 
             // put all inside
@@ -150,7 +150,7 @@ class PermissionsController extends BaseController
                 'modules_list' => $modules_list,
             ];
 
-            unset($modules_list); // reset
+            $modules_list = []; // reset
         }
 
         return [

@@ -622,13 +622,14 @@ class UsersController extends BaseController
         return $percent;
     }
 
-    private function buildProcessQueue(array $current_queue): string
+    private function buildProcessQueue($currentQueue): string
     {
-        if (!empty($current_queue)) {
-            $queue_list = '';
-            $current_queue = explode(';', $current_queue);
+        $queueList = '';
 
-            foreach ($current_queue as $key => $queues) {
+        if (!empty($currentQueue)) {
+            $currentQueue = explode(';', $currentQueue);
+
+            foreach ($currentQueue as $queues) {
                 $queue = explode(',', $queues);
 
                 if ($queue[3] <= time()) {
@@ -637,11 +638,11 @@ class UsersController extends BaseController
                     $ready = date('i:s', $queue[3] - time());
                 }
 
-                $queue_list .= "<option value=\"{$queue[0]}\">" . __('admin/users.tech')[$queue[0]] . ' (' . $queue[1] . '^) (' . date('i:s', $queue[2]) . ') (' . $ready . ') [' . $queue[4] . '] </option>';
+                $queueList .= "<option value=\"{$queue[0]}\">" . __('admin/users.tech')[$queue[0]] . ' (' . $queue[1] . '^) (' . date('i:s', $queue[2]) . ') (' . $ready . ') [' . $queue[4] . '] </option>';
             }
-
-            return $queue_list;
         }
+
+        return $queueList;
     }
 
     private function buildImageCombo(string $current_image): string
@@ -712,7 +713,7 @@ class UsersController extends BaseController
                         'status' => ($expire == 0) ? __('admin/users.us_user_premium_inactive') : (__('admin/users.us_user_premium_active_until') . date(Functions::readConfig('date_format'), $expire)),
                         'status_style' => ($expire == 0) ? 'text-danger' : 'text-success',
                         'field' => $officier,
-                        'combo' => $this->premiumCombo($expire),
+                        'combo' => $this->premiumCombo(),
                     ];
                 }
             }

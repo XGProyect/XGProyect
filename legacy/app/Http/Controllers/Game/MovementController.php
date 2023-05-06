@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Entity\FleetEntity;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\FleetsLib;
@@ -23,7 +24,6 @@ class MovementController extends BaseController
     public const REDIRECT_TARGET = 'game.php?page=movement';
 
     private array $user = [];
-    private array $planet = [];
     private ?Fleets $fleets = null;
     private ?Researches $research = null;
     private ?Premium $premium = null;
@@ -36,7 +36,6 @@ class MovementController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->user = Users::getInstance()->getUserData();
-        $this->planet = Users::getInstance()->getPlanetData();
         $this->fleetModel = new Fleet();
 
         $this->setUpFleets();
@@ -123,8 +122,7 @@ class MovementController extends BaseController
 
         if ($this->fleets->getFleetsCount() > 0) {
             // reset
-            unset($list_of_movements);
-
+            $list_of_movements = [];
             $fleet_count = 0;
 
             foreach ($this->fleets->getFleets() as $fleet) {
@@ -188,16 +186,9 @@ class MovementController extends BaseController
         return __('game/fleet.fl_onway');
     }
 
-    /**
-     * Create the ships tool tip block
-     *
-     * @param string $fleet_array Fleet array
-     *
-     * @return string
-     */
     private function buildShipsBlock(string $fleet_array): string
     {
-        $objects = $this->objects->getObjects();
+        $objects = Objects::getInstance()->getObjects();
         $ships = FleetsLib::getFleetShipsArray($fleet_array);
         $tooltips = [];
 
@@ -208,13 +199,6 @@ class MovementController extends BaseController
         return count($tooltips) > 0 ? join("\n", $tooltips) : '';
     }
 
-    /**
-     * Build the list of actions block
-     *
-     * @param FleetEntity $fleet
-     *
-     * @return string
-     */
     private function buildActionsBlock(FleetEntity $fleet): string
     {
         $actions = '-';

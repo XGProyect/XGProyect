@@ -256,14 +256,7 @@ class ResourceMarket
         $this->buildings = $this->createNewBuildingsEntity($planet);
     }
 
-    /**
-     * Create a new instance of UserEntity
-     *
-     * @param array $user
-     *
-     * @return \UserEntity
-     */
-    private function createNewUserEntity($user)
+    private function createNewUserEntity(array $user): UserEntity
     {
         return new UserEntity($user);
     }
@@ -275,7 +268,7 @@ class ResourceMarket
      *
      * @return \PremiumEntity
      */
-    private function createNewPremiumEntity($user)
+    private function createNewPremiumEntity(array $user)
     {
         return new PremiumEntity($user);
     }
@@ -287,7 +280,7 @@ class ResourceMarket
      *
      * @return \PlanetEntity
      */
-    private function createNewPlanetEntity($planet)
+    private function createNewPlanetEntity(array $planet)
     {
         return new PlanetEntity($planet);
     }
@@ -299,7 +292,7 @@ class ResourceMarket
      *
      * @return \BuildingsEntity
      */
-    private function createNewBuildingsEntity($planet)
+    private function createNewBuildingsEntity(array $planet)
     {
         return new BuildingsEntity($planet);
     }

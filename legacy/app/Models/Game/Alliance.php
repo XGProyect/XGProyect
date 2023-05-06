@@ -2,8 +2,8 @@
 
 namespace Xgp\App\Models\Game;
 
-use Xgp\App\Core\Model;
 use Exception;
+use Xgp\App\Core\Model;
 
 class Alliance extends Model
 {
@@ -449,14 +449,7 @@ class Alliance extends Model
         );
     }
 
-    /**
-     * Check alliance name
-     *
-     * @param string $alliance_name Alliance Name
-     *
-     * @return array
-     */
-    public function checkAllianceName($alliance_name)
+    public function checkAllianceName($alliance_name): ?string
     {
         return $this->db->queryFetch(
             'SELECT `alliance_name`

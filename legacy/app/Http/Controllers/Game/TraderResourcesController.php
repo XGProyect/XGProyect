@@ -104,7 +104,7 @@ class TraderResourcesController extends BaseController
     private function getPage(): array
     {
         return [
-            'currentMode' => Template::render(
+            'currentMode' => Template::getInstance()->render(
                 'trader.resources',
                 array_merge(
                     [

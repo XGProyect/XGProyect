@@ -4,6 +4,7 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\OfficiersEnumerator as OE;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
@@ -17,6 +18,7 @@ class OfficierController extends BaseController
 
     private array $user = [];
     private Officier $officierModel;
+    private Objects $objects;
 
     public function __invoke()
     {
@@ -26,17 +28,13 @@ class OfficierController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->officierModel = new Officier();
+        $this->objects = new Objects();
 
         $this->runAction();
         $this->buildPage();
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
-    private function runAction()
+    private function runAction(): void
     {
         $data = filter_input_array(INPUT_GET, [
             'offi' => [
@@ -74,11 +72,7 @@ class OfficierController extends BaseController
 
     private function buildPage(): void
     {
-        /**
-         * Parse the items
-         */
         $page = [];
-        $page['dpath'] = DPATH;
         $page['premium_pay_url'] = Functions::readConfig('premium_url') != '' ? Functions::readConfig('premium_url') : 'game.php?page=officier';
         $page['officier_list'] = $this->buildOfficiersList();
 
@@ -88,11 +82,6 @@ class OfficierController extends BaseController
         );
     }
 
-    /**
-     * Return an array with a list of officiers
-     *
-     * @return array
-     */
     private function buildOfficiersList(): array
     {
         $allowed_items = [
@@ -112,16 +101,9 @@ class OfficierController extends BaseController
         return $officiers_list;
     }
 
-    /**
-     * Build each officier block
-     *
-     * @param integer $item_id
-     * @return array
-     */
     private function setOfficier(int $item_id): array
     {
         $item_to_parse = [];
-        $item_to_parse['dpath'] = DPATH;
         $item_to_parse['status'] = $this->setOfficierStatusWithFormat($item_id);
         $item_to_parse['name'] = __('game/officier.officiers')[$item_id]['name'];
         $item_to_parse['description'] = __('game/officier.officiers')[$item_id]['description'];
@@ -136,12 +118,6 @@ class OfficierController extends BaseController
         return $item_to_parse;
     }
 
-    /**
-     * Return the officier status with format
-     *
-     * @param integer $item_id
-     * @return string
-     */
     private function setOfficierStatusWithFormat(int $item_id): string
     {
         if (OfficiersLib::isOfficierActive($this->user[$this->objects->getObjects($item_id)])) {
@@ -156,37 +132,16 @@ class OfficierController extends BaseController
         return FormatLib::colorRed(__('game/officier.of_inactive'));
     }
 
-    /**
-     * Check if the officier is accesible or not
-     *
-     * @param integer $officier
-     * @param string $time
-     * @return bool
-     */
     private function isOfficierAccesible(int $officier, string $time): bool
     {
         return ($this->objects->getPrice($officier, $time) <= $this->user['premium_dark_matter']);
     }
 
-    /**
-     * Get the officier darkmatter price
-     *
-     * @param integer $officier
-     * @param string $time
-     * @return integer
-     */
     private function getOfficierPrice(int $officier, string $time): int
     {
         return floor($this->objects->getPrice($officier, $time));
     }
 
-    /**
-     * Get the officier image
-     *
-     * @param integer $officier
-     * @param string $type
-     * @return string
-     */
     private function getOfficierImage(int $officier, string $type): string
     {
         return $this->objects->getPrice($officier, $type);

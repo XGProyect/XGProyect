@@ -4,6 +4,7 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib;
@@ -24,6 +25,7 @@ class OverviewController extends BaseController
     private array $planet = [];
     private Overview $overviewModel;
     private NoobsProtectionLib $noob;
+    private Objects $objects;
 
     public function __invoke(): void
     {
@@ -35,12 +37,12 @@ class OverviewController extends BaseController
         $this->planet = Users::getInstance()->getPlanetData();
         $this->overviewModel = new Overview();
         $this->noob = new NoobsProtectionLib();
+        $this->objects = new Objects();
 
         Template::getInstance()->view(
             'overview.body',
             array_merge(
                 [
-                    'dpath' => DPATH,
                     'planetName' => $this->planet['planet_name'],
                     'username' => $this->user['user_name'],
                     'dateTime' => Timing::formatExtendedDate(time()),
@@ -312,7 +314,7 @@ class OverviewController extends BaseController
                 $attributes = 'height="50" width="50"';
 
                 $planet_block .= '<th>' . $user_planet['planet_name'] . '<br>';
-                $planet_block .= UrlHelper::setUrl($url, Functions::setImage($image, $user_planet['planet_name'], $user_planet['planet_name'], $attributes));
+                $planet_block .= UrlHelper::setUrl($url, Functions::setImage($image, $user_planet['planet_name'], $attributes));
                 $planet_block .= '<center>';
                 $planet_block .= $this->getCurrentWork($user_planet, false);
                 $planet_block .= '</center></th>';

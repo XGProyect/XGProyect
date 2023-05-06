@@ -60,8 +60,8 @@ class InfosController extends BaseController
         $DestroyTPL = '';
         $TableHeadTPL = '';
         $TableFooterTPL = '';
+        $TableTPL = '';
 
-        $parse['dpath'] = DPATH;
         $parse['name'] = $this->langs->language[$this->_resource[$this->_element_id]];
         $parse['image'] = $this->_element_id;
         $parse['description'] = __('game/infos.info')[$this->_resource[$this->_element_id]];

@@ -215,7 +215,6 @@ class MessagesController extends BaseController
                 $operators_list[] = [
                     'user_name' => $operator['user_name'],
                     'user_email' => $operator['user_email'],
-                    'dpath' => DPATH,
                 ];
             }
         }
@@ -267,7 +266,6 @@ class MessagesController extends BaseController
                 $buddies_list[] = [
                     'user_name' => $buddy['user_name'],
                     'user_id' => $buddy['user_id'],
-                    'dpath' => DPATH,
                 ];
             }
         }
@@ -290,7 +288,6 @@ class MessagesController extends BaseController
                 $members_list[] = [
                     'user_name' => $member['user_name'],
                     'user_id' => $member['user_id'],
-                    'dpath' => DPATH,
                 ];
             }
         }

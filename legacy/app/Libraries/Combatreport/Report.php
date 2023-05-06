@@ -188,7 +188,7 @@ class Report
      *
      * @return \ReportEntity
      */
-    private function createNewReportEntity($report)
+    private function createNewReportEntity(array $report)
     {
         return new ReportEntity($report);
     }

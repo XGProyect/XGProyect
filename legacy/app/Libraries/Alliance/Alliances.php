@@ -7,23 +7,9 @@ use Xgp\App\Core\Enumerators\SwitchIntEnumerator;
 
 class Alliances
 {
-    /**
-     *
-     * @var array
-     */
-    private $_alliances = [];
-
-    /**
-     *
-     * @var int
-     */
-    private $_current_user_id = 0;
-
-    /**
-     *
-     * @var int
-     */
-    private $_current_user_rank_id = 0;
+    private array $_alliances = [];
+    private int $_current_user_id = 0;
+    private int $_current_user_rank_id = 0;
 
     public function __construct($alliances, $current_user_id, $current_user_rank_id = 0)
     {
@@ -34,12 +20,7 @@ class Alliances
         }
     }
 
-    /**
-     * Get all the alliances
-     *
-     * @return array
-     */
-    public function getAlliances()
+    public function getAlliances(): array
     {
         $list_of_alliances = [];
 
@@ -52,42 +33,22 @@ class Alliances
         return $list_of_alliances;
     }
 
-    /**
-     * Return current alliance data
-     *
-     * @return array
-     */
-    public function getCurrentAlliance()
+    public function getCurrentAlliance(): AllianceEntity
     {
         return $this->_alliances[0];
     }
 
-    /**
-     * Get current alliance rank
-     *
-     * @return Ranks
-     */
-    public function getCurrentAllianceRankObject()
+    public function getCurrentAllianceRankObject(): Ranks
     {
         return new Ranks($this->getCurrentAlliance()->getAllianceRanks());
     }
 
-    /**
-     * Check if is the alliance owner
-     *
-     * @return string
-     */
-    public function isOwner()
+    public function isOwner(): bool
     {
         return ($this->getCurrentAlliance()->getAllianceOwner() === $this->getUserId());
     }
 
-    /**
-     * Check the rank for the current user
-     *
-     * @return boolean
-     */
-    public function checkRank($rank)
+    public function checkRank(int $rank): bool
     {
         $ranks = $this->getCurrentAllianceRankObject();
 
@@ -96,76 +57,39 @@ class Alliances
             && $ranks->getRankById($this->getUserRankId())['rights'][$rank] == SwitchIntEnumerator::on);
     }
 
-    /**
-     * Check if the user has access to certain section of the alliance
-     *
-     * @param int $rank Rank
-     *
-     * @return boolean
-     */
-    public function hasAccess($rank)
+    public function hasAccess(int $rank): bool
     {
         return ($this->isOwner() or $this->checkRank($rank));
     }
 
-    /**
-     * Set up the list of alliances
-     *
-     * @param array $alliances Alliances
-     *
-     * @return void
-     */
-    private function setUp($alliances)
+    private function setUp($alliances): void
     {
         foreach ($alliances as $alliance) {
             $this->_alliances[] = $this->createNewAllianceEntity($alliance);
         }
     }
 
-    /**
-     *
-     * @param int $user_id User Id
-     */
-    private function setUserId($user_id)
+    private function setUserId(int $user_id): void
     {
         $this->_current_user_id = $user_id;
     }
 
-    /**
-     *
-     * @return int
-     */
-    private function getUserId()
+    private function getUserId(): int
     {
         return $this->_current_user_id;
     }
 
-    /**
-     *
-     * @param int $user_rank_id User Rank Id
-     */
-    private function setUserRankId($user_rank_id)
+    private function setUserRankId(int $user_rank_id): void
     {
         $this->_current_user_rank_id = $user_rank_id;
     }
 
-    /**
-     *
-     * @return int
-     */
-    private function getUserRankId()
+    private function getUserRankId(): int
     {
         return $this->_current_user_rank_id;
     }
 
-    /**
-     * Create a new instance of AllianceEntity
-     *
-     * @param array $alliance Alliance
-     *
-     * @return \AllianceEntity
-     */
-    private function createNewAllianceEntity($alliance)
+    private function createNewAllianceEntity(array $alliance): AllianceEntity
     {
         return new AllianceEntity($alliance);
     }

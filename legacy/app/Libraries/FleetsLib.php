@@ -222,17 +222,7 @@ class FleetsLib
         return $pop_up;
     }
 
-    /**
-     * fleetShipsPopup
-     *
-     * @param array  $fleetRow    Fleet row
-     * @param string $text         Text
-     * @param string $fleet_type   Fleet type
-     * @param array  $current_user Current user
-     *
-     * @return void
-     */
-    public static function fleetShipsPopup($fleetRow, $text, $fleet_type, $current_user = '')
+    public static function fleetShipsPopup(array $fleetRow, string $text, string $fleet_type, array $current_user): string
     {
         $objects = Objects::getInstance()->getObjects();
 
@@ -302,19 +292,7 @@ class FleetsLib
         return $link;
     }
 
-    /**
-     * flyingFleetsTable
-     *
-     * @param array  $fleetRow    Fleet row
-     * @param string $Status       Status
-     * @param int    $Owner        Owner
-     * @param string $Label        Label
-     * @param string $Record       Record
-     * @param string $current_user Current user
-     *
-     * @return void
-     */
-    public static function flyingFleetsTable($fleetRow, $Status, $Owner, $Label, $Record, $current_user, $acs_owner = false)
+    public static function flyingFleetsTable(array $fleetRow, string $Status, int $Owner, string $Label, string $Record, array $current_user, bool $acs_owner = false): string
     {
         $FleetStyle = [
             1 => 'attack',

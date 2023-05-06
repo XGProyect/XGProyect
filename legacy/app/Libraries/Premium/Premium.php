@@ -17,12 +17,7 @@ class Premium
         }
     }
 
-    /**
-     * Get all the premium
-     *
-     * @return array
-     */
-    public function getPremium()
+    public function getPremium(): array
     {
         $list_of_premium = [];
 
@@ -35,35 +30,19 @@ class Premium
         return $list_of_premium;
     }
 
-    /**
-     * Get current premium
-     *
-     * @return array
-     */
-    public function getCurrentPremium()
+    public function getCurrentPremium(): PremiumEntity
     {
         return $this->getPremium()[0];
     }
 
-    /**
-     * Set up the list of premium
-     *
-     * @param array $premiums Premiums
-     *
-     * @return void
-     */
-    private function setUp($premiums)
+    private function setUp($premiums): void
     {
         foreach ($premiums as $premium) {
             $this->premium[] = $this->createNewPremiumEntity($premium);
         }
     }
 
-    /**
-     *
-     * @param int $user_id User Id
-     */
-    private function setUserId($user_id)
+    private function setUserId(int $user_id): void
     {
         $this->current_user_id = $user_id;
     }
@@ -72,19 +51,12 @@ class Premium
      *
      * @return int
      */
-    private function getUserId()
+    private function getUserId(): int
     {
         return $this->current_user_id;
     }
 
-    /**
-     * Create a new instance of PremiumEntity
-     *
-     * @param array $premium Premium
-     *
-     * @return \PremiumEntity
-     */
-    private function createNewPremiumEntity($premium)
+    private function createNewPremiumEntity(array $premium): PremiumEntity
     {
         return new PremiumEntity($premium);
     }

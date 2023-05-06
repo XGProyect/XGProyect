@@ -17,11 +17,6 @@ class Researches
         }
     }
 
-    /**
-     * Get all the research
-     *
-     * @return array
-     */
     public function getResearch(): array
     {
         $list_of_research = [];
@@ -35,56 +30,29 @@ class Researches
         return $list_of_research;
     }
 
-    /**
-     * Get current research
-     *
-     * @return array
-     */
-    public function getCurrentResearch()
+    public function getCurrentResearch(): ResearchEntity
     {
         return $this->getResearch()[0];
     }
 
-    /**
-     * Set up the list of researches
-     *
-     * @param array $researches Researches
-     *
-     * @return void
-     */
-    private function setUp($researches)
+    private function setUp($researches): void
     {
         foreach ($researches as $research) {
             $this->_research[] = $this->createNewResearchEntity($research);
         }
     }
 
-    /**
-     *
-     * @param int $user_id User Id
-     */
-    private function setUserId($user_id)
+    private function setUserId(int $user_id): void
     {
         $this->_current_user_id = $user_id;
     }
 
-    /**
-     *
-     * @return int
-     */
-    private function getUserId()
+    private function getUserId(): int
     {
         return $this->_current_user_id;
     }
 
-    /**
-     * Create a new instance of ResearchEntity
-     *
-     * @param array $research Research
-     *
-     * @return \ResearchEntity
-     */
-    private function createNewResearchEntity($research)
+    private function createNewResearchEntity(array $research): ResearchEntity
     {
         return new ResearchEntity($research);
     }

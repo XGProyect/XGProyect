@@ -57,7 +57,6 @@ class ResearchController extends BaseController
 
         foreach ($this->_reslist['tech'] as $tech) {
             if (DevelopmentsLib::isDevelopmentAllowed($this->user, $this->planet, $tech)) {
-                $RowParse['dpath'] = DPATH;
                 $RowParse['tech_id'] = $tech;
                 $building_level = $this->user[$this->_resource[$tech]];
                 $RowParse['tech_level'] = DevelopmentsLib::setLevelFormat($building_level, $tech, $this->user);

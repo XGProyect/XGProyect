@@ -158,7 +158,7 @@ class UpdatesLibrary
 
             $build_array = explode(',', $queue_array[0]);
             $element = $build_array[0];
-            $build_end_time = floor($build_array[3]);
+            $build_end_time = floor((int) $build_array[3]);
             $build_mode = $build_array[4];
 
             array_shift($queue_array);
@@ -263,7 +263,7 @@ class UpdatesLibrary
                     }
 
                     if ($is_payable) {
-                        $price = Developments::developmentPrice($current_user, $current_planet, $element, true, $for_destroy);
+                        $price = Developments::developmentPrice($current_user, $current_planet, (int) $element, true, $for_destroy);
 
                         $current_planet['planet_metal'] -= $price['metal'];
                         $current_planet['planet_crystal'] -= $price['crystal'];

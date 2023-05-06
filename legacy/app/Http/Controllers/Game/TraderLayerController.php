@@ -24,12 +24,7 @@ class TraderLayerController extends BaseController
 
         Template::getInstance()->render(
             'game/trader_layer_view',
-            array_merge(
-                $this->getMode(),
-                [
-                    'dpath' => DPATH,
-                ]
-            )
+            $this->getMode()
         );
     }
 
@@ -252,7 +247,6 @@ class TraderLayerController extends BaseController
 
         foreach (['metal' => 4500, 'crystal' => 9000, 'deuterium' => 13500] as $resource => $price) {
             $list_of_resources[] = [
-                'dpath' => DPATH,
                 'resource' => $resource,
                 'resource_name' => __('game/global' . $resource),
                 'current_resource' => Format::shortlyNumber($this->planet['planet_' . $resource]),
