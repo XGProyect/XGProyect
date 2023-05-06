@@ -40,7 +40,7 @@ class Leftmenu extends Component
             ['game.php?page=facilities', 'lm_station', '', '#ffffff', false, '1', '3'],
             ['game.php?page=traderOverview', 'lm_trader', '', '#ff8900', false, '1', '5'],
             ['game.php?page=research', 'lm_research', '', '#ffffff', false, '1', '6'],
-            ['game.php?page=techtree', 'lm_technology', '', '#ffffff', false, '1', '10'],
+            ['game.php?page=technologytree', 'lm_technology', '', '#ffffff', false, '1', '10'],
             ['game.php?page=shipyard', 'lm_shipyard', '', '#ffffff', false, '1', '7'],
             ['game.php?page=defenses', 'lm_defenses', '', '#ffffff', false, '1', '12'],
             ['game.php?page=fleet1', 'lm_fleet', '', '#ffffff', false, '1', '8'],

@@ -53,7 +53,7 @@ class InfosController extends BaseController
     private function buildPage(): void
     {
         if (!array_key_exists($this->_element_id, $this->_resource)) {
-            Functions::redirect('game.php?page=techtree');
+            Functions::redirect('game.php?page=technologytree');
         }
 
         $GateTPL = '';

@@ -24,7 +24,7 @@ class Objects
     public function __construct()
     {
         // require this damn file
-        require CORE_PATH . 'objects_collection.php';
+        require CORE_PATH . 'ObjectsCollection.php';
 
         $this->objects = $resource; // @phpstan-ignore-line
         $this->relations = $requeriments; // @phpstan-ignore-line
