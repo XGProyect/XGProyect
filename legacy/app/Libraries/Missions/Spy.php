@@ -128,23 +128,23 @@ class Spy extends Missions
                     }
 
                     if ($resources <= $LS) {
-                        $SpyMessage = $Materials . '<br />' . $AttackLink . $MessageEnd;
+                        $SpyMessage = $Materials . '<br>' . $AttackLink . $MessageEnd;
                     }
 
                     if ($fleet <= $LS) {
-                        $SpyMessage = $PlanetFleet . '<br />' . $AttackLink . $MessageEnd;
+                        $SpyMessage = $PlanetFleet . '<br>' . $AttackLink . $MessageEnd;
                     }
 
                     if ($defense <= $LS) {
-                        $SpyMessage = $PlanetDefense . '<br />' . $AttackLink . $MessageEnd;
+                        $SpyMessage = $PlanetDefense . '<br>' . $AttackLink . $MessageEnd;
                     }
 
                     if ($buildings <= $LS) {
-                        $SpyMessage = $PlanetBuildings . '<br />' . $AttackLink . $MessageEnd;
+                        $SpyMessage = $PlanetBuildings . '<br>' . $AttackLink . $MessageEnd;
                     }
 
                     if ($tech <= $LS) {
-                        $SpyMessage = $TargetTechnos . '<br />' . $AttackLink . $MessageEnd;
+                        $SpyMessage = $TargetTechnos . '<br>' . $AttackLink . $MessageEnd;
                     }
 
                     Functions::sendMessage(

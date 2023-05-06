@@ -1,5 +1,5 @@
 <script src="{js_path}cntchar-min.js" type="text/javascript"></script>
-<br />
+<br>
 <div id="content" role="main">
     {status_message}
     <table width="519px" style="border: 2px solid {error_color}; text-align: center; background: transparent;">
@@ -7,7 +7,7 @@
             <td style="background:transparent;"><font color="{error_color}"><strong>{error_text}</strong></font></td>
         </tr>
     </table>
-    <br />
+    <br>
     {/status_message}
     <form action="game.php?page=chat&playerId={id}" method="post" role="form">
         <table width="519px">

@@ -298,7 +298,7 @@ class AllianceController extends BaseController
             $message = str_replace(['%s', '%d'], [$alliance_name, $alliance_tag], __('game/alliance.al_created'));
             return Functions::messageBox(
                 $message,
-                $message . '<br/><br/>',
+                $message . '<br><br>',
                 'game.php?page=alliance',
                 __('game/alliance.al_continue')
             );
@@ -446,7 +446,7 @@ class AllianceController extends BaseController
 
             return Functions::messageBox(
                 __('game/alliance.al_circular_sended'),
-                join('<br/>', $members_list),
+                join('<br>', $members_list),
                 'game.php?page=alliance',
                 __('game/alliance.al_continue'),
                 true
@@ -502,7 +502,7 @@ class AllianceController extends BaseController
 
         return Functions::messageBox(
             strtr(__('game/alliance.al_do_you_really_want_to_go_out'), ['%s' => $this->alliance->getCurrentAlliance()->getAllianceName()]),
-            '<br/>',
+            '<br>',
             'game.php?page=alliance&mode=exit&yes=1',
             __('game/alliance.al_go_out_yes')
         );

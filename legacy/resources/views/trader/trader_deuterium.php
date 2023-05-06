@@ -17,7 +17,7 @@
         }
     }
 </script>
-<br />
+<br>
 <div id="content" role="main">
     <form id="trader" action="" method="post" role="form">
         <input type="hidden" name="ress" value="deuterium">

@@ -359,7 +359,7 @@ class UsersController extends BaseController
         $errors = '';
 
         if ($username == '' or $this->usersModel->checkUsername($username, $this->id)) {
-            $errors .= __('admin/users.us_error_username') . '<br />';
+            $errors .= __('admin/users.us_error_username') . '<br>';
         }
 
         if ($password != '') {
@@ -369,23 +369,23 @@ class UsersController extends BaseController
         }
 
         if ($email == '' or $this->usersModel->checkEmail($email, $this->id)) {
-            $errors .= __('admin/users.us_error_email') . '<br />';
+            $errors .= __('admin/users.us_error_email') . '<br>';
         }
 
         if ($authlevel < 0 or $authlevel > 3) {
-            $errors .= __('admin/users.us_error_authlevel') . '<br />';
+            $errors .= __('admin/users.us_error_authlevel') . '<br>';
         }
 
         if ($id_planet <= 0) {
-            $errors .= __('admin/users.us_error_idplanet') . '<br />';
+            $errors .= __('admin/users.us_error_idplanet') . '<br>';
         }
 
         if ($cur_planet <= 0) {
-            $errors .= __('admin/users.us_error_current_planet') . '<br />';
+            $errors .= __('admin/users.us_error_current_planet') . '<br>';
         }
 
         if ($ally_id < 0) {
-            $errors .= __('admin/users.us_error_ally_id') . '<br />';
+            $errors .= __('admin/users.us_error_ally_id') . '<br>';
         }
 
         if ($errors != '') {

@@ -24,7 +24,7 @@
         <input type="hidden" name="capacity{ship_id}" value="{capacity}" />
         <input type="hidden" name="ship{ship_id}" value="{ship}" />
     {/fleet_block}
-    <br />
+    <br>
     <div id="content" role="main">
         <table role="presentation" border="0" cellpadding="0" cellspacing="1" width="519">
             <tr align="left" height="20">
@@ -41,7 +41,7 @@
                             <th>
                                 <input id="{id}" type="radio" name="mission" value="{value}"{checked}/>
                                 <label for="{id}">{mission}</label>
-                                <br />
+                                <br>
                                 {expedition_message}
                             </th>
                         </tr>

@@ -45,7 +45,7 @@
                                                                             var UserList = new filterlist(document.users.ban_name);
                                                                                 //-->
                                                                 </script>
-                                                                <br />
+                                                                <br>
                                                                 <span class="small_font">
                                                                     <a href="javascript:UserList.set('^A')"
                                                                         title="{{ __('admin/ban.bn_select_title') }} A">A</a>
@@ -100,7 +100,7 @@
                                                                     <a href="javascript:UserList.set('^Z')"
                                                                         title="{{ __('admin/ban.bn_select_title') }} Z">Z</a>
                                                                 </span>
-                                                                <br />
+                                                                <br>
                                                                 <span class="small_font">
                                                                     {{ __('admin/ban.bn_sort') }}:
                                                                     <a href="admin.php?page=ban">{{ __('admin/ban.bn_sort_by_user') }}</a>
@@ -109,18 +109,18 @@
                                                                     <a
                                                                         href="admin.php?page=ban&view=user_banned">{{ __('admin/ban.bn_sort_suspended') }}</a>
                                                                 </span>
-                                                                <br /><br />
-                                                                <br />
+                                                                <br><br>
+                                                                <br>
                                                                 <input type="text" name="regexp"
                                                                     onKeyUp="UserList.set(this.value)">
-                                                                <br />
+                                                                <br>
                                                                 <input type="button"
                                                                     onClick="UserList.set(this.form.regexp.value)"
                                                                     value="{{ __('admin/ban.bn_button_filter') }}" class="btn btn-primary">
                                                                 <input type="button"
                                                                     onClick="UserList.reset();this.form.regexp.value = ''"
                                                                     value="{{ __('admin/ban.bn_button_remove') }}" class="btn btn-primary">
-                                                                <br /><br />
+                                                                <br><br>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -156,7 +156,7 @@
                                                                             var UsersBan = new filterlist(document.userban.unban_name);
                                                                                 //-->
                                                                 </script>
-                                                                <br />
+                                                                <br>
                                                                 <span class="small_font">
                                                                     <a href="javascript:UsersBan.set('^A')"
                                                                         title="{{ __('admin/ban.bn_select_title') }} A">A</a>
@@ -211,25 +211,25 @@
                                                                     <a href="javascript:UsersBan.set('^Z')"
                                                                         title="{{ __('admin/ban.bn_select_title') }} Z">Z</a>
                                                                 </span>
-                                                                <br />
+                                                                <br>
                                                                 <span class="small_font">
                                                                     {{ __('admin/ban.bn_sort') }}:
                                                                     <a href="admin.php?page=ban">{{ __('admin/ban.bn_sort_by_user') }}</a>
                                                                     <a
                                                                         href="admin.php?page=ban&order2=id">{{ __('admin/ban.bn_sort_by_id') }}</a>
                                                                 </span>
-                                                                <br /><br />
-                                                                <br />
+                                                                <br><br>
+                                                                <br>
                                                                 <input type="text" name="regexp"
                                                                     onKeyUp="UsersBan.set(this.value)">
-                                                                <br />
+                                                                <br>
                                                                 <input type="button"
                                                                     onClick="UsersBan.set(this.form.regexp.value)"
                                                                     value="{{ __('admin/ban.bn_button_filter') }}" class="btn btn-primary">
                                                                 <input type="button"
                                                                     onClick="UsersBan.set(this.form.regexp.value)"
                                                                     value="{{ __('admin/ban.bn_button_remove') }}" class="btn btn-primary">
-                                                                <br /><br />
+                                                                <br><br>
                                                             </div>
                                                         </td>
                                                     </tr>

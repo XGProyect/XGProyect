@@ -88,7 +88,7 @@ class OverviewController extends BaseController
                 if ($is_current_planet) {
                     $building_block = DevelopmentsLib::currentBuilding('overview', $building);
                     $building_block .= __('game/constructions.' . $this->objects->getObjects($building)) . ' (' . $level . ')';
-                    $building_block .= '<br /><div id="blc" class="z">' . FormatLib::prettyTime($time_to_end) . '</div>';
+                    $building_block .= '<br><div id="blc" class="z">' . FormatLib::prettyTime($time_to_end) . '</div>';
                     $building_block .= "\n<script language=\"JavaScript\">";
                     $building_block .= "\n	pp = \"" . $time_to_end . "\";\n";
                     $building_block .= "\n	pk = \"" . 1 . "\";\n";

@@ -1,4 +1,4 @@
-<br />
+<br>
 <div id="content" role="main">
     <center>
         <form action="" method="POST" role="form">

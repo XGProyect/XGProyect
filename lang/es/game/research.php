@@ -4,7 +4,7 @@ return [
     're_lab_required' => '¡Es necesario construir primero un laboratorio de investigación en este planeta!',
     're_time' => 'Tiempo de investigación: ',
     're_research' => 'Investigar',
-    're_from' => 'de<br />',
+    're_from' => 'de<br>',
     're_building_lab' => 'No se puede investigar cuando se esta ampliando el laboratorio',
     're_spy' => ' espia',
     're_commander' => ' comandante',

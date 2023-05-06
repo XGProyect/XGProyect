@@ -1,7 +1,7 @@
 @extends('master.game')
 
 @section('content')
-<br />
+<br>
 <div id="content" role="main">
     <form action="" method="POST" role="form">
         <table width="519px">

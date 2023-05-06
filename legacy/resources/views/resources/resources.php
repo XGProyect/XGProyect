@@ -1,4 +1,4 @@
-<br />
+<br>
 <div id="content" role="main">
     <form action="" method="post" role="form">
         <table width="569">

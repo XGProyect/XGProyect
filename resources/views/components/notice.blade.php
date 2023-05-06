@@ -6,5 +6,5 @@
         </td>
     </tr>
 </table>
-<br />
+<br>
 @endif

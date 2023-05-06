@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <br/>
+    <br>
     {!! $middle1 !!}
     <table role="presentation" width="519px">
         <tr>

@@ -15,7 +15,7 @@
         <tr>
             <th width="150px">
                 {fl_friends_list}
-                <br />
+                <br>
                 <select size="5" style="width:150px;" name="friends_list">
                     {buddies_list}
                     <option value="{value}">{title}</option>
@@ -28,7 +28,7 @@
             </th>
             <th width="150px">
                 {fl_union_members} ({invited_count}/5)
-                <br />
+                <br>
                 <select size="5" style="width:150px;" name="members_list">
                     {members_list}
                     <option value="{value}">{title}</option>

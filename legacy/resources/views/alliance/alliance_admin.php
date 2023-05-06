@@ -1,5 +1,5 @@
 <script src="{js_path}cntchar-min.js" type="text/javascript"></script>
-<br />
+<br>
 <div id="content" role="main">
     <table role="presentation" width="519px">
         <tr>

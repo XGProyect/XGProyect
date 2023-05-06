@@ -1,4 +1,4 @@
-<br />
+<br>
 <div id="content" role="main">
     <table role="presentation" width="600">
         <tr>
@@ -9,7 +9,7 @@
                 <img src="{dpath}premium/DMaterie.jpg" width="120" height="120" alt=""/>
             </td>
             <td class="l">
-                <strong>{dark_matter}</strong><br/>
+                <strong>{dark_matter}</strong><br>
                 {of_darkmatter_description}
                 <div style="margin:4px 4px;">
                     <table role="presentation">
@@ -38,7 +38,7 @@
                 <img src="{dpath}premium/{img_big}.jpg" width="120" height="120" alt=""/>
             </td>
             <td class="l" rowspan="2">
-                <strong role="heading" aria-level="3">{name}</strong> (<strong>{status}</strong>)<br/>
+                <strong role="heading" aria-level="3">{name}</strong> (<strong>{status}</strong>)<br>
                 {description}
                 <div style="margin:4px 4px;">
                     <table role="presentation">
@@ -58,7 +58,7 @@
                     <strong>
                             {of_week}<br>
                             <span style="color:lime">{week_price}</span>
-                            <br/>{dark_matter}
+                            <br>{dark_matter}
                     </strong>
                 </a>
             </td>
@@ -69,7 +69,7 @@
                     <strong>
                         {of_months}<br>
                         <span style="color:lime">{month_price}</span>
-                        <br/>{dark_matter}
+                        <br>{dark_matter}
                     </strong>
                 </a>
             </td>

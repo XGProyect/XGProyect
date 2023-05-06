@@ -1,4 +1,4 @@
-<br/>
+<br>
 <div id="content" role="main">
     <table width="520">
         <tr>

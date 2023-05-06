@@ -211,19 +211,19 @@ class AlliancesController extends BaseController
 
         if ($alliance_name != $alliance_name_orig) {
             if ($alliance_name == '' or !$this->alliancesModel->checkAllianceName($alliance_name)) {
-                $errors .= __('admin/alliances.al_error_alliance_name') . '<br />';
+                $errors .= __('admin/alliances.al_error_alliance_name') . '<br>';
             }
         }
 
         if ($alliance_tag != $alliance_tag_orig) {
             if ($alliance_tag == '' or !$this->alliancesModel->checkAllianceTag($alliance_tag)) {
-                $errors .= __('admin/alliances.al_error_alliance_tag') . '<br />';
+                $errors .= __('admin/alliances.al_error_alliance_tag') . '<br>';
             }
         }
 
         if ($alliance_owner != $alliance_owner_orig) {
             if ($alliance_owner <= 0 or $this->alliancesModel->checkAllianceFounder($alliance_owner)) {
-                $errors .= __('admin/alliances.al_error_founder') . '<br />';
+                $errors .= __('admin/alliances.al_error_founder') . '<br>';
             }
         }
 

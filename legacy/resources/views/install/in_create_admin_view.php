@@ -4,7 +4,7 @@
     {alert}
     <div class="hero-unit">
         <h1>{ins_install_title}</h1>
-        <br />
+        <br>
         <form action="" method="post">
             <input type="hidden" name="page" value="{step}" />
             <div align="left">

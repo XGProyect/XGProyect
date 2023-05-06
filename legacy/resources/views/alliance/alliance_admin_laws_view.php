@@ -1,4 +1,4 @@
-<br />
+<br>
 <div id="content" role="main">
     <a href="game.php?page=alliance&mode=admin&edit=ally">{al_back}</a>
 
@@ -48,7 +48,7 @@
             </tr>
         </form>
     </table>
-    <br/>
+    <br>
     <form action="game.php?page=alliance&mode=admin&edit=rights" method="POST" role="form">
         <table width="519">
             <tr>

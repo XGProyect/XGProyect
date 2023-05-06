@@ -4,7 +4,7 @@
         new_win.focus();
     }
 </script>
-<br />
+<br>
 <div id="content" role="main">
     <form action="game.php?page=messages" method="post" role="form">
         <table width="519">

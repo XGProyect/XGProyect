@@ -60,7 +60,7 @@ class BBCodeLib
 
     private function setLineJump(): string
     {
-        return '<br/>';
+        return '<br>';
     }
 
     private function setReturn(): string

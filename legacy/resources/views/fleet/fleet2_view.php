@@ -27,7 +27,7 @@
     <input type="hidden" name="thisplanet" value="{planet}" />
     <input type="hidden" name="thisplanettype" value="{planet_type}" />
     <input type="hidden" name="target_mission" value="{target_mission}" />
-    <br />
+    <br>
     <div id="content" role="main">
         <table width="519" border="0" cellpadding="0" cellspacing="1">
             <tr height="20">

@@ -1,7 +1,7 @@
 @extends('master.game')
 
 @section('content')
-    <br />
+    <br>
     <div id="content" role="main">
         {{ $message }}
         <form action="" method="post" role="form">
@@ -15,7 +15,7 @@
                     </th>
                     <td class="l">
                         <a href="game.php?page=infos&gid={{ $item['element'] }}">{{ $item['element_name'] }}</a> {{ $item['element_nbre'] }}<br>
-                        {!! $item['element_description'] !!}<br/>
+                        {!! $item['element_description'] !!}<br>
                         {!! $item['element_price'] !!}
                         {!! $item['building_time'] !!}
                     </td>

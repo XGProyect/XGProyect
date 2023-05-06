@@ -3,7 +3,7 @@
 <div class="span9">
     <div class="hero-unit">
         <h1>{ins_install_license}</h1>
-        <br />
+        <br>
         <div align="center">
             <div style="overflow-x:auto;overflow-y:visible;width:100%;height:470px;text-align:justify;">
                 <h2>XG Proyect&#153; License</h2>

@@ -4,7 +4,7 @@ return [
     're_lab_required' => 'You need to build a research laboratory on this planet first!',
     're_time' => 'Research time: ',
     're_research' => 'research',
-    're_from' => 'from<br />',
+    're_from' => 'from<br>',
     're_building_lab' => 'Can not research when the laboratory is expanding',
     're_spy' => ' spy',
     're_commander' => ' commander',

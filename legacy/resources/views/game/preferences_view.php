@@ -8,7 +8,7 @@
             </td>
         </tr>
     </table>
-    <br />
+    <br>
     {/status_message}
     <form action="game.php?page=preferences" method="post" role="form">
         <table role="presentation" width="519px">

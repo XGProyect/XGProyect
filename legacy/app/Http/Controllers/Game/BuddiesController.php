@@ -387,7 +387,7 @@ class BuddiesController extends BaseController
                 $url = $this->generateUrl($bid, 1, __('game/buddies.bu_cancel_request'));
             } else {
                 $url = $this->generateUrl($bid, 2, __('game/buddies.bu_accept'));
-                $url .= '<br/>';
+                $url .= '<br>';
                 $url .= $this->generateUrl($bid, 1, __('game/buddies.bu_decline'));
             }
         }

@@ -1,7 +1,7 @@
 @extends('master.game')
 
 @section('content')
-    <br />
+    <br>
     <div id="content" role="main">
         {!! $BuildListScript !!}
         <table width="530">

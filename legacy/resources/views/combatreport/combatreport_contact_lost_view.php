@@ -3,7 +3,7 @@
         <tr>
             <td>
                 {cr_lost_contact}
-                <br />
+                <br>
                 {cr_first_round}
             </td>
         </tr>

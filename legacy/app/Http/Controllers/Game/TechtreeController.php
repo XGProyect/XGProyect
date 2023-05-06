@@ -63,7 +63,7 @@ class TechtreeController extends BaseController
                 'tt_info' => $object,
                 'tt_name' => $this->langs->language[$this->_resource[$object]],
                 'tt_detail' => '',
-                'requirements' => join('<br/>', $this->getRequirements($object)),
+                'requirements' => join('<br>', $this->getRequirements($object)),
             ];
         }
 

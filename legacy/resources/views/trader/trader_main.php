@@ -1,6 +1,6 @@
 <form action="game.php?page=traderOverview" method="post" role="form">
     <input type="hidden" name="action" value="2">
-    <br />
+    <br>
     <div id="content">
         <table width="600">
             <tr>
@@ -13,7 +13,7 @@
                         <option value="deut">{Deuterium}</option>
                     </select>
                     <br>
-                    {tr_exchange_quota}<br /><br />
+                    {tr_exchange_quota}<br><br>
                     <input type="submit" value="{tr_call_trader_submit}" /></th>
             </tr>
         </table>

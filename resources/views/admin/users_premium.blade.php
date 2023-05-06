@@ -21,7 +21,7 @@
                         <tr>
                             <td>
                                 {{ $item['premium'] }}
-                                <br />
+                                <br>
                                 <span class="small_font bold_font {{ $item['status_style'] }}">{{ $item['status'] }}</span>
                             </td>
                             <td>

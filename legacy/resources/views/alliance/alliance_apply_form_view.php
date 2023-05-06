@@ -1,5 +1,5 @@
 <script src="{js_path}cntchar-min.js" type="text/javascript"></script>
-<br />
+<br>
 <div id="content" role="main">
     <form action="game.php?page=alliance&mode=apply&allyid={allyid}" method="POST" id="apply" role="form">
         <table width="519">

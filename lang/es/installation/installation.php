@@ -4,9 +4,9 @@ return [
     'lang_code' => 'es',
 
     // messages
-    'ins_no_server_requirements' => 'Tu servidor/hosting no cumple con los requisitos m&iacute;nimos que requiere XG Proyect para funcionar.<br /><br />Requisitos: <br />- PHP 8.1+<br />- MySQL 5.7+',
+    'ins_no_server_requirements' => 'Tu servidor/hosting no cumple con los requisitos m&iacute;nimos que requiere XG Proyect para funcionar.<br><br>Requisitos: <br>- PHP 8.1+<br>- MySQL 5.7+',
     'ins_not_writable' => 'Debes dar permisos de escritura (chmod 777) al directorio config para poder continuar con la instalación.',
-    'ins_already_installed' => 'XG Proyect ya se encuentra instalado. Selecciona una opci&oacute;n: <br /><br /> - <a href="../admin.php?page=update">Actualizar</a> <br /> - <a href="../">Volver al juego</a> <br /><br />En el caso de que no desees realizar ninguna acci&oacute;n, por seguridad, te recomendamos <span style="color:red;text-decoration:underline;">BORRAR</span> el directorio install.',
+    'ins_already_installed' => 'XG Proyect ya se encuentra instalado. Selecciona una opci&oacute;n: <br><br> - <a href="../admin.php?page=update">Actualizar</a> <br> - <a href="../">Volver al juego</a> <br><br>En el caso de que no desees realizar ninguna acci&oacute;n, por seguridad, te recomendamos <span style="color:red;text-decoration:underline;">BORRAR</span> el directorio install.',
 
     // error headers
     'ins_error_title' => '¡Alerta!',

@@ -1,4 +1,4 @@
-<br />
+<br>
 <div id="content" role="main">
     <form action="game.php?page=renameplanet" method="POST" role="form">
         <table role="presentation" width="519">

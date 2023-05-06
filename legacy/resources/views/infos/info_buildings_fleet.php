@@ -1,4 +1,4 @@
-<br />
+<br>
 <div id="content" role="main">
     <table width="519">
         <tbody>
@@ -13,7 +13,7 @@
                         <tbody>
                             <tr>
                                 <td><img src="{dpath}elements/{image}.gif" align="top" border="0" height="120" width="120" alt=""/></td>
-                                <td>{description}<br/><br/>{rf_info_fr}{rf_info_to}</td>
+                                <td>{description}<br><br>{rf_info_fr}{rf_info_to}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -1,4 +1,4 @@
-<br />
+<br>
 <div id="content" role="main">
     <form name="stats" method="post" role="form">
         <table width="519">

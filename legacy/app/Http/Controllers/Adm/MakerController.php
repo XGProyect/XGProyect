@@ -105,7 +105,7 @@ class MakerController extends BaseController
 
                 session()->flash('success', strtr(__('admin/maker.mk_user_added'), ['%s' => $pass]));
             } else {
-                session()->flash('warning', '<br/>' . $error);
+                session()->flash('warning', '<br>' . $error);
             }
         }
 

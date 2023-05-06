@@ -1,7 +1,7 @@
 @extends('master.game')
 
 @section('content')
-    <br />
+    <br>
     <div id="content" role="main">
         <table border="0" cellpadding="0" cellspacing="1" width="750px">
             <tbody>

@@ -80,7 +80,7 @@ class ResearchController extends BaseController
                     if ($this->_is_working['working_on']['planet_b_tech_id'] == $tech) {
                         if ($this->_is_working['working_on']['planet_id'] != $this->planet['planet_id']) {
                             $bloc['tech_time'] = $this->_is_working['working_on']['planet_b_tech'] - time();
-                            $bloc['tech_name'] = __('game/research.re_from') . $this->_is_working['working_on']['planet_name'] . '<br /> ' . FormatLib::prettyCoords($this->_is_working['working_on']['planet_galaxy'], $this->_is_working['working_on']['planet_system'], $this->_is_working['working_on']['planet_planet']);
+                            $bloc['tech_name'] = __('game/research.re_from') . $this->_is_working['working_on']['planet_name'] . '<br> ' . FormatLib::prettyCoords($this->_is_working['working_on']['planet_galaxy'], $this->_is_working['working_on']['planet_system'], $this->_is_working['working_on']['planet_planet']);
                             $bloc['tech_home'] = $this->_is_working['working_on']['planet_id'];
                             $bloc['tech_id'] = $this->_is_working['working_on']['planet_b_tech_id'];
                         } else {

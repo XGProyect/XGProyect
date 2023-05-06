@@ -886,7 +886,7 @@ class Destroy extends Missions
 
         $raport[] = sprintf(__('game/destroy.des_moon_ds_chances'), $this->_destruction['moon_chance'], $this->_destruction['ds_chance']);
 
-        return join('<br/>', $raport);
+        return join('<br>', $raport);
     }
 
     /**
