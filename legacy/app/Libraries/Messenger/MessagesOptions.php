@@ -121,7 +121,7 @@ final class MessagesOptions
     public function getMessageFormat()
     {
         if ($this->_message_format == '') {
-            return MessageFormat::simple;
+            return MessagesFormat::SIMPLE;
         }
 
         return $this->_message_format;
