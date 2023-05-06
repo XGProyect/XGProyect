@@ -28,13 +28,19 @@ class ChangelogController extends BaseController
         $this->changelogModel = new Changelog();
 
         $this->runAction();
-        $this->buildPage();
+        $this->getAlertMessage();
+
+        Template::getInstance()->view(
+            'admin.changelog',
+            [
+                'changelog' => $this->buildListOfEntries(),
+            ]
+        );
     }
 
     private function runAction(): void
     {
         // route to the right page
-        $allowed_actions = ['add', 'edit', 'delete'];
         $sub_page = filter_input(INPUT_GET, 'action');
         $changelog_id = filter_input(INPUT_GET, 'changelogId', FILTER_VALIDATE_INT);
 
@@ -47,23 +53,6 @@ class ChangelogController extends BaseController
         }
     }
 
-    private function buildPage(): void
-    {
-        $this->getAlertMessage();
-
-        Template::getInstance()->view(
-            'admin.changelog',
-            [
-                'changelog' => $this->buildListOfEntries(),
-            ]
-        );
-    }
-
-    /**
-     * Build the list of changelog entries
-     *
-     * @return array
-     */
     private function buildListOfEntries(): array
     {
         $entries = $this->changelogModel->getAllEntries();
@@ -88,11 +77,6 @@ class ChangelogController extends BaseController
         }
     }
 
-    /**
-     * Show add a new entry page
-     *
-     * @return void
-     */
     private function addAction(): void
     {
         $this->saveAction();
@@ -105,12 +89,6 @@ class ChangelogController extends BaseController
         );
     }
 
-    /**
-     * Show edit an existing entry page
-     *
-     * @param integer $changelog_id
-     * @return void
-     */
     private function editAction(int $changelog_id): void
     {
         $this->saveAction();
@@ -121,13 +99,6 @@ class ChangelogController extends BaseController
         );
     }
 
-    /**
-     * Get data to build the action add or action edit pages
-     *
-     * @param string $action
-     * @param integer $changelog_id
-     * @return array
-     */
     private function getActionData(string $action, int $changelog_id = 0): array
     {
         $changelog_lang_id = 0;
@@ -147,7 +118,6 @@ class ChangelogController extends BaseController
         }
 
         return [
-            'js_path' => JS_PATH,
             'action' => $action,
             'changelog_id' => $changelog_id,
             'current_action' => strtr(
@@ -163,7 +133,6 @@ class ChangelogController extends BaseController
 
     private function saveAction(): void
     {
-        // post actions
         $data = filter_input_array(INPUT_POST, [
             'changelog_id' => [
                 'filter' => FILTER_VALIDATE_INT,
@@ -189,13 +158,13 @@ class ChangelogController extends BaseController
             ],
             'text' => [
                 'filter' => FILTER_UNSAFE_RAW,
-            ], // changelog description
+            ],
         ]);
 
         if ($data) {
             $valid = true;
 
-            foreach ($data as $field => $value) {
+            foreach ($data as $value) {
                 if ($value === false or $value === null) {
                     $valid = false;
                     break;
@@ -216,12 +185,6 @@ class ChangelogController extends BaseController
         }
     }
 
-    /**
-     * Delete an existing record
-     *
-     * @param integer $changelog_id
-     * @return void
-     */
     private function deleteAction(int $changelog_id): void
     {
         $this->changelogModel->deleteEntry($changelog_id);
@@ -229,12 +192,6 @@ class ChangelogController extends BaseController
         Functions::redirect('admin.php?page=changelog&success=delete');
     }
 
-    /**
-     * Build the list of languages
-     *
-     * @param integer $default_language
-     * @return array
-     */
     private function getAllLanguages(int $default_language): array
     {
         $languages = $this->changelogModel->getAllLanguages();
@@ -252,12 +209,6 @@ class ChangelogController extends BaseController
         return $list_of_languages;
     }
 
-    /**
-     * Check if it is a valid action, add or edit
-     *
-     * @param string|null $action
-     * @return string|null
-     */
     private function isValidAction(?string $action): ?string
     {
         if (\in_array($action, ['add', 'edit'])) {
@@ -267,12 +218,6 @@ class ChangelogController extends BaseController
         return null;
     }
 
-    /**
-     * Check if it is a valid date
-     *
-     * @param string|null $date
-     * @return string|null
-     */
     private function isValidDate(?string $date): ?string
     {
         try {

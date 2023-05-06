@@ -1,8 +1,11 @@
-<script src="{js_path}cntchar-min.js" type="text/javascript"></script>
+@extends('master.admin')
+
+@section('content')
+<script src="{{ asset('js/cntchar-min.js') }}" type="text/javascript"></script>
 <div class="container-fluid">
     <form action="" method="POST" name="changelog">
-        <input type="hidden" name="action" value="{action}">
-        <input type="hidden" name="changelog_id" value="{changelog_id}">
+        <input type="hidden" name="action" value="{{ $action }}">
+        <input type="hidden" name="changelog_id" value="{{ $changelog_id }}">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/changelog.ch_title') }}</h1>
@@ -15,7 +18,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                         aria-expanded="true" aria-controls="collapseGeneral">
-                        <h6 class="m-0 font-weight-bold text-primary">{current_action}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ $current_action }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show" id="collapseGeneral" style="">
@@ -25,13 +28,13 @@
                                     <tr>
                                         <td>
                                             <input class="form-control" type="date" name="changelog_date"
-                                                value="{changelog_date}" min="1000-01-01" max="3000-12-31" required>
+                                                value="{{ $changelog_date }}" min="1000-01-01" max="3000-12-31" required>
                                         </td>
                                         <td>
                                             <div class="row">
                                                 <div class="col-11">
                                                     <input class="form-control" type="text" name="changelog_version"
-                                                        value="{changelog_version}" placeholder="{{ __('admin/changelog.ch_version') }}"
+                                                        value="{{ $changelog_version }}" placeholder="{{ __('admin/changelog.ch_version') }}"
                                                         pattern="^(0|[1-9]\d*)\.((0|[1-9]\d*)\.)?(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z][0-9a-zA-Z]*))?$"
                                                         required>
                                                 </div>
@@ -45,9 +48,9 @@
                                         <td>
                                             <select class="form-control" name="changelog_language" required>
                                                 <option value="">{{ __('admin/changelog.ch_pick_language') }}</option>
-                                                {languages}
-                                                <option value="{language_id}" {selected}>{language_name}</option>
-                                                {/languages}
+                                                @foreach ($languages as $item)
+                                                <option value="{{ $item['language_id'] }}" {{ $item['selected'] }}>{{ $item['language_name'] }}</option>
+                                                @endforeach
                                             </select>
                                         </td>
                                     </tr>
@@ -55,7 +58,7 @@
                                         <td colspan="3">
                                             <textarea class="form-control" name="text" rows="10"
                                                 onkeyup="javascript:cntChars('changelog', 5000);"
-                                                required>{changelog_description}</textarea>
+                                                required>{{ $changelog_description }}</textarea>
                                             (<span id="cntChars">0</span> / 5000 {{ __('admin/changelog.ch_characters') }})
                                         </td>
                                     </tr>
@@ -76,3 +79,4 @@
         </div>
     </form>
 </div>
+@endsection
