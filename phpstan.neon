@@ -1,6 +1,11 @@
 parameters:
-	level: 1
-	paths:
-		- app
-		- legacy
-		- tests
+    paths:
+        - app
+        - legacy
+        - tests
+
+    # The level 8 is the highest level
+    level: 1
+
+    ignoreErrors:
+        - '#Call to an undefined static method [a-zA-Z0-9\\_]+::[a-zA-Z0-9\\_]+\(\)#'
