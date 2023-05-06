@@ -10,8 +10,7 @@ use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 
 class LanguagesController extends BaseController
 {
-    private string $alert = '';
-    private string $current_file = '';
+    private string $currentFile = '';
 
     public function __invoke(): void
     {
@@ -23,7 +22,16 @@ class LanguagesController extends BaseController
 
         $this->runAction();
 
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.languages',
+            array_merge(
+                $this->getFiles(),
+                $this->getContents(),
+                [
+                    'editFile' => $this->currentFile,
+                ]
+            )
+        );
     }
 
     private function runAction(): void
@@ -43,19 +51,15 @@ class LanguagesController extends BaseController
 
     private function doFileAction(string $file): void
     {
-        $this->current_file = $file;
+        $this->currentFile = $file;
     }
 
-    private function doSaveAction(string $file_data): void
+    private function doSaveAction(string $fileData): void
     {
-        // get the file
-        $file = lang_path($this->current_file);
+        $fs = @fopen(lang_path($this->currentFile), 'w');
 
-        // open the file
-        $fs = @fopen($file, 'w');
-
-        if ($fs && $file_data != '') {
-            fwrite($fs, $file_data);
+        if ($fs && $fileData != '') {
+            fwrite($fs, $fileData);
 
             fclose($fs);
         }
@@ -63,29 +67,15 @@ class LanguagesController extends BaseController
         session()->flash('success', __('admin/languages.le_all_ok_message'));
     }
 
-    private function buildPage(): void
-    {
-        Template::getInstance()->view(
-            'admin.languages',
-            array_merge(
-                $this->getFiles(),
-                $this->getContents(),
-                [
-                    'edit_file' => $this->current_file,
-                ]
-            )
-        );
-    }
-
     private function getContents(): array
     {
-        if (empty($this->current_file)) {
+        if (empty($this->currentFile)) {
             return [
                 'contents' => $contents ?? '',
             ];
         }
 
-        $file = lang_path($this->current_file);
+        $file = lang_path($this->currentFile);
 
         // open the file
         $fs = @fopen($file, 'a+');
@@ -99,7 +89,7 @@ class LanguagesController extends BaseController
             fclose($fs);
         }
 
-        if (!$contents && $this->current_file != '') {
+        if (!$contents && $this->currentFile != '') {
             session()->flash('error', __('admin/languages.le_all_error_reading'));
         }
 
@@ -112,16 +102,16 @@ class LanguagesController extends BaseController
     {
         chdir(lang_path());
 
-        $langs_files = glob('{,*/,*/*/,*/*/*/}*.php', GLOB_BRACE);
-        $lang_options = [];
+        $langFiles = glob('{,*/,*/*/,*/*/*/}*.php', GLOB_BRACE);
+        $langOptions = [];
 
-        foreach ($langs_files as $file) {
-            $lang_options[] = [
+        foreach ($langFiles as $file) {
+            $langOptions[] = [
                 'lang_file' => $file,
-                'selected' => ($this->current_file == $file) ? 'selected = selected' : '',
+                'selected' => ($this->currentFile == $file) ? 'selected = selected' : '',
             ];
         }
 
-        return ['language_files' => $lang_options];
+        return ['language_files' => $langOptions];
     }
 }

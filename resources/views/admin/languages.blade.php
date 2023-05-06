@@ -6,7 +6,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/languages.le_edit') }}</h1>
-        <button type="submit" class="btn btn-primary btn-icon-split" onClick="return confirm('{{ __('admin/languages.le_warning') }} {{ __('admin/languages.le_sure') }}')">
+        <button type="submit" class="btn btn-primary btn-icon-split" onClick="return confirm('{{ __('admin/languages.le_warning') }} {{ __('admin/languages.le_sure') }}') ? edit_language.submit() : false;">
             <span class="icon text-white-50">
                 <i class="fas fa-save"></i>
             </span>
@@ -29,13 +29,13 @@
                         <form action="" method="POST" name="change_language">
                             <select class="form-control" name="file" class="input-xlarge" onchange="submit()">
                                 <option value="">{{ __('admin/languages.le_file') }}</option>
-                                {language_files}
-                                <option value="{lang_file}" {selected}>{lang_file}</option>
-                                {/language_files}
+                                @foreach ($language_files as $item)
+                                <option value="{{ $item['lang_file'] }}" {{ $item['selected'] }}>{{ $item['lang_file'] }}</option>
+                                @endforeach
                             </select>
                         </form>
                         <form action="" method="POST" name="edit_language">
-                            <input type="hidden" name="file" value="{edit_file}">
+                            <input type="hidden" name="file" value="{{ $editFile }}">
                             <div class="table-responsive">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tbody>
@@ -47,7 +47,7 @@
                                         <tr>
                                             <td>
                                                 <textarea class="form-control" name="save" rows="20"
-                                                    class="field span12">{contents}</textarea>
+                                                    class="field span12">{{ $contents }}</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
