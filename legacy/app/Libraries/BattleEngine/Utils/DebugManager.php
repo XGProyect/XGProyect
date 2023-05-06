@@ -77,7 +77,6 @@ class DebugManager
      * @param mixed $errstr
      * @param mixed $errfile
      * @param mixed $errline
-     * @return
      */
     public static function myErrorHandler($errno, $errstr, $errfile, $errline)
     {
@@ -110,7 +109,6 @@ class DebugManager
      * DebugManager::save()
      * default exception handler function
      * @param mixed $other
-     * @return
      */
     public static function save($other)
     {

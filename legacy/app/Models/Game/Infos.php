@@ -23,7 +23,7 @@ class Infos extends Model
         );
     }
 
-    public function doJump(string $sub_query_origin, string $sub_query_destiny, int $jump_time, int $current_planet_id, int $target_planet_id, int $user_id): void
+    public function doJump(string $sub_query_origin, string $sub_query_destiny, int $jump_time, int $current_planet_id, int $target_planet_id, int $userId): void
     {
         try {
             $this->db->beginTransaction();
@@ -35,7 +35,7 @@ class Infos extends Model
                     `user_current_planet` = '" . $target_planet_id . "'
                 WHERE `planet_id` = '" . $current_planet_id . "'
                     AND `ship_planet_id` = '" . $current_planet_id . "'
-                    AND `user_id` = '" . $user_id . "';"
+                    AND `user_id` = '" . $userId . "';"
             );
 
             $this->db->query(
@@ -55,10 +55,10 @@ class Infos extends Model
     /**
      * Get a list of moons
      *
-     * @param integer $user_id
+     * @param integer $userId
      * @return array
      */
-    public function getListOfMoons(int $user_id): array
+    public function getListOfMoons(int $userId): array
     {
         return $this->db->queryFetchAll(
             'SELECT
@@ -72,7 +72,7 @@ class Infos extends Model
             FROM `' . PLANETS . '` AS m
             INNER JOIN `' . BUILDINGS . "` AS b ON b.building_planet_id = m.planet_id
             WHERE m.`planet_type` = '3'
-                AND m.`planet_user_id` = '" . $user_id . "';"
+                AND m.`planet_user_id` = '" . $userId . "';"
         );
     }
 }

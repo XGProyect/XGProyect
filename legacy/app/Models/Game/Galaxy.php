@@ -8,7 +8,7 @@ use Xgp\App\Core\Model;
 
 class Galaxy extends Model
 {
-    public function getGalaxyDataByGalaxyAndSystem(int $galaxy, int $system, int $user_id): array
+    public function getGalaxyDataByGalaxyAndSystem(int $galaxy, int $system, int $userId): array
     {
         return $this->db->queryFetchAll(
             "SELECT
@@ -18,9 +18,9 @@ class Galaxy extends Model
                     FROM `" . BUDDY . '` AS b
                     WHERE
                     (
-                        b.`buddy_receiver` = ' . $user_id . '
+                        b.`buddy_receiver` = ' . $userId . '
                         OR
-                        b.`buddy_sender` = ' . $user_id . '
+                        b.`buddy_sender` = ' . $userId . '
                     )
                 ) AS buddys,
                 p.`planet_debris_metal` AS `metal`,
@@ -98,13 +98,13 @@ class Galaxy extends Model
         );
     }
 
-    public function countAmountFleetsByUserId(int $user_id): int
+    public function countAmountFleetsByUserId(int $userId): int
     {
         return (int) $this->db->queryFetch(
             'SELECT
                 COUNT(`fleet_id`) AS total_fleets
             FROM `' . FLEETS . "`
-            WHERE `fleet_owner` = '" . $user_id . "';"
+            WHERE `fleet_owner` = '" . $userId . "';"
         )['total_fleets'];
     }
 

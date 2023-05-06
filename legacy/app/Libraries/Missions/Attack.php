@@ -763,12 +763,12 @@ class Attack extends Missions
     /**
      * Set hyperspace technology level
      *
-     * @param integer $user_id
+     * @param integer $userId
      * @param integer $level
      * @return void
      */
-    private function setHyperspaceTechLevel(int $user_id, int $level): void
+    private function setHyperspaceTechLevel(int $userId, int $level): void
     {
-        $this->hyperspace_technology[$user_id] = $level;
+        $this->hyperspace_technology[$userId] = $level;
     }
 }

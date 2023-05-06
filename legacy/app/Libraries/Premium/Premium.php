@@ -42,9 +42,9 @@ class Premium
         }
     }
 
-    private function setUserId(int $user_id): void
+    private function setUserId(int $userId): void
     {
-        $this->current_user_id = $user_id;
+        $this->current_user_id = $userId;
     }
 
     /**

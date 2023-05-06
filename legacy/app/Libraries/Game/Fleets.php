@@ -86,9 +86,9 @@ class Fleets
         }
     }
 
-    private function setUserId(int $user_id): void
+    private function setUserId(int $userId): void
     {
-        $this->_current_user_id = $user_id;
+        $this->_current_user_id = $userId;
     }
 
     private function setFleetsCount(): void

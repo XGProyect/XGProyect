@@ -34,13 +34,13 @@ class Alliance extends Model
      *
      * @param string $alliance_name Alliance Name
      * @param string $alliance_tag  Alliance Tag
-     * @param int $user_id          User ID
+     * @param int $userId          User ID
      * @param string $founder_rank  Founder Rank
      * @param string $newcomer_rank  New member Rank
      *
      * @return void
      */
-    public function createNewAlliance($alliance_name, $alliance_tag, $user_id, $founder_rank, $newcomer_rank)
+    public function createNewAlliance($alliance_name, $alliance_tag, $userId, $founder_rank, $newcomer_rank)
     {
         try {
             $this->db->beginTransaction();
@@ -51,7 +51,7 @@ class Alliance extends Model
                 'INSERT INTO `' . ALLIANCE . "` SET
                 `alliance_name` = '" . $alliance_name . "',
                 `alliance_tag` = '" . $alliance_tag . "' ,
-                `alliance_owner` = '" . (int) $user_id . "',
+                `alliance_owner` = '" . (int) $userId . "',
                 `alliance_register_time` = '" . time() . "',
                 `alliance_ranks` = '" . strtr($rights_string, ['Founder' => $founder_rank, 'Newcomer' => $newcomer_rank]) . "'"
             );
@@ -67,7 +67,7 @@ class Alliance extends Model
                 'UPDATE ' . USERS . " SET
                 `user_ally_id`='" . $new_ally_id . "',
                 `user_ally_register_time`='" . time() . "'
-                WHERE `user_id`='" . (int) $user_id . "'"
+                WHERE `user_id`='" . (int) $userId . "'"
             );
 
             $this->db->commitTransaction();
@@ -103,11 +103,11 @@ class Alliance extends Model
      *
      * @param int    $alliance_id  Alliance ID
      * @param string $text Request Text
-     * @param int    $user_id      User ID
+     * @param int    $userId      User ID
      *
      * @retun void
      */
-    public function createNewUserRequest($alliance_id, $text, $user_id)
+    public function createNewUserRequest($alliance_id, $text, $userId)
     {
         $this->db->query(
             'UPDATE `' . USERS . "` SET
@@ -115,40 +115,26 @@ class Alliance extends Model
             `user_ally_request_text` = '" . $text . "',
             `user_ally_register_time` = '" . time() . "',
             `user_ally_rank_id` = '1'
-            WHERE `user_id`='" . (int) $user_id . "'"
+            WHERE `user_id`='" . (int) $userId . "'"
         );
     }
 
-    /**
-     * Cancel user request
-     *
-     * @param int $user_id User ID
-     *
-     * @retun void
-     */
-    public function cancelUserRequestById($user_id)
+    public function cancelUserRequestById(int $userId): void
     {
         $this->db->query(
             'UPDATE ' . USERS . "
                 SET `user_ally_request` = '0'
-            WHERE `user_id`= '" . (int) $user_id . "'"
+            WHERE `user_id`= '" . (int) $userId . "'"
         );
     }
 
-    /**
-     * Exit alliance
-     *
-     * @param int $user_id User ID
-     *
-     * @retun void
-     */
-    public function exitAlliance($alliance_id, $user_id)
+    public function exitAlliance($alliance_id, int $userId): void
     {
         $this->db->query(
             'UPDATE `' . USERS . "` SET
                 `user_ally_id` = '0',
                 `user_ally_rank_id` = '0'
-            WHERE `user_id` = '" . (int) $user_id . "'
+            WHERE `user_id` = '" . (int) $userId . "'
                 AND `user_ally_id` = '" . (int) $alliance_id . "'"
         );
     }
@@ -311,48 +297,48 @@ class Alliance extends Model
 
     /**
      *
-     * @param int    $user_id User ID
+     * @param int    $userId User ID
      * @param string $rank    Rank
      */
-    public function updateUserRank($user_id, $rank)
+    public function updateUserRank($userId, $rank)
     {
         $this->db->query(
             'UPDATE ' . USERS . " SET
                 `user_ally_rank_id` = '" . $this->db->escapeValue($rank) . "'
-            WHERE `user_id`='" . (int) $user_id . "'"
+            WHERE `user_id`='" . (int) $userId . "'"
         );
     }
 
     /**
      * Add an user to the alliance
      *
-     * @param int $user_id     User ID
+     * @param int $userId     User ID
      * @param int $alliance_id Alliance ID
      *
      * @return void
      */
-    public function addUserToAlliance($user_id, $alliance_id)
+    public function addUserToAlliance($userId, $alliance_id)
     {
         $this->db->query(
             'UPDATE `' . USERS . "` SET
                 `user_ally_request_text` = '',
                 `user_ally_request` = '0',
                 `user_ally_id` = '" . (int) $alliance_id . "'
-            WHERE `user_id` = '" . (int) $user_id . "'"
+            WHERE `user_id` = '" . (int) $userId . "'"
         );
     }
 
     /**
      * Remove user from alliance
      *
-     * @param int $user_id     User ID
+     * @param int $userId     User ID
      * @param int $alliance_id Alliance ID
      *
      * @return void
      */
-    public function removeUserFromAlliance($user_id)
+    public function removeUserFromAlliance($userId)
     {
-        $this->addUserToAlliance($user_id, 0);
+        $this->addUserToAlliance($userId, 0);
     }
 
     /**

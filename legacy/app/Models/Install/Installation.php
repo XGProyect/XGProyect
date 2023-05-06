@@ -7,26 +7,14 @@ use Xgp\App\Core\Model;
 
 class Installation extends Model
 {
-    /**
-     * Get a list of tables
-     *
-     * @param type $db_name DB Name
-     *
-     * @return array
-     */
-    public function getListOfTables($db_name)
+    public function getListOfTables($dbName): array
     {
         return $this->db->queryFetchAll(
-            'SHOW TABLES FROM ' . $db_name
+            'SHOW TABLES FROM ' . $dbName
         );
     }
 
-    /**
-     * Get a count of admins
-     *
-     * @return array
-     */
-    public function getAdmin()
+    public function getAdmin(): array
     {
         return $this->db->queryFetch(
             'SELECT COUNT(`user_id`) as count FROM ' . USERS . "
@@ -34,16 +22,7 @@ class Installation extends Model
         );
     }
 
-    /**
-     * Check if the connection can be stablish
-     *
-     * @param string $host     Host
-     * @param string $user     User
-     * @param string $password Password
-     *
-     * @return Database
-     */
-    public function tryConnection($host, $port, $user, $password)
+    public function tryConnection(string $host, string $port, string $user, string $password): bool
     {
         return $this->db->tryConnection($host, $port, $user, $password);
     }

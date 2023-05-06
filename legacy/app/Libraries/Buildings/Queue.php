@@ -7,29 +7,17 @@ final class Queue
     public const QUEUE_SEPARATOR = ';';
     public const ITEM_SEPARATOR = ',';
 
-    /**
-     * @var array $queue Queue in array format
-     */
-    private $queue = [];
+    private array|string $queue = [];
 
-    /**
-     * Init with current queue
-     *
-     * @param string $current_queue The current queue
-     *
-     * @return void
-     */
-    public function __construct($current_queue = [])
+    public function __construct(array|string $current_queue = [])
     {
         $this->queue = $current_queue;
     }
 
     /**
      * Process the queue and put it into an array format
-     *
-     * @return void
      */
-    private function breakDownCurrentQueue()
+    private function breakDownCurrentQueue(): void
     {
         // extract elements and filter empty values
         $elements = array_filter(explode(self::QUEUE_SEPARATOR, $this->queue));
@@ -46,10 +34,8 @@ final class Queue
 
     /**
      * Process the queue and put into a string
-     *
-     * @return void
      */
-    private function makeUpCurrentQueue()
+    private function makeUpCurrentQueue(): void
     {
         if (isset($this->queue)) {
             $queue = $this->queue;
@@ -64,12 +50,8 @@ final class Queue
 
     /**
      * Adds an element to the queue
-     *
-     * @param QueueElements $queue_elements Elements to queue
-     *
-     * @return void
      */
-    public function addElementToQueue(QueueElements $queue_elements)
+    public function addElementToQueue(QueueElements $queue_elements): void
     {
         if (is_object($queue_elements)) {
             if (!is_array($this->queue)) {
@@ -83,12 +65,8 @@ final class Queue
 
     /**
      * Removes an element from the queue
-     *
-     * @param int $element_id Element ID
-     *
-     * @return void
      */
-    public function removeElementFromQueue($element_id)
+    public function removeElementFromQueue(int $element_id): void
     {
         if (is_int($element_id)) {
             if (!is_array($this->queue)) {
@@ -102,12 +80,8 @@ final class Queue
 
     /**
      * Returns an element from the queue
-     *
-     * @param int $element_id Element ID
-     *
-     * @return array
      */
-    public function getElementFromQueueAsArray($element_id)
+    public function getElementFromQueueAsArray(int $element_id): array
     {
         if (isset($this->queue)) {
             if (!is_array($this->queue)) {
@@ -122,10 +96,8 @@ final class Queue
 
     /**
      * Returns the queue as a string
-     *
-     * @return string
      */
-    public function returnQueueAsString()
+    public function returnQueueAsString(): string
     {
         if (isset($this->queue)) {
             if (is_array($this->queue)) {
@@ -140,10 +112,8 @@ final class Queue
 
     /**
      * Returns the queue as an associative array
-     *
-     * @return array
      */
-    public function returnQueueAsArray()
+    public function returnQueueAsArray(): array
     {
         if (isset($this->queue)) {
             if (!is_array($this->queue)) {
@@ -158,10 +128,8 @@ final class Queue
 
     /**
      * Count the amount of elements of the current queue
-     *
-     * @return int
      */
-    public function countQueueElements()
+    public function countQueueElements(): int
     {
         if (isset($this->queue)) {
             if (!is_array($this->queue)) {

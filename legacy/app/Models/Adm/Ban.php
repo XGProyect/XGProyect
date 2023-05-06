@@ -96,7 +96,7 @@ class Ban extends Model
                 );
             }
 
-            $user_id = $this->db->queryFetch(
+            $userId = $this->db->queryFetch(
                 'SELECT
                     `user_id`
                 FROM `' . USERS . "`
@@ -113,9 +113,9 @@ class Ban extends Model
                     p.`planet_building_solar_plant_percent` = '0',
                     p.`planet_building_fusion_reactor_percent` = '0',
                     p.`planet_ship_solar_satellite_percent` = '0'
-                WHERE u.`user_id` = " . $user_id . '
-                        AND pr.`preference_user_id` = ' . $user_id . '
-                        AND p.`planet_user_id` = ' . $user_id . ';'
+                WHERE u.`user_id` = " . $userId . '
+                        AND pr.`preference_user_id` = ' . $userId . '
+                        AND p.`planet_user_id` = ' . $userId . ';'
             );
 
             $this->db->commitTransaction();

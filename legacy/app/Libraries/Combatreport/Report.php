@@ -91,13 +91,7 @@ class Report
         return $owners[0] ?? $owners;
     }
 
-    /**
-     *
-     * @param type $report_id
-     *
-     * @return ReportEntity
-     */
-    public function getReportOwnersAsArrayByReportId($report_id)
+    public function getReportOwnersAsArrayByReportId($report_id): array
     {
         $owners = [];
 
@@ -163,13 +157,9 @@ class Report
         }
     }
 
-    /**
-     *
-     * @param int $user_id User Id
-     */
-    private function setUserId($user_id)
+    private function setUserId(int $userId): void
     {
-        $this->_current_user_id = $user_id;
+        $this->_current_user_id = $userId;
     }
 
     /**

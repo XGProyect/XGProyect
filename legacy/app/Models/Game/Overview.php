@@ -6,16 +6,9 @@ use Xgp\App\Core\Model;
 
 class Overview extends Model
 {
-    /**
-     * Get own fleets
-     *
-     * @param int $user_id
-     *
-     * @return mixed
-     */
-    public function getOwnFleets($user_id)
+    public function getOwnFleets(int $userId): ?array
     {
-        if ((int) $user_id > 0) {
+        if ($userId > 0) {
             return $this->db->queryFetchAll(
                 'SELECT DISTINCT
                     fleets.*,
@@ -36,9 +29,9 @@ class Overview extends Model
                     FROM
                         `' . FLEETS . "` f
                     WHERE
-                        f.`fleet_owner` = '" . $user_id . "'
+                        f.`fleet_owner` = '" . $userId . "'
                     OR
-                        f.`fleet_target_owner` = '" . $user_id . "'
+                        f.`fleet_target_owner` = '" . $userId . "'
                     UNION ALL
                     SELECT
                         f.*
@@ -49,7 +42,7 @@ class Overview extends Model
                     WHERE
                         f.`fleet_id` IS NOT NULL
                     AND
-                        am.`acs_user_id` = '" . $user_id . "'
+                        am.`acs_user_id` = '" . $userId . "'
                 ) fleets
                 INNER JOIN `" . USERS . '` uo ON
                     uo.`user_id` = fleets.`fleet_owner`
@@ -75,16 +68,16 @@ class Overview extends Model
         return null;
     }
 
-    public function getPlanets($user_id)
+    public function getPlanets(int $userId): ?array
     {
-        if ((int) $user_id > 0) {
+        if ($userId > 0) {
             return $this->db->queryFetchAll(
                 'SELECT *
                     FROM ' . PLANETS . ' AS p
                     INNER JOIN ' . BUILDINGS . ' AS b ON b.building_planet_id = p.`planet_id`
                     INNER JOIN ' . DEFENSES . ' AS d ON d.defense_planet_id = p.`planet_id`
                     INNER JOIN ' . SHIPS . " AS s ON s.ship_planet_id = p.`planet_id`
-                    WHERE `planet_user_id` = '" . $user_id . "'
+                    WHERE `planet_user_id` = '" . $userId . "'
                             AND `planet_destroyed` = 0;"
             );
         }

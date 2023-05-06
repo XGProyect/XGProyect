@@ -2,8 +2,8 @@
 
 namespace Xgp\App\Libraries\BattleEngine\CombatObject;
 
-use Xgp\App\Libraries\BattleEngine\Models\ShipType;
 use Exception;
+use Xgp\App\Libraries\BattleEngine\Models\ShipType;
 
 /**
  *  OPBE
@@ -41,15 +41,7 @@ class PhysicShot
     private $hullDamage = 0;
     private $cellDestroyed = 0;
 
-    /**
-     * PhysicShot::__construct()
-     *
-     * @param ShipType $shipType
-     * @param int $damage
-     * @param int $count
-     * @return
-     */
-    public function __construct(ShipType $shipType, $damage, $count)
+    public function __construct(ShipType $shipType, $damage, int $count)
     {
         log_var('damage', $damage);
         log_var('count', $count);
@@ -65,37 +57,30 @@ class PhysicShot
     }
 
     /**
-     * PhysicShot::getAssorbedDamage()
      * Return the damage assorbed by shield
-     * @return float
      */
-    public function getAssorbedDamage($cell = false)
+    public function getAssorbedDamage(): float
     {
         return $this->assorbedDamage;
     }
 
     /**
-     * PhysicShot::getBouncedDamage()
      * Return the bounced damage
-     * @return float
      */
-    public function getBouncedDamage()
+    public function getBouncedDamage(): float
     {
         return $this->bouncedDamage;
     }
 
     /**
-     * PhysicShot::getHullDamage()
      * Return the damage assorbed by hull
-     * @return float
      */
-    public function getHullDamage()
+    public function getHullDamage(): float
     {
         return $this->hullDamage;
     }
 
     /**
-     * PhysicShot::getPureDamage()
      * Return the total amount of damage from enemy
      * @return int
      */
@@ -105,21 +90,17 @@ class PhysicShot
     }
 
     /**
-     * PhysicShot::getHitShips()
      * Return the number of hitten ships.
-     * @return
      */
-    public function getHitShips()
+    public function getHitShips(): int
     {
         return min($this->count, $this->fighters->getCount());
     }
 
     /**
-     * PhysicShot::start()
      * Start the system
-     * @return
      */
-    public function start()
+    public function start(): void
     {
         $this->bounce();
         $this->assorb();
@@ -127,17 +108,11 @@ class PhysicShot
     }
 
     /**
-     * PhysicShot::bounce()
      * If the shield is disabled, then bounced damaged is zero.
      * If the damage is exactly a multipler of the needed to destroy one shield's cell then bounced damage is zero.
      * If damage is more than shield,then bounced damage is zero.
-     *
-     * @param int $currentCellsCount
-     * @param int $cellsDestroyedInOneShot
-     * @param float $bouncedDamageForOneShot
-     * @return null
      */
-    private function bounce()
+    private function bounce(): void
     {
         $count = $this->count;
         $damage = $this->damage;
@@ -147,14 +122,10 @@ class PhysicShot
     }
 
     /**
-     * PhysicShot::assorb()
      * If the shield is disabled, then assorbed damaged is zero.
      * If the total damage is more than shield, than the assorbed damage should equal the shield value.
-     * @param int $currentCellsCount
-     * @param int $cellsDestroyedInOneShot
-     * @return null
      */
-    private function assorb()
+    private function assorb(): void
     {
         $count = $this->count;
         $damage = $this->damage;
@@ -168,12 +139,10 @@ class PhysicShot
     }
 
     /**
-     * PhysicShot::inflict()
      * HullDamage should be more than zero and less than shiplife.
      * Expecially, it should be less than the life of hitten ships.
-     * @return null
      */
-    private function inflict()
+    private function inflict(): void
     {
         $hullDamage = $this->getPureDamage() - $this->assorbedDamage - $this->bouncedDamage;
         $hullDamage = min($hullDamage, $this->fighters->getCurrentLife() * $this->getHitShips() / $this->fighters->getCount());
@@ -181,13 +150,9 @@ class PhysicShot
     }
 
     /**
-     * PhysicShot2::clamp()
      * Return $a if greater than $b, zero otherwise
-     * @param mixed $a
-     * @param mixed $b
-     * @return mized
      */
-    private function clamp($a, $b)
+    private function clamp(mixed $a, mixed $b): mixed
     {
         if ($a > $b) {
             return $a;

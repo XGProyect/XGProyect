@@ -50,13 +50,13 @@ class StatisticsLibrary
     /**
      * Rebuild the user points for the current planet and specific structure type.
      *
-     * @param int    $user_id   The user ID
+     * @param int    $userId   The user ID
      * @param int    $planet_id The planet ID
      * @param string $what      The structure type (buildings|defenses|research|ships)
      *
      * @return boolean
      */
-    public function rebuildPoints($user_id, $planet_id, $what)
+    public function rebuildPoints($userId, $planet_id, $what)
     {
         if (!in_array(config('DB_PREFIX') . $what, [BUILDINGS, DEFENSES, RESEARCH, SHIPS])) {
             return false;
@@ -66,7 +66,7 @@ class StatisticsLibrary
         $objects = Objects::getInstance()->getObjects();
 
         if ($what == 'research') {
-            $objectsToUpdate = $this->statisticsLibraryModel->getResearchToUpdate($user_id);
+            $objectsToUpdate = $this->statisticsLibraryModel->getResearchToUpdate($userId);
         } else {
             $objectsToUpdate = $this->statisticsLibraryModel->getPlanetElementToUpdate($what, $planet_id);
         }
@@ -91,7 +91,7 @@ class StatisticsLibrary
             if ($points >= 0) {
                 $what = strtr($what, ['research' => 'technology']);
 
-                $this->statisticsLibraryModel->updatePoints($what, $points, $user_id);
+                $this->statisticsLibraryModel->updatePoints($what, $points, $userId);
 
                 return true;
             }
@@ -187,8 +187,8 @@ class StatisticsLibrary
         // TECH
         foreach ($tech as $key => $value) {
             if ($key == 'points') {
-                foreach ($value as $user_id => $data) {
-                    $tech['rank'][$user_id] = $rank['tech']++;
+                foreach ($value as $userId => $data) {
+                    $tech['rank'][$userId] = $rank['tech']++;
                 }
             }
         }
@@ -196,8 +196,8 @@ class StatisticsLibrary
         // BUILDINGS
         foreach ($build as $key => $value) {
             if ($key == 'points') {
-                foreach ($value as $user_id => $data) {
-                    $build['rank'][$user_id] = $rank['buil']++;
+                foreach ($value as $userId => $data) {
+                    $build['rank'][$userId] = $rank['buil']++;
                 }
             }
         }
@@ -205,8 +205,8 @@ class StatisticsLibrary
         // DEFENSES
         foreach ($defs as $key => $value) {
             if ($key == 'points') {
-                foreach ($value as $user_id => $data) {
-                    $defs['rank'][$user_id] = $rank['defe']++;
+                foreach ($value as $userId => $data) {
+                    $defs['rank'][$userId] = $rank['defe']++;
                 }
             }
         }
@@ -214,8 +214,8 @@ class StatisticsLibrary
         // SHIPS
         foreach ($ships as $key => $value) {
             if ($key == 'points') {
-                foreach ($value as $user_id => $data) {
-                    $ships['rank'][$user_id] = $rank['ship']++;
+                foreach ($value as $userId => $data) {
+                    $ships['rank'][$userId] = $rank['ship']++;
                 }
             }
         }
@@ -243,18 +243,18 @@ class StatisticsLibrary
         // UPDATE QUERY DYNAMIC BLOCK
         foreach ($total as $key => $value) {
             if ($key == 'points') {
-                foreach ($value as $user_id => $data) {
-                    $values .= '(' . $user_id . ',
-                                ' . $build['old_rank'][$user_id] . ',
-                                ' . $build['rank'][$user_id] . ',
-                                ' . $defs['old_rank'][$user_id] . ',
-                                ' . $defs['rank'][$user_id] . ',
-                                ' . $ships['old_rank'][$user_id] . ',
-                                ' . $ships['rank'][$user_id] . ',
-                                ' . $tech['old_rank'][$user_id] . ',
-                                ' . $tech['rank'][$user_id] . ',
-                                ' . $total['points'][$user_id] . ',
-                                ' . $total['old_rank'][$user_id] . ',
+                foreach ($value as $userId => $data) {
+                    $values .= '(' . $userId . ',
+                                ' . $build['old_rank'][$userId] . ',
+                                ' . $build['rank'][$userId] . ',
+                                ' . $defs['old_rank'][$userId] . ',
+                                ' . $defs['rank'][$userId] . ',
+                                ' . $ships['old_rank'][$userId] . ',
+                                ' . $ships['rank'][$userId] . ',
+                                ' . $tech['old_rank'][$userId] . ',
+                                ' . $tech['rank'][$userId] . ',
+                                ' . $total['points'][$userId] . ',
+                                ' . $total['old_rank'][$userId] . ',
                                 ' . $rank['tota']++ . ',
                                 ' . $this->time . '),';
                 }

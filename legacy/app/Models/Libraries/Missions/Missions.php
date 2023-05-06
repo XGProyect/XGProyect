@@ -94,16 +94,9 @@ class Missions extends Model
         return [];
     }
 
-    /**
-     * Get all user data by user ID
-     *
-     * @param int $userId User ID
-     *
-     * @return array
-     */
-    public function getAllUserDataByUserId(int $userId)
+    public function getAllUserDataByUserId(int $userId): array
     {
-        if ((int) $userId > 0) {
+        if ($userId > 0) {
             return $this->db->queryFetch(
                 'SELECT u.*,
                     r.*,
@@ -224,7 +217,7 @@ class Missions extends Model
 
     public function getTechnologiesByUserId(int $userId): array
     {
-        if ((int) $userId > 0) {
+        if ($userId > 0) {
             return $this->db->queryFetch(
                 'SELECT u.user_name,
                     r.research_weapons_technology,

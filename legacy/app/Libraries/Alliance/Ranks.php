@@ -117,7 +117,7 @@ class Ranks
         }
     }
 
-    public function editRankNameById(int $rank_id, string $name): array
+    public function editRankNameById(int $rank_id, string $name): string
     {
         try {
             if (!isset($this->getRanks()[$this->validateRankId($rank_id)])) {
@@ -174,14 +174,7 @@ class Ranks
         return isset($this->_ranks[$rank_id]) ? $this->_ranks[$rank_id] : $this->_ranks[1];
     }
 
-    /**
-     * Validate the rank ID
-     *
-     * @param type $rank_id Rank ID
-     *
-     * @return int
-     */
-    private function validateRankId($rank_id)
+    private function validateRankId(int $rank_id): int
     {
         if ($rank_id < 0) {
             return 0;

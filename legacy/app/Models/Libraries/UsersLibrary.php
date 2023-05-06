@@ -7,76 +7,54 @@ use Xgp\App\Libraries\Functions;
 
 class UsersLibrary extends Model
 {
-    /**
-     * Get alliance ID
-     *
-     * @param int $user_id User ID
-     *
-     * @return array
-     */
-    public function getAllyIdByUserId($user_id)
+    public function getAllyIdByUserId(int $userId): array
     {
         return $this->db->queryFetch(
-            'SELECT `user_ally_id` FROM `' . USERS . "` WHERE `user_id` = '" . $user_id . "';"
+            'SELECT `user_ally_id` FROM `' . USERS . "` WHERE `user_id` = '" . $userId . "';"
         );
     }
 
-    /**
-     * Get alliance data
-     *
-     * @param array $alliance_id Alliance ID
-     *
-     * @return array
-     */
-    public function getAllianceDataByAllianceId($alliance_id)
+    public function getAllianceDataByAllianceId(int $allianceId): array
     {
         return $this->db->queryFetch(
             'SELECT a.`alliance_id`, a.`alliance_ranks`,
                 (SELECT COUNT(user_id) AS `ally_members`
                     FROM `' . USERS . "`
-                    WHERE `user_ally_id` = '" . $alliance_id . "') AS `ally_members`
+                    WHERE `user_ally_id` = '" . $allianceId . "') AS `ally_members`
             FROM `" . ALLIANCE . "` AS a
-            WHERE a.`alliance_id` = '" . $alliance_id . "';"
+            WHERE a.`alliance_id` = '" . $allianceId . "';"
         );
     }
 
-    /**
-     * Update the alliance owner
-     *
-     * @param array $alliance_id Alliance ID
-     * @param int   $user_rank   Rank ID
-     *
-     * @return type
-     */
-    public function updateAllianceOwner($alliance_id, $user_rank)
+    public function updateAllianceOwner(int $allianceId, int $userRank): void
     {
-        return $this->db->query(
+        $this->db->query(
             'UPDATE `' . ALLIANCE . '` SET
                 `alliance_owner` =
                 (
                     SELECT `user_id`
                     FROM `' . USERS . "`
-                    WHERE `user_ally_rank_id` = '" . $user_rank . "'
-                        AND `user_ally_id` = '" . $alliance_id . "'
+                    WHERE `user_ally_rank_id` = '" . $userRank . "'
+                        AND `user_ally_id` = '" . $allianceId . "'
                     LIMIT 1
                 )
-            WHERE `alliance_id` = '" . $alliance_id . "';"
+            WHERE `alliance_id` = '" . $allianceId . "';"
         );
     }
 
     /**
      * Delete alliance
      *
-     * @param Int $alliance_id Alliance ID
+     * @param Int $allianceId Alliance ID
      *
      * @return void
      */
-    public function deleteAllianceById($alliance_id)
+    public function deleteAllianceById($allianceId)
     {
         $this->db->query(
             'DELETE ass, a FROM ' . ALLIANCE . ' AS a
             INNER JOIN ' . ALLIANCE_STATISTICS . " AS ass ON ass.alliance_statistic_alliance_id = a.alliance_id
-            WHERE a.`alliance_id` = '" . $alliance_id . "';"
+            WHERE a.`alliance_id` = '" . $allianceId . "';"
         );
 
         $this->db->query(
@@ -86,66 +64,38 @@ class UsersLibrary extends Model
                 `user_ally_request_text` = '',
                 `user_ally_register_time` = '',
                 `user_ally_rank_id` = '0'
-            WHERE `user_ally_id` = '" . $alliance_id . "';"
+            WHERE `user_ally_id` = '" . $allianceId . "';"
         );
     }
 
-    /**
-     * Delete the planet and its related data like buildings, defenses and ships.
-     *
-     * @param int $user_id User ID
-     *
-     * @return void
-     */
-    public function deletePlanetsAndRelatedDataByUserId($user_id)
+    public function deletePlanetsAndRelatedDataByUserId(int $userId): void
     {
         $this->db->query(
             'DELETE p,b,d,s FROM ' . PLANETS . ' AS p
             INNER JOIN ' . BUILDINGS . ' AS b ON b.building_planet_id = p.`planet_id`
             INNER JOIN ' . DEFENSES . ' AS d ON d.defense_planet_id = p.`planet_id`
             INNER JOIN ' . SHIPS . " AS s ON s.ship_planet_id = p.`planet_id`
-            WHERE `planet_user_id` = '" . $user_id . "';"
+            WHERE `planet_user_id` = '" . $userId . "';"
         );
     }
 
-    /**
-     * Delete the planet and its related data like buildings, defenses and ships.
-     *
-     * @param int $user_id User ID
-     *
-     * @return void
-     */
-    public function deleteMessagesByUserId($user_id)
+    public function deleteMessagesByUserId(int $userId): void
     {
         $this->db->query(
             'DELETE FROM ' . MESSAGES . "
-                WHERE `message_sender` = '" . $user_id . "' OR `message_receiver` = '" . $user_id . "';"
+                WHERE `message_sender` = '" . $userId . "' OR `message_receiver` = '" . $userId . "';"
         );
     }
 
-    /**
-     * Delete the planet and its related data like buildings, defenses and ships.
-     *
-     * @param int $user_id User ID
-     *
-     * @return void
-     */
-    public function deleteBuddysByUserId($user_id)
+    public function deleteBuddysByUserId(int $userId): void
     {
         $this->db->query(
             'DELETE FROM ' . BUDDY . "
-                WHERE `buddy_sender` = '" . $user_id . "' OR `buddy_receiver` = '" . $user_id . "';"
+                WHERE `buddy_sender` = '" . $userId . "' OR `buddy_receiver` = '" . $userId . "';"
         );
     }
 
-    /**
-     * Delete the planet and its related data like buildings, defenses and ships.
-     *
-     * @param int $user_id User ID
-     *
-     * @return void
-     */
-    public function deleteUserDataById($user_id)
+    public function deleteUserDataById(int $userId): void
     {
         $this->db->query(
             'DELETE r,f,n,p,pr,s,u FROM ' . USERS . ' AS u
@@ -155,18 +105,11 @@ class UsersLibrary extends Model
             INNER JOIN ' . PREMIUM . ' AS p ON p.premium_user_id = u.user_id
             INNER JOIN ' . PREFERENCES . ' AS pr ON pr.preference_user_id = u.user_id
             INNER JOIN ' . USERS_STATISTICS . " AS s ON s.user_statistic_user_id = u.user_id
-            WHERE u.`user_id` = '" . $user_id . "';"
+            WHERE u.`user_id` = '" . $userId . "';"
         );
     }
 
-    /**
-     * Get the user data by user name
-     *
-     * @param string $user_name User Name
-     *
-     * @return array
-     */
-    public function setUserDataByUserId($user_id)
+    public function setUserDataByUserId(int $userId): array
     {
         if (!defined('IN_ADMIN')) {
             return $this->db->queryFetch(
@@ -188,7 +131,7 @@ class UsersLibrary extends Model
                 INNER JOIN `' . PREMIUM . '` AS pre ON pre.premium_user_id = u.user_id
                 INNER JOIN `' . RESEARCH . '` AS r ON r.research_user_id = u.user_id
                 LEFT JOIN `' . ALLIANCE . "` AS a ON a.alliance_id = u.user_ally_id
-                WHERE (u.`user_id` = '" . (int) $user_id . "')
+                WHERE (u.`user_id` = '" . $userId . "')
                 LIMIT 1;"
             );
         }
@@ -197,22 +140,12 @@ class UsersLibrary extends Model
             'SELECT
                 u.*
             FROM `' . USERS . "` AS u
-            WHERE (u.`user_id` = '" . (int) $user_id . "')
+            WHERE (u.`user_id` = '" . $userId . "')
             LIMIT 1;"
         );
     }
 
-    /**
-     * Update some data
-     *
-     * @param string $request_uri Requested URL
-     * @param string $remote_addr Remote IP Address
-     * @param string $user_agent  User agent/browser
-     * @param int    $user_id     User ID
-     *
-     * @return void
-     */
-    public function updateUserActivityData($request_uri, $remote_addr, $user_agent, $user_id)
+    public function updateUserActivityData(string $request_uri, string $remote_addr, string $user_agent, int $userId): void
     {
         $this->db->query(
             'UPDATE ' . USERS . " SET
@@ -220,20 +153,12 @@ class UsersLibrary extends Model
                 `user_current_page` = '" . $this->db->escapeValue($request_uri) . "',
                 `user_lastip` = '" . $this->db->escapeValue($remote_addr) . "',
                 `user_agent` = '" . $this->db->escapeValue($user_agent) . "'
-            WHERE `user_id` = '" . $this->db->escapeValue($user_id) . "'
+            WHERE `user_id` = '" . $this->db->escapeValue($userId) . "'
             LIMIT 1;"
         );
     }
 
-    /**
-     * Set the user current planet data
-     *
-     * @param int $planet_id   Planet ID
-     * @param int $admin_level Admin Level
-     *
-     * @return type
-     */
-    public function setPlanetData($planet_id, $admin_level)
+    public function setPlanetData(int $planetId, int $adminLevel): array
     {
         return $this->db->queryFetch(
             'SELECT p.*, b.*, d.*, s.*,
@@ -245,7 +170,7 @@ class UsersLibrary extends Model
             (SELECT COUNT(user_statistic_user_id) AS stats_users
                 FROM `' . USERS_STATISTICS . '` AS s
                 INNER JOIN ' . USERS . ' AS u ON u.user_id = s.user_statistic_user_id
-                WHERE u.`user_authlevel` <= ' . $admin_level . ') AS stats_users
+                WHERE u.`user_authlevel` <= ' . $adminLevel . ') AS stats_users
             FROM ' . PLANETS . ' AS p
             INNER JOIN ' . BUILDINGS . ' AS b ON b.building_planet_id = p.`planet_id`
             INNER JOIN ' . DEFENSES . ' AS d ON d.defense_planet_id = p.`planet_id`
@@ -256,113 +181,62 @@ class UsersLibrary extends Model
                                 mp.planet_system=p.planet_system AND
                                 mp.planet_planet=p.planet_planet AND
                                 mp.planet_type=3))
-            WHERE p.`planet_id` = '" . $planet_id . "';"
+            WHERE p.`planet_id` = '" . $planetId . "';"
         );
     }
 
-    /**
-     * Validate if the requested planet belongs to the current user
-     *
-     * @param int $planet_id Planet ID
-     * @param int $user_id   User ID
-     *
-     * @return array
-     */
-    public function getUserPlanetByIdAndUserId($planet_id, $user_id)
+    public function getUserPlanetByIdAndUserId(int $planetId, int $userId): array
     {
         return $this->db->queryFetch(
             'SELECT `planet_id`
             FROM ' . PLANETS . "
-            WHERE `planet_id` = '" . $planet_id . "'
-            AND `planet_user_id` = '" . $user_id . "';"
+            WHERE `planet_id` = '" . $planetId . "'
+            AND `planet_user_id` = '" . $userId . "';"
         );
     }
 
-    /**
-     * Change the user current planet
-     *
-     * @param int $planet_id Planet ID
-     * @param int $user_id   User ID
-     *
-     * @return void
-     */
-    public function changeUserPlanetByUserId($planet_id, $user_id)
+    public function changeUserPlanetByUserId(int $planetId, int $userId): void
     {
         $this->db->query(
             'UPDATE ' . USERS . " SET
-            `user_current_planet` = '" . $planet_id . "'
-            WHERE `user_id` = '" . $user_id . "';"
+            `user_current_planet` = '" . $planetId . "'
+            WHERE `user_id` = '" . $userId . "';"
         );
     }
 
-    /**
-     * Insert a new user and return their ID
-     *
-     * @param string $insert_query Insert Query
-     *
-     * @return int
-     */
-    public function createNewUser($insert_query)
+    public function createNewUser(string $insertQuery): int
     {
-        $this->db->query($insert_query);
+        $this->db->query($insertQuery);
 
         return $this->db->insertId();
     }
 
-    /**
-     * Create premium record
-     *
-     * @param type $user_id The user id
-     *
-     * @return void
-     */
-    public function createPremium($user_id)
+    public function createPremium(int $userId): void
     {
         $this->db->query(
             'INSERT INTO `' . PREMIUM . "` (`premium_user_id`, `premium_dark_matter`)
-            VALUES('" . $user_id . "', '" . Functions::readConfig('registration_dark_matter') . "');"
+            VALUES('" . $userId . "', '" . Functions::readConfig('registration_dark_matter') . "');"
         );
     }
 
-    /**
-     * Create research record
-     *
-     * @param type $user_id The user id
-     *
-     * @return void
-     */
-    public function createResearch($user_id)
+    public function createResearch(int $userId): void
     {
         $this->db->query(
-            'INSERT INTO ' . RESEARCH . " SET `research_user_id` = '" . $user_id . "';"
+            'INSERT INTO ' . RESEARCH . " SET `research_user_id` = '" . $userId . "';"
         );
     }
 
-    /**
-     * Create settings record
-     *
-     * @param type $user_id The user id
-     *
-     * @return void
-     */
-    public function createSettings($user_id)
+    public function createSettings(int $userId): void
     {
         $this->db->query(
-            'INSERT INTO ' . PREFERENCES . " SET `preference_user_id` = '" . $user_id . "';"
+            'INSERT INTO ' . PREFERENCES . " SET `preference_user_id` = '" . $userId . "';"
         );
     }
 
-    /**
-     * Create statistics record
-     *
-     * @param type $user_id The user id
-     *
-     * @return void
-     */
-    public function createUserStatistics($user_id)
+    public function createUserStatistics(int $userId): void
     {
         $this->db->query(
-            'INSERT INTO ' . USERS_STATISTICS . " SET `user_statistic_user_id` = '" . $user_id . "';"
+            'INSERT INTO ' . USERS_STATISTICS . " SET `user_statistic_user_id` = '" . $userId . "';"
         );
     }
 }

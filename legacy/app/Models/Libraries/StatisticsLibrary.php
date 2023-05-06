@@ -7,18 +7,12 @@ use Xgp\App\Libraries\Functions;
 
 class StatisticsLibrary extends Model
 {
-    /**
-     *
-     * @param type $user_id
-     *
-     * @return array
-     */
-    public function getResearchToUpdate($user_id)
+    public function getResearchToUpdate(int $userId): array
     {
         return $this->db->queryFetch(
             'SELECT *
             FROM `' . RESEARCH . "` ttu
-            WHERE ttu.research_user_id = '" . $user_id . "';"
+            WHERE ttu.research_user_id = '" . $userId . "';"
         );
     }
 
@@ -43,16 +37,16 @@ class StatisticsLibrary extends Model
      *
      * @param string $what    What
      * @param int    $points  Points
-     * @param int    $user_id User ID
+     * @param int    $userId User ID
      *
      * @return void
      */
-    public function updatePoints($what, $points, $user_id)
+    public function updatePoints($what, $points, $userId)
     {
         $this->db->query(
             'UPDATE ' . USERS_STATISTICS . ' SET
                 `user_statistic_' . $what . "_points` = '" . $points . "'
-            WHERE `user_statistic_user_id` = '" . $user_id . "'"
+            WHERE `user_statistic_user_id` = '" . $userId . "'"
         );
     }
 

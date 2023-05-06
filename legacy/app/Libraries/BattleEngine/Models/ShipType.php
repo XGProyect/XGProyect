@@ -2,9 +2,9 @@
 
 namespace Xgp\App\Libraries\BattleEngine\Models;
 
+use Exception;
 use Xgp\App\Libraries\BattleEngine\CombatObject\PhysicShot;
 use Xgp\App\Libraries\BattleEngine\CombatObject\ShipsCleaner;
-use Exception;
 
 /**
  *  OPBE
@@ -53,8 +53,6 @@ class ShipType extends Type
     private $cost;
 
     /**
-     * ShipType::__construct()
-     *
      * @param int $id
      * @param int $count
      * @param array $rf
@@ -64,7 +62,6 @@ class ShipType extends Type
      * @param int $weapons_tech
      * @param int $shields_tech
      * @param int $armour_tech
-     * @return
      */
     public function __construct($id, $count, $rf, $shield, array $cost, $power, $weapons_tech = null, $shields_tech = null, $armour_tech = null)
     {
@@ -464,12 +461,7 @@ class ShipType extends Type
         return $this->currentShield / $this->getCount() < 0.01;
     }
 
-    /**
-     * ShipType::cloneMe()
-     *
-     * @return ShipType
-     */
-    public function cloneMe()
+    public function cloneMe(): ShipType
     {
         $class = get_class($this);
         $tmp = new $class($this->getId(), $this->getCount(), $this->rf, $this->originalShield, $this->cost, $this->originalPower, $this->weapons_tech, $this->shields_tech, $this->armour_tech);

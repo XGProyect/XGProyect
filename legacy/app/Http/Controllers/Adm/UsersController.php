@@ -485,13 +485,13 @@ class UsersController extends BaseController
     //
     //#####################################
 
-    private function buildUsersCombo(int $user_id): string
+    private function buildUsersCombo(int $userId): string
     {
         $combo_rows = '';
         $users = $this->usersModel->getAllUsers();
 
         foreach ($users as $users_row) {
-            $combo_rows .= '<option value="' . $users_row['user_id'] . '" ' . ($users_row['user_id'] == $user_id ? ' selected' : '') . '>' . $users_row['user_name'] . '</option>';
+            $combo_rows .= '<option value="' . $users_row['user_id'] . '" ' . ($users_row['user_id'] == $userId ? ' selected' : '') . '>' . $users_row['user_name'] . '</option>';
         }
 
         return $combo_rows;

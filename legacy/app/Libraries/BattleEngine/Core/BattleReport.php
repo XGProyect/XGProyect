@@ -86,23 +86,19 @@ class BattleReport
     }
 
     /**
-     * BattleReport::getResultRound()
      * Alias of getRound(). Get the round after it was processed
      * @param int $number: the corrispective round number(from 0)
-     * @return
      */
-    private function getResultRound($number)
+    private function getResultRound(int $number): Round
     {
         return $this->getRound($number);
     }
 
     /**
-     * BattleReport::getPresentationRound()
      * Get the round before it was processed.
      * @param int $number: the corrispective round (from 1)
-     * @return
      */
-    private function getPresentationRound($number)
+    private function getPresentationRound(int $number): Round
     {
         if ($number !== 'START' && $number !== 'END') {
             $number -= 1;
@@ -111,13 +107,12 @@ class BattleReport
     }
 
     /**
-     * BattleReport::setBattleResult()
      * Set the result of a battle
      * @param int $att (BATTLE_WIN ,BATTLE_LOSE, BATTLE_DRAW)
      * @param int $def (BATTLE_WIN ,BATTLE_LOSE, BATTLE_DRAW)
      * @return void
      */
-    public function setBattleResult($att, $def)
+    public function setBattleResult(int $att, int $def)
     {
         $this->getRound('END')->getAfterBattleAttackers()->battleResult = $att;
         $this->getRound('END')->getAfterBattleDefenders()->battleResult = $def;

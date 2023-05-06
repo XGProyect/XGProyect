@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use PHPUnit\Framework\TestCase;
 use Xgp\App\Libraries\Buildings\Queue;
 use Xgp\App\Libraries\Buildings\QueueElements;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Queue
@@ -17,20 +17,20 @@ class QueueTest extends TestCase
     public function testAddOneElementToQueue(): void
     {
         $object = new Queue();
-        $current_time = time();
+        $currentTime = time();
 
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 1;
-        $queue_elements->build_level = 1;
-        $queue_elements->build_time = 20;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 1;
+        $queueElements->buildLevel = 1;
+        $queueElements->buildTime = 20;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         $this->assertEquals(
             $object->returnQueueAsString(),
-            '1,1,20,' . $current_time . ',build'
+            '1,1,20,' . $currentTime . ',build'
         );
     }
 
@@ -40,45 +40,45 @@ class QueueTest extends TestCase
     public function testAddManyElementToQueue(): void
     {
         $object = new Queue();
-        $current_time = time();
+        $currentTime = time();
 
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 1;
-        $queue_elements->build_level = 1;
-        $queue_elements->build_time = 20;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 1;
+        $queueElements->buildLevel = 1;
+        $queueElements->buildTime = 20;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // add second element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 2;
-        $queue_elements->build_level = 5;
-        $queue_elements->build_time = 90;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'destroy';
+        $queueElements = new QueueElements();
+        $queueElements->building = 2;
+        $queueElements->buildLevel = 5;
+        $queueElements->buildTime = 90;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'destroy';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         $this->assertEquals(
             $object->returnQueueAsString(),
-            '1,1,20,' . $current_time . ',build;2,5,90,' . $current_time . ',destroy'
+            '1,1,20,' . $currentTime . ',build;2,5,90,' . $currentTime . ',destroy'
         );
 
         // add third element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 3;
-        $queue_elements->build_level = 10;
-        $queue_elements->build_time = 120;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 3;
+        $queueElements->buildLevel = 10;
+        $queueElements->buildTime = 120;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         $this->assertEquals(
             $object->returnQueueAsString(),
-            '1,1,20,' . $current_time . ',build;2,5,90,' . $current_time . ',destroy;3,10,120,' . $current_time . ',build'
+            '1,1,20,' . $currentTime . ',build;2,5,90,' . $currentTime . ',destroy;3,10,120,' . $currentTime . ',build'
         );
     }
 
@@ -89,16 +89,16 @@ class QueueTest extends TestCase
     {
         // add one element
         $object = new Queue();
-        $current_time = time();
+        $currentTime = time();
 
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 1;
-        $queue_elements->build_level = 1;
-        $queue_elements->build_time = 20;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 1;
+        $queueElements->buildLevel = 1;
+        $queueElements->buildTime = 20;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
         $object->removeElementFromQueue(0);
 
         $this->assertEquals(
@@ -113,33 +113,33 @@ class QueueTest extends TestCase
     public function testRemoveLastElementFromQueueWithTwoElement(): void
     {
         $object = new Queue();
-        $current_time = time();
+        $currentTime = time();
 
         // add first element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 1;
-        $queue_elements->build_level = 1;
-        $queue_elements->build_time = 20;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 1;
+        $queueElements->buildLevel = 1;
+        $queueElements->buildTime = 20;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // add second element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 2;
-        $queue_elements->build_level = 5;
-        $queue_elements->build_time = 90;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'destroy';
+        $queueElements = new QueueElements();
+        $queueElements->building = 2;
+        $queueElements->buildLevel = 5;
+        $queueElements->buildTime = 90;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'destroy';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         $object->removeElementFromQueue(1);
 
         $this->assertEquals(
             $object->returnQueueAsString(),
-            '1,1,20,' . $current_time . ',build'
+            '1,1,20,' . $currentTime . ',build'
         );
     }
 
@@ -149,33 +149,33 @@ class QueueTest extends TestCase
     public function testRemoveFirstElementFromQueueWithTwoElement(): void
     {
         $object = new Queue();
-        $current_time = time();
+        $currentTime = time();
 
         // add first element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 1;
-        $queue_elements->build_level = 1;
-        $queue_elements->build_time = 20;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 1;
+        $queueElements->buildLevel = 1;
+        $queueElements->buildTime = 20;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // add second element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 2;
-        $queue_elements->build_level = 5;
-        $queue_elements->build_time = 90;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'destroy';
+        $queueElements = new QueueElements();
+        $queueElements->building = 2;
+        $queueElements->buildLevel = 5;
+        $queueElements->buildTime = 90;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'destroy';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         $object->removeElementFromQueue(0);
 
         $this->assertEquals(
             $object->returnQueueAsString(),
-            '2,5,90,' . $current_time . ',destroy'
+            '2,5,90,' . $currentTime . ',destroy'
         );
     }
 
@@ -185,43 +185,43 @@ class QueueTest extends TestCase
     public function testRemoveMiddleElementFromQueueWithThreeElement(): void
     {
         $object = new Queue();
-        $current_time = time();
+        $currentTime = time();
 
         // add first element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 1;
-        $queue_elements->build_level = 1;
-        $queue_elements->build_time = 20;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 1;
+        $queueElements->buildLevel = 1;
+        $queueElements->buildTime = 20;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // add second element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 2;
-        $queue_elements->build_level = 5;
-        $queue_elements->build_time = 90;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'destroy';
+        $queueElements = new QueueElements();
+        $queueElements->building = 2;
+        $queueElements->buildLevel = 5;
+        $queueElements->buildTime = 90;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'destroy';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // add third element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 3;
-        $queue_elements->build_level = 10;
-        $queue_elements->build_time = 120;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 3;
+        $queueElements->buildLevel = 10;
+        $queueElements->buildTime = 120;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         $object->removeElementFromQueue(1);
 
         $this->assertEquals(
             $object->returnQueueAsString(),
-            '1,1,20,' . $current_time . ',build;3,10,120,' . $current_time . ',build'
+            '1,1,20,' . $currentTime . ',build;3,10,120,' . $currentTime . ',build'
         );
     }
 
@@ -231,43 +231,43 @@ class QueueTest extends TestCase
     public function testRemoveElementFromQueueInvalidParameters(): void
     {
         $object = new Queue();
-        $current_time = time();
+        $currentTime = time();
 
         // add first element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 1;
-        $queue_elements->build_level = 1;
-        $queue_elements->build_time = 20;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 1;
+        $queueElements->buildLevel = 1;
+        $queueElements->buildTime = 20;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // add second element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 2;
-        $queue_elements->build_level = 5;
-        $queue_elements->build_time = 90;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'destroy';
+        $queueElements = new QueueElements();
+        $queueElements->building = 2;
+        $queueElements->buildLevel = 5;
+        $queueElements->buildTime = 90;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'destroy';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // add third element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 3;
-        $queue_elements->build_level = 10;
-        $queue_elements->build_time = 120;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 3;
+        $queueElements->buildLevel = 10;
+        $queueElements->buildTime = 120;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         $object->removeElementFromQueue('wrong_parameter');
 
         $this->assertEquals(
             $object->returnQueueAsString(),
-            '1,1,20,' . $current_time . ',build;2,5,90,' . $current_time . ',destroy;3,10,120,' . $current_time . ',build'
+            '1,1,20,' . $currentTime . ',build;2,5,90,' . $currentTime . ',destroy;3,10,120,' . $currentTime . ',build'
         );
     }
 
@@ -277,46 +277,46 @@ class QueueTest extends TestCase
     public function testGetElementFromQueueAsArray(): void
     {
         $object = new Queue();
-        $current_time = time();
+        $currentTime = time();
 
         // add first element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 1;
-        $queue_elements->build_level = 1;
-        $queue_elements->build_time = 20;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 1;
+        $queueElements->buildLevel = 1;
+        $queueElements->buildTime = 20;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // add second element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 2;
-        $queue_elements->build_level = 5;
-        $queue_elements->build_time = 90;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'destroy';
+        $queueElements = new QueueElements();
+        $queueElements->building = 2;
+        $queueElements->buildLevel = 5;
+        $queueElements->buildTime = 90;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'destroy';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // add third element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 3;
-        $queue_elements->build_level = 10;
-        $queue_elements->build_time = 120;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 3;
+        $queueElements->buildLevel = 10;
+        $queueElements->buildTime = 120;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         $this->assertEquals(
             $object->getElementFromQueueAsArray(1),
             [
                 'building' => 2,
-                'build_level' => 5,
-                'build_time' => 90,
-                'build_end_time' => $current_time,
-                'build_mode' => 'destroy',
+                'buildLevel' => 5,
+                'buildTime' => 90,
+                'buildEndTime' => $currentTime,
+                'buildMode' => 'destroy',
             ]
         );
     }
@@ -327,17 +327,17 @@ class QueueTest extends TestCase
     public function testReturnQueueAsString(): void
     {
         $object = new Queue();
-        $current_time = time();
+        $currentTime = time();
 
         // add first element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 1;
-        $queue_elements->build_level = 1;
-        $queue_elements->build_time = 20;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 1;
+        $queueElements->buildLevel = 1;
+        $queueElements->buildTime = 20;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // Remove the following lines when you implement this test.
         $this->assertIsString(
@@ -346,7 +346,7 @@ class QueueTest extends TestCase
 
         $this->assertEquals(
             $object->returnQueueAsString(),
-            '1,1,20,' . $current_time . ',build'
+            '1,1,20,' . $currentTime . ',build'
         );
     }
 
@@ -356,17 +356,17 @@ class QueueTest extends TestCase
     public function testReturnQueueAsArray(): void
     {
         $object = new Queue();
-        $current_time = time();
+        $currentTime = time();
 
         // add first element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 1;
-        $queue_elements->build_level = 1;
-        $queue_elements->build_time = 20;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 1;
+        $queueElements->buildLevel = 1;
+        $queueElements->buildTime = 20;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // Remove the following lines when you implement this test.
         $this->assertIsArray(
@@ -379,10 +379,10 @@ class QueueTest extends TestCase
                 0 =>
                 [
                     'building' => 1,
-                    'build_level' => 1,
-                    'build_time' => 20,
-                    'build_end_time' => $current_time,
-                    'build_mode' => 'build',
+                    'buildLevel' => 1,
+                    'buildTime' => 20,
+                    'buildEndTime' => $currentTime,
+                    'buildMode' => 'build',
                 ],
             ]
         );
@@ -394,37 +394,37 @@ class QueueTest extends TestCase
     public function testCountQueueElements(): void
     {
         $object = new Queue();
-        $current_time = time();
+        $currentTime = time();
 
         // add first element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 1;
-        $queue_elements->build_level = 1;
-        $queue_elements->build_time = 20;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 1;
+        $queueElements->buildLevel = 1;
+        $queueElements->buildTime = 20;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // add second element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 2;
-        $queue_elements->build_level = 5;
-        $queue_elements->build_time = 90;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'destroy';
+        $queueElements = new QueueElements();
+        $queueElements->building = 2;
+        $queueElements->buildLevel = 5;
+        $queueElements->buildTime = 90;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'destroy';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // add third element
-        $queue_elements = new QueueElements();
-        $queue_elements->building = 3;
-        $queue_elements->build_level = 10;
-        $queue_elements->build_time = 120;
-        $queue_elements->build_end_time = $current_time;
-        $queue_elements->build_mode = 'build';
+        $queueElements = new QueueElements();
+        $queueElements->building = 3;
+        $queueElements->buildLevel = 10;
+        $queueElements->buildTime = 120;
+        $queueElements->buildEndTime = $currentTime;
+        $queueElements->buildMode = 'build';
 
-        $object->addElementToQueue($queue_elements);
+        $object->addElementToQueue($queueElements);
 
         // Remove the following lines when you implement this test.
         $this->assertIsArray(

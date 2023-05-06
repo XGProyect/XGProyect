@@ -11,26 +11,20 @@ class Preferences extends Model
     /**
      * Get all preferences by a certain user
      *
-     * @param int $user_id
+     * @param int $userId
      *
      * @return array
      */
-    public function getAllPreferencesByUserId(int $user_id): array
+    public function getAllPreferencesByUserId(int $userId): array
     {
         return $this->db->queryFetchAll(
             'SELECT
                 p.*
             FROM `' . PREFERENCES . "` p
-            WHERE p.`preference_user_id` = '" . $user_id . "';"
+            WHERE p.`preference_user_id` = '" . $userId . "';"
         ) ?? [];
     }
 
-    /**
-     * Check if the nickname exists
-     *
-     * @param string $user_name
-     * @return array
-     */
     public function checkIfNicknameExists(string $nickname): array
     {
         return $this->db->queryFetch(
@@ -61,10 +55,10 @@ class Preferences extends Model
      * Update validated fields
      *
      * @param array $fields
-     * @param integer $user_id
+     * @param integer $userId
      * @return void
      */
-    public function updateValidatedFields(array $fields, int $user_id): void
+    public function updateValidatedFields(array $fields, int $userId): void
     {
         $columns_to_update = [];
 
@@ -81,34 +75,34 @@ class Preferences extends Model
         $this->db->query(
             'UPDATE ' . USERS . ' AS u, ' . PREFERENCES . ' AS p SET
             ' . join(', ', $columns_to_update) . "
-            WHERE u.`user_id` = '" . $user_id . "'
-                AND p.`preference_user_id` = '" . $user_id . "';"
+            WHERE u.`user_id` = '" . $userId . "'
+                AND p.`preference_user_id` = '" . $userId . "';"
         );
     }
 
     /**
      * Check the empire current activity
      *
-     * @param integer $user_id
+     * @param integer $userId
      * @return boolean
      */
-    public function isEmpireActive(int $user_id): bool
+    public function isEmpireActive(int $userId): bool
     {
-        if ($user_id > 0) {
+        if ($userId > 0) {
             $activity = $this->db->queryFetch(
                 'SELECT (
                     (
                         SELECT
                             COUNT(f.`fleet_id`) AS quantity
                         FROM `' . FLEETS . "` f
-                        WHERE f.`fleet_owner` = '" . $user_id . "'
+                        WHERE f.`fleet_owner` = '" . $userId . "'
                     )
                 +
                     (
                         SELECT
                             COUNT(p.`planet_id`) AS quantity
                         FROM `" . PLANETS . "` p
-                        WHERE p.`planet_user_id` = '" . $user_id . "'
+                        WHERE p.`planet_user_id` = '" . $userId . "'
                             AND (p.`planet_b_building` <> 0
                                 OR `planet_b_tech` <> 0
                                 OR `planet_b_hangar` <> 0
@@ -126,12 +120,12 @@ class Preferences extends Model
     /**
      * Start vacation mode first checking if it's possible to set
      *
-     * @param integer $user_id
+     * @param integer $userId
      * @return boolean
      */
-    public function startVacation(int $user_id): bool
+    public function startVacation(int $userId): bool
     {
-        if (!$this->isEmpireActive($user_id)) {
+        if (!$this->isEmpireActive($userId)) {
             $this->db->query(
                 'UPDATE `' . PREFERENCES . '` pr, `' . PLANETS . "` p SET
                     pr.`preference_vacation_mode` = '" . time() . "',
@@ -141,8 +135,8 @@ class Preferences extends Model
                     p.`planet_building_solar_plant_percent` = '0',
                     p.`planet_building_fusion_reactor_percent` = '0',
                     p.`planet_ship_solar_satellite_percent` = '0'
-                WHERE pr.`preference_user_id` = '" . $user_id . "'
-                    AND p.`planet_user_id` = '" . $user_id . "';"
+                WHERE pr.`preference_user_id` = '" . $userId . "'
+                    AND p.`planet_user_id` = '" . $userId . "';"
             );
 
             return true;
@@ -154,12 +148,12 @@ class Preferences extends Model
     /**
      * Remove vacation mode and set production to maximum
      *
-     * @param integer $user_id
+     * @param integer $userId
      * @return void
      */
-    public function endVacation(int $user_id): void
+    public function endVacation(int $userId): void
     {
-        if ($user_id > 0) {
+        if ($userId > 0) {
             $this->db->query(
                 'UPDATE `' . PREFERENCES . '` pr, `' . PLANETS . "` p SET
                     pr.`preference_vacation_mode` = NULL,
@@ -170,8 +164,8 @@ class Preferences extends Model
                     p.`planet_building_solar_plant_percent` = '10',
                     p.`planet_building_fusion_reactor_percent` = '10',
                     p.`planet_ship_solar_satellite_percent` = '10'
-                WHERE pr.`preference_user_id` = '" . $user_id . "'
-                    AND p.`planet_user_id` = '" . $user_id . "';"
+                WHERE pr.`preference_user_id` = '" . $userId . "'
+                    AND p.`planet_user_id` = '" . $userId . "';"
             );
         }
     }

@@ -11,13 +11,13 @@ class Renameplanet extends Model
     /**
      * Get all fleets incoming/outgoing to the planet
      *
-     * @param integer $user_id
+     * @param integer $userId
      * @param integer $galaxy
      * @param integer $system
      * @param integer $planet
      * @return array|null
      */
-    public function getFleets(int $user_id, int $galaxy, int $system, int $planet): ?array
+    public function getFleets(int $userId, int $galaxy, int $system, int $planet): ?array
     {
         return $this->db->queryFetchAll(
             'SELECT
@@ -27,14 +27,14 @@ class Renameplanet extends Model
                 `fleet_mess`
             FROM `' . FLEETS . "`
             WHERE (
-                    fleet_owner = '" . $user_id . "' AND
+                    fleet_owner = '" . $userId . "' AND
                     fleet_start_galaxy = '" . $galaxy . "' AND
                     fleet_start_system = '" . $system . "' AND
                     fleet_start_planet = '" . $planet . "'
             )
             OR
             (
-                fleet_target_owner = '" . $user_id . "' AND
+                fleet_target_owner = '" . $userId . "' AND
                 fleet_end_galaxy = '" . $galaxy . "' AND
                 fleet_end_system = '" . $system . "' AND
                 fleet_end_planet = '" . $planet . "'
@@ -45,14 +45,14 @@ class Renameplanet extends Model
     /**
      * Delete moon and planet
      *
-     * @param integer $user_id
+     * @param integer $userId
      * @param integer $planet_id
      * @param integer $galaxy
      * @param integer $system
      * @param integer $planet
      * @return void
      */
-    public function deleteMoonAndPlanet(int $user_id, int $planet_id, int $galaxy, int $system, int $planet): void
+    public function deleteMoonAndPlanet(int $userId, int $planet_id, int $galaxy, int $system, int $planet): void
     {
         $this->db->query(
             'UPDATE `' . PLANETS . '` AS p, `' . PLANETS . '` AS m, `' . USERS . "` AS u SET
@@ -64,25 +64,25 @@ class Renameplanet extends Model
                 m.`planet_system` = '" . $system . "' AND
                 m.`planet_planet` = '" . $planet . "' AND
                 m.`planet_type` = '3' AND
-                u.`user_id` = '" . $user_id . "';"
+                u.`user_id` = '" . $userId . "';"
         );
     }
 
     /**
      * Delete planet
      *
-     * @param integer $user_id
+     * @param integer $userId
      * @param integer $planet_id
      * @return void
      */
-    public function deletePlanet(int $user_id, int $planet_id): void
+    public function deletePlanet(int $userId, int $planet_id): void
     {
         $this->db->query(
             'UPDATE `' . PLANETS . '` AS p, `' . USERS . "` AS u SET
                 p.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
                 u.`user_current_planet` = u.`user_home_planet_id`
             WHERE p.`planet_id` = '" . $planet_id . "' AND
-                u.`user_id` = '" . $user_id . "';"
+                u.`user_id` = '" . $userId . "';"
         );
     }
 

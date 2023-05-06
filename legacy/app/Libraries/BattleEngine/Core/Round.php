@@ -53,14 +53,9 @@ class Round
     private $number; // this round number
 
     /**
-     * Round::__construct()
      * Construct a new Round object. No side effects.
-     * @param PlayerGroup: the attackers
-     * @param PlayerGroup: the defenders
-     * @param int: the round number
-     * @return void
      */
-    public function __construct(PlayerGroup $attackers, PlayerGroup $defenders, $number)
+    public function __construct(PlayerGroup $attackers, PlayerGroup $defenders, int $number)
     {
         $this->number = $number;
         $this->fire_a = new FireManager();
@@ -71,11 +66,9 @@ class Round
     }
 
     /**
-     * Round::startRound()
      * Start the current round and update the players instance inside this object.
-     * @return
      */
-    public function startRound()
+    public function startRound(): void
     {
         echo '--- Round ' . $this->number . ' ---<br><br>';
         //---------------------- Generating the fire -------------------------------//

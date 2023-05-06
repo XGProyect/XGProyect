@@ -61,13 +61,9 @@ class AcsFleets
         }
     }
 
-    /**
-     *
-     * @param int $user_id User Id
-     */
-    private function setUserId($user_id)
+    private function setUserId(int $userId): void
     {
-        $this->_current_user_id = $user_id;
+        $this->_current_user_id = $userId;
     }
 
     /**

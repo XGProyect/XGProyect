@@ -78,14 +78,14 @@ class Alliances extends Model
         return true;
     }
 
-    public function checkAllianceFounder(int $user_id): bool
+    public function checkAllianceFounder(int $userId): bool
     {
         $ally_data = $this->db->queryFetch(
             'SELECT
                 `user_ally_id`,
                 `user_ally_request`
             FROM `' . USERS . "`
-            WHERE `user_id` = '" . $user_id . "';"
+            WHERE `user_id` = '" . $userId . "';"
         );
 
         return ($ally_data['user_ally_id'] > 0 && !empty($ally_data['user_ally_id']) && $ally_data['user_ally_request'] > 0 && !empty($ally_data['user_ally_request']));

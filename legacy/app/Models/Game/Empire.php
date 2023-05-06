@@ -9,12 +9,12 @@ class Empire extends Model
     /**
      * Get all player data
      *
-     * @param integer $user_id
+     * @param integer $userId
      * @return array
      */
-    public function getAllPlayerData(int $user_id): array
+    public function getAllPlayerData(int $userId): array
     {
-        if ($user_id > 0) {
+        if ($userId > 0) {
             return $this->db->queryFetchAll(
                 'SELECT `planet_id`,
                     `planet_name`,
@@ -79,7 +79,7 @@ class Empire extends Model
                 INNER JOIN `' . BUILDINGS . '` AS b ON b.building_planet_id = p.`planet_id`
                 INNER JOIN `' . DEFENSES . '` AS d ON d.defense_planet_id = p.`planet_id`
                 INNER JOIN `' . SHIPS . "` AS s ON s.ship_planet_id = p.`planet_id`
-                WHERE `planet_user_id` = '" . $user_id . "'
+                WHERE `planet_user_id` = '" . $userId . "'
                     AND `planet_destroyed` = 0;"
             );
         }

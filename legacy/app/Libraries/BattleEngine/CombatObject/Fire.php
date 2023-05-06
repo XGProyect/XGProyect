@@ -44,8 +44,8 @@ use Xgp\App\Libraries\BattleEngine\Utils\Number;
  */
 class Fire
 {
-    private $attackerShipType;
-    private $defenderFleet;
+    private ShipType $attackerShipType;
+    private Fleet $defenderFleet;
 
     /* old way
       const SPEEDSIM = true;
@@ -56,14 +56,6 @@ class Fire
     private $shots = 0;
     private $power = 0;
 
-    /**
-     * Fire::__construct()
-     *
-     * @param ShipType $attackerShipType
-     * @param Fleet $defenderFleet
-     * @param bool $attacking
-     * @return
-     */
     public function __construct(ShipType $attackerShipType, Fleet $defenderFleet)
     {
         log_comment('calculating fire from attacker ' . $attackerShipType->getId());
@@ -259,9 +251,7 @@ class Fire
     }
 
     /**
-     * Fire::__toString()
      * Rappresentation of this object
-     * @return
      */
     public function __toString()
     {

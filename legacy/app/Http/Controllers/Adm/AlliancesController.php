@@ -316,9 +316,9 @@ class AlliancesController extends BaseController
             $ids_string = '';
 
             if (isset($_POST['delete_message'])) {
-                foreach ($_POST['delete_message'] as $user_id => $delete_status) {
-                    if ($delete_status == 'on' && $user_id > 0 && is_numeric($user_id)) {
-                        $ids_string .= $user_id . ',';
+                foreach ($_POST['delete_message'] as $userId => $delete_status) {
+                    if ($delete_status == 'on' && $userId > 0 && is_numeric($userId)) {
+                        $ids_string .= $userId . ',';
                     }
                 }
 
@@ -341,13 +341,13 @@ class AlliancesController extends BaseController
     //
     //#####################################
 
-    private function buildUsersCombo($user_id): string
+    private function buildUsersCombo($userId): string
     {
         $combo_rows = '';
         $users = $this->alliancesModel->getAllUsers();
 
         foreach ($users as $users_row) {
-            $combo_rows .= '<option value="' . $users_row['user_id'] . '" ' . ($users_row['user_id'] == $user_id ? ' selected' : '') . '>' . $users_row['user_name'] . '</option>';
+            $combo_rows .= '<option value="' . $users_row['user_id'] . '" ' . ($users_row['user_id'] == $userId ? ' selected' : '') . '>' . $users_row['user_name'] . '</option>';
         }
 
         return $combo_rows;

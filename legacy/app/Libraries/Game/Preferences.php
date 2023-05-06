@@ -101,16 +101,9 @@ class Preferences
         }
     }
 
-    /**
-     * Set the user id
-     *
-     * @param int $user_id User Id
-     *
-     * @return void
-     */
-    private function setUserId($user_id): void
+    private function setUserId(int $userId): void
     {
-        $this->current_user_id = $user_id;
+        $this->current_user_id = $userId;
     }
 
     /**

@@ -253,12 +253,12 @@ class Maker extends Model
      *
      * @return array
      */
-    public function checkUserById(int $user_id): array
+    public function checkUserById(int $userId): array
     {
         return $this->db->queryFetch(
             'SELECT *
             FROM `' . USERS . "`
-            WHERE `user_id` = '" . $user_id . "'"
+            WHERE `user_id` = '" . $userId . "'"
         ) ?? [];
     }
 
@@ -268,18 +268,18 @@ class Maker extends Model
      * @param integer $galaxy
      * @param integer $system
      * @param integer $planet
-     * @param integer $user_id
+     * @param integer $userId
      * @param integer $field_max
      * @param integer $name
      * @return void
      */
-    public function createNewPlanet(int $galaxy, int $system, int $planet, int $user_id, int $field_max, string $name): void
+    public function createNewPlanet(int $galaxy, int $system, int $planet, int $userId, int $field_max, string $name): void
     {
         try {
             $this->db->beginTransaction();
 
             $creator = new PlanetLib();
-            $creator->setNewPlanet($galaxy, $system, $planet, $user_id, '', '', false);
+            $creator->setNewPlanet($galaxy, $system, $planet, $userId, '', '', false);
 
             $this->db->query(
                 'UPDATE `' . PLANETS . "` SET

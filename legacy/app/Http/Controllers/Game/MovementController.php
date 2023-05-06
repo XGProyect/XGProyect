@@ -154,13 +154,6 @@ class MovementController extends BaseController
         return $list_of_movements;
     }
 
-    /**
-     * Build the title block
-     *
-     * @param int $fleet_mess Fleet Mess
-     *
-     * @return array
-     */
     private function buildTitleBlock(int $fleet_mess): string
     {
         if (FleetsLib::isFleetReturning($fleet_mess)) {
@@ -170,13 +163,6 @@ class MovementController extends BaseController
         return __('game/fleet.fl_a');
     }
 
-    /**
-     * Build the topltip block
-     *
-     * @param int $fleet_mess Fleet Mess
-     *
-     * @return array
-     */
     private function buildToolTipBlock(int $fleet_mess): string
     {
         if (FleetsLib::isFleetReturning($fleet_mess)) {

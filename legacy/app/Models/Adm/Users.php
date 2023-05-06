@@ -20,7 +20,7 @@ class Users extends Model
         ) ?? [];
     }
 
-    public function getUserDataById(int $user_id): array
+    public function getUserDataById(int $userId): array
     {
         return $this->db->queryFetch(
             'SELECT u.*,
@@ -31,12 +31,12 @@ class Users extends Model
                 INNER JOIN `' . PREFERENCES . '` AS pr ON pr.`preference_user_id` = u.`user_id`
                 INNER JOIN `' . PREMIUM . '` AS p ON p.`premium_user_id` = u.`user_id`
                 INNER JOIN `' . RESEARCH . "` AS r ON r.`research_user_id` = u.`user_id`
-            WHERE (u.user_id = '" . $user_id . "')
+            WHERE (u.user_id = '" . $userId . "')
             LIMIT 1;"
         ) ?? [];
     }
 
-    public function getAllPlanetsByUserId(int $user_id): array
+    public function getAllPlanetsByUserId(int $userId): array
     {
         return $this->db->queryFetchAll(
             'SELECT
@@ -46,7 +46,7 @@ class Users extends Model
                     `planet_system`,
                     `planet_planet`
             FROM `' . PLANETS . "`
-            WHERE `planet_user_id` = '" . $user_id . "';"
+            WHERE `planet_user_id` = '" . $userId . "';"
         ) ?? [];
     }
 
@@ -61,36 +61,36 @@ class Users extends Model
         ) ?? [];
     }
 
-    public function checkUsername(string $username, int $user_id): array
+    public function checkUsername(string $username, int $userId): array
     {
         return $this->db->queryFetch(
             'SELECT `user_id`
             FROM `' . USERS . "`
             WHERE `user_name` = '" . $username . "' AND
-                    `user_id` <> '" . $user_id . "';"
+                    `user_id` <> '" . $userId . "';"
         ) ?? [];
     }
 
-    public function checkEmail(string $email, int $user_id): array
+    public function checkEmail(string $email, int $userId): array
     {
         return $this->db->queryFetch(
             'SELECT `user_id`
             FROM `' . USERS . "`
             WHERE `user_email` = '" . $email . "' AND
-                `user_id` <> '" . $user_id . "';"
+                `user_id` <> '" . $userId . "';"
         ) ?? [];
     }
 
-    public function deleteSessionByUserId(int $user_id): void
+    public function deleteSessionByUserId(int $userId): void
     {
         $this->db->query(
             'DELETE FROM `' . SESSIONS . "`
             WHERE `payload`
-            LIKE '%user_id|s:1:\"" . $user_id . "\"%'"
+            LIKE '%user_id|s:1:\"" . $userId . "\"%'"
         );
     }
 
-    public function getAllPlanetsData(int $user_id, int $planet_id = 0, string $edit = ''): array
+    public function getAllPlanetsData(int $userId, int $planet_id = 0, string $edit = ''): array
     {
         $sub_query = '';
 
@@ -138,12 +138,12 @@ class Users extends Model
                 mp.`planet_system` = p.`planet_system` AND
                 mp.`planet_planet` = p.`planet_planet` AND
                 mp.`planet_type` = 3))
-            WHERE p.`planet_user_id` = '" . $user_id . "'
+            WHERE p.`planet_user_id` = '" . $userId . "'
                 AND p.`planet_type` = 1{$sub_query};"
         ) ?? [];
     }
 
-    public function getAllMoonsData(int $user_id, int $moon_id = 0, string $edit = ''): array
+    public function getAllMoonsData(int $userId, int $moon_id = 0, string $edit = ''): array
     {
         $sub_query = '';
 
@@ -180,7 +180,7 @@ class Users extends Model
             INNER JOIN `' . BUILDINGS . '` AS b ON b.`building_planet_id` = m.`planet_id`
             INNER JOIN `' . DEFENSES . '` AS d ON d.`defense_planet_id` = m.`planet_id`
             INNER JOIN `' . SHIPS . "` AS s ON s.`ship_planet_id` = m.`planet_id`
-            WHERE m.`planet_user_id` = '" . $user_id . "'
+            WHERE m.`planet_user_id` = '" . $userId . "'
                             AND m.`planet_type` = 3{$sub_query};"
         ) ?? [];
     }
@@ -215,7 +215,7 @@ class Users extends Model
         );
     }
 
-    public function saveUserPreferences(array $post, int $user_id, array $current_user): void
+    public function saveUserPreferences(array $post, int $userId, array $current_user): void
     {
         $vacation_head = '';
         $vacation_condition = '';
@@ -233,7 +233,7 @@ class Users extends Model
         if (($current_user['preference_vacation_mode'] > 0) && $preference_vacations_status == 0) {
             // WE HAVE TO REMOVE HIM FROM VACATION AND SET PLANET PRODUCTION
             $vacation_head = ' , `' . PLANETS . '` AS p';
-            $vacation_condition = " AND p.`planet_user_id` = '" . (int) $user_id . "'";
+            $vacation_condition = " AND p.`planet_user_id` = '" . (int) $userId . "'";
             $vacation_query = "
                 pr.`preference_vacation_mode` = {$preference_vacation_mode},
                 p.`planet_last_update` = '" . time() . "',
@@ -248,7 +248,7 @@ class Users extends Model
             && $preference_vacations_status == 1) {
             // WE HAVE TO ADD HIM TO VACATION AND REMOVE PLANET PRODUCTION
             $vacation_head = ' , `' . PLANETS . '` AS p';
-            $vacation_condition = " AND p.`planet_user_id` = '" . (int) $user_id . "'";
+            $vacation_condition = " AND p.`planet_user_id` = '" . (int) $userId . "'";
             $vacation_query = "
                 pr.`preference_vacation_mode` = {$preference_vacation_mode},
                 p.`planet_building_metal_mine_percent` = '0',
@@ -266,11 +266,11 @@ class Users extends Model
                 pr.`preference_planet_sort` = '{$preference_planet_sort}',
                 pr.`preference_planet_sort_sequence` = '{$preference_planet_sort_sequence}',
                 pr.`preference_delete_mode` = {$preference_delete_mode}
-                WHERE pr.`preference_user_id` = '{$user_id}'{$vacation_condition}"
+                WHERE pr.`preference_user_id` = '{$userId}'{$vacation_condition}"
         );
     }
 
-    public function saveTechnologies(array $technologies, int $user_id): void
+    public function saveTechnologies(array $technologies, int $userId): void
     {
         // start
         $query_string = 'UPDATE `' . RESEARCH . '` SET ';
@@ -287,13 +287,13 @@ class Users extends Model
         $query_string = substr_replace($query_string, '', -1);
 
         // end
-        $query_string .= " WHERE `research_user_id` = '" . $user_id . "';";
+        $query_string .= " WHERE `research_user_id` = '" . $userId . "';";
 
         // run
         $this->db->query($query_string);
     }
 
-    public function savePremium(array $premium_data, int $user_id, array $user_query): void
+    public function savePremium(array $premium_data, int $userId, array $user_query): void
     {
         // start
         $query_string = 'UPDATE `' . PREMIUM . '` SET ';
@@ -332,7 +332,7 @@ class Users extends Model
         $query_string = substr_replace($query_string, '', -1);
 
         // end
-        $query_string .= " WHERE `premium_user_id` = '" . $this->db->escapeValue($user_id) . "';";
+        $query_string .= " WHERE `premium_user_id` = '" . $this->db->escapeValue($userId) . "';";
 
         // run
         $this->db->query($query_string);

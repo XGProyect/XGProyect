@@ -145,7 +145,7 @@ class MakerController extends BaseController
         $parse['users_combo'] = $this->buildUsersCombo();
 
         if (isset($_POST['add_planet']) && $_POST['add_planet']) {
-            $user_id = (int) $_POST['user'];
+            $userId = (int) $_POST['user'];
             $galaxy = (int) $_POST['galaxy'];
             $system = (int) $_POST['system'];
             $planet = (int) $_POST['planet'];
@@ -155,7 +155,7 @@ class MakerController extends BaseController
             $error = '';
 
             $check_planet = $this->makerModel->checkPlanet($galaxy, $system, $planet);
-            $user_query = $this->makerModel->checkUserById($user_id);
+            $user_query = $this->makerModel->checkUserById($userId);
 
             if ($check_planet['count'] == 0 && $user_query) {
                 if ($galaxy < 1 or $system < 1 or $planet < 1 or !is_numeric($galaxy) or !is_numeric($system) or !is_numeric($planet)) {
@@ -177,7 +177,7 @@ class MakerController extends BaseController
                         $name = __('admin/maker.mk_planet_default_name');
                     }
 
-                    $this->makerModel->createNewPlanet($galaxy, $system, $planet, $user_id, $field_max, $name);
+                    $this->makerModel->createNewPlanet($galaxy, $system, $planet, $userId, $field_max, $name);
 
                     session()->flash('success', __('admin/maker.mk_planet_added'));
                 } else {
