@@ -16,41 +16,41 @@
         </div>
         <p class="mb-4">{{ __('admin/permissions.pr_sub_title') }}</p>
 
-        {sections_list}
+        @foreach ($sections_list as $item)
         <div class="row">
             <div class="col-lg-12">
                 <div class="card shadow mb-4">
                     <!-- Card Header - Accordion -->
-                    <a href="#collapse{section_name}" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="collapse{section_name}">
-                        <h6 class="m-0 font-weight-bold text-primary">{section_title}</h6>
+                    <a href="#collapse{{ $item['section_name'] }}" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                        aria-expanded="true" aria-controls="collapse{{ $item['section_name'] }}">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ $item['section_title'] }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapse{section_name}" style="">
+                    <div class="collapse show" id="collapse{{ $item['section_name'] }}" style="">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th width="25%"></th>
-                                            {roles_list}
-                                            <th width="25%" class="text-center">{role_name}</th>
-                                            {/roles_list}
+                                            @foreach ($item['roles_list'] as $role)
+                                            <th width="25%" class="text-center">{{ $role['role_name'] }}</th>
+                                            @endforeach
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {modules_list}
+                                        @foreach ($item['modules_list'] as $module)
                                         <tr>
                                             <td>
-                                                <a href="admin.php?page={page_module}">{page_module_title}</a>
+                                                <a href="admin.php?page={{ $module['page_module'] }}">{{ $module['page_module_title'] }}</a>
                                             </td>
-                                            {permissions_list}
+                                            @foreach($module['permissions_list'] as $permission)
                                             <td class="text-center">
-                                                <input class="form-check-input" type="checkbox" name="{module}[{role}]" {permission_checked} {permission_disabled}>
+                                                <input class="form-check-input" type="checkbox" name="{{ $permission['module'] }}[{{ $permission['role'] }}]" {{ $permission['permission_checked'] }} {{ $permission['permission_disabled'] }}>
                                             </td>
-                                            {/permissions_list}
+                                            @endforeach
                                         </tr>
-                                        {/modules_list}
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -59,7 +59,7 @@
                 </div>
             </div>
         </div>
-        {/sections_list}
+        @endforeach
     </form>
 </div>
 @endsection

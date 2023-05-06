@@ -13,7 +13,6 @@ use Xgp\App\Libraries\Functions;
 
 class PermissionsController extends BaseController
 {
-    private string $alert = '';
     private Permissions $permissions;
 
     public function __invoke(): void
@@ -26,10 +25,12 @@ class PermissionsController extends BaseController
         }
 
         $this->setUpPermissions();
-
         $this->runAction();
 
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.permissions',
+            $this->buildListOfPermissions()
+        );
     }
 
     /**
@@ -72,23 +73,10 @@ class PermissionsController extends BaseController
 
             $this->permissions->savePermissions();
 
-            session()->flash('success', __('admin/preferences.pr_all_ok_message'));
+            session()->flash('success', __('admin/permissions.pr_all_ok_message'));
         }
     }
 
-    private function buildPage(): void
-    {
-        Template::getInstance()->view(
-            'admin.permissions',
-            $this->buildListOfPermissions()
-        );
-    }
-
-    /**
-     * Build list of roles
-     *
-     * @return array
-     */
     private function buildRolesList(): array
     {
         $roles_list = [];
@@ -102,11 +90,6 @@ class PermissionsController extends BaseController
         return $roles_list;
     }
 
-    /**
-     * Build the list of permissions
-     *
-     * @return array
-     */
     private function buildListOfPermissions(): array
     {
         $sections_list = [];
