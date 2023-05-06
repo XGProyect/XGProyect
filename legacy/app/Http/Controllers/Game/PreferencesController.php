@@ -36,7 +36,21 @@ class PreferencesController extends BaseController
 
         $this->setUpPreferences();
         $this->runAction();
-        $this->buildPage();
+
+        Template::getInstance()->view(
+            'preferences.main',
+            array_merge(
+                $this->setMessageDisplay(),
+                $this->setUserData(),
+                [
+                    'preference_spy_probes' => $this->preferences->getCurrentPreference()->getPreferenceSpyProbes(),
+                    'sort_planet' => $this->sortPlanetOptions(),
+                    'sort_sequence' => $this->sortSequenceOptions(),
+                ],
+                $this->setVacationMode(),
+                $this->setDeleteMode()
+            )
+        );
     }
 
     private function setUpPreferences(): void
@@ -106,52 +120,23 @@ class PreferencesController extends BaseController
         }
     }
 
-    private function buildPage(): void
-    {
-        Template::getInstance()->view(
-            'game/preferences_view',
-            array_merge(
-                $this->setMessageDisplay(),
-                $this->setUserData(),
-                [
-                    'preference_spy_probes' => $this->preferences->getCurrentPreference()->getPreferenceSpyProbes(),
-                    'sort_planet' => $this->sortPlanetOptions(),
-                    'sort_sequence' => $this->sortSequenceOptions(),
-                ],
-                $this->setVacationMode(),
-                $this->setDeleteMode()
-            )
-        );
-    }
-
-    /**
-     * Display the message block
-     *
-     * @return array
-     */
     private function setMessageDisplay(): array
     {
         $message = [
-            'status_message' => [],
+            'color' => '',
+            'message' => '',
         ];
 
         if ($this->post) {
             $message = [
-                'status_message' => '',
-                '/status_message' => '',
-                'error_color' => ($this->error == '' ? '#00ff00' : '#ff0000'),
-                'error_text' => ($this->error == '' ? __('game/preferences.pr_ok_settings_saved') : $this->error),
+                'color' => ($this->error == '' ? '#00ff00' : '#ff0000'),
+                'message' => ($this->error == '' ? __('game/preferences.pr_ok_settings_saved') : $this->error),
             ];
         }
 
         return $message;
     }
 
-    /**
-     * Set the user data for the view
-     *
-     * @return array
-     */
     private function setUserData(): array
     {
         return [
@@ -161,11 +146,6 @@ class PreferencesController extends BaseController
         ];
     }
 
-    /**
-     * Returns an array with the different options to sort a planet
-     *
-     * @return array
-     */
     private function sortPlanetOptions(): array
     {
         $order_options = [];
@@ -183,11 +163,6 @@ class PreferencesController extends BaseController
         return $order_options;
     }
 
-    /**
-     * Returns an array with the different sequence options to sort a planet
-     *
-     * @return array
-     */
     private function sortSequenceOptions(): array
     {
         $sequence_options = [];
@@ -205,11 +180,6 @@ class PreferencesController extends BaseController
         return $sequence_options;
     }
 
-    /**
-     * Set the vacation mode data for the view
-     *
-     * @return array
-     */
     private function setVacationMode(): array
     {
         if ($this->preferences->isVacationModeOn()) {
@@ -234,14 +204,11 @@ class PreferencesController extends BaseController
         return [
             'hide_no_vacation' => 'style="display: none"',
             'pr_vacation_mode_active' => '',
+            'hide_vacation_invalid' => '',
+            'disabled' => '',
         ];
     }
 
-    /**
-     * Set the delete mode data for the view
-     *
-     * @return array
-     */
     private function setDeleteMode(): array
     {
         if ($this->preferences->getCurrentPreference()->getPreferenceDeleteMode() > 0) {
@@ -259,15 +226,12 @@ class PreferencesController extends BaseController
             ];
         }
 
-        return [];
+        return [
+            'preference_delete_mode' => '',
+            'hide_delete' => '',
+        ];
     }
 
-    /**
-     * Validate new user name
-     *
-     * @param array $preferences
-     * @return void
-     */
     private function validateNewUserName(array $preferences): void
     {
         if (isset($preferences['new_user_name'])
@@ -295,12 +259,6 @@ class PreferencesController extends BaseController
         }
     }
 
-    /**
-     * Validate new password
-     *
-     * @param array $preferences
-     * @return void
-     */
     private function validateNewPassword(array $preferences): void
     {
         if (isset($preferences['current_user_password'])
@@ -313,12 +271,6 @@ class PreferencesController extends BaseController
         }
     }
 
-    /**
-     * Validate new email
-     *
-     * @param array $preferences
-     * @return void
-     */
     private function validateNewEmail(array $preferences): void
     {
         if (isset($preferences['new_user_email'])
@@ -344,44 +296,21 @@ class PreferencesController extends BaseController
         }
     }
 
-    /**
-     * Validate spy probes
-     *
-     * @param array $preferences
-     * @return void
-     */
     private function validateSpyProbes(array $preferences): void
     {
         $this->fields_to_update['preference_spy_probes'] = $preferences['preference_spy_probes'];
     }
 
-    /**
-     * Validate planet sort
-     *
-     * @param array $preferences
-     * @return void
-     */
     private function validatePlanetSort(array $preferences): void
     {
         $this->fields_to_update['preference_planet_sort'] = $preferences['preference_planet_sort'];
     }
 
-    /**
-     * Validate planet sort sequence
-     *
-     * @param array $preferences
-     * @return void
-     */
     private function validatePlanetSortSequence(array $preferences): void
     {
         $this->fields_to_update['preference_planet_sort_sequence'] = $preferences['preference_planet_sort_sequence'];
     }
 
-    /**
-     * Validate vacation mode
-     *
-     * @return void
-     */
     private function validateVacationMode(): void
     {
         if ($this->preferences->isVacationModeOn()) {
@@ -393,16 +322,10 @@ class PreferencesController extends BaseController
         }
     }
 
-    /**
-     * Validate delete mode
-     *
-     * @param array $preferences
-     * @return void
-     */
     private function validateDeleteMode(array $preferences): void
     {
         if (isset($preferences['preference_delete_mode'])
-            && $preferences['preference_delete_mode'] = 'on') {
+            && $preferences['preference_delete_mode'] == 'on') {
             $this->fields_to_update['preference_delete_mode'] = time();
         } else {
             $this->fields_to_update['preference_delete_mode'] = null;
