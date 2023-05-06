@@ -33,6 +33,7 @@
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
+        "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^10.0",
         "spatie/laravel-ignition": "^2.0"
     },
@@ -68,6 +69,9 @@
         ],
         "phpcompatinfo": [
             "vendor/bin/phpcompatinfo --progress analyser:run ./legacy/"
+        ],
+        "phpstan": [
+            "vendor/bin/phpstan analyse app legacy tests"
         ]
     },
     "extra": {
