@@ -97,11 +97,10 @@ abstract class Functions
             $parse['middle2'] = '</div>';
         }
 
-        (new Page(new Users()))->display(
-            Template::getInstance()->render('general/message_body', $parse),
-            $topnav,
-            (($dest != '') ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ''),
-            $menu
+        // (($dest != '') ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ''),
+        Template::getInstance()->view(
+            'general/message_body',
+            $parse
         );
     }
 

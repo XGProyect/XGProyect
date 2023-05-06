@@ -20,7 +20,8 @@ class RebuildHighscoresController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__)) {
-            die(Administration::noAccessMessage(__('admin/global.no_permissions')));
+            Administration::noAccessMessage(__('admin/global.no_permissions'));
+            exit;
         }
 
         $this->runAction();
@@ -35,6 +36,8 @@ class RebuildHighscoresController extends BaseController
     {
         $stObject = new Statistics();
         $this->result = $stObject->makeStats();
+
+        session()->flash('success', __('admin/rebuildhighscores.sb_stats_update'));
 
         Functions::updateConfig('stat_last_update', $this->result['stats_time']);
     }
@@ -54,10 +57,6 @@ class RebuildHighscoresController extends BaseController
                 '%i' => Format::prettyBytes($this->result['end_memory'][0]),
                 '%m' => Format::prettyBytes($this->result['end_memory'][0]),
             ]),
-            'alert' => Administration::saveMessage('ok', strtr(
-                __('admin/rebuildhighscores.sb_stats_update'),
-                ['%t' => $this->result['totaltime']]
-            )),
         ];
     }
 }

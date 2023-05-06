@@ -19,8 +19,8 @@ class EmpireController extends BaseController
 {
     public const MODULE_ID = 2;
 
-    private Empire $empireModel;
     private array $user = [];
+    private Empire $empireModel;
     private Objects $objects;
 
     public function __invoke(): void

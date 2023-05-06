@@ -21,6 +21,8 @@ class BuildingsController extends BaseController
 {
     public const MODULE_ID = 3;
 
+    protected array $user = [];
+    protected array $planet = [];
     protected string $page = '';
     protected array $allowedBuildings = [];
 
@@ -28,14 +30,13 @@ class BuildingsController extends BaseController
     private bool $_commander_active = false;
     private Buildings $buildingsModel;
     private Users $userLibrary;
-
-    private array $user = [];
-    private array $planet = [];
     private Objects $objects;
 
     public function __invoke(): void
     {
         Users::checkSession();
+
+        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
@@ -45,8 +46,6 @@ class BuildingsController extends BaseController
         $this->userLibrary = new Users();
 
         $this->setUpBuildings();
-
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->runAction();
 

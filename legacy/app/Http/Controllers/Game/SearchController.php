@@ -97,7 +97,7 @@ class SearchController extends BaseController
         if (count($this->results) > 0) {
             $this->searchTerms['errorBlock'] = '';
 
-            return Template::render(
+            return Template::getInstance()->render(
                 'search.results.' . $this->templatesMap[$this->searchTerms['searchType']],
                 array_merge(
                     [

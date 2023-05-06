@@ -4,6 +4,7 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
@@ -17,6 +18,8 @@ class ResourcesettingsController extends BaseController
 {
     public const MODULE_ID = 4;
 
+    private array $user = [];
+    private array $planet = [];
     private $resource;
     private $prodGrid;
     private $reslist;
@@ -26,13 +29,14 @@ class ResourcesettingsController extends BaseController
     {
         Users::checkSession();
 
-        $this->resourcesModel = new Resources();
-        $this->resource = $this->objects->getObjects();
-        $this->prodGrid = $this->objects->getProduction();
-        $this->reslist = $this->objects->getObjectsList();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+        $this->resourcesModel = new Resources();
+        $this->resource = Objects::getInstance()->getObjects();
+        $this->prodGrid = Objects::getInstance()->getProduction();
+        $this->reslist = Objects::getInstance()->getObjectsList();
 
         $this->buildPage();
     }

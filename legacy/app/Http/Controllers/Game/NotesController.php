@@ -17,6 +17,8 @@ class NotesController extends BaseController
 {
     public const MODULE_ID = 19;
     public const REDIRECT_TARGET = 'game.php?page=notes';
+
+    private array $user = [];
     private ?Note $notes = null;
     private Notes $notesModel;
 
@@ -24,25 +26,17 @@ class NotesController extends BaseController
     {
         Users::checkSession();
 
-        $this->notesModel = new Notes();
-
-        // init a new notes object
-        $this->setUpNotes();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        $this->runAction();
+        $this->user = Users::getInstance()->getUserData();
+        $this->notesModel = new Notes();
 
+        $this->setUpNotes();
+        $this->runAction();
         $this->buildPage();
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
-    private function runAction()
+    private function runAction(): void
     {
         $data = filter_input_array(INPUT_POST, [
             's' => [

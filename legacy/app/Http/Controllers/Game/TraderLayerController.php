@@ -12,14 +12,15 @@ class TraderLayerController extends BaseController
 {
     public const MODULE_ID = 5;
 
+    private array $planet = [];
+
     public function __invoke()
     {
         Users::checkSession();
 
-        $this->buildPage();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->planet = Users::getInstance()->getPlanetData();
 
         Template::getInstance()->render(
             'game/trader_layer_view',

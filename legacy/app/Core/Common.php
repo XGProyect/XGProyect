@@ -42,9 +42,7 @@ class Common
         // specific pages load or executions
         if (isset(self::APPLICATIONS[$app])) {
             foreach (self::APPLICATIONS[$app] as $method) {
-                if (!empty($method)) {
-                    $this->$method();
-                }
+                $this->$method();
             }
         }
     }
@@ -129,7 +127,8 @@ class Common
             $user_level = $user['user_authlevel'] ?? 0;
 
             if ($user_level < UserRanks::ADMIN) {
-                die(Functions::message(Functions::readConfig('close_reason'), '', '', false, false));
+                Functions::message(Functions::readConfig('close_reason'), '', '', false, false);
+                exit;
             }
         }
     }
@@ -140,10 +139,18 @@ class Common
         $user = (new Users())->getUserData();
 
         if ($user['user_banned'] > 0) {
-            die(Functions::message(StringsHelper::parseReplacements(
-                __('game/global.bg_banned'),
-                [Timing::formatShortDate($user['user_banned'])]
-            ), '', '', false, false));
+            Functions::message(
+                StringsHelper::parseReplacements(
+                    __('game/global.bg_banned'),
+                    [Timing::formatShortDate($user['user_banned'])]
+                ),
+                '',
+                '',
+                false,
+                false
+            );
+
+            exit;
         }
     }
 }

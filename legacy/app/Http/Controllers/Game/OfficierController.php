@@ -15,19 +15,19 @@ class OfficierController extends BaseController
 {
     public const MODULE_ID = 15;
 
+    private array $user = [];
     private Officier $officierModel;
 
     public function __invoke()
     {
         Users::checkSession();
 
-        $this->officierModel = new Officier();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        $this->runAction();
+        $this->user = Users::getInstance()->getUserData();
+        $this->officierModel = new Officier();
 
+        $this->runAction();
         $this->buildPage();
     }
 

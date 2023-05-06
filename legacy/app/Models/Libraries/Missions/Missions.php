@@ -205,14 +205,7 @@ class Missions extends Model
         return [];
     }
 
-    /**
-     * Update planet debris by coordinates
-     *
-     * @param array $data Data to run the query
-     *
-     * @return void
-     */
-    public function updatePlanetDebrisByCoords(array $data = [])
+    public function updatePlanetDebrisByCoords(array $data = []): void
     {
         if (is_array($data)) {
             $this->db->query(
@@ -229,14 +222,7 @@ class Missions extends Model
         }
     }
 
-    /**
-     * Get user technologies by the provided user ID
-     *
-     * @param int $userId User ID
-     *
-     * @return array
-     */
-    public function getTechnologiesByUserId($userId)
+    public function getTechnologiesByUserId(int $userId): array
     {
         if ((int) $userId > 0) {
             return $this->db->queryFetch(
@@ -251,16 +237,11 @@ class Missions extends Model
                 WHERE u.user_id = '" . $userId . "';"
             );
         }
+
+        return [];
     }
 
-    /**
-     * Get moon id by coords
-     *
-     * @param array $data Moon coords
-     *
-     * @return array
-     */
-    public function getMoonIdByCoords(array $data = [])
+    public function getMoonIdByCoords(array $data = []): array
     {
         if (is_array($data)) {
             return $this->db->queryFetch(
@@ -276,14 +257,7 @@ class Missions extends Model
         return [];
     }
 
-    /**
-     * Insert a new record in the reports table
-     *
-     * @param array $data Report data
-     *
-     * @return void
-     */
-    public function insertReport(array $data = [])
+    public function insertReport(array $data = []): void
     {
         if (is_array($data)) {
             $this->db->query(
@@ -297,14 +271,7 @@ class Missions extends Model
         }
     }
 
-    /**
-     * Update returning fleet steal resources
-     *
-     * @param array $data
-     *
-     * @return void
-     */
-    public function updateReturningFleetData(array $data = [])
+    public function updateReturningFleetData(array $data = []): void
     {
         if (is_array($data)) {
             $this->db->query(
@@ -320,14 +287,7 @@ class Missions extends Model
         }
     }
 
-    /**
-     * Delete multiple fleets by a set of provided ids
-     *
-     * @param string $id_string String of IDS
-     *
-     * @return void
-     */
-    public function deleteMultipleFleetsByIds($id_string)
+    public function deleteMultipleFleetsByIds(string $id_string): void
     {
         $this->db->query(
             'DELETE FROM `' . FLEETS . '`

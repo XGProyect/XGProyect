@@ -12,16 +12,19 @@ class RenameplanetController extends BaseController
 {
     public const MODULE_ID = 1;
 
+    private array $user = [];
+    private array $planet = [];
     private Renameplanet $renameplanetModel;
 
     public function __invoke()
     {
         Users::checkSession();
 
-        $this->renameplanetModel = new Renameplanet();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+        $this->renameplanetModel = new Renameplanet();
 
         $this->buildPage();
     }

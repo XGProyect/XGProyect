@@ -15,16 +15,19 @@ class PhalanxController extends BaseController
 {
     public const MODULE_ID = 11;
 
+    private array $user = [];
+    private array $planet = [];
     private Phalanx $phalanxModel;
 
     public function __invoke()
     {
         Users::checkSession();
 
-        $this->phalanxModel = new Phalanx();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+        $this->phalanxModel = new Phalanx();
 
         $this->buildPage();
     }

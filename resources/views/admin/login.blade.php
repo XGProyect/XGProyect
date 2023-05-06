@@ -49,7 +49,7 @@
                                             name="signin">{{ __('admin/login.lg_login') }}</button>
                                     </form>
                                     <br>
-                                    {!! $alert !!}
+                                    <x-alert :dismissible=false/>
                                 </div>
                             </div>
                         </div>

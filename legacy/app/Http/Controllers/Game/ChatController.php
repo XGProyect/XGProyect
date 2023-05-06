@@ -13,6 +13,7 @@ class ChatController extends BaseController
 {
     public const MODULE_ID = 18;
 
+    private array $user = [];
     private array $_receiver_data = [];
     private array $_message_data = [];
     private Messages $messagesModel;
@@ -21,9 +22,10 @@ class ChatController extends BaseController
     {
         Users::checkSession();
 
-        $this->messagesModel = new Messages();
-
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->messagesModel = new Messages();
 
         $this->runAction();
 

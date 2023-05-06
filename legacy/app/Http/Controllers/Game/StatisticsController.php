@@ -14,16 +14,19 @@ class StatisticsController extends BaseController
 {
     public const MODULE_ID = 16;
 
+    private array $user = [];
+    private array $planet = [];
     private Statistics $statisticsModel;
 
     public function __invoke()
     {
         Users::checkSession();
 
-        $this->statisticsModel = new Statistics();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+        $this->statisticsModel = new Statistics();
 
         $this->buildPage();
     }

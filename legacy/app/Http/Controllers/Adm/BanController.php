@@ -8,11 +8,12 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
+use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Adm\Ban;
 
 class BanController extends BaseController
 {
+    private array $user;
     private int $_users_count = 0;
     private int $_banned_count = 0;
     private Ban $banModel;
@@ -22,9 +23,11 @@ class BanController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__)) {
-            die(Administration::noAccessMessage(__('admin/global.no_permissions')));
+            Administration::noAccessMessage(__('admin/global.no_permissions'));
+            exit;
         }
 
+        $this->user = Users::getInstance()->getUserData();
         $this->banModel = new Ban();
 
         $this->buildPage();

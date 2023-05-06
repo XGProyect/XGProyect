@@ -16,11 +16,11 @@ class TraderResourcesController extends BaseController
     public const RESOURCES = ['metal', 'crystal', 'deuterium'];
     public const PERCENTAGES = [10, 50, 100];
 
+    private array $user = [];
+    private array $planet = [];
     private ?ResourceMarket $trader;
     private string $error = '';
     private Trader $traderModel;
-    private array $user = [];
-    private array $planet = [];
 
     public function __invoke(): void
     {

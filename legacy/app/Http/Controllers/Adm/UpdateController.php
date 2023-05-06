@@ -21,7 +21,8 @@ class UpdateController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__)) {
-            die(Administration::noAccessMessage(__('admin/global.no_permissions')));
+            Administration::noAccessMessage(__('admin/global.no_permissions'));
+            exit;
         }
 
         $this->updateModel = new Update();
@@ -37,7 +38,8 @@ class UpdateController extends BaseController
         $this->db_version = Functions::readConfig('version');
 
         if ($this->system_version == $this->db_version) {
-            die(Administration::noAccessMessage(__('admin/update.up_no_update_required')));
+            Administration::noAccessMessage(__('admin/update.up_no_update_required'));
+            exit;
         }
 
         $parse['alert'] = '';
@@ -64,7 +66,8 @@ class UpdateController extends BaseController
                         $parse
                     );
                 } else {
-                    die(Administration::noAccessMessage(__('admin/update.up_success')));
+                    Administration::noAccessMessage(__('admin/update.up_success'));
+                    exit;
                 }
             } else {
                 session()->flash('warning', $alerts);
@@ -137,7 +140,7 @@ class UpdateController extends BaseController
         require_once $update_path;
 
         // Check if there was something
-        if (isset($queries) && count($queries) > 0) {
+        if (count($queries) > 0) {
             foreach ($queries as $query) {
                 if (!$this->demo) {
                     $this->output[] = $this->updateModel->runQuery($query);

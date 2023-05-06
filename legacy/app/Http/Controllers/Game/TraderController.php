@@ -16,6 +16,8 @@ class TraderController extends BaseController
     public const RESOURCES = ['metal', 'crystal', 'deuterium'];
     public const PERCENTAGES = [10, 50, 100];
 
+    private array $user = [];
+    private array $planet = [];
     private ?ResourceMarket $trader;
     private string $error = '';
     private Trader $traderModel;
@@ -24,16 +26,14 @@ class TraderController extends BaseController
     {
         Users::checkSession();
 
-        $this->traderModel = new Trader();
-
-        // init a new trader object
-        $this->setUpTrader();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        $this->runAction();
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+        $this->traderModel = new Trader();
 
+        $this->setUpTrader();
+        $this->runAction();
         $this->buildPage();
     }
 

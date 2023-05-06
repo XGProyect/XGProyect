@@ -27,7 +27,8 @@ class PremiumController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__)) {
-            die(Administration::noAccessMessage(__('admin/global.no_permissions')));
+            Administration::noAccessMessage(__('admin/global.no_permissions'));
+            exit;
         }
 
         $this->runAction();

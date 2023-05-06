@@ -26,13 +26,12 @@ class Objects
         // require this damn file
         require CORE_PATH . 'objects_collection.php';
 
-        // pass the require array into properties
-        $this->objects = $resource;
-        $this->relations = $requeriments;
-        $this->price = $pricelist;
-        $this->combatSpecs = $CombatCaps;
-        $this->production = $ProdGrid;
-        $this->objectsList = $reslist;
+        $this->objects = $resource; // @phpstan-ignore-line
+        $this->relations = $requeriments; // @phpstan-ignore-line
+        $this->price = $pricelist; // @phpstan-ignore-line
+        $this->combatSpecs = $CombatCaps; // @phpstan-ignore-line
+        $this->production = $ProdGrid; // @phpstan-ignore-line
+        $this->objectsList = $reslist; // @phpstan-ignore-line
     }
 
     public function getObjects(?int $objectId = null)

@@ -21,11 +21,11 @@ class LoginController extends BaseController
         $this->loginModel = new Login();
 
         $this->runAction();
+        $this->setAlert();
 
         Template::getInstance()->view(
             'admin.login',
             [
-                'alert' => $this->getAlert(),
                 'redirect' => filter_input(INPUT_GET, 'redirect', FILTER_UNSAFE_RAW),
             ]
         );
@@ -60,14 +60,12 @@ class LoginController extends BaseController
         }
     }
 
-    private function getAlert(): string
+    private function setAlert(): void
     {
         $error = filter_input(INPUT_GET, 'error', FILTER_VALIDATE_INT);
 
         if ($error == 1) {
-            return Administration::saveMessage('error', __('admin/login.lg_error_wrong_data'), false);
+            session()->flash('danger', __('admin/login.lg_error_wrong_data'));
         }
-
-        return '';
     }
 }

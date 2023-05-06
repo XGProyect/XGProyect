@@ -10,7 +10,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Page;
 use Xgp\App\Models\Adm\Changelog;
 
 class ChangelogController extends BaseController
@@ -22,21 +21,16 @@ class ChangelogController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__)) {
-            die(Administration::noAccessMessage(__('admin/global.no_permissions')));
+            Administration::noAccessMessage(__('admin/global.no_permissions'));
+            exit;
         }
 
         $this->changelogModel = new Changelog();
 
         $this->runAction();
-
         $this->buildPage();
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         // route to the right page

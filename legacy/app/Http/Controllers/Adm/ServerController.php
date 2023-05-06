@@ -23,7 +23,8 @@ class ServerController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__)) {
-            die(Administration::noAccessMessage(__('admin/global.no_permissions')));
+            Administration::noAccessMessage(__('admin/global.no_permissions'));
+            exit;
         }
 
         $this->serverModel = new Server();
@@ -190,6 +191,7 @@ class ServerController extends BaseController
         $dt = new DateTime('now', $utc);
         $time_zones = '';
         $current_time_zone = $this->serverModel->readConfig('date_time_zone');
+        $time_zones_data = [];
 
         // Get the data
         foreach (DateTimeZone::listIdentifiers() as $tz) {

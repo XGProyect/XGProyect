@@ -22,7 +22,8 @@ class MakerController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__)) {
-            die(Administration::noAccessMessage(__('admin/global.no_permissions')));
+            Administration::noAccessMessage(__('admin/global.no_permissions'));
+            exit;
         }
 
         $this->makerModel = new Maker();
@@ -111,11 +112,6 @@ class MakerController extends BaseController
         return $parse;
     }
 
-    /**
-     * Create a new alliance
-     *
-     * @return array
-     */
     private function makeAlliace(): array
     {
         $parse['founders_combo'] = $this->buildAllianceUsersCombo();
@@ -156,13 +152,14 @@ class MakerController extends BaseController
             $name = (string) $_POST['name'];
             $field_max = (int) $_POST['planet_field_max'];
             $i = 0;
+            $error = '';
 
             $check_planet = $this->makerModel->checkPlanet($galaxy, $system, $planet);
             $user_query = $this->makerModel->checkUserById($user_id);
 
             if ($check_planet['count'] == 0 && $user_query) {
                 if ($galaxy < 1 or $system < 1 or $planet < 1 or !is_numeric($galaxy) or !is_numeric($system) or !is_numeric($planet)) {
-                    $error = __('admin/maker.mk_planet_unavailable_coords');
+                    $error .= __('admin/maker.mk_planet_unavailable_coords');
                     $i++;
                 }
 

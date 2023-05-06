@@ -17,7 +17,8 @@ class LanguagesController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__)) {
-            die(Administration::noAccessMessage(__('admin/global.no_permissions')));
+            Administration::noAccessMessage(__('admin/global.no_permissions'));
+            exit;
         }
 
         $this->runAction();
@@ -71,7 +72,7 @@ class LanguagesController extends BaseController
     {
         if (empty($this->currentFile)) {
             return [
-                'contents' => $contents ?? '',
+                'contents' => '',
             ];
         }
 
@@ -94,7 +95,7 @@ class LanguagesController extends BaseController
         }
 
         return [
-            'contents' => $contents ?? '',
+            'contents' => $contents,
         ];
     }
 

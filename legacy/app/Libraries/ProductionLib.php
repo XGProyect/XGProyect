@@ -4,14 +4,7 @@ namespace Xgp\App\Libraries;
 
 class ProductionLib
 {
-    /**
-     * maxStorable
-     *
-     * @param int $storage_level Storage level
-     *
-     * @return void
-     */
-    public static function maxStorable($storage_level)
+    public static function maxStorable($storage_level): int
     {
         return (int) (2.5 * pow(M_E, (20 * ($storage_level) / 33))) * 5000;
     }

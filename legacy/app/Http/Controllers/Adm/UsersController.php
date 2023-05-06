@@ -32,7 +32,8 @@ class UsersController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__)) {
-            die(Administration::noAccessMessage(__('admin/global.no_permissions')));
+            Administration::noAccessMessage(__('admin/global.no_permissions'));
+            exit;
         }
 
         $this->stats = new StatisticsLibrary();
@@ -266,33 +267,27 @@ class UsersController extends BaseController
         $planets_query = $this->usersModel->getAllPlanetsData($this->id, $this->planet, $this->edit);
         $parse['planets'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_planets'));
 
-        // CHOOSE THE ACTION
         switch (true) {
             case ($this->edit == 'planet' && $planets_query):
                 $parse += $this->editMain($planets_query[0]);
                 $view = 'admin.users_planets_main';
                 break;
-
             case ($this->edit == 'buildings' && $planets_query):
                 $parse['buildings_list'] = $this->editBuildings($planets_query[0], 1);
                 $view = 'admin.users_planets_buildings';
                 break;
-
             case ($this->edit == 'ships' && $planets_query):
                 $parse['ships_list'] = $this->editShips($planets_query[0]);
                 $view = 'admin.users_planets_ships';
                 break;
-
             case ($this->edit == 'defenses' && $planets_query):
                 $parse['defenses_list'] = $this->editDefenses($planets_query[0], 1);
                 $view = 'admin.users_planets_defenses';
                 break;
-
             case ($this->edit == 'delete'):
                 $this->usersModel->softDeletePlanetById($this->planet);
                 $this->refreshPage();
                 break;
-
             case '':
             default:
                 $parse['planets_list'] = $this->planetsTable($planets_query);
@@ -314,27 +309,22 @@ class UsersController extends BaseController
                 $parse += $this->editMain($moons_query[0]);
                 $view = 'admin.users_moons_main';
                 break;
-
             case ($this->edit == 'buildings' && $moons_query):
                 $parse['buildings_list'] = $this->editBuildings($moons_query[0], 3);
                 $view = 'admin.users_planets_buildings';
                 break;
-
             case ($this->edit == 'ships' && $moons_query):
                 $parse['ships_list'] = $this->editShips($moons_query[0]);
                 $view = 'admin.users_planets_ships';
                 break;
-
             case ($this->edit == 'defenses' && $moons_query):
                 $parse['defenses_list'] = $this->editDefenses($moons_query[0], 3);
                 $view = 'admin.users_planets_defenses';
                 break;
-
             case ($this->edit == 'delete'):
                 $this->usersModel->softDeleteMoonById($this->moon);
                 $this->refreshPage();
                 break;
-
             case '':
             default:
                 $parse['moons_list'] = $this->moonsTable($moons_query);

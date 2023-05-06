@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib;
@@ -15,6 +16,8 @@ class ResearchController extends BaseController
 {
     public const MODULE_ID = 6;
 
+    private array $user = [];
+    private array $planet = [];
     private $_resource;
     private $_reslist;
     private $_is_working;
@@ -25,12 +28,13 @@ class ResearchController extends BaseController
     {
         Users::checkSession();
 
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
         $this->researchModel = new Research();
-        $this->_resource = $this->objects->getObjects();
-        $this->_reslist = $this->objects->getObjectsList();
+        $this->_resource = Objects::getInstance()->getObjects();
+        $this->_reslist = Objects::getInstance()->getObjectsList();
 
         $this->setLabsAmount();
         $this->handleTechnologieBuild();

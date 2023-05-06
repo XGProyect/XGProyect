@@ -33,10 +33,7 @@ class RecoverController extends BaseController
         if ($username !== null) {
             $newPassword = Functions::generatePassword();
 
-            Mail::to($email)->send(new Recover(
-                $email,
-                $newPassword
-            ));
+            Mail::to($email)->send(new Recover($newPassword));
 
             Users::where('user_email', $email)->update(['user_password' => Functions::hash($newPassword)]);
 

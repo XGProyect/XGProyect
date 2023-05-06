@@ -17,6 +17,7 @@ class FederationController extends BaseController
     public const MODULE_ID = 8;
     public const REDIRECT_TARGET = 'game.php?page=fleet1';
 
+    private array $user = [];
     private ?Fleets $_fleets = null;
     private ?AcsFleets $_group = null;
     private string $_acs_code = '';
@@ -29,17 +30,16 @@ class FederationController extends BaseController
     {
         Users::checkSession();
 
+        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
         $this->fleetModel = new Fleet();
         $this->buddiesModel = new Buddies();
 
         // init a new fleets object
         $this->setUpFleets();
 
-        // Check module access
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
-
         $this->runAction();
-
         $this->buildPage();
     }
 

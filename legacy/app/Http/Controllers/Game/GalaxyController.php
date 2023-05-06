@@ -3,11 +3,14 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\GalaxyLib;
+use Xgp\App\Libraries\NoobsProtectionLib;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Fleet;
 use Xgp\App\Models\Game\Galaxy;
@@ -15,6 +18,9 @@ use Xgp\App\Models\Game\Galaxy;
 class GalaxyController extends BaseController
 {
     public const MODULE_ID = 11;
+
+    private array $user = [];
+    private array $planet = [];
     private array $galaxy = [];
     private int $planet_count = 0;
     private $_resource;
@@ -31,35 +37,27 @@ class GalaxyController extends BaseController
     {
         Users::checkSession();
 
+        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
         $this->fleetModel = new Fleet();
         $this->galaxyModel = new Galaxy();
-        $this->_resource = $this->objects->getObjects();
-        $this->_pricelist = $this->objects->getPrice();
-        $this->_reslist = $this->objects->getObjectsList();
-        $this->noob = Functions::loadLibrary('NoobsProtectionLib');
-        $this->_galaxyLib = Functions::loadLibrary('GalaxyLib');
+        $this->_resource = Objects::getInstance()->getObjects();
+        $this->_pricelist = Objects::getInstance()->getPrice();
+        $this->_reslist = Objects::getInstance()->getObjectsList();
+        $this->noob = new NoobsProtectionLib();
+        $this->_galaxyLib = new GalaxyLib();
 
         if ($this->user['preference_vacation_mode'] > 0) {
             Functions::message(__('game/galaxy.gl_no_access_vm_on'), '', '');
         }
 
-        // init a new galaxy object
-        //$this->setUpPreferences();
-
-        // Check module access
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
-
         $this->runAction();
-
         $this->buildPage();
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
-    private function runAction()
+    private function runAction(): void
     {
         if (isset($_GET['fleet']) && $_GET['fleet'] == 'true') {
             $this->sendFleet();

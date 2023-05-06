@@ -19,9 +19,9 @@ class ChangelogController extends BaseController
     {
         Users::checkSession();
 
-        $this->changelogModel = new Changelog();
-
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->changelogModel = new Changelog();
 
         $changes = [];
         $entries = $this->changelogModel->getAllChangelogEntries();

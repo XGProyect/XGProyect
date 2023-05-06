@@ -13,6 +13,7 @@ class CombatreportController extends BaseController
 {
     public const MODULE_ID = 23;
 
+    private array $user = [];
     private ?Report $report = null;
     private Combatreport $combatreportModel;
 
@@ -20,25 +21,21 @@ class CombatreportController extends BaseController
     {
         Users::checkSession();
 
+        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
         $this->combatreportModel = new Combatreport();
 
-        // init a new report object
         $this->setUpReport();
-
-        // Check module access
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->runAction();
 
-        $this->buildPage();
+        Template::getInstance()->view(
+            $this->getReportTemplate()
+        );
     }
 
-    /**
-     * Creates a new report object that will handle all the report actions
-     *
-     * @return void
-     */
-    private function setUpReport()
+    private function setUpReport(): void
     {
         $this->report = new Report(
             [$this->combatreportModel->getReportById(filter_input(INPUT_GET, 'report'))],
@@ -46,26 +43,13 @@ class CombatreportController extends BaseController
         );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
-    private function runAction()
+    private function runAction(): void
     {
         $owners = $this->report->getFirstReportOwnersAsArray();
 
-        if (!isset($owners) or !in_array($this->user['user_id'], $owners)) {
+        if (!in_array($this->user['user_id'], $owners)) {
             Functions::message(__('game/combatreport.cr_no_access'), '', 0, false, false, false);
         }
-    }
-
-    private function buildPage(): void
-    {
-        // view with no topvar and no leftmenu
-        Template::getInstance()->view(
-            $this->getReportTemplate()
-        );
     }
 
     /**

@@ -81,15 +81,7 @@ class AdministrationLib
         );
     }
 
-    /**
-     * adminLogin
-     *
-     * @param int    $admin_id   Admin ID
-     * @param string $password   Password
-     *
-     * @return void
-     */
-    public static function adminLogin($admin_id = 0, $password = '')
+    public static function adminLogin($admin_id = 0, $password = ''): bool
     {
         if ($admin_id != 0 && !empty($password)) {
             // login as a user

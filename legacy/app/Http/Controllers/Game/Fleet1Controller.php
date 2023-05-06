@@ -19,6 +19,8 @@ class Fleet1Controller extends BaseController
 {
     public const MODULE_ID = 8;
 
+    private array $user = [];
+    private array $planet = [];
     private ?Fleets $_fleets = null;
     private ?Researches $_research = null;
     private ?Premium $_premium = null;
@@ -29,14 +31,13 @@ class Fleet1Controller extends BaseController
     {
         Users::checkSession();
 
-        $this->fleetModel = new Fleet();
-
-        // init a new fleets object
-        $this->setUpFleets();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+        $this->fleetModel = new Fleet();
+
+        $this->setUpFleets();
         $this->buildPage();
     }
 

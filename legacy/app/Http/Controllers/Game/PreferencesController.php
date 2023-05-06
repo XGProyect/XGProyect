@@ -18,6 +18,7 @@ class PreferencesController extends BaseController
 {
     public const MODULE_ID = 21;
 
+    private array $user = [];
     private ?Pref $preferences = null;
     private array $fields_to_update = [];
     private string $error = '';
@@ -28,25 +29,16 @@ class PreferencesController extends BaseController
     {
         Users::checkSession();
 
-        $this->preferencesModel = new Preferences();
-
-        // init a new preferences object
-        $this->setUpPreferences();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        $this->runAction();
+        $this->user = Users::getInstance()->getUserData();
+        $this->preferencesModel = new Preferences();
 
+        $this->setUpPreferences();
+        $this->runAction();
         $this->buildPage();
     }
 
-    /**
-     * Creates a new preferences object that will handle all the preferences
-     * creation methods and actions
-     *
-     * @return void
-     */
     private function setUpPreferences(): void
     {
         $this->preferences = new Pref(
@@ -55,11 +47,6 @@ class PreferencesController extends BaseController
         );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $vacation_mode = filter_input(INPUT_POST, 'preference_vacation_mode');

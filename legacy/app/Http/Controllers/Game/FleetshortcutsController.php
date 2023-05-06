@@ -14,6 +14,7 @@ class FleetshortcutsController extends BaseController
     public const MODULE_ID = 8;
     public const REDIRECT_TARGET = 'game.php?page=shortcuts';
 
+    private array $user = [];
     private ?Shortcuts $_shortcuts = null;
     private int $_shortcuts_count = 0;
     private array $_clean_data = [];
@@ -23,14 +24,12 @@ class FleetshortcutsController extends BaseController
     {
         Users::checkSession();
 
-        $this->shortcutsModel = new ShortcutsModel();
-
-        // init a new shortcut object
-        $this->setUpShortcuts();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
+        $this->user = Users::getInstance()->getUserData();
+        $this->shortcutsModel = new ShortcutsModel();
+
+        $this->setUpShortcuts();
         $this->runAction();
 
         Template::getInstance()->view(

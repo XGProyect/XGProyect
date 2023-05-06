@@ -30,6 +30,8 @@ class Notes extends Model
 
     public function createNewNote(array $note_data): void
     {
+        $sql = [];
+
         foreach ($note_data as $field => $value) {
             $sql[] = '`' . $field . "` = '" . $value . "'";
         }
@@ -40,17 +42,10 @@ class Notes extends Model
         );
     }
 
-    /**
-     * Update a note by a certain user
-     *
-     * @param int $user_id
-     * @param int $note_id
-     * @param array $note_data
-     *
-     * @return void
-     */
     public function updateNoteById(int $user_id, int $note_id, array $note_data): void
     {
+        $sql = [];
+
         foreach ($note_data as $field => $value) {
             $sql[] = 'n.`' . $field . "` = '" . $value . "'";
         }
@@ -63,14 +58,6 @@ class Notes extends Model
         );
     }
 
-    /**
-     * Delete a note by a certain user
-     *
-     * @param int    $user_id
-     * @param string $notes_ids
-     *
-     * @return void
-     */
     public function deleteNoteById(int $user_id, string $notes_ids): void
     {
         $this->db->query(

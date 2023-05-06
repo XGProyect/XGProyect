@@ -17,6 +17,9 @@ use Xgp\App\Models\Game\Shipyard;
 class ShipyardController extends BaseController
 {
     public const MODULE_ID = 7;
+
+    private array $user = [];
+    private array $planet = [];
     private array $missiles = [
         Defenses::defense_anti_ballistic_missile => 0,
         Defenses::defense_interplanetary_missile => 0,
@@ -34,26 +37,18 @@ class ShipyardController extends BaseController
     {
         Users::checkSession();
 
-        $this->shipyardModel = new Shipyard();
-
-        // init a new building object with the current building queue
-        $this->setUpShipyard();
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        $this->runAction();
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+        $this->shipyardModel = new Shipyard();
 
+        $this->setUpShipyard();
+        $this->runAction();
         $this->buildPage();
     }
 
-    /**
-     * Creates a new building object that will handle all the building
-     * creation methods and actions
-     *
-     * @return void
-     */
-    private function setUpShipyard()
+    private function setUpShipyard(): void
     {
         // validate and display
         $this->showShipyardRequiredMessage();

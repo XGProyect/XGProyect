@@ -14,13 +14,13 @@ class Page
     public static function getInstance(): self
     {
         if (self::$instance === null) {
-            self::$instance = new Page(new Users());
+            self::$instance = new Page();
         }
 
         return self::$instance;
     }
 
-    public function __construct(Users $users)
+    public function __construct()
     {
         $this->current_year = date('Y');
     }

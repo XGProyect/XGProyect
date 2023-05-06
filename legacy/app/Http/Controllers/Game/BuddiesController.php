@@ -17,6 +17,7 @@ class BuddiesController extends BaseController
 {
     public const MODULE_ID = 20;
 
+    private array $user = [];
     private ?Buddy $buddy = null;
     private Buddies $buddiesModel;
 
@@ -24,26 +25,20 @@ class BuddiesController extends BaseController
     {
         Users::checkSession();
 
+        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
         $this->buddiesModel = new Buddies();
 
         // init a new buddy object
         $this->setUpBudies();
-
-        // Check module access
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->runAction();
 
         $this->buildPage();
     }
 
-    /**
-     * Creates a new buddy object that will handle all the buddies
-     * creation methods and actions
-     *
-     * @return void
-     */
-    private function setUpBudies()
+    private function setUpBudies(): void
     {
         $this->buddy = new Buddy(
             $this->buddiesModel->getBuddiesByUserId($this->user['user_id']),

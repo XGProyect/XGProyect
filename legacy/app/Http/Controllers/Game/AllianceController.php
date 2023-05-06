@@ -19,11 +19,13 @@ use Xgp\App\Models\Game\Alliance;
 class AllianceController extends BaseController
 {
     public const MODULE_ID = 13;
-
     public const DEFAULT_RANKS = [
         'founder' => 0,
         'newcomer' => 1,
     ];
+
+    private array $user = [];
+    private array $planet = [];
     private ?BBCodeLib $bbcode = null;
     private ?Alliances $alliance = null;
     private Alliance $allianceModel;
@@ -32,14 +34,14 @@ class AllianceController extends BaseController
     {
         Users::checkSession();
 
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        // load Library
-        $this->bbcode = Functions::loadLibrary('BBCodeLib');
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+
+        $this->bbcode = new BBCodeLib();
         $this->allianceModel = new Alliance();
 
-        // init a new buddy object
         $this->setUpAlliances();
 
         $this->buildPage();

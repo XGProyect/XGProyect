@@ -1,6 +1,6 @@
 <?php
 
-use Xgp\App\Core\common;
+use Xgp\App\Core\Common;
 use Xgp\App\Libraries\Adm\AdministrationLib;
 use Xgp\App\Libraries\Functions;
 

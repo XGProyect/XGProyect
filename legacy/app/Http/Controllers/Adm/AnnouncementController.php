@@ -11,11 +11,12 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Adm\Announcement;
 
 class AnnouncementController extends BaseController
 {
-    private array $alerts = [];
+    private array $user = [];
     private Announcement $announcementModel;
 
     public function __invoke(): void
@@ -23,9 +24,11 @@ class AnnouncementController extends BaseController
         Administration::checkSession();
 
         if (!Administration::authorization(__CLASS__)) {
-            die(Administration::noAccessMessage(__('admin/global.no_permissions')));
+            Administration::noAccessMessage(__('admin/global.no_permissions'));
+            exit;
         }
 
+        $this->user = Users::getInstance()->getUserData();
         $this->announcementModel = new Announcement();
 
         $this->runAction();

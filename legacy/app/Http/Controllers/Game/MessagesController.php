@@ -17,6 +17,7 @@ class MessagesController extends BaseController
 {
     public const MODULE_ID = 18;
 
+    private array $user = [];
     private array $message_type = [
         MessagesEnumerator::ESPIO => ['type_name' => 'espioopen'],
         MessagesEnumerator::COMBAT => ['type_name' => 'combatopen'],
@@ -31,9 +32,10 @@ class MessagesController extends BaseController
     {
         Users::checkSession();
 
-        $this->messagesModel = new Messages();
-
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->messagesModel = new Messages();
 
         $this->runAction();
 

@@ -3,6 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
@@ -12,27 +13,25 @@ class TechtreeController extends BaseController
 {
     public const MODULE_ID = 10;
 
-    /**
-     *
-     * @var \Objects
-     */
+    private array $user = [];
+    private array $planet = [];
     private $_resource;
-
-    /**
-     *
-     * @var \Objects
-     */
     private $_requirements;
 
     public function __invoke()
     {
         Users::checkSession();
 
-        // requirements
-        $this->_resource = $this->objects->getObjects();
+        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
 
         // requirements
-        $this->_requirements = $this->objects->getRelations();
+        $this->_resource = Objects::getInstance()->getObjects();
+
+        // requirements
+        $this->_requirements = Objects::getInstance()->getRelations();
 
         // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
@@ -54,16 +53,9 @@ class TechtreeController extends BaseController
         );
     }
 
-    /**
-     * Build the block
-     *
-     * @param string $object_id
-     *
-     * @return array
-     */
     private function buildBlock(string $object_id): array
     {
-        $objects = $this->objects->getObjectsList($object_id);
+        $objects = Objects::getInstance()->getObjectsList($object_id);
         $list_of_objects = [];
 
         foreach ($objects as $object) {

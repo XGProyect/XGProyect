@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Helpers\UrlHelper;
@@ -22,6 +23,8 @@ class InfosController extends BaseController
 {
     public const MODULE_ID = 24;
 
+    private array $user = [];
+    private array $planet = [];
     private $_element_id;
     private $_resource;
     private $_pricelist;
@@ -33,15 +36,16 @@ class InfosController extends BaseController
     {
         Users::checkSession();
 
-        $this->infosModel = new Infos();
-        $this->_resource = $this->objects->getObjects();
-        $this->_pricelist = $this->objects->getPrice();
-        $this->_combat_caps = $this->objects->getCombatSpecs();
-        $this->_prod_grid = $this->objects->getProduction();
-        $this->_element_id = isset($_GET['gid']) ? (int) $_GET['gid'] : null;
-
-        // Check module access
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
+        $this->user = Users::getInstance()->getUserData();
+        $this->planet = Users::getInstance()->getPlanetData();
+        $this->infosModel = new Infos();
+        $this->_resource = Objects::getInstance()->getObjects();
+        $this->_pricelist = Objects::getInstance()->getPrice();
+        $this->_combat_caps = Objects::getInstance()->getCombatSpecs();
+        $this->_prod_grid = Objects::getInstance()->getProduction();
+        $this->_element_id = isset($_GET['gid']) ? (int) $_GET['gid'] : null;
 
         $this->buildPage();
     }
@@ -113,7 +117,7 @@ class InfosController extends BaseController
             $TableFooterTPL = 'infos/info_astrophysics_footer';
         } elseif ($this->_element_id >= 202 && $this->_element_id <= 250) {
             $PageTPL = 'infos/info_buildings_fleet';
-            $parse['element_typ'] = __('game/ships.ships')
+            $parse['element_typ'] = __('game/ships.ships');
             $parse['rf_info_to'] = $this->ShowRapidFireTo();
             $parse['rf_info_fr'] = $this->ShowRapidFireFrom();
             $parse['hull_pt'] = FormatLib::prettyNumber($this->_pricelist[$this->_element_id]['metal'] + $this->_pricelist[$this->_element_id]['crystal']);

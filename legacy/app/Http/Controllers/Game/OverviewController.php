@@ -20,22 +20,21 @@ class OverviewController extends BaseController
 {
     public const MODULE_ID = 1;
 
-    private Overview $overviewModel;
-    private NoobsProtectionLib $noob;
     private array $user = [];
     private array $planet = [];
+    private Overview $overviewModel;
+    private NoobsProtectionLib $noob;
 
     public function __invoke(): void
     {
         Users::checkSession();
 
+        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
         $this->overviewModel = new Overview();
         $this->noob = new NoobsProtectionLib();
-
-        // Check module access
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         Template::getInstance()->view(
             'overview.body',
