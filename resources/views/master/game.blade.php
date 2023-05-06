@@ -10,7 +10,7 @@
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <meta name="generator" content="XG Proyect {{ $version }}" />
         <script type="text/javascript" src="{{ asset('js/overlib-min.js') }}"></script>
-        {{-- {!! $metaTags !!} --}}
+        @yield('metatags')
     </head>
     <body>
         <x-topnav />

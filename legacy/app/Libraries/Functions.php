@@ -84,11 +84,11 @@ abstract class Functions
         return self::readConfig('fleet_speed') / 2500;
     }
 
-    public static function message($mes, $dest = '', $time = '3', $topnav = false, $menu = true, $center = true): void
+    public static function message($mes, ?string $dest = null, string $time = '3', bool $topnav = false, bool $menu = true, $center = true): void
     {
-        define('IN_MESSAGE', true);
-
         $parse['mes'] = $mes;
+        $parse['dest'] = $dest;
+        $parse['time'] = $time;
         $parse['middle1'] = '';
         $parse['middle2'] = '';
 
@@ -97,9 +97,8 @@ abstract class Functions
             $parse['middle2'] = '</div>';
         }
 
-        // (($dest != '') ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ''),
         Template::getInstance()->view(
-            'general/message_body',
+            'message.main',
             $parse
         );
     }

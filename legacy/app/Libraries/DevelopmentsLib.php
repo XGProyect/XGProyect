@@ -114,7 +114,7 @@ class DevelopmentsLib
             $level = (isset($current_planet[$resource[$element]])) ? $current_planet[$resource[$element]] : $current_user[$resource[$element]];
         }
 
-        $text = __('game/global.require');
+        $text = __('game/buildings.require');
         $array = [
             'metal' => __('game/global.metal'),
             'crystal' => __('game/global.crystal'),
@@ -272,21 +272,12 @@ class DevelopmentsLib
         $parse['current_page'] = ($element_id != 0) ? DevelopmentsLib::setBuildingPage($element_id) : $call_program;
 
         return Template::getInstance()->render(
-            'buildings/buildings_buildlist_script',
+            'buildings.build_list_script',
             $parse
         );
     }
 
-    /**
-     * setLevelFormat
-     *
-     * @param int    $level        Level
-     * @param string $element      Element
-     * @param string $current_user Current user
-     *
-     * @return void
-     */
-    public static function setLevelFormat($level, $element = '', $current_user = '')
+    public static function setLevelFormat(int $level, int $element = 0, array $current_user = []): string
     {
         $return_level = '';
 
@@ -295,7 +286,6 @@ class DevelopmentsLib
             $return_level = ' (' . __('game/global.level') . $level . ')';
         }
 
-        // check a commander plus
         switch ($element) {
             case 106:
                 if (OfficiersLib::isOfficierActive($current_user['premium_officier_technocrat'])) {
@@ -303,16 +293,13 @@ class DevelopmentsLib
                         FormatLib::colorGreen(' +' . TECHNOCRATE_SPY . __('game/research.re_spy'))
                     );
                 }
-
                 break;
-
             case 108:
                 if (OfficiersLib::isOfficierActive($current_user['premium_officier_admiral'])) {
                     $return_level .= FormatLib::strongText(
                         FormatLib::colorGreen(' +' . AMIRAL . __('game/research.re_commander'))
                     );
                 }
-
                 break;
         }
 

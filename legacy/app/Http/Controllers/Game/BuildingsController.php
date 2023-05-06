@@ -50,7 +50,7 @@ class BuildingsController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'supplies.body',
+            'buildings.body',
             array_merge(
                 [
                     'list_of_buildings' => $this->buildListOfBuildings(),
@@ -169,7 +169,6 @@ class BuildingsController extends BaseController
     {
         $item_to_parse = [];
 
-        $item_to_parse['dpath'] = DPATH;
         $item_to_parse['i'] = $building_id;
         $item_to_parse['nivel'] = $this->getBuildingLevelWithFormat($building_id);
         $item_to_parse['n'] = __('game/constructions.' . $this->objects->getObjects()[$building_id]);
@@ -335,7 +334,7 @@ class BuildingsController extends BaseController
             ];
 
             return Template::getInstance()->render(
-                'buildings/buildings_build_script',
+                'buildings.build_single_script',
                 $block
             );
         }
@@ -704,7 +703,7 @@ class BuildingsController extends BaseController
                     $BuildLevel = $BuildArray[1];
                     $BuildMode = $BuildArray[4];
                     $BuildTime = $BuildEndTime - time();
-                    $ElementTitle = __('game/buildings.' . $this->objects->getObjects()[$building]);
+                    $ElementTitle = __('game/constructions.' . $this->objects->getObjects()[$building]);
 
                     if (isset($Sprice[$building]) && $Sprice !== false && $BuildLevel > $Sprice[$building]) {
                         $Sprice[$building] = $BuildLevel;

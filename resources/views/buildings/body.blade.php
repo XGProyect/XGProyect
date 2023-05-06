@@ -3,9 +3,9 @@
 @section('content')
     <br />
     <div id="content" role="main">
-        {{ $BuildListScript }}
+        {!! $BuildListScript !!}
         <table width="530">
-            {{ $BuildList }}
+            {!! $BuildList !!}
             @foreach ($list_of_buildings as $item)
             <tr>
                 <td class="l" width="120" height="120">
