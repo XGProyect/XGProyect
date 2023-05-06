@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Libraries\Buildings\Queue;
-use App\Libraries\Buildings\QueueElements;
+use Xgp\App\Libraries\Buildings\Queue;
+use Xgp\App\Libraries\Buildings\QueueElements;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -263,7 +263,7 @@ class QueueTest extends TestCase
 
         $object->addElementToQueue($queue_elements);
 
-        $object->removeElementFromQueue("wrong_parameter");
+        $object->removeElementFromQueue('wrong_parameter');
 
         $this->assertEquals(
             $object->returnQueueAsString(),

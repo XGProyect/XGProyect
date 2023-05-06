@@ -188,12 +188,6 @@ class BackupController extends BaseController
         return Timing::formatExtendedDate($matches[1]);
     }
 
-    /**
-     * Check whether if it's a valid file, returns an empty string if it's not
-     *
-     * @param string $file_name
-     * @return boolean
-     */
     private function isValidFile(string $file_name): string
     {
         if ((bool) preg_match('/db-backup-(?:[0-9]+)-([0-9]+)-(?:[a-zA-Z0-9]+)\.sql/', $file_name, $matches) !== false) {

@@ -16,14 +16,7 @@ class Spy extends Missions
         parent::__construct();
     }
 
-    /**
-     * spyMission
-     *
-     * @param string $string String
-     *
-     * @return void
-     */
-    public function spyMission($fleet_row)
+    public function spyMission(array $fleet_row): void
     {
         // do mission
         if (parent::canStartMission($fleet_row)) {
@@ -53,6 +46,7 @@ class Spy extends Missions
 
             foreach ($fleet as $id => $amount) {
                 if ($id == '210') {
+                    $SpyMessage = '';
                     $LS = $amount;
                     $SpyToolDebris = $LS * 300;
 
@@ -179,18 +173,14 @@ class Spy extends Missions
         }
     }
 
-    /**
-     * Spy the target
-     *
-     * @param array $target_data
-     * @param int $mode
-     * @param string $report_title
-     * @return void
-     */
-    private function generateSpyReport($target_data, $mode, $report_title)
+    private function generateSpyReport(array $target_data, int $mode, string $report_title): array
     {
+        $String = '';
         $LookAtLoop = true;
         $Count = 0;
+        $Loops = 0;
+        $ResFrom[0] = 0;
+        $ResTo[0] = 0;
 
         switch ($mode) {
             case 0:
@@ -206,37 +196,28 @@ class Spy extends Missions
                 $String .= '</tr>';
 
                 $LookAtLoop = false;
-
                 break;
-
             case 1:
                 $ResFrom[0] = 200;
                 $ResTo[0] = 299;
                 $Loops = 1;
-
                 break;
-
             case 2:
                 $ResFrom[0] = 400;
                 $ResTo[0] = 499;
                 $ResFrom[1] = 500;
                 $ResTo[1] = 599;
                 $Loops = 2;
-
                 break;
-
             case 3:
                 $ResFrom[0] = 1;
                 $ResTo[0] = 99;
                 $Loops = 1;
-
                 break;
-
             case 4:
                 $ResFrom[0] = 100;
                 $ResTo[0] = 199;
                 $Loops = 1;
-
                 break;
         }
 
@@ -253,7 +234,7 @@ class Spy extends Missions
                             $String .= '<tr>';
                         }
 
-                        $String .= '<td align=left>' . $this->langs->language[$this->resource[$Item]] . '</td><td align=right>' . FormatLib::prettyNumber($target_data[$this->resource[$Item]]) . '</td>';
+                        $String .= '<td align=left>' . __('game/constructions.' . $this->resource[$Item]) . '</td><td align=right>' . FormatLib::prettyNumber($target_data[$this->resource[$Item]]) . '</td>';
 
                         if ($row < 2 - 1) {
                             $String .= '<td>&nbsp;</td>';
@@ -290,15 +271,6 @@ class Spy extends Missions
         return $return;
     }
 
-    /**
-     * Send a report to the target informing that their planet is being spy
-     *
-     * @param array $fleet
-     * @param array $user
-     * @param array $target
-     * @param integer $chances
-     * @return void
-     */
     private function sendReportToTarget(array $fleet, array $user, array $target, int $chances): void
     {
         Functions::sendMessage(

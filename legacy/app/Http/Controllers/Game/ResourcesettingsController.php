@@ -24,6 +24,7 @@ class ResourcesettingsController extends BaseController
     private $prodGrid;
     private $reslist;
     private Resources $resourcesModel;
+    private Users $userLibrary;
 
     public function __invoke()
     {
@@ -37,6 +38,7 @@ class ResourcesettingsController extends BaseController
         $this->resource = Objects::getInstance()->getObjects();
         $this->prodGrid = Objects::getInstance()->getProduction();
         $this->reslist = Objects::getInstance()->getObjectsList();
+        $this->userLibrary = new Users();
 
         $this->buildPage();
     }
@@ -147,7 +149,7 @@ class ResourcesettingsController extends BaseController
                 $CurrRow['name'] = $this->resource[$ProdID];
                 $CurrRow['percent'] = $this->planet[$Field];
                 $CurrRow['option'] = $this->build_options($CurrRow['percent']);
-                $CurrRow['type'] = $this->langs->language[$this->resource[$ProdID]];
+                $CurrRow['type'] = __('game/constructions.' . $this->resource[$ProdID]);
                 $CurrRow['level'] = ($ProdID > 200) ? __('game/resources.rs_amount') : __('game/global.level');
                 $CurrRow['level_type'] = $this->planet[$this->resource[$ProdID]];
                 $CurrRow['metal_type'] = FormatLib::prettyNumber($metal);

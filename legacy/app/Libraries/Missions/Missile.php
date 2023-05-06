@@ -2,6 +2,7 @@
 
 namespace Xgp\App\Libraries\Missions;
 
+use Xgp\App\Core\Objects;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 
@@ -113,7 +114,7 @@ class Missile extends Missions
             ];
 
             if (isset($result) && count($result) > 0) {
-                foreach (parent::$objects->getObjectsList('defense') as $defense_id) {
+                foreach (Objects::getInstance()->getObjectsList('defense') as $defense_id) {
                     $message .= FormatLib::prettyNumber($target_data[$this->resource[$defense_id]]) . ' ' . __('game/defenses.' . $this->resource[$defense_id]);
                     if (isset($result[$defense_id])) {
                         $message .= ' (-' . FormatLib::prettyNumber($result[$defense_id]) . ')';
@@ -153,14 +154,7 @@ class Missile extends Missions
         }
     }
 
-    /**
-     * setAttackOrder
-     *
-     * @param int $primary_objective Primary objective
-     *
-     * @return void
-     */
-    private function setAttackOrder($primary_objective)
+    private function setAttackOrder(int $primaryObjective): array
     {
         $objectives = [
             0 => [401, 402, 403, 404, 405, 406, 407, 408, 503],
@@ -174,6 +168,6 @@ class Missile extends Missions
             8 => [408, 401, 402, 403, 404, 405, 406, 407, 503],
         ];
 
-        return $objectives[$primary_objective];
+        return $objectives[$primaryObjective];
     }
 }

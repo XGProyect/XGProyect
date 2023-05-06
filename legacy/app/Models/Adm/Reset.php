@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Adm;
 
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Model;
 use Xgp\App\Libraries\Functions;

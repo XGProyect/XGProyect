@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Adm;
 
+use Exception;
 use Xgp\App\Core\Model;
 
 class Ban extends Model

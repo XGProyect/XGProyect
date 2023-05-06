@@ -96,14 +96,7 @@ class Recycle extends Missions
         }
     }
 
-    /**
-     * calculateCapacity
-     *
-     * @param array $fleet_row Fleet row
-     *
-     * @return void
-     */
-    private function calculateCapacity($fleet_row)
+    private function calculateCapacity(array $fleet_row): array
     {
         $target_planet = $this->missionsModel->getPlanetDebris([
             'coords' => [

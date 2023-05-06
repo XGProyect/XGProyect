@@ -304,7 +304,7 @@ class Users extends Model
             if (strpos($premium, 'premium_') !== false) {
                 // dark matter has a different behaviour
                 if ($premium == 'premium_dark_matter') {
-                    if (!is_numeric($data) or empty($data) or !isset($data)) {
+                    if (!is_numeric($data) or empty($data)) {
                         $data = 0;
                     }
                 } else {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\BattleEngine\Utils;
+namespace Xgp\App\Libraries\BattleEngine\Utils;
 
 class LangManager
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries\BattleEngine\CombatObject;
+namespace Xgp\App\Libraries\BattleEngine\CombatObject;
 
-use App\Libraries\BattleEngine\Models\ShipType;
+use Xgp\App\Libraries\BattleEngine\Models\ShipType;
 use Exception;
 
 /**
@@ -33,7 +33,7 @@ use Exception;
  */
 class PhysicShot
 {
-    private $shipType;
+    private $fighters;
     private $damage;
     private $count;
     private $assorbedDamage = 0;

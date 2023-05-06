@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Adm;
 
+use Exception;
 use Xgp\App\Core\Entity\ChangelogEntity;
 use Xgp\App\Core\Model;
 

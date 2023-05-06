@@ -4,6 +4,7 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
@@ -30,6 +31,7 @@ class Fleet2Controller extends BaseController
         'speed_all' => [],
     ];
     private Fleet $fleetModel;
+    private Objects $objects;
 
     public function __invoke()
     {
@@ -40,6 +42,7 @@ class Fleet2Controller extends BaseController
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
         $this->fleetModel = new Fleet();
+        $this->objects = new Objects();
 
         $this->setUpFleets();
         $this->buildPage();
@@ -134,12 +137,7 @@ class Fleet2Controller extends BaseController
         return $list_of_ships;
     }
 
-    /**
-     * Build the planet type drop down
-     *
-     * @return void
-     */
-    private function buildPlanetTypesBlock()
+    private function buildPlanetTypesBlock(): array
     {
         $planet_type = [
             'fl_planet' => PlanetTypes::PLANET,

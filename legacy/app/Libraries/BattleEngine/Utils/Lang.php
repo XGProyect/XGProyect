@@ -1,36 +1,36 @@
 <?php
 
-namespace App\Libraries\BattleEngine\Utils;
+namespace Xgp\App\Libraries\BattleEngine\Utils;
 
 interface Lang
 {
-    public function getShipName($id);
+    public function getShipName(int $id): string;
 
-    public function getAttackersAttackingDescr($amount, $damage);
+    public function getAttackersAttackingDescr(int $amount, int $damage): string;
 
-    public function getDefendersDefendingDescr($damage);
+    public function getDefendersDefendingDescr(int $damage): string;
 
-    public function getDefendersAttackingDescr($amount, $damage);
+    public function getDefendersAttackingDescr(int $amount, int $damage): string;
 
-    public function getAttackersDefendingDescr($damage);
+    public function getAttackersDefendingDescr(int $damage): string;
 
-    public function getTechs($weaponsTech, $shieldsTech, $armourTech);
+    public function getTechs(int $weaponsTech, int $shieldsTech, int $armourTech): string;
 
-    public function getAttackerHasWon();
+    public function getAttackerHasWon(): string;
 
-    public function getDefendersHasWon();
+    public function getDefendersHasWon(): string;
 
-    public function getDraw();
+    public function getDraw(): string;
 
-    public function getStoleDescr($metal, $crystal, $deuterium);
+    public function getStoleDescr(int $metal, int $crystal, int $deuterium): string;
 
-    public function getAttackersLostUnits($units);
+    public function getAttackersLostUnits(int $units): string;
 
-    public function getDefendersLostUnits($units);
+    public function getDefendersLostUnits(int $units): string;
 
-    public function getFloatingDebris($metal, $crystal);
+    public function getFloatingDebris(int $metal, int $crystal): string;
 
-    public function getMoonProb($prob);
+    public function getMoonProb(int $prob): string;
 
-    public function getNewMoon($name, $galaxy, $system, $planet);
+    public function getNewMoon(string $name, int $galaxy, int $system, int $planet): string;
 }

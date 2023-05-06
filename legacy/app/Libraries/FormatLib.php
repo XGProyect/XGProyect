@@ -200,18 +200,14 @@ class FormatLib
         return '<span style="' . $style . '">' . $content . '</span>';
     }
 
-    /**
-     * prettyNumber
-     *
-     * @param int     $n     Number
-     * @param boolean $floor Floor
-     *
-     * @return string
-     */
-    public static function prettyNumber($n, $floor = true)
+    public static function prettyNumber(int $n, bool $floor = true): string
     {
+        if (empty($n)) {
+            $n = 0.0;
+        }
+
         if ($floor) {
-            $n = floor($n ?? 0.0);
+            $n = floor($n);
         }
 
         return number_format($n, 0, ',', '.');

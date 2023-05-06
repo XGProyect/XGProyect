@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Libraries\BattleEngine\Core;
+namespace Xgp\App\Libraries\BattleEngine\Core;
 
-use App\Libraries\BattleEngine\Models\PlayerGroup;
-use App\Libraries\BattleEngine\Utils\Events;
-use App\Libraries\BattleEngine\Utils\Math;
 use Exception;
+use Xgp\App\Libraries\BattleEngine\Models\PlayerGroup;
+use Xgp\App\Libraries\BattleEngine\Utils\Events;
+use Xgp\App\Libraries\BattleEngine\Utils\Math;
 
 /**
  *  OPBE
@@ -410,21 +410,25 @@ class BattleReport
         return $playersBefore_clone;
     }
 
-    public function getAttackersId()
+    public function getAttackersId(): array
     {
         $array = [];
+
         foreach ($this->getPresentationAttackersFleetOnRound('START') as $id => $group) {
             $array[] = $id;
         }
+
         return $array;
     }
 
-    public function getDefendersId()
+    public function getDefendersId(): array
     {
         $array = [];
+
         foreach ($this->getPresentationDefendersFleetOnRound('START') as $id => $group) {
             $array[] = $id;
         }
+
         return $array;
     }
 

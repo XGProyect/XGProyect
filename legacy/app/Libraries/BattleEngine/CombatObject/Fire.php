@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Libraries\BattleEngine\CombatObject;
+namespace Xgp\App\Libraries\BattleEngine\CombatObject;
 
-use App\Libraries\BattleEngine\Models\Fleet;
-use App\Libraries\BattleEngine\Models\ShipType;
-use App\Libraries\BattleEngine\Utils\Gauss;
-use App\Libraries\BattleEngine\Utils\GeometricDistribution;
-use App\Libraries\BattleEngine\Utils\Math;
-use App\Libraries\BattleEngine\Utils\Number;
+use Xgp\App\Libraries\BattleEngine\Models\Fleet;
+use Xgp\App\Libraries\BattleEngine\Models\ShipType;
+use Xgp\App\Libraries\BattleEngine\Utils\Gauss;
+use Xgp\App\Libraries\BattleEngine\Utils\GeometricDistribution;
+use Xgp\App\Libraries\BattleEngine\Utils\Math;
+use Xgp\App\Libraries\BattleEngine\Utils\Number;
 
 /**
  *  OPBE

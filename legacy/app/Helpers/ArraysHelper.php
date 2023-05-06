@@ -28,13 +28,6 @@ abstract class ArraysHelper
         return false;
     }
 
-    /**
-     * Like array_search but going deeper, for multidimensional arrays
-     *
-     * @param string $needle
-     * @param array $haystack
-     * @return array|null
-     */
     public static function multiArraySearch(string $needle, array $haystack): ?int
     {
         foreach ($haystack as $key => $value) {

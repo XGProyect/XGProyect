@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
@@ -25,6 +26,7 @@ class Fleet3Controller extends BaseController
     private int $_current_mission = 0;
     private array $_allowed_missions = [];
     private Fleet $fleetModel;
+    private Objects $objects;
 
     public function __invoke()
     {
@@ -35,6 +37,7 @@ class Fleet3Controller extends BaseController
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
         $this->fleetModel = new Fleet();
+        $this->objects = new Objects();
 
         $this->setUpFleets();
         $this->buildPage();
@@ -477,12 +480,7 @@ class Fleet3Controller extends BaseController
         ];
     }
 
-    /**
-     * Get the ships that were set in the session
-     *
-     * @return array
-     */
-    private function getSessionShips(): array
+    private function getSessionShips()
     {
         if (isset($_SESSION['fleet_data']['fleetarray'])) {
             return unserialize(base64_decode(str_rot13($_SESSION['fleet_data']['fleetarray'])));
@@ -491,12 +489,6 @@ class Fleet3Controller extends BaseController
         Functions::redirect(self::REDIRECT_TARGET);
     }
 
-    /**
-     * Check if it is a friendly target
-     *
-     * @param array $target_planet
-     * @return boolean
-     */
     private function isFriendly(array $target_planet): bool
     {
         $is_buddy = $this->fleetModel->getBuddies(

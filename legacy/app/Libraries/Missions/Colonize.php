@@ -14,13 +14,7 @@ class Colonize extends Missions
         parent::__construct();
     }
 
-    /**
-     * Colonize mission
-     *
-     * @param array $fleet_row
-     * @return void
-     */
-    public function colonizeMission($fleet_row)
+    public function colonizeMission($fleet_row): void
     {
         if ($fleet_row['fleet_mess'] == 0) {
             $colonization_check = $this->missionsModel->getPlanetAndUserCountsCounts([
@@ -102,12 +96,6 @@ class Colonize extends Missions
         }
     }
 
-    /**
-     * Start planet creation
-     *
-     * @param array $fleet_row
-     * @return void
-     */
     private function startCreation($fleet_row)
     {
         $creator = new PlanetLib();
@@ -115,15 +103,9 @@ class Colonize extends Missions
         return $creator->setNewPlanet($fleet_row['fleet_end_galaxy'], $fleet_row['fleet_end_system'], $fleet_row['fleet_end_planet'], $fleet_row['fleet_owner']);
     }
 
-    /**
-     * Build new fleet
-     *
-     * @param array $fleet_array
-     * @return void
-     */
-    private function buildNewFleet($fleet_array)
+    private function buildNewFleet(string $fleetArray): bool
     {
-        $current_fleet = FleetsLib::getFleetShipsArray($fleet_array);
+        $current_fleet = FleetsLib::getFleetShipsArray($fleetArray);
         $new_fleet = [];
 
         foreach ($current_fleet as $ship => $count) {

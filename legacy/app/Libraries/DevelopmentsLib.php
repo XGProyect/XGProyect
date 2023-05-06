@@ -42,6 +42,8 @@ class DevelopmentsLib
     {
         $resource = Objects::getInstance()->getObjects();
         $pricelist = Objects::getInstance()->getPrice();
+        $level = 0;
+        $cost = [];
 
         if ($incremental) {
             $level = (isset($current_planet[$resource[$element]])) ? $current_planet[$resource[$element]] : $current_user[$resource[$element]];
@@ -162,6 +164,7 @@ class DevelopmentsLib
         $resource = Objects::getInstance()->getObjects();
         $pricelist = Objects::getInstance()->getPrice();
         $reslist = Objects::getInstance()->getObjectsList();
+        $time = 1;
 
         // IF ROUTINE FIX BY JSTAR
         if ($level === false) {

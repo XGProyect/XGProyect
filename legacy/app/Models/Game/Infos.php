@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Game;
 
+use Exception;
 use Xgp\App\Core\Model;
 
 class Infos extends Model

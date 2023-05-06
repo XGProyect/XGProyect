@@ -68,6 +68,7 @@ abstract class Formulas
     {
         // Formula based on original game values
         // How many images do we have for each planet type
+        $type = [];
         $planets_availables = [
             'dschjungel' => 10, // jungle
             'eis' => 10, // ice

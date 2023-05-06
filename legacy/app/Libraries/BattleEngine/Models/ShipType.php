@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries\BattleEngine\Models;
+namespace Xgp\App\Libraries\BattleEngine\Models;
 
-use App\Libraries\BattleEngine\CombatObject\PhysicShot;
-use App\Libraries\BattleEngine\CombatObject\ShipsCleaner;
+use Xgp\App\Libraries\BattleEngine\CombatObject\PhysicShot;
+use Xgp\App\Libraries\BattleEngine\CombatObject\ShipsCleaner;
 use Exception;
 
 /**

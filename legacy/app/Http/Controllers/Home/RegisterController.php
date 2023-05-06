@@ -24,7 +24,8 @@ class RegisterController extends BaseController
         $this->userLibrary = Users::getInstance();
 
         if (Functions::readConfig('reg_enable') != 1) {
-            die(Functions::message(__('home/register.re_disabled'), 'index.php', '5', false, false));
+            Functions::message(__('home/register.re_disabled'), 'index.php', '5', false, false);
+            exit;
         }
 
         if ($_POST) {

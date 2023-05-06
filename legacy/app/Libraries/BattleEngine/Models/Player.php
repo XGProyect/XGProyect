@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Libraries\BattleEngine\Models;
+namespace Xgp\App\Libraries\BattleEngine\Models;
 
-use App\Libraries\BattleEngine\CombatObject\FireManager;
-use App\Libraries\BattleEngine\Utils\IterableUtil;
 use Exception;
+use Xgp\App\Libraries\BattleEngine\CombatObject\FireManager;
+use Xgp\App\Libraries\BattleEngine\Utils\IterableUtil;
 
 /**
  *  OPBE
@@ -44,7 +44,7 @@ class Player extends IterableUtil
     private $system;
     private $planet;
 
-    public function __construct($id, $fleets = [], $weapons_tech = null, $shields_tech = null, $armour_tech = null, $name = '', $galaxy = null, $system = null, $planet = null)
+    public function __construct($id, array $fleets = [], $weapons_tech = null, $shields_tech = null, $armour_tech = null, $name = '', $galaxy = null, $system = null, $planet = null)
     {
         $this->id = $id;
         $this->name = $name;
@@ -252,7 +252,7 @@ class Player extends IterableUtil
     public function mergePlayerFleets(Player $player)
     {
         foreach ($player->getIterator() as $idFleet => $fleet) {
-            $this->array[$id] = $fleet->cloneMe(); //avoid collateral effects: when the object or array is an argument && it's saved in a structure
+            $this->array[$fleet->getId()] = $fleet->cloneMe(); //avoid collateral effects: when the object or array is an argument && it's saved in a structure
         }
     }
 

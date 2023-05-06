@@ -2,28 +2,17 @@
 
 namespace Xgp\App\Libraries\Adm;
 
+use Exception;
+use JsonException;
 use Xgp\App\Core\Enumerators\AdminPagesEnumerator as AdminPages;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Helpers\ArraysHelper;
 use Xgp\App\Libraries\Functions;
-use Exception;
-use JsonException;
 
 class Permissions
 {
-    /**
-     * Defines if the admin role can be modified
-     *
-     * @var bool
-     */
     private const ALLOW_ADMIN_MODIFICATION = false;
-
-    /**
-     * Contains the permissions array
-     *
-     * @var array
-     */
-    private $permissions = [];
+    private array $permissions = [];
 
     public function __construct(string $permissions)
     {
@@ -38,21 +27,11 @@ class Permissions
         }
     }
 
-    /**
-     * Get all the permissions as an Array
-     *
-     * @return array
-     */
     public function getAllPermissionsAsArray(): array
     {
         return $this->permissions;
     }
 
-    /**
-     * Get all the permissions as a JSON
-     *
-     * @return string
-     */
     public function getAllPermissionsAsJsonString(): string
     {
         try {
@@ -62,11 +41,6 @@ class Permissions
         }
     }
 
-    /**
-     * Get a list of roles
-     *
-     * @return array
-     */
     public function getRoles(bool $no_admin = false): array
     {
         $roles = [
@@ -82,11 +56,6 @@ class Permissions
         return $roles;
     }
 
-    /**
-     * Get list of admin modules (pages)
-     *
-     * @return array
-     */
     public function getAdminModules(): array
     {
         return [
@@ -98,45 +67,21 @@ class Permissions
         ];
     }
 
-    /**
-     * Get the admin sections
-     *
-     * @return array
-     */
     public function getAdminSections(): array
     {
         return AdminPages::SECTIONS;
     }
 
-    /**
-     * Save permissions to DB
-     *
-     * @return void
-     */
     public function savePermissions(): void
     {
         Functions::updateConfig('admin_permissions', $this->getAllPermissionsAsJsonString());
     }
 
-    /**
-     * Check if access is allowed, returns true if it is
-     *
-     * @param string $module
-     * @param integer $role
-     * @return boolean
-     */
     public function isAccessAllowed(string $module, int $role): bool
     {
         return ($role === UserRanks::ADMIN or (isset($this->permissions[$module][$role]) && $this->permissions[$module][$role] === 1));
     }
 
-    /**
-     * Grant a role access to a new module
-     *
-     * @param string $module
-     * @param integer $role
-     * @return void
-     */
     public function grantAccess(string $module, int $role): void
     {
         if ($this->moduleExists($module) && $this->roleExists($role) && $this->isRoleEditable($role)) {
@@ -144,13 +89,6 @@ class Permissions
         }
     }
 
-    /**
-     * Remove access to a role from a module
-     *
-     * @param string $module
-     * @param integer $role
-     * @return void
-     */
     public function removeAccess(string $module, int $role): void
     {
         if ($this->moduleExists($module) && $this->roleExists($role) && $this->isRoleEditable($role)) {
@@ -158,49 +96,25 @@ class Permissions
         }
     }
 
-    /**
-     * Check if module exists
-     *
-     * @param string $module
-     * @return boolean
-     */
     public function moduleExists(string $module): bool
     {
         return ArraysHelper::inMultiArray($module, $this->getAdminModules());
     }
 
-    /**
-     * Check if the role exists
-     *
-     * @param string $role
-     * @return boolean
-     */
     public function roleExists(string $role): bool
     {
         return in_array($role, $this->getRoles());
     }
 
-    /**
-     * Check if the role is editable
-     *
-     * @param integer $role
-     * @return boolean
-     */
     private function isRoleEditable(int $role): bool
     {
         if ($role == UserRanks::ADMIN) {
-            return ALLOW_ADMIN_MODIFICATION;
+            return self::ALLOW_ADMIN_MODIFICATION;
         }
 
         return true;
     }
 
-    /**
-     * Set the permissions
-     *
-     * @param string $permissions
-     * @return void
-     */
     private function setPermissions(string $permissions): void
     {
         try {
@@ -210,11 +124,6 @@ class Permissions
         }
     }
 
-    /**
-     * Get the permissions
-     *
-     * @return array
-     */
     private function getPermissions(): array
     {
         return $this->permissions;

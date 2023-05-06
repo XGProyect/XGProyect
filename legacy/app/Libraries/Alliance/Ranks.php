@@ -2,11 +2,11 @@
 
 namespace Xgp\App\Libraries\Alliance;
 
+use Exception;
+use JsonException;
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Helpers\StringsHelper;
-use Exception;
-use JsonException;
 
 class Ranks
 {
@@ -117,13 +117,6 @@ class Ranks
         }
     }
 
-    /**
-     * Edit rank name
-     *
-     * @param integer $rank_id
-     * @param string $name
-     * @return array
-     */
     public function editRankNameById(int $rank_id, string $name): array
     {
         try {
@@ -143,26 +136,14 @@ class Ranks
         }
     }
 
-    /**
-     *
-     * @param RanksTypes $rank
-     * @param SwitchTypes $value
-     *
-     * @return array
-     */
-    public function deleteRankById($rank_id)
+    public function deleteRankById(int $rank_id): string
     {
         array_splice($this->_ranks, $this->validateRankId($rank_id), 1);
 
         return $this->getRanks();
     }
 
-    /**
-     * Get all the ranks permissions as an Array
-     *
-     * @return array
-     */
-    public function getAllRanksAsArray()
+    public function getAllRanksAsArray(): array
     {
         return $this->_ranks;
     }

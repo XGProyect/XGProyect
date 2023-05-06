@@ -2,6 +2,7 @@
 
 namespace Xgp\App\Models\Adm;
 
+use Exception;
 use Xgp\App\Core\Model;
 
 class Fleets extends Model

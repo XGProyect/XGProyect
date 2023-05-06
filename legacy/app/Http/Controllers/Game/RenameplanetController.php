@@ -96,6 +96,9 @@ class RenameplanetController extends BaseController
             $this->planet['planet_planet']
         );
 
+        $end_type = 0;
+        $mess = 0;
+
         foreach ($fleets_incoming as $fleet) {
             $own_fleet = $fleet['fleet_owner'];
             $enemy_fleet = $fleet['fleet_target_owner'];
@@ -105,32 +108,32 @@ class RenameplanetController extends BaseController
             }
 
             $mess = $fleet['fleet_mess'];
+
+            if ($own_fleet > 0) {
+                Functions::message(__('game/renameplanet.rp_abandon_planet_not_possible'), 'game.php?page=renameplanet');
+            } elseif ((($enemy_fleet > 0) && ($mess < 1)) && $end_type != 2) {
+                Functions::message(__('game/renameplanet.rp_abandon_planet_not_possible'), 'game.php?page=renameplanet');
+            }
         }
 
-        if ($own_fleet > 0) {
-            Functions::message(__('game/renameplanet.rp_abandon_planet_not_possible'), 'game.php?page=renameplanet');
-        } elseif ((($enemy_fleet > 0) && ($mess < 1)) && $end_type != 2) {
-            Functions::message(__('game/renameplanet.rp_abandon_planet_not_possible'), 'game.php?page=renameplanet');
-        } else {
-            if (password_verify($_POST['pw'], $this->user['user_password']) && $this->user['user_home_planet_id'] != $this->user['user_current_planet']) {
-                if ($this->planet['moon_id'] != 0) {
-                    $this->renameplanetModel->deleteMoonAndPlanet(
-                        $this->user['user_id'],
-                        $this->user['user_current_planet'],
-                        $this->planet['planet_galaxy'],
-                        $this->planet['planet_system'],
-                        $this->planet['planet_planet']
-                    );
-                } else {
-                    $this->renameplanetModel->deletePlanet($this->user['user_id'], $this->user['user_current_planet']);
-                }
-
-                Functions::message(__('game/renameplanet.rp_planet_abandoned'), 'game.php?page=overview');
-            } elseif ($this->user['user_home_planet_id'] == $this->user['user_current_planet']) {
-                Functions::message(__('game/renameplanet.rp_principal_planet_cant_abanone'), 'game.php?page=renameplanet');
+        if (password_verify($_POST['pw'], $this->user['user_password']) && $this->user['user_home_planet_id'] != $this->user['user_current_planet']) {
+            if ($this->planet['moon_id'] != 0) {
+                $this->renameplanetModel->deleteMoonAndPlanet(
+                    $this->user['user_id'],
+                    $this->user['user_current_planet'],
+                    $this->planet['planet_galaxy'],
+                    $this->planet['planet_system'],
+                    $this->planet['planet_planet']
+                );
             } else {
-                Functions::message(__('game/renameplanet.rp_wrong_pass'), 'game.php?page=renameplanet');
+                $this->renameplanetModel->deletePlanet($this->user['user_id'], $this->user['user_current_planet']);
             }
+
+            Functions::message(__('game/renameplanet.rp_planet_abandoned'), 'game.php?page=overview');
+        } elseif ($this->user['user_home_planet_id'] == $this->user['user_current_planet']) {
+            Functions::message(__('game/renameplanet.rp_principal_planet_cant_abanone'), 'game.php?page=renameplanet');
+        } else {
+            Functions::message(__('game/renameplanet.rp_wrong_pass'), 'game.php?page=renameplanet');
         }
     }
 }

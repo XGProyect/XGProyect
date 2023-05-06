@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\BattleEngine\Constants;
+namespace Xgp\App\Libraries\BattleEngine\Constants;
 
 /**
  *  OPBE

@@ -4,6 +4,7 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
+use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\FleetsLib;
@@ -26,6 +27,7 @@ class Fleet1Controller extends BaseController
     private ?Premium $_premium = null;
     private int $_ship_count = 0;
     private Fleet $fleetModel;
+    private Objects $objects;
 
     public function __invoke()
     {
@@ -36,6 +38,7 @@ class Fleet1Controller extends BaseController
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
         $this->fleetModel = new Fleet();
+        $this->objects = new Objects();
 
         $this->setUpFleets();
         $this->buildPage();
@@ -97,12 +100,7 @@ class Fleet1Controller extends BaseController
         );
     }
 
-    /**
-     * Build the not slot block
-     *
-     * @return type
-     */
-    private function buildNoSlotBlock()
+    private function buildNoSlotBlock(): ?string
     {
         if (!$this->checkAvailableSlot()) {
             return Template::getInstance()->render('fleet/fleet1_noslots_row');
@@ -111,12 +109,7 @@ class Fleet1Controller extends BaseController
         return null;
     }
 
-    /**
-     * Build the list of ships
-     *
-     * @return array
-     */
-    private function buildListOfShips()
+    private function buildListOfShips(): array
     {
         $objects = $this->objects->getObjects();
         $price = $this->objects->getPrice();
@@ -153,15 +146,7 @@ class Fleet1Controller extends BaseController
         return $list_of_ships;
     }
 
-    /**
-     * Build the ship name block
-     *
-     * @param string $ship_name Ship Name
-     * @param int    $ship_id   Ship ID
-     *
-     * @return type
-     */
-    private function buildShipName($ship_name, $ship_id)
+    private function buildShipName(string $ship_name, int $ship_id): string
     {
         $title = __('game/fleet.fl_speed_title') . FleetsLib::fleetMaxSpeed(null, $ship_id, $this->user);
 

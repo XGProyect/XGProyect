@@ -26,9 +26,8 @@ class PlanetLib
      * @param string  $name     Planet name
      * @param boolean $main     Main planet
      *
-     * @return boolean
      */
-    public function setNewPlanet($galaxy, $system, $position, $owner, $name = '', $main = false)
+    public function setNewPlanet($galaxy, $system, $position, $owner, $name = '', $main = false): bool
     {
         $planetExists = $this->planetslibModel->checkPlanetExists($galaxy, $system, $position);
 

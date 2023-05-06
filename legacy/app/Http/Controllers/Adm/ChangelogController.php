@@ -161,12 +161,6 @@ class ChangelogController extends BaseController
         ];
     }
 
-    /**
-     * Save action to add/edit a record
-     *
-     * @param string $source
-     * @return void
-     */
     private function saveAction(): void
     {
         // post actions
@@ -290,12 +284,6 @@ class ChangelogController extends BaseController
         }
     }
 
-    /**
-     * Performs a regular expression check to determine if a valid version was provided
-     *
-     * @param string|null $version
-     * @return boolean
-     */
     private function isValidVersion(?string $version): ?string
     {
         preg_match_all(

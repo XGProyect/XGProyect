@@ -23,6 +23,7 @@ class ResearchController extends BaseController
     private $_is_working;
     private $_lab_level;
     private Research $researchModel;
+    private Users $userLibrary;
 
     public function __invoke()
     {
@@ -35,6 +36,7 @@ class ResearchController extends BaseController
         $this->researchModel = new Research();
         $this->_resource = Objects::getInstance()->getObjects();
         $this->_reslist = Objects::getInstance()->getObjectsList();
+        $this->userLibrary = new Users();
 
         $this->setLabsAmount();
         $this->handleTechnologieBuild();

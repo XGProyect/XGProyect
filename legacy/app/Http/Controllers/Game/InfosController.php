@@ -186,8 +186,8 @@ class InfosController extends BaseController
                     $parse['gate_wait_time'] = '';
                     $parse['gate_script_go'] = '';
                 }
-                $parse['gate_dest_moons'] = $this->BuildJumpableMoonCombo($this->user, $this->planet);
-                $parse['gate_fleet_rows'] = $this->BuildFleetListRows($this->planet);
+                $parse['gate_dest_moons'] = $this->BuildJumpableMoonCombo();
+                $parse['gate_fleet_rows'] = $this->BuildFleetListRows();
                 $page .= Template::getInstance()->render($GateTPL, $parse);
             }
         }
@@ -361,10 +361,7 @@ class InfosController extends BaseController
         return $RetMessage;
     }
 
-    /**
-     * @return mixed
-     */
-    private function BuildFleetListRows()
+    private function BuildFleetListRows(): string
     {
         $RowsTPL = 'infos/info_gate_rows';
         $CurrIdx = 1;
@@ -385,10 +382,7 @@ class InfosController extends BaseController
         return $Result;
     }
 
-    /**
-     * @return mixed
-     */
-    private function BuildJumpableMoonCombo()
+    private function BuildJumpableMoonCombo(): string
     {
         $MoonList = $this->infosModel->getListOfMoons($this->user['user_id']);
 

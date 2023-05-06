@@ -56,6 +56,8 @@ abstract class Functions
         $configs = Options::getInstance();
 
         if ($all) {
+            $return = [];
+
             foreach ($configs->getOptions(null) as $row) {
                 $return[$row['option_name']] = $row['option_value'];
             }
@@ -118,7 +120,8 @@ abstract class Functions
     public static function moduleMessage(int $accessLevel): void
     {
         if ($accessLevel == 0) {
-            die(self::message(__('game/global.module_not_accesible'), '', '', true));
+            self::message(__('game/global.module_not_accesible'), '', '', true);
+            exit;
         }
     }
 
@@ -207,24 +210,13 @@ abstract class Functions
         return '<img src="' . $path . '" title="' . $title . '" border="0"' . $attributes . '>';
     }
 
-    /**
-     * redirect
-     *
-     * @param string $route Route
-     *
-     * @return void
-     */
-    public static function redirect($route)
+    public static function redirect(string $route): void
     {
-        exit(header('location:' . $route));
+        header('location:' . $route);
+        exit;
     }
 
-    /**
-     * getCurrentLanguage
-     *
-     * @return string
-     */
-    public static function getCurrentLanguage($installed = false)
+    public static function getCurrentLanguage(bool $installed = false): string
     {
         if ($installed) {
             return self::readConfig('lang');
@@ -365,13 +357,6 @@ abstract class Functions
         return StringsHelper::randomString(16);
     }
 
-    /**
-     * Check if it is the current planet
-     *
-     * @param array $current
-     * @param array $target
-     * @return boolean
-     */
     public static function isCurrentPlanet(array $current, array $target): bool
     {
         return ($current['planet_galaxy'] == $target['planet_galaxy']

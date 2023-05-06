@@ -265,6 +265,8 @@ class UsersController extends BaseController
     private function getDataPlanets(): string
     {
         $planets_query = $this->usersModel->getAllPlanetsData($this->id, $this->planet, $this->edit);
+        $view = '';
+
         $parse['planets'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_planets'));
 
         switch (true) {
@@ -301,6 +303,8 @@ class UsersController extends BaseController
     private function getDataMoons(): string
     {
         $moons_query = $this->usersModel->getAllMoonsData($this->id, $this->moon, $this->edit);
+        $view = '';
+
         $parse['moons'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_moons'));
         $parse['planets'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_moons'));
 

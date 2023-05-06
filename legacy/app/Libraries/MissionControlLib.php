@@ -13,41 +13,24 @@ class MissionControlLib
         $this->missionControlLibModel = new MissionControlLibModel();
     }
 
-    /**
-     * Get all the fleets that should be arriving by now
-     *
-     * @return void
-     */
-    public function arrivingFleets()
+    public function arrivingFleets(): void
     {
         $this->processMissions(
             $this->missionControlLibModel->getArrivingFleets()
         );
     }
 
-    /**
-     * Get all the fleets that should be returning by now
-     *
-     * @return void
-     */
-    public function returningFleets()
+    public function returningFleets(): void
     {
         $this->processMissions(
             $this->missionControlLibModel->getReturningFleets()
         );
     }
 
-    /**
-     * Process the mission based on the provided fleets
-     *
-     * @param array $all_fleets A list of fleets
-     *
-     * @return void
-     */
-    private function processMissions($all_fleets = [])
+    private function processMissions(array $allFleets = []): void
     {
         // validate
-        if (!is_array($all_fleets) or empty($all_fleets)) {
+        if (!is_array($allFleets) or empty($allFleets)) {
             return;
         }
 
@@ -67,10 +50,10 @@ class MissionControlLib
         ];
 
         // Process missions
-        foreach ($all_fleets as $fleet) {
+        foreach ($allFleets as $fleet) {
             $name = $missions[$fleet['fleet_mission']];
             $mission_name = $name . 'Mission';
-            $class_name = '\Xgp\App\Libraries\Missions\\' . $name;
+            $class_name = 'Xgp\App\Libraries\Missions\\' . $name;
 
             $mission = new $class_name();
             $mission->$mission_name($fleet);

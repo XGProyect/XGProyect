@@ -26,10 +26,9 @@ class GalaxyLib
     private $resource;
     private $pricelist;
     private $noob;
-    private $template;
     private bool $no_popup = false;
 
-    public function __construct($user = '', $planet = '', $galaxy = '', $system = '')
+    public function __construct(array $user = [], array $planet = [], int $galaxy = 0, int $system = 0)
     {
         $this->current_user = $user;
         $this->current_planet = $planet;
@@ -38,14 +37,7 @@ class GalaxyLib
 
         $this->resource = Objects::getInstance()->getObjects();
         $this->pricelist = Objects::getInstance()->getPrice();
-        $this->noob = Functions::loadLibrary('NoobsProtectionLib');
-
-        $this->setTemplate();
-    }
-
-    private function setTemplate(): void
-    {
-        $this->template = new Template();
+        $this->noob = new NoobsProtectionLib();
     }
 
     //#####################################
@@ -173,12 +165,7 @@ class GalaxyLib
         return $parse;
     }
 
-    /**
-     * planetNameBlock
-     *
-     * @return void
-     */
-    private function planetNameBlock()
+    private function planetNameBlock(): string
     {
         $phalanx_link = stripslashes($this->row_data['planet_name']);
 
@@ -295,6 +282,7 @@ class GalaxyLib
                 $this->current_user['research_hyperspace_technology']
             );
 
+            $recyclers_sended = 0;
             $recyclers_needed = ceil(
                 ($this->row_data['metal'] + $this->row_data['crystal']) / $recyclers_storage
             );
@@ -433,12 +421,7 @@ class GalaxyLib
         ];
     }
 
-    /**
-     * allyBlock
-     *
-     * @return string
-     */
-    private function allyBlock()
+    private function allyBlock(): array
     {
         $parse = ['tag' => ''];
         $add = '';
@@ -685,26 +668,18 @@ class GalaxyLib
         return true;
     }
 
-    /**
-     * isMissileActive
-     *
-     * @return boolean
-     */
-    private function isMissileActive()
+    private function isMissileActive(): bool
     {
         if (($this->current_planet['defense_interplanetary_missile'] != 0)
             && ($this->row_data['user_id'] != $this->current_user['user_id'])
             && ($this->row_data['planet_galaxy'] == $this->current_planet['planet_galaxy'])) {
             return $this->isInRange(Formulas::missileRange($this->current_user['research_impulse_drive']));
         }
+
+        return false;
     }
 
-    /**
-     * isPhalanxActive
-     *
-     * @return boolean
-     */
-    private function isPhalanxActive()
+    private function isPhalanxActive(): bool
     {
         if (($this->current_planet['building_phalanx'] != 0)
             && ($this->row_data['user_id'] != $this->current_user['user_id'])
@@ -712,16 +687,11 @@ class GalaxyLib
             && ($this->current_planet['planet_type']) == PlanetTypesEnumerator::MOON) {
             return $this->isInRange(Formulas::phalanxRange($this->current_planet['building_phalanx']));
         }
+
+        return false;
     }
 
-    /**
-     * isInRange
-     *
-     * @param int $range Range
-     *
-     * @return boolean
-     */
-    private function isInRange($range)
+    private function isInRange($range): bool
     {
         $minsystem = $this->current_planet['planet_system'] - $range;
         $maxsystem = $this->current_planet['planet_system'] + $range;
@@ -732,12 +702,7 @@ class GalaxyLib
         return (($this->system <= $maxsystem) && ($this->system >= $minsystem));
     }
 
-    /**
-     * Get the css class for each user status
-     *
-     * @return void
-     */
-    private function getUserStatusClass(string $status)
+    private function getUserStatusClass(string $status): string
     {
         return [
             'a' => 'status_abbr_admin',

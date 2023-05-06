@@ -78,12 +78,10 @@ class GalaxyController extends BaseController
         $CurrentPlID = $this->planet['planet_id'];
         $CurrentSP = $this->planet['ship_espionage_probe'];
 
-        if (!isset($mode)) {
-            if (isset($_GET['mode'])) {
-                $mode = intval($_GET['mode']);
-            } else {
-                $mode = 0;
-            }
+        if (isset($_GET['mode'])) {
+            $mode = intval($_GET['mode']);
+        } else {
+            $mode = 0;
         }
 
         $setted_position = $this->validatePosition($mode);
@@ -92,7 +90,8 @@ class GalaxyController extends BaseController
         $planet = $setted_position['planet'];
 
         if ($mode == 2 && $this->planet['defense_interplanetary_missile'] < 1) {
-            die(Functions::message(__('game/galaxy.gl_no_missiles'), 'game.php?page=galaxy&mode=0', 2));
+            Functions::message(__('game/galaxy.gl_no_missiles'), 'game.php?page=galaxy&mode=0', 2);
+            exit;
         }
 
         $this->galaxy = $this->galaxyModel->getGalaxyDataByGalaxyAndSystem($this->_galaxy, $this->_system, $this->user['user_id']);

@@ -47,15 +47,7 @@ class Users
         return self::$instance;
     }
 
-    /**
-     * userLogin
-     *
-     * @param int    $userId   User ID
-     * @param string $password  Password
-     *
-     * @return void
-     */
-    public function userLogin($userId = 0, $password = '')
+    public function userLogin(int $userId = 0, string $password = ''): bool
     {
         if ($userId != 0 && !empty($password) && (strlen($password) == 60)) {
             $_SESSION['user_id'] = $userId;
@@ -180,7 +172,7 @@ class Users
         $select = isset($_GET['cp']) ? (int) $_GET['cp'] : '';
         $restore = isset($_GET['re']) ? (int) $_GET['re'] : '';
 
-        if (isset($select) && is_numeric($select) && isset($restore) && $restore == 0 && $select != 0) {
+        if (is_numeric($select) && $restore == 0 && $select != 0) {
             $owned = $this->usersModel->getUserPlanetByIdAndUserId($select, $this->userData['user_id']);
 
             if ($owned) {

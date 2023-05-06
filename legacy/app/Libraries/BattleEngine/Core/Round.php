@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Libraries\BattleEngine\Core;
+namespace Xgp\App\Libraries\BattleEngine\Core;
 
-use App\Libraries\BattleEngine\CombatObject\Fire;
-use App\Libraries\BattleEngine\CombatObject\FireManager;
-use App\Libraries\BattleEngine\Models\PlayerGroup;
+use Xgp\App\Libraries\BattleEngine\CombatObject\Fire;
+use Xgp\App\Libraries\BattleEngine\CombatObject\FireManager;
+use Xgp\App\Libraries\BattleEngine\Models\PlayerGroup;
 
 /**
  *  OPBE

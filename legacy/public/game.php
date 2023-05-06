@@ -12,7 +12,7 @@ $system->bootUp('game');
 
 $page = filter_input(INPUT_GET, 'page');
 
-if (is_null($page)) {
+if (empty($page)) {
     Functions::redirect('game.php?page=overview');
 }
 
@@ -27,21 +27,19 @@ $page = strtr(
 
 $file_name = GAME_PATH . ucfirst($page) . 'Controller.php';
 
-if (isset($page)) {
-    // logout
-    if ($page == 'logout') {
-        $system->getSession()->delete();
-        Functions::redirect(SYSTEM_ROOT);
-    }
+// logout
+if ($page == 'logout') {
+    $system->getSession()->delete();
+    Functions::redirect(SYSTEM_ROOT);
+}
 
-    // other pages
-    if (file_exists($file_name)) {
-        include $file_name;
+// other pages
+if (file_exists($file_name)) {
+    include $file_name;
 
-        $class_name = 'Xgp\App\Http\Controllers\Game\\' . ucfirst($page) . 'Controller';
+    $class_name = 'Xgp\App\Http\Controllers\Game\\' . ucfirst($page) . 'Controller';
 
-        (new $class_name())->__invoke();
-    }
+    (new $class_name())->__invoke();
 }
 
 // any other case

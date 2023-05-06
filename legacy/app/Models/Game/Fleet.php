@@ -2,6 +2,7 @@
 
 namespace Xgp\App\Models\Game;
 
+use Exception;
 use Xgp\App\Core\Entity\FleetEntity;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Model;
@@ -134,16 +135,6 @@ class Fleet extends Model
         );
     }
 
-    /**
-     * Get planet owner by coords
-     *
-     * @param int $g    Galaxy
-     * @param int $s    System
-     * @param int $p    Planet
-     * @param int $pt   Planet Type
-     *
-     * @return bool
-     */
     public function getPlanetOwnerByCoords(int $g, int $s, int $p, int $pt): array
     {
         return $this->db->queryFetch(
@@ -222,6 +213,7 @@ class Fleet extends Model
     {
         try {
             $this->db->beginTransaction();
+            $sql = [];
 
             // prepare the query
             foreach ($fleet_data as $field => $value) {
@@ -297,17 +289,10 @@ class Fleet extends Model
         }
     }
 
-    /**
-     * Update planet based on the received values
-     *
-     * @param array $planet_data Planet Data
-     * @param array $fleet_data  Fleet Data
-     * @param array $fleet_ships Fleet Ships
-     *
-     * @return void
-     */
-    public function updatePlanet(array $planet_data, array $fleet_data, array $fleet_ships)
+    public function updatePlanet(array $planet_data, array $fleet_data, array $fleet_ships): void
     {
+        $sql = [];
+
         // prepare the query
         foreach ($fleet_ships as $field => $value) {
             $sql[] = '`' . $field . '` = `' . $field . "` - '" . $value . "'";

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries\BattleEngine\Core;
+namespace Xgp\App\Libraries\BattleEngine\Core;
 
-use App\Libraries\BattleEngine\Models\PlayerGroup;
+use Xgp\App\Libraries\BattleEngine\Models\PlayerGroup;
 
 /**
  *  OPBE
@@ -92,13 +92,9 @@ class Battle
     }
 
     /**
-     * Battle::checkWhoWon()
      * Assign to groups the status win,lose or draw
-     * @param boolean $att_lose
-     * @param boolean $deff_lose
-     * @return null
      */
-    private function checkWhoWon($att_lose, $deff_lose)
+    private function checkWhoWon(bool $att_lose, bool $deff_lose): void
     {
         if ($att_lose && !$deff_lose) {
             $this->attackers->battleResult = BATTLE_LOSE;
@@ -112,22 +108,12 @@ class Battle
         }
     }
 
-    /**
-     * Battle::__toString()
-     *
-     * @return
-     */
     public function __toString()
     {
         return $this->report->__toString();
     }
 
-    /**
-     * Battle::getReport()
-     * Start the battle if not and return the report.
-     * @return BattleReport
-     */
-    public function getReport()
+    public function getReport(): BattleReport
     {
         if (!$this->battleStarted) {
             $this->startBattle();

@@ -322,14 +322,7 @@ class BuddiesController extends BaseController
         return $rows;
     }
 
-    /**
-     * Extract player data based on provided object
-     *
-     * @param BuddyEntity $buddy Buddy Entity Object
-     *
-     * @return arrau
-     */
-    private function extractPlayerData(BuddyEntity $buddy)
+    private function extractPlayerData(BuddyEntity $buddy): array
     {
         if ($buddy->getBuddySender() == $this->user['user_id']) {
             $id_to_get = $buddy->getBuddyReceiver();

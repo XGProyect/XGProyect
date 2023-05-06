@@ -148,6 +148,7 @@ class UpdatesLibrary
         $db = new UpdatesLibraryModel();
         $resource = Objects::getInstance()->getObjects();
         $ret_value = false;
+        $queue_array = [];
 
         if ($current_planet['planet_b_building_id'] != 0) {
             $current_queue = $current_planet['planet_b_building_id'];
@@ -231,6 +232,8 @@ class UpdatesLibrary
 
         if ($current_planet['planet_b_building'] == 0) {
             $current_queue = $current_planet['planet_b_building_id'];
+            $build_end_time = '0';
+            $new_queue = '0';
 
             if ($current_queue != 0) {
                 $queue_array = explode(';', $current_queue);
@@ -264,6 +267,7 @@ class UpdatesLibrary
 
                     if ($is_payable) {
                         $price = Developments::developmentPrice($current_user, $current_planet, (int) $element, true, $for_destroy);
+                        $recalculated_queue = [];
 
                         $current_planet['planet_metal'] -= $price['metal'];
                         $current_planet['planet_crystal'] -= $price['crystal'];
@@ -316,7 +320,7 @@ class UpdatesLibrary
                             $price = Developments::developmentPrice(
                                 $current_user,
                                 $current_planet,
-                                $element,
+                                (int) $element,
                                 true,
                                 $for_destroy
                             );
@@ -382,9 +386,6 @@ class UpdatesLibrary
                         }
                     }
                 }
-            } else {
-                $build_end_time = '0';
-                $new_queue = '0';
             }
 
             $current_planet['planet_b_building'] = $build_end_time;
@@ -683,14 +684,8 @@ class UpdatesLibrary
 
     /**
      * Update the hangar queue, ships and defenses that were on queue
-     *
-     * @param array $current_user   Current user
-     * @param array $current_planet Current planet
-     * @param int   $ProductionTime Production time
-     *
-     * @return int
      */
-    private static function updateHangarQueue($current_user, &$current_planet, $ProductionTime)
+    private static function updateHangarQueue(array $current_user, array &$current_planet, int $ProductionTime): array
     {
         $resource = Objects::getInstance()->getObjects();
 
@@ -757,7 +752,7 @@ class UpdatesLibrary
                 }
             }
         } else {
-            $Builded = '';
+            $Builded = [];
             $current_planet['planet_b_hangar'] = 0;
         }
 

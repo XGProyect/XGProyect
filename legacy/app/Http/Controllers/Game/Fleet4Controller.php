@@ -6,10 +6,12 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
+use Xgp\App\Core\Objects;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\Fleets;
+use Xgp\App\Libraries\NoobsProtectionLib;
 use Xgp\App\Libraries\Premium\Premium;
 use Xgp\App\Libraries\Research\Researches;
 use Xgp\App\Libraries\Users;
@@ -55,6 +57,8 @@ class Fleet4Controller extends BaseController
     private int $_fleet_storage = 0;
     private array $_fleet_ships = [];
     private Fleet $fleetModel;
+    private Users $userLibrary;
+    private Objects $objects;
 
     public function __invoke()
     {
@@ -65,6 +69,8 @@ class Fleet4Controller extends BaseController
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
         $this->fleetModel = new Fleet();
+        $this->userLibrary = new Users();
+        $this->objects = new Objects();
 
         $this->setUpFleets();
         $this->buildPage();
@@ -105,12 +111,7 @@ class Fleet4Controller extends BaseController
         Functions::redirect(self::REDIRECT_TARGET);
     }
 
-    /**
-     * Set inputs data
-     *
-     * @return array
-     */
-    private function setInputsData()
+    private function setInputsData(): void
     {
         $exp_time = $this->_research->getCurrentResearch()->getResearchAstrophysics();
 
@@ -151,12 +152,7 @@ class Fleet4Controller extends BaseController
         $this->_clean_input_data = $data;
     }
 
-    /**
-     * Get target user info and planet info
-     *
-     * @return void
-     */
-    private function getTarget()
+    private function getTarget(): void
     {
         $target_data = $this->getTargetData();
 
@@ -217,12 +213,7 @@ class Fleet4Controller extends BaseController
         return true;
     }
 
-    /**
-     * Validate both players level
-     *
-     * @return boolean
-     */
-    private function validateAdmin()
+    private function validateAdmin(): bool
     {
         // skip if it's our own planet or it's an empty planet
         if ($this->_own_planet
@@ -241,12 +232,7 @@ class Fleet4Controller extends BaseController
         return true;
     }
 
-    /**
-     * Validate vacations for both players
-     *
-     * @return boolean
-     */
-    private function validateOwnVacations()
+    private function validateOwnVacations(): bool
     {
         if ($this->userLibrary->isOnVacations($this->user)) {
             $this->showMessage(__('game/fleet.fl_vacation_mode_active'));
@@ -258,12 +244,7 @@ class Fleet4Controller extends BaseController
         return true;
     }
 
-    /**
-     * Validate vacations for both players
-     *
-     * @return boolean
-     */
-    private function validateTargetVacations()
+    private function validateTargetVacations(): bool
     {
         // skip if it's our own planet or it's an empty planet
         if ($this->_own_planet
@@ -280,12 +261,7 @@ class Fleet4Controller extends BaseController
         return true;
     }
 
-    /**
-     * Validate any current ACS
-     *
-     * @return boolean
-     */
-    private function validateAcs()
+    private function validateAcs(): bool
     {
         $target_data = $this->getTargetData();
 
@@ -310,12 +286,7 @@ class Fleet4Controller extends BaseController
         return true;
     }
 
-    /**
-     * Validate if the received amount of ships is valid
-     *
-     * @return boolean
-     */
-    private function validateShips()
+    private function validateShips(): bool
     {
         // post/session fleet
         $fleet = $this->getSessionShips();
@@ -354,12 +325,7 @@ class Fleet4Controller extends BaseController
         return false;
     }
 
-    /**
-     * Validate the mission
-     *
-     * @return boolean
-     */
-    private function validateMission()
+    private function validateMission(): bool
     {
         // post/session fleet
         $fleet = $this->getSessionShips();
@@ -493,7 +459,7 @@ class Fleet4Controller extends BaseController
         }
 
         if (!$this->userLibrary->isInactive($this->_target_data)) {
-            $noob = Functions::loadLibrary('NoobsProtectionLib');
+            $noob = new NoobsProtectionLib();
 
             $points = $noob->returnPoints(
                 $this->user['user_id'],
@@ -693,44 +659,22 @@ class Fleet4Controller extends BaseController
         return true;
     }
 
-    /**
-     * Get fleet data
-     *
-     * @return array
-     */
-    private function getFleetData()
+    private function getFleetData(): array
     {
         return $_SESSION['fleet_data'];
     }
 
-    /**
-     * Get session set ships
-     *
-     * @return string
-     */
-    private function getSessionShips()
+    private function getSessionShips(): array
     {
         return unserialize(base64_decode(str_rot13($this->getFleetData()['fleetarray'])));
     }
 
-    /**
-     * Get the target data
-     *
-     * @return array
-     */
-    private function getTargetData()
+    private function getTargetData(): array
     {
         return $_SESSION['fleet_data']['target'];
     }
 
-    /**
-     * Show message with some default fleet values
-     *
-     * @param type $message
-     *
-     * @return void
-     */
-    private function showMessage($message)
+    private function showMessage($message): void
     {
         Functions::message(
             $message,

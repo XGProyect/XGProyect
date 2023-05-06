@@ -78,12 +78,12 @@ class BuildingsController extends BaseController
         $action = filter_input(INPUT_GET, 'cmd');
         $reload = filter_input(INPUT_GET, 'r');
         $building = filter_input(INPUT_GET, 'building', FILTER_VALIDATE_INT);
-        $list_id = filter_input(INPUT_GET, 'listid', FILTER_VALIDATE_INT);
+        $listId = filter_input(INPUT_GET, 'listid', FILTER_VALIDATE_INT);
         $allowed_actions = ['cancel', 'destroy', 'insert', 'remove'];
 
         if (!is_null($action)) {
             if (in_array($action, $allowed_actions)) {
-                if ($this->canInitBuildAction($building, $list_id)) {
+                if ($this->canInitBuildAction($building, $listId)) {
                     switch ($action) {
                         case 'cancel':
                             $this->cancelCurrent();
@@ -98,7 +98,7 @@ class BuildingsController extends BaseController
                             break;
 
                         case 'remove':
-                            $this->removeFromQueue($list_id);
+                            $this->removeFromQueue($listId);
                             break;
                     }
 
@@ -342,16 +342,9 @@ class BuildingsController extends BaseController
         return '<center>-</center>';
     }
 
-    /**
-     *
-     * @param int $building_id  Building ID
-     * @param int $list_id      List ID
-     *
-     * @return boolean
-     */
-    private function canInitBuildAction($building_id, $list_id)
+    private function canInitBuildAction(int $buildingId, int $listId): bool
     {
-        if (isset($list_id)) {
+        if (!empty($listId)) {
             return true;
         }
 
@@ -359,11 +352,11 @@ class BuildingsController extends BaseController
             return false;
         }
 
-        if ($this->isWorkInProgress($building_id)) {
+        if ($this->isWorkInProgress($buildingId)) {
             return false;
         }
 
-        if (!in_array($building_id, $this->allowedBuildings)) {
+        if (!in_array($buildingId, $this->allowedBuildings)) {
             return false;
         }
 
@@ -497,15 +490,11 @@ class BuildingsController extends BaseController
         return $ReturnValue;
     }
 
-    /**
-     * method removeFromQueue
-     * param $QueueID
-     * return (int) the queue ID
-     */
-    private function removeFromQueue($QueueID)
+    private function removeFromQueue(int $QueueID): int
     {
         if ($QueueID > 1) {
             $CurrentQueue = $this->planet['planet_b_building_id'];
+            $NewQueue = '';
 
             if (!empty($CurrentQueue)) {
                 $QueueArray = explode(';', $CurrentQueue);

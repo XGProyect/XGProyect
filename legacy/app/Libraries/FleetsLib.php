@@ -43,14 +43,14 @@ class FleetsLib
         return (35000 / $percentage * sqrt($distance * 10 / $maxFleetSpeed) + 10) / $speedFactor;
     }
 
-    public static function fleetMaxSpeed(?array $fleetArray, int $fleet, array $user): float|array
+    public static function fleetMaxSpeed(?array $fleetArray, int $ship, array $user): float|array
     {
         $pricelist = Objects::getInstance()->getPrice();
         $speed_all = [];
 
-        if ($fleet != 0) {
+        if ($ship != 0) {
             $fleetArray = [];
-            $fleetArray[$fleet] = 1;
+            $fleetArray[$ship] = 1;
         }
 
         if (!empty($fleetArray) && !is_null($fleetArray)) {
@@ -103,7 +103,7 @@ class FleetsLib
             }
         }
 
-        if ($fleet != 0) {
+        if ($ship != 0) {
             $ship_speed = isset($speed_all[$ship]) ? $speed_all[$ship] : 0;
             $speed_all = $ship_speed;
         }
@@ -141,19 +141,19 @@ class FleetsLib
         return round($consumption);
     }
 
-    public static function getMaxFleets($computerTech, $amiralLevel): int
+    public static function getMaxFleets(int $computerTech, int $amiralLevel): int
     {
         return OfficiersLib::getMaxComputer($computerTech, $amiralLevel);
     }
 
     public static function getMaxExpeditions(int $astrophysicsTech): int
     {
-        return floor(sqrt($astrophysicsTech));
+        return (int) floor(sqrt($astrophysicsTech));
     }
 
     public static function getMaxColonies($astrophysicsTech): int
     {
-        return ceil($astrophysicsTech / 2);
+        return (int) ceil($astrophysicsTech / 2);
     }
 
     public static function startLink(array $fleetRow, string $fleetType): string
@@ -184,16 +184,7 @@ class FleetsLib
         return UrlHelper::setUrl($link, $coords, '', $fleetType);
     }
 
-    /**
-     * fleetResourcesPopup
-     *
-     * @param array  $fleetRow  Fleet row
-     * @param string $text       Text
-     * @param string $fleet_type Fleet type
-     *
-     * @return void
-     */
-    public static function fleetResourcesPopup($fleetRow, $text, $fleet_type)
+    public static function fleetResourcesPopup(array $fleetRow, string $text, string $fleet_type): string
     {
         $total_resources = $fleetRow['fleet_resource_metal'] + $fleetRow['fleet_resource_crystal'] + $fleetRow['fleet_resource_deuterium'];
 
@@ -315,6 +306,8 @@ class FleetsLib
 
         $FleetStatus = [0 => 'flight', 1 => 'holding', 2 => 'return'];
         $MissionType = $fleetRow['fleet_mission'];
+        $FleetContent = '';
+
         if ($MissionType != Missions::MISSILE) {
             $FleetContent = self::fleetShipsPopup(
                 $fleetRow,
@@ -326,6 +319,8 @@ class FleetsLib
 
         $StartType = $fleetRow['fleet_start_type'];
         $TargetType = $fleetRow['fleet_end_type'];
+        $StartID = '';
+        $TargetID = '';
 
         if ($Status != 2) {
             if ($StartType == 1) {
@@ -342,11 +337,9 @@ class FleetsLib
                     case 1:
                         $TargetID = __('game/events.ev_the_planet');
                         break;
-
                     case 2:
                         $TargetID = __('game/events.ev_debris_field');
                         break;
-
                     case 3:
                         $TargetID = __('game/events.ev_to_the_moon');
                         break;
@@ -410,6 +403,9 @@ class FleetsLib
                 $EventString .= self::enemyLink($fleetRow);
             }
 
+            $Time = 0;
+            $Rest = 0;
+
             switch ($Status) {
                 case 0:
                     $Time = $fleetRow['fleet_start_time'];
@@ -421,7 +417,6 @@ class FleetsLib
                     $EventString .= $TargetID;
                     $EventString .= __('game/events.ev_with_the_mission_of');
                     break;
-
                 case 1:
                     $Time = $fleetRow['fleet_end_stay'];
                     $Rest = $Time - time();
@@ -432,7 +427,6 @@ class FleetsLib
                     $EventString .= $TargetID;
                     $EventString .= __('game/events.ev_with_the_mission_of');
                     break;
-
                 case 2:
                     $Time = $fleetRow['fleet_end_time'];
                     $Rest = $Time - time();
@@ -490,13 +484,6 @@ class FleetsLib
         return intval($ship_storage + ($ship_storage * 0.05 * $hyperspace_tech_level));
     }
 
-    /**
-     * Serialize the fleet array
-     *
-     * @param array $fleetArray Fleet array
-     *
-     * @return string
-     */
     public static function setFleetShipsArray(array $fleetArray): string
     {
         return serialize($fleetArray);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\BattleEngine\Utils;
+namespace Xgp\App\Libraries\BattleEngine\Utils;
 
 use Iterator;
 use ReturnTypeWillChange;
@@ -33,15 +33,17 @@ use ReturnTypeWillChange;
  */
 class IterableUtil implements Iterator
 {
+    protected $array = [];
+
     /* Iterator functions */
     #[ReturnTypeWillChange]
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->array);
     }
 
     #[ReturnTypeWillChange]
-    public function current()
+    public function current(): mixed
     {
         return current($this->array);
     }
@@ -53,19 +55,19 @@ class IterableUtil implements Iterator
     }
 
     #[ReturnTypeWillChange]
-    public function next()
+    public function next(): void
     {
         return next($this->array);
     }
 
     #[ReturnTypeWillChange]
-    public function valid()
+    public function valid(): bool
     {
         return $this->current() !== false;
     }
     /* other functions */
 
-    public function getIterator()
+    public function getIterator(): mixed
     {
         return $this->array;
     }

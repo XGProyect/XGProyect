@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries\BattleEngine\Models;
+namespace Xgp\App\Libraries\BattleEngine\Models;
 
-use App\Libraries\BattleEngine\CombatObject\FireManager;
-use App\Libraries\BattleEngine\Utils\IterableUtil;
+use Xgp\App\Libraries\BattleEngine\CombatObject\FireManager;
+use Xgp\App\Libraries\BattleEngine\Utils\IterableUtil;
 use Exception;
 
 /**

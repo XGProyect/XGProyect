@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\Missions;
+namespace Xgp\App\Libraries\Missions;
 
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\BattleEngine\Core\Battle;
@@ -13,7 +13,6 @@ use Xgp\App\Libraries\BattleEngine\Models\PlayerGroup;
 use Xgp\App\Libraries\BattleEngine\Models\Ship;
 use Xgp\App\Libraries\BattleEngine\Utils\DebugManager;
 use Xgp\App\Libraries\BattleEngine\Utils\LangManager;
-use Xgp\App\Libraries\Combatreport\Report;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
@@ -252,15 +251,7 @@ class Attack extends Missions
         }
     }
 
-    /**
-     * updateDebris
-     *
-     * @param array  $fleet_row Fleet row
-     * @param Report $report    Report
-     *
-     * @return void
-     */
-    private function updateDebris($fleet_row, $report)
+    private function updateDebris(array $fleet_row, BattleReport $report): void
     {
         list($metal, $crystal) = $report->getDebris();
 
@@ -328,13 +319,8 @@ class Attack extends Missions
 
     /**
      * Get player group from query
-     *
-     * @param array   $result      Result
-     * @param boolean $target_user Target User
-     *
-     * @return \PlayerGroup
      */
-    private function getPlayerGroupFromQuery($result, ?array $target_user = [])
+    private function getPlayerGroupFromQuery(array $result, ?array $target_user = []): PlayerGroup
     {
         $playerGroup = new PlayerGroup();
 
@@ -361,7 +347,7 @@ class Attack extends Missions
                     }
 
                     if (isset($target_user['planet_id']) && $target_user['planet_id'] == $idPlayer) {
-                        $fleetSouther = new Fleet();
+                        $fleetSouther = new Fleet(-1);
                         $player = new Player($idPlayer, [$fleetSouther]);
                     } else {
                         $player = new Player($idPlayer, [$fleet]);
@@ -438,13 +424,8 @@ class Attack extends Missions
 
     /**
      * Create a new report and attach it to a message
-     *
-     * @param array  $fleet_row Fleet Row
-     * @param Report $report    Report
-     *
-     * @return void
      */
-    private function createNewReportAndSendIt($fleet_row, $report, $target_planet_name)
+    private function createNewReportAndSendIt(array $fleet_row, BattleReport $report, string $target_planet_name): void
     {
         $idAtts = $report->getAttackersId();
         $idDefs = $report->getDefendersId();
@@ -522,12 +503,8 @@ class Attack extends Missions
 
     /**
      * Get cargo capacity for each ship
-     *
-     * @param PlayerGroup $players Players
-     *
-     * @return int
      */
-    private function getCapacity(PlayerGroup $players)
+    private function getCapacity(PlayerGroup $players): int
     {
         $capacity = 0;
 
@@ -545,16 +522,7 @@ class Attack extends Missions
         return $capacity;
     }
 
-    /**
-     * updateAttackers
-     *
-     * @param Battle $playerGroupBeforeBattle Player Group before battle
-     * @param Battle $playerGroupAfterBattle  Player Group after battle
-     * @param array  $target_planet           Target planet
-     *
-     * @return array
-     */
-    private function updateAttackers($playerGroupBeforeBattle, $playerGroupAfterBattle, $target_planet)
+    private function updateAttackers(PlayerGroup $playerGroupBeforeBattle, PlayerGroup $playerGroupAfterBattle, array $target_planet): array
     {
         $fleetArray = '';
         $emptyFleets = [];
@@ -648,17 +616,7 @@ class Attack extends Missions
         return $steal;
     }
 
-    /**
-     * updateDefenders
-     *
-     * @param Battle $playerGroupBeforeBattle Player Group before battle
-     * @param Battle $playerGroupAfterBattle  Player Group after battle
-     * @param array  $target_planet           Target planet
-     * @param array  $steal                   Stealed resources
-     *
-     * @return void
-     */
-    private function updateDefenders($playerGroupBeforeBattle, $playerGroupAfterBattle, $target_planet, $steal)
+    private function updateDefenders(PlayerGroup $playerGroupBeforeBattle, PlayerGroup $playerGroupAfterBattle, array $target_planet, array $steal): void
     {
         $Xplayer = $Xfleet = $XshipType = null;
         $fleetArray = '';

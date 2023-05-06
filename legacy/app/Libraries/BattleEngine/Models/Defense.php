@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\BattleEngine\Models;
+namespace Xgp\App\Libraries\BattleEngine\Models;
 
 /**
  *  OPBE

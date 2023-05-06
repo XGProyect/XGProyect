@@ -235,13 +235,14 @@ class Expedition extends Missions
     {
         $ships_ratio = $this->setShipsRatios();
         $found_chance = $fleet_points / $fleet_row['fleet_amount'];
+        $foundShip = [];
 
         for ($ship = 202; $ship <= 215; $ship++) {
             if (isset($current_fleet[$ship]) && $current_fleet[$ship] != 0) {
-                $found_ship[$ship] = round($current_fleet[$ship] * $ships_ratio[$ship] * $found_chance) + 1;
+                $foundShip[$ship] = round($current_fleet[$ship] * $ships_ratio[$ship] * $found_chance) + 1;
 
-                if ($found_ship[$ship] > 0) {
-                    $current_fleet[$ship] += $found_ship[$ship];
+                if ($foundShip[$ship] > 0) {
+                    $current_fleet[$ship] += $foundShip[$ship];
                 }
             }
         }
@@ -255,8 +256,8 @@ class Expedition extends Missions
             }
         }
 
-        if ($found_ship != null) {
-            foreach ($found_ship as $ship => $count) {
+        if ($foundShip != null) {
+            foreach ($foundShip as $ship => $count) {
                 if ($count != 0) {
                     $found_ship_message .= __('game/ships.' . $this->resource[$ship]) . ': ' . $count . '<br>';
                 }
