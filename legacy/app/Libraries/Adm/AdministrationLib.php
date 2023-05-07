@@ -71,13 +71,14 @@ class AdministrationLib
         );
     }
 
-    public static function showPopUp(string $message): string
+    public static function showPopUp(string $content, string $popupCcontent): string
     {
-        $parse['message'] = $message;
-
         return Template::getInstance()->render(
-            'admin.popup_view',
-            $parse
+            'admin.popup',
+            [
+                'content' => $content,
+                'popupContent' => $popupCcontent,
+            ]
         );
     }
 

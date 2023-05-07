@@ -1,5 +1,8 @@
-<script src="{js_path}cntchar-min.js" type="text/javascript"></script>
-<script type="text/javascript" src="{js_path}filterlist-min.js"></script>
+@extends('master.admin')
+
+@section('content')
+<script type="text/javascript" src="{{ asset('js/cntchar-min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/filterlist-min.js') }}"></script>
 <div class="container-fluid">
     <x-alert/>
     <!-- Page Heading -->
@@ -14,14 +17,14 @@
                 <!-- Card Header - Accordion -->
                 <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                     aria-expanded="true" aria-controls="collapseGeneral">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/ban.bn_username') }}: {name}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/ban.bn_username') }}: {{ $name }}</h6>
                 </a>
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseGeneral" style="">
                     <div class="card-body">
                         <div class="table-responsive">
                             <form action="" method="POST" name="frm_ban">
-                                <input type="hidden" name="ban_name" value="{name}">
+                                <input type="hidden" name="ban_name" value="{{ $name }}">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tr>
                                         <th>
@@ -29,36 +32,39 @@
                                         </th>
                                         <td colspan="2">
                                             <textarea class="form-control" name="text" rows="5"
-                                                onkeyup="javascript:cntChars('frm_ban', 50);">{reason}</textarea>
+                                                onkeyup="javascript:cntChars('frm_ban', 50);">{{ $reason }}</textarea>
                                             (<span id="cntChars">0</span> / 50 {{ __('admin/ban.bn_characters') }})
                                         </td>
                                     </tr>
+                                    {!! $banned_until !!}
                                     <tr>
-                                        <th colspan="2">{changedate}</th>
+                                        <th colspan="2">{!! $changedate !!}</th>
                                     </tr>
                                     <tr>
                                         <th>{{ __('admin/ban.bn_time_days') }}</th>
-                                        <td><input name="days" class="form-control" type="text" value="0"></td>
+                                        <td><input name="days" class="form-control" type="number" value="0" min="0" max="1000"></td>
                                     </tr>
                                     <tr>
                                         <th>{{ __('admin/ban.bn_time_hours') }}</th>
-                                        <td><input name="hour" class="form-control" type="text" value="0"></td>
+                                        <td><input name="hour" class="form-control" type="number" value="0" min="0" max="1000"></td>
                                     </tr>
                                     <tr>
                                         <th>{{ __('admin/ban.bn_vacation_mode') }}</th>
                                         <td>
-                                            <input name="vacat" class="form-control-check" type="checkbox" {vacation} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <div align="center">
-                                                <input type="submit" value="{{ __('admin/ban.bn_ban_user') }}" name="bannow"
-                                                    class="btn btn-primary">
-                                            </div>
+                                            <input name="vacat" class="form-control-check" type="checkbox" {{ $vacation }} />
                                         </td>
                                     </tr>
                                 </table>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-icon-split"
+                                        name="bannow"
+                                        value="{{ __('admin/ban.bn_ban_user') }}">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-save"></i>
+                                        </span>
+                                        <span class="text">{{ __('admin/ban.bn_ban_user') }}</span>
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -67,3 +73,4 @@
         </div>
     </div>
 </div>
+@endsection

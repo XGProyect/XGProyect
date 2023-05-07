@@ -2,6 +2,8 @@
 
 return [
     'bn_title' => 'Banning',
+    'bn_sub_title' => 'This page provides useful information for banning users from your platform. Follow the guidelines carefully to ensure that your platform remains safe and secure for all users.',
+    'bn_general' => 'General',
     'bn_users_list' => 'Users',
     'bn_banned_list' => 'Banned',
     'bn_total_users' => 'Total: ',

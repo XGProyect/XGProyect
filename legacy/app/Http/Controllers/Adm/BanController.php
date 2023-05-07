@@ -30,45 +30,25 @@ class BanController extends BaseController
         $this->user = Users::getInstance()->getUserData();
         $this->banModel = new Ban();
 
-        $this->buildPage();
-    }
+        $view = 'admin.ban';
+        $parse = $this->showDefault();
 
-    private function buildPage(): void
-    {
-        switch ((isset($_GET['mode']) ? $_GET['mode'] : '')) {
-            case 'ban':
-                $view = $this->showBan();
-
-                break;
-
-            case '':
-            default:
-                $view = $this->showDefault();
-
-                break;
+        if ((isset($_GET['mode']) ? $_GET['mode'] : '')) {
+            $view = 'admin.ban_result';
+            $parse = $this->showBan();
         }
 
-        Template::getInstance()->view($view);
+        Template::getInstance()->view($view, $parse);
     }
 
-    /**
-     * method showDefault
-     * param
-     * return build the default page
-     */
-    private function showDefault()
+    private function showDefault(): array
     {
-        $parse['js_path'] = JS_PATH;
-        $parse['alert'] = '';
-        $parse['bn_sub_title'] = '';
-        $parse['np_general'] = '';
-
         if (isset($_POST['unban_name']) && $_POST['unban_name']) {
             $username = $_POST['unban_name'];
 
             $this->banModel->unbanUser($username);
 
-            session()->flash('ok', (str_replace('%s', $username, __('admin/ban.bn_lift_ban_success'))));
+            session()->flash('success', (str_replace('%s', $username, __('admin/ban.bn_lift_ban_success'))));
         }
 
         $parse['users_list'] = $this->getUsersList();
@@ -76,19 +56,11 @@ class BanController extends BaseController
         $parse['users_amount'] = $this->_users_count;
         $parse['banned_amount'] = $this->_banned_count;
 
-        return Template::getInstance()->render('admin.ban', $parse);
+        return $parse;
     }
 
-    /**
-     * method showBan
-     * param
-     * return build the ban page
-     */
     private function showBan()
     {
-        $parse['js_path'] = JS_PATH;
-        $parse['alert'] = '';
-        $parse['bn_sub_title'] = '';
         $parse['reason'] = '';
         $ban_name = isset($_GET['ban_name']) ? $_GET['ban_name'] : null;
 
@@ -101,9 +73,9 @@ class BanController extends BaseController
             $banned_user = $this->banModel->getBannedUserData($ban_name);
 
             if ($banned_user) {
-                $parse['banned_until'] = __('admin/ban.bn_banned_until') . ' (' . date(Functions::readConfig('date_format_extended'), $banned_user['banned_longer']) . ')';
+                $parse['banned_until'] = '<tr><th>' . __('admin/ban.bn_banned_until') . '</th><td>' . date(Functions::readConfig('date_format_extended'), (int) $banned_user['banned_longer']) . '</td></tr>';
                 $parse['reason'] = $banned_user['banned_theme'];
-                $parse['changedate'] = '<div style="float:left">' . __('admin/ban.bn_change_date') . '</div><div style="float:right">' . Administration::showPopUp(__('admin/ban.bn_edit_ban_help')) . '</div>';
+                $parse['changedate'] = Administration::showPopUp(__('admin/ban.bn_change_date'), __('admin/ban.bn_edit_ban_help'));
                 $parse['vacation'] = $banned_user['preference_vacation_mode'] ? 'checked="checked"' : '';
             }
 
@@ -146,21 +118,16 @@ class BanController extends BaseController
                         $vacation_mode
                     );
 
-                    session()->flash('ok', (str_replace('%s', $ban_name, __('admin/ban.bn_ban_success'))));
+                    session()->flash('success', (str_replace('%s', $ban_name, __('admin/ban.bn_ban_success'))));
                 }
             }
         } else {
             Functions::redirect('admin.php?page=ban');
         }
 
-        return Template::getInstance()->render('admin.ban_result', $parse);
+        return $parse;
     }
 
-    /**
-     * method getUsersList
-     * param
-     * return the users list (left select)
-     */
     private function getUsersList()
     {
         $query_order = (isset($_GET['order']) && $_GET['order'] == 'id') ? 'user_id' : 'user_name';
@@ -195,22 +162,14 @@ class BanController extends BaseController
             $this->_users_count++;
         }
 
-        unset($users_query); // free resources
-
-        return $users_list; // return builded list
+        return $users_list;
     }
 
-    /**
-     * method getBannedList
-     * param
-     * return the banned users list (right select)
-     */
     private function getBannedList()
     {
         $order = (isset($_GET['order2']) && $_GET['order2'] == 'id') ? 'user_id' : 'user_name';
         $banned_list = '';
 
-        // get the banned users
         $banned_query = $this->banModel->getBannedUsers($order);
 
         foreach ($banned_query as $user) {
@@ -219,8 +178,6 @@ class BanController extends BaseController
             $this->_banned_count++;
         }
 
-        unset($banned_query); // free resources
-
-        return $banned_list; // return builded list
+        return $banned_list;
     }
 }

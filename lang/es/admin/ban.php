@@ -2,6 +2,8 @@
 
 return [
     'bn_title' => 'Suspensiones',
+    'bn_sub_title' => 'Esta página proporciona información útil para prohibir usuarios en tu plataforma. Sigue las pautas cuidadosamente para garantizar que tu plataforma siga siendo segura para todos los usuarios.',
+    'bn_general' => 'General',
     'bn_users_list' => 'Usuarios',
     'bn_banned_list' => 'Suspendidos',
     'bn_total_users' => 'Totales: ',

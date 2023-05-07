@@ -54,14 +54,6 @@ class Ban extends Model
         );
     }
 
-    /**
-     * Ban user or update ban data
-     *
-     * @param array|null $banned_user
-     * @param array $ban_data
-     * @param string|null $vacation_mode
-     * @return void
-     */
     public function setOrUpdateBan(?array $banned_user, array $ban_data, ?string $vacation_mode): void
     {
         try {
@@ -139,12 +131,6 @@ class Ban extends Model
         );
     }
 
-    /**
-     * Get list of banned users
-     *
-     * @param string $order
-     * @return array|null
-     */
     public function getBannedUsers(string $order): ?array
     {
         return $this->db->queryFetchAll(

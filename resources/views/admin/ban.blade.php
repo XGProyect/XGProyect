@@ -1,7 +1,7 @@
 @extends('master.admin')
 
 @section('content')
-<script type="text/javascript" src="{js_path}filterlist-min.js"></script>
+<script type="text/javascript" src="{{ asset('js/filterlist-min.js') }}"></script>
 <div class="container-fluid">
     <x-alert/>
     <!-- Page Heading -->
@@ -16,7 +16,7 @@
                 <!-- Card Header - Accordion -->
                 <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                     aria-expanded="true" aria-controls="collapseGeneral">
-                    <h6 class="m-0 font-weight-bold text-primary">{np_general}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/ban.bn_general') }}</h6>
                 </a>
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseGeneral" style="">
@@ -29,21 +29,37 @@
                                             <form action="" method="GET" name="users">
                                                 <input type="hidden" name="page" value="ban">
                                                 <input type="hidden" name="mode" value="ban">
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary btn-icon-split"
+                                                        name="banuser"
+                                                        value="{{ __('admin/ban.bn_button_ban') }}">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-user-slash"></i>
+                                                        </span>
+                                                        <span class="text">{{ __('admin/ban.bn_button_ban') }}</span>
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary btn-icon-split"
+                                                        onClick="UserList.reset();this.form.regexp.value = ''"
+                                                        value="{{ __('admin/ban.bn_button_reset') }}">
+                                                        <span class="text">{{ __('admin/ban.bn_button_reset') }}</span>
+                                                    </button>
+                                                </div>
                                                 <table width="100%">
                                                     <tr>
                                                         <td style="border:0px;">{{ __('admin/ban.bn_users_list') }}
-                                                            ({{ __('admin/ban.bn_total_users') }}{users_amount})</td>
+                                                            ({{ __('admin/ban.bn_total_users') }}{{ $users_amount }})
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td style="border:0px;">
-                                                            <div align="center">
-                                                                <select name="ban_name" style="width:100%;" size="20">
-                                                                    {users_list}
+                                                            <div class="text-center">
+                                                                <select name="ban_name" class="form-control" style="width:100%;" size="20">
+                                                                    {!! $users_list !!}
                                                                 </select>
                                                                 <script type="text/javascript">
-                                                                                < !--
-                                                                            var UserList = new filterlist(document.users.ban_name);
-                                                                                //-->
+                                                                    <!--
+                                                                    var UserList = new filterlist(document.users.ban_name);
+                                                                    //-->
                                                                 </script>
                                                                 <br>
                                                                 <span class="small_font">
@@ -104,34 +120,47 @@
                                                                 <span class="small_font">
                                                                     {{ __('admin/ban.bn_sort') }}:
                                                                     <a href="admin.php?page=ban">{{ __('admin/ban.bn_sort_by_user') }}</a>
-                                                                    <a
-                                                                        href="admin.php?page=ban&order=id">{{ __('admin/ban.bn_sort_by_id') }}</a>
-                                                                    <a
-                                                                        href="admin.php?page=ban&view=user_banned">{{ __('admin/ban.bn_sort_suspended') }}</a>
+                                                                    <a href="admin.php?page=ban&order=id">{{ __('admin/ban.bn_sort_by_id') }}</a>
+                                                                    <a href="admin.php?page=ban&view=user_banned">{{ __('admin/ban.bn_sort_suspended') }}</a>
                                                                 </span>
                                                                 <br><br>
                                                                 <br>
-                                                                <input type="text" name="regexp"
-                                                                    onKeyUp="UserList.set(this.value)">
+                                                                <input type="text" class="form-control" name="regexp" onKeyUp="UserList.set(this.value)">
                                                                 <br>
-                                                                <input type="button"
-                                                                    onClick="UserList.set(this.form.regexp.value)"
-                                                                    value="{{ __('admin/ban.bn_button_filter') }}" class="btn btn-primary">
-                                                                <input type="button"
-                                                                    onClick="UserList.reset();this.form.regexp.value = ''"
-                                                                    value="{{ __('admin/ban.bn_button_remove') }}" class="btn btn-primary">
-                                                                <br><br>
+                                                                <div class="text-center">
+                                                                    <button type="button" class="btn btn-primary btn-icon-split"
+                                                                        onClick="UserList.set(this.form.regexp.value)"
+                                                                        value="{{ __('admin/ban.bn_button_filter') }}">
+                                                                        <span class="icon text-white-50">
+                                                                            <i class="fas fa-filter"></i>
+                                                                        </span>
+                                                                        <span class="text">{{ __('admin/ban.bn_button_filter') }}</span>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-primary btn-icon-split"
+                                                                        onClick="UserList.reset();this.form.regexp.value = ''"
+                                                                        value="{{ __('admin/ban.bn_button_remove') }}">
+                                                                        <span class="text">{{ __('admin/ban.bn_button_remove') }}</span>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="border:0px;">
-                                                            <div align="center">
-                                                                <input type="submit" value="{{ __('admin/ban.bn_button_ban') }}"
-                                                                    name="banuser" class="btn btn-primary">
-                                                                <input type="button"
+                                                        <td style="border: 0px;">
+                                                            <div class="text-center">
+                                                                <button type="submit" class="btn btn-primary btn-icon-split"
+                                                                    name="banuser"
+                                                                    value="{{ __('admin/ban.bn_button_ban') }}">
+                                                                    <span class="icon text-white-50">
+                                                                        <i class="fas fa-user-slash"></i>
+                                                                    </span>
+                                                                    <span class="text">{{ __('admin/ban.bn_button_ban') }}</span>
+                                                                </button>
+                                                                <button type="button" class="btn btn-primary btn-icon-split"
                                                                     onClick="UserList.reset();this.form.regexp.value = ''"
-                                                                    value="{{ __('admin/ban.bn_button_reset') }}" class="btn btn-primary">
+                                                                    value="{{ __('admin/ban.bn_button_reset') }}">
+                                                                    <span class="text">{{ __('admin/ban.bn_button_reset') }}</span>
+                                                                </button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -140,21 +169,37 @@
                                         </td>
                                         <td>
                                             <form action="" method="POST" name="userban">
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary btn-icon-split"
+                                                        name="liftbanuser"
+                                                        value="{{ __('admin/ban.bn_button_lift_ban') }}">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-user"></i>
+                                                        </span>
+                                                        <span class="text">{{ __('admin/ban.bn_button_lift_ban') }}</span>
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary btn-icon-split"
+                                                        onClick="UsersBan.reset();this.form.regexp.value = ''"
+                                                        value="{{ __('admin/ban.bn_button_reset') }}">
+                                                        <span class="text">{{ __('admin/ban.bn_button_reset') }}</span>
+                                                    </button>
+                                                </div>
                                                 <table width="100%">
                                                     <tr>
                                                         <td style="border:0px;">{{ __('admin/ban.bn_banned_list') }}
-                                                            ({{ __('admin/ban.bn_total_users') }}{banned_amount})</td>
+                                                            ({{ __('admin/ban.bn_total_users') }}{{ $banned_amount }})
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td style="border:0px;">
-                                                            <div align="center">
-                                                                <select name="unban_name" style="width:100%;" size="20">
-                                                                    {banned_list}
+                                                            <div class="text-center">
+                                                                <select name="unban_name" class="form-control" style="width:100%;" size="20">
+                                                                    {!! $banned_list !!}
                                                                 </select>
                                                                 <script type="text/javascript">
-                                                                                < !--
-                                                                            var UsersBan = new filterlist(document.userban.unban_name);
-                                                                                //-->
+                                                                    <!--
+                                                                    var UsersBan = new filterlist(document.userban.unban_name);
+                                                                    //-->
                                                                 </script>
                                                                 <br>
                                                                 <span class="small_font">
@@ -220,27 +265,42 @@
                                                                 </span>
                                                                 <br><br>
                                                                 <br>
-                                                                <input type="text" name="regexp"
-                                                                    onKeyUp="UsersBan.set(this.value)">
+                                                                <input type="text" class="form-control" name="regexp" onKeyUp="UsersBan.set(this.value)">
                                                                 <br>
-                                                                <input type="button"
-                                                                    onClick="UsersBan.set(this.form.regexp.value)"
-                                                                    value="{{ __('admin/ban.bn_button_filter') }}" class="btn btn-primary">
-                                                                <input type="button"
-                                                                    onClick="UsersBan.set(this.form.regexp.value)"
-                                                                    value="{{ __('admin/ban.bn_button_remove') }}" class="btn btn-primary">
-                                                                <br><br>
+                                                                <div class="text-center">
+                                                                    <button type="button" class="btn btn-primary btn-icon-split"
+                                                                        onClick="UsersBan.set(this.form.regexp.value)"
+                                                                        value="{{ __('admin/ban.bn_button_filter') }}">
+                                                                        <span class="icon text-white-50">
+                                                                            <i class="fas fa-filter"></i>
+                                                                        </span>
+                                                                        <span class="text">{{ __('admin/ban.bn_button_filter') }}</span>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-primary btn-icon-split"
+                                                                        onClick="UsersBan.set(this.form.regexp.value)"
+                                                                        value="{{ __('admin/ban.bn_button_remove') }}">
+                                                                        <span class="text">{{ __('admin/ban.bn_button_remove') }}</span>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td style="border:0px;">
-                                                            <div align="center">
-                                                                <input type="submit" value="{{ __('admin/ban.bn_button_lift_ban') }}"
-                                                                    name="liftbanuser" class="btn btn-primary">
-                                                                <input type="button"
+                                                            <div class="text-center">
+                                                                <button type="submit" class="btn btn-primary btn-icon-split"
+                                                                    name="liftbanuser"
+                                                                    value="{{ __('admin/ban.bn_button_lift_ban') }}">
+                                                                    <span class="icon text-white-50">
+                                                                        <i class="fas fa-user"></i>
+                                                                    </span>
+                                                                    <span class="text">{{ __('admin/ban.bn_button_lift_ban') }}</span>
+                                                                </button>
+                                                                <button type="button" class="btn btn-primary btn-icon-split"
                                                                     onClick="UsersBan.reset();this.form.regexp.value = ''"
-                                                                    value="{{ __('admin/ban.bn_button_reset') }}" class="btn btn-primary">
+                                                                    value="{{ __('admin/ban.bn_button_reset') }}">
+                                                                    <span class="text">{{ __('admin/ban.bn_button_reset') }}</span>
+                                                                </button>
                                                             </div>
                                                         </td>
                                                     </tr>
