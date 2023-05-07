@@ -15,8 +15,5 @@ return [
     'db_data_length' => 'Longitud de datos',
     'db_index_length' => 'Longitud de índice',
     'db_overhead' => 'Overhead',
-    'db_checkall' => 'Marcar todas',
-    'db_yes' => 'Si',
-    'db_no' => 'No',
     'db_table_result' => 'Resultado',
 ];

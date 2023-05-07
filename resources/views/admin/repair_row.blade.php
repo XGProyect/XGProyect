@@ -1,9 +1,9 @@
 <tr>
-    <td>{row}</td>
-    <td>{data}</td>
-    <td>{index}</td>
-    <td>{overhead}</td>
+    <td>{{ $row }}</td>
+    <td>{{ $data }}</td>
+    <td>{{ $index }}</td>
+    <td>{{ $overhead }}</td>
     <td style="text-align:right">
-        <input type="checkbox" class="form-check-input" name="table[]" value="{row}"> {{ __('admin/repair.db_yes') }}
+        <input type="checkbox" class="form-check-input" name="table[]" value="{{ $row }}">
     </td>
 </tr>

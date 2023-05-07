@@ -9,7 +9,6 @@ use Xgp\App\Models\Adm\Reset;
 
 class ResetController extends BaseController
 {
-    private string $alert = '';
     private Reset $resetModel;
 
     public function __invoke(): void

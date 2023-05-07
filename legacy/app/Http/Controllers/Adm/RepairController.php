@@ -29,8 +29,6 @@ class RepairController extends BaseController
 
     private function buildPage(): void
     {
-        $parse['alert'] = '';
-
         if (!$_POST) {
             $tables = $this->repairModel->getAllTables();
 
@@ -59,20 +57,20 @@ class RepairController extends BaseController
             if (isset($_POST['table']) && is_array($_POST['table'])) {
                 $result_rows = '';
 
-                foreach ($_POST['table'] as $key => $table) {
+                foreach ($_POST['table'] as $table) {
                     $parse['row'] = $table;
 
                     $this->repairModel->checkTable($table);
                     $parse['result'] = __('admin/repair.db_check_ok');
                     $result_rows .= Template::getInstance()->render('admin.repair_result', $parse);
 
-                    if (isset($_POST['Optimize']) && $_POST['Optimize'] == 'yes') {
+                    if (isset($_POST['optimize']) && $_POST['optimize'] === 'on') {
                         $this->repairModel->optimizeTable($table);
                         $parse['result'] = __('admin/repair.db_opt');
                         $result_rows .= Template::getInstance()->render('admin.repair_result', $parse);
                     }
 
-                    if (isset($_POST['Repair']) && $_POST['Repair'] == 'yes') {
+                    if (isset($_POST['repair']) && $_POST['repair'] === 'on') {
                         $this->repairModel->repairTable($table);
                         $parse['result'] = __('admin/repair.db_rep');
                         $result_rows .= Template::getInstance()->render('admin.repair_result', $parse);

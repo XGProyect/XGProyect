@@ -24,24 +24,33 @@
                             <div class="table-responsive">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tr>
-                                        {head}
+                                        {!! $head !!}
                                     </tr>
-                                    {tables}
-                                    {results}
+                                    {!! $tables !!}
+                                    {!! $results !!}
                                     <tr>
                                         <td colspan="5">
-                                            <div align="center" style="display: {display}">
-                                                <input type="radio" name="Optimize" value="yes" checked="on"> {{ __('admin/repair.db_yes') }}
-                                                <input type="radio" name="Optimize" value="no"> {{ __('admin/repair.db_no') }}
-                                                <strong>{{ __('admin/repair.db_optimize') }}</strong><br>
-                                                <input type="radio" name="Repair" value="yes" checked="on"> {{ __('admin/repair.db_yes') }}
-                                                <input type="radio" name="Repair" value="no"> {{ __('admin/repair.db_no') }}
-                                                <strong>{{ __('admin/repair.db_repair') }}</strong><br><br>
-                                                <input type="submit" class="btn btn-primary">
+                                            <div class="text-center" style="display: {{ $display }}">
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input" name="optimize" id="optimize" checked>
+                                                    <label class="custom-control-label" for="optimize">{{ __('admin/repair.db_optimize') }}</label>
+                                                </div>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input" name="repair" id="repair" checked>
+                                                    <label class="custom-control-label" for="repair">{{ __('admin/repair.db_repair') }}</label>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
                                 </table>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-clipboard-check"></i>
+                                        </span>
+                                        <span class="text">{{ __('admin/repair.db_check') }}</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -8,7 +8,7 @@
         <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{{ $errorType }}</strong>
         <br>
-        {{ $errorMessage }}
+        {!! $errorMessage !!}
     </div>
     @endif
 
@@ -98,8 +98,6 @@
                     <a href="https://github.com/jstar88/opbe" target="_blank">jstar - OPBE</a>
                     <br>
                     <a href="https://startbootstrap.com/themes/sb-admin-2/" target="_blank">Start Bootstrap | SB Admin 2</a>
-                    <br>
-                    <a href="https://github.com/mailhog/MailHog" target="_blank">MailHog</a>
                     <br><br>
                     <strong>{{ __('admin/home.hm_thanks_to') }}</strong>
                     <br>
