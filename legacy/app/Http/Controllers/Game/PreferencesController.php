@@ -238,9 +238,9 @@ class PreferencesController extends BaseController
             && isset($preferences['confirmation_user_password'])
             && $this->preferences->isNickNameChangeAllowed()) {
             if (password_verify($preferences['confirmation_user_password'], $this->user['user_password'])) {
-                $user_name_len = strlen(trim($preferences['new_user_name']));
+                $username_len = strlen(trim($preferences['new_user_name']));
 
-                if ($user_name_len > 3 && $user_name_len <= 20) {
+                if ($username_len > 3 && $username_len <= 20) {
                     if (!$this->preferencesModel->checkIfNicknameExists($preferences['new_user_name'])) {
                         $this->fields_to_update['user_name'] = $preferences['new_user_name'];
                         $this->fields_to_update['preference_nickname_change'] = time();

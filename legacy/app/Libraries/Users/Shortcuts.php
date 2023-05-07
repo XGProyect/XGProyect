@@ -2,13 +2,13 @@
 
 namespace Xgp\App\Libraries\Users;
 
-use Xgp\App\Helpers\StringsHelper;
 use Exception;
 use JsonException;
+use Xgp\App\Helpers\StringsHelper;
 
 class Shortcuts
 {
-    private array $_shortcuts = [];
+    private array $shortcuts = [];
 
     public function __construct($shortcuts)
     {
@@ -23,46 +23,23 @@ class Shortcuts
         }
     }
 
-    /**
-     * Set the shortcuts
-     *
-     * @param string $shortcuts Shortcuts
-     */
-    private function setShortcuts($shortcuts)
+    private function setShortcuts(string $shortcuts): void
     {
         try {
             if (!empty($shortcuts)) {
-                $this->_shortcuts = json_decode($shortcuts, true, 512, JSON_THROW_ON_ERROR);
+                $this->shortcuts = json_decode($shortcuts, true, 512, JSON_THROW_ON_ERROR);
             }
         } catch (JsonException $e) {
             die('JSON Error - ' . $e->getMessage() . ' on ' . __CLASS__ . ', line: ' . $e->getLine());
         }
     }
 
-    /**
-     * Get the shortcuts
-     *
-     * @return string
-     */
-    private function getShortcuts()
+    private function getShortcuts(): array
     {
-        return $this->_shortcuts;
+        return $this->shortcuts;
     }
 
-    /**
-     * Create a new shortcut
-     *
-     * @param string $name
-     * @param int $g
-     * @param int $s
-     * @param int $p
-     * @param int $pt
-     *
-     * @return array
-     *
-     * @throws Exception
-     */
-    public function addNew($name, $g, $s, $p, $pt)
+    public function addNew(string $name, int $g, int $s, int $p, int $pt): array
     {
         try {
             if (empty($name) or empty($g) or empty($s) or empty($p) or empty($pt)) {
@@ -71,7 +48,7 @@ class Shortcuts
 
             $filtered_name = StringsHelper::escapeString(strip_tags($name));
 
-            $this->_shortcuts[] = [
+            $this->shortcuts[] = [
                 'name' => $filtered_name,
                 'g' => $g,
                 's' => $s,
@@ -85,21 +62,7 @@ class Shortcuts
         }
     }
 
-    /**
-     * Edit shortcuts by ID
-     *
-     * @param int $shortcut_id
-     * @param string $name
-     * @param int $g
-     * @param int $s
-     * @param int $p
-     * @param int $pt
-     *
-     * @return array
-     *
-     * @throws Exception
-     */
-    public function editById(int $shortcut_id, string $name, int $g, int $s, int $p, int $pt)
+    public function editById(int $shortcut_id, string $name, int $g, int $s, int $p, int $pt): array
     {
         try {
             if (!isset($this->getShortcuts()[$this->validateShortcutId($shortcut_id)])) {
@@ -108,7 +71,7 @@ class Shortcuts
 
             $filtered_name = StringsHelper::escapeString(strip_tags($name));
 
-            $this->_shortcuts[$shortcut_id] = [
+            $this->shortcuts[$shortcut_id] = [
                 'name' => $filtered_name,
                 'g' => $g,
                 's' => $s,
@@ -122,71 +85,40 @@ class Shortcuts
         }
     }
 
-    /**
-     * Delete a shortcut by ID
-     *
-     * @param int $shortcut_id
-     *
-     * @return array
-     */
     public function deleteById(int $shortcut_id): array
     {
-        array_splice($this->_shortcuts, $this->validateShortcutId($shortcut_id), 1);
+        array_splice($this->shortcuts, $this->validateShortcutId($shortcut_id), 1);
 
         return $this->getShortcuts();
     }
 
-    /**
-     * Get all the shortcuts as an Array
-     *
-     * @return array
-     */
-    public function getAllAsArray()
+    public function getAllAsArray(): array
     {
-        return $this->_shortcuts;
+        return $this->shortcuts;
     }
 
-    /**
-     * Get all the shortcuts as a JSON
-     *
-     * @return string
-     */
-    public function getAllAsJsonString()
+    public function getAllAsJsonString(): string
     {
         try {
-            return json_encode($this->_shortcuts, JSON_THROW_ON_ERROR);
+            return json_encode($this->shortcuts, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
             die('JSON Error - ' . $e->getMessage() . ' on ' . __CLASS__ . ', line: ' . $e->getLine());
         }
     }
 
-    /**
-     * Get the shortcut by ID
-     *
-     * @param int $shortcut_id Shortcut ID
-     *
-     * @return array
-     */
-    public function getById($shortcut_id)
+    public function getById(int $shortcut_id): array
     {
-        return isset($this->_shortcuts[$shortcut_id]) ? $this->_shortcuts[$shortcut_id] : 0;
+        return isset($this->shortcuts[$shortcut_id]) ? $this->shortcuts[$shortcut_id] : 0;
     }
 
-    /**
-     * Validate the shortcut ID
-     *
-     * @param type $shortcut_id Shortcut ID
-     *
-     * @return int
-     */
-    private function validateShortcutId($shortcut_id)
+    private function validateShortcutId(int $shortcut_id): int
     {
         if ($shortcut_id < 0) {
             return 0;
         }
 
-        if ($shortcut_id > count($this->_shortcuts)) {
-            return count($this->_shortcuts) - 1;
+        if ($shortcut_id > count($this->shortcuts)) {
+            return count($this->shortcuts) - 1;
         }
 
         return $shortcut_id;

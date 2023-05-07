@@ -7,190 +7,103 @@ use Xgp\App\Helpers\StringsHelper;
 
 final class MessagesOptions
 {
-    /**
-     *
-     * @var type
-     */
-    private $_to;
+    private int $_to;
+    private int $_sender;
+    private int $_time;
+    private int $_type;
+    private string $_from;
+    private string $_subject;
+    private string $_message_text;
+    private int $_message_format;
 
-    /**
-     *
-     * @var type
-     */
-    private $_sender;
-
-    /**
-     *
-     * @var type
-     */
-    private $_time;
-
-    /**
-     *
-     * @var type
-     */
-    private $_type;
-
-    /**
-     *
-     * @var type
-     */
-    private $_from;
-
-    /**
-     *
-     * @var type
-     */
-    private $_subject;
-
-    /**
-     *
-     * @var type
-     */
-    private $_message_text;
-
-    /**
-     *
-     * @var type
-     */
-    private $_message_format;
-
-    /**
-     * @return mixed
-     */
-    public function getTo()
+    public function getTo(): int
     {
         return $this->_to;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSender()
+    public function getSender(): int
     {
-        return $this->_sender == '' ? 0 : $this->_sender;
+        return $this->_sender == 0 ? 0 : $this->_sender;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTime()
+    public function getTime(): int
     {
-        return $this->_time == '' ? time() : $this->_time;
+        return $this->_time == 0 ? time() : $this->_time;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getType()
+    public function getType(): int
     {
-        if ($this->_type == '' or !is_object($this->_type)) {
+        if ($this->_type == 0 or !is_object($this->_type)) {
             return MessagesEnumerator::GENERAL;
         }
 
         return $this->_type;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFrom()
+    public function getFrom(): string
     {
         return $this->_from;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->_subject;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMessageText()
+    public function getMessageText(): string
     {
         return $this->_message_text;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMessageFormat()
+    public function getMessageFormat(): int
     {
-        if ($this->_message_format == '') {
+        if ($this->_message_format == 0) {
             return MessagesFormat::SIMPLE;
         }
 
         return $this->_message_format;
     }
 
-    /**
-     * @param $to
-     */
-    public function setTo($to)
+    public function setTo(int $to)
     {
         $this->_to = $to;
     }
 
-    /**
-     * @param $sender
-     */
-    public function setSender($sender)
+    public function setSender(int $sender)
     {
         $this->_sender = $sender;
     }
 
-    /**
-     * @param $time
-     */
-    public function setTime($time)
+    public function setTime(int $time)
     {
         $this->_time = $time;
     }
 
-    /**
-     * @param $type
-     */
-    public function setType($type)
+    public function setType(int $type)
     {
         $this->_type = $type;
     }
 
-    /**
-     * @param $from
-     */
-    public function setFrom($from)
+    public function setFrom(string $from)
     {
         $this->_from = $from;
     }
 
-    /**
-     * @param $subject
-     */
-    public function setSubject($subject)
+    public function setSubject(string $subject)
     {
         $this->_subject = $subject;
     }
 
-    /**
-     * @param $message_text
-     */
-    public function setMessageText($message_text)
+    public function setMessageText(string $message_text)
     {
-        if ($this->_message_format == 1) {
+        if ($this->_message_format == MessagesFormat::HTML) {
             $this->_message_text = stripslashes($message_text);
         } else {
             $this->_message_text = StringsHelper::escapeString($message_text);
         }
     }
 
-    /**
-     * @param $message_format
-     */
-    public function setMessageFormat($message_format)
+    public function setMessageFormat(int $message_format)
     {
         $this->_message_format = $message_format;
     }

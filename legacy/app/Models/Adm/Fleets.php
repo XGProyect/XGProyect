@@ -32,12 +32,6 @@ class Fleets extends Model
         );
     }
 
-    /**
-     * Delete fleet by ID
-     *
-     * @param integer $fleet_id
-     * @return void
-     */
     public function restartFleetById(int $fleet): void
     {
         try {

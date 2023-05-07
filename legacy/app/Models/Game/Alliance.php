@@ -139,29 +139,16 @@ class Alliance extends Model
         );
     }
 
-    /**
-     *
-     * @param type $alliance_id
-     * @return type
-     */
-    public function getAllianceRequestsCount($alliance_id)
+    public function getAllianceRequestsCount(int $alliance_id): array
     {
         return $this->db->queryFetch(
             'SELECT COUNT(user_id) AS total_requests
                 FROM `' . USERS . "`
-                WHERE `user_ally_request` = '" . (int) $alliance_id . "'"
+                WHERE `user_ally_request` = '" . $alliance_id . "'"
         );
     }
 
-    /**
-     * Get alliance members
-     *
-     * @param type $alliance_id
-     * @param type $sort_by_field
-     * @param type $sort_by_order
-     * @return type
-     */
-    public function getAllianceMembers($alliance_id, $sort_by_field, $sort_by_order)
+    public function getAllianceMembers(int $alliance_id, $sort_by_field, $sort_by_order): array
     {
         return $this->db->queryFetchAll(
             'SELECT u.user_id,
@@ -175,8 +162,10 @@ class Alliance extends Model
                     s.user_statistic_total_points
             FROM `' . USERS . '` AS u
             INNER JOIN `' . USERS_STATISTICS . "`AS s ON u.user_id = s.user_statistic_user_id
-            WHERE u.user_ally_id='" . (int) $alliance_id . "'" . $this->returnSort($sort_by_field, $sort_by_order)
+            WHERE u.user_ally_id='" . $alliance_id . "'" . $this->returnSort($sort_by_field, $sort_by_order)
         );
+
+        return [];
     }
 
     /**
@@ -328,27 +317,12 @@ class Alliance extends Model
         );
     }
 
-    /**
-     * Remove user from alliance
-     *
-     * @param int $userId     User ID
-     * @param int $alliance_id Alliance ID
-     *
-     * @return void
-     */
-    public function removeUserFromAlliance($userId)
+    public function removeUserFromAlliance(int $userId): void
     {
         $this->addUserToAlliance($userId, 0);
     }
 
-    /**
-     * Add an user to the alliance
-     *
-     * @param int $alliance_id Alliance ID
-     *
-     * @return array
-     */
-    public function getAllianceRequests($alliance_id)
+    public function getAllianceRequests(int $alliance_id): array
     {
         return $this->db->queryFetchAll(
             'SELECT `user_id`,

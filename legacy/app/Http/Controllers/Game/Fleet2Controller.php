@@ -84,12 +84,7 @@ class Fleet2Controller extends BaseController
         );
     }
 
-    /**
-     * Build the fleet block
-     *
-     * @return type
-     */
-    private function buildFleetBlock()
+    private function buildFleetBlock(): array
     {
         $objects = $this->objects->getObjects();
         $price = $this->objects->getPrice();

@@ -10,10 +10,6 @@ class FormatLib
 {
     /**
      * Convert or format a time in seconds to its string representation. Ex.: weeks, days, hours, minutes, seconds
-     *
-     * @param int $input_seconds
-     *
-     * @return string
      */
     public static function prettyTime(float $input_seconds): string
     {

@@ -321,26 +321,12 @@ class DevelopmentsLib
         return ($current_user['research_current_research'] != 0);
     }
 
-    /**
-     * isShipyardWorking
-     *
-     * @param array $current_planet Current planet
-     *
-     * @return boolean
-     */
-    public static function isShipyardWorking($current_planet)
+    public static function isShipyardWorking(array $current_planet): bool
     {
         return ($current_planet['planet_b_hangar'] != 0);
     }
 
-    /**
-     * Check if there are any fields available
-     *
-     * @param type $current_planet
-     *
-     * @return boolean
-     */
-    public static function areFieldsAvailable($current_planet)
+    public static function areFieldsAvailable(array $current_planet): bool
     {
         return ($current_planet['planet_field_current'] < self::maxFields($current_planet));
     }

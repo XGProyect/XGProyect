@@ -9,25 +9,19 @@ use Xgp\App\Core\Model;
 
 class Ban extends Model
 {
-    /**
-     * Unban user by username
-     *
-     * @param string $username
-     * @return void
-     */
-    public function unbanUser(string $user_name): void
+    public function unbanUser(string $username): void
     {
-        $clean_user_name = $this->db->escapeValue($user_name);
+        $clean_username = $this->db->escapeValue($username);
 
         $this->db->query(
             'DELETE FROM `' . BANNED . "`
-            WHERE `banned_who` = '" . $clean_user_name . "'"
+            WHERE `banned_who` = '" . $clean_username . "'"
         );
 
         $this->db->query(
             'UPDATE `' . USERS . "` SET
                 `user_banned` = '0'
-            WHERE `user_name` = '" . $clean_user_name . "'
+            WHERE `user_name` = '" . $clean_username . "'
             LIMIT 1"
         );
     }

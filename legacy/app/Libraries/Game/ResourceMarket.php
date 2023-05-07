@@ -81,15 +81,6 @@ class ResourceMarket
         );
     }
 
-    /**
-     * Get the price to refill the storage
-     *
-     * @param integer $max_storage
-     * @param integer $base_dm
-     * @param integer $percentage
-     * @param float $current_resources
-     * @return float
-     */
     public function calculateRefillStoragePrice(string $resource, int $percentage, float $current_resources = 0): float
     {
         $max_storage = Production::maxStorable($this->buildings->{'getBuilding' . ucfirst($resource) . 'Store'}());
@@ -98,42 +89,21 @@ class ResourceMarket
         return floor((($max_storage - $current_resources) * $percentage / $max_storage) * $base_price / 10);
     }
 
-    /**
-     * Check if the metal storage is full, returns true if full
-     *
-     * @return boolean
-     */
     public function isMetalStorageFull(): bool
     {
         return (Production::maxStorable($this->buildings->getBuildingMetalStore()) <= $this->planet->getPlanetAmountOfMetal());
     }
 
-    /**
-     * Check if the crystal storage is full, returns true if full
-     *
-     * @return boolean
-     */
     public function isCrystalStorageFull(): bool
     {
         return (Production::maxStorable($this->buildings->getBuildingCrystalStore()) <= $this->planet->getPlanetAmountOfCrystal());
     }
 
-    /**
-     * Check if the deuterium storage is full, returns true if full
-     *
-     * @return boolean
-     */
     public function isDeuteriumStorageFull(): bool
     {
         return (Production::maxStorable($this->buildings->getBuildingDeuteriumStore()) <= $this->planet->getPlanetAmountOfDeuterium());
     }
 
-    /**
-     * Get the amount of resources that we will refill based on the provided percentage
-     *
-     * @param int $percentage
-     * @return float
-     */
     public function getProjectedResouces(string $resource, int $percentage): float
     {
         $amount_to_fill = Production::maxStorable(
@@ -147,58 +117,26 @@ class ResourceMarket
         return $amount_to_fill;
     }
 
-    /**
-     * Check if the metal storage is fillable up to the provided percentage, returns true if it is
-     *
-     * @param integer $percentage
-     * @return boolean
-     */
     public function isMetalStorageFillable(int $percentage): bool
     {
         return $this->isStorageFillable('metal', $percentage);
     }
 
-    /**
-     * Check if the crystal storage is fillable up to the provided percentage, returns true if it is
-     *
-     * @param integer $percentage
-     * @return boolean
-     */
     public function isCrystalStorageFillable(int $percentage): bool
     {
         return $this->isStorageFillable('crystal', $percentage);
     }
 
-    /**
-     * Check if the deuterium storage is fillable up to the provided percentage, returns true if it is
-     *
-     * @param integer $percentage
-     * @return boolean
-     */
     public function isDeuteriumStorageFillable(int $percentage): bool
     {
         return $this->isStorageFillable('deuterium', $percentage);
     }
 
-    /**
-     * Check if the user can pay for the storage refill
-     *
-     * @param string $resource
-     * @param integer $percentage
-     * @return boolean
-     */
     public function isRefillPayable(string $resource, int $percentage): bool
     {
         return ($this->{'getPriceToFill' . $percentage . 'Percent'}($resource) <= $this->premium->getPremiumDarkMatter());
     }
 
-    /**
-     * Check if the storage is fillable up to the provided percentage, returns true if it is
-     *
-     * @param string $resource
-     * @param integer $percentage
-     * @return boolean
-     */
     private function isStorageFillable(string $resource, int $percentage): bool
     {
         if ($this->{'is' . ucfirst($resource) . 'StorageFull'}()) {
@@ -208,50 +146,22 @@ class ResourceMarket
         return (Production::maxStorable($this->buildings->{'getBuilding' . ucfirst($resource) . 'Store'}()) >= $this->getProjectedResouces($resource, $percentage));
     }
 
-    /**
-     * Set up the user
-     *
-     * @param array $user
-     *
-     * @return void
-     */
-    private function setUpUser($user): void
+    private function setUpUser(array $user): void
     {
         $this->user = $this->createNewUserEntity($user);
     }
 
-    /**
-     * Set up the user premium data
-     *
-     * @param array $user
-     *
-     * @return void
-     */
-    private function setUpPremium($user): void
+    private function setUpPremium(array $user): void
     {
         $this->premium = $this->createNewPremiumEntity($user);
     }
 
-    /**
-     * Set up the planet
-     *
-     * @param array $planet
-     *
-     * @return void
-     */
-    private function setUpPlanet($planet): void
+    private function setUpPlanet(array $planet): void
     {
         $this->planet = $this->createNewPlanetEntity($planet);
     }
 
-    /**
-     * Set up the plaanet buildings
-     *
-     * @param array $planet
-     *
-     * @return void
-     */
-    private function setUpBuildings($planet): void
+    private function setUpBuildings(array $planet): void
     {
         $this->buildings = $this->createNewBuildingsEntity($planet);
     }
@@ -261,38 +171,17 @@ class ResourceMarket
         return new UserEntity($user);
     }
 
-    /**
-     * Create a new instance of PremiumEntity
-     *
-     * @param array $user
-     *
-     * @return \PremiumEntity
-     */
-    private function createNewPremiumEntity(array $user)
+    private function createNewPremiumEntity(array $user): PremiumEntity
     {
         return new PremiumEntity($user);
     }
 
-    /**
-     * Create a new instance of PlanetEntity
-     *
-     * @param array $planet
-     *
-     * @return \PlanetEntity
-     */
-    private function createNewPlanetEntity(array $planet)
+    private function createNewPlanetEntity(array $planet): PlanetEntity
     {
         return new PlanetEntity($planet);
     }
 
-    /**
-     * Create a new instance of BuildingsEntity
-     *
-     * @param array $planet
-     *
-     * @return \BuildingsEntity
-     */
-    private function createNewBuildingsEntity(array $planet)
+    private function createNewBuildingsEntity(array $planet): BuildingsEntity
     {
         return new BuildingsEntity($planet);
     }

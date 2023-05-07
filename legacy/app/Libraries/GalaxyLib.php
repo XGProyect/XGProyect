@@ -383,11 +383,11 @@ class GalaxyLib
             }
         }
 
-        $user_name = '';
+        $username = '';
         $user_status = [];
         foreach ($statuses as $status => $details) {
-            if (empty($user_name)) {
-                $user_name = FormatLib::spanClassElement($this->row_data['user_name'], $details['class']);
+            if (empty($username)) {
+                $username = FormatLib::spanClassElement($this->row_data['user_name'], $details['class']);
             }
 
             $user_status[] = FormatLib::spanClassElement($details['shortcut'], $details['class']);
@@ -396,7 +396,7 @@ class GalaxyLib
         if (count($user_status) > 0) {
             $formated_username = StringsHelper::parseReplacements(
                 '%s (%s)',
-                [$user_name, join(' ', $user_status)]
+                [$username, join(' ', $user_status)]
             );
         }
 

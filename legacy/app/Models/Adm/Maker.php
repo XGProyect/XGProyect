@@ -95,12 +95,6 @@ class Maker extends Model
         ) ?? [];
     }
 
-    /**
-     * Check if the planet exists
-     *
-     * @param string $email
-     * @return array
-     */
     public function checkPlanet(int $galaxy, int $system, int $planet): array
     {
         return $this->db->queryFetch(
@@ -116,18 +110,6 @@ class Maker extends Model
         ) ?? [];
     }
 
-    /**
-     * Create new user and set their new planet
-     *
-     * @param string $name
-     * @param string $email
-     * @param integer $auth
-     * @param string $pass
-     * @param integer $galaxy
-     * @param integer $system
-     * @param integer $planet
-     * @return void
-     */
     public function createNewUser(string $name, string $email, int $auth, string $pass, int $galaxy, int $system, int $planet): void
     {
         try {
@@ -262,24 +244,13 @@ class Maker extends Model
         ) ?? [];
     }
 
-    /**
-     * Create new planet with the provided details
-     *
-     * @param integer $galaxy
-     * @param integer $system
-     * @param integer $planet
-     * @param integer $userId
-     * @param integer $field_max
-     * @param integer $name
-     * @return void
-     */
     public function createNewPlanet(int $galaxy, int $system, int $planet, int $userId, int $field_max, string $name): void
     {
         try {
             $this->db->beginTransaction();
 
             $creator = new PlanetLib();
-            $creator->setNewPlanet($galaxy, $system, $planet, $userId, '', '', false);
+            $creator->setNewPlanet($galaxy, $system, $planet, $userId, '', false);
 
             $this->db->query(
                 'UPDATE `' . PLANETS . "` SET
@@ -297,10 +268,6 @@ class Maker extends Model
         }
     }
 
-    /**
-     * @param int $planet_id
-     * @return mixed
-     */
     public function checkMoon(int $planet_id): array
     {
         return $this->db->queryFetch(

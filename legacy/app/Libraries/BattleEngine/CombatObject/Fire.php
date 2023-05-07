@@ -239,7 +239,7 @@ class Fire
     public function getShotsFiredByAttackerToAll(ShipType $shipType_A, $real = false)
     {
         $num = new Number($this->getAttackerTotalShots() * $shipType_A->getCount());
-        $denum = new Number($this->attackerShipType->getTotalCount());
+        $denum = new Number($this->attackerShipType->getCount());
         return Math::divide($num, $denum, $real);
     }
 

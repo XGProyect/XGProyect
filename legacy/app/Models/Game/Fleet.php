@@ -493,14 +493,6 @@ class Fleet extends Model
         );
     }
 
-    /**
-     * Remove an ACS Member
-     *
-     * @param int $member
-     * @param int $group_id
-     *
-     * @return void
-     */
     public function removeAcsMember(int $member, int $group_id): void
     {
         $this->db->query(
@@ -510,20 +502,13 @@ class Fleet extends Model
         );
     }
 
-    /**
-     * Get the user name by ID
-     *
-     * @param string $user_name User Name
-     *
-     * @return int
-     */
-    public function getUserIdByName(string $user_name, int $group_id): int
+    public function getUserIdByName(string $username, int $group_id): int
     {
         return $this->db->queryFetch(
             'SELECT
                 u.`user_id`
             FROM `' . USERS . "` u
-            WHERE u.`user_name` = '" . $user_name . "'
+            WHERE u.`user_name` = '" . $username . "'
             AND u.`user_id` NOT IN (
                 SELECT
                     acs.`acs_user_id`

@@ -69,7 +69,7 @@ class Attack extends Missions
             }
 
             $targetUser = $this->missionsModel->getAllUserDataByUserId($target_planet['planet_user_id']);
-            $target_userID = $targetUser['user_id'];
+            $targetUserId = $targetUser['user_id'];
 
             UpdatesLibrary::updatePlanetResources($targetUser, $target_planet, time());
 
@@ -118,8 +118,8 @@ class Attack extends Missions
                 }
             }
 
-            if (!$defenders->existPlayer($target_userID)) {
-                $player = new Player($target_userID, [$homeFleet]);
+            if (!$defenders->existPlayer($targetUserId)) {
+                $player = new Player($targetUserId, [$homeFleet]);
 
                 $player->setTech(
                     $targetUser['research_weapons_technology'],
@@ -137,7 +137,7 @@ class Attack extends Missions
 
                 $defenders->addPlayer($player);
             } else {
-                $defenders->getPlayer($target_userID)->addDefense($homeFleet);
+                $defenders->getPlayer($targetUserId)->addDefense($homeFleet);
             }
             //-------------------------------------------------------------------------
             //------------------------------ battle -----------------------------------
@@ -172,7 +172,7 @@ class Attack extends Missions
 
             $this->updatePoints($report, $afterBattleAttackers, $afterBattleDefenders);
             $this->updateDebris($fleet_row, $report);
-            $this->updateMoon($fleet_row, $report, $target_userID);
+            $this->updateMoon($fleet_row, $report, $targetUserId);
             $this->createNewReportAndSendIt($fleet_row, $report, $target_planet['planet_name']);
         } elseif ($fleet_row['fleet_end_time'] <= time()) {
             $message = sprintf(
@@ -226,12 +226,12 @@ class Attack extends Missions
     private function updatePoints(BattleReport $report, PlayerGroup $afterBattleAttackers, PlayerGroup $afterBattleDefenders): void
     {
         $attackersBefore = $report->getRound('START')->getAfterBattleAttackers();
-        $attackersLostShipsAndDefence = $report->getPlayersLostShips($attackersBefore, $afterBattleAttackers, true);
+        $attackersLostShipsAndDefence = $report->getPlayersLostShips($attackersBefore, $afterBattleAttackers);
 
         $this->updateLostShipsAndDefencePoints($attackersLostShipsAndDefence);
 
         $defendersBefore = $report->getRound('START')->getAfterBattleDefenders();
-        $defendersLostShipsAndDefence = $report->getPlayersLostShips($defendersBefore, $afterBattleDefenders, true);
+        $defendersLostShipsAndDefence = $report->getPlayersLostShips($defendersBefore, $afterBattleDefenders);
 
         $this->updateLostShipsAndDefencePoints($defendersLostShipsAndDefence);
     }
@@ -273,14 +273,7 @@ class Attack extends Missions
         }
     }
 
-    /**
-     * getPlayerGroup
-     *
-     * @param array  $fleet_row Fleet row
-     *
-     * @return \PlayerGroup
-     */
-    private function getPlayerGroup($fleet_row)
+    private function getPlayerGroup(array $fleet_row): PlayerGroup
     {
         $playerGroup = new PlayerGroup();
         $serializedTypes = FleetsLib::getFleetShipsArray($fleet_row['fleet_array']);
@@ -381,16 +374,7 @@ class Attack extends Missions
         return $playerGroup;
     }
 
-    /**
-     * updateMoon
-     *
-     * @param array  $fleet_row     Fleet Row
-     * @param Report $report        Report
-     * @param int    $target_userId Target User ID
-     *
-     * @return void
-     */
-    private function updateMoon($fleet_row, $report, $target_userId)
+    private function updateMoon(array $fleet_row, BattleReport $report, int $targetUserId): void
     {
         $moon = $report->tryMoon();
 
@@ -419,7 +403,7 @@ class Attack extends Missions
 
         // create the moon
         $_creator = new PlanetLib();
-        $_creator->setNewMoon($galaxy, $system, $planet, $target_userId);
+        $_creator->setNewMoon($galaxy, $system, $planet, $targetUserId);
     }
 
     /**

@@ -17,12 +17,7 @@ class AcsFleets
         }
     }
 
-    /**
-     * Get all the acs
-     *
-     * @return array
-     */
-    public function getAcs()
+    public function getAcs(): array
     {
         $list_of_acs = [];
 
@@ -35,24 +30,12 @@ class AcsFleets
         return $list_of_acs;
     }
 
-    /**
-     * Get the first acs result
-     *
-     * @return array
-     */
-    public function getFirstAcs()
+    public function getFirstAcs(): AcsFleetEntity
     {
         return $this->getAcs()[0];
     }
 
-    /**
-     * Set up the list of acs
-     *
-     * @param array $acsFleets Acs Fleets
-     *
-     * @return void
-     */
-    private function setUp($acsFleets)
+    private function setUp(array $acsFleets): void
     {
         foreach ($acsFleets as $acs) {
             $data = $this->createNewAcsFleetEntity($acs);
@@ -66,23 +49,12 @@ class AcsFleets
         $this->_current_user_id = $userId;
     }
 
-    /**
-     *
-     * @return int
-     */
-    private function getUserId()
+    private function getUserId(): int
     {
         return $this->_current_user_id;
     }
 
-    /**
-     * Create a new instance of AcsFleetEntity
-     *
-     * @param array $fleet Fleet
-     *
-     * @return \AcsFleetEntity
-     */
-    private function createNewAcsFleetEntity(array $fleet)
+    private function createNewAcsFleetEntity(array $fleet): AcsFleetEntity
     {
         return new AcsFleetEntity($fleet);
     }

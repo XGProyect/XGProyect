@@ -162,23 +162,12 @@ class Report
         $this->_current_user_id = $userId;
     }
 
-    /**
-     *
-     * @return int
-     */
-    private function getUserId()
+    private function getUserId(): int
     {
         return $this->_current_user_id;
     }
 
-    /**
-     * Create a new instance of ReportEntity
-     *
-     * @param array $report Report
-     *
-     * @return \ReportEntity
-     */
-    private function createNewReportEntity(array $report)
+    private function createNewReportEntity(array $report): ReportEntity
     {
         return new ReportEntity($report);
     }

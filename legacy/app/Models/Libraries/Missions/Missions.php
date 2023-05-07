@@ -344,14 +344,7 @@ class Missions extends Model
         return [];
     }
 
-    /**
-     * Get friendly planet data
-     *
-     * @param array $data Data to update
-     *
-     * @return void
-     */
-    public function getFriendlyPlanetData(array $data = [])
+    public function getFriendlyPlanetData(array $data = []): array
     {
         if (is_array($data)) {
             return $this->db->queryFetch(
@@ -377,6 +370,8 @@ class Missions extends Model
                     pc2.`planet_type` = '" . $data['coords']['end']['type'] . "'"
             );
         }
+
+        return [];
     }
 
     public function updateLostShipsAndDefensePoints(int $playerId, array $lost): void
@@ -680,20 +675,13 @@ class Missions extends Model
             );
         }
     }
+
     /**
      *
      * MISSILE
      *
      */
-
-    /**
-     * Get all missiles attacker data by coords
-     *
-     * @param array $data Coords
-     *
-     * @return void
-     */
-    public function getMissileAttackerDataByCoords(array $data = [])
+    public function getMissileAttackerDataByCoords(array $data = []): array
     {
         if (is_array($data)) {
             return $this->db->queryFetch(
@@ -706,16 +694,11 @@ class Missions extends Model
                     `planet_type` = ' . $data['coords']['type'] . ';'
             );
         }
+
+        return [];
     }
 
-    /**
-     * Get all missiles target data by coords
-     *
-     * @param array $data Coords
-     *
-     * @return void
-     */
-    public function getMissileTargetDataByCoords(array $data = [])
+    public function getMissileTargetDataByCoords(array $data = []): array
     {
         if (is_array($data)) {
             return $this->db->queryFetch(
@@ -729,16 +712,11 @@ class Missions extends Model
                     `planet_type` = ' . $data['coords']['type'] . ';'
             );
         }
+
+        return [];
     }
 
-    /**
-     * Update planet target defenses based on the attack result
-     *
-     * @param array $data Data to update
-     *
-     * @return void
-     */
-    public function updatePlanetDefenses(array $data = [])
+    public function updatePlanetDefenses(array $data = []): void
     {
         if (is_array($data)) {
             $this->db->query(
@@ -749,20 +727,13 @@ class Missions extends Model
             );
         }
     }
+
     /**
      *
      * RECYCLE
      *
      */
-
-    /**
-     * Update planet debris field and make the fleet return
-     *
-     * @param array $data Data to update
-     *
-     * @return void
-     */
-    public function updatePlanetDebrisFieldAndFleet(array $data = [])
+    public function updatePlanetDebrisFieldAndFleet(array $data = []): void
     {
         if (is_array($data)) {
             $this->db->query(
@@ -781,14 +752,7 @@ class Missions extends Model
         }
     }
 
-    /**
-     * Update planet debris field and make the fleet return
-     *
-     * @param array $data Data to update
-     *
-     * @return void
-     */
-    public function getPlanetDebris(array $data = [])
+    public function getPlanetDebris(array $data = []): array
     {
         if (is_array($data)) {
             return $this->db->queryFetch(
@@ -807,20 +771,13 @@ class Missions extends Model
 
         return [];
     }
+
     /**
      *
      * SPY
      *
      */
-
-    /**
-     * Get user data that's going to start the spy process
-     *
-     * @param array $data Data to update
-     *
-     * @return array
-     */
-    public function getSpyUserDataByCords(array $data = [])
+    public function getSpyUserDataByCords(array $data = []): array
     {
         if (is_array($data)) {
             return $this->db->queryFetch(
@@ -846,14 +803,7 @@ class Missions extends Model
         return [];
     }
 
-    /**
-     * Get user data that's going to be inquired (spied)
-     *
-     * @param array $data Data to update
-     *
-     * @return array
-     */
-    public function getInquiredUserDataByCords(array $data = [])
+    public function getInquiredUserDataByCords(array $data = []): array
     {
         if (is_array($data)) {
             return $this->db->queryFetch(

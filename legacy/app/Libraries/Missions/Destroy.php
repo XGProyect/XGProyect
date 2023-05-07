@@ -88,7 +88,7 @@ class Destroy extends Missions
             }
 
             $targetUser = $this->missionsModel->getAllUserDataByUserId($target_planet['planet_user_id']);
-            $target_userID = $targetUser['user_id'];
+            $targetUserId = $targetUser['user_id'];
 
             UpdatesLibrary::updatePlanetResources($targetUser, $target_planet, time());
 
@@ -137,8 +137,8 @@ class Destroy extends Missions
                 }
             }
 
-            if (!$defenders->existPlayer($target_userID)) {
-                $player = new Player($target_userID, [$homeFleet]);
+            if (!$defenders->existPlayer($targetUserId)) {
+                $player = new Player($targetUserId, [$homeFleet]);
 
                 $player->setTech(
                     $targetUser['research_weapons_technology'],
@@ -156,7 +156,7 @@ class Destroy extends Missions
 
                 $defenders->addPlayer($player);
             } else {
-                $defenders->getPlayer($target_userID)->addDefense($homeFleet);
+                $defenders->getPlayer($targetUserId)->addDefense($homeFleet);
             }
             //-------------------------------------------------------------------------
             //------------------------------ battle -----------------------------------
@@ -267,12 +267,12 @@ class Destroy extends Missions
     private function updatePoints(BattleReport $report, PlayerGroup $afterBattleAttackers, PlayerGroup $afterBattleDefenders): void
     {
         $attackersBefore = $report->getRound('START')->getAfterBattleAttackers();
-        $attackersLostShipsAndDefence = $report->getPlayersLostShips($attackersBefore, $afterBattleAttackers, true);
+        $attackersLostShipsAndDefence = $report->getPlayersLostShips($attackersBefore, $afterBattleAttackers);
 
         $this->updateLostShipsAndDefencePoints($attackersLostShipsAndDefence);
 
         $defendersBefore = $report->getRound('START')->getAfterBattleDefenders();
-        $defendersLostShipsAndDefence = $report->getPlayersLostShips($defendersBefore, $afterBattleDefenders, true);
+        $defendersLostShipsAndDefence = $report->getPlayersLostShips($defendersBefore, $afterBattleDefenders);
 
         $this->updateLostShipsAndDefencePoints($defendersLostShipsAndDefence);
     }
@@ -314,14 +314,7 @@ class Destroy extends Missions
         }
     }
 
-    /**
-     * getPlayerGroup
-     *
-     * @param array  $fleet_row Fleet row
-     *
-     * @return \PlayerGroup
-     */
-    private function getPlayerGroup($fleet_row)
+    private function getPlayerGroup(array $fleet_row): PlayerGroup
     {
         $playerGroup = new PlayerGroup();
         $serializedTypes = FleetsLib::getFleetShipsArray($fleet_row['fleet_array']);
@@ -806,15 +799,7 @@ class Destroy extends Missions
         );
     }
 
-    /**
-     * Extend the base report with destruction data
-     *
-     * @param array  $fleet_row
-     * @param type   $report
-     *
-     * @return string
-     */
-    private function buildDestroyReport(array $fleet_row, $report): string
+    private function buildDestroyReport(array $fleet_row, BattleReport $report): string
     {
         $destruction_info = sprintf(
             __('game/destroy.des_report_start'),
@@ -845,13 +830,6 @@ class Destroy extends Missions
         return join('<br>', $raport);
     }
 
-    /**
-     * Set hyperspace technology level
-     *
-     * @param integer $userId
-     * @param integer $level
-     * @return void
-     */
     private function setHyperspaceTechLevel(int $userId, int $level): void
     {
         $this->hyperspace_technology[$userId] = $level;

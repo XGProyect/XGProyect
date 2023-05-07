@@ -84,7 +84,7 @@ class Topnav extends Component
             ['planet_destroyed', '=', 0],
         ]);
 
-        switch ($user->preference_planet_sort) {
+        switch ($user->preferences->preference_planet_sort) {
             case 0: // emergence
             default:
                 $orderBy = ['planet_id'];
@@ -104,7 +104,7 @@ class Topnav extends Component
         }
 
         foreach ($orderBy as $order) {
-            if ($user->preference_planet_sort_sequence === 1) {
+            if ($user->preferences->preference_planet_sort_sequence === 1) {
                 $allUserPlanets->orderByDesc($order);
             } else {
                 $allUserPlanets->orderBy($order);

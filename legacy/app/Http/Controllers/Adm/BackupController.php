@@ -174,12 +174,6 @@ class BackupController extends BaseController
         ];
     }
 
-    /**
-     * Format the file name to get the current date as name
-     *
-     * @param string $file_name
-     * @return string
-     */
     private function formatFileName(string $file_name): string
     {
         $matches = [];

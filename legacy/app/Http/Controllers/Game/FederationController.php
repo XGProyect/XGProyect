@@ -177,29 +177,22 @@ class FederationController extends BaseController
         }
     }
 
-    /**
-     * Search for an user
-     *
-     * @param string $user_name
-     *
-     * @return void
-     */
-    private function searchUser(string $user_name): void
+    private function searchUser(string $username): void
     {
-        if (!empty($user_name)) {
+        if (!empty($username)) {
             $fleet_id = filter_input(INPUT_GET, 'fleet', FILTER_VALIDATE_INT);
 
-            $userId = $this->fleetModel->getUserIdByName($user_name, $fleet_id);
+            $userId = $this->fleetModel->getUserIdByName($username, $fleet_id);
             if ($userId > 0 && $userId != $this->user['user_id']) {
                 $this->addAcsMember($userId);
 
                 $this->_message = FormatLib::customColor(
-                    __('game/fleet.fl_player') . ' ' . $user_name . ' ' . __('game/fleet.fl_add_to_attack'),
+                    __('game/fleet.fl_player') . ' ' . $username . ' ' . __('game/fleet.fl_add_to_attack'),
                     'lime'
                 );
             } else {
                 $this->_message = FormatLib::colorRed(
-                    __('game/fleet.fl_player') . ' ' . $user_name . ' ' . __('game/fleet.fl_dont_exist')
+                    __('game/fleet.fl_player') . ' ' . $username . ' ' . __('game/fleet.fl_dont_exist')
                 );
             }
         }

@@ -125,21 +125,7 @@ abstract class Functions
         }
     }
 
-    /**
-     * sendMessage
-     *
-     * @param int    $to        To
-     * @param int    $sender    Sender
-     * @param int    $time      Time
-     * @param int    $type      Type
-     * @param string $from      From
-     * @param string $subject   Subject
-     * @param string $message   Message
-     * @param bool   $allowHtml Allow HTML
-     *
-     * @return void
-     */
-    public static function sendMessage($to, $sender, $time = '', $type = '', $from = '', $subject = '', $message = '', $allowHtml = false)
+    public static function sendMessage(int $to, int $sender, int $time = 0, int $type = 0, string $from = '', string $subject = '', string $message = '', bool $allowHtml = false): void
     {
         $options = new MessagesOptions();
         $options->setTo($to);

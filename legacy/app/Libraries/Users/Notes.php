@@ -16,11 +16,6 @@ class Notes
         }
     }
 
-    /**
-     * Get all the notes
-     *
-     * @return array
-     */
     public function getNotes(): array
     {
         $list_of_notes = [];
@@ -34,14 +29,7 @@ class Notes
         return $list_of_notes;
     }
 
-    /**
-     * Get note by ID
-     *
-     * @param int $note_id
-     *
-     * @return array
-     */
-    public function getNoteById(int $note_id)
+    public function getNoteById(int $note_id): NotesEntity
     {
         if ($note_id == $this->getNotes()[0]->getNoteId()) {
             return $this->getNotes()[0];
@@ -50,14 +38,7 @@ class Notes
         return null;
     }
 
-    /**
-     * Set up the list of notes
-     *
-     * @param array $notes Notes
-     *
-     * @return void
-     */
-    private function setUp($notes): void
+    private function setUp(array $notes): void
     {
         foreach ($notes as $note) {
             $this->notes[] = $this->createNewNotesEntity($note);
@@ -66,31 +47,16 @@ class Notes
         }
     }
 
-    /**
-     * Count the amount of notes
-     *
-     * @return boolean
-     */
     public function hasNotes(): bool
     {
         return ($this->getNotesCount() > 0);
     }
 
-    /**
-     * Set the notes count
-     *
-     * @return void
-     */
     private function setNotesCount(): void
     {
         ++$this->notes_count;
     }
 
-    /**
-     * Return the notes count
-     *
-     * @return int
-     */
     public function getNotesCount(): int
     {
         return $this->notes_count;
