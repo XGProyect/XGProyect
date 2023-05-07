@@ -66,7 +66,7 @@ class AdministrationLib
         }
 
         Template::getInstance()->view(
-            'admin.save_message_view',
+            'admin.save_message',
             $parse
         );
     }

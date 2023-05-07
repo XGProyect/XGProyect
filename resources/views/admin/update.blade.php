@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="container-fluid">
-    <x-alert/>
+    <x-alert :dismissible=false />
+    @if ($continue)
     <form name="update_form" method="post" action="">
         <input type="hidden" name="send" value="send">
         <!-- Page Heading -->
@@ -15,7 +16,7 @@
                 <span class="text">{{ __('admin/update.up_go') }}</span>
             </button>
         </div>
-        <p class="mb-4">{{ __('admin/update.up_sub_title') }}</p>
+        <p class="mb-4">{!! $up_sub_title !!}</p>
 
         <div class="row">
             <div class="col-lg-12">
@@ -34,10 +35,9 @@
                                         <tr>
                                             <td>
                                                 <span>
-                                                    <input class="form-check-input" type="checkbox" name="demo_mode"
-                                                        checked>
+                                                    <input class="form-check-input" type="checkbox" name="demo_mode" checked>
                                                     <label>{{ __('admin/update.up_test_mode') }}</label>
-                                                    <p><em>{{ __('admin/update.up_test_mode_notice') }}</em></p>
+                                                    <p><em>{!! __('admin/update.up_test_mode_notice') !!}</em></p>
                                                 </span>
                                             </td>
                                         </tr>
@@ -50,5 +50,6 @@
             </div>
         </div>
     </form>
+    @endif
 </div>
 @endsection

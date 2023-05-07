@@ -33,16 +33,16 @@ class UpdateController extends BaseController
     private function buildPage(): void
     {
         $continue = true;
+        $alerts = '';
 
         $this->system_version = SYSTEM_VERSION;
         $this->db_version = Functions::readConfig('version');
 
         if ($this->system_version == $this->db_version) {
-            Administration::noAccessMessage(__('admin/update.up_no_update_required'));
-            exit;
+            session()->flash('danger', __('admin/update.up_no_update_required'));
+            $continue = false;
         }
 
-        $parse['alert'] = '';
         $parse['up_sub_title'] = sprintf(__('admin/update.up_sub_title'), $this->db_version, $this->system_version);
 
         if ($_POST && isset($_POST['send'])) {
@@ -56,7 +56,7 @@ class UpdateController extends BaseController
             if ($continue) {
                 $this->startUpdate();
 
-                session()->flash('ok', __('admin/update.up_success'));
+                session()->flash('success', __('admin/update.up_success'));
 
                 if ($this->demo) {
                     $parse['result'] = print_r($this->output, true);
@@ -66,13 +66,15 @@ class UpdateController extends BaseController
                         $parse
                     );
                 } else {
-                    Administration::noAccessMessage(__('admin/update.up_success'));
-                    exit;
+                    session()->flash('danger', __('admin/update.up_success'));
+                    $continue = false;
                 }
             } else {
                 session()->flash('warning', $alerts);
             }
         }
+
+        $parse['continue'] = $continue;
 
         Template::getInstance()->view(
             'admin.update',
@@ -124,14 +126,7 @@ class UpdateController extends BaseController
         }
     }
 
-    /**
-     * executeFile
-     *
-     * @param string $version Version number
-     *
-     * @return void
-     */
-    private function executeFile($version)
+    private function executeFile(string $version): void
     {
         // Define some stuff
         $update_path = UPDATE_PATH . 'update_' . $version . '.php';

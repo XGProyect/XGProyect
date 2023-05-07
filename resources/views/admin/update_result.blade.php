@@ -1,3 +1,6 @@
+@extends('master.admin')
+
+@section('content')
 <div class="container-fluid">
     <x-alert/>
     <!-- Page Heading -->
@@ -10,7 +13,7 @@
             <span class="text">{{ __('admin/update.up_back') }}</span>
         </button>
     </div>
-    <p class="mb-4">{{ __('admin/update.up_sub_title') }}</p>
+    <p class="mb-4">{!! $up_sub_title !!}</p>
 
     <div class="row">
         <div class="col-lg-12">
@@ -23,10 +26,11 @@
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseGeneral" style="">
                     <div class="card-body">
-                        <pre>{result}</pre>
+                        <pre>{{ $result }}</pre>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
