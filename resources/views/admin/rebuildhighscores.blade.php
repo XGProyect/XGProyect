@@ -36,7 +36,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            {memory_p}
+                                            {{ $memory_p }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -46,7 +46,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            {memory_i}
+                                            {{ $memory_i }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -56,7 +56,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            {memory_e}
+                                            {{ $memory_e }}
                                         </td>
                                     </tr>
                                 </tbody>

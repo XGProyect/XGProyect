@@ -37,7 +37,7 @@ class RebuildHighscoresController extends BaseController
         $stObject = new Statistics();
         $this->result = $stObject->makeStats();
 
-        session()->flash('success', __('admin/rebuildhighscores.sb_stats_update'));
+        session()->flash('success', strtr(__('admin/rebuildhighscores.sb_stats_update'), ['%t' => $this->result['totaltime']]));
 
         Functions::updateConfig('stat_last_update', $this->result['stats_time']);
     }

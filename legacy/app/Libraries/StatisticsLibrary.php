@@ -100,34 +100,17 @@ class StatisticsLibrary
         return false;
     }
 
-    /**
-     * makeStats
-     *
-     * @return array
-     */
     public function makeStats()
     {
-        // INITIAL TIME
-        $mtime = microtime();
-        $mtime = explode(' ', $mtime);
-        $mtime = $mtime[1] + $mtime[0];
-        $starttime = $mtime;
         $this->time = time();
+        $starttime = microtime(true);
 
-        // INITIAL MEMORY
         $result['initial_memory'] = [round(memory_get_usage() / 1024, 1), round(memory_get_usage(1) / 1024, 1)];
 
-        // MAKE STATISTICS FOR USERS
         self::makeUserRank();
-
-        // MAKE STATISTICS FOR ALLIANCE
         self::makeAllyRank();
 
-        // END STATISTICS BUILD
-        $mtime = microtime();
-        $mtime = explode(' ', $mtime);
-        $mtime = $mtime[1] + $mtime[0];
-        $endtime = $mtime;
+        $endtime = microtime(true);
 
         $result['stats_time'] = $this->time;
         $result['totaltime'] = ($endtime - $starttime);
