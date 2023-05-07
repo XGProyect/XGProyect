@@ -25,24 +25,20 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <span>
-                                                    {{ __('admin/encrypter.et_pass') }}
-                                                </span>
-                                            </td>
-                                            <td>
                                                 <input class="form-control" type="text" name="unencrypted"
-                                                    value="{unencrypted}">
+                                                    value="{{ $unencrypted }}" placeholder="{{ __('admin/encrypter.et_pass') }}">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <span>
-                                                    {{ __('admin/encrypter.et_result') }}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <input class="form-control" type="text" name="encrypted"
-                                                    value="{encrypted}">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" onclick="navigator.clipboard.writeText($('#encrypted').val());" style="cursor: pointer">
+                                                            <i class="fas fa-copy"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="encrypted" name="encrypted" value="{{ $encrypted }}" disabled>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
