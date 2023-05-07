@@ -98,11 +98,6 @@ class MessagesController extends BaseController
         );
     }
 
-    /**
-     * Build the premium messages section
-     *
-     * @return string
-     */
     private function getPremiumSection(): string
     {
         // display an specific category of items

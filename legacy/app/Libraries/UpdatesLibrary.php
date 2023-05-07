@@ -150,7 +150,7 @@ class UpdatesLibrary
         $ret_value = false;
         $queue_array = [];
 
-        if ($current_planet['planet_b_building_id'] != 0) {
+        if (!empty($current_planet['planet_b_building_id'])) {
             $current_queue = $current_planet['planet_b_building_id'];
 
             if ($current_queue != 0) {

@@ -205,7 +205,7 @@ class Messages extends Model
     public function getFriends(int $userId): ?array
     {
         if ($userId > 0) {
-            return $this->db->query(
+            return $this->db->queryFetchAll(
                 'SELECT
                     u.`user_id`,
                     u.`user_name`,
@@ -260,7 +260,7 @@ class Messages extends Model
     public function getNotes(int $userId): ?array
     {
         if ($userId > 0) {
-            return $this->db->query(
+            return $this->db->queryFetchAll(
                 'SELECT `note_id`, `note_priority`, `note_title`
                 FROM `' . NOTES . "`
                 WHERE `note_owner` = '" . $userId . "';"
