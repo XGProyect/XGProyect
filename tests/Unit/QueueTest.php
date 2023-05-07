@@ -263,7 +263,7 @@ class QueueTest extends TestCase
 
         $object->addElementToQueue($queueElements);
 
-        $object->removeElementFromQueue('wrong_parameter');
+        $object->removeElementFromQueue(99999);
 
         $this->assertEquals(
             $object->returnQueueAsString(),
