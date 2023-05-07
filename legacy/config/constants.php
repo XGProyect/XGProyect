@@ -95,13 +95,6 @@ define('VIEWS_DIR', RESOURCES_PATH . 'views' . DIRECTORY_SEPARATOR);
 
 /**
  *
- * STORAGE DIRECTORY STRUCTURE
- *
- */
-define('BACKUP_PATH', storage_path('backups') . DIRECTORY_SEPARATOR);
-
-/**
- *
  * PUBLIC DIRECTORY STRUCTURE
  *
  */

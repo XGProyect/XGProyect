@@ -17,6 +17,7 @@ class BackupController extends BaseController
     public const BACKUP_SETTINGS = [
         'auto_backup' => FILTER_UNSAFE_RAW,
     ];
+
     private Backup $backupModel;
 
     public function __invoke(): void
@@ -32,14 +33,15 @@ class BackupController extends BaseController
 
         $this->runAction();
 
-        $this->buildPage();
+        Template::getInstance()->view(
+            'admin.backup',
+            array_merge(
+                $this->getBackupSettings(),
+                $this->getBackupList()
+            )
+        );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $save = filter_input(INPUT_POST, 'save');
@@ -75,15 +77,9 @@ class BackupController extends BaseController
         }
     }
 
-    /**
-     * Download the provided file
-     *
-     * @param string $file_name
-     * @return void
-     */
     private function doDownloadAction(string $file_name): void
     {
-        $to_download = BACKUP_PATH . $file_name;
+        $to_download = storage_path('backups') . DIRECTORY_SEPARATOR . $file_name;
 
         if (file_exists($to_download)) {
             header('Content-type: text/plain');
@@ -93,32 +89,15 @@ class BackupController extends BaseController
         }
     }
 
-    /**
-     * Delete the provided file
-     *
-     * @param string $file_name
-     * @return void
-     */
     private function doDeleteAction(string $file_name): void
     {
-        $to_delete = BACKUP_PATH . $file_name;
+        $to_delete = storage_path('backups') . DIRECTORY_SEPARATOR . $file_name;
 
         if (file_exists($to_delete)) {
             unlink($to_delete);
         }
 
         Functions::redirect('admin.php?page=backup');
-    }
-
-    private function buildPage(): void
-    {
-        Template::getInstance()->view(
-            'admin.backup',
-            array_merge(
-                $this->getBackupSettings(),
-                $this->getBackupList()
-            )
-        );
     }
 
     private function getBackupSettings(): array
@@ -134,12 +113,6 @@ class BackupController extends BaseController
         );
     }
 
-    /**
-     * Coverts the setting value from an int to a "checked"
-     *
-     * @param array $settings
-     * @return array
-     */
     private function setChecked(array $settings): array
     {
         foreach ($settings as $key => $value) {
@@ -153,8 +126,7 @@ class BackupController extends BaseController
     {
         $backup_list = [];
 
-        // list of backup files
-        chdir(BACKUP_PATH);
+        chdir(storage_path('backups'));
         $files = glob('*.sql');
 
         if ($files != '') {

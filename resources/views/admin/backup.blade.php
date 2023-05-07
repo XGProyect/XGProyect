@@ -44,7 +44,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="checkbox" name="auto_backup"
-                                                    {auto_backup}>
+                                                    {{ $auto_backup }}>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -75,26 +75,26 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-borderless" width="100%" cellspacing="0">
-                                {backup_list}
+                                @foreach ($backup_list as $item)
                                 <tr>
                                     <td>
-                                        {file_name}
+                                        {{ $item['file_name'] }}
                                     </td>
                                     <td>
-                                        {file_size}
+                                        {{ $item['file_size'] }}
                                     </td>
                                     <td>
-                                        <a href="admin.php?page=backup&action=download&file={full_file_name}"
+                                        <a href="admin.php?page=backup&action=download&file={{ $item['full_file_name'] }}"
                                             target="_blank" class="btn btn-primary btn-circle btn-sm">
                                             <i class="fas fa-file-download"></i>
                                         </a>
-                                        <a href="admin.php?page=backup&action=delete&file={full_file_name}"
+                                        <a href="admin.php?page=backup&action=delete&file={{ $item['full_file_name'] }}"
                                             class="btn btn-danger btn-circle btn-sm">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </td>
                                 </tr>
-                                {/backup_list}
+                                @endforeach
                             </table>
                         </div>
                     </div>

@@ -330,7 +330,7 @@ class Database
 
         // SAVE FILE
         $file_name = 'db-backup-' . date('Ymd') . '-' . time() . '-' . (sha1(join(',', $tables))) . '.sql';
-        $handle = fopen(BACKUP_PATH . $file_name, 'w+');
+        $handle = fopen(storage_path('backups') . DIRECTORY_SEPARATOR . $file_name, 'w+');
         $writed = fwrite($handle, $return);
 
         fclose($handle);
