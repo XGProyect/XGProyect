@@ -1,7 +1,7 @@
 @extends('master.admin')
 
 @section('content')
-<script src="{js_path}cntchar-min.js" type="text/javascript"></script>
+<script src="{{ asset('js/cntchar-min.js') }}" type="text/javascript"></script>
 <div class="container-fluid">
     <x-alert/>
     <form action="" method="POST" name="announcement">
@@ -15,7 +15,7 @@
                 <span class="text">{{ __('admin/announcement.an_send_message') }}</span>
             </button>
         </div>
-        <p class="mb-4">{{ __('admin/announcement.an_sub_title') }}</p>
+        <p class="mb-4">{!! __('admin/announcement.an_sub_title') !!}</p>
 
         <div class="row">
             <div class="col-lg-12">
@@ -39,10 +39,10 @@
                                             <td width="20%">
                                                 <!--<input class="form-control" name="color-picker" type="color">-->
                                                 <select class="form-control" name="color-picker">
-                                                    <option disabled selected>{al_color}</option>
-                                                    {colors}
-                                                    <option value="{color}">{color}</option>
-                                                    {/colors}
+                                                    <option disabled selected>{{ __('admin/announcement.an_color') }}</option>
+                                                    @foreach ($colors as $item)
+                                                    <option value="{{ $item['color'] }}">{{ $item['color'] }}</option>
+                                                    @endforeach
                                                 </select>
                                             </td>
                                             <td width="35%">

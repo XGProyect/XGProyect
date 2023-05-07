@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use Illuminate\Mail\SentMessage;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Mail;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Core\Template;
@@ -35,20 +37,10 @@ class AnnouncementController extends BaseController
 
         Template::getInstance()->view(
             'admin.announcement',
-            array_merge(
-                $this->buildColorPicker(),
-                [
-                    'js_path' => JS_PATH,
-                ]
-            )
+            $this->buildColorPicker()
         );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $action = filter_input_array(
@@ -84,12 +76,6 @@ class AnnouncementController extends BaseController
         }
     }
 
-    /**
-     * Send the annoucement as a private message to every user
-     *
-     * @param array $post
-     * @return void
-     */
     private function doMessageAction(array $post): void
     {
         $players = $this->announcementModel->getAllPlayers();
@@ -109,8 +95,8 @@ class AnnouncementController extends BaseController
 
         foreach ($players as $player) {
             Functions::sendMessage(
-                $player['user_id'],
-                $this->user['user_id'],
+                (int) $player['user_id'],
+                (int) $this->user['user_id'],
                 $time,
                 MessagesEnumerator::GENERAL,
                 $from,
@@ -123,38 +109,26 @@ class AnnouncementController extends BaseController
         session()->flash('success', __('admin/announcement.an_sent'));
     }
 
-    /**
-     * Send the annoucement as an email to every user
-     *
-     * @param array $post
-     * @return void
-     */
     private function doEmailAction(array $post): void
     {
         $players = $this->announcementModel->getAllPlayers();
-        $from = [
-            'mail' => Functions::readConfig('admin_email'),
-            'name' => Functions::readConfig('game_name'),
-        ];
-        $sent_count = 0;
+        $sentCount = 0;
         $results = [];
 
         foreach ($players as $player) {
-            $result = Functions::sendEmail(
-                $player['user_email'],
-                ($post['subject'] ?? __('admin/announcement.an_none')),
-                strtr($post['text'], ['%player%' => Format::strongText($player['user_name'])]),
-                $from
-            );
+            $result = Mail::to($player['user_email'], $player['user_name'])->send(new \App\Mail\Announcement(
+                $post['subject'],
+                strtr($post['text'], ['%player%' => Format::strongText($player['user_name'])])
+            ));
 
-            $results[] = $player['user_name'] . ': ' . ($result ? __('admin/announcement.an_email_sent') : __('admin/announcement.an_email_failed'));
+            $results[] = $player['user_name'] . ': ' . ($result instanceof SentMessage ? __('admin/announcement.an_email_sent') : __('admin/announcement.an_email_failed'));
 
             // 20 per row
-            if ($sent_count % 20 == 0) {
+            if ($sentCount % 20 == 0) {
                 sleep(1); // wait, prevent flooding
             }
 
-            $sent_count++;
+            $sentCount++;
         }
 
         session()->flash(
@@ -166,11 +140,6 @@ class AnnouncementController extends BaseController
         );
     }
 
-    /**
-     * Build a list of colors
-     *
-     * @return array
-     */
     private function buildColorPicker(): array
     {
         $colors_list = [];
@@ -186,12 +155,6 @@ class AnnouncementController extends BaseController
         ];
     }
 
-    /**
-     * Check whether if it's a valid color, returns an empty string if it's not
-     *
-     * @param string $color
-     * @return string
-     */
     private function isValidColor(string $color): string
     {
         if (in_array($color, Format::getHTMLColorsNameList())) {
@@ -201,11 +164,6 @@ class AnnouncementController extends BaseController
         return '';
     }
 
-    /**
-     * Get the color based on the rank
-     *
-     * @return array
-     */
     private function getMessageColor(): array
     {
         return [

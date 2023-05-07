@@ -2,7 +2,7 @@
 
 return [
     'an_title' => 'Announcement',
-    'an_sub_title' => 'From here you will be able to send announcements to all the server players.',
+    'an_sub_title' => 'From here you will be able to send announcements to all the server players.<br>Use with caution; misuse of this tool can cause your <strong>domain name to be blacklisted</strong>. <strong>XGP is not responsible</strong> for any misuse of this tool.',
     'an_subject' => 'Subject',
     'an_general' => 'General',
     'an_none' => 'Announcement',
@@ -17,5 +17,5 @@ return [
     'an_info' => 'You can use %player% to target user names and make the message more personalized! The tag will be replaced with the nickname once the message is sent.',
     'an_email_sent' => 'Sent!',
     'an_email_failed' => 'Failed!',
-    'al_color' => 'Pick a color',
+    'an_color' => 'Pick a color',
 ];

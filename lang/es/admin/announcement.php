@@ -2,7 +2,7 @@
 
 return [
     'an_title' => 'Anuncio',
-    'an_sub_title' => 'Desde aquí puedes enviar anuncios a todos los jugadores del servidor.',
+    'an_sub_title' => '¡Aquí podrás enviar anuncios a todos los jugadores del servidor!<br>Usa con precaución; el mal uso de esta herramienta puede hacer que tu <strong>nombre de dominio sea incluido en una lista negra</strong>. <strong>XGP no se hace responsable</strong> del mal uso de esta herramienta.',
     'an_subject' => 'Asunto',
     'an_general' => 'General',
     'an_none' => 'Anuncio',
@@ -17,5 +17,5 @@ return [
     'an_info' => '¡Puedes usar% player% para apuntar nombres de usuario y hacer que el mensaje sea más personalizado! La etiqueta será reemplazada con el nickname una vez que el mensaje haya sido enviado.',
     'an_email_sent' => '¡Enviado!',
     'an_email_failed' => '¡Fallo el envío!',
-    'al_color' => 'Selecciona un color',
+    'an_color' => 'Selecciona un color',
 ];

@@ -11,6 +11,7 @@ return [
     'gn_danger_title' => 'Alert!',
     'gn_warning_title' => 'Warning!',
     'gn_success_title' => 'Ok!',
+    'gn_info_title' => '',
     'ge_yes' => 'YES',
     'ge_no' => 'NO',
 ];
