@@ -81,10 +81,4 @@ return [
     // exploration status
     'exp_status_fresh_1' => 'Entry from the communications officers logbook: It seems that this part of the universe has not been explored yet.', // ok
     'exp_status_fresh_2' => 'Entry from the communications officers logbook: It feels great to be the first ones traveling through an unexplored sector.', // ok
-
-    // old lines
-    'exp_blackholl_1' => 'The fleet was sucked into a black hole is partially destroyed.',
-    'exp_blackholl_2' => 'The fleet was sucked into a black hole, and was completely destroyed!',
-    'exp_found_goods' => 'The fleet has discovered an unmanned spacecraft! <br> His scouts have recovered %s de %s, %s de %s, %s de %s y %s de %s.',
-    'exp_back_home' => 'Your expedition returned to the hangar.',
 ];

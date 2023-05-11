@@ -17,7 +17,7 @@ return [
     'in_range' => 'Rango de sensores',
     'in_title_head' => 'Información de',
     'in_name' => 'Nombre',
-    'in_struct_pt' => 'Puntos de Estructura',
+    'in_struct_pt' => 'Estructura de puntos',
     'in_shield_pt' => 'Integridad del Escudo',
     'in_attack_pt' => 'Poder de ataque',
     'in_capacity' => 'Capacidad de carga',

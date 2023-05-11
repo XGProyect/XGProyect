@@ -242,12 +242,9 @@ abstract class Formulas
         return self::getDevelopmentTime($metal_cost, $cystal_cost, $building, $robotics_factory, $nanite_factory, $level);
     }
 
-    /**
-     * Get research time
-     */
     public static function getResearchTime(int $metal_cost, int $cystal_cost, int $total_lab_level, int $expedition_level): float
     {
-        $universe_speed = Functions::readConfig('game_speed') / 2500;
+        $universe_speed = (int) Functions::readConfig('game_speed') / 2500;
 
         return ($metal_cost + $cystal_cost) / ($universe_speed * 1000 * (1 + $total_lab_level) * (1 + $expedition_level)) * 3600;
     }
@@ -261,7 +258,7 @@ abstract class Formulas
         $reduction = max(4 - ($level + 1) / 2, 1);
         $robotics = 1 + $first_boost;
         $nanite = pow(2, $second_boost);
-        $universe_speed = Functions::readConfig('game_speed') / 2500;
+        $universe_speed = (int) Functions::readConfig('game_speed') / 2500;
         $without_reduction = [
             Buildings::BUILDING_NANO_FACTORY,
             Buildings::BUILDING_MONDBASIS,
