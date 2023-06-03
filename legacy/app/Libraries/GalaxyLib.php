@@ -53,11 +53,11 @@ class GalaxyLib
         $this->planet = $planet;
 
         // BLOCK TEMPLATES
-        $block['planet'] = 'galaxy/galaxy_planet_block';
-        $block['moon'] = 'galaxy/galaxy_moon_block';
-        $block['debris'] = 'galaxy/galaxy_debris_block';
-        $block['username'] = 'galaxy/galaxy_username_block';
-        $block['alliance'] = 'galaxy/galaxy_alliance_block';
+        $block['planet'] = 'galaxy.galaxy_planet_block';
+        $block['moon'] = 'galaxy.galaxy_moon_block';
+        $block['debris'] = 'galaxy.galaxy_debris_block';
+        $block['username'] = 'galaxy.galaxy_username_block';
+        $block['alliance'] = 'galaxy.galaxy_alliance_block';
 
         // PRE CREATED BLOCK TO PREVENT REDUNDANCY
         $debris_block = $this->debrisBlock();
@@ -269,12 +269,7 @@ class GalaxyLib
         return $parse;
     }
 
-    /**
-     * debrisBlock
-     *
-     * @return array
-     */
-    private function debrisBlock()
+    private function debrisBlock(): string|array
     {
         if ($this->row_data['metal'] + $this->row_data['crystal'] >= DEBRIS_MIN_VISIBLE_SIZE) {
             $recyclers_storage = FleetsLib::getMaxStorage(
@@ -308,12 +303,7 @@ class GalaxyLib
         return '';
     }
 
-    /**
-     * usernameBlock
-     *
-     * @return array
-     */
-    private function usernameBlock()
+    private function usernameBlock(): array
     {
         $this->no_popup = false;
 

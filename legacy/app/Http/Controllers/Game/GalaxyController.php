@@ -117,7 +117,7 @@ class GalaxyController extends BaseController
         ) : ' ';
 
         Template::getInstance()->view(
-            'game/galaxy_view',
+            'galaxy.galaxy_view',
             array_merge(
                 [
                     'list_of_positions' => $this->buildPositionsList(),

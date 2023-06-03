@@ -147,7 +147,7 @@ class PhalanxController extends BaseController
 
         // view with no topvar and no leftmenu
         Template::getInstance()->view(
-            'galaxy/phalanx_body',
+            'galaxy.phalanx_body',
             $parse
         );
     }

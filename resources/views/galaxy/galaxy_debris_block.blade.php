@@ -1,0 +1,6 @@
+<a
+    style="cursor: pointer;"
+    onmouseover="return overlib('<table role=presentation width=240><tr><td class=c colspan=2>{{ __('game/galaxy.gl_debris_field') }} [{{ $galaxy }}:{{ $system }}:{{ $planet }}]</td></tr><tr><th width=80><img src={{ $image }} height=75 width=75 alt=></th><th><table><tr><td class=c colspan=2>{{ __('game/galaxy.gl_resources') }}:</td></tr><tr><th scope=row>{{ __('game/global.metal') }}: </th><th role=cell>{{ $planet_debris_metal }}</th></tr><tr><th scope=row>{{ __('game/global.crystal') }}: </th><th role=cell>{{ $planet_debris_crystal }}</th></tr><tr><td class=c colspan=2>{{ __('game/galaxy.gl_actions') }}:</td></tr><tr><th role=cell colspan=2 align=left><a href= # onclick=&#039javascript:doit (8, {{ $galaxy }}, {{ $system }}, {{ $planet }}, {{ $planettype }}, {{ $recsended }}); return nd();&#039 >{{ __('game/galaxy.gl_collect') }}</a></tr></table></th></tr></table>', STICKY, MOUSEOFF, DELAY, 750, CENTER, OFFSETX, -40, OFFSETY, -40);"
+    onmouseout="return nd();">
+    <img src="{{ $image }}" height="22px" width="22px" alt="{{ __('game/global.metal') }}: {{ $planet_debris_metal }}, {{ __('game/global.crystal') }}: {{ $planet_debris_crystal }}"/>
+</a>

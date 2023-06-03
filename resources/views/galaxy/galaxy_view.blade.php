@@ -1,3 +1,6 @@
+@extends('master.game')
+
+@section('content')
 <br>
 <div id="content" role="main">
     <script  language="JavaScript">
@@ -80,49 +83,49 @@
             // each case gets a different table entry, no language file used :P
             switch (parseInt(retVals[0])) {
                 case 600:
-                    addToTable("{gl_success}", "success");
+                    addToTable("{{ __('game/galaxy.gl_success') }}", "success");
                     break;
                 case 601:
-                    addToTable("{gl_error}", "error");
+                    addToTable("{{ __('game/galaxy.gl_error') }}", "error");
                     break;
                 case 602:
-                    addToTable("{gl_no_moon}", "error");
+                    addToTable("{{ __('game/galaxy.gl_no_moon') }}", "error");
                     break;
                 case 603:
-                    addToTable("{gl_noob_protection}", "error");
+                    addToTable("{{ __('game/galaxy.gl_noob_protection') }}", "error");
                     break;
                 case 604:
-                    addToTable("{gl_too_strong}", "error");
+                    addToTable("{{ __('game/galaxy.gl_too_strong') }}", "error");
                     break;
                 case 605:
-                    addToTable("{gl_vacation_mode}", "vacation");
+                    addToTable("{{ __('game/galaxy.gl_vacation_mode') }}", "vacation");
                     break;
                 case 610:
-                    addToTable("{gl_only_amount_ships_1} " + retVals[1] + " {gl_only_amount_ships_2}", "notice");
+                    addToTable("{{ __('game/galaxy.gl_only_amount_ships_1') }} " + retVals[1] + " {{ __('game/galaxy.gl_only_amount_ships_2') }}", "notice");
                     break;
                 case 611:
-                    addToTable("{gl_no_ships}", "error");
+                    addToTable("{{ __('game/galaxy.gl_no_ships') }}", "error");
                     break;
                 case 612:
-                    addToTable("{gl_no_slots}", "error");
+                    addToTable("{{ __('game/galaxy.gl_no_slots') }}", "error");
                     break;
                 case 613:
-                    addToTable("{gl_no_deuterium}", "error");
+                    addToTable("{{ __('game/galaxy.gl_no_deuterium') }}", "error");
                     break;
                 case 614:
-                    addToTable("{gl_no_planet}", "error");
+                    addToTable("{{ __('game/galaxy.gl_no_planet') }}", "error");
                     break;
                 case 615:
-                    addToTable("{gl_not_enought_storage}", "error");
+                    addToTable("{{ __('game/galaxy.gl_not_enought_storage') }}", "error");
                     break;
                 case 616:
-                    addToTable("{gl_multi_alarm}", "error");
+                    addToTable("{{ __('game/galaxy.gl_multi_alarm') }}", "error");
                     break;
             }
         }
 
         function doit(order, galaxy, system, planet, planettype, shipcount) {
-            strInfo = "{gl_send} " + shipcount + " {gl_ship}" + (shipcount != 1 ? "{gl_ships}" : "") + " {gl_to}  " + galaxy + ":" + system + ":" + planet + "...";
+            strInfo = "{{ __('game/galaxy.gl_send') }} " + shipcount + " {{ __('game/galaxy.gl_ship') }}" + (shipcount != 1 ? "{{ __('game/galaxy.gl_ships') }}" : "") + " {{ __('game/galaxy.gl_to') }}  " + galaxy + ":" + system + ":" + planet + "...";
             ajax.requestFile = "game.php?page=galaxy&fleet=true&action=send";
 
             // no longer needed, since we don't want to write the cryptic
@@ -214,7 +217,7 @@
         }
         document.onkeydown = cursorevent;
     </script>
-    {mip}
+    {!! $mip !!}
     <table width="656px">
         <tr>
             <td class="c" colspan="8">
@@ -223,7 +226,7 @@
                     <table width="100%">
                         <tr>
                             <td style="background-color: transparent">
-                                {gl_galaxy}
+                                {{ __('game/galaxy.gl_galaxy') }}
                             </td>
                             <td style="background-color: transparent">
                                 <input type="button" name="galaxyLeft" value="&lt;-" onClick="galaxy_submit('galaxyLeft')">
@@ -235,23 +238,23 @@
                                 <input type="button" name="galaxyRight" value="-&gt;" onClick="galaxy_submit('galaxyRight')">
                             </td>
                             <td style="background-color: transparent">
-                                {gl_solar_system}
+                                {{ __('game/galaxy.gl_solar_system') }}
                             </td>
                             <td style="background-color: transparent">
                                 <input type="button" name="systemLeft" value="&lt;-" onClick="galaxy_submit('systemLeft')">
                             </td>
                             <td style="background-color: transparent">
-                                <input type="number" name="system" value="{selected_system}" style="width:50px;" min="1" max="{max_system}" tabindex="2">
+                                <input type="number" name="system" value="{{ $selected_system }}" style="width:50px;" min="1" max="{{ $max_system }}" tabindex="2">
                             </td>
                             <td style="background-color: transparent">
                                 <input type="button" name="systemRight" value="-&gt;" onClick="galaxy_submit('systemRight')">
                             </td>
                             <td style="background-color: transparent">
-                                <input type="submit" value="{gl_go}">
+                                <input type="submit" value="{{ __('game/galaxy.gl_go') }}">
                             </td>
                             <td style="background-color: transparent; width: 50%; text-align: right;">
-                                <a href="game.php?page=fleet1&amp;galaxy={selected_galaxy}&amp;system={selected_system}&amp;planet=16&amp;planettype=1&amp;target_mission=15">
-                                    <input type="button" value="{gl_expedition}">
+                                <a href="game.php?page=fleet1&amp;galaxy={{ $selected_galaxy }}&amp;system={{ $selected_system }}&amp;planet=16&amp;planettype=1&amp;target_mission=15">
+                                    <input type="button" value="{{ __('game/galaxy.gl_expedition') }}">
                                 </a>
                             </td>
                         </tr>
@@ -262,46 +265,46 @@
         <tr>
             <th role="cell" colspan="8">
                 <span id="probes">
-                    {gl_esp_probe}:
-                    <span id="probeValue">{spyprobes}</span>
+                    {{ __('game/galaxy.gl_esp_probe') }}:
+                    <span id="probeValue">{{ $spyprobes }}</span>
                 </span>
                 <span id="recycler">
-                    {gl_recyclers}:
-                    <span id="recyclerValue">{recyclers}</span>
+                    {{ __('game/galaxy.gl_recyclers') }}:
+                    <span id="recyclerValue">{{ $recyclers }}</span>
                 </span>
                 <span id="rockets">
-                    {gl_ipm}:
-                    <span id="missileValue">{currentmip}</span>
+                    {{ __('game/galaxy.gl_ipm') }}:
+                    <span id="missileValue">{{ $currentmip }}</span>
                 </span>
                 <span id="slots">
-                    {gl_used_slots}:
+                    {{ __('game/galaxy.gl_used_slots') }}:
                     <span id="slotValue">
-                        <span id="slotUsed">{maxfleetcount}</span>/{fleetmax}
+                        <span id="slotUsed">{{ $maxfleetcount }}</span>/{{ $fleetmax }}
                     </span>
                 </span>
             </th>
         </tr>
         <tr>
-            <td role="columnheader" class="c" colspan="2">{gl_planet}</td>
-            <td role="columnheader" class="c">{gl_name_activity}</td>
-            <td role="columnheader" class="c">{gl_moon}</td>
-            <td role="columnheader" class="c">{gl_debris}</td>
-            <td role="columnheader" class="c">{gl_player_estate}</td>
-            <td role="columnheader" class="c">{gl_alliance}</td>
-            <td role="columnheader"class="c">{gl_actions}</td>
+            <td role="columnheader" class="c" colspan="2">{{ __('game/galaxy.gl_planet') }}</td>
+            <td role="columnheader" class="c">{{ __('game/galaxy.gl_name_activity') }}</td>
+            <td role="columnheader" class="c">{{ __('game/galaxy.gl_moon') }}</td>
+            <td role="columnheader" class="c">{{ __('game/galaxy.gl_debris') }}</td>
+            <td role="columnheader" class="c">{{ __('game/galaxy.gl_player_estate') }}</td>
+            <td role="columnheader" class="c">{{ __('game/galaxy.gl_alliance') }}</td>
+            <td role="columnheader"class="c">{{ __('game/galaxy.gl_actions') }}</td>
         </tr>
-        {list_of_positions}
+        @foreach ($list_of_positions as $item)
         <tr>
-            <th role="cell" width="30px">{pos}</th>
-            <th role="cell" width="30px">{planet}</th>
-            <th role="cell" width="130px" style="white-space: nowrap;">{planetname}</th>
-            <th role="cell" width="30px" style="white-space: nowrap;">{moon}</th>
-            <th role="cell" width="30px" style="white-space: nowrap;">{debris}</th>
-            <th role="cell" width="150px">{username}</th>
-            <th role="cell" width="80px">{alliance}</th>
-            <th role="cell" width="125px" style="white-space: nowrap;">{actions}</th>
+            <th role="cell" width="30px">{{ $item['pos'] }}</th>
+            <th role="cell" width="30px">{!! $item['planet'] !!}</th>
+            <th role="cell" width="130px" style="white-space: nowrap;">{!! $item['planetname'] !!}</th>
+            <th role="cell" width="30px" style="white-space: nowrap;">{!! $item['moon'] !!}</th>
+            <th role="cell" width="30px" style="white-space: nowrap;">{!! $item['debris'] !!}</th>
+            <th role="cell" width="150px">{!! $item['username'] !!}</th>
+            <th role="cell" width="80px">{!! $item['alliance'] !!}</th>
+            <th role="cell" width="125px" style="white-space: nowrap;">{!! $item['actions'] !!}</th>
         </tr>
-        {/list_of_positions}
+        @endforeach
         <tr id="fleetstatusrow">
             <th role="cell" class="c" colspan="8">
                 <table style="font-weight: bold" width="100%" id="fleetstatustable">
@@ -311,13 +314,14 @@
         </tr>
         <tr>
             <td class="c" colspan="7">
-                {planet_count} {gl_colonized_planets}
+                {{ $planet_count }} {{ __('game/galaxy.gl_colonized_planets') }}
             </td>
             <td class="c">
-                <a href="#" style="cursor: pointer;" onmouseover='return overlib("<table width=150><tr><td class=c colspan=2>{gl_legend}</td></tr><tr><td style=width: 20px;><span class=status_abbr_admin>{gl_a}</span></td><td width=220>{gl_administrator}</td></tr><tr><td style=width: 20px;><span class=status_abbr_strong>{gl_s}</span></td><td width=220>{gl_strong_player}</td></tr><tr><td style=width: 20px;><span class=status_abbr_noob>{gl_w}</span></td><td width=220>{gl_week_player}</td></tr><tr><td style=width: 20px;><span class=status_abbr_outlaw>{gl_o}</span></td><td width=220>{gl_outlaw}</td> </tr><tr><td style=width: 20px;><span class=status_abbr_vacation>{gl_v}</span></td><td width=220>{gl_vacation}</td></tr><tr><td style=width: 20px;><span class=status_abbr_banned><s>{gl_b}</s></span></td><td width=220>{gl_banned}</td> </tr> <tr> <td style=width: 20px;><span class=status_abbr_inactive>{gl_i}</span></td> <td width=220>{gl_inactive_seven}</td></tr><tr><td style=width: 20px;><span class=status_abbr_longinactive>{gl_I}</span></td><td width=220>{gl_inactive_twentyeight}</td></tr><tr> <td style=width: 20px;><span class=status_abbr_honorableTarget>{gl_hp}</span></td><td width=220>{gl_honourable_target}</td></tr></table>", STICKY, MOUSEOFF, DELAY, 750, CENTER, OFFSETY, -150);' onmouseout='return nd();'>
-                    {gl_legend}
+                <a href="#" style="cursor: pointer;" onmouseover='return overlib("<table width=150><tr><td class=c colspan=2>{{ __('game/galaxy.gl_legend') }}</td></tr><tr><td style=width: 20px;><span class=status_abbr_admin>{{ __('game/galaxy.gl_a') }}</span></td><td width=220>{{ __('game/galaxy.gl_administrator') }}</td></tr><tr><td style=width: 20px;><span class=status_abbr_strong>{{ __('game/galaxy.gl_s') }}</span></td><td width=220>{{ __('game/galaxy.gl_strong_player') }}</td></tr><tr><td style=width: 20px;><span class=status_abbr_noob>{{ __('game/galaxy.gl_w') }}</span></td><td width=220>{{ __('game/galaxy.gl_week_player') }}</td></tr><tr><td style=width: 20px;><span class=status_abbr_outlaw>{{ __('game/galaxy.gl_o') }}</span></td><td width=220>{{ __('game/galaxy.gl_outlaw') }}</td> </tr><tr><td style=width: 20px;><span class=status_abbr_vacation>{{ __('game/galaxy.gl_v') }}</span></td><td width=220>{{ __('game/galaxy.gl_vacation') }}</td></tr><tr><td style=width: 20px;><span class=status_abbr_banned><s>{{ __('game/galaxy.gl_b') }}</s></span></td><td width=220>{{ __('game/galaxy.gl_banned') }}</td> </tr> <tr> <td style=width: 20px;><span class=status_abbr_inactive>{{ __('game/galaxy.gl_i') }}</span></td> <td width=220>{{ __('game/galaxy.gl_inactive_seven') }}</td></tr><tr><td style=width: 20px;><span class=status_abbr_longinactive>{{ __('game/galaxy.gl_I') }}</span></td><td width=220>{{ __('game/galaxy.gl_inactive_twentyeight') }}</td></tr><tr> <td style=width: 20px;><span class=status_abbr_honorableTarget>{{ __('game/galaxy.gl_hp') }}</span></td><td width=220>{{ __('game/galaxy.gl_honourable_target') }}</td></tr></table>", STICKY, MOUSEOFF, DELAY, 750, CENTER, OFFSETY, -150);' onmouseout='return nd();'>
+                    {{ __('game/galaxy.gl_legend') }}
                 </a>
             </td>
         </tr>
     </table>
 </div>
+@endsection
