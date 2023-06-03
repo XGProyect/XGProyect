@@ -61,12 +61,7 @@ class MovementController extends BaseController
         );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
-    private function runAction()
+    private function runAction(): void
     {
         $fleet_action = filter_input(INPUT_GET, 'action');
 
@@ -90,24 +85,21 @@ class MovementController extends BaseController
             'list_of_movements' => $this->buildMovements(),
         ];
 
-        Template::getInstance()->render(
-            'game/movements_view',
+        Template::getInstance()->view(
+            'movement.view',
             $page
         );
     }
 
-    /**
-     * Build the list of movements
-     *
-     * @return array
-     */
     private function buildMovements(): array
     {
         $list_of_movements[] = [
             'num' => '-',
             'fleet_mission' => '-',
             'title' => '',
+            'tooltip' => '',
             'fleet_amount' => '-',
+            'fleet' => '',
             'fleet_start' => '-',
             'fleet_start_time' => '-',
             'fleet_end' => '-',
@@ -202,11 +194,6 @@ class MovementController extends BaseController
         return $actions;
     }
 
-    /**
-     * Execute the fleet return if possible
-     *
-     * @return void
-     */
     private function execFleetReturn(): void
     {
         $fleet_id = filter_input(INPUT_POST, 'fleetid', FILTER_VALIDATE_INT);
