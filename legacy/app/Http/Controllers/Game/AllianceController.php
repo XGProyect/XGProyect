@@ -335,7 +335,6 @@ class AllianceController extends BaseController
         return Template::getInstance()->render(
             'alliance/alliance_apply_form_view',
             [
-                'js_path' => JS_PATH,
                 'allyid' => $this->getAllianceId(),
                 'text_apply' => (!empty($this->alliance->getCurrentAlliance()->getAllianceRequest())) ? $this->alliance->getCurrentAlliance()->getAllianceRequest() : __('game/alliance.al_default_request_text'),
                 'write_to_alliance' => strtr(
@@ -469,7 +468,6 @@ class AllianceController extends BaseController
         return Template::getInstance()->render(
             'alliance/alliance_circular_view',
             [
-                'js_path' => JS_PATH,
                 'ranks_list' => $ranks_list,
             ]
         );
@@ -636,7 +634,6 @@ class AllianceController extends BaseController
         return Template::getInstance()->render(
             'alliance/alliance_admin',
             [
-                'js_path' => JS_PATH,
                 't' => $t,
                 'request_type' => $request_type[$t],
                 'text' => $text[$t],
@@ -827,7 +824,6 @@ class AllianceController extends BaseController
                 $request_form = Template::getInstance()->render(
                     'alliance/alliance_admin_request_form',
                     [
-                        'js_path' => JS_PATH,
                         'id' => $list_of_requests[$show]['id'],
                         'request_from' => strtr(__('game/alliance.al_request_from'), ['%s' => $list_of_requests[$show]['username']]),
                         'request_text' => $list_of_requests[$show]['ally_request_text'],

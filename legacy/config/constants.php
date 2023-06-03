@@ -102,7 +102,6 @@ define('CSS_PATH', 'css' . DIRECTORY_SEPARATOR);
 define('ADMIN_PUBLIC_PATH', 'admin' . DIRECTORY_SEPARATOR);
 define('IMG_PATH', 'images' . DIRECTORY_SEPARATOR);
 define('PUB_INS_PATH', 'install' . DIRECTORY_SEPARATOR);
-define('JS_PATH', 'js' . DIRECTORY_SEPARATOR);
 define('UPLOAD_PATH', 'upload' . DIRECTORY_SEPARATOR);
 
 /**

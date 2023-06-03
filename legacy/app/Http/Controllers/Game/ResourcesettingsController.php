@@ -45,6 +45,14 @@ class ResourcesettingsController extends BaseController
 
     private function buildPage(): void
     {
+        $langFile = [
+            'build' => 'constructions',
+            'tech' => 'technologies',
+            'fleet' => 'ships',
+            'defenses' => 'defenses',
+            'missiles' => 'defenses',
+        ];
+
         $game_metal_basic_income = Functions::readConfig('metal_basic_income');
         $game_crystal_basic_income = Functions::readConfig('crystal_basic_income');
         $game_deuterium_basic_income = Functions::readConfig('deuterium_basic_income');
@@ -145,11 +153,12 @@ class ResourcesettingsController extends BaseController
                 $deuterium = ProductionLib::currentProduction($deuterium_prod, $post_percent);
                 $energy = ProductionLib::currentProduction($energy, $post_percent);
                 $Field = 'planet_' . $this->resource[$ProdID] . '_percent';
+
                 $CurrRow = [];
                 $CurrRow['name'] = $this->resource[$ProdID];
                 $CurrRow['percent'] = $this->planet[$Field];
                 $CurrRow['option'] = $this->build_options($CurrRow['percent']);
-                $CurrRow['type'] = __('game/constructions.' . $this->resource[$ProdID]);
+                $CurrRow['type'] = $this->setLangLine($this->resource[$ProdID]);
                 $CurrRow['level'] = ($ProdID > 200) ? __('game/resources.rs_amount') : __('game/global.level');
                 $CurrRow['level_type'] = $this->planet[$this->resource[$ProdID]];
                 $CurrRow['metal_type'] = FormatLib::prettyNumber($metal);
@@ -160,8 +169,9 @@ class ResourcesettingsController extends BaseController
                 $CurrRow['crystal_type'] = FormatLib::colorNumber($CurrRow['crystal_type']);
                 $CurrRow['deuterium_type'] = FormatLib::colorNumber($CurrRow['deuterium_type']);
                 $CurrRow['energy_type'] = FormatLib::colorNumber($CurrRow['energy_type']);
+
                 $parse['resource_row'] .= Template::getInstance()->render(
-                    'resources/resources_row',
+                    'resourcesettings.resources_row',
                     $CurrRow
                 );
             }
@@ -230,7 +240,7 @@ class ResourcesettingsController extends BaseController
         }
 
         Template::getInstance()->view(
-            'resources/resources',
+            'resourcesettings.view',
             $parse
         );
     }
@@ -321,5 +331,25 @@ class ResourcesettingsController extends BaseController
         }
 
         return $prod_level;
+    }
+
+    private function setLangLine(string $langLine): string
+    {
+        $prefix = '';
+        $langTypeMap = [
+            'building_' => 'constructions',
+            'research_' => 'technologies',
+            'ship_' => 'ships',
+            'defense_' => 'defenses',
+        ];
+
+        foreach ($langTypeMap as $type => $lang) {
+            if (strpos($langLine, $type) !== false) {
+                $prefix = $lang;
+                break;
+            }
+        }
+
+        return __('game/' . $prefix . '.' . $langLine);
     }
 }

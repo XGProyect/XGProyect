@@ -87,11 +87,7 @@ class FederationController extends BaseController
     {
         $this->validateData();
 
-        /**
-         * Parse the items
-         */
         $page = [
-            'js_path' => JS_PATH,
             'acs_code' => $this->_acs_code,
             'buddies_list' => $this->buildBuddiesList(),
             'members_list' => $this->buildMembersList(),

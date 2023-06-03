@@ -67,7 +67,6 @@ class Fleet2Controller extends BaseController
          * Parse the items
          */
         $page = [
-            'js_path' => JS_PATH,
             'fleet_block' => $this->buildFleetBlock(),
             'planet_types' => $this->buildPlanetTypesBlock(),
             'shortcuts' => $this->buildShortcutsBlock(),
@@ -76,7 +75,7 @@ class Fleet2Controller extends BaseController
         ];
 
         Template::getInstance()->view(
-            'fleet/fleet2_view',
+            'fleet.fleet2_view',
             array_merge(
                 $page,
                 $this->setInputsData()
@@ -113,12 +112,12 @@ class Fleet2Controller extends BaseController
                     $this->_fleet_data['fleet_array'][$ship_id] = $amount_to_set;
                     $this->_fleet_data['fleet_list'] .= $ship_id . ',' . strval($amount_to_set) . ';';
                     $this->_fleet_data['amount'] += $amount_to_set;
-                    $this->_fleet_data['speed_all'][$ship_id] = FleetsLib::fleetMaxSpeed(null, $ship_id, $this->user);
+                    $this->_fleet_data['speed_all'][$ship_id] = FleetsLib::getShipSpeed($ship_id, $this->user);
 
                     $list_of_ships[] = [
                         'ship_id' => $ship_id,
                         'consumption' => FleetsLib::shipConsumption($ship_id, $this->user),
-                        'speed' => FleetsLib::fleetMaxSpeed(null, $ship_id, $this->user),
+                        'speed' => FleetsLib::getShipSpeed($ship_id, $this->user),
                         'capacity' => FleetsLib::getMaxStorage(
                             $price[$ship_id]['capacity'],
                             $this->_research->getCurrentResearch()->getResearchHyperspaceTechnology()
@@ -154,7 +153,7 @@ class Fleet2Controller extends BaseController
                 $list_of_options[] = [
                     'value' => $value,
                     'selected' => ($value == $data['planet_type']) ? 'selected' : '',
-                    'title' => __('game/fleet.fl_' . $label),
+                    'title' => __('game/fleet.' . $label),
                 ];
             }
         }
@@ -162,12 +161,7 @@ class Fleet2Controller extends BaseController
         return $list_of_options;
     }
 
-    /**
-     * Build the shortcuts block
-     *
-     * @return string
-     */
-    private function buildShortcutsBlock()
+    private function buildShortcutsBlock(): string
     {
         if (!OfficiersLib::isOfficierActive($this->_premium->getCurrentPremium()->getPremiumOfficierCommander())) {
             return '';
@@ -213,7 +207,7 @@ class Fleet2Controller extends BaseController
         }
 
         return Template::getInstance()->render(
-            'fleet/fleet2_shortcuts',
+            'fleet.fleet2_shortcuts',
             [
                 'shortcuts_rows' => $shortcut_row
             ]
@@ -244,7 +238,7 @@ class Fleet2Controller extends BaseController
             }
 
             return Template::getInstance()->render(
-                'fleet/fleet2_shortcuts_row',
+                'fleet.fleet2_shortcuts_row',
                 [
                     'select' => 'colonies',
                     'options' => $list_of_planets,
@@ -253,7 +247,7 @@ class Fleet2Controller extends BaseController
         }
 
         return Template::getInstance()->render(
-            'fleet/fleet2_shortcuts_noshortcuts_row',
+            'fleet.fleet2_shortcuts_noshortcuts_row',
             ['shorcut_message' => __('game/fleet.fl_no_colony')]
         );
     }

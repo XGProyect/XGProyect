@@ -65,7 +65,6 @@ class Fleet3Controller extends BaseController
             'fleet/fleet3_view',
             array_merge(
                 [
-                    'js_path' => JS_PATH,
                     'fleet_block' => $this->buildFleetBlock(),
                     'title' => $this->buildTitleBlock(),
                     'mission_selector' => $this->buildMissionBlock(),
@@ -112,7 +111,7 @@ class Fleet3Controller extends BaseController
                     $list_of_ships[] = [
                         'ship_id' => $ship_id,
                         'consumption' => FleetsLib::shipConsumption($ship_id, $this->user),
-                        'speed' => FleetsLib::fleetMaxSpeed(null, $ship_id, $this->user),
+                        'speed' => FleetsLib::getShipSpeed($ship_id, $this->user),
                         'capacity' => FleetsLib::getMaxStorage(
                             $price[$ship_id]['capacity'],
                             $this->_research->getCurrentResearch()->getResearchHyperspaceTechnology()
@@ -126,12 +125,7 @@ class Fleet3Controller extends BaseController
         return $list_of_ships;
     }
 
-    /**
-     * Build the title block
-     *
-     * @return string
-     */
-    private function buildTitleBlock()
+    private function buildTitleBlock(): string
     {
         return FormatLib::prettyCoords(
             $this->planet['planet_galaxy'],
@@ -140,12 +134,7 @@ class Fleet3Controller extends BaseController
         ) . ' - ' . __('game/global.planet_type')[$this->planet['planet_type']];
     }
 
-    /**
-     * Build the missions block
-     *
-     * @return string
-     */
-    private function buildMissionBlock()
+    private function buildMissionBlock(): array
     {
         $missionsList = $this->getAllowedMissions();
         $missiongSelector = [];
@@ -158,7 +147,7 @@ class Fleet3Controller extends BaseController
             foreach ($missionsList as $mission) {
                 $missiongSelector[] = [
                     'value' => $mission,
-                    'mission' => __('game/global.type_mission')[$mission],
+                    'mission' => __('game/missions.type_mission')[$mission],
                     'expedition_message' => $mission == Missions::EXPEDITION ? __('game/fleet.fl_expedition_alert_message') : '',
                     'id' => $mission == Missions::EXPEDITION ? ' ' : 'inpuT_' . $mission,
                     'checked' => $mission == $this->_current_mission ? ' checked="checked"' : '',
@@ -169,12 +158,7 @@ class Fleet3Controller extends BaseController
         return $missiongSelector;
     }
 
-    /**
-     * Build the stay time block
-     *
-     * @return string
-     */
-    private function buildStayBlock()
+    private function buildStayBlock(): string
     {
         // by rule, expedition time is based on the astrophysics level, relation 1:1 level:hour
         $max_exp_time = $this->_research->getCurrentResearch()->getResearchAstrophysics();
@@ -217,12 +201,7 @@ class Fleet3Controller extends BaseController
         return '';
     }
 
-    /**
-     * Get allowed missions per ship and option
-     *
-     * @return array
-     */
-    private function getAllowedMissions()
+    private function getAllowedMissions(): array
     {
         /**
          * rules
@@ -433,7 +412,7 @@ class Fleet3Controller extends BaseController
 
         $fleet = $this->getSessionShips();
         $Speed_factor = Functions::fleetSpeedFactor();
-        $fleet_speed = FleetsLib::fleetMaxSpeed($fleet, 0, $this->user);
+        $fleet_speed = FleetsLib::fleetMaxSpeed($fleet, $this->user);
 
         $consumption = FleetsLib::fleetConsumption(
             $fleet,

@@ -43,93 +43,81 @@ class FleetsLib
         return (35000 / $percentage * sqrt($distance * 10 / $maxFleetSpeed) + 10) / $speedFactor;
     }
 
-    public static function fleetMaxSpeed(?array $fleetArray, int $ship, array $user): float|array
+    public static function fleetMaxSpeed(array $fleet, array $user): array
     {
         $pricelist = Objects::getInstance()->getPrice();
-        $speed_all = [];
+        $speed = [];
 
-        if ($ship != 0) {
-            $fleetArray = [];
-            $fleetArray[$ship] = 1;
-        }
+        foreach ($fleet as $ship => $count) {
+            /**
+             * Special condition for Small cargo
+             */
+            if ($ship == 202) {
+                if ($user['research_impulse_drive'] >= 5) {
+                    $speed[$ship] = $pricelist[$ship]['speed2'] + ($pricelist[$ship]['speed2'] * $user['research_impulse_drive'] * 0.2);
+                } else {
+                    $speed[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_combustion_drive']) * 0.1);
+                }
+            }
 
-        if (!empty($fleetArray) && !is_null($fleetArray)) {
-            foreach ($fleetArray as $ship => $count) {
-                /**
-                 * Special condition for Small cargo
-                 */
-                if ($ship == 202) {
-                    if ($user['research_impulse_drive'] >= 5) {
-                        $speed_all[$ship] = $pricelist[$ship]['speed2'] + ($pricelist[$ship]['speed2'] * $user['research_impulse_drive'] * 0.2);
-                    } else {
-                        $speed_all[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_combustion_drive']) * 0.1);
-                    }
+            /**
+             * Special condition for Recycler
+             */
+            if ($ship == 209) {
+                $speed[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_combustion_drive']) * 0.1);
+
+                if ($user['research_impulse_drive'] >= 17) {
+                    $speed[$ship] = $pricelist[$ship]['speed2'] + (($pricelist[$ship]['speed2'] * $user['research_impulse_drive']) * 0.2);
                 }
 
-                /**
-                 * Special condition for Recycler
-                 */
-                if ($ship == 209) {
-                    $speed_all[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_combustion_drive']) * 0.1);
-
-                    if ($user['research_impulse_drive'] >= 17) {
-                        $speed_all[$ship] = $pricelist[$ship]['speed2'] + (($pricelist[$ship]['speed2'] * $user['research_impulse_drive']) * 0.2);
-                    }
-
-                    if ($user['research_hyperspace_drive'] >= 15) {
-                        $speed_all[$ship] = $pricelist[$ship]['speed2'] + (($pricelist[$ship]['speed2'] * $user['research_hyperspace_drive']) * 0.3);
-                    }
+                if ($user['research_hyperspace_drive'] >= 15) {
+                    $speed[$ship] = $pricelist[$ship]['speed2'] + (($pricelist[$ship]['speed2'] * $user['research_hyperspace_drive']) * 0.3);
                 }
+            }
 
-                if ($ship == 203 or $ship == 204 or $ship == 210) {
-                    $speed_all[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_combustion_drive']) * 0.1);
-                }
+            if ($ship == 203 or $ship == 204 or $ship == 210) {
+                $speed[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_combustion_drive']) * 0.1);
+            }
 
-                if ($ship == 205 or $ship == 206 or $ship == 208) {
-                    $speed_all[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_impulse_drive']) * 0.2);
-                }
+            if ($ship == 205 or $ship == 206 or $ship == 208) {
+                $speed[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_impulse_drive']) * 0.2);
+            }
 
-                if ($ship == 211) {
-                    if ($user['research_hyperspace_drive'] >= 8) {
-                        $speed_all[$ship] = $pricelist[$ship]['speed2'] + (($pricelist[$ship]['speed2'] * $user['research_hyperspace_drive']) * 0.3);
-                    } else {
-                        $speed_all[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_hyperspace_drive']) * 0.2);
-                    }
+            if ($ship == 211) {
+                if ($user['research_hyperspace_drive'] >= 8) {
+                    $speed[$ship] = $pricelist[$ship]['speed2'] + (($pricelist[$ship]['speed2'] * $user['research_hyperspace_drive']) * 0.3);
+                } else {
+                    $speed[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_hyperspace_drive']) * 0.2);
                 }
+            }
 
-                if ($ship == 207 or $ship == 213 or $ship == 214 or $ship == 215) {
-                    $speed_all[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_hyperspace_drive']) * 0.3);
-                }
+            if ($ship == 207 or $ship == 213 or $ship == 214 or $ship == 215) {
+                $speed[$ship] = $pricelist[$ship]['speed'] + (($pricelist[$ship]['speed'] * $user['research_hyperspace_drive']) * 0.3);
             }
         }
 
-        if ($ship != 0) {
-            $ship_speed = isset($speed_all[$ship]) ? $speed_all[$ship] : 0;
-            $speed_all = $ship_speed;
-        }
-
-        return $speed_all;
+        return $speed;
     }
 
-    /**
-     * fleetConsumption
-     *
-     * @param array $fleetArray      Fleet
-     * @param int   $speed_factor     Speed factor
-     * @param int   $mission_duration Mission duration
-     * @param int   $mission_distance Mission distance
-     * @param array $user             User
-     *
-     * @return int
-     */
-    public static function fleetConsumption($fleetArray, $speed_factor, $mission_duration, $mission_distance, $user)
+    public static function getShipSpeed(int $ship, array $user): float
+    {
+        if ($ship === 0) {
+            return 0.0;
+        }
+
+        $fleet[$ship] = 1;
+
+        return self::fleetMaxSpeed($fleet, $user)[$ship];
+    }
+
+    public static function fleetConsumption(array $fleetArray, int $speed_factor, int $mission_duration, int $mission_distance, array $user): float
     {
         $consumption = 0;
         $basic_consumption = 0;
 
         foreach ($fleetArray as $ship => $count) {
             if ($ship > 0) {
-                $ship_speed = self::fleetMaxSpeed(null, $ship, $user);
+                $ship_speed = self::getShipSpeed($ship, $user);
                 $ship_consumption = self::shipConsumption($ship, $user);
                 $spd = 35000 / ($mission_duration * $speed_factor - 10) * sqrt($mission_distance * 10 / $ship_speed);
 

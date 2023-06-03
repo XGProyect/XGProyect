@@ -120,10 +120,7 @@ class NotesController extends BaseController
         if ($edit_view !== false && !is_null($edit_view)) {
             return [
                 'template' => 'game/notes_form_view',
-                'data' => array_merge(
-                    ['js_path' => JS_PATH],
-                    $this->buildEditBlock($edit_view)
-                ),
+                'data' => $this->buildEditBlock($edit_view),
             ];
         }
 

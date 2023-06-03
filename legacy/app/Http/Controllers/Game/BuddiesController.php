@@ -241,10 +241,7 @@ class BuddiesController extends BaseController
 
         Template::getInstance()->view(
             'game/buddies_request',
-            array_merge(
-                ['js_path' => JS_PATH],
-                $user,
-            )
+            $user
         );
     }
 

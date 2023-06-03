@@ -120,7 +120,6 @@ class GalaxyController extends BaseController
             'game/galaxy_view',
             array_merge(
                 [
-                    'js_path' => JS_PATH,
                     'list_of_positions' => $this->buildPositionsList(),
                     'planet_count' => $this->planet_count,
                     'max_galaxy' => MAX_GALAXY_IN_WORLD,
@@ -519,7 +518,7 @@ class GalaxyController extends BaseController
         }
 
         $Distance = FleetsLib::targetDistance($this->planet['planet_galaxy'], $_POST['galaxy'], $this->planet['planet_system'], $_POST['system'], $this->planet['planet_planet'], $_POST['planet']);
-        $speedall = FleetsLib::fleetMaxSpeed($FleetArray, 0, $this->user);
+        $speedall = FleetsLib::fleetMaxSpeed($FleetArray, $this->user);
         $SpeedAllMin = min($speedall);
         $Duration = FleetsLib::missionDuration(10, $SpeedAllMin, $Distance, Functions::fleetSpeedFactor());
 

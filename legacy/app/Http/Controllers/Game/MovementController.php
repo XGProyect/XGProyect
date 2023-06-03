@@ -77,11 +77,7 @@ class MovementController extends BaseController
 
     private function buildPage(): void
     {
-        /**
-         * Parse the items
-         */
         $page = [
-            'js_path' => JS_PATH,
             'fleets' => $this->fleets->getFleetsCount(),
             'max_fleets' => FleetsLib::getMaxFleets(
                 $this->research->getCurrentResearch()->getResearchComputerTechnology(),

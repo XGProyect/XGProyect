@@ -44,13 +44,7 @@ class Fleet1Controller extends BaseController
         $this->buildPage();
     }
 
-    /**
-     * Creates a new ships object that will handle all the ships
-     * creation methods and actions
-     *
-     * @return void
-     */
-    private function setUpFleets()
+    private function setUpFleets(): void
     {
         $this->_fleets = new Fleets(
             $this->fleetModel->getAllFleetsByUserId($this->user['user_id']),
@@ -70,11 +64,7 @@ class Fleet1Controller extends BaseController
 
     private function buildPage(): void
     {
-        /**
-         * Parse the items
-         */
         $page = [
-            'js_path' => JS_PATH,
             'fleets' => $this->_fleets->getFleetsCount(),
             'max_fleets' => FleetsLib::getMaxFleets(
                 $this->_research->getCurrentResearch()->getResearchComputerTechnology(),
@@ -92,7 +82,7 @@ class Fleet1Controller extends BaseController
         ];
 
         Template::getInstance()->view(
-            'fleet/fleet1_view',
+            'fleet.fleet1_view',
             array_merge(
                 $page,
                 $this->setInputsData()
@@ -103,7 +93,7 @@ class Fleet1Controller extends BaseController
     private function buildNoSlotBlock(): ?string
     {
         if (!$this->checkAvailableSlot()) {
-            return Template::getInstance()->render('fleet/fleet1_noslots_row');
+            return Template::getInstance()->render('fleet.fleet1_noslots_row');
         }
 
         return null;
@@ -133,7 +123,7 @@ class Fleet1Controller extends BaseController
                         'ship_id' => $ship_id,
                         'max_ships' => $ship_amount,
                         'consumption' => FleetsLib::shipConsumption($ship_id, $this->user),
-                        'speed' => FleetsLib::fleetMaxSpeed(null, $ship_id, $this->user),
+                        'speed' => FleetsLib::getShipSpeed($ship_id, $this->user),
                         'capacity' => FleetsLib::getMaxStorage(
                             $price[$ship_id]['capacity'],
                             $this->_research->getCurrentResearch()->getResearchHyperspaceTechnology()
@@ -148,7 +138,7 @@ class Fleet1Controller extends BaseController
 
     private function buildShipName(string $ship_name, int $ship_id): string
     {
-        $title = __('game/fleet.fl_speed_title') . FleetsLib::fleetMaxSpeed(null, $ship_id, $this->user);
+        $title = __('game/fleet.fl_speed_title') . FleetsLib::getShipSpeed($ship_id, $this->user);
 
         return UrlHelper::setUrl('', __('game/ships.' . $ship_name), $title);
     }
@@ -206,7 +196,7 @@ class Fleet1Controller extends BaseController
     {
         if ($this->_ship_count > 0
             && $this->checkAvailableSlot()) {
-            return Template::getInstance()->render('fleet/fleet1_selector_row');
+            return Template::getInstance()->render('fleet.fleet1_selector_row');
         }
 
         return '';
@@ -220,7 +210,7 @@ class Fleet1Controller extends BaseController
     private function buildNoShipsBlock()
     {
         if ($this->_ship_count <= 0) {
-            return Template::getInstance()->render('fleet/fleet1_noships_row');
+            return Template::getInstance()->render('fleet.fleet1_noships_row');
         }
 
         return '';
@@ -235,7 +225,7 @@ class Fleet1Controller extends BaseController
     {
         if ($this->_ship_count > 0
             && $this->checkAvailableSlot()) {
-            return Template::getInstance()->render('fleet/fleet1_button');
+            return Template::getInstance()->render('fleet.fleet1_button');
         }
 
         return '';

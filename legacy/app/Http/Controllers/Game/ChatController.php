@@ -44,7 +44,6 @@ class ChatController extends BaseController
                 'status_message' => (!$this->_message_data['error_block'] ? [] : ''),
                 '/status_message' => (!$this->_message_data['error_block'] ? [] : ''),
                 'error_color' => ((!isset($this->_message_data['error_color'])) ? '' : $this->_message_data['error_color']),
-                'js_path' => JS_PATH
             ]
         );
     }
