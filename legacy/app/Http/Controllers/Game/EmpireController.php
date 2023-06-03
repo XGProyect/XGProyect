@@ -73,10 +73,10 @@ class EmpireController extends BaseController
 
                 foreach ($this->objects->getObjectsList($element) as $elementId) {
                     if (!isset($empire[$element][$this->objects->getObjects($elementId)])) {
-                        $empire[$element][$this->objects->getObjects($elementId)]['element'] = __('game/' . $langLine . '.' . $this->objects->getObjects($elementId));
+                        $empire[$element][$this->objects->getObjects($elementId)]['value'] = '<th width="75px">' . __('game/' . $langLine . '.' . $this->objects->getObjects($elementId)) . '</th>';
                     }
 
-                    $empire[$element][$this->objects->getObjects($elementId)]['amount'] = $this->setStructureData($planet, $source, $element, $elementId);
+                    $empire[$element][$this->objects->getObjects($elementId)]['value'] .= '<th width="75px">' . $this->setStructureData($planet, $source, $element, $elementId) . '</th>';
                 }
             }
         }
@@ -126,17 +126,21 @@ class EmpireController extends BaseController
     {
         if ($resource == 'energy') {
             return [
-                'usedEnergy' => (FormatLib::prettyNumber($planet['planet_energy_max'] + $planet['planet_energy_used'])),
-                'maxEnergy' => FormatLib::prettyNumber($planet['planet_energy_max']),
+                'usedEnergy' => (FormatLib::prettyNumber(
+                    ((int)($planet['planet_energy_max'] + $planet['planet_energy_used']))
+                )),
+                'maxEnergy' => FormatLib::prettyNumber((int)$planet['planet_energy_max']),
             ];
         }
 
         return [
             'planetId' => $planet['planet_id'],
             'planetType' => $planet['planet_type'],
-            'planetCurrentAmount' => FormatLib::prettyNumber($planet['planet_' . $resource]),
+            'planetCurrentAmount' => FormatLib::prettyNumber((int) $planet['planet_' . $resource]),
             'planetProduction' => (
-                FormatLib::prettyNumber($planet['planet_' . $resource . '_perhour'] + Functions::readConfig($resource . '_basic_income'))
+                FormatLib::prettyNumber(
+                    ((int)($planet['planet_' . $resource . '_perhour'] + Functions::readConfig($resource . '_basic_income')))
+                )
             ),
         ];
     }

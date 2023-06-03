@@ -82,8 +82,7 @@
                 </tr>
                 @foreach ($resources as $item)
                 <tr>
-                    <th width="75px">{{ $item['element'] }}</th>
-                    <th width="75px">{!! $item['amount'] !!}</th>
+                    {!! $item['value'] !!}
                 </tr>
                 @endforeach
                 <tr>
@@ -91,8 +90,7 @@
                 </tr>
                 @foreach ($facilities as $item)
                 <tr>
-                    <th width="75px">{{ $item['element'] }}</th>
-                    <th width="75px">{!! $item['amount'] !!}</th>
+                    {!! $item['value'] !!}
                 </tr>
                 @endforeach
                 <tr height="20px">
@@ -100,14 +98,12 @@
                 </tr>
                 @foreach ($defenses as $item)
                 <tr>
-                    <th width="75px">{{ $item['element'] }}</th>
-                    <th width="75px">{!! $item['amount'] !!}</th>
+                    {!! $item['value'] !!}
                 </tr>
                 @endforeach
                 @foreach ($missiles as $item)
                 <tr>
-                    <th width="75px">{{ $item['element'] }}</th>
-                    <th width="75px">{!! $item['amount'] !!}</th>
+                    {!! $item['value'] !!}
                 </tr>
                 @endforeach
                 <tr height="20px">
@@ -115,8 +111,7 @@
                 </tr>
                 @foreach ($tech as $item)
                 <tr>
-                    <th width="75px">{{ $item['element'] }}</th>
-                    <th width="75px">{!! $item['amount'] !!}</th>
+                    {!! $item['value'] !!}
                 </tr>
                 @endforeach
                 <tr height="20px">
@@ -124,8 +119,7 @@
                 </tr>
                 @foreach ($fleet as $item)
                 <tr>
-                    <th width="75px">{{ $item['element'] }}</th>
-                    <th width="75px">{!! $item['amount'] !!}</th>
+                    {!! $item['value'] !!}
                 </tr>
                 @endforeach
             </tbody>
