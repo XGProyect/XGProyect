@@ -51,7 +51,7 @@ abstract class Functions
         );
     }
 
-    public static function readConfig(?string $name, $all = false): array|string
+    public static function readConfig(?string $name, $all = false): mixed
     {
         $configs = Options::getInstance();
 

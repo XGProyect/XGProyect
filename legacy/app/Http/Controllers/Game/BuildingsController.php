@@ -342,9 +342,9 @@ class BuildingsController extends BaseController
         return '<center>-</center>';
     }
 
-    private function canInitBuildAction(int $buildingId, int $listId): bool
+    private function canInitBuildAction($buildingId, $listId): bool
     {
-        if (!empty($listId)) {
+        if (isset($listId)) {
             return true;
         }
 

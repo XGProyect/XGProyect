@@ -51,7 +51,7 @@ class UpdatesLibrary
 
             if ($chooseToDelete) {
                 foreach ($chooseToDelete as $delete) {
-                    $users->deleteUser($delete['user_id']);
+                    $users->deleteUser((int) $delete['user_id']);
                 }
             }
 
