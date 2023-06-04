@@ -11,7 +11,7 @@
     {!! $middle1 !!}
     <table role="presentation" width="519px">
         <tr>
-            <th class="errormessage">{{ $mes }}</th>
+            <th class="errormessage">{!! $mes !!}</th>
         </tr>
     </table>
     {!! $middle2 !!}

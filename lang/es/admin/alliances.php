@@ -9,6 +9,7 @@ return [
     'al_nothing_found' => 'No se encontro la alianza',
     'al_edit' => 'Editar',
     'al_delete' => 'Borrar',
+    'al_delete_confirm' => '¿Estás seguro que deseas eliminar esta alianza?',
     'al_general_info' => 'Información general',
     'al_ranks' => 'Rangos',
     'al_members' => 'Miembros',

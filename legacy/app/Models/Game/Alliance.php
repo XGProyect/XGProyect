@@ -7,14 +7,7 @@ use Xgp\App\Core\Model;
 
 class Alliance extends Model
 {
-    /**
-     * Get Alliance Data By ID
-     *
-     * @param int $alliance_id Alliance ID
-     *
-     * @return array
-     */
-    public function getAllianceDataById($alliance_id)
+    public function getAllianceDataById(?int $alliance_id): array
     {
         $result[] = $this->db->queryFetch(
             'SELECT a.*,
@@ -362,23 +355,27 @@ class Alliance extends Model
         );
     }
 
-    /**
-     * @param int $alliance_id  Alliance ID
-     */
-    public function deleteAlliance($alliance_id)
+    public function deleteAlliance(int $alliance_id): void
     {
         try {
             $this->db->beginTransaction();
 
             $this->db->query(
                 'UPDATE `' . USERS . "` SET
-                    `user_ally_id` = '0'
+                    `user_ally_id` = '0',
+                    `user_ally_rank_id` = '0'
                 WHERE `user_ally_id` = '" . $alliance_id . "'"
             );
 
             $this->db->query(
                 'DELETE FROM `' . ALLIANCE . "`
                 WHERE `alliance_id` = '" . $alliance_id . "'
+                LIMIT 1"
+            );
+
+            $this->db->query(
+                'DELETE FROM `' . ALLIANCE_STATISTICS . "`
+                WHERE `alliance_statistic_alliance_id` = '" . $alliance_id . "'
                 LIMIT 1"
             );
 
@@ -409,7 +406,7 @@ class Alliance extends Model
         );
     }
 
-    public function checkAllianceName($alliance_name): ?string
+    public function checkAllianceName(string $alliance_name): ?string
     {
         return $this->db->queryFetch(
             'SELECT `alliance_name`
@@ -418,14 +415,7 @@ class Alliance extends Model
         );
     }
 
-    /**
-     * Check alliance tag
-     *
-     * @param string $alliance_tag Alliance Tag
-     *
-     * @return array
-     */
-    public function checkAllianceTag($alliance_tag)
+    public function checkAllianceTag(string $alliance_tag): ?string
     {
         return $this->db->queryFetch(
             'SELECT `alliance_tag`

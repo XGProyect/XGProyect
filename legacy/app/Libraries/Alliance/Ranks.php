@@ -12,7 +12,7 @@ class Ranks
 {
     private array $_ranks = [];
 
-    public function __construct($alliance_ranks)
+    public function __construct(string|array $alliance_ranks)
     {
         try {
             if (is_array($alliance_ranks)) {
@@ -25,12 +25,7 @@ class Ranks
         }
     }
 
-    /**
-     * Set the ranks
-     *
-     * @param string $ranks Ranks
-     */
-    private function setRanks($ranks)
+    private function setRanks(string $ranks): void
     {
         try {
             if (!empty($ranks)) {
@@ -41,24 +36,12 @@ class Ranks
         }
     }
 
-    /**
-     * Get the ranks
-     *
-     * @return string
-     */
-    private function getRanks()
+    private function getRanks(): array
     {
         return $this->_ranks;
     }
 
-    /**
-     * Create a new rank
-     *
-     * @param string $name Rank Name
-     *
-     * @return array
-     */
-    public function addNew($name)
+    public function addNew(string $name): array
     {
         try {
             if (empty($name) or is_null($name)) {
@@ -88,17 +71,7 @@ class Ranks
         }
     }
 
-    /**
-     * Edit ranks by ID
-     *
-     * @param int   $rank_id
-     * @param array $rights
-     *
-     * @throws Exception
-     *
-     * @return array
-     */
-    public function editRankById($rank_id, $rights)
+    public function editRankById(int $rank_id, array $rights)
     {
         try {
             if (!isset($this->getRanks()[$this->validateRankId($rank_id)])) {
@@ -117,7 +90,7 @@ class Ranks
         }
     }
 
-    public function editRankNameById(int $rank_id, string $name): string
+    public function editRankNameById(int $rank_id, string $name): array
     {
         try {
             if (!isset($this->getRanks()[$this->validateRankId($rank_id)])) {
@@ -136,7 +109,7 @@ class Ranks
         }
     }
 
-    public function deleteRankById(int $rank_id): string
+    public function deleteRankById(int $rank_id): array
     {
         array_splice($this->_ranks, $this->validateRankId($rank_id), 1);
 
@@ -148,12 +121,7 @@ class Ranks
         return $this->_ranks;
     }
 
-    /**
-     * Get all the ranks permissions as a JSON
-     *
-     * @return string
-     */
-    public function getAllRanksAsJsonString()
+    public function getAllRanksAsJsonString(): string
     {
         try {
             return json_encode($this->_ranks, JSON_THROW_ON_ERROR);

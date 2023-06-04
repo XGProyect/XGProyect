@@ -11,124 +11,64 @@ class AllianceEntity extends Entity
         parent::__construct($data);
     }
 
-    /**
-     * Return the alliance id
-     *
-     * @return string
-     */
-    public function getAllianceId()
+    public function getAllianceId(): int
     {
-        return $this->data['alliance_id'];
+        return (int) $this->data['alliance_id'];
     }
 
-    /**
-     * Return the alliance name
-     *
-     * @return string
-     */
-    public function getAllianceName()
+    public function getAllianceName(): string
     {
-        return $this->data['alliance_name'];
+        return (string) $this->data['alliance_name'];
     }
 
-    /**
-     * Return the alliance tag
-     *
-     * @return string
-     */
-    public function getAllianceTag()
+    public function getAllianceTag(): string
     {
-        return $this->data['alliance_tag'];
+        return (string) $this->data['alliance_tag'];
     }
 
-    /**
-     * Return the alliance owner
-     *
-     * @return string
-     */
-    public function getAllianceOwner()
+    public function getAllianceOwner(): int
     {
-        return $this->data['alliance_owner'];
+        return (int) $this->data['alliance_owner'];
     }
 
-    /**
-     * Return the alliance register time
-     *
-     * @return string
-     */
-    public function getAllianceRegisterTime()
+    public function getAllianceRegisterTime(): int
     {
-        return $this->data['alliance_register_time'];
+        return (int) $this->data['alliance_register_time'];
     }
 
-    /**
-     * Return the alliance description
-     *
-     * @return string
-     */
-    public function getAllianceDescription()
+    public function getAllianceDescription(): string
     {
-        return $this->data['alliance_description'];
+        return (string) $this->data['alliance_description'];
     }
 
-    /**
-     * Return the alliance web
-     *
-     * @return string
-     */
-    public function getAllianceWeb()
+    public function getAllianceWeb(): string
     {
-        return $this->data['alliance_web'];
+        return (string) $this->data['alliance_web'];
     }
 
-    /**
-     * Return the alliance text
-     *
-     * @return string
-     */
-    public function getAllianceText()
+    public function getAllianceText(): string
     {
-        return $this->data['alliance_text'];
+        return (string) $this->data['alliance_text'];
     }
 
-    /**
-     * Return the alliance image
-     *
-     * @return string
-     */
-    public function getAllianceImage()
+    public function getAllianceImage(): string
     {
-        return $this->data['alliance_image'];
+        return (string) $this->data['alliance_image'];
     }
 
-    /**
-     * Return the alliance request
-     *
-     * @return string
-     */
-    public function getAllianceRequest()
+    public function getAllianceRequest(): string
     {
-        return $this->data['alliance_request'];
+        return (string) $this->data['alliance_request'];
     }
 
-    /**
-     * Return the alliance request not allow
-     *
-     * @return string
-     */
-    public function getAllianceRequestNotAllow()
+    public function getAllianceRequestNotAllow(): int
     {
-        return $this->data['alliance_request_notallow'];
+        return (int) $this->data['alliance_request_notallow'];
     }
 
-    /**
-     * Return the alliance ranks
-     *
-     * @return string
-     */
-    public function getAllianceRanks()
+    public function getAllianceRanks(): string
     {
-        return $this->data['alliance_ranks'];
+        return (string) $this->data['alliance_ranks'];
     }
 
     /**

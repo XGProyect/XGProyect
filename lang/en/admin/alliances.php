@@ -9,6 +9,7 @@ return [
     'al_nothing_found' => 'Alliance not found',
     'al_edit' => 'Edit',
     'al_delete' => 'Delete',
+    'al_delete_confirm' => 'Are you sure you want to delete this alliance?',
     'al_general_info' => 'General information',
     'al_ranks' => 'Ranks',
     'al_members' => 'Members',

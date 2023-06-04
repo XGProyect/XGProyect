@@ -293,31 +293,16 @@ abstract class Functions
         return $lang_options;
     }
 
-    /**
-     * Shows a message box
-     *
-     * @param string $title     Box Tittle
-     * @param string $message   Box Message
-     * @param string $goto      Go to url
-     * @param string $button    Button text
-     * @param bool   $two_lines Set the message in two lines
-     *
-     * @return string
-     */
-    public static function messageBox($title, $message, $goto = '', $button = ' ok ', $two_lines = false)
+    public static function messageBox(string $title, string $message, string $goto = '', string $button = ' ok ', bool $twoLines = false): void
     {
-        return Template::getInstance()->render(
-            'alliance/alliance_message_box',
+        Template::getInstance()->view(
+            'alliance.message_box',
             [
                 'goto' => $goto,
                 'title' => $title,
-                'message_box_row' => Template::getInstance()->render(
-                    'alliance/alliance_message_box_row_' . ($two_lines ? 'two' : 'one'),
-                    [
-                        'message' => $message,
-                        'button' => $button,
-                    ]
-                ),
+                'oneRow' => !$twoLines,
+                'message' => $message,
+                'button' => $button,
             ]
         );
     }

@@ -14,7 +14,7 @@ final class MessagesOptions
     private string $_from;
     private string $_subject;
     private string $_message_text;
-    private int $_message_format;
+    private int $_message_format = MessagesFormat::SIMPLE;
 
     public function getTo(): int
     {
@@ -28,7 +28,7 @@ final class MessagesOptions
 
     public function getTime(): int
     {
-        return $this->_time == 0 ? time() : $this->_time;
+        return $this->_time === 0 ? time() : $this->_time;
     }
 
     public function getType(): int
