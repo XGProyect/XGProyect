@@ -175,11 +175,11 @@ $pricelist = [
     408 => ['metal' => 50000, 'crystal' => 50000, 'deuterium' => 0, 'energy' => 0, 'factor' => 1],
     502 => ['metal' => 8000, 'crystal' => 0, 'deuterium' => 2000, 'energy' => 0, 'factor' => 1],
     503 => ['metal' => 12500, 'crystal' => 2500, 'deuterium' => 10000, 'energy' => 0, 'factor' => 1],
-    601 => ['darkmatter_week' => 10000, 'darkmatter_month' => 100000, 'img_big' => 'commander_stern_gross', 'img_small' => 'commander_ikon'],
-    602 => ['darkmatter_week' => 5000, 'darkmatter_month' => 50000, 'img_big' => 'ogame_admiral', 'img_small' => 'admiral_ikon'],
-    603 => ['darkmatter_week' => 5000, 'darkmatter_month' => 50000, 'img_big' => 'ogame_ingenieur', 'img_small' => 'ingenieur_ikon'],
-    604 => ['darkmatter_week' => 12500, 'darkmatter_month' => 125000, 'img_big' => 'ogame_geologe', 'img_small' => 'geologe_ikon'],
-    605 => ['darkmatter_week' => 10000, 'darkmatter_month' => 100000, 'img_big' => 'ogame_technokrat', 'img_small' => 'technokrat_ikon'],
+    601 => ['darkmatter_week' => 10000, 'darkmatter_month' => 100000, 'img_big' => 'commander_stern_gross', 'img_small' => 'commander_icon'],
+    602 => ['darkmatter_week' => 5000, 'darkmatter_month' => 50000, 'img_big' => 'ogame_admiral', 'img_small' => 'admiral_icon'],
+    603 => ['darkmatter_week' => 5000, 'darkmatter_month' => 50000, 'img_big' => 'ogame_ingenieur', 'img_small' => 'engineer_icon'],
+    604 => ['darkmatter_week' => 12500, 'darkmatter_month' => 125000, 'img_big' => 'ogame_geologe', 'img_small' => 'geologist_icon'],
+    605 => ['darkmatter_week' => 10000, 'darkmatter_month' => 100000, 'img_big' => 'ogame_technokrat', 'img_small' => 'technocrat_icon'],
 ];
 
 $CombatCaps = [

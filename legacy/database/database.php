@@ -244,7 +244,7 @@ $tables['options_insert'] = 'INSERT INTO `' . OPTIONS . "` (`option_name`, `opti
 ('stat_update_time', '1'),
 ('stat_admin_level', '0'),
 ('stat_last_update', '0'),
-('premium_url', 'https://www.xgproyect.org/game.php?page=officier'),
+('premium_url', 'https://www.xgproyect.org/game.php?page=premium'),
 ('merchant_price', '3500'),
 ('auto_backup', '0'),
 ('last_backup', '0'),

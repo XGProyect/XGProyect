@@ -52,7 +52,7 @@
                     <tr class="header">
                         @foreach ($officers as $officer)
                         <td style="margin: 0 auto;" width="35px" class='header'>
-                            <a href="game.php?page=officier" accesskey="o">
+                            <a href="game.php?page=premium" accesskey="o">
                                 <img style="border:0;" src="{{ asset('upload/skins/xgproyect/premium/' . $officer['icon'] .'.gif') }}" width="32" height="32" alt="{{ $officer['name'] }}" onmouseover="return overlib('<table width=390px><tr><td class=c>{{ $officer['name'] }}</td></tr><tr><th style=text-align:left>{{ $officer['status'] }}</th></tr></table>');" onmouseout="return nd();">
                             </a>
                         </td>

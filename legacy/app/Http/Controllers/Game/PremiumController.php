@@ -12,7 +12,7 @@ use Xgp\App\Libraries\OfficiersLib;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Officier;
 
-class OfficierController extends BaseController
+class PremiumController extends BaseController
 {
     public const MODULE_ID = 15;
 
@@ -31,7 +31,14 @@ class OfficierController extends BaseController
         $this->objects = new Objects();
 
         $this->runAction();
-        $this->buildPage();
+
+        Template::getInstance()->view(
+            'premium.view',
+            [
+                'premium_pay_url' => Functions::readConfig('premium_url') != '' ? Functions::readConfig('premium_url') : 'game.php?page=premium',
+                'officier_list' => $this->buildOfficiersList(),
+            ]
+        );
     }
 
     private function runAction(): void
@@ -65,21 +72,9 @@ class OfficierController extends BaseController
 
                 $this->officierModel->setPremium($this->user['user_id'], $price, $officier, $time_to_add);
 
-                Functions::redirect('game.php?page=officier');
+                Functions::redirect('game.php?page=premium');
             }
         }
-    }
-
-    private function buildPage(): void
-    {
-        $page = [];
-        $page['premium_pay_url'] = Functions::readConfig('premium_url') != '' ? Functions::readConfig('premium_url') : 'game.php?page=officier';
-        $page['officier_list'] = $this->buildOfficiersList();
-
-        Template::getInstance()->view(
-            'game/officier_view',
-            $page
-        );
     }
 
     private function buildOfficiersList(): array
@@ -112,8 +107,8 @@ class OfficierController extends BaseController
         $item_to_parse['week_price'] = FormatLib::prettyNumber($this->getOfficierPrice($item_id, 'darkmatter_week'));
         $item_to_parse['img_big'] = $this->getOfficierImage($item_id, 'img_big');
         $item_to_parse['img_small'] = $this->getOfficierImage($item_id, 'img_small');
-        $item_to_parse['link_month'] = 'game.php?page=officier&offi=' . $item_id . '&time=month';
-        $item_to_parse['link_week'] = 'game.php?page=officier&offi=' . $item_id . '&time=week';
+        $item_to_parse['link_month'] = 'game.php?page=premium&offi=' . $item_id . '&time=month';
+        $item_to_parse['link_week'] = 'game.php?page=premium&offi=' . $item_id . '&time=week';
 
         return $item_to_parse;
     }
