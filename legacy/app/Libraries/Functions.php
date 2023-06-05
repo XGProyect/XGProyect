@@ -100,7 +100,7 @@ abstract class Functions
         }
 
         Template::getInstance()->view(
-            'message.main',
+            'message.view',
             $parse
         );
     }

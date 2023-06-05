@@ -66,7 +66,7 @@ class ShipyardController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'shipyard.main',
+            'shipyard.view',
             [
                 'message' => $this->showShipyardUpgradeMessage(),
                 'list_of_items' => $this->buildListOfItems(),

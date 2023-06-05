@@ -582,7 +582,7 @@ class AllianceController extends BaseController
         $ranks = $this->alliance->getCurrentAllianceRankObject();
 
         Template::getInstance()->view(
-            'alliance.admin.main',
+            'alliance.admin.view',
             [
                 't' => $t,
                 'request_type' => $request_type[$t],

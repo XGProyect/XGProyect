@@ -38,7 +38,7 @@ class PreferencesController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'preferences.main',
+            'preferences.view',
             array_merge(
                 $this->setMessageDisplay(),
                 $this->setUserData(),
