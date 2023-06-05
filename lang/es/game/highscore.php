@@ -12,7 +12,6 @@ return [
     'st_members' => 'Miembros',
     'st_per_member' => 'Por Miembro',
     'st_statistics' => 'Estadísticas',
-    'st_updated' => 'Actualizadas',
     'st_show' => 'Mostrar',
     'st_per' => 'por',
     'st_in_the_positions' => 'en las posiciones',

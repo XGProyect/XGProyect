@@ -50,7 +50,7 @@ class Leftmenu extends Component
             ['game.php?page=alliance', 'lm_alliance', '', '#ffffff', false, '1', '13'],
             ['game.php?page=premium', 'lm_officiers', '', '#ff8900', false, '1', '15'],
             ['game.php?page=messages', 'lm_messages', '', '#ffffff', false, '1', '18'],
-            ['game.php?page=statistics', 'lm_statistics', '&range=' . $user->stats->user_statistic_total_rank, '#ffffff', false, '2', '16'],
+            ['game.php?page=highscore', 'lm_statistics', '&range=' . $user->stats->user_statistic_total_rank, '#ffffff', false, '2', '16'],
             ['game.php?page=notes', 'lm_notes', '', '#ffffff', true, '2', '19'],
             ['game.php?page=buddies', 'lm_buddylist', '', '#ffffff', false, '2', '20'],
             ['game.php?page=search', 'lm_search', '', '#ffffff', false, '2', '17'],

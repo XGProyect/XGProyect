@@ -12,7 +12,6 @@ return [
     'st_members' => 'Member',
     'st_per_member' => 'Per Member',
     'st_statistics' => 'Statistics',
-    'st_updated' => 'Updated',
     'st_show' => 'show',
     'st_per' => 'by',
     'st_in_the_positions' => 'in ranks',

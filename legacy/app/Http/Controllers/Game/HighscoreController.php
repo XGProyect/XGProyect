@@ -6,11 +6,10 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Statistics;
 
-class StatisticsController extends BaseController
+class HighscoreController extends BaseController
 {
     public const MODULE_ID = 16;
 
@@ -37,14 +36,14 @@ class StatisticsController extends BaseController
         $type = (isset($_POST['type'])) ? $_POST['type'] : ((isset($_GET['type'])) ? $_GET['type'] : 1);
         $range = (isset($_POST['range'])) ? $_POST['range'] : ((isset($_GET['range'])) ? $_GET['range'] : 1);
 
-        $parse['who'] = '<option value="1"' . (($who == '1') ? ' SELECTED' : '') . '>' . __('game/statistics.st_player') . '</option>';
-        $parse['who'] .= '<option value="2"' . (($who == '2') ? ' SELECTED' : '') . '>' . __('game/statistics.st_alliance') . '</option>';
+        $parse['who'] = '<option value="1"' . (($who == '1') ? ' SELECTED' : '') . '>' . __('game/highscore.st_player') . '</option>';
+        $parse['who'] .= '<option value="2"' . (($who == '2') ? ' SELECTED' : '') . '>' . __('game/highscore.st_alliance') . '</option>';
 
-        $parse['type'] = '<option value="1"' . (($type == '1') ? ' SELECTED' : '') . '>' . __('game/statistics.st_points') . '</option>';
-        $parse['type'] .= '<option value="2"' . (($type == '2') ? ' SELECTED' : '') . '>' . __('game/statistics.st_fleets') . '</option>';
-        $parse['type'] .= '<option value="3"' . (($type == '3') ? ' SELECTED' : '') . '>' . __('game/statistics.st_researh') . '</option>';
-        $parse['type'] .= '<option value="4"' . (($type == '4') ? ' SELECTED' : '') . '>' . __('game/statistics.st_buildings') . '</option>';
-        $parse['type'] .= '<option value="5"' . (($type == '5') ? ' SELECTED' : '') . '>' . __('game/statistics.st_defenses') . '</option>';
+        $parse['type'] = '<option value="1"' . (($type == '1') ? ' SELECTED' : '') . '>' . __('game/highscore.st_points') . '</option>';
+        $parse['type'] .= '<option value="2"' . (($type == '2') ? ' SELECTED' : '') . '>' . __('game/highscore.st_fleets') . '</option>';
+        $parse['type'] .= '<option value="3"' . (($type == '3') ? ' SELECTED' : '') . '>' . __('game/highscore.st_researh') . '</option>';
+        $parse['type'] .= '<option value="4"' . (($type == '4') ? ' SELECTED' : '') . '>' . __('game/highscore.st_buildings') . '</option>';
+        $parse['type'] .= '<option value="5"' . (($type == '5') ? ' SELECTED' : '') . '>' . __('game/highscore.st_defenses') . '</option>';
 
         $data = $this->ranking_type($type);
         $Order = $data['order'];
@@ -57,7 +56,7 @@ class StatisticsController extends BaseController
 
             $parse['range'] = $this->build_range_list($MaxAllys, $range);
             $parse['stat_header'] = Template::getInstance()->render(
-                'stat/stat_alliancetable_header',
+                'highscore.alliance_header',
                 $parse
             );
 
@@ -66,7 +65,6 @@ class StatisticsController extends BaseController
 
             $start++;
 
-            $parse['stat_date'] = Timing::formatExtendedDate(Functions::readConfig('stat_last_update'));
             $parse['stat_values'] = '';
 
             foreach ($query as $StatRow) {
@@ -80,7 +78,7 @@ class StatisticsController extends BaseController
                 $parse['ally_points'] = FormatLib::prettyNumber($StatRow['alliance_statistic_' . $Order]);
                 $parse['ally_members_points'] = FormatLib::prettyNumber(floor($StatRow['alliance_statistic_' . $Order] / $StatRow['ally_members']));
                 $parse['stat_values'] .= Template::getInstance()->render(
-                    'stat/stat_alliancetable',
+                    'highscore.alliance_table',
                     $parse
                 );
 
@@ -89,7 +87,7 @@ class StatisticsController extends BaseController
         } else {
             $parse['range'] = $this->build_range_list($this->planet['stats_users'], $range);
             $parse['stat_header'] = Template::getInstance()->render(
-                'stat/stat_playertable_header',
+                'highscore.player_header',
                 $parse
             );
 
@@ -97,7 +95,6 @@ class StatisticsController extends BaseController
             $query = $this->statisticsModel->getUsers($Order, $start);
 
             $start++;
-            $parse['stat_date'] = Timing::formatExtendedDate(Functions::readConfig('stat_last_update'));
             $parse['stat_values'] = '';
             $previusId = 0;
 
@@ -130,7 +127,7 @@ class StatisticsController extends BaseController
                 $parse['player_rankplus'] = $this->rank_difference($ranking);
                 $parse['player_points'] = FormatLib::prettyNumber($StatRow['user_statistic_' . $Order]);
                 $parse['stat_values'] .= Template::getInstance()->render(
-                    'stat/stat_playertable',
+                    'highscore.player_table',
                     $parse
                 );
                 $start++;
@@ -138,7 +135,7 @@ class StatisticsController extends BaseController
         }
 
         Template::getInstance()->view(
-            'stat/stat_body',
+            'highscore.body',
             $parse
         );
     }
