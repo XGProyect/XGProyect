@@ -40,7 +40,7 @@ class OverviewController extends BaseController
         $this->objects = new Objects();
 
         Template::getInstance()->view(
-            'overview.body',
+            'overview.view',
             array_merge(
                 [
                     'planetName' => $this->planet['planet_name'],
