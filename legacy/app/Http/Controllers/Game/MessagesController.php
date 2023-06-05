@@ -39,14 +39,9 @@ class MessagesController extends BaseController
 
         $this->runAction();
 
-        $this->buildPage();
+        $this->{'get' . ucfirst($this->getCurrentSection()) . 'Section'}();
     }
 
-    /**
-     * Determine the current page and validate it
-     *
-     * @return string
-     */
     private function getCurrentSection(): string
     {
         if (OfficiersLib::isOfficierActive($this->user['premium_officier_commander'])) {
@@ -56,11 +51,6 @@ class MessagesController extends BaseController
         return 'default';
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $delete = filter_input(INPUT_POST, 'deletemessages');
@@ -70,25 +60,13 @@ class MessagesController extends BaseController
         }
     }
 
-    private function buildPage(): void
-    {
-        Template::getInstance()->view(
-            $this->{'get' . ucfirst($this->getCurrentSection()) . 'Section'}()
-        );
-    }
-
-    /**
-     * Build the default messages section
-     *
-     * @return string
-     */
-    private function getDefaultSection(): string
+    private function getDefaultSection(): void
     {
         // set messages as read
         $this->messagesModel->markAsRead($this->user['user_id']);
 
-        return Template::getInstance()->render(
-            'game/messages_default_view',
+        Template::getInstance()->view(
+            'messages.default',
             [
                 'message_list' => $this->getMessagesList(
                     $this->messagesModel->getByUserId($this->user['user_id'])
@@ -98,13 +76,13 @@ class MessagesController extends BaseController
         );
     }
 
-    private function getPremiumSection(): string
+    private function getPremiumSection(): void
     {
         // display an specific category of items
         $active = [];
-        $messages = [];
+        $messages = false;
         $message_list = [];
-        $delete_options = [];
+        $deleteOptions = false;
         $data = filter_input_array(INPUT_GET, FILTER_VALIDATE_INT);
 
         if (isset($data['dsp']) && $data['dsp'] == 1) {
@@ -119,41 +97,33 @@ class MessagesController extends BaseController
             }
 
             // get list of messages
-            $messages = '';
+            $messages = true;
+            $deleteOptions = true;
+
             $message_list = $this->getMessagesList(
                 $this->messagesModel->getByUserIdAndType($this->user['user_id'], $get_messages)
             );
-            $delete_options = '';
 
             // set messages as read
             $this->messagesModel->markAsReadByType($this->user['user_id'], $get_messages);
         }
 
-        return Template::getInstance()->render(
-            'game/messages_premium_view',
+        Template::getInstance()->view(
+            'messages.premium',
             array_merge(
                 [
                     'form_submit' => 'game.php?' . $_SERVER['QUERY_STRING'],
                     'message_type_list' => $this->getMessagesTypesList($active),
                     'messages' => $messages,
-                    '/messages' => $messages,
                     'messages_list' => $message_list,
-                    'delete_options' => $delete_options,
-                    '/delete_options' => $delete_options,
+                    'deleteOptions' => $deleteOptions,
                 ],
                 $this->getExtraBlocksDisplay()
             )
         );
     }
 
-    /**
-     * Return an array with a list of messages
-     *
-     * @param string $messages The messages
-     *
-     * @return array
-     */
-    private function getMessagesList($messages): array
+    private function getMessagesList(array $messages): array
     {
         $messages_list = [];
 
@@ -176,12 +146,6 @@ class MessagesController extends BaseController
         return $messages_list;
     }
 
-    /**
-     * Set the message reply icon
-     *
-     * @param integer $from
-     * @return string
-     */
     private function setMessageReply(int $from): string
     {
         if ($from > 0) {
@@ -195,11 +159,6 @@ class MessagesController extends BaseController
         return '';
     }
 
-    /**
-     * Return an array with a list of operators
-     *
-     * @return array
-     */
     private function getOperatorsAddressBook(): array
     {
         $operators = $this->messagesModel->getOperators($this->user['user_id']);
@@ -217,11 +176,6 @@ class MessagesController extends BaseController
         return $operators_list;
     }
 
-    /**
-     * Build the list of message types
-     *
-     * @return array
-     */
     private function getMessagesTypesList(array $active): array
     {
         $messages_types = $this->messagesModel->countMessagesByType($this->user['user_id']);
@@ -246,11 +200,6 @@ class MessagesController extends BaseController
         return $messages_types_list;
     }
 
-    /**
-     * Build the friends block to display
-     *
-     * @return array
-     */
     private function getFriendsAddressBook(): array
     {
         $buddies = $this->messagesModel->getFriends($this->user['user_id']);
@@ -268,11 +217,6 @@ class MessagesController extends BaseController
         return $buddies_list;
     }
 
-    /**
-     * Build the alliance members block to display
-     *
-     * @return array
-     */
     private function getAllinaceAddressBook(): array
     {
         $members = $this->messagesModel->getAllianceMembers($this->user['user_id'], $this->user['user_ally_id']);
@@ -290,11 +234,6 @@ class MessagesController extends BaseController
         return $members_list;
     }
 
-    /**
-     * Build the notes block to display
-     *
-     * @return array
-     */
     private function getNotesList(): array
     {
         $notes = $this->messagesModel->getNotes($this->user['user_id']);
@@ -313,11 +252,6 @@ class MessagesController extends BaseController
         return $notes_list;
     }
 
-    /**
-     * Get extra blocks
-     *
-     * @return array
-     */
     private function getExtraBlocksDisplay(): array
     {
         $address_book_notes_counts = $this->messagesModel->countAddressBookAndNotes($this->user['user_id'], $this->user['user_ally_id']);
@@ -369,11 +303,6 @@ class MessagesController extends BaseController
         return $blocks_set;
     }
 
-    /**
-     * Execute a delete action
-     *
-     * @return void
-     */
     private function doDeleteAction(): void
     {
         $delete = filter_input(INPUT_POST, 'deletemessages');

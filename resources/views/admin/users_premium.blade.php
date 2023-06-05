@@ -26,7 +26,7 @@
                             </td>
                             <td>
                                 <select name="{{ $item['field'] }}" class="form-control">
-                                    {{ $item['combo'] }}
+                                    {!! $item['combo'] !!}
                                 </select>
                             </td>
                         </tr>
