@@ -443,7 +443,7 @@ class FleetsLib
         $bloc['fleet_time'] = Timing::formatExtendedDate($Time);
 
         return Template::getInstance()->render(
-            'overview.overview_fleet_event',
+            'overview.fleets',
             $bloc
         );
     }
