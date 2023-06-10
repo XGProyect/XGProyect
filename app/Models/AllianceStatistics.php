@@ -45,7 +45,22 @@ class AllianceStatistics extends Model
      * @var array
      */
     protected $fillable = [
-        'alliance_statistic_buildings_points', 'alliance_statistic_buildings_old_rank', 'alliance_statistic_buildings_rank', 'alliance_statistic_defenses_points', 'alliance_statistic_defenses_old_rank', 'alliance_statistic_defenses_rank', 'alliance_statistic_ships_points', 'alliance_statistic_ships_old_rank', 'alliance_statistic_ships_rank', 'alliance_statistic_technology_points', 'alliance_statistic_technology_old_rank', 'alliance_statistic_technology_rank', 'alliance_statistic_total_points', 'alliance_statistic_total_old_rank', 'alliance_statistic_total_rank', 'alliance_statistic_update_time'
+        'alliance_statistic_buildings_points',
+        'alliance_statistic_buildings_old_rank',
+        'alliance_statistic_buildings_rank',
+        'alliance_statistic_defenses_points',
+        'alliance_statistic_defenses_old_rank',
+        'alliance_statistic_defenses_rank',
+        'alliance_statistic_ships_points',
+        'alliance_statistic_ships_old_rank',
+        'alliance_statistic_ships_rank',
+        'alliance_statistic_technology_points',
+        'alliance_statistic_technology_old_rank',
+        'alliance_statistic_technology_rank',
+        'alliance_statistic_total_points',
+        'alliance_statistic_total_old_rank',
+        'alliance_statistic_total_rank',
+        'alliance_statistic_update_time',
     ];
 
     /**
@@ -63,7 +78,23 @@ class AllianceStatistics extends Model
      * @var array
      */
     protected $casts = [
-        'alliance_statistic_alliance_id' => 'int', 'alliance_statistic_buildings_points' => 'double', 'alliance_statistic_buildings_old_rank' => 'int', 'alliance_statistic_buildings_rank' => 'int', 'alliance_statistic_defenses_points' => 'double', 'alliance_statistic_defenses_old_rank' => 'int', 'alliance_statistic_defenses_rank' => 'int', 'alliance_statistic_ships_points' => 'double', 'alliance_statistic_ships_old_rank' => 'int', 'alliance_statistic_ships_rank' => 'int', 'alliance_statistic_technology_points' => 'double', 'alliance_statistic_technology_old_rank' => 'int', 'alliance_statistic_technology_rank' => 'int', 'alliance_statistic_total_points' => 'double', 'alliance_statistic_total_old_rank' => 'int', 'alliance_statistic_total_rank' => 'int', 'alliance_statistic_update_time' => 'int'
+        'alliance_statistic_alliance_id' => 'int',
+        'alliance_statistic_buildings_points' => 'double',
+        'alliance_statistic_buildings_old_rank' => 'int',
+        'alliance_statistic_buildings_rank' => 'int',
+        'alliance_statistic_defenses_points' => 'double',
+        'alliance_statistic_defenses_old_rank' => 'int',
+        'alliance_statistic_defenses_rank' => 'int',
+        'alliance_statistic_ships_points' => 'double',
+        'alliance_statistic_ships_old_rank' => 'int',
+        'alliance_statistic_ships_rank' => 'int',
+        'alliance_statistic_technology_points' => 'double',
+        'alliance_statistic_technology_old_rank' => 'int',
+        'alliance_statistic_technology_rank' => 'int',
+        'alliance_statistic_total_points' => 'double',
+        'alliance_statistic_total_old_rank' => 'int',
+        'alliance_statistic_total_rank' => 'int',
+        'alliance_statistic_update_time' => 'int',
     ];
 
     /**
@@ -80,7 +111,7 @@ class AllianceStatistics extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

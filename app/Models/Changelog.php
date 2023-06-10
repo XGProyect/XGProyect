@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int    $changelog_id
@@ -33,7 +34,10 @@ class Changelog extends Model
      * @var array
      */
     protected $fillable = [
-        'changelog_lang_id', 'changelog_version', 'changelog_date', 'changelog_description'
+        'changelog_lang_id',
+        'changelog_version',
+        'changelog_date',
+        'changelog_description',
     ];
 
     /**
@@ -51,7 +55,11 @@ class Changelog extends Model
      * @var array
      */
     protected $casts = [
-        'changelog_id' => 'int', 'changelog_lang_id' => 'int', 'changelog_version' => 'string', 'changelog_date' => 'date', 'changelog_description' => 'string'
+        'changelog_id' => 'int',
+        'changelog_lang_id' => 'int',
+        'changelog_version' => 'string',
+        'changelog_date' => 'date',
+        'changelog_description' => 'string',
     ];
 
     /**
@@ -60,7 +68,7 @@ class Changelog extends Model
      * @var array
      */
     protected $dates = [
-        'changelog_date'
+        'changelog_date',
     ];
 
     /**
@@ -68,11 +76,15 @@ class Changelog extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 
     // Functions ...
 
     // Relations ...
+    public function language(): HasOne
+    {
+        return $this->hasOne(Languages::class, 'id', 'changelog_lang_id');
+    }
 }

@@ -33,7 +33,10 @@ class Reports extends Model
      * @var array
      */
     protected $fillable = [
-        'report_owners', 'report_content', 'report_destroyed', 'report_time'
+        'report_owners',
+        'report_content',
+        'report_destroyed',
+        'report_time',
     ];
 
     /**
@@ -51,7 +54,11 @@ class Reports extends Model
      * @var array
      */
     protected $casts = [
-        'report_rid' => 'string', 'report_owners' => 'string', 'report_content' => 'string', 'report_destroyed' => 'int', 'report_time' => 'int'
+        'report_rid' => 'string',
+        'report_owners' => 'string',
+        'report_content' => 'string',
+        'report_destroyed' => 'int',
+        'report_time' => 'int',
     ];
 
     /**
@@ -68,7 +75,7 @@ class Reports extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

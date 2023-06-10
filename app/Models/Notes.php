@@ -33,7 +33,11 @@ class Notes extends Model
      * @var array
      */
     protected $fillable = [
-        'note_owner', 'note_time', 'note_priority', 'note_title', 'note_text'
+        'note_owner',
+        'note_time',
+        'note_priority',
+        'note_title',
+        'note_text',
     ];
 
     /**
@@ -51,7 +55,11 @@ class Notes extends Model
      * @var array
      */
     protected $casts = [
-        'note_owner' => 'int', 'note_time' => 'int', 'note_priority' => 'boolean', 'note_title' => 'string', 'note_text' => 'string'
+        'note_owner' => 'int',
+        'note_time' => 'int',
+        'note_priority' => 'boolean',
+        'note_title' => 'string',
+        'note_text' => 'string',
     ];
 
     /**
@@ -68,7 +76,7 @@ class Notes extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

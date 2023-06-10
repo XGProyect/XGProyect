@@ -34,7 +34,12 @@ class Banned extends Model
      * @var array
      */
     protected $fillable = [
-        'banned_who', 'banned_theme', 'banned_time', 'banned_longer', 'banned_author', 'banned_email'
+        'banned_who',
+        'banned_theme',
+        'banned_time',
+        'banned_longer',
+        'banned_author',
+        'banned_email',
     ];
 
     /**
@@ -52,7 +57,12 @@ class Banned extends Model
      * @var array
      */
     protected $casts = [
-        'banned_who' => 'string', 'banned_theme' => 'string', 'banned_time' => 'int', 'banned_longer' => 'int', 'banned_author' => 'string', 'banned_email' => 'string'
+        'banned_who' => 'string',
+        'banned_theme' => 'string',
+        'banned_time' => 'int',
+        'banned_longer' => 'int',
+        'banned_author' => 'string',
+        'banned_email' => 'string',
     ];
 
     /**
@@ -69,7 +79,7 @@ class Banned extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

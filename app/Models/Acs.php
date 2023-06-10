@@ -34,7 +34,12 @@ class Acs extends Model
      * @var array
      */
     protected $fillable = [
-        'acs_name', 'acs_owner', 'acs_galaxy', 'acs_system', 'acs_planet', 'acs_planet_type'
+        'acs_name',
+        'acs_owner',
+        'acs_galaxy',
+        'acs_system',
+        'acs_planet',
+        'acs_planet_type',
     ];
 
     /**
@@ -52,7 +57,12 @@ class Acs extends Model
      * @var array
      */
     protected $casts = [
-        'acs_name' => 'string', 'acs_owner' => 'int', 'acs_galaxy' => 'int', 'acs_system' => 'int', 'acs_planet' => 'int', 'acs_planet_type' => 'boolean'
+        'acs_name' => 'string',
+        'acs_owner' => 'int',
+        'acs_galaxy' => 'int',
+        'acs_system' => 'int',
+        'acs_planet' => 'int',
+        'acs_planet_type' => 'boolean',
     ];
 
     /**
@@ -69,7 +79,7 @@ class Acs extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

@@ -33,7 +33,10 @@ class Buddys extends Model
      * @var array
      */
     protected $fillable = [
-        'buddy_sender', 'buddy_receiver', 'buddy_status', 'buddy_request_text'
+        'buddy_sender',
+        'buddy_receiver',
+        'buddy_status',
+        'buddy_request_text',
     ];
 
     /**
@@ -51,7 +54,11 @@ class Buddys extends Model
      * @var array
      */
     protected $casts = [
-        'buddy_id' => 'int', 'buddy_sender' => 'int', 'buddy_receiver' => 'int', 'buddy_status' => 'boolean', 'buddy_request_text' => 'string'
+        'buddy_id' => 'int',
+        'buddy_sender' => 'int',
+        'buddy_receiver' => 'int',
+        'buddy_status' => 'boolean',
+        'buddy_request_text' => 'string',
     ];
 
     /**
@@ -68,7 +75,7 @@ class Buddys extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

@@ -15,7 +15,7 @@ class SettingsService
             $settings = Options::all()->toArray();
 
             foreach ($settings as $item) {
-                $this->settings[$item['option_name']] = $item['option_value'];
+                $this->settings[$item['name']] = $item['value'];
             }
         }
 
@@ -27,8 +27,8 @@ class SettingsService
         if (!empty($key)) {
             DB::table('options')
                 ->updateOrInsert(
-                    ['option_name' => $key],
-                    ['option_value' => $value]
+                    ['name' => $key],
+                    ['value' => $value]
                 );
 
             return true;

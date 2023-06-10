@@ -45,7 +45,22 @@ class UsersStatistics extends Model
      * @var array
      */
     protected $fillable = [
-        'user_statistic_buildings_points', 'user_statistic_buildings_old_rank', 'user_statistic_buildings_rank', 'user_statistic_defenses_points', 'user_statistic_defenses_old_rank', 'user_statistic_defenses_rank', 'user_statistic_ships_points', 'user_statistic_ships_old_rank', 'user_statistic_ships_rank', 'user_statistic_technology_points', 'user_statistic_technology_old_rank', 'user_statistic_technology_rank', 'user_statistic_total_points', 'user_statistic_total_old_rank', 'user_statistic_total_rank', 'user_statistic_update_time'
+        'user_statistic_buildings_points',
+        'user_statistic_buildings_old_rank',
+        'user_statistic_buildings_rank',
+        'user_statistic_defenses_points',
+        'user_statistic_defenses_old_rank',
+        'user_statistic_defenses_rank',
+        'user_statistic_ships_points',
+        'user_statistic_ships_old_rank',
+        'user_statistic_ships_rank',
+        'user_statistic_technology_points',
+        'user_statistic_technology_old_rank',
+        'user_statistic_technology_rank',
+        'user_statistic_total_points',
+        'user_statistic_total_old_rank',
+        'user_statistic_total_rank',
+        'user_statistic_update_time',
     ];
 
     /**
@@ -63,7 +78,23 @@ class UsersStatistics extends Model
      * @var array
      */
     protected $casts = [
-        'user_statistic_user_id' => 'int', 'user_statistic_buildings_points' => 'double', 'user_statistic_buildings_old_rank' => 'int', 'user_statistic_buildings_rank' => 'int', 'user_statistic_defenses_points' => 'double', 'user_statistic_defenses_old_rank' => 'int', 'user_statistic_defenses_rank' => 'int', 'user_statistic_ships_points' => 'double', 'user_statistic_ships_old_rank' => 'int', 'user_statistic_ships_rank' => 'int', 'user_statistic_technology_points' => 'double', 'user_statistic_technology_old_rank' => 'int', 'user_statistic_technology_rank' => 'int', 'user_statistic_total_points' => 'double', 'user_statistic_total_old_rank' => 'int', 'user_statistic_total_rank' => 'int', 'user_statistic_update_time' => 'int'
+        'user_statistic_user_id' => 'int',
+        'user_statistic_buildings_points' => 'double',
+        'user_statistic_buildings_old_rank' => 'int',
+        'user_statistic_buildings_rank' => 'int',
+        'user_statistic_defenses_points' => 'double',
+        'user_statistic_defenses_old_rank' => 'int',
+        'user_statistic_defenses_rank' => 'int',
+        'user_statistic_ships_points' => 'double',
+        'user_statistic_ships_old_rank' => 'int',
+        'user_statistic_ships_rank' => 'int',
+        'user_statistic_technology_points' => 'double',
+        'user_statistic_technology_old_rank' => 'int',
+        'user_statistic_technology_rank' => 'int',
+        'user_statistic_total_points' => 'double',
+        'user_statistic_total_old_rank' => 'int',
+        'user_statistic_total_rank' => 'int',
+        'user_statistic_update_time' => 'int',
     ];
 
     /**
@@ -80,7 +111,7 @@ class UsersStatistics extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

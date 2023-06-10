@@ -36,7 +36,14 @@ class Messages extends Model
      * @var array
      */
     protected $fillable = [
-        'message_sender', 'message_receiver', 'message_time', 'message_type', 'message_from', 'message_subject', 'message_text', 'message_read'
+        'message_sender',
+        'message_receiver',
+        'message_time',
+        'message_type',
+        'message_from',
+        'message_subject',
+        'message_text',
+        'message_read',
     ];
 
     /**
@@ -54,7 +61,14 @@ class Messages extends Model
      * @var array
      */
     protected $casts = [
-        'message_sender' => 'int', 'message_receiver' => 'int', 'message_time' => 'int', 'message_type' => 'int', 'message_from' => 'string', 'message_subject' => 'string', 'message_text' => 'string', 'message_read' => 'int'
+        'message_sender' => 'int',
+        'message_receiver' => 'int',
+        'message_time' => 'int',
+        'message_type' => 'int',
+        'message_from' => 'string',
+        'message_subject' => 'string',
+        'message_text' => 'string',
+        'message_read' => 'int',
     ];
 
     /**
@@ -71,7 +85,7 @@ class Messages extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

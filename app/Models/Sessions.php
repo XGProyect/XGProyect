@@ -30,7 +30,8 @@ class Sessions extends Model
      * @var array
      */
     protected $fillable = [
-        'payload', 'last_activity'
+        'payload',
+        'last_activity',
     ];
 
     /**
@@ -48,7 +49,8 @@ class Sessions extends Model
      * @var array
      */
     protected $casts = [
-        'payload' => 'string', 'last_activity' => 'timestamp'
+        'payload' => 'string',
+        'last_activity' => 'timestamp',
     ];
 
     /**
@@ -65,7 +67,7 @@ class Sessions extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

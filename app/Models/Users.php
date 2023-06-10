@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property int $user_id
+ * @property int    $user_id
  * @property string $user_name
  * @property string $user_password
  * @property string $user_email
@@ -71,7 +71,28 @@ class Users extends Model
      * @var array
      */
     protected $casts = [
-        'user_name' => 'string', 'user_password' => 'string', 'user_email' => 'string', 'user_authlevel' => 'int', 'user_home_planet_id' => 'int', 'user_galaxy' => 'int', 'user_system' => 'int', 'user_planet' => 'int', 'user_current_planet' => 'int', 'user_lastip' => 'string', 'user_ip_at_reg' => 'string', 'user_agent' => 'string', 'user_current_page' => 'string', 'user_register_time' => 'int', 'user_onlinetime' => 'int', 'user_fleet_shortcuts' => 'string', 'user_ally_id' => 'int', 'user_ally_request' => 'int', 'user_ally_request_text' => 'string', 'user_ally_register_time' => 'int', 'user_ally_rank_id' => 'int', 'user_banned' => 'int'
+        'user_name' => 'string',
+        'user_password' => 'string',
+        'user_email' => 'string',
+        'user_authlevel' => 'int',
+        'user_home_planet_id' => 'int',
+        'user_galaxy' => 'int',
+        'user_system' => 'int',
+        'user_planet' => 'int',
+        'user_current_planet' => 'int',
+        'user_lastip' => 'string',
+        'user_ip_at_reg' => 'string',
+        'user_agent' => 'string',
+        'user_current_page' => 'string',
+        'user_register_time' => 'int',
+        'user_onlinetime' => 'int',
+        'user_fleet_shortcuts' => 'string',
+        'user_ally_id' => 'int',
+        'user_ally_request' => 'int',
+        'user_ally_request_text' => 'string',
+        'user_ally_register_time' => 'int',
+        'user_ally_rank_id' => 'int',
+        'user_banned' => 'int'
     ];
 
     /**

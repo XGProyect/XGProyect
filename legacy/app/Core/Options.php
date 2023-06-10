@@ -36,8 +36,8 @@ class Options
         if ($option != '') {
             DB::table('options')
                 ->updateOrInsert(
-                    ['option_name' => $option],
-                    ['option_value' => $value]
+                    ['name' => $option],
+                    ['value' => $value]
                 );
 
             return true;
@@ -54,7 +54,7 @@ class Options
     public function deleteOption(string $option): bool
     {
         if ($option != '') {
-            ModelsOptions::where('option_name', $option)->delete();
+            ModelsOptions::where('name', $option)->delete();
 
             return true;
         }
@@ -68,7 +68,7 @@ class Options
             $options = ModelsOptions::all()->toArray();
 
             foreach ($options as $option) {
-                $this->options[$option['option_name']] = $option['option_value'];
+                $this->options[$option['name']] = $option['value'];
             }
         }
     }

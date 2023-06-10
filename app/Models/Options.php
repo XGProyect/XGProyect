@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int $option_id
- * @property string $option_name
- * @property string $option_value
+ * @property int $id
+ * @property string $name
+ * @property string $value
+ * @property string $type
  */
 class Options extends Model
 {
-    public const UPDATED_AT = null;
-
     /**
      * The database table used by the model.
      *
@@ -25,7 +24,7 @@ class Options extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'option_id';
+    protected $primaryKey = 'id';
 
     /**
      * Attributes that should be mass-assignable.
@@ -33,7 +32,9 @@ class Options extends Model
      * @var array
      */
     protected $fillable = [
-        'option_name', 'option_value'
+        'name',
+        'value',
+        'type',
     ];
 
     /**
@@ -51,7 +52,9 @@ class Options extends Model
      * @var array
      */
     protected $casts = [
-        'option_name' => 'string', 'option_value' => 'string'
+        'name' => 'string',
+        'value' => 'string',
+        'type' => 'string',
     ];
 
     /**
@@ -68,7 +71,7 @@ class Options extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

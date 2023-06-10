@@ -47,7 +47,24 @@ class Research extends Model
      * @var array
      */
     protected $fillable = [
-        'research_user_id', 'research_current_research', 'research_espionage_technology', 'research_computer_technology', 'research_weapons_technology', 'research_shielding_technology', 'research_armour_technology', 'research_energy_technology', 'research_hyperspace_technology', 'research_combustion_drive', 'research_impulse_drive', 'research_hyperspace_drive', 'research_laser_technology', 'research_ionic_technology', 'research_plasma_technology', 'research_intergalactic_research_network', 'research_astrophysics', 'research_graviton_technology'
+        'research_user_id',
+        'research_current_research',
+        'research_espionage_technology',
+        'research_computer_technology',
+        'research_weapons_technology',
+        'research_shielding_technology',
+        'research_armour_technology',
+        'research_energy_technology',
+        'research_hyperspace_technology',
+        'research_combustion_drive',
+        'research_impulse_drive',
+        'research_hyperspace_drive',
+        'research_laser_technology',
+        'research_ionic_technology',
+        'research_plasma_technology',
+        'research_intergalactic_research_network',
+        'research_astrophysics',
+        'research_graviton_technology',
     ];
 
     /**
@@ -65,7 +82,25 @@ class Research extends Model
      * @var array
      */
     protected $casts = [
-        'research_id' => 'int', 'research_user_id' => 'int', 'research_current_research' => 'int', 'research_espionage_technology' => 'int', 'research_computer_technology' => 'int', 'research_weapons_technology' => 'int', 'research_shielding_technology' => 'int', 'research_armour_technology' => 'int', 'research_energy_technology' => 'int', 'research_hyperspace_technology' => 'int', 'research_combustion_drive' => 'int', 'research_impulse_drive' => 'int', 'research_hyperspace_drive' => 'int', 'research_laser_technology' => 'int', 'research_ionic_technology' => 'int', 'research_plasma_technology' => 'int', 'research_intergalactic_research_network' => 'int', 'research_astrophysics' => 'int', 'research_graviton_technology' => 'int'
+        'research_id' => 'int',
+        'research_user_id' => 'int',
+        'research_current_research' => 'int',
+        'research_espionage_technology' => 'int',
+        'research_computer_technology' => 'int',
+        'research_weapons_technology' => 'int',
+        'research_shielding_technology' => 'int',
+        'research_armour_technology' => 'int',
+        'research_energy_technology' => 'int',
+        'research_hyperspace_technology' => 'int',
+        'research_combustion_drive' => 'int',
+        'research_impulse_drive' => 'int',
+        'research_hyperspace_drive' => 'int',
+        'research_laser_technology' => 'int',
+        'research_ionic_technology' => 'int',
+        'research_plasma_technology' => 'int',
+        'research_intergalactic_research_network' => 'int',
+        'research_astrophysics' => 'int',
+        'research_graviton_technology' => 'int',
     ];
 
     /**
@@ -82,7 +117,7 @@ class Research extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

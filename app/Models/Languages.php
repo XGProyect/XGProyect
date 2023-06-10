@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Languages extends Model
 {
-    public const UPDATED_AT = null;
-
     /**
      * The database table used by the model.
      *
@@ -34,7 +32,7 @@ class Languages extends Model
      */
     protected $fillable = [
         'name',
-        'code'
+        'code',
     ];
 
     /**
@@ -54,7 +52,7 @@ class Languages extends Model
     protected $casts = [
         'id' => 'int',
         'name' => 'string',
-        'code' => 'string'
+        'code' => 'string',
     ];
 
     /**
@@ -71,7 +69,7 @@ class Languages extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

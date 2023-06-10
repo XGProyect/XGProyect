@@ -31,7 +31,8 @@ class AcsMembers extends Model
      * @var array
      */
     protected $fillable = [
-        'acs_group_id', 'acs_user_id'
+        'acs_group_id',
+        'acs_user_id',
     ];
 
     /**
@@ -49,7 +50,9 @@ class AcsMembers extends Model
      * @var array
      */
     protected $casts = [
-        'acs_member_id' => 'int', 'acs_group_id' => 'int', 'acs_user_id' => 'int'
+        'acs_member_id' => 'int',
+        'acs_group_id' => 'int',
+        'acs_user_id' => 'int',
     ];
 
     /**
@@ -66,7 +69,7 @@ class AcsMembers extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

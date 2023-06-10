@@ -48,7 +48,25 @@ class Buildings extends Model
      * @var array
      */
     protected $fillable = [
-        'building_planet_id', 'building_metal_mine', 'building_crystal_mine', 'building_deuterium_sintetizer', 'building_solar_plant', 'building_fusion_reactor', 'building_robot_factory', 'building_nano_factory', 'building_hangar', 'building_metal_store', 'building_crystal_store', 'building_deuterium_tank', 'building_laboratory', 'building_terraformer', 'building_ally_deposit', 'building_missile_silo', 'building_mondbasis', 'building_phalanx', 'building_jump_gate'
+        'building_planet_id',
+        'building_metal_mine',
+        'building_crystal_mine',
+        'building_deuterium_sintetizer',
+        'building_solar_plant',
+        'building_fusion_reactor',
+        'building_robot_factory',
+        'building_nano_factory',
+        'building_hangar',
+        'building_metal_store',
+        'building_crystal_store',
+        'building_deuterium_tank',
+        'building_laboratory',
+        'building_terraformer',
+        'building_ally_deposit',
+        'building_missile_silo',
+        'building_mondbasis',
+        'building_phalanx',
+        'building_jump_gate',
     ];
 
     /**
@@ -66,7 +84,26 @@ class Buildings extends Model
      * @var array
      */
     protected $casts = [
-        'building_id' => 'int', 'building_planet_id' => 'int', 'building_metal_mine' => 'int', 'building_crystal_mine' => 'int', 'building_deuterium_sintetizer' => 'int', 'building_solar_plant' => 'int', 'building_fusion_reactor' => 'int', 'building_robot_factory' => 'int', 'building_nano_factory' => 'int', 'building_hangar' => 'int', 'building_metal_store' => 'int', 'building_crystal_store' => 'int', 'building_deuterium_tank' => 'int', 'building_laboratory' => 'int', 'building_terraformer' => 'int', 'building_ally_deposit' => 'int', 'building_missile_silo' => 'int', 'building_mondbasis' => 'int', 'building_phalanx' => 'int', 'building_jump_gate' => 'int'
+        'building_id' => 'int',
+        'building_planet_id' => 'int',
+        'building_metal_mine' => 'int',
+        'building_crystal_mine' => 'int',
+        'building_deuterium_sintetizer' => 'int',
+        'building_solar_plant' => 'int',
+        'building_fusion_reactor' => 'int',
+        'building_robot_factory' => 'int',
+        'building_nano_factory' => 'int',
+        'building_hangar' => 'int',
+        'building_metal_store' => 'int',
+        'building_crystal_store' => 'int',
+        'building_deuterium_tank' => 'int',
+        'building_laboratory' => 'int',
+        'building_terraformer' => 'int',
+        'building_ally_deposit' => 'int',
+        'building_missile_silo' => 'int',
+        'building_mondbasis' => 'int',
+        'building_phalanx' => 'int',
+        'building_jump_gate' => 'int',
     ];
 
     /**
@@ -83,7 +120,7 @@ class Buildings extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

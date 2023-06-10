@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
+ * @property int    $alliance_id
  * @property string $alliance_name
  * @property string $alliance_tag
  * @property string $alliance_description
@@ -39,7 +42,17 @@ class Alliance extends Model
      * @var array
      */
     protected $fillable = [
-        'alliance_name', 'alliance_tag', 'alliance_owner', 'alliance_register_time', 'alliance_description', 'alliance_web', 'alliance_text', 'alliance_image', 'alliance_request', 'alliance_request_notallow', 'alliance_ranks'
+        'alliance_name',
+        'alliance_tag',
+        'alliance_owner',
+        'alliance_register_time',
+        'alliance_description',
+        'alliance_web',
+        'alliance_text',
+        'alliance_image',
+        'alliance_request',
+        'alliance_request_notallow',
+        'alliance_ranks',
     ];
 
     /**
@@ -57,7 +70,17 @@ class Alliance extends Model
      * @var array
      */
     protected $casts = [
-        'alliance_name' => 'string', 'alliance_tag' => 'string', 'alliance_owner' => 'int', 'alliance_register_time' => 'int', 'alliance_description' => 'string', 'alliance_web' => 'string', 'alliance_text' => 'string', 'alliance_image' => 'string', 'alliance_request' => 'string', 'alliance_request_notallow' => 'int', 'alliance_ranks' => 'string'
+        'alliance_name' => 'string',
+        'alliance_tag' => 'string',
+        'alliance_owner' => 'int',
+        'alliance_register_time' => 'int',
+        'alliance_description' => 'string',
+        'alliance_web' => 'string',
+        'alliance_text' => 'string',
+        'alliance_image' => 'string',
+        'alliance_request' => 'string',
+        'alliance_request_notallow' => 'int',
+        'alliance_ranks' => 'string',
     ];
 
     /**
@@ -74,11 +97,20 @@ class Alliance extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 
     // Functions ...
 
     // Relations ...
+    public function members(): HasMany
+    {
+        return $this->hasMany(Users::class, 'user_ally_id');
+    }
+
+    public function stats(): HasOne
+    {
+        return $this->hasOne(AllianceStatistics::class, 'alliance_statistic_alliance_id');
+    }
 }

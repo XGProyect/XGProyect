@@ -18,7 +18,7 @@ class Changelog extends Model
             LEFT JOIN `' . LANGUAGES . '` l
                 ON l.`id` = c.`changelog_lang_id`
             WHERE l.`code` = (
-                SELECT o.`option_value` FROM `' . OPTIONS . "` o WHERE `option_name` = 'lang'
+                SELECT o.`value` FROM `' . OPTIONS . "` o WHERE `name` = 'lang'
             )
             ORDER BY c.`changelog_date` DESC"
         );

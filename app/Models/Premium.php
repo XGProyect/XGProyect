@@ -35,7 +35,12 @@ class Premium extends Model
      * @var array
      */
     protected $fillable = [
-        'premium_dark_matter', 'premium_officier_commander', 'premium_officier_admiral', 'premium_officier_engineer', 'premium_officier_geologist', 'premium_officier_technocrat'
+        'premium_dark_matter',
+        'premium_officier_commander',
+        'premium_officier_admiral',
+        'premium_officier_engineer',
+        'premium_officier_geologist',
+        'premium_officier_technocrat',
     ];
 
     /**
@@ -53,7 +58,13 @@ class Premium extends Model
      * @var array
      */
     protected $casts = [
-        'premium_user_id' => 'int', 'premium_dark_matter' => 'int', 'premium_officier_commander' => 'int', 'premium_officier_admiral' => 'int', 'premium_officier_engineer' => 'int', 'premium_officier_geologist' => 'int', 'premium_officier_technocrat' => 'int'
+        'premium_user_id' => 'int',
+        'premium_dark_matter' => 'int',
+        'premium_officier_commander' => 'int',
+        'premium_officier_admiral' => 'int',
+        'premium_officier_engineer' => 'int',
+        'premium_officier_geologist' => 'int',
+        'premium_officier_technocrat' => 'int',
     ];
 
     /**
@@ -70,7 +81,7 @@ class Premium extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

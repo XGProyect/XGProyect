@@ -40,7 +40,17 @@ class Defenses extends Model
      * @var array
      */
     protected $fillable = [
-        'defense_planet_id', 'defense_rocket_launcher', 'defense_light_laser', 'defense_heavy_laser', 'defense_ion_cannon', 'defense_gauss_cannon', 'defense_plasma_turret', 'defense_small_shield_dome', 'defense_large_shield_dome', 'defense_anti-ballistic_missile', 'defense_interplanetary_missile'
+        'defense_planet_id',
+        'defense_rocket_launcher',
+        'defense_light_laser',
+        'defense_heavy_laser',
+        'defense_ion_cannon',
+        'defense_gauss_cannon',
+        'defense_plasma_turret',
+        'defense_small_shield_dome',
+        'defense_large_shield_dome',
+        'defense_anti-ballistic_missile',
+        'defense_interplanetary_missile',
     ];
 
     /**
@@ -58,9 +68,19 @@ class Defenses extends Model
      * @var array
      */
     protected $casts = [
-        'defense_id' => 'int', 'defense_planet_id' => 'int', 'defense_rocket_launcher' => 'int', 'defense_light_laser' => 'int', 'defense_heavy_laser' => 'int', 'defense_ion_cannon' => 'int', 'defense_gauss_cannon' => 'int', 'defense_plasma_turret' => 'int', 'defense_small_shield_dome' => 'int', 'defense_large_shield_dome' => 'int', 'defense_anti-ballistic_missile' => 'int', 'defense_interplanetary_missile' => 'int'
+        'defense_id' => 'int',
+        'defense_planet_id' => 'int',
+        'defense_rocket_launcher' => 'int',
+        'defense_light_laser' => 'int',
+        'defense_heavy_laser' => 'int',
+        'defense_ion_cannon' => 'int',
+        'defense_gauss_cannon' => 'int',
+        'defense_plasma_turret' => 'int',
+        'defense_small_shield_dome' => 'int',
+        'defense_large_shield_dome' => 'int',
+        'defense_anti-ballistic_missile' => 'int',
+        'defense_interplanetary_missile' => 'int',
     ];
-
     /**
      * The attributes that should be mutated to dates.
      *
@@ -75,7 +95,7 @@ class Defenses extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 

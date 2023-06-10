@@ -65,7 +65,44 @@ class Planets extends Model
      * @var array
      */
     protected $fillable = [
-        'planet_name', 'planet_user_id', 'planet_galaxy', 'planet_system', 'planet_planet', 'planet_last_update', 'planet_type', 'planet_destroyed', 'planet_b_building', 'planet_b_building_id', 'planet_b_tech', 'planet_b_tech_id', 'planet_b_hangar', 'planet_b_hangar_id', 'planet_image', 'planet_diameter', 'planet_field_current', 'planet_field_max', 'planet_temp_min', 'planet_temp_max', 'planet_metal', 'planet_metal_perhour', 'planet_crystal', 'planet_crystal_perhour', 'planet_deuterium', 'planet_deuterium_perhour', 'planet_energy_used', 'planet_energy_max', 'planet_building_metal_mine_percent', 'planet_building_crystal_mine_percent', 'planet_building_deuterium_sintetizer_percent', 'planet_building_solar_plant_percent', 'planet_building_fusion_reactor_percent', 'planet_ship_solar_satellite_percent', 'planet_last_jump_time', 'planet_debris_metal', 'planet_debris_crystal', 'planet_invisible_start_time'
+        'planet_name',
+        'planet_user_id',
+        'planet_galaxy',
+        'planet_system',
+        'planet_planet',
+        'planet_last_update',
+        'planet_type',
+        'planet_destroyed',
+        'planet_b_building',
+        'planet_b_building_id',
+        'planet_b_tech',
+        'planet_b_tech_id',
+        'planet_b_hangar',
+        'planet_b_hangar_id',
+        'planet_image',
+        'planet_diameter',
+        'planet_field_current',
+        'planet_field_max',
+        'planet_temp_min',
+        'planet_temp_max',
+        'planet_metal',
+        'planet_metal_perhour',
+        'planet_crystal',
+        'planet_crystal_perhour',
+        'planet_deuterium',
+        'planet_deuterium_perhour',
+        'planet_energy_used',
+        'planet_energy_max',
+        'planet_building_metal_mine_percent',
+        'planet_building_crystal_mine_percent',
+        'planet_building_deuterium_sintetizer_percent',
+        'planet_building_solar_plant_percent',
+        'planet_building_fusion_reactor_percent',
+        'planet_ship_solar_satellite_percent',
+        'planet_last_jump_time',
+        'planet_debris_metal',
+        'planet_debris_crystal',
+        'planet_invisible_start_time',
     ];
 
     /**
@@ -83,7 +120,42 @@ class Planets extends Model
      * @var array
      */
     protected $casts = [
-        'planet_name' => 'string', 'planet_user_id' => 'int', 'planet_galaxy' => 'int', 'planet_system' => 'int', 'planet_planet' => 'int', 'planet_last_update' => 'int', 'planet_type' => 'int', 'planet_destroyed' => 'int', 'planet_b_building' => 'int', 'planet_b_building_id' => 'string', 'planet_b_tech' => 'int', 'planet_b_tech_id' => 'int', 'planet_b_hangar' => 'int', 'planet_b_hangar_id' => 'string', 'planet_image' => 'string', 'planet_diameter' => 'int', 'planet_field_current' => 'int', 'planet_field_max' => 'int', 'planet_temp_min' => 'int', 'planet_temp_max' => 'int', 'planet_metal' => 'double', 'planet_metal_perhour' => 'int', 'planet_crystal' => 'double', 'planet_crystal_perhour' => 'int', 'planet_deuterium' => 'double', 'planet_deuterium_perhour' => 'int', 'planet_energy_used' => 'int', 'planet_energy_max' => 'int', 'planet_building_metal_mine_percent' => 'int', 'planet_building_crystal_mine_percent' => 'int', 'planet_building_deuterium_sintetizer_percent' => 'int', 'planet_building_solar_plant_percent' => 'int', 'planet_building_fusion_reactor_percent' => 'int', 'planet_ship_solar_satellite_percent' => 'int', 'planet_last_jump_time' => 'int', 'planet_invisible_start_time' => 'int'
+        'planet_name' => 'string',
+        'planet_user_id' => 'int',
+        'planet_galaxy' => 'int',
+        'planet_system' => 'int',
+        'planet_planet' => 'int',
+        'planet_last_update' => 'int',
+        'planet_type' => 'int',
+        'planet_destroyed' => 'int',
+        'planet_b_building' => 'int',
+        'planet_b_building_id' => 'string',
+        'planet_b_tech' => 'int',
+        'planet_b_tech_id' => 'int',
+        'planet_b_hangar' => 'int',
+        'planet_b_hangar_id' => 'string',
+        'planet_image' => 'string',
+        'planet_diameter' => 'int',
+        'planet_field_current' => 'int',
+        'planet_field_max' => 'int',
+        'planet_temp_min' => 'int',
+        'planet_temp_max' => 'int',
+        'planet_metal' => 'double',
+        'planet_metal_perhour' => 'int',
+        'planet_crystal' => 'double',
+        'planet_crystal_perhour' => 'int',
+        'planet_deuterium' => 'double',
+        'planet_deuterium_perhour' => 'int',
+        'planet_energy_used' => 'int',
+        'planet_energy_max' => 'int',
+        'planet_building_metal_mine_percent' => 'int',
+        'planet_building_crystal_mine_percent' => 'int',
+        'planet_building_deuterium_sintetizer_percent' => 'int',
+        'planet_building_solar_plant_percent' => 'int',
+        'planet_building_fusion_reactor_percent' => 'int',
+        'planet_ship_solar_satellite_percent' => 'int',
+        'planet_last_jump_time' => 'int',
+        'planet_invisible_start_time' => 'int',
     ];
 
     /**
@@ -100,7 +172,7 @@ class Planets extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 
