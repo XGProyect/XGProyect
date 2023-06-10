@@ -35,7 +35,14 @@ class BuddiesController extends BaseController
 
         $this->runAction();
 
-        $this->buildPage();
+        Template::getInstance()->view(
+            'buddies.view',
+            [
+                'list_of_requests_received' => $this->buildListOfRequestsReceived(),
+                'list_of_requests_sent' => $this->buildListOfRequestsSent(),
+                'list_of_buddies' => $this->buildListOfBuddies()
+            ]
+        );
     }
 
     private function setUpBudies(): void
@@ -46,12 +53,7 @@ class BuddiesController extends BaseController
         );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
-    private function runAction()
+    private function runAction(): void
     {
         $mode = filter_input(INPUT_GET, 'mode', FILTER_VALIDATE_INT);
         $sm = filter_input(INPUT_GET, 'sm', FILTER_VALIDATE_INT);
@@ -78,14 +80,7 @@ class BuddiesController extends BaseController
         }
     }
 
-    /**
-     * Exec provided action
-     *
-     * @param string $action Action
-     *
-     * @throws Exception
-     */
-    private function execAction($action)
+    private function execAction($action): void
     {
         try {
             if (empty($action)) {
@@ -99,12 +94,7 @@ class BuddiesController extends BaseController
         }
     }
 
-    /**
-     * Reject, Cancel, Delete or Remove a buddy request
-     *
-     * @return void
-     */
-    private function removeRequest()
+    private function removeRequest(): void
     {
         $bid = filter_input(INPUT_GET, 'bid', FILTER_VALIDATE_INT);
 
@@ -129,12 +119,7 @@ class BuddiesController extends BaseController
         $this->buddiesModel->removeBuddyById($bid, $this->user['user_id']);
     }
 
-    /**
-     * Accept a buddy request
-     *
-     * @return void
-     */
-    private function acceptRequest()
+    private function acceptRequest(): void
     {
         $bid = filter_input(INPUT_GET, 'bid', FILTER_VALIDATE_INT);
 
@@ -147,12 +132,7 @@ class BuddiesController extends BaseController
         $this->buddiesModel->setBuddyStatusById($bid, $this->user['user_id']);
     }
 
-    /**
-     * Send a buddy request
-     *
-     * @return void
-     */
-    private function sendRequest()
+    private function sendRequest(): void
     {
         $user = filter_input(INPUT_POST, 'user', FILTER_VALIDATE_INT);
         $text = filter_input(INPUT_POST, 'text');
@@ -176,15 +156,7 @@ class BuddiesController extends BaseController
         );
     }
 
-    /**
-     * Send message
-     *
-     * @param int $to   To
-     * @param int $type Type
-     *
-     * @return void
-     */
-    private function sendMessage($to, $type)
+    private function sendMessage(int $to, int $type): void
     {
         $types = [
             1 => [
@@ -208,7 +180,7 @@ class BuddiesController extends BaseController
         Functions::sendMessage(
             $to,
             $this->user['user_id'],
-            '',
+            0,
             5,
             $this->user['user_name'],
             __('game/buddies.' . $types[$type]['title']),
@@ -220,12 +192,7 @@ class BuddiesController extends BaseController
         );
     }
 
-    /**
-     * Build the buddy request form page
-     *
-     * @return void
-     */
-    private function buildRequestForm()
+    private function buildRequestForm(): void
     {
         $user = filter_input(INPUT_GET, 'u', FILTER_VALIDATE_INT);
 
@@ -240,34 +207,12 @@ class BuddiesController extends BaseController
         }
 
         Template::getInstance()->view(
-            'game/buddies_request',
+            'buddies.request',
             $user
         );
     }
 
-    private function buildPage(): void
-    {
-        /**
-         * Parse the items
-         */
-        $page = [];
-        $page['list_of_requests_received'] = $this->buildListOfRequestsReceived();
-        $page['list_of_requests_sent'] = $this->buildListOfRequestsSent();
-        $page['list_of_buddies'] = $this->buildListOfBuddies();
-
-        // display the page
-        Template::getInstance()->view(
-            'game/buddies_view',
-            $page
-        );
-    }
-
-    /**
-     * Build the list of requests received
-     *
-     * @return string
-     */
-    private function buildListOfRequestsReceived()
+    private function buildListOfRequestsReceived(): array
     {
         $received_requests = $this->buddy->getReceivedRequests();
         $rows = [];
@@ -281,12 +226,7 @@ class BuddiesController extends BaseController
         return $rows;
     }
 
-    /**
-     * Build the list of requests sent
-     *
-     * @return string
-     */
-    private function buildListOfRequestsSent()
+    private function buildListOfRequestsSent(): array
     {
         $requests_sent = $this->buddy->getSentRequests();
         $rows = [];
@@ -300,12 +240,7 @@ class BuddiesController extends BaseController
         return $rows;
     }
 
-    /**
-     * Build the list of buddies
-     *
-     * @return array
-     */
-    private function buildListOfBuddies()
+    private function buildListOfBuddies(): array
     {
         $buddies = $this->buddy->getBuddies();
         $rows = [];
@@ -343,30 +278,16 @@ class BuddiesController extends BaseController
         ];
     }
 
-    /**
-     * Set the text
-     *
-     * @param BuddyEntity $buddy Buddy
-     *
-     * @return string
-     */
-    private function setText(BuddyEntity $buddy, $online_time)
+    private function setText(BuddyEntity $buddy, int $onlineTime): string
     {
         if ($buddy->getBuddyStatus() == BuddiesStatus::isBuddy) {
-            return Timing::setOnlineStatus($online_time);
+            return Timing::setOnlineStatus($onlineTime);
         } else {
             return $buddy->getRequestText();
         }
     }
 
-    /**
-     * Set action button based on the request status
-     *
-     * @param BuddyEntity $buddy Buddy
-     *
-     * @return string
-     */
-    private function setAction(BuddyEntity $buddy)
+    private function setAction(BuddyEntity $buddy): string
     {
         $bid = $buddy->getBuddyId();
 

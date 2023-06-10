@@ -32,7 +32,7 @@ class Buddies extends Model
         );
     }
 
-    public function getBuddyDataById(int $userId): array
+    public function getBuddyDataById(int $userId): ?array
     {
         return $this->db->queryFetch(
             'SELECT u.`user_id`,
@@ -45,7 +45,7 @@ class Buddies extends Model
                     a.`alliance_name`
             FROM ' . USERS . ' AS u
             LEFT JOIN `' . ALLIANCE . "` AS a ON a.`alliance_id` = u.`user_ally_id`
-            WHERE u.`user_id`='" . (int) $userId . "'"
+            WHERE u.`user_id` = '" . $userId . "'"
         );
     }
 
@@ -85,15 +85,22 @@ class Buddies extends Model
         );
     }
 
-    public function getBuddyIdByReceiverAndSender(int $send_to, int $userId): array
+    public function getBuddyIdByReceiverAndSender(int $sendTo, int $userId): ?array
     {
         return $this->db->queryFetch(
-            'SELECT `buddy_id`
-            FROM `' . BUDDY . "`
-            WHERE (`buddy_receiver` = '" . (int) $userId . "' AND
-                    `buddy_sender` = '" . (int) $send_to . "') OR
-                            (`buddy_receiver` = '" . (int) $send_to . "' AND
-                                    `buddy_sender` = '" . (int) $userId . "')"
+            'SELECT
+                `buddy_id`
+            FROM
+                `' . BUDDY . "`
+            WHERE (
+                `buddy_receiver` = '" . $userId . "'
+            AND
+                `buddy_sender` = '" . $sendTo . "'
+            ) OR (
+                `buddy_receiver` = '" . $sendTo . "'
+            AND
+                `buddy_sender` = '" . $userId . "'
+            )"
         );
     }
 
