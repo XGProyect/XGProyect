@@ -5,7 +5,11 @@
 <div id="content" role="main">
     <table width="519">
         <tr>
-            <td class="c" colspan="4"><a href="game.php?page=renameplanet">{{ __('game/overview.ov_planet') }} "{{ $planetName }}"</a> ({{ $username }})</td>
+            <td class="c" colspan="4">
+                <a href="#" title="{{ __('game/overview.ov_abandon_rename') }}" onclick="f('game.php?page=planetlayer', '{{ __('game/overview.ov_abandon_rename') }} {{ $planetName }}')">
+                    {{ __('game/overview.ov_planet') }} "{{ $planetName }}"
+                </a> ({{ $username }})
+            </td>
         </tr>
         {!! $newMessage !!}
         <tr>

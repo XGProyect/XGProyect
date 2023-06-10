@@ -32,6 +32,7 @@ class Topnav extends Component
         $planet = Planets::where([
             ['planet_user_id', '=', $user->user_id],
             ['planet_id', '=', $user->user_current_planet],
+            ['planet_destroyed', '=', 0],
         ])->firstOrFail();
 
         $metal = FormatLib::prettyNumber($planet->planet_metal);

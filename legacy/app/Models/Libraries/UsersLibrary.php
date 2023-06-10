@@ -185,13 +185,14 @@ class UsersLibrary extends Model
         );
     }
 
-    public function getUserPlanetByIdAndUserId(int $planetId, int $userId): array
+    public function getUserPlanetByIdAndUserId(int $planetId, int $userId): ?array
     {
         return $this->db->queryFetch(
             'SELECT `planet_id`
             FROM ' . PLANETS . "
             WHERE `planet_id` = '" . $planetId . "'
-            AND `planet_user_id` = '" . $userId . "';"
+            AND `planet_user_id` = '" . $userId . "'
+            AND `planet_destroyed` = 0;"
         );
     }
 

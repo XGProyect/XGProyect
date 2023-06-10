@@ -1,4 +1,4 @@
-@extends('master.game')
+@extends('master.game', ['noTopnav' => $topnav, 'noLeftMenu' => $menu])
 
 @section('metatags')
 @if($dest)

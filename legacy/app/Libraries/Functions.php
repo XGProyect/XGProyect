@@ -80,23 +80,36 @@ abstract class Functions
         return self::readConfig('fleet_speed') / 2500;
     }
 
-    public static function message($mes, ?string $dest = null, string $time = '3', bool $topnav = false, bool $menu = true, $center = true): void
+    public static function message(string $mes, ?string $dest = null, string $time = '3', bool $topnav = true, bool $menu = true, $center = true): void
     {
-        $parse['mes'] = $mes;
-        $parse['dest'] = $dest;
-        $parse['time'] = $time;
-        $parse['middle1'] = '';
-        $parse['middle2'] = '';
+        $middle = [
+            'middle1' => '',
+            'middle2' => '',
+        ];
 
         if ($center) {
-            $parse['middle1'] = '<div id="content">';
-            $parse['middle2'] = '</div>';
+            $middle['middle1'] = '<div id="content">';
+            $middle['middle2'] = '</div>';
         }
 
         Template::getInstance()->view(
             'message.view',
-            $parse
+            array_merge(
+                $middle,
+                [
+                    'mes' => $mes,
+                    'dest' => $dest,
+                    'time' => $time,
+                    'topnav' => $topnav === true ? null : true,
+                    'menu' => $menu === true ? null : true,
+                ]
+            )
         );
+    }
+
+    public static function popupMessage(string $mes, ?string $dest = null, string $time = '3'): void
+    {
+        self::message($mes, $dest, $time, false, false, false);
     }
 
     public static function isModuleAccesible(int $module = 0): int

@@ -5,6 +5,7 @@ return [
     'ov_have_new_messages' => 'Tienes %m mensajes nuevos',
     'ov_free' => 'Libre',
     'ov_place' => ':points (Lugar :url de :total)',
+    'ov_abandon_rename' => 'abandonar/renombrar',
     'ov_planet' => 'Planeta',
     'ov_server_time' => 'Hora del servidor',
     'ov_events' => 'Eventos',
