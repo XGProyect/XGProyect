@@ -183,7 +183,7 @@ class FleetsLib
 
             $resources_popup = (new Page())->jsReady(
                 Template::getInstance()->render(
-                    'general/fleet_resources_popup_view',
+                    'overview.fleets_popup',
                     $popup
                 )
             );
