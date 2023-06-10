@@ -56,13 +56,7 @@ abstract class Functions
         $configs = Options::getInstance();
 
         if ($all) {
-            $return = [];
-
-            foreach ($configs->getOptions(null) as $row) {
-                $return[$row['option_name']] = $row['option_value'];
-            }
-
-            return $return;
+            return $configs->getOptions(null);
         } else {
             return $configs->getOptions($name);
         }

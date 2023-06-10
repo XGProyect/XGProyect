@@ -3,20 +3,20 @@
 namespace App\View\Components;
 
 use App\Models\Users;
+use App\Services\SettingsService;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\FormatLib;
-use Xgp\App\Libraries\Functions;
 
 class Leftmenu extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(private SettingsService $settingsService)
     {
     }
 
@@ -32,7 +32,7 @@ class Leftmenu extends Component
         // :$this->current_planet['stats_users'] : $this->current_user['user_statistic_total_rank'];
 
         $menu = [];
-        $modules = explode(';', Functions::readConfig('modules'));
+        $modules = explode(';', $this->settingsService->get('modules'));
         $pages = [
             ['game.php?page=overview', 'lm_overview', '', '#ffffff', false, '1', '1'],
             ['game.php?page=supplies', 'lm_resources', '', '#ffffff', false, '1', '3'],
@@ -56,7 +56,7 @@ class Leftmenu extends Component
             ['game.php?page=search', 'lm_search', '', '#ffffff', false, '2', '17'],
             ['game.php?page=preferences', 'lm_options', '', '#ffffff', false, '2', '21'],
             ['game.php?page=logout', 'lm_logout', '', '#ffffff', false, '2', ''],
-            [Functions::readConfig('forum_url'), 'lm_forums', '', '#ffffff', false, '3', '14'],
+            [$this->settingsService->get('forum_url'), 'lm_forums', '', '#ffffff', false, '3', '14'],
         ];
         $blocks = [
             '1' => ['ogame-produktion.jpg', '110', '40'],
@@ -88,7 +88,7 @@ class Leftmenu extends Component
                 'blocks' => $blocks,
                 'menu' => $menu,
                 'isAdmin' => $user->user_authlevel > UserRanksEnumerator::PLAYER,
-                'servername' => Functions::readConfig('game_name'),
+                'servername' => $this->settingsService->get('game_name'),
                 'changelog' => UrlHelper::setUrl('game.php?page=changelog', SYSTEM_VERSION),
                 'version' => SYSTEM_VERSION,
                 'year' => date('Y'),

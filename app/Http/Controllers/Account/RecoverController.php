@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account;
 use App\Http\Requests\RecoverRequest;
 use App\Mail\Recover;
 use App\Models\Users;
+use App\Services\SettingsService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Controller as BaseController;
@@ -14,12 +15,16 @@ use Xgp\App\Libraries\Functions;
 
 class RecoverController extends BaseController
 {
+    public function __construct(private SettingsService $settingsService)
+    {
+    }
+
     public function __invoke(): View|Factory
     {
         return view(
             'account.recover',
             [
-                'gameName' => Functions::readConfig('game_name'),
+                'gameName' => $this->settingsService->get('game_name'),
             ]
         );
     }

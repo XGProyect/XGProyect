@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 class Options
 {
     private static $instance = null;
+    private bool $initialized = false;
+    private array $options = [];
 
     public static function getInstance(): Options
     {
@@ -18,12 +20,14 @@ class Options
         return self::$instance;
     }
 
-    public function getOptions(?string $option)
+    public function getOptions(?string $option): mixed
     {
+        $this->loadOptions();
+
         if (empty($option)) {
-            return ModelsOptions::all()->toArray();
+            return $this->options;
         } else {
-            return ModelsOptions::where('option_name', $option)->firstOrFail()->option_value;
+            return $this->options[$option] ?? null;
         }
     }
 
@@ -56,5 +60,16 @@ class Options
         }
 
         return false;
+    }
+
+    private function loadOptions(): void
+    {
+        if (!$this->initialized) {
+            $options = ModelsOptions::all()->toArray();
+
+            foreach ($options as $option) {
+                $this->options[$option['option_name']] = $option['option_value'];
+            }
+        }
     }
 }

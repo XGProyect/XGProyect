@@ -40,9 +40,6 @@ define(
 // SYSTEM ROOT, IGNORING PUBLIC
 define('SYSTEM_ROOT', PROTOCOL . strtr(BASE_PATH, ['public' => '', 'public/' => '']) . '/');
 
-// GAME URL
-define('GAMEURL', PROTOCOL . $_SERVER['HTTP_HOST'] . '/');
-
 // ADMIN PATHS
 define('ADM_URL', PROTOCOL . strtr(BASE_PATH, ['public' => '', 'public/' => '']) . '/');
 
@@ -55,7 +52,6 @@ define('APP_PATH', XGP_ROOT . 'app' . DIRECTORY_SEPARATOR);
 define('CONFIGS_PATH', config_path() . DIRECTORY_SEPARATOR);
 define('DATABASE_PATH', XGP_ROOT . 'database' . DIRECTORY_SEPARATOR);
 define('PUBLIC_PATH', XGP_ROOT . 'public' . DIRECTORY_SEPARATOR);
-define('RESOURCES_PATH', XGP_ROOT . 'resources' . DIRECTORY_SEPARATOR);
 
 /**
  *
@@ -64,9 +60,7 @@ define('RESOURCES_PATH', XGP_ROOT . 'resources' . DIRECTORY_SEPARATOR);
  */
 define('CONTROLLERS_PATH', APP_PATH . 'Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR);
 define('CORE_PATH', APP_PATH . 'Core' . DIRECTORY_SEPARATOR);
-define('HELPERS_PATH', APP_PATH . 'Helpers' . DIRECTORY_SEPARATOR);
 define('LIB_PATH', APP_PATH . 'Libraries' . DIRECTORY_SEPARATOR);
-define('MODELS_PATH', APP_PATH . 'Models' . DIRECTORY_SEPARATOR);
 
 /**
  *
@@ -88,20 +82,10 @@ define('UPDATE_PATH', DATABASE_PATH . 'update' . DIRECTORY_SEPARATOR);
 
 /**
  *
- * RESOURCES DIRECTORY STRUCTURE
- *
- */
-define('VIEWS_DIR', RESOURCES_PATH . 'views' . DIRECTORY_SEPARATOR);
-
-/**
- *
  * PUBLIC DIRECTORY STRUCTURE
  *
  */
-define('CSS_PATH', 'css' . DIRECTORY_SEPARATOR);
-define('ADMIN_PUBLIC_PATH', 'admin' . DIRECTORY_SEPARATOR);
 define('IMG_PATH', 'images' . DIRECTORY_SEPARATOR);
-define('PUB_INS_PATH', 'install' . DIRECTORY_SEPARATOR);
 define('UPLOAD_PATH', 'upload' . DIRECTORY_SEPARATOR);
 
 /**
