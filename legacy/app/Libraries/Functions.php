@@ -14,31 +14,17 @@ use Xgp\App\Libraries\Messenger\Messenger;
 abstract class Functions
 {
     /**
-     * Return a new instance of Template
-     *
-     * @return Template
-     */
-    public static function getTemplate(): Template
-    {
-        return new Template();
-    }
-
-    /**
-     * chronoApplet
-     *
      * @param string  $type  Type
      * @param string  $ref   Ref
      * @param string  $value Value
      * @param boolean $init  Init
-     *
-     * @return string
      */
-    public static function chronoApplet($type, $ref, $value, $init)
+    public static function chronoApplet($type, $ref, $value, $init): string
     {
         if ($init == true) {
-            $template = 'general/chrono_applet_init';
+            $template = 'scripts.chrono_applet_init';
         } else {
-            $template = 'general/chrono_applet';
+            $template = 'scripts.chrono_applet';
         }
 
         $parse['type'] = $type;
