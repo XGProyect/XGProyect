@@ -10,11 +10,6 @@ use Xgp\App\Libraries\Users;
 
 class AdministrationLib
 {
-    public static function getTemplate(): Template
-    {
-        return new Template();
-    }
-
     public static function haveAccess($userLevel): bool
     {
         return ($userLevel >= 1);

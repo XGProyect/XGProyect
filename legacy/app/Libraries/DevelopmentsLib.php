@@ -9,11 +9,6 @@ use Xgp\App\Core\Template;
 
 class DevelopmentsLib
 {
-    public static function getTemplate(): Template
-    {
-        return new Template();
-    }
-
     public static function setBuildingPage(int $element): string
     {
         $supplies_array = [1, 2, 3, 4, 12, 22, 23, 24];

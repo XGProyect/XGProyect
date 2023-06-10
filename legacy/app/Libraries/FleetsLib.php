@@ -499,14 +499,4 @@ class FleetsLib
     {
         return ($fleet['fleet_resource_metal'] != 0 or $fleet['fleet_resource_crystal'] != 0 or $fleet['fleet_resource_deuterium'] != 0);
     }
-
-    /**
-     * Return a new instance of Template
-     *
-     * @return Template
-     */
-    private static function getTemplate(): Template
-    {
-        return new Template();
-    }
 }
