@@ -13,7 +13,7 @@
                     <table width="100%">
                         <tr>
                             <td style="background-color: transparent;" align="left">
-                                <a href="game.php?page=infos&gid={{ $item['tt_info'] }}">
+                                <a href="game.php?page=infos&gid={{ $item['tt_info'] }}" style="text-decoration: none;">
                                     <img src="{{ asset('upload/skins/xgproyect/elements/' . $item['tt_info'] . '.gif') }}" alt="{{ $item['tt_name'] }}" style="height: 28px; width: 28px;">
                                     <span style="vertical-align: top; font-weight: normal;">{{ $item['tt_name'] }}</span>
                                 </a>
@@ -40,7 +40,7 @@
                     <table width="100%">
                         <tr>
                             <td style="background-color: transparent;" align="left">
-                                <a href="game.php?page=infos&gid={{ $item['tt_info'] }}">
+                                <a href="game.php?page=infos&gid={{ $item['tt_info'] }}" style="text-decoration: none;">
                                     <img src="{{ asset('upload/skins/xgproyect/elements/' . $item['tt_info'] . '.gif') }}" alt="{{ $item['tt_name'] }}" style="height: 28px; width: 28px;">
                                     <span style="vertical-align: top; font-weight: normal;">{{ $item['tt_name'] }}</span>
                                 </a>
@@ -67,7 +67,7 @@
                     <table width="100%">
                         <tr>
                             <td style="background-color: transparent;" align="left">
-                                <a href="game.php?page=infos&gid={{ $item['tt_info'] }}">
+                                <a href="game.php?page=infos&gid={{ $item['tt_info'] }}" style="text-decoration: none;">
                                     <img src="{{ asset('upload/skins/xgproyect/elements/' . $item['tt_info'] . '.gif') }}" alt="{{ $item['tt_name'] }}" style="height: 28px; width: 28px;">
                                     <span style="vertical-align: top; font-weight: normal;">{{ $item['tt_name'] }}</span>
                                 </a>
@@ -94,7 +94,7 @@
                     <table width="100%">
                         <tr>
                             <td style="background-color: transparent;" align="left">
-                                <a href="game.php?page=infos&gid={{ $item['tt_info'] }}">
+                                <a href="game.php?page=infos&gid={{ $item['tt_info'] }}" style="text-decoration: none;">
                                     <img src="{{ asset('upload/skins/xgproyect/elements/' . $item['tt_info'] . '.gif') }}" alt="{{ $item['tt_name'] }}" style="height: 28px; width: 28px;">
                                     <span style="vertical-align: top; font-weight: normal;">{{ $item['tt_name'] }}</span>
                                 </a>
@@ -121,7 +121,7 @@
                     <table width="100%">
                         <tr>
                             <td style="background-color: transparent;" align="left">
-                                <a href="game.php?page=infos&gid={{ $item['tt_info'] }}">
+                                <a href="game.php?page=infos&gid={{ $item['tt_info'] }}" style="text-decoration: none;">
                                     <img src="{{ asset('upload/skins/xgproyect/elements/' . $item['tt_info'] . '.gif') }}" alt="{{ $item['tt_name'] }}" style="height: 28px; width: 28px;">
                                     <span style="vertical-align: top; font-weight: normal;">{{ $item['tt_name'] }}</span>
                                 </a>
