@@ -30,7 +30,7 @@ class ChatController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'game/chat_view',
+            'chat.view',
             [
                 'id' => $this->_receiver_data['user_id'],
                 'to' => $this->_receiver_data['user_name'] . ' ' . FormatLib::prettyCoords(
@@ -41,8 +41,6 @@ class ChatController extends BaseController
                 'subject' => ((!isset($this->_message_data['subject'])) ? __('game/chat.pm_no_subject') : $this->_message_data['subject']),
                 'text' => ((!isset($this->_message_data['text'])) ? '' : $this->_message_data['text']),
                 'error_text' => ((!isset($this->_message_data['error_text'])) ? '' : $this->_message_data['error_text']),
-                'status_message' => (!$this->_message_data['error_block'] ? [] : ''),
-                '/status_message' => (!$this->_message_data['error_block'] ? [] : ''),
                 'error_color' => ((!isset($this->_message_data['error_color'])) ? '' : $this->_message_data['error_color']),
             ]
         );
@@ -90,7 +88,7 @@ class ChatController extends BaseController
                 Functions::sendMessage(
                     $write_to,
                     $this->user['user_id'],
-                    '',
+                    0,
                     4,
                     $this->user['user_name'] . ' ' . FormatLib::prettyCoords(
                         $this->user['user_galaxy'],
