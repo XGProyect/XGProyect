@@ -185,7 +185,7 @@ class Recycle extends Missions
     {
         Functions::sendMessage(
             $owner,
-            '',
+            0,
             $time,
             5,
             __('game/recycle.rec_report_from'),

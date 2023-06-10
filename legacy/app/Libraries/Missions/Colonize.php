@@ -133,7 +133,7 @@ class Colonize extends Missions
      */
     private function colonizeMessage($owner, $message, $time)
     {
-        Functions::sendMessage($owner, '', $time, 5, __('game/colonize.col_report_from'), __('game/colonize.col_report_title'), $message);
+        Functions::sendMessage($owner, 0, $time, 5, __('game/colonize.col_report_from'), __('game/colonize.col_report_title'), $message);
     }
 
     /**

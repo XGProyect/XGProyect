@@ -413,7 +413,15 @@ class GalaxyLib
 
     private function allyBlock(): array
     {
-        $parse = ['tag' => ''];
+        $parse = [
+            'alliance_name' => '',
+            'ally_members' => '',
+            'add' => '',
+            'ally_id' => '',
+            'web' => '',
+            'tag' => '',
+        ];
+
         $add = '';
 
         if ($this->row_data['user_ally_id'] != 0) {

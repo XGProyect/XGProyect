@@ -132,7 +132,7 @@ class FederationController extends BaseController
                     Functions::sendMessage(
                         $member,
                         $this->user['user_id'],
-                        '',
+                        0,
                         5,
                         $this->user['user_name'],
                         __('game/fleet.fl_acs_invitation_title'),

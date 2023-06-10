@@ -466,7 +466,7 @@ class AllianceController extends BaseController
      * ADMINS SECTION
      *
      */
-    private function getAdminSection(): string
+    private function getAdminSection(): void
     {
         $edit = filter_input(INPUT_GET, 'edit');
 

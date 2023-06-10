@@ -639,7 +639,7 @@ class UsersController extends BaseController
                 if ($queue[3] <= time()) {
                     $ready = 'OK';
                 } else {
-                    $ready = date('i:s', $queue[3] - time());
+                    $ready = date('i:s', (int) $queue[3] - time());
                 }
 
                 $queueList .= "<option value=\"{$queue[0]}\">" . __('admin/users.tech')[$queue[0]] . ' (' . $queue[1] . '^) (' . date('i:s', $queue[2]) . ') (' . $ready . ') [' . $queue[4] . '] </option>';

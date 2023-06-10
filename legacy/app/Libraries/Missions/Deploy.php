@@ -56,7 +56,7 @@ class Deploy extends Missions
         // send message
         Functions::sendMessage(
             $fleet['fleet_owner'],
-            '',
+            0,
             $fleet['fleet_start_time'],
             5,
             __('game/missions.mi_fleet_command'),
@@ -105,7 +105,7 @@ class Deploy extends Missions
         // send message
         Functions::sendMessage(
             $fleet['fleet_owner'],
-            '',
+            0,
             $fleet['fleet_end_time'],
             5,
             __('game/missions.mi_fleet_command'),

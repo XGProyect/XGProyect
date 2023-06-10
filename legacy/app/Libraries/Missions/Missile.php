@@ -131,7 +131,7 @@ class Missile extends Missions
             // attacker
             Functions::sendMessage(
                 $fleet_row['fleet_owner'],
-                '',
+                0,
                 $fleet_row['fleet_end_time'],
                 5,
                 __('game/missions.mi_fleet_command'),
@@ -142,7 +142,7 @@ class Missile extends Missions
             // enemy
             Functions::sendMessage(
                 $target_data['planet_user_id'],
-                '',
+                0,
                 $fleet_row['fleet_end_time'],
                 5,
                 __('game/missions.mi_fleet_command'),

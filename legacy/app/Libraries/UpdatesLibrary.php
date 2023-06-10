@@ -360,7 +360,7 @@ class UpdatesLibrary
                             Functions::sendMessage(
                                 $current_user['user_id'],
                                 0,
-                                '',
+                                0,
                                 5,
                                 __('game/buildings.bd_building_queue_not_enough_resources_from'),
                                 __('game/buildings.bd_building_queue_not_enough_resources_subject'),

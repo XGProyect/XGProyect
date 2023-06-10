@@ -188,7 +188,7 @@ class Attack extends Missions
 
             Functions::sendMessage(
                 $fleet_row['fleet_owner'],
-                '',
+                0,
                 $fleet_row['fleet_end_time'],
                 1,
                 __('game/missions.mi_fleet_command'),
@@ -446,7 +446,7 @@ class Attack extends Missions
 
             Functions::sendMessage(
                 $id,
-                '',
+                0,
                 $fleet_row['fleet_start_time'],
                 1,
                 __('game/missions.mi_fleet_command'),
@@ -475,7 +475,7 @@ class Attack extends Missions
 
             Functions::sendMessage(
                 $id,
-                '',
+                0,
                 $fleet_row['fleet_start_time'],
                 1,
                 __('game/missions.mi_fleet_command'),

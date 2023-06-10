@@ -460,7 +460,7 @@ class Expedition extends Missions
 
         Functions::sendMessage(
             $owner,
-            '',
+            0,
             $time,
             5,
             __('game/missions.mi_fleet_command'),

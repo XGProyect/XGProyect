@@ -93,7 +93,7 @@ class Transport extends Missions
         // send message
         Functions::sendMessage(
             $trading_planets['start_id'],
-            '',
+            0,
             $fleet['fleet_start_time'],
             5,
             __('game/missions.mi_fleet_command'),
@@ -123,7 +123,7 @@ class Transport extends Missions
             // send message
             Functions::sendMessage(
                 $trading_planets['target_id'],
-                '',
+                0,
                 $fleet['fleet_start_time'],
                 5,
                 __('game/transport.tra_incoming_from'),
@@ -181,7 +181,7 @@ class Transport extends Missions
         // send message
         Functions::sendMessage(
             $trading_planets['start_id'],
-            '',
+            0,
             $fleet['fleet_end_time'],
             5,
             __('game/missions.mi_fleet_command'),

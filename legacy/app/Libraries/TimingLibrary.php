@@ -4,7 +4,7 @@ namespace Xgp\App\Libraries;
 
 abstract class TimingLibrary
 {
-    public static function setOnlineStatus($onlineTime): string
+    public static function setOnlineStatus(int $onlineTime): string
     {
         $color = 'red';
         $status = __('game/global.offline');

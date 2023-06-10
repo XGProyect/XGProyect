@@ -132,6 +132,6 @@ class Stay extends Missions
      */
     private function stayMessage($owner, $message, $time, $status_message)
     {
-        Functions::sendMessage($owner, '', $time, 5, __('game/missions.mi_fleet_command'), $status_message, $message);
+        Functions::sendMessage($owner, 0, $time, 5, __('game/missions.mi_fleet_command'), $status_message, $message);
     }
 }

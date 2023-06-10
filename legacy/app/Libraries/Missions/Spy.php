@@ -81,7 +81,7 @@ class Spy extends Missions
                     if ($TargetChances >= $SpyerChances) {
                         Functions::sendMessage(
                             $fleet_row['fleet_owner'],
-                            '',
+                            0,
                             $fleet_row['fleet_start_time'],
                             0,
                             __('game/missions.mi_fleet_command'),
@@ -143,7 +143,7 @@ class Spy extends Missions
 
                     Functions::sendMessage(
                         $fleet_row['fleet_owner'],
-                        '',
+                        0,
                         $fleet_row['fleet_start_time'],
                         0,
                         __('game/missions.mi_fleet_command'),
@@ -275,7 +275,7 @@ class Spy extends Missions
     {
         Functions::sendMessage(
             $target['planet_user_id'],
-            '',
+            0,
             $fleet['fleet_start_time'],
             0,
             __('game/spy.spy_activity_from'),

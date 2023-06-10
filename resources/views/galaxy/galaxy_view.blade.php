@@ -33,7 +33,7 @@
         }
 
     </script>
-    <script language="JavaScript" src="{js_path}tw-sack-min.js"></script>
+    <script src="{{ asset('js/tw-sack-min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         var ajax = new sack();
         var strInfo = "";
@@ -232,7 +232,7 @@
                                 <input type="button" name="galaxyLeft" value="&lt;-" onClick="galaxy_submit('galaxyLeft')">
                             </td>
                             <td style="background-color: transparent">
-                                <input type="number" name="galaxy" value="{selected_galaxy}" style="width:50px;" min="1" max="{max_galaxy}" tabindex="1">
+                                <input type="number" name="galaxy" value="{{ $selected_galaxy }}" style="width:50px;" min="1" max="{{ $max_galaxy }}" tabindex="1">
                             </td>
                             <td style="background-color: transparent">
                                 <input type="button" name="galaxyRight" value="-&gt;" onClick="galaxy_submit('galaxyRight')">

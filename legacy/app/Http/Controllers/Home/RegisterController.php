@@ -62,7 +62,7 @@ class RegisterController extends BaseController
                     Functions::sendMessage(
                         $newUser['user_id'],
                         0,
-                        '',
+                        0,
                         5,
                         __('home/register.re_welcome_message_from'),
                         __('home/register.re_welcome_message_subject'),
