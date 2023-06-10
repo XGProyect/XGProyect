@@ -121,7 +121,7 @@ class AdministrationLib
 
     public static function updateRequired(): void
     {
-        if (SYSTEM_VERSION != Functions::readConfig('version')) {
+        if (config('version.files') != Functions::readConfig('version')) {
             $exclude_pages = ['', 'home', 'update', 'logout'];
 
             if (isset($_GET['page']) && !in_array($_GET['page'], $exclude_pages)) {

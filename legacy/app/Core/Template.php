@@ -34,7 +34,7 @@ class Template
         }
 
         View::share('gameTitle', Functions::readConfig('game_name'));
-        View::share('version', SYSTEM_VERSION);
+        View::share('version', config('version.files'));
 
         return View::make($template, $data)->render();
     }

@@ -250,7 +250,7 @@ $tables['options_insert'] = 'INSERT INTO `' . OPTIONS . "` (`option_name`, `opti
 ('auto_backup', '0'),
 ('last_backup', '0'),
 ('last_cleanup', '0'),
-('version', '" . SYSTEM_VERSION . "'),
+('version', '" . config('version.files') . "'),
 ('lastsettedgalaxypos', '1'),
 ('lastsettedsystempos', '1'),
 ('lastsettedplanetpos', '1'),

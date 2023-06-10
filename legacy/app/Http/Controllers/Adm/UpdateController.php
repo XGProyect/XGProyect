@@ -35,7 +35,7 @@ class UpdateController extends BaseController
         $continue = true;
         $alerts = '';
 
-        $this->system_version = SYSTEM_VERSION;
+        $this->system_version = config('version.files');
         $this->db_version = Functions::readConfig('version');
 
         if ($this->system_version == $this->db_version) {

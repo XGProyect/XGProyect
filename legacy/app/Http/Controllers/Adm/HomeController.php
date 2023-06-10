@@ -50,7 +50,7 @@ class HomeController extends BaseController
                     'databaseSize' => Format::prettyBytes($this->homeModel->getDbSize()['db_size']),
                     'databaseServer' => $this->homeModel->getDbVersion(),
                     'phpVersion' => PHP_VERSION,
-                    'serverVersion' => SYSTEM_VERSION,
+                    'serverVersion' => config('version.files'),
                 ]
             )
         );
@@ -77,7 +77,7 @@ class HomeController extends BaseController
                 $alert[] = __('admin/home.hm_install_file_detected');
             }
 
-            if (Functions::readConfig('version') != SYSTEM_VERSION) {
+            if (Functions::readConfig('version') != config('version.files')) {
                 $alert[] = __('admin/home.hm_update_required');
             }
         }

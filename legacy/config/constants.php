@@ -8,14 +8,6 @@
 
 /**
  *
- * SYSTEM CONFIGURATION
- *
- */
-// GAME FILES VERSION
-define('SYSTEM_VERSION', '4.0.0');
-
-/**
- *
  * SYSTEM PATHS CONFIGURATION
  *
  */
@@ -50,7 +42,6 @@ define('ADM_URL', PROTOCOL . strtr(BASE_PATH, ['public' => '', 'public/' => ''])
  */
 define('APP_PATH', XGP_ROOT . 'app' . DIRECTORY_SEPARATOR);
 define('CONFIGS_PATH', config_path() . DIRECTORY_SEPARATOR);
-define('DATABASE_PATH', XGP_ROOT . 'database' . DIRECTORY_SEPARATOR);
 define('PUBLIC_PATH', XGP_ROOT . 'public' . DIRECTORY_SEPARATOR);
 
 /**
@@ -72,13 +63,6 @@ define('AJAX_PATH', CONTROLLERS_PATH . 'Ajax' . DIRECTORY_SEPARATOR);
 define('GAME_PATH', CONTROLLERS_PATH . 'Game' . DIRECTORY_SEPARATOR);
 define('HOME_PATH', CONTROLLERS_PATH . 'Home' . DIRECTORY_SEPARATOR);
 define('INSTALL_PATH', CONTROLLERS_PATH . 'Install' . DIRECTORY_SEPARATOR);
-
-/**
- *
- * DATABASE DIRECTORY STRUCTURE
- *
- */
-define('UPDATE_PATH', DATABASE_PATH . 'update' . DIRECTORY_SEPARATOR);
 
 /**
  *

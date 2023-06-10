@@ -426,7 +426,7 @@ class InstallationController extends BaseController
         $tables = [];
 
         // get the database structure
-        require_once DATABASE_PATH . DIRECTORY_SEPARATOR . 'database.php';
+        require_once database_path('schema/mysql-schema.php');
 
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $this->installationModel->setWindowsSqlMode();

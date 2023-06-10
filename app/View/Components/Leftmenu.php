@@ -89,8 +89,8 @@ class Leftmenu extends Component
                 'menu' => $menu,
                 'isAdmin' => $user->user_authlevel > UserRanksEnumerator::PLAYER,
                 'servername' => $this->settingsService->get('game_name'),
-                'changelog' => UrlHelper::setUrl('game.php?page=changelog', SYSTEM_VERSION),
-                'version' => SYSTEM_VERSION,
+                'changelog' => UrlHelper::setUrl('game.php?page=changelog', config('version.files')),
+                'version' => config('version.files'),
                 'year' => date('Y'),
             ]
         );

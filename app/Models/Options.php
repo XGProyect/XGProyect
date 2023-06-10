@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property int $option_id
  * @property string $option_name
  * @property string $option_value
  */
 class Options extends Model
 {
+    public const UPDATED_AT = null;
+
     /**
      * The database table used by the model.
      *
