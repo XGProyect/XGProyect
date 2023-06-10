@@ -41,9 +41,6 @@ class ResearchController extends BaseController
         $this->setLabsAmount();
         $this->handleTechnologieBuild();
 
-        // Check module access
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
-
         if ($this->planet[$this->_resource[31]] == 0) {
             Functions::message(__('game/research.re_lab_required'), '', '', true);
         }
@@ -53,7 +50,7 @@ class ResearchController extends BaseController
 
     private function buildPage(): void
     {
-        $technology_list = '';
+        $technology_list = [];
 
         $this->doCommand();
 
@@ -92,7 +89,7 @@ class ResearchController extends BaseController
                             $bloc['tech_id'] = $this->planet['planet_b_tech_id'];
                         }
                         $action_link = Template::getInstance()->render(
-                            'buildings/buildings_research_script',
+                            'research.script',
                             $bloc
                         );
                     } else {
@@ -100,28 +97,21 @@ class ResearchController extends BaseController
                     }
                 }
                 $RowParse['tech_link'] = $action_link;
-                $technology_list .= Template::getInstance()->render(
-                    'buildings/buildings_research_row',
-                    $RowParse
-                );
+
+                $technology_list[] = $RowParse;
             }
         }
 
         $parse['noresearch'] = (!$this->isLaboratoryInQueue() ? __('game/research.re_building_lab') : '');
-        $parse['technolist'] = $technology_list;
+        $parse['technologies'] = $technology_list;
 
         Template::getInstance()->view(
-            'buildings/buildings_research',
+            'research.view',
             $parse
         );
     }
 
-    /**
-     * method doCommand
-     * param
-     * return void
-     */
-    private function doCommand()
+    private function doCommand(): void
     {
         $cmd = isset($_GET['cmd']) ? $_GET['cmd'] : null;
 
@@ -206,12 +196,7 @@ class ResearchController extends BaseController
         }
     }
 
-    /**
-     * method isLaboratoryInQueue
-     * param
-     * return true if all clear, false if is anything in the queue
-     */
-    private function isLaboratoryInQueue()
+    private function isLaboratoryInQueue(): bool
     {
         $return = true;
         $current_building = '';
@@ -245,12 +230,7 @@ class ResearchController extends BaseController
         return $return;
     }
 
-    /**
-     * method handleTechnologieBuild
-     * param
-     * return return the planet where it's been working on and the status
-     */
-    private function handleTechnologieBuild()
+    private function handleTechnologieBuild(): void
     {
         $this->_is_working['working_on'] = '';
         $this->_is_working['is_working'] = false;
@@ -284,12 +264,7 @@ class ResearchController extends BaseController
         }
     }
 
-    /**
-     * method setLabsAmount
-     * param
-     * return (void)
-     */
-    private function setLabsAmount()
+    private function setLabsAmount(): void
     {
         $labs_limit = $this->user[$this->_resource[123]] + 1;
         $this->_lab_level = $this->researchModel->getAllLabsLevel($this->user['user_id'], $labs_limit);
