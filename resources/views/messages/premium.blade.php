@@ -153,7 +153,7 @@
                                     @foreach ($notes_list as $item)
                                     <tr>
                                         <th role="cell" colspan="4">
-                                            <a href="#" onclick="f('game.php?page=notes&a=2&n={{ $item['note_id'] }}', 'Notes')">
+                                            <a href="#" onclick="f('game.php?page=notices&a=2&n={{ $item['note_id'] }}', 'Notes')">
                                                 <font color="{{ $item['note_color'] }}">{{ $item['note_title'] }}</font>
                                             </a>
                                         </th>

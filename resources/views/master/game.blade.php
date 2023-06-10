@@ -13,9 +13,13 @@
         @yield('metatags')
     </head>
     <body>
+        @if (!isset($noTopnav))
         <x-topnav />
+        @endif
 
+        @if (!isset($noLeftMenu))
         <x-leftmenu />
+        @endif
 
         <center>
             @yield('content')

@@ -13,10 +13,10 @@ use Xgp\App\Libraries\Users;
 use Xgp\App\Libraries\Users\Notes as Note;
 use Xgp\App\Models\Game\Notes;
 
-class NotesController extends BaseController
+class NoticesController extends BaseController
 {
     public const MODULE_ID = 19;
-    public const REDIRECT_TARGET = 'game.php?page=notes';
+    public const REDIRECT_TARGET = 'game.php?page=notices';
 
     private array $user = [];
     private ?Note $notes = null;
@@ -119,16 +119,16 @@ class NotesController extends BaseController
 
         if ($edit_view !== false && !is_null($edit_view)) {
             return [
-                'template' => 'game/notes_form_view',
+                'template' => 'notices.write',
                 'data' => $this->buildEditBlock($edit_view),
             ];
         }
 
         return [
-            'template' => 'game/notes_view',
+            'template' => 'notices.view',
             'data' => [
                 'list_of_notes' => $this->buildNotesListBlock(),
-                'no_notes' => $this->notes->hasNotes() ? '' : '<tr><th colspan="4">' . __('game/notes.nt_no_notes_found') . '</th>',
+                'no_notes' => $this->notes->hasNotes() ? '' : '<tr><th colspan="4">' . __('game/notices.nt_no_notes_found') . '</th>',
             ],
         ];
     }
@@ -157,7 +157,7 @@ class NotesController extends BaseController
                 return array_merge([
                     's' => 2,
                     'note_id' => '<input type="hidden" name="n" value=' . $note_data->getNoteById($note_id)->getNoteId() . '>',
-                    'title' => __('game/notes.nt_edit_note'),
+                    'title' => __('game/notices.nt_edit_note'),
                     'subject' => $note_data->getNoteById($note_id)->getNoteTitle(),
                     'text' => $note_data->getNoteById($note_id)->getNoteText(),
                 ], $selected);
@@ -168,8 +168,8 @@ class NotesController extends BaseController
         return array_merge([
             's' => 1,
             'note_id' => '',
-            'title' => __('game/notes.nt_add_note'),
-            'subject' => __('game/notes.nt_your_subject'),
+            'title' => __('game/notices.nt_add_note'),
+            'subject' => __('game/notices.nt_your_subject'),
             'text' => '',
         ], $selected);
     }
@@ -181,7 +181,7 @@ class NotesController extends BaseController
                 'note_owner' => $this->user['user_id'],
                 'note_time' => time(),
                 'note_priority' => is_int($data['u']) ? $data['u'] : Importance::important,
-                'note_title' => !empty($data['title']) ? $data['title'] : __('game/notes.nt_your_subject'),
+                'note_title' => !empty($data['title']) ? $data['title'] : __('game/notices.nt_your_subject'),
                 'note_text' => !empty($data['text']) ? $data['text'] : '',
             ]
         );
@@ -195,7 +195,7 @@ class NotesController extends BaseController
             [
                 'note_time' => time(),
                 'note_priority' => is_int($data['u']) ? $data['u'] : Importance::important,
-                'note_title' => !empty($data['title']) ? $data['title'] : __('game/notes.nt_your_subject'),
+                'note_title' => !empty($data['title']) ? $data['title'] : __('game/notices.nt_your_subject'),
                 'note_text' => !empty($data['text']) ? $data['text'] : '',
             ]
         );
