@@ -105,16 +105,12 @@ abstract class Functions
         );
     }
 
-    public static function isModuleAccesible($module = 0): array|int
+    public static function isModuleAccesible(int $module = 0): int
     {
         $modules = self::readConfig('modules');
         $modules = explode(';', $modules);
 
-        if ($module == 0) {
-            return $modules;
-        } else {
-            return $modules[$module];
-        }
+        return (int) $modules[$module];
     }
 
     public static function moduleMessage(int $accessLevel): void

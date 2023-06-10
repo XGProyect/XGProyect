@@ -169,15 +169,16 @@ PRIMARY KEY (`fleet_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;";
 
 $tables['languages'] = 'CREATE TABLE `' . LANGUAGES . '` (
-`language_id` int(11) NOT NULL,
-`language_name` varchar(64) CHARACTER SET utf8 NOT NULL,
-PRIMARY KEY (`language_id`),
-UNIQUE KEY `language_id` (`language_id`)
+`id` int(11) NOT NULL,
+`name` varchar(64) CHARACTER SET utf8 NOT NULL,
+`code` varchar(32) CHARACTER SET utf8 NOT NULL,
+PRIMARY KEY (`id`),
+UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
 
-$tables['languages_insert'] = 'INSERT INTO `' . LANGUAGES . "` (`language_id`, `language_name`) VALUES
-(1, 'Español'),
-(2, 'English');";
+$tables['languages_insert'] = 'INSERT INTO `' . LANGUAGES . "` (`id`, `name`, 'code') VALUES
+(1, 'Español', 'es'),
+(2, 'English', 'en');";
 
 $tables['messages'] = 'CREATE TABLE `' . MESSAGES . "` (
 `message_id` BIGINT(11) NOT NULL AUTO_INCREMENT,

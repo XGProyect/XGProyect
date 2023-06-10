@@ -26,21 +26,19 @@ class ChangelogController extends BaseController
         $changes = [];
         $entries = $this->changelogModel->getAllChangelogEntries();
 
-        if ($entries) {
-            foreach ($entries as $entry) {
-                $changes[] = [
-                    'version_number' => $entry['changelog_version'],
-                    'description' => nl2br(
-                        Timing::formatShortDate($entry['changelog_date']) . '<br>' . $entry['changelog_description']
-                    ),
-                ];
-            }
+        foreach ($entries as $entry) {
+            $changes[] = [
+                'version_number' => $entry['changelog_version'],
+                'description' => nl2br(
+                    Timing::formatShortDate($entry['changelog_date']) . '<br>' . $entry['changelog_description']
+                ),
+            ];
         }
 
         Template::getInstance()->view(
-            'game/changelog_view',
+            'changelog.view',
             [
-                'list_of_changes' => $changes
+                'changes' => $changes
             ]
         );
     }

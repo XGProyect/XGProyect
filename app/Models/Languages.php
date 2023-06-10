@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int    $language_id
- * @property string $language_name
+ * @property int    $id
+ * @property string $name
+ * @property string $code
  */
 class Languages extends Model
 {
+    public const UPDATED_AT = null;
+
     /**
      * The database table used by the model.
      *
@@ -22,7 +25,7 @@ class Languages extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'language_id';
+    protected $primaryKey = 'id';
 
     /**
      * Attributes that should be mass-assignable.
@@ -30,7 +33,8 @@ class Languages extends Model
      * @var array
      */
     protected $fillable = [
-        'language_name'
+        'name',
+        'code'
     ];
 
     /**
@@ -48,7 +52,9 @@ class Languages extends Model
      * @var array
      */
     protected $casts = [
-        'language_id' => 'int', 'language_name' => 'string'
+        'id' => 'int',
+        'name' => 'string',
+        'code' => 'string'
     ];
 
     /**
