@@ -3,7 +3,9 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Template;
+use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Libraries\Users\Shortcuts;
@@ -16,7 +18,6 @@ class FleetshortcutsController extends BaseController
 
     private array $user = [];
     private ?Shortcuts $_shortcuts = null;
-    private int $_shortcuts_count = 0;
     private array $_clean_data = [];
     private ShortcutsModel $shortcutsModel;
 
@@ -33,33 +34,21 @@ class FleetshortcutsController extends BaseController
         $this->runAction();
 
         Template::getInstance()->view(
-            'shortcuts/shortcuts_view',
+            'fleet.shortcuts.view',
             [
                 'shortcuts' => $this->buildShortcuts(),
-                'no_shortcuts' => $this->_shortcuts_count <= 0 ? '<th colspan="2">' . __('game/fleet.fl_no_shortcuts') . '</th>' : '',
             ]
         );
     }
 
-    /**
-     * Creates a new shortcut object that will handle all the shortcuts
-     * creation methods and actions
-     *
-     * @return void
-     */
-    private function setUpShortcuts()
+    private function setUpShortcuts(): void
     {
         $this->_shortcuts = new Shortcuts(
             $this->user['user_fleet_shortcuts']
         );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
-    private function runAction()
+    private function runAction(): void
     {
         $mode = filter_input(
             INPUT_GET,
@@ -107,11 +96,6 @@ class FleetshortcutsController extends BaseController
         }
     }
 
-    /**
-     * Build the shortcuts list
-     *
-     * @return array
-     */
     private function buildShortcuts(): array
     {
         $shortcuts = $this->_shortcuts->getAllAsArray();
@@ -126,14 +110,14 @@ class FleetshortcutsController extends BaseController
                     'row_start' => $set_row ? '<tr height="20">' : '',
                     'shortcut_id' => $shortcut_id++,
                     'shortcut_name' => $shortcut['name'],
-                    'shortcut_galaxy' => $shortcut['g'],
-                    'shortcut_system' => $shortcut['s'],
-                    'shortcut_planet' => $shortcut['p'],
+                    'shortcut_coords' => FormatLib::formatCoords(
+                        $shortcut['g'],
+                        $shortcut['s'],
+                        $shortcut['p'],
+                    ),
                     'shortcut_type' => __('game/global.planet_type_short')[$shortcut['pt']],
                     'row_end' => !$set_row ? '</tr>' : '',
                 ];
-
-                ++$this->_shortcuts_count;
 
                 $set_row = !$set_row;
             }
@@ -142,19 +126,10 @@ class FleetshortcutsController extends BaseController
         return $list_of_shortcuts;
     }
 
-    /**
-     * Create a shortcut
-     *
-     * @return void
-     */
     private function addShortcut(): void
     {
         $this->setData();
-
-        /**
-         * Parse the items
-         */
-        $page = [
+        $this->buildEdit([
             'mode' => 'add',
             'visibility' => 'hidden',
             'shortcut_id' => '',
@@ -162,17 +137,10 @@ class FleetshortcutsController extends BaseController
             'galaxy' => '',
             'system' => '',
             'planet' => '',
-            'type' => '',
-        ];
-
-        $this->buildEdit($page);
+            'planetTypes' => $this->setPlanetTypes(),
+        ]);
     }
 
-    /**
-     * Edit a shortcut
-     *
-     * @return void
-     */
     private function editShortcut(): void
     {
         $this->setData();
@@ -185,10 +153,7 @@ class FleetshortcutsController extends BaseController
 
         $shortcut = $this->_shortcuts->getById($shortcut_id);
 
-        /**
-         * Parse the items
-         */
-        $page = [
+        $this->buildEdit([
             'mode' => 'edit',
             'visibility' => 'button',
             'shortcut_id' => '&a=' . $shortcut_id,
@@ -196,42 +161,23 @@ class FleetshortcutsController extends BaseController
             'galaxy' => $shortcut['g'],
             'system' => $shortcut['s'],
             'planet' => $shortcut['p'],
-            'type' . $shortcut['pt'] => 'selected="selected"',
-        ];
-
-        $this->buildEdit($page);
+            'planetTypes' => $this->setPlanetTypes((int) $shortcut['pt']),
+        ]);
     }
 
-    /**
-     * Delete a shortcut
-     *
-     * @return void
-     */
     private function deleteShortcut(): void
     {
         $this->setData();
     }
 
-    /**
-     * Build the edit view
-     *
-     * @param array $page Page Data
-     *
-     * @return void
-     */
     private function buildEdit(array $page): void
     {
         Template::getInstance()->view(
-            'shortcuts/shortcuts_edit_view',
+            'fleet.shortcuts.edit',
             $page
         );
     }
 
-    /**
-     * Set and save the post data if valid
-     *
-     * @return void
-     */
     private function setData(): void
     {
         $data = $this->_clean_data['data'];
@@ -274,5 +220,25 @@ class FleetshortcutsController extends BaseController
 
             Functions::redirect(self::REDIRECT_TARGET);
         }
+    }
+
+    private function setPlanetTypes(int $selected = 0): array
+    {
+        $types = [
+            PlanetTypesEnumerator::PLANET => 'fl_planet',
+            PlanetTypesEnumerator::DEBRIS => 'fl_debris',
+            PlanetTypesEnumerator::MOON => 'fl_moon',
+        ];
+        $options = [];
+
+        foreach ($types as $id => $name) {
+            $options[] = [
+                'selected' => $id === $selected ? ' selected="selected" ' : '',
+                'value' => $id,
+                'name' => __('game/fleet.' . $name)
+            ];
+        }
+
+        return $options;
     }
 }

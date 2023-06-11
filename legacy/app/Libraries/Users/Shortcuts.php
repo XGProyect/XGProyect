@@ -10,16 +10,10 @@ class Shortcuts
 {
     private array $shortcuts = [];
 
-    public function __construct($shortcuts)
+    public function __construct(?string $shortcuts)
     {
-        try {
-            if (is_array($shortcuts)) {
-                throw new Exception('JSON Expected!');
-            }
-
+        if (!empty($shortcuts)) {
             $this->setShortcuts($shortcuts);
-        } catch (Exception $e) {
-            die('Caught exception: ' . $e->getMessage() . "\n");
         }
     }
 
