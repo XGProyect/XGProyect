@@ -77,7 +77,7 @@ class Topnav extends Component
     private function buildPlanetList(Users $user): array
     {
         $page = isset($_GET['page']) ? $_GET['page'] : '';
-        $gid = isset($_GET['gid']) ? $_GET['gid'] : '';
+        $technology = isset($_GET['technology']) ? $_GET['technology'] : '';
         $mode = isset($_GET['mode']) ? $_GET['mode'] : '';
 
         $allUserPlanets = Planets::where([
@@ -116,9 +116,9 @@ class Topnav extends Component
 
         foreach ($allUserPlanets->get()->getIterator() as $planet) {
             $link = sprintf(
-                'game.php?page=%s&gid=%d&cp=%s&mode=%s&re=0',
+                'game.php?page=%s&technology=%d&cp=%s&mode=%s&re=0',
                 $page,
-                $gid,
+                $technology,
                 $planet->planet_id,
                 $mode
             );

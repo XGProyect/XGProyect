@@ -9,12 +9,12 @@
                 @foreach ($list_of_items as $item)
                 <tr>
                     <th scope="row" class="l">
-                        <a href="game.php?page=infos&gid={{ $item['element'] }}">
+                        <a href="game.php?page=technologydetails&technology={{ $item['element'] }}">
                             <img border="0" src="{{ asset('upload/skins/xgproyect/elements/' . $item['element'] . '.gif') }}" align="top" width="120px" height="120px" alt="{{ $item['element_name'] }}"/>
                         </a>
                     </th>
                     <td class="l">
-                        <a href="game.php?page=infos&gid={{ $item['element'] }}">{{ $item['element_name'] }}</a> {{ $item['element_nbre'] }}<br>
+                        <a href="game.php?page=technologydetails&technology={{ $item['element'] }}">{{ $item['element_name'] }}</a> {{ $item['element_nbre'] }}<br>
                         {!! $item['element_description'] !!}<br>
                         {!! $item['element_price'] !!}
                         {!! $item['building_time'] !!}
