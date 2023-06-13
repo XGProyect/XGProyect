@@ -114,7 +114,7 @@
 
             $.getJSON('//updates.xgproyect.org/latest.php', function (data) {
                 $.each(data, function (index, element) {
-                    if (compareversion('{{ $version }}', element)) {
+                    if (compareversion('{{ config("version.files") }}', element)) {
                         $('.badge-counter').html('1');
                         $('.dropdown-list').css('display', '')
                     }

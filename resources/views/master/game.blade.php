@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/formate.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('upload/skins/xgproyect/formate.css') }}">
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-        <meta name="generator" content="XG Proyect {{ $version }}" />
+        <meta name="generator" content="XG Proyect {{ config('version.files') }}" />
         <script type="text/javascript" src="{{ asset('js/overlib-min.js') }}"></script>
         @yield('metatags')
     </head>

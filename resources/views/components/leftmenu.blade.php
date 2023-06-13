@@ -56,7 +56,7 @@
                     <td>
                         <div style="text-align:center">
                             <span style="color:#FFFFFF">
-                                <a href="#" title="Powered by XG Proyect {{ $version }} &copy; 2008 - {{ $year }} GNU General Public License">&copy; 2008 - {{ $year }}</a>
+                                <a href="#" title="Powered by XG Proyect {{ config('version.files') }} &copy; 2008 - {{ $year }} GNU General Public License">&copy; 2008 - {{ $year }}</a>
                             </span>
                         </div>
                     </td>

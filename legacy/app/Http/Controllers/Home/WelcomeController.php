@@ -69,7 +69,6 @@ class WelcomeController extends BaseController
             'userName' => isset($_GET['character']) ? $_GET['character'] : '',
             'userEmail' => isset($_GET['email']) ? $_GET['email'] : '',
             'forumUrl' => Functions::readConfig('forum_url'),
-            'version' => config('version.files'),
             'year' => date('Y'),
         ];
     }

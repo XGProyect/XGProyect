@@ -15,7 +15,6 @@ class Template
     public static function legacyView($view = null, $data = [], $mergeData = []): void
     {
         View::share('gameTitle', Functions::readConfig('game_name'));
-        View::share('version', config('version.files'));
 
         throw new LegacyView(
             view($view, $data, $mergeData)
@@ -40,7 +39,6 @@ class Template
         }
 
         View::share('gameTitle', Functions::readConfig('game_name'));
-        View::share('version', config('version.files'));
 
         return View::make($template, $data)->render();
     }

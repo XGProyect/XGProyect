@@ -24,7 +24,6 @@ class Footer extends Component
         return view(
             'components.footer',
             [
-                'version' => config('version.files'),
                 'year' => date('Y'),
             ]
         );
