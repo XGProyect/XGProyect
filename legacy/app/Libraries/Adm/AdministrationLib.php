@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Adm;
 
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
@@ -28,7 +29,7 @@ class AdministrationLib
     public static function authorization(string $module): bool
     {
         $cleaned_module_name = strtolower(substr(strrchr($module, '\\'), 1));
-        $permissions = new Permissions(Functions::readConfig('admin_permissions'));
+        $permissions = new Permissions(Options::getInstance()->get('admin_permissions'));
 
         return $permissions->isAccessAllowed($cleaned_module_name, (int) Users::getInstance()->getUserData()['user_authlevel']);
     }
@@ -116,7 +117,7 @@ class AdministrationLib
 
     public static function updateRequired(): void
     {
-        if (config('version.files') != Functions::readConfig('version')) {
+        if (config('version.files') != Options::getInstance()->get('version')) {
             $exclude_pages = ['', 'home', 'update', 'logout'];
 
             if (isset($_GET['page']) && !in_array($_GET['page'], $exclude_pages)) {

@@ -7,16 +7,11 @@ namespace Xgp\App\Models\Adm;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Model;
-use Xgp\App\Libraries\Functions;
+use Xgp\App\Core\Options;
 use Xgp\App\Libraries\PlanetLib;
 
 class Reset extends Model
 {
-    /**
-     * Set to 0 all planet's defenses
-     *
-     * @return void
-     */
     public function resetDefenses(): void
     {
         $this->db->query(
@@ -397,7 +392,7 @@ class Reset extends Model
 
                     $this->db->query(
                         'INSERT INTO `' . PREMIUM . "` (`premium_user_id`, `premium_dark_matter`)
-                        VALUES('" . $last_id . "', '" . Functions::readConfig('registration_dark_matter') . "');"
+                        VALUES('" . $last_id . "', '" . Options::getInstance()->get('registration_dark_matter') . "');"
                     );
 
                     $this->db->query(

@@ -5,41 +5,24 @@ declare(strict_types=1);
 namespace Xgp\App\Models\Adm;
 
 use Xgp\App\Core\Model;
-use Xgp\App\Libraries\Functions;
+use Xgp\App\Core\Options;
 
 class Server extends Model
 {
-    /**
-     * Read all server configurations
-     *
-     * @return array
-     */
     public function readAllConfigs(): array
     {
-        return Functions::readConfig('', true);
+        return Options::getInstance()->get();
     }
 
-    /**
-     * Read an specific config variable
-     *
-     * @param string $config_name
-     * @return string
-     */
     public function readConfig(string $config_name): string
     {
-        return Functions::readConfig($config_name);
+        return Options::getInstance()->get($config_name);
     }
 
-    /**
-     * Update all configs, we asume they were validated
-     *
-     * @param array $configs
-     * @return void
-     */
     public function updateConfigs(array $configs): void
     {
         foreach ($configs as $config_name => $config_value) {
-            Functions::updateConfig($config_name, $config_value);
+            Options::getInstance()->write($config_name, $config_value);
         }
     }
 }

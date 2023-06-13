@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
-use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\StatisticsLibrary as Statistics;
 
 class RebuildHighscoresController extends BaseController
@@ -39,7 +39,7 @@ class RebuildHighscoresController extends BaseController
 
         session()->flash('success', strtr(__('admin/rebuildhighscores.sb_stats_update'), ['%t' => $this->result['totaltime']]));
 
-        Functions::updateConfig('stat_last_update', $this->result['stats_time']);
+        Options::getInstance()->write('stat_last_update', $this->result['stats_time']);
     }
 
     private function getStatisticsResult(): array

@@ -3,9 +3,9 @@
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
-use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Adm\Update;
 
 class UpdateController extends BaseController
@@ -36,7 +36,7 @@ class UpdateController extends BaseController
         $alerts = '';
 
         $this->system_version = config('version.files');
-        $this->db_version = Functions::readConfig('version');
+        $this->db_version = Options::getInstance()->get('version');
 
         if ($this->system_version == $this->db_version) {
             session()->flash('danger', __('admin/update.up_no_update_required'));

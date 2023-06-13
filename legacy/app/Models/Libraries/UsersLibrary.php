@@ -3,7 +3,7 @@
 namespace Xgp\App\Models\Libraries;
 
 use Xgp\App\Core\Model;
-use Xgp\App\Libraries\Functions;
+use Xgp\App\Core\Options;
 
 class UsersLibrary extends Model
 {
@@ -216,7 +216,7 @@ class UsersLibrary extends Model
     {
         $this->db->query(
             'INSERT INTO `' . PREMIUM . "` (`premium_user_id`, `premium_dark_matter`)
-            VALUES('" . $userId . "', '" . Functions::readConfig('registration_dark_matter') . "');"
+            VALUES('" . $userId . "', '" . Options::getInstance()->get('registration_dark_matter') . "');"
         );
     }
 

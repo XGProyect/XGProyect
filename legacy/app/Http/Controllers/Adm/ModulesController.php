@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
-use Xgp\App\Libraries\Functions;
 
 class ModulesController extends BaseController
 {
@@ -35,13 +35,13 @@ class ModulesController extends BaseController
         $modules = request()->all();
 
         if (count($modules) > 1) {
-            $modules_count = count(explode(';', Functions::readConfig('modules')));
+            $modules_count = count(explode(';', Options::getInstance()->get('modules')));
 
             for ($i = 0; $i < $modules_count; $i++) {
                 $modules_set[] = (isset($modules["status{$i}"]) ? 1 : 0);
             }
 
-            Functions::updateConfig('modules', join(';', $modules_set));
+            Options::getInstance()->write('modules', join(';', $modules_set));
 
             session()->flash('success', __('admin/modules.mdl_all_ok_message'));
         }
@@ -51,7 +51,7 @@ class ModulesController extends BaseController
     {
         $modules_list = [];
 
-        $modules = explode(';', Functions::readConfig('modules'));
+        $modules = explode(';', Options::getInstance()->get('modules'));
 
         if ($modules) {
             foreach ($modules as $module => $status) {

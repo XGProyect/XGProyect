@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Adm;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Alliance\Ranks;
@@ -110,7 +111,7 @@ class AlliancesController extends BaseController
     {
         $parse = (array) $this->alliance_query;
         $parse['al_alliance_information'] = str_replace('%s', $this->alliance_query['alliance_name'], __('admin/alliances.al_alliance_information'));
-        $parse['alliance_register_time'] = ($this->alliance_query['alliance_register_time'] == 0) ? '-' : date(Functions::readConfig('date_format_extended'), $this->alliance_query['alliance_register_time']);
+        $parse['alliance_register_time'] = ($this->alliance_query['alliance_register_time'] == 0) ? '-' : date(Options::getInstance()->get('date_format_extended'), $this->alliance_query['alliance_register_time']);
         $parse['alliance_owner_picker'] = $this->buildUsersCombo($this->alliance_query['alliance_owner']);
         $parse['sel1'] = $this->alliance_query['alliance_request_notallow'] == 1 ? 'selected' : '';
         $parse['sel0'] = $this->alliance_query['alliance_request_notallow'] == 0 ? 'selected' : '';
@@ -167,7 +168,7 @@ class AlliancesController extends BaseController
             foreach ($all_members as $member) {
                 $member['alliance_request'] = ($member['user_ally_request']) ? __('admin/alliances.al_request_yes') : __('admin/alliances.al_request_no');
                 $member['ally_request_text'] = ($member['user_ally_request_text']) ? $member['user_ally_request_text'] : '-';
-                $member['alliance_register_time'] = date(Functions::readConfig('date_format_extended'), $member['user_ally_register_time']);
+                $member['alliance_register_time'] = date(Options::getInstance()->get('date_format_extended'), $member['user_ally_register_time']);
 
                 if (isset($member['user_ally_rank_id'])) {
                     $member['ally_rank'] = $this->ranks->getRankById($member['user_ally_rank_id'])['rank'];

@@ -2,6 +2,8 @@
 
 namespace Xgp\App\Libraries;
 
+use Xgp\App\Core\Options;
+
 abstract class TimingLibrary
 {
     public static function setOnlineStatus(int $onlineTime): string
@@ -35,7 +37,7 @@ abstract class TimingLibrary
             $time = strtotime($time);
         }
 
-        return date(Functions::readConfig('date_format_extended'), $time);
+        return date(Options::getInstance()->get('date_format_extended'), $time);
     }
 
     /**
@@ -51,7 +53,7 @@ abstract class TimingLibrary
             $time = strtotime($time);
         }
 
-        return date(Functions::readConfig('date_format'), $time);
+        return date(Options::getInstance()->get('date_format'), $time);
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
@@ -73,7 +74,7 @@ class BanController extends BaseController
             $banned_user = $this->banModel->getBannedUserData($ban_name);
 
             if ($banned_user) {
-                $parse['banned_until'] = '<tr><th>' . __('admin/ban.bn_banned_until') . '</th><td>' . date(Functions::readConfig('date_format_extended'), (int) $banned_user['banned_longer']) . '</td></tr>';
+                $parse['banned_until'] = '<tr><th>' . __('admin/ban.bn_banned_until') . '</th><td>' . date(Options::getInstance()->get('date_format_extended'), (int) $banned_user['banned_longer']) . '</td></tr>';
                 $parse['reason'] = $banned_user['banned_theme'];
                 $parse['changedate'] = Administration::showPopUp(__('admin/ban.bn_change_date'), __('admin/ban.bn_edit_ban_help'));
                 $parse['vacation'] = $banned_user['preference_vacation_mode'] ? 'checked="checked"' : '';

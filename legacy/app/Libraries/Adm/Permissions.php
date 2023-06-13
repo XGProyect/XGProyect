@@ -6,8 +6,8 @@ use Exception;
 use JsonException;
 use Xgp\App\Core\Enumerators\AdminPagesEnumerator as AdminPages;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Core\Options;
 use Xgp\App\Helpers\ArraysHelper;
-use Xgp\App\Libraries\Functions;
 
 class Permissions
 {
@@ -74,7 +74,7 @@ class Permissions
 
     public function savePermissions(): void
     {
-        Functions::updateConfig('admin_permissions', $this->getAllPermissionsAsJsonString());
+        Options::getInstance()->write('admin_permissions', $this->getAllPermissionsAsJsonString());
     }
 
     public function isAccessAllowed(string $module, int $role): bool

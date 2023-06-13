@@ -6,10 +6,10 @@ namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
 use JsonException;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
-use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Adm\Home;
 
@@ -77,7 +77,7 @@ class HomeController extends BaseController
                 $alert[] = __('admin/home.hm_install_file_detected');
             }
 
-            if (Functions::readConfig('version') != config('version.files')) {
+            if (Options::getInstance()->get('version') != config('version.files')) {
                 $alert[] = __('admin/home.hm_update_required');
             }
         }
@@ -121,7 +121,7 @@ class HomeController extends BaseController
                 );
 
                 if ($fileData) {
-                    $systemVersion = Functions::readConfig('version');
+                    $systemVersion = Options::getInstance()->get('version');
                     $lastestVersion = @json_decode(
                         $fileData,
                         false,

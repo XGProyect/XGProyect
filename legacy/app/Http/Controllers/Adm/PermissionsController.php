@@ -6,10 +6,10 @@ namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Adm\Permissions;
-use Xgp\App\Libraries\Functions;
 
 class PermissionsController extends BaseController
 {
@@ -42,7 +42,7 @@ class PermissionsController extends BaseController
     private function setUpPermissions(): void
     {
         $this->permissions = new Permissions(
-            Functions::readConfig('admin_permissions')
+            Options::getInstance()->get('admin_permissions')
         );
     }
 

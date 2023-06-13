@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
-use Xgp\App\Libraries\Functions;
 
 class PremiumController extends BaseController
 {
@@ -48,7 +48,7 @@ class PremiumController extends BaseController
 
             foreach ($data as $option => $value) {
                 if ((is_numeric($value) && $value >= 0) or is_string($value)) {
-                    Functions::updateConfig($option, $value);
+                    Options::getInstance()->write($option, $value);
                 }
             }
 
@@ -59,7 +59,7 @@ class PremiumController extends BaseController
     private function getPremiumSettings(): array
     {
         return array_filter(
-            Functions::readConfig('', true),
+            Options::getInstance()->get(),
             function ($key) {
                 return array_key_exists($key, self::PREMIUM_SETTINGS);
             },

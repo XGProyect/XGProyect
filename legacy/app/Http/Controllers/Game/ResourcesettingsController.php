@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Objects;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
@@ -53,11 +54,11 @@ class ResourcesettingsController extends BaseController
             'missiles' => 'defenses',
         ];
 
-        $game_metal_basic_income = Functions::readConfig('metal_basic_income');
-        $game_crystal_basic_income = Functions::readConfig('crystal_basic_income');
-        $game_deuterium_basic_income = Functions::readConfig('deuterium_basic_income');
-        $game_energy_basic_income = Functions::readConfig('energy_basic_income');
-        $game_resource_multiplier = Functions::readConfig('resource_multiplier');
+        $game_metal_basic_income = Options::getInstance()->get('metal_basic_income');
+        $game_crystal_basic_income = Options::getInstance()->get('crystal_basic_income');
+        $game_deuterium_basic_income = Options::getInstance()->get('deuterium_basic_income');
+        $game_energy_basic_income = Options::getInstance()->get('energy_basic_income');
+        $game_resource_multiplier = Options::getInstance()->get('resource_multiplier');
 
         if ($this->user['preference_vacation_mode'] > 0 or $this->planet['planet_type'] == PlanetTypesEnumerator::MOON) {
             $game_metal_basic_income = 0;

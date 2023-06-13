@@ -11,6 +11,11 @@ class Options
     private bool $initialized = false;
     private array $options = [];
 
+    public function __construct()
+    {
+        $this->load();
+    }
+
     public static function getInstance(): Options
     {
         if (self::$instance == null) {
@@ -20,10 +25,8 @@ class Options
         return self::$instance;
     }
 
-    public function getOptions(?string $option): mixed
+    public function get(?string $option = null): mixed
     {
-        $this->loadOptions();
-
         if (empty($option)) {
             return $this->options;
         } else {
@@ -31,7 +34,7 @@ class Options
         }
     }
 
-    public function writeOptions(string $option, string $value = ''): bool
+    public function write(string $option, mixed $value = ''): bool
     {
         if ($option != '') {
             DB::table('options')
@@ -46,30 +49,16 @@ class Options
         return false;
     }
 
-    public function insertOption(string $option, string $value = ''): bool
-    {
-        return $this->writeOptions($option, $value);
-    }
-
-    public function deleteOption(string $option): bool
-    {
-        if ($option != '') {
-            ModelsOptions::where('name', $option)->delete();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    private function loadOptions(): void
+    private function load(): void
     {
         if (!$this->initialized) {
-            $options = ModelsOptions::all()->toArray();
+            $options = ModelsOptions::all(['name', 'value'])->toArray();
 
             foreach ($options as $option) {
                 $this->options[$option['name']] = $option['value'];
             }
+
+            $this->initialized = true;
         }
     }
 }

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
-use Xgp\App\Libraries\Functions;
 
 class PlanetsController extends BaseController
 {
@@ -44,7 +44,7 @@ class PlanetsController extends BaseController
             $data = array_diff($data, [null, false]);
 
             foreach ($data as $option => $value) {
-                Functions::updateConfig($option, $value);
+                Options::getInstance()->write($option, $value);
             }
 
             session()->flash('success', __('admin/planets.np_all_ok_message'));
@@ -54,7 +54,7 @@ class PlanetsController extends BaseController
     private function getNewPlanetSettings(): array
     {
         return array_filter(
-            Functions::readConfig('', true),
+            Options::getInstance()->get(),
             function ($key) {
                 return array_key_exists($key, self::PLANET_SETTINGS);
             },

@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\OfficiersEnumerator as OE;
 use Xgp\App\Core\Objects;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
@@ -35,7 +36,7 @@ class PremiumController extends BaseController
         Template::legacyView(
             'premium.view',
             [
-                'premium_pay_url' => Functions::readConfig('premium_url') != '' ? Functions::readConfig('premium_url') : 'game.php?page=premium',
+                'premium_pay_url' => Options::getInstance()->get('premium_url') != '' ? Options::getInstance()->get('premium_url') : 'game.php?page=premium',
                 'officier_list' => $this->buildOfficiersList(),
             ]
         );

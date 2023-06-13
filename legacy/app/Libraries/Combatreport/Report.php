@@ -3,7 +3,7 @@
 namespace Xgp\App\Libraries\Combatreport;
 
 use Xgp\App\Core\Entity\ReportEntity;
-use Xgp\App\Libraries\enumerators\ReportStatusEnumerator as ReportStatus;
+use Xgp\App\Core\Enumerators\ReportStatusEnumerator as ReportStatus;
 
 class Report
 {

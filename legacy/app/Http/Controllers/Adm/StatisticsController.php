@@ -6,9 +6,9 @@ namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
-use Xgp\App\Libraries\Functions;
 
 class StatisticsController extends BaseController
 {
@@ -57,7 +57,7 @@ class StatisticsController extends BaseController
             $data = array_diff($data, [null, false]);
 
             foreach ($data as $option => $value) {
-                Functions::updateConfig($option, $value);
+                Options::getInstance()->write($option, $value);
             }
 
             session()->flash('success', __('admin/statistics.cs_all_ok_message'));
@@ -67,7 +67,7 @@ class StatisticsController extends BaseController
     private function getStatisticsSettings(): array
     {
         return array_filter(
-            Functions::readConfig('', true),
+            Options::getInstance()->get(),
             function ($value, $key) {
                 if ($key == 'stat_admin_level') {
                     $this->user_level = $value;

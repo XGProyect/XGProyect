@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\ArraysHelper;
 use Xgp\App\Helpers\UrlHelper;
@@ -132,7 +133,7 @@ class MessagesController extends BaseController
                 $messages_list[] = [
                     'message_id' => $message['message_id'],
                     'message_time' => date(
-                        strtr(Functions::readConfig('date_format_extended'), ['.Y' => '']),
+                        strtr(Options::getInstance()->get('date_format_extended'), ['.Y' => '']),
                         $message['message_time']
                     ),
                     'message_from' => $message['message_from'],

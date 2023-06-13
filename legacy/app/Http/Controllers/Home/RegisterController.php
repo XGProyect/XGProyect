@@ -7,6 +7,7 @@ namespace Xgp\App\Http\Controllers\Home;
 use App\Mail\Welcome;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Mail;
+use Xgp\App\Core\Options;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Home\Register;
@@ -23,7 +24,7 @@ class RegisterController extends BaseController
         $this->registerModel = new Register();
         $this->userLibrary = Users::getInstance();
 
-        if (Functions::readConfig('reg_enable') != 1) {
+        if (Options::getInstance()->get('reg_enable') != 1) {
             Functions::message(__('home/register.re_disabled'), 'index.php', '5', false, false);
             exit;
         }
@@ -58,7 +59,7 @@ class RegisterController extends BaseController
                 $newUser = $this->registerModel->getNewUserData();
 
                 // Send Welcome Message to the user if the feature is enabled
-                if (Functions::readConfig('reg_welcome_message')) {
+                if (Options::getInstance()->get('reg_welcome_message')) {
                     Functions::sendMessage(
                         $newUser['user_id'],
                         0,
@@ -71,7 +72,7 @@ class RegisterController extends BaseController
                 }
 
                 // Send Welcome Email to the user if the feature is enabled
-                if (Functions::readConfig('reg_welcome_email')) {
+                if (Options::getInstance()->get('reg_welcome_email')) {
                     Mail::to($newUser['user_email'])->send(new Welcome(
                         $newUser['user_name'],
                         $userPassword
@@ -130,9 +131,9 @@ class RegisterController extends BaseController
     private function calculateNewPlanetPosition(): void
     {
         $this->isPlanetFree(
-            (int) Functions::readConfig('lastsettedgalaxypos'),
-            (int) Functions::readConfig('lastsettedsystempos'),
-            max((int) Functions::readConfig('lastsettedplanetpos'), 4) // new users need to start at position 4
+            (int) Options::getInstance()->get('lastsettedgalaxypos'),
+            (int) Options::getInstance()->get('lastsettedsystempos'),
+            max((int) Options::getInstance()->get('lastsettedplanetpos'), 4) // new users need to start at position 4
         );
     }
 
@@ -141,9 +142,9 @@ class RegisterController extends BaseController
         // Check if the planet is free
         $isFree = !$this->registerModel->checkIfPlanetExists($galaxy, $system, $position);
         if ($isFree) {
-            Functions::updateConfig('lastsettedgalaxypos', $galaxy);
-            Functions::updateConfig('lastsettedsystempos', $system);
-            Functions::updateConfig('lastsettedplanetpos', $position);
+            Options::getInstance()->write('lastsettedgalaxypos', $galaxy);
+            Options::getInstance()->write('lastsettedsystempos', $system);
+            Options::getInstance()->write('lastsettedplanetpos', $position);
 
             $this->available_coords = [
                 'galaxy' => $galaxy,

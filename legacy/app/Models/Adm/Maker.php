@@ -4,6 +4,7 @@ namespace Xgp\App\Models\Adm;
 
 use Exception;
 use Xgp\App\Core\Model;
+use Xgp\App\Core\Options;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;
 
@@ -143,7 +144,7 @@ class Maker extends Model
 
             $this->db->query(
                 'INSERT INTO `' . PREMIUM . "` (`premium_user_id`, `premium_dark_matter`)
-                VALUES('" . $last_user_id . "', '" . Functions::readConfig('registration_dark_matter') . "');"
+                VALUES('" . $last_user_id . "', '" . Options::getInstance()->get('registration_dark_matter') . "');"
             );
 
             $this->db->query(

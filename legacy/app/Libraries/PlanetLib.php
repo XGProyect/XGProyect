@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xgp\App\Libraries;
 
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Core\Options;
 use Xgp\App\Models\Libraries\PlanetLib as PlanetLibModel;
 
 class PlanetLib
@@ -55,11 +56,11 @@ class PlanetLib
                     'planet_temp_min' => $temp['min'],
                     'planet_temp_max' => $temp['max'],
                     'planet_metal' => BUILD_METAL,
-                    'planet_metal_perhour' => Functions::readConfig('metal_basic_income'),
+                    'planet_metal_perhour' => Options::getInstance()->get('metal_basic_income'),
                     'planet_crystal' => BUILD_CRISTAL,
-                    'planet_crystal_perhour' => Functions::readConfig('crystal_basic_income'),
+                    'planet_crystal_perhour' => Options::getInstance()->get('crystal_basic_income'),
                     'planet_deuterium' => BUILD_DEUTERIUM,
-                    'planet_deuterium_perhour' => Functions::readConfig('deuterium_basic_income'),
+                    'planet_deuterium_perhour' => Options::getInstance()->get('deuterium_basic_income'),
                     'planet_b_building_id' => '0',
                     'planet_b_hangar_id' => '',
                 ]

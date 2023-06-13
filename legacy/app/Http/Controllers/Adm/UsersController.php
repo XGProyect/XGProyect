@@ -5,6 +5,7 @@ namespace Xgp\App\Http\Controllers\Adm;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
@@ -221,11 +222,11 @@ class UsersController extends BaseController
         $parse['main_planet'] = $this->buildPlanetCombo($this->user_query, 'user_home_planet_id');
         $parse['current_planet'] = $this->buildPlanetCombo($this->user_query, 'user_current_planet');
         $parse['alliances'] = $this->buildAllianceCombo($this->user_query);
-        $parse['user_register_time'] = ($this->user_query['user_register_time'] == 0) ? '-' : date(Functions::readConfig('date_format_extended'), $this->user_query['user_register_time']);
+        $parse['user_register_time'] = ($this->user_query['user_register_time'] == 0) ? '-' : date(Options::getInstance()->get('date_format_extended'), $this->user_query['user_register_time']);
         $parse['user_onlinetime'] = $this->lastActivity($this->user_query['user_onlinetime']);
         $parse['user_roles'] = $this->buildUsersRolesList();
         $parse['user_banned'] = ($this->user_query['user_banned'] <= 0) ? '<p class="text-error">' . __('admin/global.ge_no') : '<p class="text-success">' . __('admin/global.ge_yes');
-        $parse['user_banned'] .= ($this->user_query['user_banned'] > 0) ? __('admin/users.us_user_information_banned_until') . date(Functions::readConfig('date_format'), $this->user_query['user_banned']) . '</p>' : '</p>';
+        $parse['user_banned'] .= ($this->user_query['user_banned'] > 0) ? __('admin/users.us_user_information_banned_until') . date(Options::getInstance()->get('date_format'), $this->user_query['user_banned']) . '</p>' : '</p>';
         $parse['user_fleet_shortcuts'] = $this->buildShortcutsCombo($this->user_query['user_fleet_shortcuts']);
 
         return Template::getInstance()->render('admin.users_information', $parse);
@@ -714,7 +715,7 @@ class UsersController extends BaseController
 
                     $prepare_table[] = [
                         'premium' => __('admin/users.us_user_' . $officier),
-                        'status' => ($expire == 0) ? __('admin/users.us_user_premium_inactive') : (__('admin/users.us_user_premium_active_until') . date(Functions::readConfig('date_format'), $expire)),
+                        'status' => ($expire == 0) ? __('admin/users.us_user_premium_inactive') : (__('admin/users.us_user_premium_active_until') . date(Options::getInstance()->get('date_format'), $expire)),
                         'status_style' => ($expire == 0) ? 'text-danger' : 'text-success',
                         'field' => $officier,
                         'combo' => $this->premiumCombo(),
@@ -804,16 +805,16 @@ class UsersController extends BaseController
     {
         $parse = $planets_data;
         $parse['planet_user_id'] = $this->buildUsersCombo($parse['planet_user_id']);
-        $parse['planet_last_update'] = date(Functions::readConfig('date_format_extended'), $parse['planet_last_update']);
+        $parse['planet_last_update'] = date(Options::getInstance()->get('date_format_extended'), $parse['planet_last_update']);
         $parse['type1'] = $parse['planet_type'] == PlanetTypesEnumerator::PLANET ? ' selected' : '';
         $parse['type2'] = $parse['planet_type'] == PlanetTypesEnumerator::MOON ? ' selected' : '';
         $parse['dest1'] = $parse['planet_destroyed'] > 0 ? ' selected' : '';
         $parse['dest2'] = $parse['planet_destroyed'] <= 0 ? ' selected' : '';
-        $parse['planet_destroyed'] = $parse['planet_destroyed'] > 0 ? date(Functions::readConfig('date_format_extended'), $parse['planet_destroyed']) : '-';
-        $parse['planet_b_building'] = $parse['planet_b_building'] > 0 ? date(Functions::readConfig('date_format_extended'), $parse['planet_b_building']) : '-';
+        $parse['planet_destroyed'] = $parse['planet_destroyed'] > 0 ? date(Options::getInstance()->get('date_format_extended'), $parse['planet_destroyed']) : '-';
+        $parse['planet_b_building'] = $parse['planet_b_building'] > 0 ? date(Options::getInstance()->get('date_format_extended'), $parse['planet_b_building']) : '-';
         $parse['planet_b_building_id'] = $this->buildProcessQueue($parse['planet_b_building_id']);
-        $parse['planet_b_tech'] = $parse['planet_b_tech'] > 0 ? date(Functions::readConfig('date_format_extended'), $parse['planet_b_tech']) : '-';
-        $parse['planet_b_hangar'] = $parse['planet_b_hangar'] > 0 ? date(Functions::readConfig('date_format_extended'), $parse['planet_b_hangar']) : '-';
+        $parse['planet_b_tech'] = $parse['planet_b_tech'] > 0 ? date(Options::getInstance()->get('date_format_extended'), $parse['planet_b_tech']) : '-';
+        $parse['planet_b_hangar'] = $parse['planet_b_hangar'] > 0 ? date(Options::getInstance()->get('date_format_extended'), $parse['planet_b_hangar']) : '-';
         $parse['planet_image'] = $this->buildImageCombo($parse['planet_image']);
         $parse['planet_building_metal_mine_percent'] = $this->buildPercentCombo($parse['planet_building_metal_mine_percent']);
         $parse['planet_building_crystal_mine_percent'] = $this->buildPercentCombo($parse['planet_building_crystal_mine_percent']);
@@ -821,8 +822,8 @@ class UsersController extends BaseController
         $parse['planet_building_solar_plant_percent'] = $this->buildPercentCombo($parse['planet_building_solar_plant_percent']);
         $parse['planet_building_fusion_reactor_percent'] = $this->buildPercentCombo($parse['planet_building_fusion_reactor_percent']);
         $parse['planet_ship_solar_satellite_percent'] = $this->buildPercentCombo($parse['planet_ship_solar_satellite_percent']);
-        $parse['planet_last_jump_time'] = $parse['planet_last_jump_time'] > 0 ? date(Functions::readConfig('date_format_extended'), $parse['planet_last_jump_time']) : '-';
-        $parse['planet_invisible_start_time'] = $parse['planet_invisible_start_time'] > 0 ? date(Functions::readConfig('date_format_extended'), $parse['planet_invisible_start_time']) : '-';
+        $parse['planet_last_jump_time'] = $parse['planet_last_jump_time'] > 0 ? date(Options::getInstance()->get('date_format_extended'), $parse['planet_last_jump_time']) : '-';
+        $parse['planet_invisible_start_time'] = $parse['planet_invisible_start_time'] > 0 ? date(Options::getInstance()->get('date_format_extended'), $parse['planet_invisible_start_time']) : '-';
 
         return $parse;
     }
@@ -972,6 +973,6 @@ class UsersController extends BaseController
 
     private function vacationSet(): string
     {
-        return __('admin/users.us_user_preference_vacations_until') . date(Functions::readConfig('date_format_extended'), $this->user_query['preference_vacation_mode']);
+        return __('admin/users.us_user_preference_vacations_until') . date(Options::getInstance()->get('date_format_extended'), $this->user_query['preference_vacation_mode']);
     }
 }

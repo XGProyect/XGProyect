@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\URL;
-use Xgp\App\Libraries\Functions;
+use Xgp\App\Core\Options;
 
 class Announcement extends Mailable
 {
@@ -34,8 +34,8 @@ class Announcement extends Mailable
         return new Envelope(
             subject: !empty($this->emailSubject) ? $this->emailSubject : __('admin/announcement.an_none'),
             from: new Address(
-                Functions::readConfig('admin_email'),
-                Functions::readConfig('game_name')
+                Options::getInstance()->get('admin_email'),
+                Options::getInstance()->get('game_name')
             ),
         );
     }
@@ -49,7 +49,7 @@ class Announcement extends Mailable
             markdown: 'emails.admin.announcement',
             with: [
                 'content' => $this->emailContent,
-                'gameName' => Functions::readConfig('game_name'),
+                'gameName' => Options::getInstance()->get('game_name'),
                 'gameUrl' => URL::to('/'),
             ],
         );

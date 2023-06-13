@@ -5,15 +5,10 @@ declare(strict_types=1);
 namespace Xgp\App\Models\Game;
 
 use Xgp\App\Core\Model;
-use Xgp\App\Libraries\Functions;
+use Xgp\App\Core\Options;
 
 class Statistics extends Model
 {
-    /**
-     * Get the amount of alliances
-     *
-     * @return integer
-     */
     public function countAlliances(): int
     {
         return (int) $this->db->queryFetch(
@@ -23,13 +18,6 @@ class Statistics extends Model
         )['count'];
     }
 
-    /**
-     * Get list of alliances and their statistics
-     *
-     * @param string $order
-     * @param integer $start
-     * @return array|null
-     */
     public function getAlliances(string $order, int $start): ?array
     {
         return $this->db->queryFetchAll(
@@ -52,13 +40,6 @@ class Statistics extends Model
         );
     }
 
-    /**
-     * Get list of users and their statistics
-     *
-     * @param string $order
-     * @param integer $start
-     * @return array|null
-     */
     public function getUsers(string $order, int $start): ?array
     {
         return $this->db->queryFetchAll(
@@ -71,7 +52,7 @@ class Statistics extends Model
             FROM `' . USERS_STATISTICS . '` as s
             INNER JOIN `' . USERS . '` as u ON u.`user_id` = s.`user_statistic_user_id`
             LEFT JOIN `' . ALLIANCE . '` AS a ON a.`alliance_id` = u.`user_ally_id`
-            WHERE `user_authlevel` <= ' . Functions::readConfig('stat_admin_level') . '
+            WHERE `user_authlevel` <= ' . Options::getInstance()->get('stat_admin_level') . '
             ORDER BY `user_statistic_' . $order . '` DESC, `user_statistic_total_rank` ASC
             LIMIT ' . $start . ',100;'
         );

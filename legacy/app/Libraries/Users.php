@@ -4,6 +4,7 @@ namespace Xgp\App\Libraries;
 
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Core\Options;
 use Xgp\App\Libraries\Alliance\Ranks;
 use Xgp\App\Models\Libraries\UsersLibrary;
 
@@ -163,7 +164,7 @@ class Users
     {
         $this->planetData = $this->usersModel->setPlanetData(
             $this->userData['user_current_planet'],
-            Functions::readConfig('stat_admin_level')
+            Options::getInstance()->get('stat_admin_level')
         );
     }
 

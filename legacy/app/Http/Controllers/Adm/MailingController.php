@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
-use Xgp\App\Libraries\Functions;
 
 class MailingController extends BaseController
 {
@@ -49,7 +49,7 @@ class MailingController extends BaseController
         if ($data) {
             foreach ($data as $option => $value) {
                 if ((is_numeric($value) && $value >= 0) or is_string($value) && ($value !== false && $value !== null)) {
-                    Functions::updateConfig($option, $value);
+                    Options::getInstance()->write($option, $value);
                 }
             }
 
@@ -60,7 +60,7 @@ class MailingController extends BaseController
     private function getMailingSettings(): array
     {
         return array_filter(
-            Functions::readConfig('', true),
+            Options::getInstance()->get(),
             function ($key) {
                 return array_key_exists($key, self::MAILING_SETTINGS);
             },
@@ -75,7 +75,7 @@ class MailingController extends BaseController
         foreach (['mail', 'sendmail', 'smtp'] as $option) {
             $options[] = [
                 'value' => $option,
-                'selected' => ($option == Functions::readConfig('mailing_protocol') ? ' selected' : ''),
+                'selected' => ($option == Options::getInstance()->get('mailing_protocol') ? ' selected' : ''),
                 'option' => $option,
             ];
         }
@@ -90,7 +90,7 @@ class MailingController extends BaseController
         foreach (['', 'tls', 'ssl'] as $option) {
             $options[] = [
                 'value' => $option,
-                'selected' => ($option == Functions::readConfig('mailing_smtp_crypto') ? ' selected' : ''),
+                'selected' => ($option == Options::getInstance()->get('mailing_smtp_crypto') ? ' selected' : ''),
                 'option' => strtoupper($option),
             ];
         }

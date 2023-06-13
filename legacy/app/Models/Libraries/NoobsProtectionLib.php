@@ -5,27 +5,15 @@ declare(strict_types=1);
 namespace Xgp\App\Models\Libraries;
 
 use Xgp\App\Core\Model;
-use Xgp\App\Libraries\Functions;
+use Xgp\App\Core\Options;
 
 class NoobsProtectionLib extends Model
 {
-    /**
-     * Read all server configurations
-     *
-     * @return array
-     */
     public function readAllConfigs(): array
     {
-        return Functions::readConfig('', true);
+        return Options::getInstance()->get();
     }
 
-    /**
-     * Return points for current user and the other user
-     *
-     * @param integer $current_user_id
-     * @param integer $other_user_id
-     * @return array
-     */
     public function returnBothPartiesPoints(int $current_user_id, int $other_user_id): array
     {
         return $this->db->queryFetch(

@@ -13,13 +13,7 @@ use Xgp\App\Libraries\Messenger\Messenger;
 
 abstract class Functions
 {
-    /**
-     * @param string  $type  Type
-     * @param string  $ref   Ref
-     * @param string  $value Value
-     * @param boolean $init  Init
-     */
-    public static function chronoApplet($type, $ref, $value, $init): string
+    public static function chronoApplet(string $type, string $ref, string $value, bool $init): string
     {
         if ($init == true) {
             $template = 'scripts.chrono_applet_init';
@@ -37,22 +31,6 @@ abstract class Functions
         );
     }
 
-    public static function readConfig(?string $name, $all = false): mixed
-    {
-        $configs = Options::getInstance();
-
-        if ($all) {
-            return $configs->getOptions(null);
-        } else {
-            return $configs->getOptions($name);
-        }
-    }
-
-    public static function updateConfig($name, $value)
-    {
-        return Options::getInstance()->writeOptions($name, $value);
-    }
-
     public static function validEmail(string $address): bool
     {
         return (!preg_match(
@@ -63,7 +41,7 @@ abstract class Functions
 
     public static function fleetSpeedFactor(): string
     {
-        return self::readConfig('fleet_speed') / 2500;
+        return Options::getInstance()->get('fleet_speed') / 2500;
     }
 
     public static function message(string $mes, ?string $dest = null, string $time = '3', bool $topnav = true, bool $menu = true, $center = true): void
@@ -100,7 +78,7 @@ abstract class Functions
 
     public static function isModuleAccesible(int $module = 0): int
     {
-        $modules = self::readConfig('modules');
+        $modules = Options::getInstance()->get('modules');
         $modules = explode(';', $modules);
 
         return (int) $modules[$module];
@@ -157,26 +135,12 @@ abstract class Functions
         $messenger->sendMessage($options);
     }
 
-    /**
-     * getDefaultVacationTime
-     *
-     * @return int
-     */
-    public static function getDefaultVacationTime()
+    public static function getDefaultVacationTime(): int
     {
         return (time() + (3600 * 24 * VACATION_TIME_FORCED));
     }
 
-    /**
-     * setImage
-     *
-     * @param string $path       Image path
-     * @param string $title      Title
-     * @param string $attributes Attributes - css & js
-     *
-     * @return string
-     */
-    public static function setImage($path, $title = 'img', $attributes = '')
+    public static function setImage(string $path, string $title = 'img', string $attributes = ''): string
     {
         if (!empty($attributes)) {
             $attributes = ' ' . $attributes;
@@ -194,12 +158,12 @@ abstract class Functions
     public static function getCurrentLanguage(bool $installed = false): string
     {
         if ($installed) {
-            return self::readConfig('lang');
+            return Options::getInstance()->get('lang');
         }
 
         // set the user language reading the config file
         if ($installed && !isset($_COOKIE['current_lang'])) {
-            $_COOKIE['current_lang'] = self::readConfig('lang');
+            $_COOKIE['current_lang'] = Options::getInstance()->get('lang');
         }
 
         // get the language from the session
@@ -210,14 +174,7 @@ abstract class Functions
         return 'english'; // the universal language if nothing was set
     }
 
-    /**
-     * setCurrentLanguage
-     *
-     * @param string $lang Language
-     *
-     * @return void
-     */
-    public static function setCurrentLanguage($lang = '')
+    public static function setCurrentLanguage(string $lang = ''): void
     {
         // force english
         if (!in_array($lang, self::getLanguagesList())) {
@@ -228,18 +185,13 @@ abstract class Functions
 
         // set the user language reading the config file
         if ($db != null && $db->testConnection() && !isset($_COOKIE['current_lang'])) {
-            self::updateConfig('lang', $lang);
+            Options::getInstance()->write('lang', $lang);
         }
 
         setcookie('current_lang', $lang);
     }
 
-    /**
-     * Get the list of available languages
-     *
-     * @return array
-     */
-    public static function getLanguagesList()
+    public static function getLanguagesList(): array
     {
         $langs_dir = opendir(lang_path());
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store'];
@@ -254,14 +206,7 @@ abstract class Functions
         return $langs;
     }
 
-    /**
-     * getLanguages
-     *
-     * @param string $current_lang Current language
-     *
-     * @return string
-     */
-    public static function getLanguages($current_lang)
+    public static function getLanguages(string $current_lang): string
     {
         $langs_dir = opendir(lang_path());
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store'];
@@ -296,22 +241,11 @@ abstract class Functions
         );
     }
 
-    /**
-     * Encrypt a password
-     *
-     * @param string $password
-     * @return string
-     */
     public static function hash(string $password): string
     {
         return password_hash($password, PASSWORD_BCRYPT);
     }
 
-    /**
-     * Generate a random password
-     *
-     * @return string
-     */
     public static function generatePassword(): string
     {
         return StringsHelper::randomString(16);

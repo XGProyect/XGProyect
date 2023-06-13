@@ -30,9 +30,6 @@ class Common
 
     /**
      * Start the system
-     *
-     * @param string $app
-     * @return void
      */
     public function bootUp(string $app): void
     {
@@ -92,7 +89,7 @@ class Common
 
     private function setSystemTimezone(): void
     {
-        date_default_timezone_set(Functions::readConfig('date_time_zone'));
+        date_default_timezone_set(Options::getInstance()->get('date_time_zone'));
     }
 
     private function setSession(): void
@@ -113,8 +110,8 @@ class Common
 
     private function setUpdates(): void
     {
-        define('SHIP_DEBRIS_FACTOR', Functions::readConfig('fleet_cdr') / 100);
-        define('DEFENSE_DEBRIS_FACTOR', Functions::readConfig('defs_cdr') / 100);
+        define('SHIP_DEBRIS_FACTOR', Options::getInstance()->get('fleet_cdr') / 100);
+        define('DEFENSE_DEBRIS_FACTOR', Options::getInstance()->get('defs_cdr') / 100);
 
         // Several updates
         new UpdatesLibrary();
@@ -122,12 +119,12 @@ class Common
 
     private function isServerOpen(): void
     {
-        if (Functions::readConfig('game_enable') == SwitchInt::off) {
+        if (Options::getInstance()->get('game_enable') == SwitchInt::off) {
             $user = (new Users())->getUserData();
             $user_level = $user['user_authlevel'] ?? 0;
 
             if ($user_level < UserRanks::ADMIN) {
-                Functions::message(Functions::readConfig('close_reason'), '', '', false, false);
+                Functions::message(Options::getInstance()->get('close_reason'), '', '', false, false);
                 exit;
             }
         }

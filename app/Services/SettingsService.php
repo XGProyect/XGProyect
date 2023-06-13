@@ -12,7 +12,7 @@ class SettingsService
     public function get(?string $setting = null): mixed
     {
         if (!$this->settings) {
-            $settings = Options::all()->toArray();
+            $settings = Options::all(['name', 'value'])->toArray();
 
             foreach ($settings as $item) {
                 $this->settings[$item['name']] = $item['value'];

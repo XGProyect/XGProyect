@@ -4,6 +4,7 @@ namespace Xgp\App\Http\Controllers\Install;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Artisan;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Libraries\Functions;
@@ -169,10 +170,10 @@ class InstallationController extends BaseController
 
                 if ($continue) {
                     // set last stat update
-                    Functions::updateConfig('stat_last_update', time());
+                    Options::getInstance()->write('stat_last_update', time());
 
                     // set the installation language to the game language
-                    Functions::updateConfig('lang', Functions::getCurrentLanguage());
+                    Options::getInstance()->write('lang', Functions::getCurrentLanguage());
 
                     $current_page = Template::getInstance()->render(
                         'install/in_create_admin_done_view',
@@ -497,7 +498,7 @@ class InstallationController extends BaseController
         $this->_planet->setNewPlanet(1, 1, 1, 1, $adm_name);
 
         // write the new admin email for support
-        Functions::updateConfig('admin_email', $adm_email);
+        Options::getInstance()->write('admin_email', $adm_email);
 
         return true;
     }

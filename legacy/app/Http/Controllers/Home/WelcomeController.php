@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Home;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
@@ -62,13 +63,13 @@ class WelcomeController extends BaseController
     private function getPageData(): array
     {
         return [
-            'servername' => __('home/home.hm_title', ['game' => Functions::readConfig('game_name')]),
-            'gameLogo' => Functions::readConfig('game_logo'),
+            'servername' => __('home/home.hm_title', ['game' => Options::getInstance()->get('game_name')]),
+            'gameLogo' => Options::getInstance()->get('game_logo'),
             'extraJsError' => $this->getErrors(),
             'basePath' => BASE_PATH,
             'userName' => isset($_GET['character']) ? $_GET['character'] : '',
             'userEmail' => isset($_GET['email']) ? $_GET['email'] : '',
-            'forumUrl' => Functions::readConfig('forum_url'),
+            'forumUrl' => Options::getInstance()->get('forum_url'),
             'year' => date('Y'),
         ];
     }

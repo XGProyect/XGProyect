@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
@@ -59,7 +60,7 @@ class BackupController extends BaseController
             $data = filter_input_array(INPUT_POST, self::BACKUP_SETTINGS, true);
 
             foreach ($data as $option => $value) {
-                Functions::updateConfig($option, ($value == 'on' ? 1 : 0));
+                Options::getInstance()->write($option, ($value == 'on' ? 1 : 0));
             }
         }
 
@@ -104,7 +105,7 @@ class BackupController extends BaseController
     {
         return $this->setChecked(
             array_filter(
-                Functions::readConfig('', true),
+                Options::getInstance()->get(),
                 function ($key) {
                     return array_key_exists($key, self::BACKUP_SETTINGS);
                 },

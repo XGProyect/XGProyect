@@ -7,6 +7,7 @@ namespace Xgp\App\Http\Controllers\Game;
 use Exception;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Objects;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib;
@@ -139,7 +140,7 @@ class EmpireController extends BaseController
             'planetCurrentAmount' => FormatLib::prettyNumber((int) $planet['planet_' . $resource]),
             'planetProduction' => (
                 FormatLib::prettyNumber(
-                    ((int)($planet['planet_' . $resource . '_perhour'] + Functions::readConfig($resource . '_basic_income')))
+                    ((int)($planet['planet_' . $resource . '_perhour'] + Options::getInstance()->get($resource . '_basic_income')))
                 )
             ),
         ];
