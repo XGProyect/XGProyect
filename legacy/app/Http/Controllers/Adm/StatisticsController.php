@@ -40,7 +40,7 @@ class StatisticsController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.statistics',
             array_merge(
                 $this->getStatisticsSettings(),

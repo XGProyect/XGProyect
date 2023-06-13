@@ -23,7 +23,7 @@ class LoginController extends BaseController
         $this->runAction();
         $this->setAlert();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.login',
             [
                 'redirect' => filter_input(INPUT_GET, 'redirect', FILTER_UNSAFE_RAW),

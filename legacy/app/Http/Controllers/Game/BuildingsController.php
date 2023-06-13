@@ -49,7 +49,7 @@ class BuildingsController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'buildings.body',
             array_merge(
                 [

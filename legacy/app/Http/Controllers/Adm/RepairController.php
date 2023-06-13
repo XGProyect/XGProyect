@@ -83,7 +83,7 @@ class RepairController extends BaseController
             }
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.repair',
             $parse
         );

@@ -116,7 +116,7 @@ class GalaxyController extends BaseController
             $parse
         ) : ' ';
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'galaxy.galaxy_view',
             array_merge(
                 [

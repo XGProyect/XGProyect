@@ -32,7 +32,7 @@ class MailingController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.mailing',
             array_merge(
                 $this->getMailingSettings(),

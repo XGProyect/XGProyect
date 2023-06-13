@@ -105,7 +105,7 @@ class ResearchController extends BaseController
         $parse['noresearch'] = (!$this->isLaboratoryInQueue() ? __('game/research.re_building_lab') : '');
         $parse['technologies'] = $technology_list;
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'research.view',
             $parse
         );

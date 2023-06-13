@@ -29,7 +29,7 @@ class MessagesController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.messages',
             array_merge(
                 $this->buildMessageTypeBlock(),

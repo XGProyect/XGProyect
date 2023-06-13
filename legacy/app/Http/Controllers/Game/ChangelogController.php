@@ -35,7 +35,7 @@ class ChangelogController extends BaseController
             ];
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'changelog.view',
             [
                 'changes' => $changes

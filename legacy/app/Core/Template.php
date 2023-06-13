@@ -4,12 +4,23 @@ declare(strict_types=1);
 
 namespace Xgp\App\Core;
 
+use App\Exceptions\LegacyView;
 use Illuminate\Support\Facades\View;
 use Xgp\App\Libraries\Functions;
 
 class Template
 {
     private static ?Template $instance = null;
+
+    public static function legacyView($view = null, $data = [], $mergeData = []): void
+    {
+        View::share('gameTitle', Functions::readConfig('game_name'));
+        View::share('version', config('version.files'));
+
+        throw new LegacyView(
+            view($view, $data, $mergeData)
+        );
+    }
 
     public static function getInstance(): self
     {
@@ -18,11 +29,6 @@ class Template
         }
 
         return self::$instance;
-    }
-
-    public function view(string $template = '', array $data = []): void
-    {
-        die(self::render($template, $data));
     }
 
     public function render(string $template = '', array $data = [])

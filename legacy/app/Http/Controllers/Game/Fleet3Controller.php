@@ -61,7 +61,7 @@ class Fleet3Controller extends BaseController
     {
         $inputsData = $this->setInputsData();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'fleet/fleet3_view',
             array_merge(
                 [

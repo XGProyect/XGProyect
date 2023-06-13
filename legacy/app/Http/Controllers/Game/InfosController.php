@@ -196,7 +196,7 @@ class InfosController extends BaseController
             $page .= $this->buildTearDownBlock();
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             $page
         );
     }

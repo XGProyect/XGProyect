@@ -25,7 +25,7 @@ class EncrypterController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.encrypter',
             [
                 'unencrypted' => $this->unencrypted ?? '',

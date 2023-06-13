@@ -33,7 +33,7 @@ class ServerController extends BaseController
 
         $this->gameConfig = $this->serverModel->readAllConfigs();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.server',
             [
                 'game_name' => $this->gameConfig['game_name'],

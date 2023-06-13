@@ -28,7 +28,7 @@ class MakerController extends BaseController
 
         $this->makerModel = new Maker();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.maker',
             array_merge(
                 $this->makeUser(),

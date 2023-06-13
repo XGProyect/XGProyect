@@ -30,7 +30,7 @@ class PlanetsController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.planets',
             $this->getNewPlanetSettings()
         );

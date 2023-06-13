@@ -33,7 +33,7 @@ class BackupController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.backup',
             array_merge(
                 $this->getBackupSettings(),

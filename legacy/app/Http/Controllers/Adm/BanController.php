@@ -38,7 +38,7 @@ class BanController extends BaseController
             $parse = $this->showBan();
         }
 
-        Template::getInstance()->view($view, $parse);
+        Template::legacyView($view, $parse);
     }
 
     private function showDefault(): array

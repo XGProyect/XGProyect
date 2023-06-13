@@ -35,7 +35,7 @@ class BuddiesController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'buddies.view',
             [
                 'list_of_requests_received' => $this->buildListOfRequestsReceived(),
@@ -206,7 +206,7 @@ class BuddiesController extends BaseController
             Functions::redirect('game.php?page=buddies');
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'buddies.request',
             $user
         );

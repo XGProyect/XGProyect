@@ -32,7 +32,7 @@ class PremiumController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'premium.view',
             [
                 'premium_pay_url' => Functions::readConfig('premium_url') != '' ? Functions::readConfig('premium_url') : 'game.php?page=premium',

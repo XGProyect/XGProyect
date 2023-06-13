@@ -102,7 +102,7 @@ class TraderController extends BaseController
 
     private function buildPage(): void
     {
-        Template::getInstance()->view(
+        Template::legacyView(
             'game/trader_overview_view',
             array_merge(
                 $this->setMessageDisplay(),

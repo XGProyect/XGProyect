@@ -22,7 +22,7 @@ class WelcomeController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'home.welcome',
             array_merge(
                 $this->getErrors(),

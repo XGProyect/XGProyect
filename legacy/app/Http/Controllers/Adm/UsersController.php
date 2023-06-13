@@ -96,7 +96,7 @@ class UsersController extends BaseController
         $parse['user_rank'] = __('admin/global.user_level')[$this->authlevel];
         $parse['content'] = ($user != '' && $type != '') ? $this->getData($type) : '';
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.users',
             $parse
         );

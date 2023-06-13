@@ -30,7 +30,7 @@ class ChangelogController extends BaseController
         $this->runAction();
         $this->getAlertMessage();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.changelog',
             [
                 'changelog' => $this->buildListOfEntries(),
@@ -81,7 +81,7 @@ class ChangelogController extends BaseController
     {
         $this->saveAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.changelog_form',
             array_merge(
                 $this->getActionData('add')
@@ -93,7 +93,7 @@ class ChangelogController extends BaseController
     {
         $this->saveAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.changelog_form',
             $this->getActionData('edit', $changelog_id)
         );

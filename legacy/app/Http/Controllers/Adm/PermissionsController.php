@@ -27,7 +27,7 @@ class PermissionsController extends BaseController
         $this->setUpPermissions();
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.permissions',
             $this->buildListOfPermissions()
         );

@@ -78,7 +78,7 @@ abstract class Functions
             $middle['middle2'] = '</div>';
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'message.view',
             array_merge(
                 $middle,
@@ -284,7 +284,7 @@ abstract class Functions
 
     public static function messageBox(string $title, string $message, string $goto = '', string $button = ' ok ', bool $twoLines = false): void
     {
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.message_box',
             [
                 'goto' => $goto,

@@ -33,7 +33,7 @@ class EmpireController extends BaseController
         $this->objects = Objects::getInstance();
         $this->empireModel = new Empire();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'empire.view',
             $this->buildBlocks()
         );

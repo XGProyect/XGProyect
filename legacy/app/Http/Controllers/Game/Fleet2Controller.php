@@ -74,7 +74,7 @@ class Fleet2Controller extends BaseController
             'acs' => $this->buildAcsBlock(),
         ];
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'fleet.fleet2_view',
             array_merge(
                 $page,

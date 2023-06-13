@@ -96,7 +96,7 @@ class FederationController extends BaseController
         ];
 
         // view with no topvar and no leftmenu
-        Template::getInstance()->view(
+        Template::legacyView(
             'fleet/fleet_federation_view',
             $page
         );

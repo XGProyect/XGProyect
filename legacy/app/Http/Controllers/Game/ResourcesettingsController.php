@@ -239,7 +239,7 @@ class ResourcesettingsController extends BaseController
             Functions::redirect('game.php?page=resourceSettings');
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'resourcesettings.view',
             $parse
         );

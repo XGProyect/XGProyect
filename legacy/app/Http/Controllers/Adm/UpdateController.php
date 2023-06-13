@@ -61,7 +61,7 @@ class UpdateController extends BaseController
                 if ($this->demo) {
                     $parse['result'] = print_r($this->output, true);
 
-                    Template::getInstance()->view(
+                    Template::legacyView(
                         'admin.update_result',
                         $parse
                     );
@@ -76,7 +76,7 @@ class UpdateController extends BaseController
 
         $parse['continue'] = $continue;
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.update',
             $parse
         );

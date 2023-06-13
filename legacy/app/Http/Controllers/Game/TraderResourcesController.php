@@ -38,7 +38,7 @@ class TraderResourcesController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'trader.overview',
             array_merge(
                 $this->setMessageDisplay(),

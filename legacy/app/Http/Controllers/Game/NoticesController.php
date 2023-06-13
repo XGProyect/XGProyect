@@ -36,7 +36,7 @@ class NoticesController extends BaseController
 
         $page = $this->getCurrentPage();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             $page['template'],
             $page['data']
         );

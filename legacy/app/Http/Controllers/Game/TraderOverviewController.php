@@ -17,7 +17,7 @@ class TraderOverviewController extends BaseController
 
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'trader.overview',
             [
                 'color' => '',

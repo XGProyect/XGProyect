@@ -57,7 +57,7 @@ class AlliancesController extends BaseController
         $parse['tag'] = ($alliance != '') ? 'a' : 'button';
         $parse['content'] = ($alliance != '' && $type != '') ? $this->getData($type) : '';
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.alliances',
             $parse
         );

@@ -28,7 +28,7 @@ class RegistrationController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.registration',
             $this->getNewUserRegistrationSettings()
         );

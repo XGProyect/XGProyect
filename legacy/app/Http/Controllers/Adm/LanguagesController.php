@@ -23,7 +23,7 @@ class LanguagesController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.languages',
             array_merge(
                 $this->getFiles(),

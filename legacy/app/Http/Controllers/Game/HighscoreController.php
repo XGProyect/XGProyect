@@ -134,7 +134,7 @@ class HighscoreController extends BaseController
             }
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'highscore.body',
             $parse
         );

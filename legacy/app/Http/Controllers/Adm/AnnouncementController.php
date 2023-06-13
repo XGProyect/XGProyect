@@ -35,7 +35,7 @@ class AnnouncementController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.announcement',
             $this->buildColorPicker()
         );

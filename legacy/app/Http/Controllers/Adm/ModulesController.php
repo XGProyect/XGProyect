@@ -22,7 +22,7 @@ class ModulesController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.modules',
             [
                 'modules' => $this->buildModulesList(),

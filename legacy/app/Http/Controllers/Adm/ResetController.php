@@ -24,7 +24,7 @@ class ResetController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.reset'
         );
     }

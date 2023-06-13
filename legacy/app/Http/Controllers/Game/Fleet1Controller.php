@@ -81,7 +81,7 @@ class Fleet1Controller extends BaseController
             'continue_button' => $this->buildContinueBlock(),
         ];
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'fleet.fleet1_view',
             array_merge(
                 $page,

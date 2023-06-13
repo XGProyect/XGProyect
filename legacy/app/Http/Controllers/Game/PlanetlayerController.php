@@ -51,7 +51,7 @@ class PlanetlayerController extends BaseController
             $this->deletePlanet();
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'planetlayer.view',
             [
                 'planetImage' => $this->planet['planet_image'],

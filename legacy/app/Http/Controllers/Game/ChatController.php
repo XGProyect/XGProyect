@@ -29,7 +29,7 @@ class ChatController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'chat.view',
             [
                 'id' => $this->_receiver_data['user_id'],

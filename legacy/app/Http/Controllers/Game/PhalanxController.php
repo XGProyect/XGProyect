@@ -146,7 +146,7 @@ class PhalanxController extends BaseController
         $parse['phl_pl_name'] = $TargetName;
 
         // view with no topvar and no leftmenu
-        Template::getInstance()->view(
+        Template::legacyView(
             'galaxy.phalanx_body',
             $parse
         );

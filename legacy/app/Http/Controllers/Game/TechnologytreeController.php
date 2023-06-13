@@ -34,7 +34,7 @@ class TechnologytreeController extends BaseController
 
     private function buildPage(): void
     {
-        Template::getInstance()->view(
+        Template::legacyView(
             'technologytree.view',
             [
                 'list_of_constructions' => $this->buildBlock('build'),

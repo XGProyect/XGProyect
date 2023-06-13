@@ -32,7 +32,7 @@ class HomeController extends BaseController
 
         $userStats = $this->homeModel->getUsersStats();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.home',
             array_merge(
                 $userStats,

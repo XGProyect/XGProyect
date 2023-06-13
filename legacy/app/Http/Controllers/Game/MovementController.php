@@ -85,7 +85,7 @@ class MovementController extends BaseController
             'list_of_movements' => $this->buildMovements(),
         ];
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'movement.view',
             $page
         );

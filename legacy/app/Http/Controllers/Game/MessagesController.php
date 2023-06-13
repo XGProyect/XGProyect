@@ -65,7 +65,7 @@ class MessagesController extends BaseController
         // set messages as read
         $this->messagesModel->markAsRead($this->user['user_id']);
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'messages.default',
             [
                 'message_list' => $this->getMessagesList(
@@ -108,7 +108,7 @@ class MessagesController extends BaseController
             $this->messagesModel->markAsReadByType($this->user['user_id'], $get_messages);
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'messages.premium',
             array_merge(
                 [

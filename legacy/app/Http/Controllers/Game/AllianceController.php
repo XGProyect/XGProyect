@@ -139,7 +139,7 @@ class AllianceController extends BaseController
 
     private function getDefaultPublicSection(): void
     {
-        Template::getInstance()->view('alliance.start');
+        Template::legacyView('alliance.start');
     }
 
     private function getDefaultAwaitingApprovalSection(): void
@@ -154,7 +154,7 @@ class AllianceController extends BaseController
             $button_text = __('game/alliance.al_continue');
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.awaiting',
             [
                 'request_text' => str_replace('%s', $this->alliance->getCurrentAlliance()->getAllianceTag(), $request_text),
@@ -180,7 +180,7 @@ class AllianceController extends BaseController
             $details[] = $data;
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.front',
             [
                 'image' => $this->buildImageBlock(),
@@ -194,7 +194,7 @@ class AllianceController extends BaseController
 
     private function getAinfoSection(): void
     {
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.ainfo',
             [
                 'image' => $this->buildImageBlock(),
@@ -229,7 +229,7 @@ class AllianceController extends BaseController
             }
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.search',
             [
                 'searchtext' => $searchString,
@@ -278,7 +278,7 @@ class AllianceController extends BaseController
                 __('game/alliance.al_continue')
             );
         } else {
-            Template::getInstance()->view('alliance.make');
+            Template::legacyView('alliance.make');
         }
     }
 
@@ -302,7 +302,7 @@ class AllianceController extends BaseController
             }
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.apply',
             [
                 'allyid' => $this->getAllianceId(),
@@ -352,7 +352,7 @@ class AllianceController extends BaseController
             ];
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.members',
             [
                 'total' => $position,
@@ -425,7 +425,7 @@ class AllianceController extends BaseController
             }
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.circular',
             [
                 'ranks_list' => $ranks_list,
@@ -581,7 +581,7 @@ class AllianceController extends BaseController
 
         $ranks = $this->alliance->getCurrentAllianceRankObject();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.admin.view',
             [
                 't' => $t,
@@ -664,7 +664,7 @@ class AllianceController extends BaseController
             ];
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.admin.members',
             [
                 'total' => $position,
@@ -695,7 +695,7 @@ class AllianceController extends BaseController
             Functions::redirect('game.php?page=alliance&mode=admin&edit=ally');
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.admin.edit',
             [
                 'case' => strtr(
@@ -771,7 +771,7 @@ class AllianceController extends BaseController
             }
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.admin.applications',
             array_merge(
                 $requestForm,
@@ -875,7 +875,7 @@ class AllianceController extends BaseController
             }
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance..admin.rights',
             [
                 'list_of_ranks' => $list_of_ranks,
@@ -904,7 +904,7 @@ class AllianceController extends BaseController
             Functions::redirect('game.php?page=alliance&mode=admin&edit=ally');
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.admin.edit',
             [
                 'case' => strtr(
@@ -956,7 +956,7 @@ class AllianceController extends BaseController
             }
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'alliance.admin.transfer',
             [
                 'members' => $members,

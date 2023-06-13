@@ -46,7 +46,7 @@ class SearchController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'search.view',
             array_merge(
                 [

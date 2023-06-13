@@ -23,7 +23,7 @@ class TasksController extends BaseController
             exit;
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.tasks',
             $this->buildUpdatesBlock()
         );

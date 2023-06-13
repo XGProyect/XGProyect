@@ -37,7 +37,7 @@ class PreferencesController extends BaseController
         $this->setUpPreferences();
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'preferences.view',
             array_merge(
                 $this->setMessageDisplay(),

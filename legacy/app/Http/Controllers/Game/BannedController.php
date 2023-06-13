@@ -24,7 +24,7 @@ class BannedController extends BaseController
 
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'banned.view',
             [
                 'bannedPlayers' => $this->buildBannedPlayersList(),

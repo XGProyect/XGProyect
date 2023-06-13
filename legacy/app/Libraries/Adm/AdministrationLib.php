@@ -60,7 +60,7 @@ class AdministrationLib
             $parse['dismissible'] = 'd-none';
         }
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.save_message',
             $parse
         );

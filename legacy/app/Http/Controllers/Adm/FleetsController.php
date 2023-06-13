@@ -29,7 +29,7 @@ class FleetsController extends BaseController
 
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'admin.fleets',
             $this->buildFleetMovementsBlock()
         );

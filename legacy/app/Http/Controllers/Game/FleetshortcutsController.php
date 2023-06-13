@@ -33,7 +33,7 @@ class FleetshortcutsController extends BaseController
         $this->setUpShortcuts();
         $this->runAction();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'fleet.shortcuts.view',
             [
                 'shortcuts' => $this->buildShortcuts(),
@@ -172,7 +172,7 @@ class FleetshortcutsController extends BaseController
 
     private function buildEdit(array $page): void
     {
-        Template::getInstance()->view(
+        Template::legacyView(
             'fleet.shortcuts.edit',
             $page
         );

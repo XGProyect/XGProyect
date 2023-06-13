@@ -39,7 +39,7 @@ class OverviewController extends BaseController
         $this->noob = new NoobsProtectionLib();
         $this->objects = new Objects();
 
-        Template::getInstance()->view(
+        Template::legacyView(
             'overview.view',
             array_merge(
                 [
