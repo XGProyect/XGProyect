@@ -19,11 +19,11 @@ class Maker extends Model
     {
         return $this->db->queryFetchAll(
             'SELECT
-                `user_id`,
-                `user_name`
+                `id`,
+                `name`
             FROM `' . USERS . "`
-            WHERE `user_ally_id` = '0'
-                AND `user_ally_request` = '0';"
+            WHERE `ally_id` = '0'
+                AND `ally_request` = '0';"
         ) ?? [];
     }
 
@@ -36,8 +36,8 @@ class Maker extends Model
     {
         return $this->db->queryFetchAll(
             'SELECT
-                `user_id`,
-                `user_name`
+                `id`,
+                `name`
             FROM `' . USERS . '`;'
         ) ?? [];
     }
@@ -72,9 +72,9 @@ class Maker extends Model
     {
         return $this->db->queryFetch(
             'SELECT
-                `user_name`
+                `name`
             FROM `' . USERS . "`
-            WHERE `user_name` = '" . $this->db->escapeValue($username) . "'
+            WHERE `name` = '" . $this->db->escapeValue($username) . "'
             LIMIT 1"
         ) ?? [];
     }
@@ -89,9 +89,9 @@ class Maker extends Model
     {
         return $this->db->queryFetch(
             'SELECT
-                `user_email`
+                `email`
             FROM `' . USERS . "`
-            WHERE `user_email` = '" . $this->db->escapeValue($email) . "'
+            WHERE `email` = '" . $this->db->escapeValue($email) . "'
             LIMIT 1"
         ) ?? [];
     }
@@ -120,14 +120,14 @@ class Maker extends Model
 
             $this->db->query(
                 'INSERT INTO `' . USERS . "` SET
-                    `user_name` = '" . $this->db->escapeValue($name) . "',
-                    `user_email` = '" . $this->db->escapeValue($email) . "',
-                    `user_ip_at_reg` = '" . $_SERVER['REMOTE_ADDR'] . "',
-                    `user_home_planet_id` = '0',
-                    `user_register_time` = '" . $time . "',
-                    `user_onlinetime` = '" . $time . "',
-                    `user_authlevel` = '" . $auth . "',
-                    `user_password` = '" . Functions::hash($pass) . "';"
+                    `name` = '" . $this->db->escapeValue($name) . "',
+                    `email` = '" . $this->db->escapeValue($email) . "',
+                    `ip_at_reg` = '" . $_SERVER['REMOTE_ADDR'] . "',
+                    `home_planet_id` = '0',
+                    `register_time` = '" . $time . "',
+                    `onlinetime` = '" . $time . "',
+                    `authlevel` = '" . $auth . "',
+                    `password` = '" . Functions::hash($pass) . "';"
             );
 
             $last_user_id = $this->db->insertId();
@@ -159,13 +159,13 @@ class Maker extends Model
 
             $this->db->query(
                 'UPDATE `' . USERS . "` SET
-                    `user_home_planet_id` = '" . $last_planet_id . "',
-                    `user_current_planet` = '" . $last_planet_id . "',
-                    `user_galaxy` = '" . $galaxy . "',
-                    `user_system` = '" . $system . "',
-                    `user_planet` = '" . $planet . "'
+                    `home_planet_id` = '" . $last_planet_id . "',
+                    `current_planet` = '" . $last_planet_id . "',
+                    `galaxy` = '" . $galaxy . "',
+                    `system` = '" . $system . "',
+                    `planet` = '" . $planet . "'
                 WHERE
-                    `user_id` = '" . $last_user_id . "'
+                    `id` = '" . $last_user_id . "'
                 LIMIT 1;"
             );
 
@@ -220,9 +220,9 @@ class Maker extends Model
 
             $this->db->query(
                 'UPDATE `' . USERS . "` SET
-                    `user_ally_id` = '" . $new_alliance_id . "',
-                    `user_ally_register_time` = '" . $time . "'
-                WHERE `user_id` = '" . $alliance_founder . "'"
+                    `ally_id` = '" . $new_alliance_id . "',
+                    `ally_register_time` = '" . $time . "'
+                WHERE `id` = '" . $alliance_founder . "'"
             );
 
             $this->db->commitTransaction();
@@ -241,7 +241,7 @@ class Maker extends Model
         return $this->db->queryFetch(
             'SELECT *
             FROM `' . USERS . "`
-            WHERE `user_id` = '" . $userId . "'"
+            WHERE `id` = '" . $userId . "'"
         ) ?? [];
     }
 

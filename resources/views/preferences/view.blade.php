@@ -15,7 +15,7 @@
                     </tr>
                     <tr>
                         <th>{{ __('game/preferences.pr_your_player_name') }}:</th>
-                        <th>{{ $user_name }}</th>
+                        <th>{{ $name }}</th>
                     </tr>
                     <tr {{ $hide_nickname_change }}>
                         <th>{{ __('game/preferences.pr_new_player_name') }}:</th>
@@ -54,7 +54,7 @@
                     </tr>
                     <tr>
                         <th>{{ __('game/preferences.pr_your_player_email') }}:</th>
-                        <th>{{ $user_email }}</th>
+                        <th>{{ $email }}</th>
                     </tr>
                     <tr>
                         <th>{{ __('game/preferences.pr_new_player_email') }}:</th>

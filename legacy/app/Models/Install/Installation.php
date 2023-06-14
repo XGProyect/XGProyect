@@ -17,8 +17,8 @@ class Installation extends Model
     public function getAdmin(): array
     {
         return $this->db->queryFetch(
-            'SELECT COUNT(`user_id`) as count FROM ' . USERS . "
-                WHERE `user_id` = '1' OR `user_authlevel` = '3';"
+            'SELECT COUNT(`id`) as count FROM ' . USERS . "
+                WHERE `id` = '1' OR `authlevel` = '3';"
         );
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\Options;
@@ -22,7 +24,7 @@ class SettingsService
         return $this->settings[$setting] ?? $this->settings;
     }
 
-    public function write(string $key, string $value): bool
+    public function write(string $key, mixed $value): bool
     {
         if (!empty($key)) {
             DB::table('options')

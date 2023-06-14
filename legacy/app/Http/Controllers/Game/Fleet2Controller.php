@@ -52,12 +52,12 @@ class Fleet2Controller extends BaseController
     {
         $this->_research = new Researches(
             [$this->user],
-            $this->user['user_id']
+            $this->user['id']
         );
 
         $this->_premium = new Premium(
             [$this->user],
-            $this->user['user_id']
+            $this->user['id']
         );
     }
 
@@ -168,7 +168,7 @@ class Fleet2Controller extends BaseController
         }
 
         $shortcuts = new Shortcuts(
-            $this->user['user_fleet_shortcuts']
+            $this->user['fleet_shortcuts']
         );
 
         $shortcuts_list = $shortcuts->getAllAsArray();
@@ -221,7 +221,7 @@ class Fleet2Controller extends BaseController
      */
     private function buildColoniesBlock()
     {
-        $planets = $this->fleetModel->getAllPlanetsByUserId($this->user['user_id']);
+        $planets = $this->fleetModel->getAllPlanetsByUserId($this->user['id']);
         $list_of_planets = [];
 
         if ($planets) {
@@ -259,7 +259,7 @@ class Fleet2Controller extends BaseController
      */
     private function buildAcsBlock()
     {
-        $current_acs = $this->fleetModel->getOngoingAcs($this->user['user_id']);
+        $current_acs = $this->fleetModel->getOngoingAcs($this->user['id']);
         $acs_fleets = [];
 
         if ($current_acs) {

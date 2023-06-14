@@ -66,8 +66,8 @@ class UsersController extends BaseController
                 session()->flash('danger', __('admin/users.us_nothing_found'));
                 $user = '';
             } else {
-                $this->id = $checked_user['user_id'];
-                $this->authlevel = $checked_user['user_authlevel'];
+                $this->id = $checked_user['id'];
+                $this->authlevel = $checked_user['authlevel'];
 
                 // initial data
                 $this->user_query = $this->usersModel->getUserDataById($this->id);
@@ -83,8 +83,8 @@ class UsersController extends BaseController
         }
 
         // physical delete
-        if (isset($_GET['mode']) && $_GET['mode'] == 'delete' && $this->user_query['user_authlevel'] != 3) {
-            $this->userLibrary->deleteUser($this->user_query['user_id']);
+        if (isset($_GET['mode']) && $_GET['mode'] == 'delete' && $this->user_query['authlevel'] != 3) {
+            $this->userLibrary->deleteUser($this->user_query['id']);
 
             session()->flash('success', __('admin/users.us_user_deleted'));
         }
@@ -92,7 +92,7 @@ class UsersController extends BaseController
         $parse['type'] = ($type != '') ? $type : 'info';
         $parse['user'] = ($user != '') ? $user : '';
         $parse['status'] = ($user != '') ? '' : ' disabled';
-        $parse['status_box'] = ($user != '' && $this->id != $this->user['user_id']) ? '' : ' disabled';
+        $parse['status_box'] = ($user != '' && $this->id != $this->user['id']) ? '' : ' disabled';
         $parse['tag'] = ($user != '') ? 'a' : 'button';
         $parse['user_rank'] = __('admin/global.user_level')[$this->authlevel];
         $parse['content'] = ($user != '' && $type != '') ? $this->getData($type) : '';
@@ -218,23 +218,23 @@ class UsersController extends BaseController
     private function getDataInfo(): string
     {
         $parse = (array) $this->user_query;
-        $parse['information'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_information'));
-        $parse['main_planet'] = $this->buildPlanetCombo($this->user_query, 'user_home_planet_id');
-        $parse['current_planet'] = $this->buildPlanetCombo($this->user_query, 'user_current_planet');
+        $parse['information'] = str_replace('%s', $this->user_query['name'], __('admin/users.us_user_information'));
+        $parse['main_planet'] = $this->buildPlanetCombo($this->user_query, 'home_planet_id');
+        $parse['current_planet'] = $this->buildPlanetCombo($this->user_query, 'current_planet');
         $parse['alliances'] = $this->buildAllianceCombo($this->user_query);
-        $parse['user_register_time'] = ($this->user_query['user_register_time'] == 0) ? '-' : date(Options::getInstance()->get('date_format_extended'), $this->user_query['user_register_time']);
-        $parse['user_onlinetime'] = $this->lastActivity($this->user_query['user_onlinetime']);
+        $parse['register_time'] = ($this->user_query['register_time'] == 0) ? '-' : date(Options::getInstance()->get('date_format_extended'), $this->user_query['register_time']);
+        $parse['onlinetime'] = $this->lastActivity($this->user_query['onlinetime']);
         $parse['user_roles'] = $this->buildUsersRolesList();
-        $parse['user_banned'] = ($this->user_query['user_banned'] <= 0) ? '<p class="text-error">' . __('admin/global.ge_no') : '<p class="text-success">' . __('admin/global.ge_yes');
-        $parse['user_banned'] .= ($this->user_query['user_banned'] > 0) ? __('admin/users.us_user_information_banned_until') . date(Options::getInstance()->get('date_format'), $this->user_query['user_banned']) . '</p>' : '</p>';
-        $parse['user_fleet_shortcuts'] = $this->buildShortcutsCombo($this->user_query['user_fleet_shortcuts']);
+        $parse['banned'] = ($this->user_query['banned'] <= 0) ? '<p class="text-error">' . __('admin/global.ge_no') : '<p class="text-success">' . __('admin/global.ge_yes');
+        $parse['banned'] .= ($this->user_query['banned'] > 0) ? __('admin/users.us_user_information_banned_until') . date(Options::getInstance()->get('date_format'), $this->user_query['banned']) . '</p>' : '</p>';
+        $parse['fleet_shortcuts'] = $this->buildShortcutsCombo($this->user_query['fleet_shortcuts']);
 
         return Template::getInstance()->render('admin.users_information', $parse);
     }
 
     private function getDataSettings(): string
     {
-        $parse['settings'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_settings'));
+        $parse['settings'] = str_replace('%s', $this->user_query['name'], __('admin/users.us_user_settings'));
         $parse['preference_planet_sort'] = $this->planetSortCombo();
         $parse['preference_planet_sort_sequence'] = $this->planetOrderCombo();
         $parse['preference_spy_probes'] = $this->user_query['preference_spy_probes'];
@@ -248,7 +248,7 @@ class UsersController extends BaseController
     private function getDataResearch(): string
     {
         $parse = (array) $this->user_query;
-        $parse['research'] = str_replace(['%s', '%d'], [$this->user_query['user_name'], $this->id], __('admin/users.us_user_research'));
+        $parse['research'] = str_replace(['%s', '%d'], [$this->user_query['name'], $this->id], __('admin/users.us_user_research'));
         $parse['technologies_list'] = $this->researchTable();
 
         return Template::getInstance()->render('admin.users_research', $parse);
@@ -256,7 +256,7 @@ class UsersController extends BaseController
 
     private function getDataPremium(): string
     {
-        $parse['premium'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_premium'));
+        $parse['premium'] = str_replace('%s', $this->user_query['name'], __('admin/users.us_user_premium'));
         $parse['premium_dark_matter'] = $this->user_query['premium_dark_matter'];
         $parse['premium_list'] = $this->premiumTable();
 
@@ -268,7 +268,7 @@ class UsersController extends BaseController
         $planets_query = $this->usersModel->getAllPlanetsData($this->id, $this->planet, $this->edit);
         $view = '';
 
-        $parse['planets'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_planets'));
+        $parse['planets'] = str_replace('%s', $this->user_query['name'], __('admin/users.us_user_planets'));
 
         switch (true) {
             case ($this->edit == 'planet' && $planets_query):
@@ -306,8 +306,8 @@ class UsersController extends BaseController
         $moons_query = $this->usersModel->getAllMoonsData($this->id, $this->moon, $this->edit);
         $view = '';
 
-        $parse['moons'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_moons'));
-        $parse['planets'] = str_replace('%s', $this->user_query['user_name'], __('admin/users.us_user_moons'));
+        $parse['moons'] = str_replace('%s', $this->user_query['name'], __('admin/users.us_user_moons'));
+        $parse['planets'] = str_replace('%s', $this->user_query['name'], __('admin/users.us_user_moons'));
 
         switch (true) {
             case ($this->edit == 'moon' && $moons_query):
@@ -370,7 +370,7 @@ class UsersController extends BaseController
         if ($password != '') {
             $password = "'" . Functions::hash($password) . "'";
         } else {
-            $password = '`user_password`';
+            $password = '`password`';
         }
 
         if ($email == '' or $this->usersModel->checkEmail($email, $this->id)) {
@@ -407,7 +407,7 @@ class UsersController extends BaseController
                 'id' => $this->id,
             ]);
 
-            if ($this->user['user_id'] != $this->id) {
+            if ($this->user['id'] != $this->id) {
                 $this->usersModel->deleteSessionByUserId($this->id);
             }
         }
@@ -492,7 +492,7 @@ class UsersController extends BaseController
         $users = $this->usersModel->getAllUsers();
 
         foreach ($users as $users_row) {
-            $combo_rows .= '<option value="' . $users_row['user_id'] . '" ' . ($users_row['user_id'] == $userId ? ' selected' : '') . '>' . $users_row['user_name'] . '</option>';
+            $combo_rows .= '<option value="' . $users_row['id'] . '" ' . ($users_row['id'] == $userId ? ' selected' : '') . '>' . $users_row['name'] . '</option>';
         }
 
         return $combo_rows;
@@ -520,7 +520,7 @@ class UsersController extends BaseController
         $alliances = $this->usersModel->getAllAlliances();
 
         foreach ($alliances as $alliance_row) {
-            if ($user_data['user_ally_id'] == $alliance_row['alliance_id']) {
+            if ($user_data['ally_id'] == $alliance_row['alliance_id']) {
                 $combo_rows .= '<option value="' . $alliance_row['alliance_id'] . '" selected>' . $alliance_row['alliance_name'] . ' [' . $alliance_row['alliance_tag'] . ']' . '</option>';
             } else {
                 $combo_rows .= '<option value="' . $alliance_row['alliance_id'] . '">' . $alliance_row['alliance_name'] . ' [' . $alliance_row['alliance_tag'] . ']' . '</option>';
@@ -730,7 +730,7 @@ class UsersController extends BaseController
     private function planetsTable(array $planets_data): array
     {
         $imagePath = DEFAULT_SKINPATH . 'planets/small/s_';
-        $parse['user'] = $this->user_query['user_name'];
+        $parse['user'] = $this->user_query['name'];
         $prepare_table = [];
 
         foreach ($planets_data as $planets) {
@@ -773,7 +773,7 @@ class UsersController extends BaseController
 
     private function moonsTable(array $moons_data): array
     {
-        $parse['user'] = $this->user_query['user_name'];
+        $parse['user'] = $this->user_query['name'];
         $prepare_table = [];
 
         foreach ($moons_data as $moons) {
@@ -963,7 +963,7 @@ class UsersController extends BaseController
         foreach ($roles as $role) {
             $roles_list[] = [
                 'role_id' => $role,
-                'role_sel' => ($role == $this->user_query['user_authlevel'] ? 'selected' : ''),
+                'role_sel' => ($role == $this->user_query['authlevel'] ? 'selected' : ''),
                 'role_name' => __('admin/global.user_level')[$role],
             ];
         }

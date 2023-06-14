@@ -18,14 +18,14 @@ class Fleets extends Model
             'SELECT
                 f.*,
                 (
-                    SELECT `user_name`
+                    SELECT `name`
                     FROM `' . USERS . '`
-                    WHERE `user_id` = f.`fleet_owner`
+                    WHERE `id` = f.`fleet_owner`
                 ) AS fleet_username,
                 (
-                    SELECT `user_name`
+                    SELECT `name`
                     FROM `' . USERS . '`
-                    WHERE `user_id` = f.`fleet_target_owner`
+                    WHERE `id` = f.`fleet_target_owner`
                 ) AS `target_username`
             FROM `' . FLEETS . '` AS f
             ORDER BY f.`fleet_end_time` ASC;'

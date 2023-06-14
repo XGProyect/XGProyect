@@ -10,12 +10,12 @@ class Login extends Model
     {
         $result = $this->db->queryFetch(
             'SELECT
-                `user_id`,
-                `user_name`,
-                `user_password`
+                `id`,
+                `name`,
+                `password`
             FROM `' . USERS . "`
-            WHERE `user_email` = '" . $this->db->escapeValue($userEmail) . "'
-                AND `user_authlevel` >= '1'
+            WHERE `email` = '" . $this->db->escapeValue($userEmail) . "'
+                AND `authlevel` >= '1'
             LIMIT 1"
         );
 

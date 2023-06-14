@@ -20,8 +20,8 @@ class Ban extends Model
 
         $this->db->query(
             'UPDATE `' . USERS . "` SET
-                `user_banned` = '0'
-            WHERE `user_name` = '" . $clean_username . "'
+                `banned` = '0'
+            WHERE `name` = '" . $clean_username . "'
             LIMIT 1"
         );
     }
@@ -45,9 +45,9 @@ class Ban extends Model
             INNER JOIN `' . PREFERENCES . '` AS p
                 ON p.`preference_user_id` = (
                     SELECT
-                        `user_id`
+                        `id`
                     FROM `' . USERS . "`
-                    WHERE `user_name` = '" . $clean_user_name . "'
+                    WHERE `name` = '" . $clean_user_name . "'
                     LIMIT 1
                 )
             WHERE `banned_who` = '" . $clean_user_name . "'"
@@ -84,14 +84,14 @@ class Ban extends Model
 
             $userId = $this->db->queryFetch(
                 'SELECT
-                    `user_id`
+                    `id`
                 FROM `' . USERS . "`
-                WHERE `user_name` = '" . $ban_data['ban_name'] . "' LIMIT 1"
-            )['user_id'];
+                WHERE `name` = '" . $ban_data['ban_name'] . "' LIMIT 1"
+            )['id'];
 
             $this->db->query(
                 'UPDATE `' . USERS . '` AS u, `' . PREFERENCES . '` AS pr, `' . PLANETS . "` AS p SET
-                    u.`user_banned` = '" . $ban_data['ban_until'] . "',
+                    u.`banned` = '" . $ban_data['ban_until'] . "',
                     pr.`preference_vacation_mode` = " . (isset($vacation_mode) && $vacation_mode != '' ? "'" . time() . "'" : 'NULL') . ",
                     p.`planet_building_metal_mine_percent` = '0',
                     p.`planet_building_crystal_mine_percent` = '0',
@@ -99,7 +99,7 @@ class Ban extends Model
                     p.`planet_building_solar_plant_percent` = '0',
                     p.`planet_building_fusion_reactor_percent` = '0',
                     p.`planet_ship_solar_satellite_percent` = '0'
-                WHERE u.`user_id` = " . $userId . '
+                WHERE u.`id` = " . $userId . '
                         AND pr.`preference_user_id` = ' . $userId . '
                         AND p.`planet_user_id` = ' . $userId . ';'
             );
@@ -122,9 +122,9 @@ class Ban extends Model
     {
         return $this->db->queryFetchAll(
             'SELECT
-                `user_id`,
-                `user_name`,
-                `user_banned`
+                `id`,
+                `name`,
+                `banned`
             FROM `' . USERS . '`
             ' . $where_authlevel . ' ' . $where_banned . '
             ORDER BY ' . $query_order . ' ASC'
@@ -135,10 +135,10 @@ class Ban extends Model
     {
         return $this->db->queryFetchAll(
             'SELECT
-                `user_id`,
-                `user_name`
+                `id`,
+                `name`
             FROM `' . USERS . "`
-            WHERE `user_banned` <> '0'
+            WHERE `banned` <> '0'
             ORDER BY " . $order . ' ASC'
         );
     }

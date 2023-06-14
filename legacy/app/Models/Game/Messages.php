@@ -81,9 +81,9 @@ class Messages extends Model
     {
         if ((int) $planetId > 0) {
             return $this->db->queryFetch(
-                'SELECT u.`user_id`, u.`user_name`, p.`planet_galaxy`, p.`planet_system`, p.`planet_planet`
+                'SELECT u.`id`, u.`name`, p.`planet_galaxy`, p.`planet_system`, p.`planet_planet`
                 FROM ' . PLANETS . ' AS p
-                INNER JOIN ' . USERS . " as u ON p.planet_user_id = u.user_id
+                INNER JOIN ' . USERS . " as u ON p.planet_user_id = u.id
                 WHERE p.`planet_user_id` = '" . $planetId . "';"
             );
         }
@@ -168,16 +168,16 @@ class Messages extends Model
      *
      * @return mixed
      */
-    public function countAddressBookAndNotes($userId, $user_ally_id)
+    public function countAddressBookAndNotes($userId, $ally_id)
     {
-        if ((int) $userId > 0 && (int) $user_ally_id >= 0) {
+        if ((int) $userId > 0 && (int) $ally_id >= 0) {
             return $this->db->queryFetch(
                 'SELECT
-                ( SELECT COUNT(`user_id`)
+                ( SELECT COUNT(`id`)
                     FROM `' . USERS . "`
-                    WHERE `user_ally_id` = '" . $user_ally_id . "'
-                        AND `user_ally_id` <> 0
-                        AND `user_id` <> '" . $userId . "'
+                    WHERE `ally_id` = '" . $ally_id . "'
+                        AND `ally_id` <> 0
+                        AND `id` <> '" . $userId . "'
                     ) AS alliance_count,
 
                     ( SELECT COUNT(`buddy_id`)
@@ -191,10 +191,10 @@ class Messages extends Model
                     WHERE `note_owner` = '" . $userId . "'
                     ) AS notes_count,
 
-                    ( SELECT COUNT(`user_id`)
+                    ( SELECT COUNT(`id`)
                     FROM " . USERS . "
-                    WHERE user_authlevel <> 0
-                        AND `user_id` <> '" . $userId . "'
+                    WHERE authlevel <> 0
+                        AND `id` <> '" . $userId . "'
                     ) AS operators_count"
             );
         }
@@ -207,12 +207,12 @@ class Messages extends Model
         if ($userId > 0) {
             return $this->db->queryFetchAll(
                 'SELECT
-                    u.`user_id`,
-                    u.`user_name`,
-                    u.`user_email`
+                    u.`id`,
+                    u.`name`,
+                    u.`email`
                 FROM `' . BUDDY . '` b
                 LEFT JOIN `' . USERS . "` u
-                    ON u.user_id = IF(`buddy_sender` = '" . $userId . "', `buddy_receiver`, `buddy_sender`)
+                    ON u.id = IF(`buddy_sender` = '" . $userId . "', `buddy_receiver`, `buddy_sender`)
                 WHERE `buddy_sender`='" . $userId . "'
                     OR `buddy_receiver`='" . $userId . "'"
             );
@@ -225,18 +225,18 @@ class Messages extends Model
      * Get all alliance members that the user can contact
      *
      * @param int $userId      User ID
-     * @param int $user_ally_id User Alliance ID
+     * @param int $ally_id User Alliance ID
      *
      * @return mixed
      */
-    public function getAllianceMembers($userId, $user_ally_id)
+    public function getAllianceMembers($userId, $ally_id)
     {
-        if ((int) $userId > 0 && (int) $user_ally_id > 0) {
+        if ((int) $userId > 0 && (int) $ally_id > 0) {
             return $this->db->query(
-                'SELECT `user_id`, `user_name`, `user_email`
+                'SELECT `id`, `name`, `email`
                 FROM ' . USERS . "
-                WHERE user_ally_id = '" . $user_ally_id . "'
-                    AND `user_id` <> '" . $userId . "';"
+                WHERE ally_id = '" . $ally_id . "'
+                    AND `id` <> '" . $userId . "';"
             );
         }
 
@@ -247,10 +247,10 @@ class Messages extends Model
     {
         if ($userId > 0) {
             return $this->db->queryFetchAll(
-                'SELECT `user_name`, `user_email`
+                'SELECT `name`, `email`
                 FROM ' . USERS . "
-                WHERE user_authlevel > '0'
-                    AND `user_id` <> '" . $userId . "';"
+                WHERE authlevel > '0'
+                    AND `id` <> '" . $userId . "';"
             );
         }
 

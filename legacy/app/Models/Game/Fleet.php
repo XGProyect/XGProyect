@@ -119,10 +119,10 @@ class Fleet extends Model
         return $this->db->queryFetch(
             'SELECT
                 p.`planet_user_id`,
-                u.`user_ally_id`
+                u.`ally_id`
             FROM `' . PLANETS . '` AS p
             INNER JOIN `' . USERS . "` AS u
-                ON u.`user_id` = p.`planet_user_id`
+                ON u.`id` = p.`planet_user_id`
             WHERE p.`planet_galaxy` = '" . $g . "'
                 AND p.`planet_system` = '" . $s . "'
                 AND p.`planet_planet` = '" . $p . "'
@@ -149,14 +149,14 @@ class Fleet extends Model
                 p.`planet_debris_crystal`,
                 p.`planet_invisible_start_time`,
                 p.`planet_destroyed`,
-                u.`user_id`,
-                u.`user_authlevel`,
-                u.`user_onlinetime`,
-                u.`user_ally_id`,
+                u.`id`,
+                u.`authlevel`,
+                u.`onlinetime`,
+                u.`ally_id`,
                 pr.`preference_vacation_mode`
             FROM `' . PLANETS . '` p
-            INNER JOIN `' . USERS . '` u ON u.`user_id` = p.`planet_user_id`
-            INNER JOIN `' . PREFERENCES . "` pr ON pr.`preference_user_id` = u.`user_id`
+            INNER JOIN `' . USERS . '` u ON u.`id` = p.`planet_user_id`
+            INNER JOIN `' . PREFERENCES . "` pr ON pr.`preference_user_id` = u.`id`
             WHERE p.`planet_galaxy` = '" . $g . "'
                 AND p.`planet_system` = '" . $s . "'
                 AND p.`planet_planet` = '" . $p . "'
@@ -244,7 +244,7 @@ class Fleet extends Model
             $this->db->query(
                 'UPDATE `' . DEFENSES . '` SET
                     `defense_interplanetary_missile` = `defense_interplanetary_missile` - ' . $data['fleet_amount'] . "
-                WHERE `defense_planet_id` =  '" . $data['user_current_planet'] . "'"
+                WHERE `defense_planet_id` =  '" . $data['current_planet'] . "'"
             );
 
             $this->db->commitTransaction();
@@ -450,10 +450,10 @@ class Fleet extends Model
     {
         return $this->db->queryFetchAll(
             'SELECT
-                u.`user_id`,
-                u.`user_name`
+                u.`id`,
+                u.`name`
             FROM `' . ACS_MEMBERS . '` am
-                INNER JOIN `' . USERS . "` u ON u.`user_id` = am.`acs_user_id`
+                INNER JOIN `' . USERS . "` u ON u.`id` = am.`acs_user_id`
             WHERE am.`acs_group_id` = '" . $group_id . "'"
         );
     }
@@ -506,15 +506,15 @@ class Fleet extends Model
     {
         return $this->db->queryFetch(
             'SELECT
-                u.`user_id`
+                u.`id`
             FROM `' . USERS . "` u
-            WHERE u.`user_name` = '" . $username . "'
-            AND u.`user_id` NOT IN (
+            WHERE u.`name` = '" . $username . "'
+            AND u.`id` NOT IN (
                 SELECT
                     acs.`acs_user_id`
                 FROM `" . ACS_MEMBERS . "` acs
                 WHERE acs.`acs_group_id` = '" . $group_id . "'
             )"
-        )['user_id'] ?? 0;
+        )['id'] ?? 0;
     }
 }

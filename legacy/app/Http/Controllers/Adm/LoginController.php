@@ -42,8 +42,8 @@ class LoginController extends BaseController
             $login = $this->loginModel->getLoginData($loginData['inputEmail']);
 
             if ($login) {
-                if (password_verify($loginData['inputPassword'], $login['user_password'])
-                    && Administration::adminLogin((int) $login['user_id'], $login['user_password'])) {
+                if (password_verify($loginData['inputPassword'], $login['password'])
+                    && Administration::adminLogin((int) $login['id'], $login['password'])) {
                     $redirect = filter_input(INPUT_GET, 'redirect', FILTER_UNSAFE_RAW) ?? 'home';
 
                     if ($redirect == '') {

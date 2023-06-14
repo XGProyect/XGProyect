@@ -28,9 +28,9 @@ class Preferences extends Model
     public function checkIfNicknameExists(string $nickname): array
     {
         return $this->db->queryFetch(
-            'SELECT `user_id`
+            'SELECT `id`
             FROM `' . USERS . "`
-            WHERE `user_name` = '" . $this->db->escapeValue($nickname) . "'
+            WHERE `name` = '" . $this->db->escapeValue($nickname) . "'
             LIMIT 1;"
         ) ?? [];
     }
@@ -44,9 +44,9 @@ class Preferences extends Model
     public function checkIfEmailExists(string $email): array
     {
         return $this->db->queryFetch(
-            'SELECT `user_email`
+            'SELECT `email`
             FROM `' . USERS . "`
-            WHERE `user_email` = '" . $this->db->escapeValue($email) . "'
+            WHERE `email` = '" . $this->db->escapeValue($email) . "'
             LIMIT 1;"
         ) ?? [];
     }
@@ -63,7 +63,7 @@ class Preferences extends Model
         $columns_to_update = [];
 
         foreach ($fields as $column => $value) {
-            if (strpos($column, 'user_') !== false) {
+            if (strpos($column, 'preference_') === false) {
                 $columns_to_update[] = 'u.`' . $column . "` = '" . $value . "'";
             }
 
@@ -75,7 +75,7 @@ class Preferences extends Model
         $this->db->query(
             'UPDATE ' . USERS . ' AS u, ' . PREFERENCES . ' AS p SET
             ' . join(', ', $columns_to_update) . "
-            WHERE u.`user_id` = '" . $userId . "'
+            WHERE u.`id` = '" . $userId . "'
                 AND p.`preference_user_id` = '" . $userId . "';"
         );
     }

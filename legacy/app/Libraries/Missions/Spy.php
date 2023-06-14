@@ -291,7 +291,7 @@ class Spy extends Missions
                 [
                     $user['planet_name'],
                     FormatLib::prettyCoords($user['planet_galaxy'], $user['planet_system'], $user['planet_planet']),
-                    $user['user_name'],
+                    $user['name'],
                     $target['planet_name'],
                     FormatLib::prettyCoords($target['planet_galaxy'], $target['planet_system'], $target['planet_planet']),
                     $chances,

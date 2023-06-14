@@ -71,7 +71,7 @@ class PremiumController extends BaseController
                     $time_to_add = time() + $set_time;
                 }
 
-                $this->officierModel->setPremium($this->user['user_id'], $price, $officier, $time_to_add);
+                $this->officierModel->setPremium($this->user['id'], $price, $officier, $time_to_add);
 
                 Functions::redirect('game.php?page=premium');
             }

@@ -42,7 +42,7 @@ class Home extends Model
             'SELECT
                 (
                     SELECT
-                        COUNT(u.`user_id`) AS `total_users`
+                        COUNT(u.`id`) AS `total_users`
                     FROM
                         `' . USERS . '` u
                 ) AS `number_users`,

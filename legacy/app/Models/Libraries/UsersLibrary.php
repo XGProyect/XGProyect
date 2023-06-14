@@ -10,7 +10,7 @@ class UsersLibrary extends Model
     public function getAllyIdByUserId(int $userId): array
     {
         return $this->db->queryFetch(
-            'SELECT `user_ally_id` FROM `' . USERS . "` WHERE `user_id` = '" . $userId . "';"
+            'SELECT `ally_id` FROM `' . USERS . "` WHERE `id` = '" . $userId . "';"
         );
     }
 
@@ -18,9 +18,9 @@ class UsersLibrary extends Model
     {
         return $this->db->queryFetch(
             'SELECT a.`alliance_id`, a.`alliance_ranks`,
-                (SELECT COUNT(user_id) AS `ally_members`
+                (SELECT COUNT(id) AS `ally_members`
                     FROM `' . USERS . "`
-                    WHERE `user_ally_id` = '" . $allianceId . "') AS `ally_members`
+                    WHERE `ally_id` = '" . $allianceId . "') AS `ally_members`
             FROM `" . ALLIANCE . "` AS a
             WHERE a.`alliance_id` = '" . $allianceId . "';"
         );
@@ -32,10 +32,10 @@ class UsersLibrary extends Model
             'UPDATE `' . ALLIANCE . '` SET
                 `alliance_owner` =
                 (
-                    SELECT `user_id`
+                    SELECT `id`
                     FROM `' . USERS . "`
-                    WHERE `user_ally_rank_id` = '" . $userRank . "'
-                        AND `user_ally_id` = '" . $allianceId . "'
+                    WHERE `ally_rank_id` = '" . $userRank . "'
+                        AND `ally_id` = '" . $allianceId . "'
                     LIMIT 1
                 )
             WHERE `alliance_id` = '" . $allianceId . "';"
@@ -59,12 +59,12 @@ class UsersLibrary extends Model
 
         $this->db->query(
             'UPDATE `' . USERS . "` SET
-                `user_ally_id` = '0',
-                `user_ally_request` = '0',
-                `user_ally_request_text` = '',
-                `user_ally_register_time` = '',
-                `user_ally_rank_id` = '0'
-            WHERE `user_ally_id` = '" . $allianceId . "';"
+                `ally_id` = '0',
+                `ally_request` = '0',
+                `ally_request_text` = '',
+                `ally_register_time` = '',
+                `ally_rank_id` = '0'
+            WHERE `ally_id` = '" . $allianceId . "';"
         );
     }
 
@@ -99,21 +99,22 @@ class UsersLibrary extends Model
     {
         $this->db->query(
             'DELETE r,f,n,p,pr,s,u FROM ' . USERS . ' AS u
-            INNER JOIN ' . RESEARCH . ' AS r ON r.research_user_id = u.user_id
-            LEFT JOIN ' . FLEETS . ' AS f ON f.fleet_owner = u.user_id
-            LEFT JOIN ' . NOTES . ' AS n ON n.note_owner = u.user_id
-            INNER JOIN ' . PREMIUM . ' AS p ON p.premium_user_id = u.user_id
-            INNER JOIN ' . PREFERENCES . ' AS pr ON pr.preference_user_id = u.user_id
-            INNER JOIN ' . USERS_STATISTICS . " AS s ON s.user_statistic_user_id = u.user_id
-            WHERE u.`user_id` = '" . $userId . "';"
+            INNER JOIN ' . RESEARCH . ' AS r ON r.research_user_id = u.id
+            LEFT JOIN ' . FLEETS . ' AS f ON f.fleet_owner = u.id
+            LEFT JOIN ' . NOTES . ' AS n ON n.note_owner = u.id
+            INNER JOIN ' . PREMIUM . ' AS p ON p.premium_user_id = u.id
+            INNER JOIN ' . PREFERENCES . ' AS pr ON pr.preference_user_id = u.id
+            INNER JOIN ' . USERS_STATISTICS . " AS s ON s.user_statistic_user_id = u.id
+            WHERE u.`id` = '" . $userId . "';"
         );
     }
 
-    public function setUserDataByUserId(int $userId): array
+    public function setUserDataByUserId(): array
     {
         if (!defined('IN_ADMIN')) {
             return $this->db->queryFetch(
-                'SELECT u.*,
+                'SELECT
+                    u.*,
                     pre.*,
                     pr.*,
                     usul.user_statistic_total_rank,
@@ -123,15 +124,17 @@ class UsersLibrary extends Model
                     (
                         SELECT COUNT(`message_id`) AS `new_message`
                         FROM `' . MESSAGES . '`
-                        WHERE `message_receiver` = u.`user_id` AND `message_read` = 0
-                    ) AS `new_message`
+                        WHERE `message_receiver` = u.`id` AND `message_read` = 0
+                    ) AS `new_message`,
+                    b.banned_longer
                 FROM `' . USERS . '` AS u
-                INNER JOIN `' . PREFERENCES . '` AS pr ON pr.preference_user_id = u.user_id
-                INNER JOIN `' . USERS_STATISTICS . '` AS usul ON usul.user_statistic_user_id = u.user_id
-                INNER JOIN `' . PREMIUM . '` AS pre ON pre.premium_user_id = u.user_id
-                INNER JOIN `' . RESEARCH . '` AS r ON r.research_user_id = u.user_id
-                LEFT JOIN `' . ALLIANCE . "` AS a ON a.alliance_id = u.user_ally_id
-                WHERE (u.`user_id` = '" . $userId . "')
+                INNER JOIN `' . PREFERENCES . '` AS pr ON pr.preference_user_id = u.id
+                INNER JOIN `' . USERS_STATISTICS . '` AS usul ON usul.user_statistic_user_id = u.id
+                INNER JOIN `' . PREMIUM . '` AS pre ON pre.premium_user_id = u.id
+                INNER JOIN `' . RESEARCH . '` AS r ON r.research_user_id = u.id
+                LEFT JOIN `' . ALLIANCE . '` AS a ON a.alliance_id = u.ally_id
+                LEFT JOIN `' . BANNED . "` AS b ON b.banned_who = u.name
+                WHERE (u.`id` = '" . session('user_id') . "')
                 LIMIT 1;"
             );
         }
@@ -140,20 +143,20 @@ class UsersLibrary extends Model
             'SELECT
                 u.*
             FROM `' . USERS . "` AS u
-            WHERE (u.`user_id` = '" . $userId . "')
+            WHERE (u.`id` = '" . session('user_id') . "')
             LIMIT 1;"
         );
     }
 
-    public function updateUserActivityData(string $request_uri, string $remote_addr, string $user_agent, int $userId): void
+    public function updateUserActivityData(string $request_uri, string $remote_addr, string $agent, int $userId): void
     {
         $this->db->query(
             'UPDATE ' . USERS . " SET
-                `user_onlinetime` = '" . time() . "',
-                `user_current_page` = '" . $this->db->escapeValue($request_uri) . "',
-                `user_lastip` = '" . $this->db->escapeValue($remote_addr) . "',
-                `user_agent` = '" . $this->db->escapeValue($user_agent) . "'
-            WHERE `user_id` = '" . $this->db->escapeValue($userId) . "'
+                `onlinetime` = '" . time() . "',
+                `current_page` = '" . $this->db->escapeValue($request_uri) . "',
+                `lastip` = '" . $this->db->escapeValue($remote_addr) . "',
+                `agent` = '" . $this->db->escapeValue($agent) . "'
+            WHERE `id` = '" . $this->db->escapeValue($userId) . "'
             LIMIT 1;"
         );
     }
@@ -169,8 +172,8 @@ class UsersLibrary extends Model
             m.planet_image AS moon_image,
             (SELECT COUNT(user_statistic_user_id) AS stats_users
                 FROM `' . USERS_STATISTICS . '` AS s
-                INNER JOIN ' . USERS . ' AS u ON u.user_id = s.user_statistic_user_id
-                WHERE u.`user_authlevel` <= ' . $adminLevel . ') AS stats_users
+                INNER JOIN ' . USERS . ' AS u ON u.id = s.user_statistic_user_id
+                WHERE u.`authlevel` <= ' . $adminLevel . ') AS stats_users
             FROM ' . PLANETS . ' AS p
             INNER JOIN ' . BUILDINGS . ' AS b ON b.building_planet_id = p.`planet_id`
             INNER JOIN ' . DEFENSES . ' AS d ON d.defense_planet_id = p.`planet_id`
@@ -200,8 +203,8 @@ class UsersLibrary extends Model
     {
         $this->db->query(
             'UPDATE ' . USERS . " SET
-            `user_current_planet` = '" . $planetId . "'
-            WHERE `user_id` = '" . $userId . "';"
+            `current_planet` = '" . $planetId . "'
+            WHERE `id` = '" . $userId . "';"
         );
     }
 

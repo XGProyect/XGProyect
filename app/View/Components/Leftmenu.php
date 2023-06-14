@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Models\Users;
+use App\Models\User;
 use App\Services\SettingsService;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -25,7 +25,7 @@ class Leftmenu extends Component
      */
     public function render(): View|Closure|string
     {
-        $user = Users::find($_SESSION['user_id']);
+        $user = User::find(session('user_id'));
 
         // @todo review - future reference in case there is a bug
         // $tota_rank = $this->current_user['user_statistic_total_rank'] == '' ?
@@ -84,10 +84,10 @@ class Leftmenu extends Component
         return view(
             'components.leftmenu',
             [
-                'userName' => UrlHelper::setUrl('game.php?page=preferences', $user->user_name),
+                'userName' => UrlHelper::setUrl('game.php?page=preferences', $user->name),
                 'blocks' => $blocks,
                 'menu' => $menu,
-                'isAdmin' => $user->user_authlevel > UserRanksEnumerator::PLAYER,
+                'isAdmin' => $user->authlevel > UserRanksEnumerator::PLAYER,
                 'servername' => $this->settingsService->get('game_name'),
                 'changelog' => UrlHelper::setUrl('game.php?page=changelog', config('version.files')),
                 'year' => date('Y'),

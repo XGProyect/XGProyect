@@ -109,7 +109,7 @@ class GalaxyLib
         $action['transport'] = $this->transportLink(self::PLANET_TYPE);
 
         // ONLY IF IS NOT THE CURRENT USER
-        if ($this->row_data['user_id'] != $this->current_user['user_id']) {
+        if ($this->row_data['id'] != $this->current_user['id']) {
             $action['attack'] = $this->attackLink(self::PLANET_TYPE);
             $action['spy'] = $this->spyLink(self::PLANET_TYPE);
 
@@ -120,7 +120,7 @@ class GalaxyLib
         }
 
         // ONLY IF IS THE CURRENT USER
-        if ($this->row_data['user_id'] == $this->current_user['user_id']) {
+        if ($this->row_data['id'] == $this->current_user['id']) {
             $action['deploy'] = $this->deployLink(self::PLANET_TYPE);
         }
 
@@ -153,8 +153,8 @@ class GalaxyLib
             $parse['links'] = __('game/galaxy.gl_no_action');
         }
 
-        if ($this->row_data['user_authlevel'] >= UserRanks::GO
-            && $this->row_data['user_id'] != $this->current_user['user_id']) {
+        if ($this->row_data['authlevel'] >= UserRanks::GO
+            && $this->row_data['id'] != $this->current_user['id']) {
             $parse['links'] = $this->transportLink(self::PLANET_TYPE);
         }
 
@@ -179,8 +179,8 @@ class GalaxyLib
 
             $planetname = $phalanx_link;
 
-            if ($this->row_data['planet_last_update'] > (time() - 59 * 60) && $this->row_data['user_id'] != $this->current_user['user_id']) {
-                if ($this->row_data['planet_last_update'] > (time() - 10 * 60) && $this->row_data['user_id'] != $this->current_user['user_id']) {
+            if ($this->row_data['planet_last_update'] > (time() - 59 * 60) && $this->row_data['id'] != $this->current_user['id']) {
+                if ($this->row_data['planet_last_update'] > (time() - 10 * 60) && $this->row_data['id'] != $this->current_user['id']) {
                     $planetname .= '(*)';
                 } else {
                     $planetname .= ' (' . FormatLib::prettyTimeHour(
@@ -217,7 +217,7 @@ class GalaxyLib
         $action['transport'] = $this->transportLink(self::MOON_TYPE);
 
         // ONLY IF IS NOT THE CURRENT USER
-        if ($this->row_data['user_id'] != $this->current_user['user_id']) {
+        if ($this->row_data['id'] != $this->current_user['id']) {
             $action['spy'] = $this->spyLink(self::MOON_TYPE);
             $action['attack'] = $this->attackLink(self::MOON_TYPE);
 
@@ -233,7 +233,7 @@ class GalaxyLib
         }
 
         // ONLY IF IS THE CURRENT USER
-        if ($this->row_data['user_id'] == $this->current_user['user_id']) {
+        if ($this->row_data['id'] == $this->current_user['id']) {
             $action['deploy'] = $this->deployLink(self::MOON_TYPE);
         }
 
@@ -257,8 +257,8 @@ class GalaxyLib
             $parse['links'] = __('game/galaxy.gl_no_action');
         }
 
-        if ($this->row_data['user_authlevel'] >= UserRanks::GO
-            && $this->row_data['user_id'] != $this->current_user['user_id']) {
+        if ($this->row_data['authlevel'] >= UserRanks::GO
+            && $this->row_data['id'] != $this->current_user['id']) {
             $parse['links'] = $this->transportLink(self::PLANET_TYPE);
         }
 
@@ -307,11 +307,11 @@ class GalaxyLib
     {
         $this->no_popup = false;
 
-        if ($this->row_data['user_id'] == $this->current_user['user_id']) {
+        if ($this->row_data['id'] == $this->current_user['id']) {
             $this->no_popup = true;
 
             return [
-                'status' => $this->row_data['user_name'],
+                'status' => $this->row_data['name'],
             ];
         }
 
@@ -320,7 +320,7 @@ class GalaxyLib
 
         $statuses = [];
 
-        if ($this->row_data['user_authlevel'] >= UserRanks::GO) {
+        if ($this->row_data['authlevel'] >= UserRanks::GO) {
             $this->no_popup = true;
 
             $statuses['admin'] = [
@@ -329,7 +329,7 @@ class GalaxyLib
             ];
         }
 
-        if ($this->row_data['user_banned']) {
+        if ($this->row_data['banned']) {
             $statuses['banned'] = [
                 'class' => $this->getUserStatusClass('b'),
                 'shortcut' => __('game/galaxy.gl_b'),
@@ -343,14 +343,14 @@ class GalaxyLib
             ];
         }
 
-        if ($this->row_data['user_onlinetime'] < (time() - ONE_WEEK)) {
+        if ($this->row_data['onlinetime'] < (time() - ONE_WEEK)) {
             $statuses['inactive'] = [
                 'class' => $this->getUserStatusClass('i'),
                 'shortcut' => __('game/galaxy.gl_i'),
             ];
         }
 
-        if ($this->row_data['user_onlinetime'] < (time() - ONE_DAY * 28)) {
+        if ($this->row_data['onlinetime'] < (time() - ONE_DAY * 28)) {
             $statuses['inactive'] = [
                 'class' => $this->getUserStatusClass('I'),
                 'shortcut' => __('game/galaxy.gl_I'),
@@ -377,7 +377,7 @@ class GalaxyLib
         $user_status = [];
         foreach ($statuses as $status => $details) {
             if (empty($username)) {
-                $username = FormatLib::spanClassElement($this->row_data['user_name'], $details['class']);
+                $username = FormatLib::spanClassElement($this->row_data['name'], $details['class']);
             }
 
             $user_status[] = FormatLib::spanClassElement($details['shortcut'], $details['class']);
@@ -392,19 +392,19 @@ class GalaxyLib
 
         $actions = '<td>';
         $actions .= str_replace('"', '', UrlHelper::setUrl(
-            'game.php?page=chat&playerId=' . $this->row_data['user_id'],
+            'game.php?page=chat&playerId=' . $this->row_data['id'],
             __('game/global.write_message')
         ));
         $actions .= '</td></tr><tr><td>';
         $actions .= str_replace('"', '', UrlHelper::setUrl(
-            'game.php?page=buddies&mode=2&u=' . $this->row_data['user_id'],
+            'game.php?page=buddies&mode=2&u=' . $this->row_data['id'],
             __('game/galaxy.gl_buddy_request')
         ));
         $actions .= '</td></tr><tr>';
 
         return [
-            'status' => $formated_username ?? $this->row_data['user_name'],
-            'username' => $this->row_data['user_name'],
+            'status' => $formated_username ?? $this->row_data['name'],
+            'username' => $this->row_data['name'],
             'current_rank' => $this->row_data['user_statistic_total_rank'],
             'start' => (floor($this->row_data['user_statistic_total_rank'] / 100) * 100) + 1,
             'actions' => $actions,
@@ -424,7 +424,7 @@ class GalaxyLib
 
         $add = '';
 
-        if ($this->row_data['user_ally_id'] != 0) {
+        if ($this->row_data['ally_id'] != 0) {
             if ($this->row_data['ally_members'] > 1) {
                 $add = __('game/galaxy.gl_member_add');
             }
@@ -438,7 +438,7 @@ class GalaxyLib
             $parse['web'] = '';
             $parse['ally_members'] = $this->row_data['ally_members'];
             $parse['add'] = $add;
-            $parse['ally_id'] = $this->row_data['user_ally_id'];
+            $parse['ally_id'] = $this->row_data['ally_id'];
 
             if ($this->row_data['alliance_web'] != '') {
                 $web_url = UrlHelper::setUrl(
@@ -452,7 +452,7 @@ class GalaxyLib
                 $parse['web'] .= '<td>' . str_replace('"', '', $web_url) . '</td>';
             }
 
-            if ($this->current_user['user_ally_id'] == $this->row_data['user_ally_id']) {
+            if ($this->current_user['ally_id'] == $this->row_data['ally_id']) {
                 $parse['tag'] = '<span class="allymember">' . $this->row_data['alliance_tag'] . '</span>';
             } else {
                 $parse['tag'] = $this->row_data['alliance_tag'];
@@ -469,7 +469,7 @@ class GalaxyLib
      */
     private function actionsBlock(): string
     {
-        if ($this->row_data['user_id'] == $this->current_user['user_id']) {
+        if ($this->row_data['id'] == $this->current_user['id']) {
             return '';
         }
 
@@ -481,15 +481,15 @@ class GalaxyLib
             ],
             'write' => [
                 'image' => Functions::setImage(DPATH . 'img/m.gif', __('game/global.write_message')),
-                'url' => 'game.php?page=chat&playerId=' . $this->row_data['user_id'],
+                'url' => 'game.php?page=chat&playerId=' . $this->row_data['id'],
             ],
             'buddy' => [
                 'image' => Functions::setImage(DPATH . 'img/b.gif', __('game/galaxy.gl_buddy_request')),
-                'url' => 'game.php?page=buddies&mode=2&u=' . $this->row_data['user_id'],
+                'url' => 'game.php?page=buddies&mode=2&u=' . $this->row_data['id'],
             ],
             'missile' => [
                 'image' => Functions::setImage(DPATH . 'img/r.gif', __('game/galaxy.gl_missile_attack')),
-                'url' => 'game.php?page=galaxy&mode=2&galaxy=' . $this->galaxy . '&system=' . $this->system . '&planet=' . $this->planet . '&current=' . $this->current_user['user_current_planet'],
+                'url' => 'game.php?page=galaxy&mode=2&galaxy=' . $this->galaxy . '&system=' . $this->system . '&planet=' . $this->planet . '&current=' . $this->current_user['current_planet'],
             ],
         ];
 
@@ -499,7 +499,7 @@ class GalaxyLib
             array_push($available_actions, 'missile');
         }
 
-        if ($this->row_data['user_authlevel'] >= UserRanks::GO) {
+        if ($this->row_data['authlevel'] >= UserRanks::GO) {
             $available_actions = ['write'];
         }
 
@@ -617,7 +617,7 @@ class GalaxyLib
     private function missileLink($planet_type)
     {
         $url = 'game.php?page=galaxy&mode=2&galaxy=' . $this->galaxy . '&system=' . $this->system . '&planet=' .
-        $this->planet . '&current=' . $this->current_user['user_current_planet'];
+        $this->planet . '&current=' . $this->current_user['current_planet'];
         return str_replace('"', '', UrlHelper::setUrl($url, __('game/galaxy.gl_missile_attack')));
     }
 
@@ -651,13 +651,13 @@ class GalaxyLib
 
         if (isset($this->row_data['buddys'])) {
             $friends = explode(',', $this->row_data['buddys']);
-            $is_buddy = in_array($this->row_data['user_id'], $friends);
+            $is_buddy = in_array($this->row_data['id'], $friends);
         }
 
         if (!$is_buddy
             && (
-                ($this->row_data['user_ally_id'] == 0 && $this->current_user['user_ally_id'] == 0)
-                or ($this->row_data['user_ally_id'] != $this->current_user['user_ally_id'])
+                ($this->row_data['ally_id'] == 0 && $this->current_user['ally_id'] == 0)
+                or ($this->row_data['ally_id'] != $this->current_user['ally_id'])
             )
         ) {
             return false;
@@ -669,7 +669,7 @@ class GalaxyLib
     private function isMissileActive(): bool
     {
         if (($this->current_planet['defense_interplanetary_missile'] != 0)
-            && ($this->row_data['user_id'] != $this->current_user['user_id'])
+            && ($this->row_data['id'] != $this->current_user['id'])
             && ($this->row_data['planet_galaxy'] == $this->current_planet['planet_galaxy'])) {
             return $this->isInRange(Formulas::missileRange($this->current_user['research_impulse_drive']));
         }
@@ -680,7 +680,7 @@ class GalaxyLib
     private function isPhalanxActive(): bool
     {
         if (($this->current_planet['building_phalanx'] != 0)
-            && ($this->row_data['user_id'] != $this->current_user['user_id'])
+            && ($this->row_data['id'] != $this->current_user['id'])
             && ($this->row_data['planet_galaxy'] == $this->current_planet['planet_galaxy'])
             && ($this->current_planet['planet_type']) == PlanetTypesEnumerator::MOON) {
             return $this->isInRange(Formulas::phalanxRange($this->current_planet['building_phalanx']));

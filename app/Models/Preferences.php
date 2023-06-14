@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int     $preference_id
@@ -91,4 +92,8 @@ class Preferences extends Model
     // Functions ...
 
     // Relations ...
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

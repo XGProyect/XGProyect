@@ -12,7 +12,7 @@
                     <table class="table table-borderless" width="100%" cellspacing="0">
                         <tr>
                             <td>{{ __('admin/users.us_user_information_username') }}</td>
-                            <td><input type="text" class="form-control" name="username" value="{{ $user_name }}"></td>
+                            <td><input type="text" class="form-control" name="username" value="{{ $name }}"></td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_information_password') }}</td>
@@ -20,7 +20,7 @@
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_information_email') }}</td>
-                            <td><input type="text" class="form-control" name="email" value="{{ $user_email }}"></td>
+                            <td><input type="text" class="form-control" name="email" value="{{ $email }}"></td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_information_level') }}</td>
@@ -50,33 +50,33 @@
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_information_last_ip') }}</td>
-                            <td>{{ $user_lastip }}</td>
+                            <td>{{ $lastip }}</td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_information_reg_ip') }}</td>
-                            <td>{{ $user_ip_at_reg }}</td>
+                            <td>{{ $ip_at_reg }}</td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_information_browser') }}</td>
-                            <td>{{ $user_agent }}</td>
+                            <td>{{ $agent }}</td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_information_actual_page') }}</td>
-                            <td>{{ $user_current_page }}</td>
+                            <td>{{ $current_page }}</td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_information_date_reg') }}</td>
-                            <td>{{ $user_register_time }}</td>
+                            <td>{{ $register_time }}</td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_information_conection') }}</td>
-                            <td>{!! $user_onlinetime !!}</td>
+                            <td>{!! $onlinetime !!}</td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_information_shortcuts') }}</td>
                             <td>
                                 <select name="user_fleet_shortcuts" class="form-control">
-                                    {!! $user_fleet_shortcuts !!}
+                                    {!! $fleet_shortcuts !!}
                                 </select>
                             </td>
                         </tr>
@@ -91,7 +91,7 @@
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_information_banned') }}</td>
-                            <td>{!! $user_banned !!}</td>
+                            <td>{!! $banned !!}</td>
                         </tr>
                     </table>
                     <div class="text-center">

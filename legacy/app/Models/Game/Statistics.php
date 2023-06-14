@@ -29,9 +29,9 @@ class Statistics extends Model
                 a.`alliance_request_notallow`,
                 (
                     SELECT
-                        COUNT(user_id) AS `ally_members`
+                        COUNT(id) AS `ally_members`
                     FROM `' . USERS . '`
-                    WHERE `user_ally_id` = a.`alliance_id`
+                    WHERE `ally_id` = a.`alliance_id`
                 ) AS `ally_members`
             FROM `' . ALLIANCE_STATISTICS . '` AS s
             INNER JOIN  `' . ALLIANCE . '` AS a ON a.`alliance_id` = s.`alliance_statistic_alliance_id`
@@ -45,14 +45,14 @@ class Statistics extends Model
         return $this->db->queryFetchAll(
             'SELECT
                 s.*,
-                u.`user_id`,
-                u.`user_name`,
-                u.`user_ally_id`,
+                u.`id`,
+                u.`name`,
+                u.`ally_id`,
                 a.`alliance_name`
             FROM `' . USERS_STATISTICS . '` as s
-            INNER JOIN `' . USERS . '` as u ON u.`user_id` = s.`user_statistic_user_id`
-            LEFT JOIN `' . ALLIANCE . '` AS a ON a.`alliance_id` = u.`user_ally_id`
-            WHERE `user_authlevel` <= ' . Options::getInstance()->get('stat_admin_level') . '
+            INNER JOIN `' . USERS . '` as u ON u.`id` = s.`user_statistic_user_id`
+            LEFT JOIN `' . ALLIANCE . '` AS a ON a.`alliance_id` = u.`ally_id`
+            WHERE `authlevel` <= ' . Options::getInstance()->get('stat_admin_level') . '
             ORDER BY `user_statistic_' . $order . '` DESC, `user_statistic_total_rank` ASC
             LIMIT ' . $start . ',100;'
         );

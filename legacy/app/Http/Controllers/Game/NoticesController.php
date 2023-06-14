@@ -85,7 +85,7 @@ class NoticesController extends BaseController
     private function setUpNotes(): void
     {
         $this->notes = new Note(
-            $this->notesModel->getAllNotesByUserId($this->user['user_id'])
+            $this->notesModel->getAllNotesByUserId($this->user['id'])
         );
     }
 
@@ -144,7 +144,7 @@ class NoticesController extends BaseController
 
         // edit
         if ($edit_view == 2 && !is_null($note_id)) {
-            $note = $this->notesModel->getNoteById($this->user['user_id'], $note_id);
+            $note = $this->notesModel->getNoteById($this->user['id'], $note_id);
             $selected = array_fill_keys(array_keys($selected), null); // clear values keeping the keys
 
             if ($note) {
@@ -178,7 +178,7 @@ class NoticesController extends BaseController
     {
         $this->notesModel->createNewNote(
             [
-                'note_owner' => $this->user['user_id'],
+                'note_owner' => $this->user['id'],
                 'note_time' => time(),
                 'note_priority' => is_int($data['u']) ? $data['u'] : Importance::important,
                 'note_title' => !empty($data['title']) ? $data['title'] : __('game/notices.nt_your_subject'),
@@ -190,7 +190,7 @@ class NoticesController extends BaseController
     private function editNote(array $data): void
     {
         $this->notesModel->updateNoteById(
-            $this->user['user_id'],
+            $this->user['id'],
             $data['n'],
             [
                 'note_time' => time(),
@@ -212,7 +212,7 @@ class NoticesController extends BaseController
         }
 
         $this->notesModel->deleteNoteById(
-            $this->user['user_id'],
+            $this->user['id'],
             join(',', $delete_string)
         );
     }

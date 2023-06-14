@@ -71,7 +71,7 @@ class TraderResourcesController extends BaseController
                     $this->trader->{'getPriceToFill' . $percentage . 'Percent'}($resource),
                     $resource,
                     $this->trader->getProjectedResouces($resource, $percentage),
-                    $this->user['user_id'],
+                    $this->user['id'],
                     $this->planet['planet_id']
                 );
 

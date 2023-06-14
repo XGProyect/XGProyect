@@ -31,7 +31,7 @@ class AdministrationLib
         $cleaned_module_name = strtolower(substr(strrchr($module, '\\'), 1));
         $permissions = new Permissions(Options::getInstance()->get('admin_permissions'));
 
-        return $permissions->isAccessAllowed($cleaned_module_name, (int) Users::getInstance()->getUserData()['user_authlevel']);
+        return $permissions->isAccessAllowed($cleaned_module_name, (int) Users::getInstance()->getUserData()['authlevel']);
     }
 
     public static function saveMessage(string $result, string $message, bool $dismissible = true): void

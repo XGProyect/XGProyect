@@ -32,8 +32,8 @@ class ChatController extends BaseController
         Template::legacyView(
             'chat.view',
             [
-                'id' => $this->_receiver_data['user_id'],
-                'to' => $this->_receiver_data['user_name'] . ' ' . FormatLib::prettyCoords(
+                'id' => $this->_receiver_data['id'],
+                'to' => $this->_receiver_data['name'] . ' ' . FormatLib::prettyCoords(
                     $this->_receiver_data['planet_galaxy'],
                     $this->_receiver_data['planet_system'],
                     $this->_receiver_data['planet_planet']
@@ -87,13 +87,13 @@ class ChatController extends BaseController
 
                 Functions::sendMessage(
                     $write_to,
-                    $this->user['user_id'],
+                    $this->user['id'],
                     0,
                     4,
-                    $this->user['user_name'] . ' ' . FormatLib::prettyCoords(
-                        $this->user['user_galaxy'],
-                        $this->user['user_system'],
-                        $this->user['user_planet']
+                    $this->user['name'] . ' ' . FormatLib::prettyCoords(
+                        $this->user['galaxy'],
+                        $this->user['system'],
+                        $this->user['planet']
                     ),
                     $message_sent['subject'],
                     $message_sent['text']

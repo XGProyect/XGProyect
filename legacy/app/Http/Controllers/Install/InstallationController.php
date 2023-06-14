@@ -479,19 +479,19 @@ class InstallationController extends BaseController
         // create user and its planet
         $this->userLibrary->createUserWithOptions(
             [
-                'user_name' => $adm_name,
-                'user_password' => $adm_pass,
-                'user_email' => $adm_email,
-                'user_authlevel' => '3',
-                'user_home_planet_id' => '1',
-                'user_galaxy' => 1,
-                'user_system' => 1,
-                'user_planet' => 1,
-                'user_current_planet' => 1,
-                'user_register_time' => time(),
-                'user_ip_at_reg' => $_SERVER['REMOTE_ADDR'],
-                'user_agent' => '',
-                'user_current_page' => '',
+                'name' => $adm_name,
+                'password' => $adm_pass,
+                'email' => $adm_email,
+                'authlevel' => '3',
+                'home_planet_id' => '1',
+                'galaxy' => 1,
+                'system' => 1,
+                'planet' => 1,
+                'current_planet' => 1,
+                'register_time' => time(),
+                'ip_at_reg' => $_SERVER['REMOTE_ADDR'],
+                'agent' => '',
+                'current_page' => '',
             ]
         );
 

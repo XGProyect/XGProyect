@@ -64,7 +64,7 @@
                             @foreach ($operators_list as $item)
                             <tr>
                                 <th role="cell" colspan="4">
-                                    {{ $item['user_name'] }} <a href="mailto:{{ $item['user_email'] }}">
+                                    {{ $item['name'] }} <a href="mailto:{{ $item['email'] }}">
                                         <img src="{{ asset('upload/skins/xgproyect/img/m.gif') }}" alt=""/>
                                     </a>
                                 </th>

@@ -120,8 +120,8 @@ class SearchController extends BaseController
                     $results,
                     [
                         'planet_position' => FormatLib::prettyCoords((int) $results['planet_galaxy'], (int) $results['planet_system'], (int) $results['planet_planet']),
-                        'user_rank' => $this->setPosition((int) $results['user_rank'], (int) $results['user_authlevel']),
-                        'user_actions' => $this->getPlayersActions((int) $results['user_id']),
+                        'user_rank' => $this->setPosition((int) $results['user_rank'], (int) $results['authlevel']),
+                        'user_actions' => $this->getPlayersActions((int) $results['id']),
                     ]
                 );
             }
@@ -141,8 +141,8 @@ class SearchController extends BaseController
                     $results,
                     [
                         'planet_position' => FormatLib::prettyCoords((int) $results['planet_galaxy'], (int) $results['planet_system'], (int) $results['planet_planet']),
-                        'user_rank' => $this->setPosition((int) $results['user_rank'], (int) $results['user_authlevel']),
-                        'user_actions' => $this->getPlayersActions((int) $results['user_id']),
+                        'user_rank' => $this->setPosition((int) $results['user_rank'], (int) $results['authlevel']),
+                        'user_actions' => $this->getPlayersActions((int) $results['id']),
                     ]
                 );
             }

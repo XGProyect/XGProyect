@@ -53,7 +53,7 @@ class Fleet3Controller extends BaseController
             [
                 $this->user
             ],
-            $this->user['user_id']
+            $this->user['id']
         );
     }
 
@@ -310,7 +310,7 @@ class Fleet3Controller extends BaseController
         if ($selected_planet) {
             $ocuppied = true;
 
-            if ($selected_planet['planet_user_id'] == $this->user['user_id']) {
+            if ($selected_planet['planet_user_id'] == $this->user['id']) {
                 $action_type = 'own';
             }
         }
@@ -471,15 +471,15 @@ class Fleet3Controller extends BaseController
     private function isFriendly(array $target_planet): bool
     {
         $is_buddy = $this->fleetModel->getBuddies(
-            $this->user['user_id'],
+            $this->user['id'],
             $target_planet['planet_user_id']
         ) >= 1;
 
         if (
             !$is_buddy
             && (
-                ($target_planet['user_ally_id'] == 0 && $this->user['user_ally_id'] == 0)
-                or ($target_planet['user_ally_id'] != $this->user['user_ally_id'])
+                ($target_planet['ally_id'] == 0 && $this->user['ally_id'] == 0)
+                or ($target_planet['ally_id'] != $this->user['ally_id'])
             )
         ) {
             return false;

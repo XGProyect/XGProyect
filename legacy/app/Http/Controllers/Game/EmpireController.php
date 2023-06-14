@@ -42,7 +42,7 @@ class EmpireController extends BaseController
 
     private function buildBlocks(): array
     {
-        $empireData = $this->empireModel->getAllPlayerData((int) $this->user['user_id']);
+        $empireData = $this->empireModel->getAllPlayerData((int) $this->user['id']);
         $empire = [];
         $resourceData = [
             'resources' => 'constructions',

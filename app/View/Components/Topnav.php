@@ -3,7 +3,7 @@
 namespace App\View\Components;
 
 use App\Models\Planets;
-use App\Models\Users;
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -28,10 +28,10 @@ class Topnav extends Component
      */
     public function render(): View|Closure|string
     {
-        $user = Users::find($_SESSION['user_id']);
+        $user = User::find(session('user_id'));
         $planet = Planets::where([
-            ['planet_user_id', '=', $user->user_id],
-            ['planet_id', '=', $user->user_current_planet],
+            ['planet_user_id', '=', $user->id],
+            ['planet_id', '=', $user->current_planet],
             ['planet_destroyed', '=', 0],
         ])->firstOrFail();
 
@@ -74,14 +74,14 @@ class Topnav extends Component
         );
     }
 
-    private function buildPlanetList(Users $user): array
+    private function buildPlanetList(User $user): array
     {
         $page = isset($_GET['page']) ? $_GET['page'] : '';
         $technology = isset($_GET['technology']) ? $_GET['technology'] : '';
         $mode = isset($_GET['mode']) ? $_GET['mode'] : '';
 
         $allUserPlanets = Planets::where([
-            ['planet_user_id', '=', $user->user_id],
+            ['planet_user_id', '=', $user->id],
             ['planet_destroyed', '=', 0],
         ]);
 
@@ -129,7 +129,7 @@ class Topnav extends Component
                 FormatLib::formatCoords($planet->planet_galaxy, $planet->planet_system, $planet->planet_planet);
 
             $planetList[] = [
-                'selected' => $planet->planet_id === $user->user_current_planet ? 'selected="selected"' : '',
+                'selected' => $planet->planet_id === $user->current_planet ? 'selected="selected"' : '',
                 'value' => $link,
                 'text' => $text,
             ];
@@ -137,7 +137,7 @@ class Topnav extends Component
         return $planetList;
     }
 
-    private function getOfficersDetails(Users $user): array
+    private function getOfficersDetails(User $user): array
     {
         $officers = [];
 
@@ -161,7 +161,7 @@ class Topnav extends Component
         return $officers;
     }
 
-    private function buildNotices(Users $user): array
+    private function buildNotices(User $user): array
     {
         $notice = ['color' => '', 'message' => ''];
 

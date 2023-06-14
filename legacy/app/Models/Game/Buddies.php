@@ -35,17 +35,17 @@ class Buddies extends Model
     public function getBuddyDataById(int $userId): ?array
     {
         return $this->db->queryFetch(
-            'SELECT u.`user_id`,
-                    u.`user_name`,
-                    u.`user_galaxy`,
-                    u.`user_system`,
-                    u.`user_planet`,
-                    u.`user_onlinetime`,
+            'SELECT u.`id`,
+                    u.`name`,
+                    u.`galaxy`,
+                    u.`system`,
+                    u.`planet`,
+                    u.`onlinetime`,
                     a.`alliance_id`,
                     a.`alliance_name`
             FROM ' . USERS . ' AS u
-            LEFT JOIN `' . ALLIANCE . "` AS a ON a.`alliance_id` = u.`user_ally_id`
-            WHERE u.`user_id` = '" . $userId . "'"
+            LEFT JOIN `' . ALLIANCE . "` AS a ON a.`alliance_id` = u.`ally_id`
+            WHERE u.`id` = '" . $userId . "'"
         );
     }
 
@@ -119,10 +119,10 @@ class Buddies extends Model
     {
         return $this->db->queryFetch(
             'SELECT
-                `user_id`,
-                `user_name`
+                `id`,
+                `name`
             FROM `' . USERS . "`
-            WHERE `user_id` = '" . $userId . "'"
+            WHERE `id` = '" . $userId . "'"
         );
     }
 
@@ -130,11 +130,11 @@ class Buddies extends Model
     {
         return $this->db->queryFetchAll(
             'SELECT DISTINCT
-                u.`user_id`,
-                u.`user_name`
+                u.`id`,
+                u.`name`
             FROM `' . BUDDY . '` AS b
             LEFT JOIN `' . USERS . "` AS u
-            	ON ((u.user_id = b.buddy_sender) OR (u.user_id = b.buddy_receiver))
+            	ON ((u.id = b.buddy_sender) OR (u.id = b.buddy_receiver))
             WHERE
             (
                 b.`buddy_sender` = '" . $userId . "'
@@ -142,7 +142,7 @@ class Buddies extends Model
                 b.`buddy_receiver` = '" . $userId . "'
             )
             AND b.`buddy_status` = '1'
-            AND u.`user_id` NOT IN (
+            AND u.`id` NOT IN (
                 SELECT
                     acs.`acs_user_id`
                 FROM `" . ACS_MEMBERS . "` acs

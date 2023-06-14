@@ -166,12 +166,12 @@ class AlliancesController extends BaseController
 
         if (!empty($all_members)) {
             foreach ($all_members as $member) {
-                $member['alliance_request'] = ($member['user_ally_request']) ? __('admin/alliances.al_request_yes') : __('admin/alliances.al_request_no');
-                $member['ally_request_text'] = ($member['user_ally_request_text']) ? $member['user_ally_request_text'] : '-';
-                $member['alliance_register_time'] = date(Options::getInstance()->get('date_format_extended'), $member['user_ally_register_time']);
+                $member['alliance_request'] = ($member['ally_request']) ? __('admin/alliances.al_request_yes') : __('admin/alliances.al_request_no');
+                $member['ally_request_text'] = ($member['ally_request_text']) ? $member['ally_request_text'] : '-';
+                $member['alliance_register_time'] = date(Options::getInstance()->get('date_format_extended'), $member['ally_register_time']);
 
-                if (isset($member['user_ally_rank_id'])) {
-                    $member['ally_rank'] = $this->ranks->getRankById($member['user_ally_rank_id'])['rank'];
+                if (isset($member['ally_rank_id'])) {
+                    $member['ally_rank'] = $this->ranks->getRankById($member['ally_rank_id'])['rank'];
                 } else {
                     $member['ally_rank'] = __('admin/alliances.al_rank_not_defined');
                 }
@@ -348,7 +348,7 @@ class AlliancesController extends BaseController
         $users = $this->alliancesModel->getAllUsers();
 
         foreach ($users as $users_row) {
-            $combo_rows .= '<option value="' . $users_row['user_id'] . '" ' . ($users_row['user_id'] == $userId ? ' selected' : '') . '>' . $users_row['user_name'] . '</option>';
+            $combo_rows .= '<option value="' . $users_row['id'] . '" ' . ($users_row['id'] == $userId ? ' selected' : '') . '>' . $users_row['name'] . '</option>';
         }
 
         return $combo_rows;

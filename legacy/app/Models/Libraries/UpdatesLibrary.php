@@ -10,12 +10,12 @@ class UpdatesLibrary extends Model
     public function deleteUsersByDeletedAndInactive(int $del_deleted, int $del_inactive): ?array
     {
         return $this->db->queryFetchAll(
-            'SELECT u.`user_id`
+            'SELECT u.`id`
             FROM `' . USERS . '` AS u
-            INNER JOIN `' . PREFERENCES . "` AS p ON p.preference_user_id = u.user_id
+            INNER JOIN `' . PREFERENCES . "` AS p ON p.preference_user_id = u.id
             WHERE (p.`preference_delete_mode` < '" . $del_deleted . "'
                 AND p.`preference_delete_mode` <> 0)
-                OR (u.`user_onlinetime` < '" . $del_inactive . "' AND u.`user_onlinetime` <> 0 AND u.`user_authlevel` <> 3)"
+                OR (u.`onlinetime` < '" . $del_inactive . "' AND u.`onlinetime` <> 0 AND u.`authlevel` <> 3)"
         );
     }
 

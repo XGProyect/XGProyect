@@ -116,9 +116,15 @@
         var universeDistinctions = [];
 
         $(document).ready(function() {
+            @if ($loginError)
+            $("#loginBtn").addClass('open').text(JSLoca[1]);
+            $('#login').fadeIn('fast', function(){$("#usernameLogin").focus();});
+            @endif
             $(".zebra tr:odd").addClass("alt");
             $.validationEngineLanguage.newLang()
-            $.validationEngine.buildPrompt("{{ $divId }}", "{{ $message }}", "error");
+            @foreach ($errors as $error)
+            $.validationEngine.buildPrompt("{{ $error['divId'] }}", "{{ $error['message'] }}", "error");
+            @endforeach
         });
         // ]]>
     </script>
@@ -137,7 +143,8 @@
                 {{ __('home/home.hm_login_button') }}
             </a>
             <div id="login">
-                <form id="loginForm" name="loginForm" method="post" action="index.php">
+                <form id="loginForm" name="loginForm" method="post" action="{{ route('login') }}">
+                    @csrf
                     <input type="hidden" name="kid" value="">
 			        <div class="input-wrap">
 			            <label for="serverLogin">{{ __('home/home.hm_universe') }}</label>
@@ -150,13 +157,13 @@
 		            <div class="input-wrap">
 						<label for="usernameLogin">{{ __('home/home.hm_username_mail') }}</label>
 						<div class="black-border">
-                            <input class="js_userName" type="text" onkeydown="hideLoginErrorBox();" id="usernameLogin" name="login" value="">
+                            <input class="js_userName" type="text" onkeydown="hideLoginErrorBox();" id="usernameLogin" name="username" value="">
 						</div>
 					</div>
 					<div class="input-wrap">
                         <label for="passwordLogin">{{ __('home/home.hm_password') }}</label>
 						<div class="black-border">
-                            <input type="password" onkeydown="hideLoginErrorBox();" id="passwordLogin" name="pass" maxlength="20">
+                            <input type="password" onkeydown="hideLoginErrorBox();" id="passwordLogin" name="password" maxlength="20">
 						</div>
 					</div>
                     <input type="submit" id="loginSubmit" value="{{ __('home/home.hm_login_button') }}">
@@ -170,6 +177,7 @@
 		<div id="content" class="clearfix">
 			<div id="subscribe">
                 <form id="subscribeForm" name="subscribeForm" method="POST" onsubmit="changeAction(&#39;register&#39;,&#39;subscribeForm&#39;);" action="">
+                    @csrf
                     <input type="hidden" name="v" value="3">
                     <input type="hidden" name="step" value="validate">
                     <input type="hidden" name="kid" value="">
@@ -205,7 +213,7 @@
 					<div class="input-wrap">
                         <label for="username">{{ __('home/home.hm_username') }}</label>
 						<div class="black-border">
-                            <input id="username" class="js_userName validate[required,custom[noSpecialCharacters],custom[noBeginOrEndUnderscore],custom[noBeginOrEndWhitespace],custom[noBeginOrEndHyphen],custom[notMoreThanThreeUnderscores],custom[notMoreThanThreeWhitespaces],custom[notMoreThanThreeHyphen],custom[noCollocateUnderscores],custom[noCollocateWhitespaces],custom[noCollocateHyphen],length[3,20]]" type="text" name="character" value="{{ $userName }}">
+                            <input id="username" class="js_userName validate[required,custom[noSpecialCharacters],custom[noBeginOrEndUnderscore],custom[noBeginOrEndWhitespace],custom[noBeginOrEndHyphen],custom[notMoreThanThreeUnderscores],custom[notMoreThanThreeWhitespaces],custom[notMoreThanThreeHyphen],custom[noCollocateUnderscores],custom[noCollocateWhitespaces],custom[noCollocateHyphen],length[3,20]]" type="text" name="username" value="{{ $userName }}">
 						</div>
 					</div>
                     <div class="input-wrap">

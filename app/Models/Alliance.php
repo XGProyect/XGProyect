@@ -106,7 +106,7 @@ class Alliance extends Model
     // Relations ...
     public function members(): HasMany
     {
-        return $this->hasMany(Users::class, 'user_ally_id');
+        return $this->hasMany(Users::class, 'ally_id');
     }
 
     public function stats(): HasOne

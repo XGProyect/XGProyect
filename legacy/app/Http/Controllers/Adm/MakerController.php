@@ -279,9 +279,9 @@ class MakerController extends BaseController
 
         foreach ($users as $users_row) {
             if (isset($_GET['user']) && $_GET['user'] > 0) {
-                $combo_rows .= '<option value="' . $users_row['user_id'] . '" ' . ($_GET['user'] == $users_row['user_id'] ? ' selected' : '') . '>' . $users_row['user_name'] . '</option>';
+                $combo_rows .= '<option value="' . $users_row['id'] . '" ' . ($_GET['user'] == $users_row['id'] ? ' selected' : '') . '>' . $users_row['name'] . '</option>';
             } else {
-                $combo_rows .= '<option value="' . $users_row['user_id'] . '">' . $users_row['user_name'] . '</option>';
+                $combo_rows .= '<option value="' . $users_row['id'] . '">' . $users_row['name'] . '</option>';
             }
         }
 
@@ -347,7 +347,7 @@ class MakerController extends BaseController
         $users = $this->makerModel->getUsersWithoutAlliance();
 
         foreach ($users as $users_row) {
-            $combo_rows .= '<option value="' . $users_row['user_id'] . '">' . $users_row['user_name'] . '</option>';
+            $combo_rows .= '<option value="' . $users_row['id'] . '">' . $users_row['name'] . '</option>';
         }
 
         return $combo_rows;

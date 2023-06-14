@@ -11,12 +11,13 @@ class Users extends Model
     {
         return $this->db->queryFetch(
             'SELECT
-                `user_id`, `user_authlevel`
+                `id`,
+                `authlevel`
             FROM `' . USERS . "`
             WHERE
-                `user_name` = '" . $user . "'
+                `name` = '" . $user . "'
             OR
-                `user_email` = '" . $user . "';"
+                `email` = '" . $user . "';"
         ) ?? [];
     }
 
@@ -28,10 +29,10 @@ class Users extends Model
                     pr.*,
                     r.*
             FROM `' . USERS . '` AS u
-                INNER JOIN `' . PREFERENCES . '` AS pr ON pr.`preference_user_id` = u.`user_id`
-                INNER JOIN `' . PREMIUM . '` AS p ON p.`premium_user_id` = u.`user_id`
-                INNER JOIN `' . RESEARCH . "` AS r ON r.`research_user_id` = u.`user_id`
-            WHERE (u.user_id = '" . $userId . "')
+                INNER JOIN `' . PREFERENCES . '` AS pr ON pr.`preference_user_id` = u.`id`
+                INNER JOIN `' . PREMIUM . '` AS p ON p.`premium_user_id` = u.`id`
+                INNER JOIN `' . RESEARCH . "` AS r ON r.`research_user_id` = u.`id`
+            WHERE (u.id = '" . $userId . "')
             LIMIT 1;"
         ) ?? [];
     }
@@ -64,20 +65,20 @@ class Users extends Model
     public function checkUsername(string $username, int $userId): array
     {
         return $this->db->queryFetch(
-            'SELECT `user_id`
+            'SELECT `id`
             FROM `' . USERS . "`
-            WHERE `user_name` = '" . $username . "' AND
-                    `user_id` <> '" . $userId . "';"
+            WHERE `name` = '" . $username . "' AND
+                    `id` <> '" . $userId . "';"
         ) ?? [];
     }
 
     public function checkEmail(string $email, int $userId): array
     {
         return $this->db->queryFetch(
-            'SELECT `user_id`
+            'SELECT `id`
             FROM `' . USERS . "`
-            WHERE `user_email` = '" . $email . "' AND
-                `user_id` <> '" . $userId . "';"
+            WHERE `email` = '" . $email . "' AND
+                `id` <> '" . $userId . "';"
         ) ?? [];
     }
 
@@ -86,7 +87,7 @@ class Users extends Model
         $this->db->query(
             'DELETE FROM `' . SESSIONS . "`
             WHERE `payload`
-            LIKE '%user_id|s:1:\"" . $userId . "\"%'"
+            LIKE '%id|s:1:\"" . $userId . "\"%'"
         );
     }
 
@@ -189,8 +190,8 @@ class Users extends Model
     {
         return $this->db->queryFetchAll(
             'SELECT
-                `user_id`,
-                `user_name`
+                `id`,
+                `name`
             FROM `' . USERS . '`;'
         ) ?? [];
     }
@@ -204,14 +205,14 @@ class Users extends Model
     {
         $this->db->query(
             'UPDATE `' . USERS . "` SET
-                `user_name` = '" . $data['username'] . "',
-                `user_password` = " . $data['password'] . ",
-                `user_email` = '" . $data['email'] . "',
-                `user_authlevel` = '" . $data['authlevel'] . "',
-                `user_home_planet_id` = '" . $data['id_planet'] . "',
-                `user_current_planet` = '" . $data['cur_planet'] . "',
-                `user_ally_id` = '" . $data['ally_id'] . "'
-                WHERE `user_id` = '" . $data['id'] . "';"
+                `name` = '" . $data['username'] . "',
+                `password` = " . $data['password'] . ",
+                `email` = '" . $data['email'] . "',
+                `authlevel` = '" . $data['authlevel'] . "',
+                `home_planet_id` = '" . $data['id_planet'] . "',
+                `current_planet` = '" . $data['cur_planet'] . "',
+                `ally_id` = '" . $data['ally_id'] . "'
+                WHERE `id` = '" . $data['id'] . "';"
         );
     }
 
@@ -472,7 +473,7 @@ class Users extends Model
             'UPDATE `' . PLANETS . '` AS p, `' . PLANETS . '` AS m, `' . USERS . "` AS u SET
             p.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
             m.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
-            u.`user_current_planet` = u.`user_home_planet_id`
+            u.`current_planet` = u.`home_planet_id`
             WHERE p.`planet_id` = '" . $planet_id . "' AND
                 m.`planet_galaxy` = p.`planet_galaxy` AND
                 m.`planet_system` = p.`planet_system` AND
@@ -498,7 +499,7 @@ class Users extends Model
         $this->db->query(
             'UPDATE `' . PLANETS . '` AS m, `' . USERS . "` AS u SET
                 m.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
-                u.`user_current_planet` = u.`user_home_planet_id`
+                u.`current_planet` = u.`home_planet_id`
                 WHERE m.`planet_id` = '" . $moon_id . "'
                     AND m.`planet_type` = '3';"
         );

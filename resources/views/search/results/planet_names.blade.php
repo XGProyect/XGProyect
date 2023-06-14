@@ -9,7 +9,7 @@
     </tr>
     @foreach ($results as $result)
     <tr>
-        <th scope="row">{{ $result['user_name'] }}</th>
+        <th scope="row">{{ $result['name'] }}</th>
         <th role="cell">
             <a href="game.php?page=alliance&mode=ainfo&id={{ $result['alliance_id'] }}">{{ $result['alliance_name'] }}</a>
         </th>

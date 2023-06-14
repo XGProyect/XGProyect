@@ -5,14 +5,14 @@
 <br>
 <div id="content" role="main">
     <form action="game.php?page=buddies&mode=1&sm=3" method="post" role="form">
-        <input type="hidden" name="user" value="{{ $user_id }}">
+        <input type="hidden" name="user" value="{{ $id }}">
         <table width="520">
             <tr>
                 <td class="c" colspan="2">{{ __('game/buddies.bu_request_message') }}</td>
             </tr>
             <tr>
                 <th>{{ __('game/buddies.bu_player') }}</th>
-                <th>{{ $user_name }}</th>
+                <th>{{ $name }}</th>
             </tr>
             <tr>
                 <th scope="row">

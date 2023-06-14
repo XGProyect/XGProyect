@@ -32,10 +32,10 @@ class Infos extends Model
                 'UPDATE `' . PLANETS . '`, `' . USERS . '`, `' . SHIPS . "` SET
                     $sub_query_origin
                     `planet_last_jump_time` = '" . $jump_time . "',
-                    `user_current_planet` = '" . $target_planet_id . "'
+                    `current_planet` = '" . $target_planet_id . "'
                 WHERE `planet_id` = '" . $current_planet_id . "'
                     AND `ship_planet_id` = '" . $current_planet_id . "'
-                    AND `user_id` = '" . $userId . "';"
+                    AND `id` = '" . $userId . "';"
             );
 
             $this->db->query(

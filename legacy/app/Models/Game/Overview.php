@@ -14,8 +14,8 @@ class Overview extends Model
                     fleets.*,
                     po.`planet_name` AS `start_planet_name`,
                     pt.`planet_name` AS `target_planet_name`,
-                    uo.`user_name` AS `start_planet_user`,
-                    ut.`user_name` AS `target_planet_user`,
+                    uo.`name` AS `start_planet_user`,
+                    ut.`name` AS `target_planet_user`,
                     (
                         SELECT
                             GROUP_CONCAT(am.`acs_user_id`)
@@ -45,9 +45,9 @@ class Overview extends Model
                         am.`acs_user_id` = '" . $userId . "'
                 ) fleets
                 INNER JOIN `" . USERS . '` uo ON
-                    uo.`user_id` = fleets.`fleet_owner`
+                    uo.`id` = fleets.`fleet_owner`
                 LEFT JOIN `' . USERS . '` ut ON
-                    ut.`user_id` = fleets.`fleet_target_owner`
+                    ut.`id` = fleets.`fleet_target_owner`
                 INNER JOIN `' . PLANETS . '` po ON
                 (
                     po.`planet_galaxy` = fleets.`fleet_start_galaxy` AND

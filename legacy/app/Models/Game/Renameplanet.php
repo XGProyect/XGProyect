@@ -58,13 +58,13 @@ class Renameplanet extends Model
             'UPDATE `' . PLANETS . '` AS p, `' . PLANETS . '` AS m, `' . USERS . "` AS u SET
                 p.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
                 m.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
-                u.`user_current_planet` = u.`user_home_planet_id`
+                u.`current_planet` = u.`home_planet_id`
             WHERE p.`planet_id` = '" . $planet_id . "' AND
                 m.`planet_galaxy` = '" . $galaxy . "' AND
                 m.`planet_system` = '" . $system . "' AND
                 m.`planet_planet` = '" . $planet . "' AND
                 m.`planet_type` = '3' AND
-                u.`user_id` = '" . $userId . "';"
+                u.`id` = '" . $userId . "';"
         );
     }
 
@@ -80,9 +80,9 @@ class Renameplanet extends Model
         $this->db->query(
             'UPDATE `' . PLANETS . '` AS p, `' . USERS . "` AS u SET
                 p.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
-                u.`user_current_planet` = u.`user_home_planet_id`
+                u.`current_planet` = u.`home_planet_id`
             WHERE p.`planet_id` = '" . $planet_id . "' AND
-                u.`user_id` = '" . $userId . "';"
+                u.`id` = '" . $userId . "';"
         );
     }
 

@@ -2,6 +2,8 @@
 
 namespace Xgp\App\Libraries;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Core\Options;
@@ -51,8 +53,10 @@ class Users
     public function userLogin(int $userId = 0, string $password = ''): bool
     {
         if ($userId != 0 && !empty($password) && (strlen($password) == 60)) {
-            $_SESSION['user_id'] = $userId;
-            $_SESSION['user_password'] = Functions::hash($password . '-' . config('SECRETWORD'));
+            session([
+                'user_id' => $userId,
+                'user_password' => Functions::hash($password . '-' . config('SECRETWORD')),
+            ]);
 
             return true;
         } else {
@@ -81,8 +85,8 @@ class Users
     {
         $userData = $this->usersModel->getAllyIdByUserId($userId);
 
-        if ($userData['user_ally_id'] != 0) {
-            $alliance = $this->usersModel->getAllianceDataByAllianceId($userData['user_ally_id']);
+        if ($userData['ally_id'] != 0) {
+            $alliance = $this->usersModel->getAllianceDataByAllianceId($userData['ally_id']);
 
             if ($alliance['ally_members'] > 1 && (isset($alliance['alliance_ranks']) && !is_null($alliance['alliance_ranks']))) {
                 $ranks = new Ranks($alliance['alliance_ranks']);
@@ -120,17 +124,17 @@ class Users
 
     public function isInactive(array $user): bool
     {
-        return ($user['user_onlinetime'] < (time() - ONE_WEEK));
+        return ($user['onlinetime'] < (time() - ONE_WEEK));
     }
 
     private static function isSessionSet(): bool
     {
-        return !(!isset($_SESSION['user_id']) or !isset($_SESSION['user_password']));
+        return session('user_id', false) && session('user_password', false);
     }
 
     private function setUserData(): void
     {
-        $userRow = $this->usersModel->setUserDataByUserId($_SESSION['user_id']);
+        $userRow = $this->usersModel->setUserDataByUserId();
 
         $this->displayLoginErrors($userRow);
 
@@ -139,7 +143,7 @@ class Users
             $_SERVER['REQUEST_URI'],
             $_SERVER['REMOTE_ADDR'],
             $_SERVER['HTTP_USER_AGENT'],
-            $_SESSION['user_id']
+            session('user_id')
         );
 
         // pass the data
@@ -151,11 +155,15 @@ class Users
 
     private function displayLoginErrors(array $userRow): void
     {
-        if ($userRow['user_id'] != $_SESSION['user_id'] && !defined('IN_LOGIN')) {
+        if ($userRow['id'] != session('user_id')) {
             Functions::redirect(SYSTEM_ROOT);
         }
 
-        if (!password_verify(($userRow['user_password'] . '-' . config('SECRETWORD')), $_SESSION['user_password']) && !defined('IN_LOGIN')) {
+        if (Auth::id() !== session('user_id')) {
+            Functions::redirect(SYSTEM_ROOT);
+        }
+
+        if (!Hash::check(($userRow['password'] . '-' . config('SECRETWORD')), session('user_password'))) {
             Functions::redirect(SYSTEM_ROOT);
         }
     }
@@ -163,7 +171,7 @@ class Users
     private function setPlanetData(): void
     {
         $this->planetData = $this->usersModel->setPlanetData(
-            $this->userData['user_current_planet'],
+            $this->userData['current_planet'],
             Options::getInstance()->get('stat_admin_level')
         );
     }
@@ -174,11 +182,11 @@ class Users
         $restore = isset($_GET['re']) ? (int) $_GET['re'] : '';
 
         if (is_numeric($select) && $restore == 0 && $select != 0) {
-            $owned = $this->usersModel->getUserPlanetByIdAndUserId($select, $this->userData['user_id']);
+            $owned = $this->usersModel->getUserPlanetByIdAndUserId($select, $this->userData['id']);
 
             if ($owned) {
                 $this->userData['current_planet'] = $select;
-                $this->usersModel->changeUserPlanetByUserId($select, $this->userData['user_id']);
+                $this->usersModel->changeUserPlanetByUserId($select, $this->userData['id']);
             }
         }
     }

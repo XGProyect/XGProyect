@@ -88,7 +88,7 @@ class Destroy extends Missions
             }
 
             $targetUser = $this->missionsModel->getAllUserDataByUserId($target_planet['planet_user_id']);
-            $targetUserId = $targetUser['user_id'];
+            $targetUserId = $targetUser['id'];
 
             UpdatesLibrary::updatePlanetResources($targetUser, $target_planet, time());
 
@@ -152,7 +152,7 @@ class Destroy extends Missions
                     $fleet_row['fleet_end_planet']
                 );
 
-                $player->setName($targetUser['user_name']);
+                $player->setName($targetUser['name']);
 
                 $defenders->addPlayer($player);
             } else {
@@ -204,7 +204,7 @@ class Destroy extends Missions
                     'planet_id' => $target_planet['planet_id'],
                 ]);
 
-                if ($targetUser['user_current_planet'] == $target_planet['planet_id']) {
+                if ($targetUser['current_planet'] == $target_planet['planet_id']) {
                     $this->missionsModel->updateUserCurrentPlanetByCoordsAndUserId([
                         'coords' => [
                             'galaxy' => $fleet_row['fleet_end_galaxy'],
@@ -338,7 +338,7 @@ class Destroy extends Missions
             $player_info['research_armour_technology']
         );
 
-        $player->setName($player_info['user_name']);
+        $player->setName($player_info['name']);
 
         $player->setCoords(
             $fleet_row['fleet_start_galaxy'],
@@ -373,7 +373,7 @@ class Destroy extends Missions
 
                 //making the player object and add it to playerGroup object
                 if (!$playerGroup->existPlayer($idPlayer)) {
-                    if (!empty($target_user) && $target_user['user_id'] == $idPlayer) {
+                    if (!empty($target_user) && $target_user['id'] == $idPlayer) {
                         $player_info = $target_user;
                     } else {
                         $player_info = $this->missionsModel->getTechnologiesByUserId($idPlayer);
@@ -399,7 +399,7 @@ class Destroy extends Missions
                         $fleet_row['fleet_start_planet']
                     );
 
-                    $player->setName($player_info['user_name']);
+                    $player->setName($player_info['name']);
 
                     $playerGroup->addPlayer($player);
 

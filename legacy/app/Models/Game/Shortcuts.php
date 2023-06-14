@@ -10,8 +10,8 @@ class Shortcuts extends Model
     {
         $this->db->query(
             'UPDATE `' . USERS . "` u SET
-                u.`user_fleet_shortcuts` = '" . $shortcuts . "'
-            WHERE u.`user_id` = '" . $userId . "'"
+                u.`fleet_shortcuts` = '" . $shortcuts . "'
+            WHERE u.`id` = '" . $userId . "'"
         );
     }
 }

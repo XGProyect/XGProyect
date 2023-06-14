@@ -23,7 +23,7 @@ function changeAction(type,formular)
     }
     else if(type == "register")
     {
-        document.forms[formular].action = "//"+uniUrl+"/index.php?page=register";
+        document.forms[formular].action = "//"+uniUrl+"/register";
 
     }
 }

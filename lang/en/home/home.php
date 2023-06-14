@@ -21,6 +21,7 @@ return [
     'hm_username_not_available' => 'This username is not available anymore',
     'hm_email_not_available' => 'The E-mail address is already in use!',
     'hm_only_characters' => 'Use characters only.',
+    'hm_invalid_login' => 'Unrecognised email address or invalid password. Please try again or click on \'Forgotten your Password\'.',
     'hm_hidden_title' => 'XGProyect - Conquer the universe',
     'hm_login_button' => 'Login',
     'hm_close_button' => 'Close',

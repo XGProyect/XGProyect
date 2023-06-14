@@ -10,9 +10,9 @@ class Announcement extends Model
     {
         return $this->db->queryFetchAll(
             'SELECT
-                `user_id`,
-                `user_name`,
-                `user_email`
+                `id`,
+                `name`,
+                `email`
             FROM `' . USERS . '`;'
         );
     }

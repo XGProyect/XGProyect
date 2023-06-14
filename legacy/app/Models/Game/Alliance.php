@@ -11,9 +11,9 @@ class Alliance extends Model
     {
         $result[] = $this->db->queryFetch(
             'SELECT a.*,
-                    (SELECT COUNT(user_id) AS `alliance_members`
+                    (SELECT COUNT(id) AS `alliance_members`
                         FROM `' . USERS . '`
-                        WHERE `user_ally_id` = a.`alliance_id`) AS `alliance_members`
+                        WHERE `ally_id` = a.`alliance_id`) AS `alliance_members`
             FROM `' . ALLIANCE . "` AS a
             WHERE a.`alliance_id` = '" . (int) $alliance_id . "'
             LIMIT 1;"
@@ -58,9 +58,9 @@ class Alliance extends Model
 
             $this->db->query(
                 'UPDATE ' . USERS . " SET
-                `user_ally_id`='" . $new_ally_id . "',
-                `user_ally_register_time`='" . time() . "'
-                WHERE `user_id`='" . (int) $userId . "'"
+                `ally_id`='" . $new_ally_id . "',
+                `ally_register_time`='" . time() . "'
+                WHERE `id`='" . (int) $userId . "'"
             );
 
             $this->db->commitTransaction();
@@ -82,9 +82,9 @@ class Alliance extends Model
             'SELECT a.alliance_id,
                     a.alliance_tag,
                     a.alliance_name,
-                (SELECT COUNT(user_id) AS `alliance_members`
+                (SELECT COUNT(id) AS `alliance_members`
                     FROM `' . USERS . '`
-                    WHERE `user_ally_id` = a.`alliance_id`) AS `alliance_members`
+                    WHERE `ally_id` = a.`alliance_id`) AS `alliance_members`
             FROM ' . ALLIANCE . " AS a
             WHERE a.alliance_name LIKE '%" . $this->db->escapeValue($name_tag) . "%' OR
                     a.alliance_tag LIKE '%" . $this->db->escapeValue($name_tag) . "%' LIMIT 30"
@@ -104,11 +104,11 @@ class Alliance extends Model
     {
         $this->db->query(
             'UPDATE `' . USERS . "` SET
-            `user_ally_request` = '" . (int) $alliance_id . "' ,
-            `user_ally_request_text` = '" . $text . "',
-            `user_ally_register_time` = '" . time() . "',
-            `user_ally_rank_id` = '1'
-            WHERE `user_id`='" . (int) $userId . "'"
+            `ally_request` = '" . (int) $alliance_id . "' ,
+            `ally_request_text` = '" . $text . "',
+            `ally_register_time` = '" . time() . "',
+            `ally_rank_id` = '1'
+            WHERE `id`='" . (int) $userId . "'"
         );
     }
 
@@ -116,8 +116,8 @@ class Alliance extends Model
     {
         $this->db->query(
             'UPDATE ' . USERS . "
-                SET `user_ally_request` = '0'
-            WHERE `user_id`= '" . (int) $userId . "'"
+                SET `ally_request` = '0'
+            WHERE `id`= '" . (int) $userId . "'"
         );
     }
 
@@ -125,37 +125,37 @@ class Alliance extends Model
     {
         $this->db->query(
             'UPDATE `' . USERS . "` SET
-                `user_ally_id` = '0',
-                `user_ally_rank_id` = '0'
-            WHERE `user_id` = '" . (int) $userId . "'
-                AND `user_ally_id` = '" . (int) $alliance_id . "'"
+                `ally_id` = '0',
+                `ally_rank_id` = '0'
+            WHERE `id` = '" . (int) $userId . "'
+                AND `ally_id` = '" . (int) $alliance_id . "'"
         );
     }
 
     public function getAllianceRequestsCount(int $alliance_id): array
     {
         return $this->db->queryFetch(
-            'SELECT COUNT(user_id) AS total_requests
+            'SELECT COUNT(id) AS total_requests
                 FROM `' . USERS . "`
-                WHERE `user_ally_request` = '" . $alliance_id . "'"
+                WHERE `ally_request` = '" . $alliance_id . "'"
         );
     }
 
     public function getAllianceMembers(int $alliance_id, $sort_by_field, $sort_by_order): array
     {
         return $this->db->queryFetchAll(
-            'SELECT u.user_id,
-                    u.user_onlinetime,
-                    u.user_name,
-                    u.user_galaxy,
-                    u.user_system,
-                    u.user_planet,
-                    u.user_ally_register_time,
-                    u.user_ally_rank_id,
+            'SELECT u.id,
+                    u.onlinetime,
+                    u.name,
+                    u.galaxy,
+                    u.system,
+                    u.planet,
+                    u.ally_register_time,
+                    u.ally_rank_id,
                     s.user_statistic_total_points
             FROM `' . USERS . '` AS u
-            INNER JOIN `' . USERS_STATISTICS . "`AS s ON u.user_id = s.user_statistic_user_id
-            WHERE u.user_ally_id='" . $alliance_id . "'" . $this->returnSort($sort_by_field, $sort_by_order)
+            INNER JOIN `' . USERS_STATISTICS . "`AS s ON u.id = s.user_statistic_user_id
+            WHERE u.ally_id='" . $alliance_id . "'" . $this->returnSort($sort_by_field, $sort_by_order)
         );
 
         return [];
@@ -171,9 +171,9 @@ class Alliance extends Model
     public function getAllianceMembersById($alliance_id)
     {
         return $this->db->queryFetchAll(
-            'SELECT `user_id`, `user_name`, `user_ally_rank_id`
+            'SELECT `id`, `name`, `ally_rank_id`
                 FROM `' . USERS . "`
-                WHERE `user_ally_id` = '" . (int) $alliance_id . "'"
+                WHERE `ally_id` = '" . (int) $alliance_id . "'"
         );
     }
 
@@ -188,10 +188,10 @@ class Alliance extends Model
     public function getAllianceMembersByIdAndRankId($alliance_id, $rank_id)
     {
         return $this->db->queryFetchAll(
-            'SELECT `user_id`, `user_name`
+            'SELECT `id`, `name`
             FROM `' . USERS . "`
-            WHERE `user_ally_id` = '" . (int) $alliance_id . "' AND
-                `user_ally_rank_id` = '" . (int) $rank_id . "'"
+            WHERE `ally_id` = '" . (int) $alliance_id . "' AND
+                `ally_rank_id` = '" . (int) $rank_id . "'"
         );
     }
 
@@ -286,8 +286,8 @@ class Alliance extends Model
     {
         $this->db->query(
             'UPDATE ' . USERS . " SET
-                `user_ally_rank_id` = '" . $this->db->escapeValue($rank) . "'
-            WHERE `user_id`='" . (int) $userId . "'"
+                `ally_rank_id` = '" . $this->db->escapeValue($rank) . "'
+            WHERE `id`='" . (int) $userId . "'"
         );
     }
 
@@ -303,10 +303,10 @@ class Alliance extends Model
     {
         $this->db->query(
             'UPDATE `' . USERS . "` SET
-                `user_ally_request_text` = '',
-                `user_ally_request` = '0',
-                `user_ally_id` = '" . (int) $alliance_id . "'
-            WHERE `user_id` = '" . (int) $userId . "'"
+                `ally_request_text` = '',
+                `ally_request` = '0',
+                `ally_id` = '" . (int) $alliance_id . "'
+            WHERE `id` = '" . (int) $userId . "'"
         );
     }
 
@@ -318,12 +318,12 @@ class Alliance extends Model
     public function getAllianceRequests(int $alliance_id): array
     {
         return $this->db->queryFetchAll(
-            'SELECT `user_id`,
-                    `user_name`,
-                    `user_ally_request_text`,
-                    `user_ally_register_time`
+            'SELECT `id`,
+                    `name`,
+                    `ally_request_text`,
+                    `ally_register_time`
             FROM `' . USERS . "`
-            WHERE `user_ally_request` = '" . $alliance_id . "'"
+            WHERE `ally_request` = '" . $alliance_id . "'"
         );
     }
 
@@ -362,9 +362,9 @@ class Alliance extends Model
 
             $this->db->query(
                 'UPDATE `' . USERS . "` SET
-                    `user_ally_id` = '0',
-                    `user_ally_rank_id` = '0'
-                WHERE `user_ally_id` = '" . $alliance_id . "'"
+                    `ally_id` = '0',
+                    `ally_rank_id` = '0'
+                WHERE `ally_id` = '" . $alliance_id . "'"
             );
 
             $this->db->query(
@@ -397,12 +397,12 @@ class Alliance extends Model
     {
         $this->db->query(
             'UPDATE `' . USERS . '` AS u1, `' . ALLIANCE . '` AS a, `' . USERS . "` AS u2 SET
-                u1.`user_ally_rank_id` = '1',
+                u1.`ally_rank_id` = '1',
                 a.`alliance_owner` = '" . (int) $new_leader . "',
-                u2.`user_ally_rank_id` = '0'
-            WHERE u1.`user_id` = " . $current_user_id . ' AND
+                u2.`ally_rank_id` = '0'
+            WHERE u1.`id` = " . $current_user_id . ' AND
                 a.`alliance_id` = ' . $alliance_id . " AND
-                u2.`user_id` = '" . (int) $new_leader . "'"
+                u2.`id` = '" . (int) $new_leader . "'"
         );
     }
 
@@ -437,22 +437,22 @@ class Alliance extends Model
         // FIRST ORDER
         switch ($sort_field) {
             case 1:
-                $sort = ' ORDER BY `user_name`';
+                $sort = ' ORDER BY `name`';
                 break;
             case 2:
-                $sort = ' ORDER BY `user_ally_rank_id`';
+                $sort = ' ORDER BY `ally_rank_id`';
                 break;
             case 3:
                 $sort = ' ORDER BY `user_statistic_total_points`';
                 break;
             case 4:
-                $sort = ' ORDER BY `user_ally_register_time`';
+                $sort = ' ORDER BY `ally_register_time`';
                 break;
             case 5:
-                $sort = ' ORDER BY `user_onlinetime`';
+                $sort = ' ORDER BY `onlinetime`';
                 break;
             default:
-                $sort = ' ORDER BY `user_id`';
+                $sort = ' ORDER BY `id`';
                 break;
         }
 

@@ -4,130 +4,68 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Home;
 
-use Exception;
+use App\Http\Requests\RegisterRequest;
+use App\Models\Planets;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 use Xgp\App\Core\Model;
-use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;
-use Xgp\App\Libraries\Users;
 
 class Register extends Model
 {
-    private int $userId = 0;
-    private string $userName = '';
-    private string $userEmail = '';
-    private string $userPassword = '';
-
-    public function checkIfPlanetExists(int $galaxy, int $system, int $planet): bool
-    {
-        $planet = $this->db->queryFetch(
-            'SELECT
-                `planet_id`
-            FROM `' . PLANETS . "`
-            WHERE `planet_galaxy` = '" . $galaxy . "'
-                AND `planet_system` = '" . $system . "'
-                AND `planet_planet` = '" . $planet . "'
-            LIMIT 1;"
-        );
-
-        return isset($planet['planet_id']);
-    }
-
-    public function createNewUser(Users $user, array $newUserData, array $coords): void
+    public function createNewUser(RegisterRequest $request, array $coords): ?User
     {
         try {
-            $this->db->beginTransaction();
-
-            $this->userName = $this->db->escapeValue(strip_tags($newUserData['new_user_name']));
-            $this->userEmail = $this->db->escapeValue($newUserData['new_user_email']);
-            $this->userPassword = Functions::hash($newUserData['new_user_password']);
+            DB::beginTransaction();
 
             // create the new user
-            $this->userId = $user->createUserWithOptions(
+            $newUser = User::create(array_merge(
+                $request->validated(),
                 [
-                    'user_name' => $this->userName,
-                    'user_password' => $this->userPassword,
-                    'user_email' => $this->userEmail,
-                    'user_lastip' => $_SERVER['REMOTE_ADDR'],
-                    'user_ip_at_reg' => $_SERVER['REMOTE_ADDR'],
-                    'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-                    'user_current_page' => $this->db->escapeValue($_SERVER['REQUEST_URI']),
-                    'user_register_time' => time(),
-                    'user_onlinetime' => time(),
+                    'name' => $request->validated()['username'],
+                    'home_planet_id' => 0,
+                    'current_planet' => 0,
+                    'lastip' => $request->ip(),
+                    'ip_at_reg' => $request->ip(),
+                    'agent' => $request->header('User-Agent'),
+                    'current_page' => $request->getRequestUri(),
+                    'register_time' => time(),
+                    'onlinetime' => time(),
                 ]
-            );
+            ));
+
+            $newUser->preferences()->create();
+            $newUser->premium()->create();
+            $newUser->research()->create();
+            $newUser->stats()->create();
 
             // create a new planet
-            $this->createNewPlanet($coords, $this->userId);
+            (new PlanetLib())->setNewPlanet($coords['galaxy'], $coords['system'], $coords['planet'], $newUser->id, '', true);
 
             // assign the new planet to the new user
-            $this->updateUserPlanet($coords, $this->userId);
+            $this->updateUserPlanet($coords, $newUser->id);
 
-            $this->db->commitTransaction();
-        } catch (Exception $e) {
-            $this->db->rollbackTransaction();
+            DB::commit();
+
+            return $newUser;
+        } catch (Throwable $e) {
+            DB::rollback();
+
+            throw $e;
         }
+
+        return null;
     }
 
-    private function createNewPlanet(array $coords, int $new_user_id): void
+    public function updateUserPlanet(array $coords, int $userId): void
     {
-        $creator = new PlanetLib();
-        $creator->setNewPlanet($coords['galaxy'], $coords['system'], $coords['planet'], $new_user_id, '', true);
-    }
-
-    private function updateUserPlanet(array $coords, int $new_user_id): void
-    {
-        $this->db->query(
-            'UPDATE `' . USERS . '` SET
-            `user_home_planet_id` = (
-                SELECT
-                    `planet_id`
-                FROM `' . PLANETS . "`
-                WHERE `planet_user_id` = '" . $new_user_id . "'
-                LIMIT 1
-            ),
-            `user_current_planet` = (
-                SELECT
-                    `planet_id`
-                FROM `" . PLANETS . "`
-                WHERE `planet_user_id` = '" . $new_user_id . "'
-                LIMIT 1
-            ),
-            `user_galaxy` = '" . $coords['galaxy'] . "',
-            `user_system` = '" . $coords['system'] . "',
-            `user_planet` = '" . $coords['planet'] . "'
-             WHERE `user_id` = '" . $new_user_id . "' LIMIT 1;"
-        );
-    }
-
-    public function getNewUserData(): array
-    {
-        return [
-            'user_id' => $this->userId,
-            'user_name' => $this->userName,
-            'user_email' => $this->userEmail,
-            'user_hashed_password' => $this->userPassword,
-        ];
-    }
-
-    public function checkUser(string $userName): ?array
-    {
-        return $this->db->queryFetch(
-            'SELECT
-                u.`user_name`
-            FROM `' . USERS . "` AS u
-            WHERE `user_name` = '" . $this->db->escapeValue($userName) . "'
-            LIMIT 1;"
-        );
-    }
-
-    public function checkEmail(string $email): ?array
-    {
-        return $this->db->queryFetch(
-            'SELECT
-                u.`user_email`
-            FROM `' . USERS . "` AS u
-            WHERE `user_email` = '" . $this->db->escapeValue($email) . "'
-            LIMIT 1;"
-        );
+        User::where('id', $userId)->update([
+            'home_planet_id' => Planets::where('planet_user_id', $userId)->value('planet_id'),
+            'current_planet' => Planets::where('planet_user_id', $userId)->value('planet_id'),
+            'galaxy' => $coords['galaxy'],
+            'system' => $coords['system'],
+            'planet' => $coords['planet'],
+        ]);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
+use App\Models\Planets;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Options;
 use Xgp\App\Models\Libraries\PlanetLib as PlanetLibModel;
@@ -41,30 +42,32 @@ class PlanetLib
                 $name = __('game/global.homeworld');
             }
 
-            $this->planetslibModel->createNewPlanet(
-                [
-                    'planet_name' => $name,
-                    'planet_user_id' => $owner,
-                    'planet_galaxy' => $galaxy,
-                    'planet_system' => $system,
-                    'planet_planet' => $position,
-                    'planet_last_update' => time(),
-                    'planet_type' => PlanetTypesEnumerator::PLANET,
-                    'planet_image' => Formulas::setPlanetImage($system, $position),
-                    'planet_diameter' => $planet['planet_diameter'],
-                    'planet_field_max' => $planet['planet_field_max'],
-                    'planet_temp_min' => $temp['min'],
-                    'planet_temp_max' => $temp['max'],
-                    'planet_metal' => BUILD_METAL,
-                    'planet_metal_perhour' => Options::getInstance()->get('metal_basic_income'),
-                    'planet_crystal' => BUILD_CRISTAL,
-                    'planet_crystal_perhour' => Options::getInstance()->get('crystal_basic_income'),
-                    'planet_deuterium' => BUILD_DEUTERIUM,
-                    'planet_deuterium_perhour' => Options::getInstance()->get('deuterium_basic_income'),
-                    'planet_b_building_id' => '0',
-                    'planet_b_hangar_id' => '',
-                ]
-            );
+            $newPlanet = Planets::create([
+                'planet_name' => $name,
+                'planet_user_id' => $owner,
+                'planet_galaxy' => $galaxy,
+                'planet_system' => $system,
+                'planet_planet' => $position,
+                'planet_last_update' => time(),
+                'planet_type' => PlanetTypesEnumerator::PLANET,
+                'planet_image' => Formulas::setPlanetImage($system, $position),
+                'planet_diameter' => $planet['planet_diameter'],
+                'planet_field_max' => $planet['planet_field_max'],
+                'planet_temp_min' => $temp['min'],
+                'planet_temp_max' => $temp['max'],
+                'planet_metal' => BUILD_METAL,
+                'planet_metal_perhour' => Options::getInstance()->get('metal_basic_income'),
+                'planet_crystal' => BUILD_CRISTAL,
+                'planet_crystal_perhour' => Options::getInstance()->get('crystal_basic_income'),
+                'planet_deuterium' => BUILD_DEUTERIUM,
+                'planet_deuterium_perhour' => Options::getInstance()->get('deuterium_basic_income'),
+                'planet_b_building_id' => '0',
+                'planet_b_hangar_id' => '',
+            ]);
+
+            $newPlanet->buildings()->create();
+            $newPlanet->defenses()->create();
+            $newPlanet->ships()->create();
 
             return true;
         }

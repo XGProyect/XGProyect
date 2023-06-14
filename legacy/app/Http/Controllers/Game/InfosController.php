@@ -336,7 +336,7 @@ class InfosController extends BaseController
                                 $JumpTime,
                                 $this->planet['planet_id'],
                                 $TargetGate['planet_id'],
-                                $this->user['user_id']
+                                $this->user['id']
                             );
 
                             $this->planet['planet_last_jump_time'] = $JumpTime;
@@ -385,7 +385,7 @@ class InfosController extends BaseController
 
     private function BuildJumpableMoonCombo(): string
     {
-        $MoonList = $this->infosModel->getListOfMoons($this->user['user_id']);
+        $MoonList = $this->infosModel->getListOfMoons($this->user['id']);
 
         $Combo = '';
 

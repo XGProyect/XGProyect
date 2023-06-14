@@ -69,7 +69,7 @@ class Attack extends Missions
             }
 
             $targetUser = $this->missionsModel->getAllUserDataByUserId($target_planet['planet_user_id']);
-            $targetUserId = $targetUser['user_id'];
+            $targetUserId = $targetUser['id'];
 
             UpdatesLibrary::updatePlanetResources($targetUser, $target_planet, time());
 
@@ -133,7 +133,7 @@ class Attack extends Missions
                     $fleet_row['fleet_end_planet']
                 );
 
-                $player->setName($targetUser['user_name']);
+                $player->setName($targetUser['name']);
 
                 $defenders->addPlayer($player);
             } else {
@@ -297,7 +297,7 @@ class Attack extends Missions
             $player_info['research_armour_technology']
         );
 
-        $player->setName($player_info['user_name']);
+        $player->setName($player_info['name']);
 
         $player->setCoords(
             $fleet_row['fleet_start_galaxy'],
@@ -332,7 +332,7 @@ class Attack extends Missions
 
                 //making the player object and add it to playerGroup object
                 if (!$playerGroup->existPlayer($idPlayer)) {
-                    if (!empty($target_user) && $target_user['user_id'] == $idPlayer) {
+                    if (!empty($target_user) && $target_user['id'] == $idPlayer) {
                         $player_info = $target_user;
                     } else {
                         $player_info = $this->missionsModel->getTechnologiesByUserId($idPlayer);
@@ -358,7 +358,7 @@ class Attack extends Missions
                         $fleet_row['fleet_start_planet']
                     );
 
-                    $player->setName($player_info['user_name']);
+                    $player->setName($player_info['name']);
 
                     $playerGroup->addPlayer($player);
 

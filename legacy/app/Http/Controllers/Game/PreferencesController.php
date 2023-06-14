@@ -56,8 +56,8 @@ class PreferencesController extends BaseController
     private function setUpPreferences(): void
     {
         $this->preferences = new Pref(
-            $this->preferencesModel->getAllPreferencesByUserId((int) $this->user['user_id']),
-            (int) $this->user['user_id']
+            $this->preferencesModel->getAllPreferencesByUserId((int) $this->user['id']),
+            (int) $this->user['id']
         );
     }
 
@@ -112,7 +112,7 @@ class PreferencesController extends BaseController
             if ($this->error == '') {
                 $this->preferencesModel->updateValidatedFields(
                     $this->fields_to_update,
-                    (int) $this->user['user_id']
+                    (int) $this->user['id']
                 );
 
                 $this->setUpPreferences();
@@ -140,9 +140,9 @@ class PreferencesController extends BaseController
     private function setUserData(): array
     {
         return [
-            'user_name' => $this->user['user_name'],
+            'name' => $this->user['name'],
             'hide_nickname_change' => ($this->preferences->isNickNameChangeAllowed() ? '' : 'style="display: none"'),
-            'user_email' => $this->user['user_email'],
+            'email' => $this->user['email'],
         ];
     }
 
@@ -192,7 +192,7 @@ class PreferencesController extends BaseController
             ];
         }
 
-        if ($this->preferencesModel->isEmpireActive((int) $this->user['user_id'])) {
+        if ($this->preferencesModel->isEmpireActive((int) $this->user['id'])) {
             return [
                 'disabled' => 'style="display: none"',
                 'pr_vacation_mode_active' => Format::strongText(
@@ -237,12 +237,12 @@ class PreferencesController extends BaseController
         if (isset($preferences['new_user_name'])
             && isset($preferences['confirmation_user_password'])
             && $this->preferences->isNickNameChangeAllowed()) {
-            if (password_verify($preferences['confirmation_user_password'], $this->user['user_password'])) {
+            if (password_verify($preferences['confirmation_user_password'], $this->user['password'])) {
                 $username_len = strlen(trim($preferences['new_user_name']));
 
                 if ($username_len > 3 && $username_len <= 20) {
                     if (!$this->preferencesModel->checkIfNicknameExists($preferences['new_user_name'])) {
-                        $this->fields_to_update['user_name'] = $preferences['new_user_name'];
+                        $this->fields_to_update['name'] = $preferences['new_user_name'];
                         $this->fields_to_update['preference_nickname_change'] = time();
                     } else {
                         $this->error = __('game/preferences.pr_error_nick_in_use');
@@ -263,8 +263,8 @@ class PreferencesController extends BaseController
     {
         if (isset($preferences['current_user_password'])
             && isset($preferences['new_user_password'])) {
-            if (password_verify($preferences['current_user_password'], $this->user['user_password'])) {
-                $this->fields_to_update['user_password'] = Functions::hash(trim($preferences['new_user_password']));
+            if (password_verify($preferences['current_user_password'], $this->user['password'])) {
+                $this->fields_to_update['password'] = Functions::hash(trim($preferences['new_user_password']));
             } else {
                 $this->error = __('game/preferences.pr_error_wrong_password');
             }
@@ -275,12 +275,12 @@ class PreferencesController extends BaseController
     {
         if (isset($preferences['new_user_email'])
             && isset($preferences['confirmation_email_password'])) {
-            if (password_verify($preferences['confirmation_email_password'], $this->user['user_password'])) {
+            if (password_verify($preferences['confirmation_email_password'], $this->user['password'])) {
                 $user_email_len = strlen(trim($preferences['new_user_email']));
 
                 if ($user_email_len > 4 && $user_email_len <= 64) {
                     if (!$this->preferencesModel->checkIfEmailExists($preferences['new_user_email'])) {
-                        $this->fields_to_update['user_email'] = $preferences['new_user_email'];
+                        $this->fields_to_update['email'] = $preferences['new_user_email'];
                     } else {
                         $this->error = __('game/preferences.pr_error_email_in_use');
                     }
@@ -315,10 +315,10 @@ class PreferencesController extends BaseController
     {
         if ($this->preferences->isVacationModeOn()) {
             if ($this->preferences->isVacationModeRemovalAllowed()) {
-                $this->preferencesModel->endVacation((int) $this->user['user_id']);
+                $this->preferencesModel->endVacation((int) $this->user['id']);
             }
         } else {
-            $this->preferencesModel->startVacation((int) $this->user['user_id']);
+            $this->preferencesModel->startVacation((int) $this->user['id']);
         }
     }
 

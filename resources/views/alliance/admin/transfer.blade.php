@@ -13,7 +13,7 @@
                 <th role="cell">
                     <select name="newleader">
                         @foreach ($members as $member)
-                        <option value="{{ $member['user_id'] }}">{{ $member['user_name'] }} [{{ $member['user_rank'] }}]</option>
+                        <option value="{{ $member['id'] }}">{{ $member['name'] }} [{{ $member['user_rank'] }}]</option>
                         @endforeach
                     </select>
                 </th>

@@ -83,10 +83,10 @@ class AnnouncementController extends BaseController
         if (isset($post['color-picker'])) {
             $color = $post['color-picker'];
         } else {
-            $color = $this->getMessageColor()[$this->user['user_authlevel']];
+            $color = $this->getMessageColor()[$this->user['authlevel']];
         }
 
-        $level = __('admin/global.user_level')[$this->user['user_authlevel']];
+        $level = __('admin/global.user_level')[$this->user['authlevel']];
         $time = time();
 
         $from = Format::customColor($level, $color);
@@ -95,13 +95,13 @@ class AnnouncementController extends BaseController
 
         foreach ($players as $player) {
             Functions::sendMessage(
-                (int) $player['user_id'],
-                (int) $this->user['user_id'],
+                (int) $player['id'],
+                (int) $this->user['id'],
                 $time,
                 MessagesEnumerator::GENERAL,
                 $from,
                 $subject,
-                strtr($message, ['%player%' => Format::strongText($player['user_name'])]),
+                strtr($message, ['%player%' => Format::strongText($player['name'])]),
                 true
             );
         }
@@ -116,12 +116,12 @@ class AnnouncementController extends BaseController
         $results = [];
 
         foreach ($players as $player) {
-            $result = Mail::to($player['user_email'], $player['user_name'])->send(new \App\Mail\Announcement(
+            $result = Mail::to($player['email'], $player['name'])->send(new \App\Mail\Announcement(
                 $post['subject'],
-                strtr($post['text'], ['%player%' => Format::strongText($player['user_name'])])
+                strtr($post['text'], ['%player%' => Format::strongText($player['name'])])
             ));
 
-            $results[] = $player['user_name'] . ': ' . ($result instanceof SentMessage ? __('admin/announcement.an_email_sent') : __('admin/announcement.an_email_failed'));
+            $results[] = $player['name'] . ': ' . ($result instanceof SentMessage ? __('admin/announcement.an_email_sent') : __('admin/announcement.an_email_failed'));
 
             // 20 per row
             if ($sentCount % 20 == 0) {

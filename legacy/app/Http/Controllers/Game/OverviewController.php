@@ -44,7 +44,7 @@ class OverviewController extends BaseController
             array_merge(
                 [
                     'planetName' => $this->planet['planet_name'],
-                    'username' => $this->user['user_name'],
+                    'username' => $this->user['name'],
                     'dateTime' => Timing::formatExtendedDate(time()),
                     'newMessage' => $this->getMessages(),
                     'fleetList' => $this->getFleetMovements(),
@@ -134,7 +134,7 @@ class OverviewController extends BaseController
         $fleet_row = [];
         $record = 0;
 
-        $own_fleets = $this->overviewModel->getOwnFleets($this->user['user_id']);
+        $own_fleets = $this->overviewModel->getOwnFleets($this->user['id']);
 
         foreach ($own_fleets as $fleets) {
             //#####################################
@@ -151,7 +151,7 @@ class OverviewController extends BaseController
             $fleet_group = $fleets['fleet_group'];
             $id = $fleets['fleet_id'];
 
-            if ($fleets['fleet_owner'] == $this->user['user_id']) {
+            if ($fleets['fleet_owner'] == $this->user['id']) {
                 $record++;
 
                 $label = 'fs';
@@ -191,7 +191,7 @@ class OverviewController extends BaseController
             // incoming fleets
             //
             //#####################################
-            if ($fleets['fleet_owner'] != $this->user['user_id']) {
+            if ($fleets['fleet_owner'] != $this->user['id']) {
                 if ($fleets['fleet_mission'] == 2) {
                     $record++;
                     $start_time = ($fleet_status > 0) ? '' : $fleets['fleet_start_time'];
@@ -235,10 +235,10 @@ class OverviewController extends BaseController
             //
             //#####################################
 
-            if ($fleets['fleet_owner'] != $this->user['user_id']) {
+            if ($fleets['fleet_owner'] != $this->user['id']) {
                 $acs_member = false;
 
-                if (in_array($this->user['user_id'], explode(',', $fleets['acs_members'] ?? ''))) {
+                if (in_array($this->user['id'], explode(',', $fleets['acs_members'] ?? ''))) {
                     $acs_member = true;
                 }
 
@@ -304,11 +304,11 @@ class OverviewController extends BaseController
     {
         $colony = 1;
 
-        $planets_query = $this->overviewModel->getPlanets($this->user['user_id']);
+        $planets_query = $this->overviewModel->getPlanets($this->user['id']);
         $planet_block = '<tr>';
 
         foreach ($planets_query as $user_planet) {
-            if ($user_planet['planet_id'] != $this->user['user_current_planet'] && $user_planet['planet_type'] != PlanetTypesEnumerator::MOON) {
+            if ($user_planet['planet_id'] != $this->user['current_planet'] && $user_planet['planet_type'] != PlanetTypesEnumerator::MOON) {
                 $url = 'game.php?page=overview&cp=' . $user_planet['planet_id'] . '&re=0';
                 $image = asset('upload/skins/xgproyect/planets/small/s_' . $user_planet['planet_image'] . '.jpg');
                 $attributes = 'height="50" width="50"';
@@ -340,7 +340,7 @@ class OverviewController extends BaseController
         $userRank = '-';
         $totalRank = $this->user['user_statistic_total_rank'] == '' ? $this->planet['stats_users'] : $this->user['user_statistic_total_rank'];
 
-        if ($this->noob->isRankVisible($this->user['user_authlevel'])) {
+        if ($this->noob->isRankVisible($this->user['authlevel'])) {
             $userRank = __('game/overview.ov_place', [
                 'points' => FormatLib::prettyNumber($this->user['user_statistic_total_points']),
                 'url' => UrlHelper::setUrl('game.php?page=statistics&range=' . $totalRank, $totalRank, $totalRank),

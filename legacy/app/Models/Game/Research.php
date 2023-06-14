@@ -26,7 +26,7 @@ class Research extends Model
                 p.`planet_deuterium` = '" . $working_planet['planet_deuterium'] . "',
                 r.`research_current_research` = '" . $current_user['research_current_research'] . "'
             WHERE p.`planet_id` = '" . $working_planet['planet_id'] . "'
-                AND r.`research_user_id` = '" . $current_user['user_id'] . "';"
+                AND r.`research_user_id` = '" . $current_user['id'] . "';"
         );
     }
 

@@ -39,7 +39,7 @@ class CombatreportController extends BaseController
     {
         $this->report = new Report(
             [$this->combatreportModel->getReportById(filter_input(INPUT_GET, 'report'))],
-            $this->user['user_id']
+            $this->user['id']
         );
     }
 
@@ -47,7 +47,7 @@ class CombatreportController extends BaseController
     {
         $owners = $this->report->getFirstReportOwnersAsArray();
 
-        if (!in_array($this->user['user_id'], $owners)) {
+        if (!in_array($this->user['id'], $owners)) {
             Functions::message(__('game/combatreport.cr_no_access'), '', 0, false, false, false);
         }
     }

@@ -73,7 +73,7 @@ class GalaxyController extends BaseController
     {
         // fleets
         $max_fleets = FleetsLib::getMaxFleets($this->user['research_computer_technology'], $this->user['premium_officier_admiral']);
-        $current_fleets = $this->galaxyModel->countAmountFleetsByUserId($this->user['user_id']);
+        $current_fleets = $this->galaxyModel->countAmountFleetsByUserId($this->user['id']);
 
         // missiles and espionage probes
         $CurrentPlID = $this->planet['planet_id'];
@@ -95,7 +95,7 @@ class GalaxyController extends BaseController
             exit;
         }
 
-        $this->galaxy = $this->galaxyModel->getGalaxyDataByGalaxyAndSystem($this->_galaxy, $this->_system, $this->user['user_id']);
+        $this->galaxy = $this->galaxyModel->getGalaxyDataByGalaxyAndSystem($this->_galaxy, $this->_system, $this->user['id']);
 
         $parse['selected_galaxy'] = $this->_galaxy;
         $parse['selected_system'] = $this->_system;
@@ -275,7 +275,7 @@ class GalaxyController extends BaseController
 
         $target_user = $this->galaxyModel->getTargetUserDataByCoords($galaxy, $system, $planet);
 
-        $user_points = $this->noob->returnPoints($this->user['user_id'], $target_user['user_id']);
+        $user_points = $this->noob->returnPoints($this->user['id'], $target_user['id']);
         $MyGameLevel = $user_points['user_points'];
         $HeGameLevel = $user_points['target_points'];
 
@@ -322,7 +322,7 @@ class GalaxyController extends BaseController
             $errors++;
         }
 
-        if ($target_user['user_onlinetime'] >= (time() - 60 * 60 * 24 * 7)) {
+        if ($target_user['onlinetime'] >= (time() - 60 * 60 * 24 * 7)) {
             if ($this->noob->isWeak(intval($MyGameLevel), intval($HeGameLevel))) {
                 $error .= __('game/fleet.fl_week_player') . '<br>';
                 $errors++;
@@ -355,7 +355,7 @@ class GalaxyController extends BaseController
         ];
 
         $this->fleetModel->insertNewMissilesMission([
-            'fleet_owner' => $this->user['user_id'],
+            'fleet_owner' => $this->user['id'],
             'fleet_amount' => $missiles_amount,
             'fleet_array' => FleetsLib::setFleetShipsArray([503 => $missiles_amount]),
             'fleet_start_time' => (time() + $flight_time),
@@ -367,8 +367,8 @@ class GalaxyController extends BaseController
             'fleet_end_system' => $system,
             'fleet_end_planet' => $planet,
             'fleet_target_obj' => $target,
-            'fleet_target_owner' => $target_user['user_id'],
-            'user_current_planet' => $this->user['user_current_planet'],
+            'fleet_target_owner' => $target_user['id'],
+            'current_planet' => $this->user['current_planet'],
         ]);
 
         Functions::message('<b>' . $missiles_amount . '</b>' . __('game/galaxy.gl_missiles_sended') . $DefenseLabel[$target], 'game.php?page=overview', 3);
@@ -462,7 +462,7 @@ class GalaxyController extends BaseController
             die('614 ');
         }
 
-        $current_fleets = $this->galaxyModel->countAmountFleetsByUserId($this->user['user_id']);
+        $current_fleets = $this->galaxyModel->countAmountFleetsByUserId($this->user['id']);
 
         $target_user = $this->galaxyModel->getTargetUserDataByCoords($galaxy, $system, $planet, $_POST['planettype']);
 
@@ -479,7 +479,7 @@ class GalaxyController extends BaseController
             }
         }
 
-        $user_points = $this->noob->returnPoints($this->user['user_id'], $target_user['user_id']);
+        $user_points = $this->noob->returnPoints($this->user['id'], $target_user['id']);
         $CurrentPoints = $user_points['user_points'];
         $TargetPoints = $user_points['target_points'];
         $TargetVacat = $target_user['preference_vacation_mode'];
@@ -500,21 +500,21 @@ class GalaxyController extends BaseController
             die('605 ');
         }
 
-        if ($target_user['user_onlinetime'] >= (time() - 60 * 60 * 24 * 7)) {
-            if ($this->noob->isWeak(intval($CurrentPoints), intval($TargetPoints)) && $target_user['user_id'] != '' && $order == 6) {
+        if ($target_user['onlinetime'] >= (time() - 60 * 60 * 24 * 7)) {
+            if ($this->noob->isWeak(intval($CurrentPoints), intval($TargetPoints)) && $target_user['id'] != '' && $order == 6) {
                 die('603 ');
             }
 
-            if ($this->noob->isStrong(intval($CurrentPoints), intval($TargetPoints)) && $target_user['user_id'] != '' && $order == 6) {
+            if ($this->noob->isStrong(intval($CurrentPoints), intval($TargetPoints)) && $target_user['id'] != '' && $order == 6) {
                 die('604 ');
             }
         }
 
-        if ($target_user['user_id'] == '' && $order != 8) {
+        if ($target_user['id'] == '' && $order != 8) {
             die('601 ');
         }
 
-        if (($target_user['user_id'] == $this->planet['planet_user_id']) && ($order == 6)) {
+        if (($target_user['id'] == $this->planet['planet_user_id']) && ($order == 6)) {
             die('601 ');
         }
 
@@ -551,13 +551,13 @@ class GalaxyController extends BaseController
             die('613 ');
         }
 
-        if (Options::getInstance()->get('adm_attack') == 1 && $target_user['user_authlevel'] > 0) {
+        if (Options::getInstance()->get('adm_attack') == 1 && $target_user['authlevel'] > 0) {
             die('601 ');
         }
 
         $this->fleetModel->insertNewFleet(
             [
-                'fleet_owner' => $this->user['user_id'],
+                'fleet_owner' => $this->user['id'],
                 'fleet_mission' => intval($order),
                 'fleet_amount' => $FleetShipCount,
                 'fleet_array' => FleetsLib::setFleetShipsArray($FleetDBArray),
@@ -575,7 +575,7 @@ class GalaxyController extends BaseController
                 'fleet_resource_crystal' => 0,
                 'fleet_resource_deuterium' => 0,
                 'fleet_fuel' => $consumption,
-                'fleet_target_owner' => $target_user['user_id'],
+                'fleet_target_owner' => $target_user['id'],
             ],
             $this->planet,
             $fleet_sub_query

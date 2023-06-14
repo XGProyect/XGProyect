@@ -64,13 +64,13 @@ class MessagesController extends BaseController
     private function getDefaultSection(): void
     {
         // set messages as read
-        $this->messagesModel->markAsRead($this->user['user_id']);
+        $this->messagesModel->markAsRead($this->user['id']);
 
         Template::legacyView(
             'messages.default',
             [
                 'message_list' => $this->getMessagesList(
-                    $this->messagesModel->getByUserId($this->user['user_id'])
+                    $this->messagesModel->getByUserId($this->user['id'])
                 ),
                 'operators_list' => $this->getOperatorsAddressBook(),
             ]
@@ -102,11 +102,11 @@ class MessagesController extends BaseController
             $deleteOptions = true;
 
             $message_list = $this->getMessagesList(
-                $this->messagesModel->getByUserIdAndType($this->user['user_id'], $get_messages)
+                $this->messagesModel->getByUserIdAndType($this->user['id'], $get_messages)
             );
 
             // set messages as read
-            $this->messagesModel->markAsReadByType($this->user['user_id'], $get_messages);
+            $this->messagesModel->markAsReadByType($this->user['id'], $get_messages);
         }
 
         Template::legacyView(
@@ -162,14 +162,14 @@ class MessagesController extends BaseController
 
     private function getOperatorsAddressBook(): array
     {
-        $operators = $this->messagesModel->getOperators($this->user['user_id']);
+        $operators = $this->messagesModel->getOperators($this->user['id']);
         $operators_list = [];
 
         if ($operators) {
             foreach ($operators as $operator) {
                 $operators_list[] = [
-                    'user_name' => $operator['user_name'],
-                    'user_email' => $operator['user_email'],
+                    'name' => $operator['name'],
+                    'email' => $operator['email'],
                 ];
             }
         }
@@ -179,7 +179,7 @@ class MessagesController extends BaseController
 
     private function getMessagesTypesList(array $active): array
     {
-        $messages_types = $this->messagesModel->countMessagesByType($this->user['user_id']);
+        $messages_types = $this->messagesModel->countMessagesByType($this->user['id']);
         $messages_types_list = [];
 
         if ($messages_types) {
@@ -203,14 +203,14 @@ class MessagesController extends BaseController
 
     private function getFriendsAddressBook(): array
     {
-        $buddies = $this->messagesModel->getFriends($this->user['user_id']);
+        $buddies = $this->messagesModel->getFriends($this->user['id']);
         $buddies_list = [];
 
         if ($buddies) {
             foreach ($buddies as $buddy) {
                 $buddies_list[] = [
-                    'user_name' => $buddy['user_name'],
-                    'user_id' => $buddy['user_id'],
+                    'name' => $buddy['name'],
+                    'id' => $buddy['id'],
                 ];
             }
         }
@@ -220,14 +220,14 @@ class MessagesController extends BaseController
 
     private function getAllinaceAddressBook(): array
     {
-        $members = $this->messagesModel->getAllianceMembers($this->user['user_id'], $this->user['user_ally_id']);
+        $members = $this->messagesModel->getAllianceMembers($this->user['id'], $this->user['ally_id']);
         $members_list = [];
 
         if ($members) {
             foreach ($members as $member) {
                 $members_list[] = [
-                    'user_name' => $member['user_name'],
-                    'user_id' => $member['user_id'],
+                    'name' => $member['name'],
+                    'id' => $member['id'],
                 ];
             }
         }
@@ -237,7 +237,7 @@ class MessagesController extends BaseController
 
     private function getNotesList(): array
     {
-        $notes = $this->messagesModel->getNotes($this->user['user_id']);
+        $notes = $this->messagesModel->getNotes($this->user['id']);
         $notes_list = [];
 
         if ($notes) {
@@ -255,7 +255,7 @@ class MessagesController extends BaseController
 
     private function getExtraBlocksDisplay(): array
     {
-        $address_book_notes_counts = $this->messagesModel->countAddressBookAndNotes($this->user['user_id'], $this->user['user_ally_id']);
+        $address_book_notes_counts = $this->messagesModel->countAddressBookAndNotes($this->user['id'], $this->user['ally_id']);
         $current_extra_block_open = filter_input_array(INPUT_POST, [
             'owncontactsopen' => FILTER_UNSAFE_RAW,
             'ownallyopen' => FILTER_UNSAFE_RAW,
@@ -312,7 +312,7 @@ class MessagesController extends BaseController
 
         switch ($delete) {
             case 'deleteall':
-                $this->messagesModel->deleteAllByOwner($this->user['user_id']);
+                $this->messagesModel->deleteAllByOwner($this->user['id']);
                 break;
             case 'deletemarked':
                 foreach ($messages_to_delete as $message => $checked) {
@@ -324,7 +324,7 @@ class MessagesController extends BaseController
                 }
 
                 if (isset($message_ids)) {
-                    $this->messagesModel->deleteByOwnerAndIds($this->user['user_id'], join(',', $message_ids));
+                    $this->messagesModel->deleteByOwnerAndIds($this->user['id'], join(',', $message_ids));
                 }
                 break;
             case 'deleteunmarked':
@@ -338,7 +338,7 @@ class MessagesController extends BaseController
                 }
 
                 if (isset($message_ids)) {
-                    $this->messagesModel->deleteByOwnerAndIds($this->user['user_id'], join(',', $message_ids));
+                    $this->messagesModel->deleteByOwnerAndIds($this->user['id'], join(',', $message_ids));
                 }
                 break;
             case 'deleteallshown':
@@ -353,7 +353,7 @@ class MessagesController extends BaseController
                     }
 
                     if (isset($type_id)) {
-                        $this->messagesModel->deleteByOwnerAndMessageType($this->user['user_id'], $type_id);
+                        $this->messagesModel->deleteByOwnerAndMessageType($this->user['id'], $type_id);
                     }
                 }
                 break;

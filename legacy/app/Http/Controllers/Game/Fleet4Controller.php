@@ -80,18 +80,18 @@ class Fleet4Controller extends BaseController
     private function setUpFleets(): void
     {
         $this->_fleets = new Fleets(
-            $this->fleetModel->getAllFleetsByUserId($this->user['user_id']),
-            $this->user['user_id']
+            $this->fleetModel->getAllFleetsByUserId($this->user['id']),
+            $this->user['id']
         );
 
         $this->_research = new Researches(
             [$this->user],
-            $this->user['user_id']
+            $this->user['id']
         );
 
         $this->_premium = new Premium(
             [$this->user],
-            $this->user['user_id']
+            $this->user['id']
         );
     }
 
@@ -171,7 +171,7 @@ class Fleet4Controller extends BaseController
             $this->_target_data = $target;
 
             // validate owner
-            if ($target['planet_user_id'] == $this->user['user_id']) {
+            if ($target['planet_user_id'] == $this->user['id']) {
                 $this->_own_planet = true;
             }
 
@@ -223,8 +223,8 @@ class Fleet4Controller extends BaseController
         }
 
         if (Options::getInstance()->get('adm_attack') != 0
-            && $this->_target_data['user_authlevel'] >= 1
-            && $this->user['user_authlevel'] == 0) {
+            && $this->_target_data['authlevel'] >= 1
+            && $this->user['authlevel'] == 0) {
             $this->showMessage(
                 __('game/fleet.fl_admins_cannot_be_attacked')
             );
@@ -240,7 +240,7 @@ class Fleet4Controller extends BaseController
         }
 
         // set owner
-        $this->_fleet_data['fleet_owner'] = $this->user['user_id'];
+        $this->_fleet_data['fleet_owner'] = $this->user['id'];
 
         return true;
     }
@@ -372,7 +372,7 @@ class Fleet4Controller extends BaseController
                 $this->_target_data['planet_user_id']
             ) >= 1;
 
-            if ($this->_target_data['user_ally_id'] != $this->user['user_ally_id'] && !$is_buddy) {
+            if ($this->_target_data['ally_id'] != $this->user['ally_id'] && !$is_buddy) {
                 $this->showMessage(
                     FormatLib::colorRed(__('game/fleet.fl_stay_not_on_enemy'))
                 );
@@ -463,8 +463,8 @@ class Fleet4Controller extends BaseController
             $noob = new NoobsProtectionLib();
 
             $points = $noob->returnPoints(
-                $this->user['user_id'],
-                $this->_target_data['user_id']
+                $this->user['id'],
+                $this->_target_data['id']
             );
 
             $user_points = $points['user_points'];

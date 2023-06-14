@@ -264,10 +264,10 @@ DROP TABLE IF EXISTS `options`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `options` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(191) DEFAULT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `value` longtext NOT NULL,
-  `type` varchar(32) NOT NULL,
-  PRIMARY KEY (`id`),
+  `type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '32',
+  PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `option_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -459,30 +459,37 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `user_id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(64) NOT NULL DEFAULT '',
-  `user_password` varchar(64) NOT NULL DEFAULT '',
-  `user_email` varchar(64) NOT NULL DEFAULT '',
-  `user_authlevel` tinyint NOT NULL DEFAULT '0',
-  `user_home_planet_id` int NOT NULL DEFAULT '0',
-  `user_galaxy` int NOT NULL DEFAULT '0',
-  `user_system` int NOT NULL DEFAULT '0',
-  `user_planet` int NOT NULL DEFAULT '0',
-  `user_current_planet` int NOT NULL DEFAULT '0',
-  `user_lastip` varchar(39) NOT NULL DEFAULT '',
-  `user_ip_at_reg` varchar(39) NOT NULL DEFAULT '',
-  `user_agent` text,
-  `user_current_page` text,
-  `user_register_time` int NOT NULL DEFAULT '0',
-  `user_onlinetime` int NOT NULL DEFAULT '0',
-  `user_fleet_shortcuts` text,
-  `user_ally_id` int NOT NULL DEFAULT '0',
-  `user_ally_request` int NOT NULL DEFAULT '0',
-  `user_ally_request_text` text,
-  `user_ally_register_time` int NOT NULL DEFAULT '0',
-  `user_ally_rank_id` int NOT NULL DEFAULT '0',
-  `user_banned` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`)
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL DEFAULT '',
+  `password` varchar(64) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `authlevel` tinyint NOT NULL DEFAULT '0',
+  `home_planet_id` int NOT NULL,
+  `galaxy` int NOT NULL DEFAULT '0',
+  `system` int NOT NULL DEFAULT '0',
+  `planet` int NOT NULL DEFAULT '0',
+  `current_planet` int NOT NULL,
+  `lastip` varchar(39) NOT NULL DEFAULT '',
+  `ip_at_reg` varchar(39) NOT NULL DEFAULT '',
+  `agent` text,
+  `current_page` text,
+  `register_time` int NOT NULL DEFAULT '0',
+  `onlinetime` int NOT NULL DEFAULT '0',
+  `fleet_shortcuts` text,
+  `ally_id` int NOT NULL DEFAULT '0',
+  `ally_request` int NOT NULL DEFAULT '0',
+  `ally_request_text` text,
+  `ally_register_time` int NOT NULL DEFAULT '0',
+  `ally_rank_id` int NOT NULL DEFAULT '0',
+  `banned` int NOT NULL DEFAULT '0',
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  UNIQUE KEY `users_home_planet_id_unique` (`home_planet_id`),
+  UNIQUE KEY `users_current_planet_unique` (`current_planet`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users_statistics`;
@@ -507,7 +514,7 @@ CREATE TABLE `users_statistics` (
   `user_statistic_total_rank` int NOT NULL DEFAULT '0',
   `user_statistic_update_time` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_statistic_user_id`),
-  CONSTRAINT `users_statistics_user_statistic_user_id_foreign` FOREIGN KEY (`user_statistic_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+  CONSTRAINT `users_statistics_user_statistic_user_id_foreign` FOREIGN KEY (`user_statistic_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -527,3 +534,5 @@ INSERT INTO `migrations` VALUES (7,'2023_06_10_143652_update_version',4);
 INSERT INTO `migrations` VALUES (10,'2023_06_10_152102_create_alliance_statistics_alliance_statistic_alliance_id_fk',5);
 INSERT INTO `migrations` VALUES (11,'2023_06_10_155911_update_options_table',6);
 INSERT INTO `migrations` VALUES (12,'2023_06_10_160413_update_options_types',7);
+INSERT INTO `migrations` VALUES (13,'2023_06_14_192542_update_users_table',8);
+INSERT INTO `migrations` VALUES (14,'2023_06_14_193932_create_users_table_unique_indexes',9);

@@ -103,10 +103,10 @@ class Missions extends Model
                     pr.*,
                     pref.preference_vacation_mode
                 FROM `' . USERS . '` AS u
-                INNER JOIN `' . RESEARCH . '` AS r ON r.research_user_id = u.user_id
-                INNER JOIN `' . PREMIUM . '` AS pr ON pr.premium_user_id = u.user_id
-                INNER JOIN `' . PREFERENCES . "` AS pref ON pref.preference_user_id = u.user_id
-                WHERE u.`user_id` = '" . $userId . "'
+                INNER JOIN `' . RESEARCH . '` AS r ON r.research_user_id = u.id
+                INNER JOIN `' . PREMIUM . '` AS pr ON pr.premium_user_id = u.id
+                INNER JOIN `' . PREFERENCES . "` AS pref ON pref.preference_user_id = u.id
+                WHERE u.`id` = '" . $userId . "'
                 LIMIT 1;"
             );
         }
@@ -219,15 +219,15 @@ class Missions extends Model
     {
         if ($userId > 0) {
             return $this->db->queryFetch(
-                'SELECT u.user_name,
+                'SELECT u.name,
                     r.research_weapons_technology,
                     r.research_shielding_technology,
                     r.research_armour_technology,
                     r.research_hyperspace_technology
                 FROM ' . USERS . ' AS u
                     INNER JOIN `' . RESEARCH . "` AS r
-                        ON r.research_user_id = u.user_id
-                WHERE u.user_id = '" . $userId . "';"
+                        ON r.research_user_id = u.id
+                WHERE u.id = '" . $userId . "';"
             );
         }
 
@@ -326,7 +326,7 @@ class Missions extends Model
                 'SELECT
                     (SELECT COUNT(*)
                             FROM ' . PLANETS . " AS pc1
-                            WHERE pc1.`planet_user_id` = '" . $data['user_id'] . "' AND
+                            WHERE pc1.`planet_user_id` = '" . $data['id'] . "' AND
                                             pc1.`planet_type` = '1' AND
                                             pc1.`planet_destroyed` = '0') AS planet_count,
                     (SELECT COUNT(*)
@@ -337,7 +337,7 @@ class Missions extends Model
                                             pc2.`planet_type` = '1') AS galaxy_count,
                     (SELECT `research_astrophysics`
                             FROM " . RESEARCH . "
-                            WHERE `research_user_id` = '" . $data['user_id'] . "') AS astro_level"
+                            WHERE `research_user_id` = '" . $data['id'] . "') AS astro_level"
             );
         }
 
@@ -356,10 +356,10 @@ class Missions extends Model
                     pc2.`planet_metal` AS `target_metal`,
                     pc2.`planet_crystal` AS `target_crystal`,
                     pc2.`planet_deuterium` AS `target_deuterium`,
-                    u.`user_name` AS `start_user_name`
+                    u.`name` AS `start_user_name`
                 FROM `' . PLANETS . '` AS pc1 JOIN `' . PLANETS . '` AS pc2
                 LEFT JOIN `' . USERS . "` AS u
-                    ON u.`user_id` = pc1.`planet_user_id`
+                    ON u.`id` = pc1.`planet_user_id`
                 WHERE pc1.planet_galaxy = '" . $data['coords']['start']['galaxy'] . "' AND
                     pc1.`planet_system` = '" . $data['coords']['start']['system'] . "' AND
                     pc1.`planet_planet` = '" . $data['coords']['start']['planet'] . "' AND
@@ -477,10 +477,10 @@ class Missions extends Model
                     r.research_weapons_technology,
                     r.research_shielding_technology,
                     r.research_armour_technology,
-                    u.user_name,
-                    u.user_id
+                    u.name,
+                    u.id
                 FROM ' . PLANETS . ' AS p
-                INNER JOIN ' . USERS . ' AS u ON u.user_id = p.planet_user_id
+                INNER JOIN ' . USERS . ' AS u ON u.id = p.planet_user_id
                 INNER JOIN ' . PREMIUM . ' AS pr ON pr.premium_user_id = p.planet_user_id
                 INNER JOIN ' . RESEARCH . ' AS r ON r.research_user_id = p.planet_user_id
                 WHERE p.`planet_galaxy` = ' . $data['coords']['galaxy'] . ' AND
@@ -508,17 +508,17 @@ class Missions extends Model
                     s.*,
                     d.*,
                     p.`planet_id`,
-                    p.planet_diameter,
-                    p.planet_user_id,
-                    u.user_name,
-                    u.user_current_planet,
-                    r.research_weapons_technology,
-                    r.research_shielding_technology,
-                    r.research_armour_technology
+                    p.`planet_diameter`,
+                    p.`planet_user_id`,
+                    u.`name`,
+                    u.`current_planet`,
+                    r.`research_weapons_technology`,
+                    r.`research_shielding_technology`,
+                    r.`research_armour_technology`
                 FROM ' . PLANETS . ' AS p
                 INNER JOIN ' . SHIPS . ' AS s ON s.ship_planet_id = p.`planet_id`
                 INNER JOIN ' . DEFENSES . ' AS d ON d.defense_planet_id = p.`planet_id`
-                INNER JOIN ' . USERS . ' AS u ON u.user_id = p.planet_user_id
+                INNER JOIN ' . USERS . ' AS u ON u.id = p.planet_user_id
                 INNER JOIN ' . PREMIUM . ' AS pr ON pr.premium_user_id = p.planet_user_id
                 INNER JOIN ' . RESEARCH . " AS r ON r.research_user_id = p.planet_user_id
                 WHERE p.`planet_galaxy` = '" . $data['coords']['galaxy'] . "' AND
@@ -571,14 +571,14 @@ class Missions extends Model
         if (is_array($data)) {
             $this->db->query(
                 'UPDATE ' . USERS . ' SET
-                    `user_current_planet` = (
+                    `current_planet` = (
                         SELECT `planet_id`
                         FROM ' . PLANETS . "
                         WHERE `planet_galaxy` = '" . $data['coords']['fleet_end_galaxy'] . "' AND
                             `planet_system` = '" . $data['coords']['fleet_end_system'] . "' AND
                             `planet_planet` = '" . $data['coords']['fleet_end_planet'] . "' AND
                             `planet_type` = '1')
-                WHERE `user_id` = '" . $data['planet_user_id'] . "';"
+                WHERE `id` = '" . $data['planet_user_id'] . "';"
             );
         }
     }
@@ -785,11 +785,11 @@ class Missions extends Model
                     p.`planet_galaxy`,
                     p.`planet_system`,
                     p.`planet_planet`,
-                    u.`user_name`,
+                    u.`name`,
                     r.`research_espionage_technology`,
                     pr.`premium_officier_technocrat`
                     FROM `' . PLANETS . '` AS p
-                    INNER JOIN `' . USERS . '` AS u ON u.`user_id` = p.`planet_user_id`
+                    INNER JOIN `' . USERS . '` AS u ON u.`id` = p.`planet_user_id`
                     INNER JOIN `' . PREMIUM . '` AS pr ON pr.`premium_user_id` = p.`planet_user_id`
                     INNER JOIN `' . RESEARCH . '` AS r ON r.`research_user_id` = p.`planet_user_id`
                     WHERE p.`planet_galaxy` = ' . $data['coords']['galaxy'] . ' AND
@@ -823,7 +823,7 @@ class Missions extends Model
                     INNER JOIN `' . SHIPS . '` AS s ON s.`ship_planet_id` = p.`planet_id`
                     INNER JOIN `' . DEFENSES . '` AS d ON d.`defense_planet_id` = p.`planet_id`
                     INNER JOIN `' . BUILDINGS . '` AS b ON b.`building_planet_id` = p.`planet_id`
-                    INNER JOIN `' . USERS . '` AS u ON u.`user_id` = p.`planet_user_id`
+                    INNER JOIN `' . USERS . '` AS u ON u.`id` = p.`planet_user_id`
                     INNER JOIN `' . PREMIUM . '` AS pr ON pr.`premium_user_id` = p.`planet_user_id`
                     INNER JOIN `' . RESEARCH . "` AS r ON r.`research_user_id` = p.`planet_user_id`
                     WHERE p.`planet_galaxy` = '" . $data['coords']['galaxy'] . "' AND

@@ -4,38 +4,20 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Libraries;
 
+use App\Models\Planets;
 use Xgp\App\Core\Model;
 
 class PlanetLib extends Model
 {
-    /**
-     * Check if a planet exists
-     *
-     * @param integer $galaxy
-     * @param integer $system
-     * @param integer $position
-     * @return array|null
-     */
-    public function checkPlanetExists(int $galaxy, int $system, int $position): ?array
+    public function checkPlanetExists(int $galaxy, int $system, int $position): bool
     {
-        return $this->db->queryFetch(
-            'SELECT
-                `planet_id`
-            FROM `' . PLANETS . "`
-            WHERE `planet_galaxy` = '" . $galaxy . "' AND
-                `planet_system` = '" . $system . "' AND
-                `planet_planet` = '" . $position . "';"
-        );
+        return Planets::where([
+            'planet_galaxy' => $galaxy,
+            'planet_system' => $system,
+            'planet_planet' => $position,
+        ])->first() !== null;
     }
 
-    /**
-     * Check if a moon exists
-     *
-     * @param integer $galaxy
-     * @param integer $system
-     * @param integer $position
-     * @return array|null
-     */
     public function checkMoonExists(int $galaxy, int $system, int $position): ?array
     {
         return $this->db->queryFetch(

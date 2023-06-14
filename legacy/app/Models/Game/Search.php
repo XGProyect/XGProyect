@@ -17,9 +17,9 @@ class Search extends Model
         if (!empty($playerName)) {
             return $this->db->queryFetchAll(
                 'SELECT
-                    u.`user_id`,
-                    u.`user_name`,
-                    u.`user_authlevel`,
+                    u.`id`,
+                    u.`name`,
+                    u.`authlevel`,
                     p.`planet_name`,
                     p.`planet_galaxy`,
                     p.`planet_system`,
@@ -28,10 +28,10 @@ class Search extends Model
                     a.`alliance_id`,
                     a.`alliance_name`
                 FROM `' . USERS . '` AS u
-                    INNER JOIN `' . USERS_STATISTICS . '` AS s ON s.`user_statistic_user_id` = u.`user_id`
-                    INNER JOIN `' . PLANETS . '` AS p ON p.`planet_id` = u.`user_home_planet_id`
-                    LEFT JOIN `' . ALLIANCE . "` AS a ON a.alliance_id = u.`user_ally_id`
-                WHERE u.`user_name` LIKE '%" . $this->db->escapeValue($playerName) . "%'
+                    INNER JOIN `' . USERS_STATISTICS . '` AS s ON s.`user_statistic_user_id` = u.`id`
+                    INNER JOIN `' . PLANETS . '` AS p ON p.`planet_id` = u.`home_planet_id`
+                    LEFT JOIN `' . ALLIANCE . "` AS a ON a.alliance_id = u.`ally_id`
+                WHERE u.`name` LIKE '%" . $this->db->escapeValue($playerName) . "%'
                 LIMIT " . MAX_SEARCH_RESULTS . ';'
             );
         }
@@ -56,9 +56,9 @@ class Search extends Model
                     a.`alliance_request_notallow` AS `alliance_requests`,
                     s.`alliance_statistic_total_points` AS `alliance_points`,
                     (SELECT
-                        COUNT(user_id) AS `ally_members`
+                        COUNT(id) AS `ally_members`
                         FROM `' . USERS . '`
-                        WHERE `user_ally_id` = a.`alliance_id`
+                        WHERE `ally_id` = a.`alliance_id`
                     ) AS `alliance_members`
                 FROM `' . ALLIANCE . '` AS a
                     LEFT JOIN `' . ALLIANCE_STATISTICS . "` AS s ON a.`alliance_id` = s.`alliance_statistic_alliance_id`
@@ -82,9 +82,9 @@ class Search extends Model
         if (!empty($planetName)) {
             return $this->db->queryFetchAll(
                 'SELECT
-                    u.`user_id`,
-                    u.`user_name`,
-                    u.`user_authlevel`,
+                    u.`id`,
+                    u.`name`,
+                    u.`authlevel`,
                     p.`planet_name`,
                     p.`planet_galaxy`,
                     p.`planet_system`,
@@ -93,9 +93,9 @@ class Search extends Model
                     a.`alliance_id`,
                     a.`alliance_name`
                 FROM `' . USERS . '` AS u
-                    INNER JOIN `' . USERS_STATISTICS . '` AS s ON s.`user_statistic_user_id` = u.`user_id`
-                    INNER JOIN `' . PLANETS . '` AS p ON p.`planet_user_id` = u.`user_id`
-                    LEFT JOIN `' . ALLIANCE . "` AS a ON a.`alliance_id` = u.`user_ally_id`
+                    INNER JOIN `' . USERS_STATISTICS . '` AS s ON s.`user_statistic_user_id` = u.`id`
+                    INNER JOIN `' . PLANETS . '` AS p ON p.`planet_user_id` = u.`id`
+                    LEFT JOIN `' . ALLIANCE . "` AS a ON a.`alliance_id` = u.`ally_id`
                 WHERE p.`planet_name` LIKE '%" . $this->db->escapeValue($planetName) . "%'
                 LIMIT " . MAX_SEARCH_RESULTS . ';'
             );

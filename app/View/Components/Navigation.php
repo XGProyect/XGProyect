@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Models\Users;
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -26,7 +26,7 @@ class Navigation extends Component
         return view(
             'components.navigation',
             [
-                'username' => Users::find($_SESSION['user_id'])->user_name,
+                'username' => User::find(session('user_id'))->name,
                 'currentDate' => TimingLibrary::formatShortDate(time()),
             ]
         );

@@ -92,8 +92,8 @@
                                     @foreach ($buddy_list as $item)
                                     <tr>
                                         <th role="cell" colspan="4">
-                                            {{ $item['user_name'] }}
-                                            <a href="game.php?page=chat&playerId={{ $item['user_id'] }}">
+                                            {{ $item['name'] }}
+                                            <a href="game.php?page=chat&playerId={{ $item['id'] }}">
                                                 <img src="{{ asset('upload/skins/xgproyect/img/m.gif') }}" alt=""/>
                                             </a>
                                         </th>
@@ -107,8 +107,8 @@
                                     @foreach ($members_list as $item)
                                     <tr>
                                         <th role="cell" colspan="4">
-                                            {{ $item['user_name'] }}
-                                            <a href="game.php?page=chat&playerId={{ $item['user_id'] }}">
+                                            {{ $item['name'] }}
+                                            <a href="game.php?page=chat&playerId={{ $item['id'] }}">
                                                 <img src="{{ asset('upload/skins/xgproyect/img/m.gif') }}" alt=""/>
                                             </a>
                                         </th>
@@ -122,8 +122,8 @@
                                     @foreach ($operators_list as $item)
                                     <tr>
                                         <th role="cell" colspan="4">
-                                            {{ $item['user_name'] }}
-                                            <a href="mailto:{{ $item['user_email'] }}">
+                                            {{ $item['name'] }}
+                                            <a href="mailto:{{ $item['email'] }}">
                                                 <img src="{{ asset('upload/skins/xgproyect/img/m.gif') }}" alt=""/>
                                             </a>
                                         </th>

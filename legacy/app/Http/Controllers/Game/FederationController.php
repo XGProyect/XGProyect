@@ -52,8 +52,8 @@ class FederationController extends BaseController
     private function setUpFleets()
     {
         $this->_fleets = new Fleets(
-            $this->fleetModel->getAllFleetsByUserId($this->user['user_id']),
-            $this->user['user_id']
+            $this->fleetModel->getAllFleetsByUserId($this->user['id']),
+            $this->user['id']
         );
     }
 
@@ -122,19 +122,19 @@ class FederationController extends BaseController
                 );
 
                 if ($acs['acs_members'] < 5
-                    && $member != $this->user['user_id']) {
+                    && $member != $this->user['id']) {
                     $this->fleetModel->insertNewAcsMember(
                         $member,
                         $own_fleet->getFleetGroup()
                     );
 
-                    $invite_message = __('game/fleet.fl_player') . $this->user['user_name'] . __('game/fleet.fl_acs_invitation_message');
+                    $invite_message = __('game/fleet.fl_player') . $this->user['name'] . __('game/fleet.fl_acs_invitation_message');
                     Functions::sendMessage(
                         $member,
-                        $this->user['user_id'],
+                        $this->user['id'],
                         0,
                         5,
-                        $this->user['user_name'],
+                        $this->user['name'],
                         __('game/fleet.fl_acs_invitation_title'),
                         $invite_message
                     );
@@ -163,7 +163,7 @@ class FederationController extends BaseController
                 );
 
                 if ($acs['acs_members'] >= 1
-                    && $member != $this->user['user_id']) {
+                    && $member != $this->user['id']) {
                     $this->fleetModel->removeAcsMember(
                         $member,
                         $own_fleet->getFleetGroup()
@@ -179,7 +179,7 @@ class FederationController extends BaseController
             $fleet_id = filter_input(INPUT_GET, 'fleet', FILTER_VALIDATE_INT);
 
             $userId = $this->fleetModel->getUserIdByName($username, $fleet_id);
-            if ($userId > 0 && $userId != $this->user['user_id']) {
+            if ($userId > 0 && $userId != $this->user['id']) {
                 $this->addAcsMember($userId);
 
                 $this->_message = FormatLib::customColor(
@@ -218,7 +218,7 @@ class FederationController extends BaseController
                 $this->fleetModel->updateAcsName(
                     $acs_name,
                     $acs['acs_id'],
-                    $this->user['user_id']
+                    $this->user['id']
                 );
             }
         }
@@ -249,7 +249,7 @@ class FederationController extends BaseController
 
                 $this->_group = new AcsFleets(
                     [$this->fleetModel->getAcsDataByGroupId($group_id)],
-                    $this->user['user_id']
+                    $this->user['id']
                 );
 
                 $this->_acs_code = $this->_group->getFirstAcs()->getAcsFleetName();
@@ -279,16 +279,16 @@ class FederationController extends BaseController
         $list_of_buddies = [];
 
         $buddies = $this->buddiesModel->getBuddiesDetailsForAcsById(
-            $this->user['user_id'],
+            $this->user['id'],
             $this->_group->getFirstAcs()->getAcsFleetId()
         );
 
         if (count($buddies) > 0) {
             foreach ($buddies as $buddy) {
-                if ($buddy['user_id'] != $this->user['user_id']) {
+                if ($buddy['id'] != $this->user['id']) {
                     $list_of_buddies[] = [
-                        'value' => $buddy['user_id'],
-                        'title' => $buddy['user_name'],
+                        'value' => $buddy['id'],
+                        'title' => $buddy['name'],
                     ];
                 }
             }
@@ -315,8 +315,8 @@ class FederationController extends BaseController
                 ++$this->_members_count;
 
                 $list_of_members[] = [
-                    'value' => $member['user_id'],
-                    'title' => $member['user_name'],
+                    'value' => $member['id'],
+                    'title' => $member['name'],
                 ];
             }
         }

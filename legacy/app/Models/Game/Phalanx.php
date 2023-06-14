@@ -81,13 +81,13 @@ class Phalanx extends Model
                 f.*,
                 po.`planet_name` AS `start_planet_name`,
                 pt.`planet_name` AS `target_planet_name`,
-                uo.`user_name` AS `start_planet_user`,
-                ut.`user_name` AS `target_planet_user`
+                uo.`name` AS `start_planet_user`,
+                ut.`name` AS `target_planet_user`
             FROM `' . FLEETS . '` f
                 INNER JOIN `' . USERS . '` uo
-                    ON uo.`user_id` = f.`fleet_owner`
+                    ON uo.`id` = f.`fleet_owner`
                 LEFT JOIN `' . USERS . '` ut
-                    ON ut.`user_id` = f.`fleet_target_owner`
+                    ON ut.`id` = f.`fleet_target_owner`
                 INNER JOIN `' . PLANETS . '` po
                     ON (
                         po.planet_galaxy = f.fleet_start_galaxy AND

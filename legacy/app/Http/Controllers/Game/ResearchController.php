@@ -267,6 +267,6 @@ class ResearchController extends BaseController
     private function setLabsAmount(): void
     {
         $labs_limit = $this->user[$this->_resource[123]] + 1;
-        $this->_lab_level = $this->researchModel->getAllLabsLevel($this->user['user_id'], $labs_limit);
+        $this->_lab_level = $this->researchModel->getAllLabsLevel($this->user['id'], $labs_limit);
     }
 }

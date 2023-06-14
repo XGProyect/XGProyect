@@ -27,12 +27,6 @@ $page = strtr(
 
 $file_name = GAME_PATH . ucfirst($page) . 'Controller.php';
 
-// logout
-if ($page == 'logout') {
-    $system->getSession()->delete();
-    Functions::redirect(SYSTEM_ROOT);
-}
-
 // other pages
 if (file_exists($file_name)) {
     include $file_name;

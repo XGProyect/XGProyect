@@ -54,7 +54,7 @@ class PhalanxController extends BaseController
 
         /* main page */
         if ($this->planet['planet_deuterium'] >= 10000) {
-            $this->phalanxModel->reduceDeuterium($this->user['user_current_planet']);
+            $this->phalanxModel->reduceDeuterium($this->user['current_planet']);
 
             $target_planet_info = $this->phalanxModel->getTargetPlanetIdAndName($Galaxy, $System, $Planet);
 

@@ -52,7 +52,7 @@ class UpdatesLibrary
 
             if ($chooseToDelete) {
                 foreach ($chooseToDelete as $delete) {
-                    $users->deleteUser((int) $delete['user_id']);
+                    $users->deleteUser((int) $delete['id']);
                 }
             }
 
@@ -359,7 +359,7 @@ class UpdatesLibrary
 
                         if ($message != '') {
                             Functions::sendMessage(
-                                $current_user['user_id'],
+                                $current_user['id'],
                                 0,
                                 0,
                                 5,

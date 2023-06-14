@@ -236,11 +236,11 @@ class Reset extends Model
         $this->db->query('TRUNCATE TABLE `' . ALLIANCE_STATISTICS . '`');
         $this->db->query(
             'UPDATE `' . USERS . "` SET
-                `user_ally_id` = '0',
-                `user_ally_request` = '0',
-                `user_ally_request_text` = 'NULL',
-                `user_ally_register_time` = '0',
-                `user_ally_rank_id` = '0'"
+                `ally_id` = '0',
+                `ally_request` = '0',
+                `ally_request_text` = 'NULL',
+                `ally_register_time` = '0',
+                `ally_rank_id` = '0'"
         );
     }
 
@@ -266,8 +266,8 @@ class Reset extends Model
         $this->db->query('TRUNCATE TABLE `' . BANNED . '`');
         $this->db->query(
             'UPDATE `' . USERS . "` SET
-                `user_banned` = '0'
-                WHERE `user_id` > '1'"
+                `banned` = '0'
+                WHERE `id` > '1'"
         );
     }
 
@@ -343,16 +343,16 @@ class Reset extends Model
 
             $all_users = $this->db->query(
                 'SELECT
-                    `user_name`,
-                    `user_password`,
-                    `user_email`,
-                    `user_authlevel`,
-                    `user_galaxy`,
-                    `user_system`,
-                    `user_planet`,
-                    `user_onlinetime`,
-                    `user_register_time`,
-                    `user_home_planet_id`
+                    `name`,
+                    `password`,
+                    `email`,
+                    `authlevel`,
+                    `galaxy`,
+                    `system`,
+                    `planet`,
+                    `onlinetime`,
+                    `register_time`,
+                    `home_planet_id`
                 FROM `' . USERS . '_s`
                 WHERE 1;'
             );
@@ -360,21 +360,21 @@ class Reset extends Model
             $limit_time = time() - (ONE_WEEK * 2 + ONE_DAY); // 15 days
 
             while ($user = $this->db->fetchAssoc($all_users)) {
-                if ($user['user_onlinetime'] > $limit_time) {
+                if ($user['onlinetime'] > $limit_time) {
                     $time = time();
 
                     $this->db->query(
                         'INSERT INTO `' . USERS . "` SET
-                            `user_name` = '" . $user['user_name'] . "',
-                            `user_email` = '" . $user['user_email'] . "',
-                            `user_home_planet_id` = '0',
-                            `user_authlevel` = '" . $user['user_authlevel'] . "',
-                            `user_galaxy` = '" . $user['user_galaxy'] . "',
-                            `user_system` = '" . $user['user_system'] . "',
-                            `user_planet` = '" . $user['user_planet'] . "',
-                            `user_register_time` = '" . $user['user_register_time'] . "',
-                            `user_onlinetime` = '" . $time . "',
-                            `user_password` = '" . $user['user_password'] . "';"
+                            `name` = '" . $user['name'] . "',
+                            `email` = '" . $user['email'] . "',
+                            `home_planet_id` = '0',
+                            `authlevel` = '" . $user['authlevel'] . "',
+                            `galaxy` = '" . $user['galaxy'] . "',
+                            `system` = '" . $user['system'] . "',
+                            `planet` = '" . $user['planet'] . "',
+                            `register_time` = '" . $user['register_time'] . "',
+                            `onlinetime` = '" . $time . "',
+                            `password` = '" . $user['password'] . "';"
                     );
 
                     $last_id = $this->db->insertId();
@@ -401,9 +401,9 @@ class Reset extends Model
                     );
 
                     $creator->setNewPlanet(
-                        $user['user_galaxy'],
-                        $user['user_system'],
-                        $user['user_planet'],
+                        $user['galaxy'],
+                        $user['system'],
+                        $user['planet'],
                         $new_user,
                         '',
                         true
@@ -411,9 +411,9 @@ class Reset extends Model
 
                     $this->db->query(
                         'UPDATE `' . USERS . "` SET
-                        `user_home_planet_id` = '" . $new_user . "',
-                        `user_current_planet` = '" . $new_user . "'
-                        WHERE `user_id` = '" . $new_user . "';"
+                        `home_planet_id` = '" . $new_user . "',
+                        `current_planet` = '" . $new_user . "'
+                        WHERE `id` = '" . $new_user . "';"
                     );
                 }
             }

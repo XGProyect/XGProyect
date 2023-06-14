@@ -46,18 +46,18 @@ class MovementController extends BaseController
     private function setUpFleets(): void
     {
         $this->fleets = new Fleets(
-            $this->fleetModel->getAllFleetsByUserId($this->user['user_id']),
-            $this->user['user_id']
+            $this->fleetModel->getAllFleetsByUserId($this->user['id']),
+            $this->user['id']
         );
 
         $this->research = new Researches(
             [$this->user],
-            $this->user['user_id']
+            $this->user['id']
         );
 
         $this->premium = new Premium(
             [$this->user],
-            $this->user['user_id']
+            $this->user['id']
         );
     }
 
@@ -204,7 +204,7 @@ class MovementController extends BaseController
             if (!is_null($fleet) && $fleet->getFleetMess() != 1) {
                 $this->fleetModel->returnFleet(
                     $fleet,
-                    $this->user['user_id']
+                    $this->user['id']
                 );
 
                 Functions::redirect(self::REDIRECT_TARGET);

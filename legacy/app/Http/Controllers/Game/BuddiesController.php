@@ -48,8 +48,8 @@ class BuddiesController extends BaseController
     private function setUpBudies(): void
     {
         $this->buddy = new Buddy(
-            $this->buddiesModel->getBuddiesByUserId($this->user['user_id']),
-            $this->user['user_id']
+            $this->buddiesModel->getBuddiesByUserId($this->user['id']),
+            $this->user['id']
         );
     }
 
@@ -103,20 +103,20 @@ class BuddiesController extends BaseController
         );
 
         if ($buddy->getBuddyStatus() == BuddiesStatus::isNotBuddy) {
-            if ($buddy->getBuddySender() != $this->user['user_id']) {
+            if ($buddy->getBuddySender() != $this->user['id']) {
                 $this->sendMessage($buddy->getBuddySender(), 1);
-            } elseif ($buddy->getBuddySender() == $this->user['user_id']) {
+            } elseif ($buddy->getBuddySender() == $this->user['id']) {
                 $this->sendMessage($buddy->getBuddyReceiver(), 1);
             }
         } else {
-            if ($buddy->getBuddySender() != $this->user['user_id']) {
+            if ($buddy->getBuddySender() != $this->user['id']) {
                 $this->sendMessage($buddy->getBuddySender(), 2);
-            } elseif ($buddy->getBuddySender() == $this->user['user_id']) {
+            } elseif ($buddy->getBuddySender() == $this->user['id']) {
                 $this->sendMessage($buddy->getBuddyReceiver(), 2);
             }
         }
 
-        $this->buddiesModel->removeBuddyById($bid, $this->user['user_id']);
+        $this->buddiesModel->removeBuddyById($bid, $this->user['id']);
     }
 
     private function acceptRequest(): void
@@ -129,7 +129,7 @@ class BuddiesController extends BaseController
 
         $this->sendMessage($buddy->getBuddySender(), 3);
 
-        $this->buddiesModel->setBuddyStatusById($bid, $this->user['user_id']);
+        $this->buddiesModel->setBuddyStatusById($bid, $this->user['id']);
     }
 
     private function sendRequest(): void
@@ -139,7 +139,7 @@ class BuddiesController extends BaseController
 
         $buddy = null;
 
-        if ($buddy_data = $this->buddiesModel->getBuddyIdByReceiverAndSender($user, $this->user['user_id'])) {
+        if ($buddy_data = $this->buddiesModel->getBuddyIdByReceiverAndSender($user, $this->user['id'])) {
             $buddy = new BuddyEntity($buddy_data);
         }
 
@@ -151,7 +151,7 @@ class BuddiesController extends BaseController
 
         $this->buddiesModel->insertNewBuddyRequest(
             $user,
-            $this->user['user_id'],
+            $this->user['id'],
             $text
         );
     }
@@ -179,14 +179,14 @@ class BuddiesController extends BaseController
 
         Functions::sendMessage(
             $to,
-            $this->user['user_id'],
+            $this->user['id'],
             0,
             5,
-            $this->user['user_name'],
+            $this->user['name'],
             __('game/buddies.' . $types[$type]['title']),
             str_replace(
                 '%u',
-                $this->user['user_name'],
+                $this->user['name'],
                 __('game/buddies.' . $types[$type]['text'])
             )
         );
@@ -196,7 +196,7 @@ class BuddiesController extends BaseController
     {
         $user = filter_input(INPUT_GET, 'u', FILTER_VALIDATE_INT);
 
-        if ($user == $this->user['user_id']) {
+        if ($user == $this->user['id']) {
             Functions::message(__('game/buddies.bu_cannot_request_yourself'), 'game.php?page=buddies', 2, true);
         }
 
@@ -256,7 +256,7 @@ class BuddiesController extends BaseController
 
     private function extractPlayerData(BuddyEntity $buddy): array
     {
-        if ($buddy->getBuddySender() == $this->user['user_id']) {
+        if ($buddy->getBuddySender() == $this->user['id']) {
             $id_to_get = $buddy->getBuddyReceiver();
         } else {
             $id_to_get = $buddy->getBuddySender();
@@ -266,14 +266,14 @@ class BuddiesController extends BaseController
         $user_data = $this->buddiesModel->getBuddyDataById($id_to_get);
 
         return [
-            'id' => $user_data['user_id'],
-            'username' => $user_data['user_name'],
+            'id' => $user_data['id'],
+            'username' => $user_data['name'],
             'ally_id' => $user_data['alliance_id'],
             'alliance_name' => $user_data['alliance_name'],
-            'galaxy' => $user_data['user_galaxy'],
-            'system' => $user_data['user_system'],
-            'planet' => $user_data['user_planet'],
-            'text' => $this->setText($buddy, $user_data['user_onlinetime']),
+            'galaxy' => $user_data['galaxy'],
+            'system' => $user_data['system'],
+            'planet' => $user_data['planet'],
+            'text' => $this->setText($buddy, $user_data['onlinetime']),
             'action' => $this->setAction($buddy),
         ];
     }
@@ -294,7 +294,7 @@ class BuddiesController extends BaseController
         if ($buddy->getBuddyStatus() == BuddiesStatus::isBuddy) {
             $url = $this->generateUrl($bid, 1, __('game/buddies.bu_delete'));
         } else {
-            if ($buddy->getBuddySender() == $this->user['user_id']) {
+            if ($buddy->getBuddySender() == $this->user['id']) {
                 $url = $this->generateUrl($bid, 1, __('game/buddies.bu_cancel_request'));
             } else {
                 $url = $this->generateUrl($bid, 2, __('game/buddies.bu_accept'));

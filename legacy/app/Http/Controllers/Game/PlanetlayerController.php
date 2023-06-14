@@ -3,7 +3,7 @@
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Models\Planets;
-use App\Models\Users as ModelsUsers;
+use App\Models\User;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Template;
@@ -35,7 +35,7 @@ class PlanetlayerController extends BaseController
 
     private function buildPage(): void
     {
-        $hasColonies = Planets::where(['planet_user_id' => $this->user['user_id'], 'planet_type' => 1, 'planet_destroyed' => 0])->count() > 1;
+        $hasColonies = Planets::where(['planet_user_id' => $this->user['id'], 'planet_type' => 1, 'planet_destroyed' => 0])->count() > 1;
         $isMoon = $this->planet['planet_type'] == PlanetTypesEnumerator::MOON ? true : false;
         $defaultName = __('game/planetlayer.new_planet_name');
 
@@ -55,7 +55,7 @@ class PlanetlayerController extends BaseController
             'planetlayer.view',
             [
                 'planetImage' => $this->planet['planet_image'],
-                'mainPlanet' => ($this->user['user_home_planet_id'] === $this->planet['planet_id']),
+                'mainPlanet' => ($this->user['home_planet_id'] === $this->planet['planet_id']),
                 'withColonies' => $hasColonies,
                 'isMoon' => $isMoon,
                 'defaultName' => $defaultName,
@@ -75,7 +75,7 @@ class PlanetlayerController extends BaseController
         }
 
         if ($newName != '') {
-            $this->renameplanetModel->updatePlanetName($newName, $this->user['user_current_planet']);
+            $this->renameplanetModel->updatePlanetName($newName, $this->user['current_planet']);
             Functions::popupMessage(__('game/planetlayer.rename_success', ['name' => $newName]), 'game.php?page=planetlayer', 3);
         }
     }
@@ -85,7 +85,7 @@ class PlanetlayerController extends BaseController
         $own_fleet = 0;
         $enemy_fleet = 0;
         $fleets_incoming = $this->renameplanetModel->getFleets(
-            $this->user['user_id'],
+            $this->user['id'],
             $this->planet['planet_galaxy'],
             $this->planet['planet_system'],
             $this->planet['planet_planet']
@@ -98,7 +98,7 @@ class PlanetlayerController extends BaseController
             $own_fleet = $fleet['fleet_owner'];
             $enemy_fleet = $fleet['fleet_target_owner'];
 
-            if ($fleet['fleet_target_owner'] == $this->user['user_id']) {
+            if ($fleet['fleet_target_owner'] == $this->user['id']) {
                 $end_type = $fleet['fleet_end_type'];
             }
 
@@ -111,28 +111,28 @@ class PlanetlayerController extends BaseController
             }
         }
 
-        if (password_verify($_POST['password'], $this->user['user_password'])) {
+        if (password_verify($_POST['password'], $this->user['password'])) {
             if ($this->planet['moon_id'] != 0) {
                 $this->renameplanetModel->deleteMoonAndPlanet(
-                    $this->user['user_id'],
-                    $this->user['user_current_planet'],
+                    $this->user['id'],
+                    $this->user['current_planet'],
                     $this->planet['planet_galaxy'],
                     $this->planet['planet_system'],
                     $this->planet['planet_planet']
                 );
             } else {
-                $this->renameplanetModel->deletePlanet($this->user['user_id'], $this->user['user_current_planet']);
+                $this->renameplanetModel->deletePlanet($this->user['id'], $this->user['current_planet']);
             }
 
             $nextPlanet = Planets::where([
-                'planet_user_id' => $this->user['user_id'],
+                'planet_user_id' => $this->user['id'],
                 'planet_type' => 1,
                 'planet_destroyed' => 0,
             ])->firstOrFail()->planet_id;
 
-            ModelsUsers::where(['user_id' => $this->user['user_id']])->update([
-                'user_home_planet_id' => $nextPlanet,
-                'user_current_planet' => $nextPlanet
+            User::where(['id' => $this->user['id']])->update([
+                'home_planet_id' => $nextPlanet,
+                'current_planet' => $nextPlanet
             ]);
 
             Functions::popupMessage(__('game/planetlayer.rp_planet_abandoned'), 'game.php?page=planetlayer', 3);

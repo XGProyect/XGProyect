@@ -87,8 +87,8 @@ class BanController extends BaseController
                     $reas = (string) $_POST['text'];
                     $days = (int) $_POST['days'];
                     $hour = (int) $_POST['hour'];
-                    $admin_name = $this->user['user_name'];
-                    $admin_mail = $this->user['user_email'];
+                    $admin_name = $this->user['name'];
+                    $admin_mail = $this->user['email'];
                     $current_time = time();
                     $ban_time = $days * 86400;
                     $ban_time += $hour * 3600;
@@ -131,20 +131,20 @@ class BanController extends BaseController
 
     private function getUsersList()
     {
-        $query_order = (isset($_GET['order']) && $_GET['order'] == 'id') ? 'user_id' : 'user_name';
+        $query_order = (isset($_GET['order']) && $_GET['order'] == 'id') ? 'id' : 'name';
         $where_authlevel = '';
         $where_banned = '';
         $users_list = '';
 
-        if ($this->user['user_authlevel'] != 3) {
-            $where_authlevel = "WHERE `user_authlevel` < '" . ($this->user['user_authlevel']) . "'";
+        if ($this->user['authlevel'] != 3) {
+            $where_authlevel = "WHERE `authlevel` < '" . ($this->user['authlevel']) . "'";
         }
 
-        if (isset($_GET['view']) && ($_GET['view'] == 'user_banned')) {
-            if ($this->user['user_authlevel'] == 3) {
-                $where_banned = "WHERE `user_banned` <> '0'";
+        if (isset($_GET['view']) && ($_GET['view'] == 'banned')) {
+            if ($this->user['authlevel'] == 3) {
+                $where_banned = "WHERE `banned` <> '0'";
             } else {
-                $where_banned = "AND `user_banned` <> '1'";
+                $where_banned = "AND `banned` <> '1'";
             }
         }
 
@@ -154,11 +154,11 @@ class BanController extends BaseController
         foreach ($users_query as $user) {
             $status = '';
 
-            if ($user['user_banned'] == 1) {
+            if ($user['banned'] == 1) {
                 $status = __('admin/ban.bn_status');
             }
 
-            $users_list .= '<option value="' . $user['user_name'] . '">' . $user['user_name'] . '&nbsp;&nbsp;(ID:&nbsp;' . $user['user_id'] . ')' . $status . '</option>';
+            $users_list .= '<option value="' . $user['name'] . '">' . $user['name'] . '&nbsp;&nbsp;(ID:&nbsp;' . $user['id'] . ')' . $status . '</option>';
 
             $this->_users_count++;
         }
@@ -168,13 +168,13 @@ class BanController extends BaseController
 
     private function getBannedList()
     {
-        $order = (isset($_GET['order2']) && $_GET['order2'] == 'id') ? 'user_id' : 'user_name';
+        $order = (isset($_GET['order2']) && $_GET['order2'] == 'id') ? 'id' : 'name';
         $banned_list = '';
 
         $banned_query = $this->banModel->getBannedUsers($order);
 
         foreach ($banned_query as $user) {
-            $banned_list .= '<option value="' . $user['user_name'] . '">' . $user['user_name'] . '&nbsp;&nbsp;(ID:&nbsp;' . $user['user_id'] . ')</option>';
+            $banned_list .= '<option value="' . $user['name'] . '">' . $user['name'] . '&nbsp;&nbsp;(ID:&nbsp;' . $user['id'] . ')</option>';
 
             $this->_banned_count++;
         }

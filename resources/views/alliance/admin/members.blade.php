@@ -23,16 +23,16 @@
         @foreach ($list_of_members as $item)
         <tr>
             <th scope="row">{{ $item['position'] }}</th>
-            <th role="cell">{{ $item['user_name'] }}</th>
+            <th role="cell">{{ $item['name'] }}</th>
             <th role="cell">
-                <a href="game.php?page=chat&playerId={{ $item['user_id'] }}">
+                <a href="game.php?page=chat&playerId={{ $item['id'] }}">
                     <img src="{{ asset('upload/skins/xgproyect/img/m.gif') }}" border="0" title="{{ $item['write_message'] }}" alt="{{ $item['write_message'] }}"/>
                 </a>
             </th>
-            <th role="cell">{!! $item['user_ally_range'] !!}</th>
+            <th role="cell">{!! $item['ally_range'] !!}</th>
             <th role="cell">{{ $item['points'] }}</th>
             <th role="cell">{!! $item['coords'] !!}</th>
-            <th role="cell">{{ $item['user_ally_register_time'] }}</th>
+            <th role="cell">{{ $item['ally_register_time'] }}</th>
             <th role="cell">{!! $item['online_time'] !!}</th>
             <th role="cell">{!! $item['actions'] !!}</th>
         </tr>

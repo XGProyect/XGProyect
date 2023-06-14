@@ -18,7 +18,7 @@ class UserEntity extends Entity
      */
     public function getUserId(): int
     {
-        return (int) $this->data['user_id'];
+        return (int) $this->data['id'];
     }
 
     /**
@@ -28,7 +28,7 @@ class UserEntity extends Entity
      */
     public function getUserName(): string
     {
-        return (string) $this->data['user_name'];
+        return (string) $this->data['name'];
     }
 
     /**
@@ -38,7 +38,7 @@ class UserEntity extends Entity
      */
     public function getUserPassword(): string
     {
-        return (string) $this->data['user_password'];
+        return (string) $this->data['password'];
     }
 
     /**
@@ -48,7 +48,7 @@ class UserEntity extends Entity
      */
     public function getUserEmail(): string
     {
-        return (string) $this->data['user_email'];
+        return (string) $this->data['email'];
     }
 
     /**
@@ -58,7 +58,7 @@ class UserEntity extends Entity
      */
     public function getUserAuthlevel(): int
     {
-        return (int) $this->data['user_authlevel'];
+        return (int) $this->data['authlevel'];
     }
 
     /**
@@ -68,7 +68,7 @@ class UserEntity extends Entity
      */
     public function getUserHomePlanetId(): int
     {
-        return (int) $this->data['user_home_planet_id'];
+        return (int) $this->data['home_planet_id'];
     }
 
     /**
@@ -78,7 +78,7 @@ class UserEntity extends Entity
      */
     public function getUserGalaxy(): int
     {
-        return (int) $this->data['user_galaxy'];
+        return (int) $this->data['galaxy'];
     }
 
     /**
@@ -88,7 +88,7 @@ class UserEntity extends Entity
      */
     public function getUserSystem(): int
     {
-        return (int) $this->data['user_system'];
+        return (int) $this->data['system'];
     }
 
     /**
@@ -98,7 +98,7 @@ class UserEntity extends Entity
      */
     public function getUserPlanet(): int
     {
-        return (int) $this->data['user_planet'];
+        return (int) $this->data['planet'];
     }
 
     /**
@@ -108,7 +108,7 @@ class UserEntity extends Entity
      */
     public function getUserCurrentPlanet(): int
     {
-        return (int) $this->data['user_current_planet'];
+        return (int) $this->data['current_planet'];
     }
 
     /**
@@ -118,7 +118,7 @@ class UserEntity extends Entity
      */
     public function getUserLastip(): string
     {
-        return (string) $this->data['user_lastip'];
+        return (string) $this->data['lastip'];
     }
 
     /**
@@ -128,7 +128,7 @@ class UserEntity extends Entity
      */
     public function getUserIpAtReg(): string
     {
-        return (string) $this->data['user_ip_at_reg'];
+        return (string) $this->data['ip_at_reg'];
     }
 
     /**
@@ -138,7 +138,7 @@ class UserEntity extends Entity
      */
     public function getUserAgent(): string
     {
-        return (string) $this->data['user_agent'];
+        return (string) $this->data['agent'];
     }
 
     /**
@@ -148,7 +148,7 @@ class UserEntity extends Entity
      */
     public function getUserCurrentPage(): string
     {
-        return (string) $this->data['user_current_page'];
+        return (string) $this->data['current_page'];
     }
 
     /**
@@ -158,7 +158,7 @@ class UserEntity extends Entity
      */
     public function getUserRegisterTime(): int
     {
-        return (int) $this->data['user_register_time'];
+        return (int) $this->data['register_time'];
     }
 
     /**
@@ -168,7 +168,7 @@ class UserEntity extends Entity
      */
     public function getUserOnlinetime(): int
     {
-        return (int) $this->data['user_online_time'];
+        return (int) $this->data['online_time'];
     }
 
     /**
@@ -178,7 +178,7 @@ class UserEntity extends Entity
      */
     public function getUserFleetShortcuts(): string
     {
-        return (string) $this->data['user_fleet_shortcuts'];
+        return (string) $this->data['fleet_shortcuts'];
     }
 
     /**
@@ -188,7 +188,7 @@ class UserEntity extends Entity
      */
     public function getUserAllyId(): int
     {
-        return (int) $this->data['user_ally_id'];
+        return (int) $this->data['ally_id'];
     }
 
     /**
@@ -198,7 +198,7 @@ class UserEntity extends Entity
      */
     public function getUserAllyRequest(): int
     {
-        return (int) $this->data['user_ally_request'];
+        return (int) $this->data['ally_request'];
     }
 
     /**
@@ -208,7 +208,7 @@ class UserEntity extends Entity
      */
     public function getUserAllyRequestText(): string
     {
-        return (string) $this->data['user_ally_request_text'];
+        return (string) $this->data['ally_request_text'];
     }
 
     /**
@@ -218,7 +218,7 @@ class UserEntity extends Entity
      */
     public function getUserAllyRegisterTime(): int
     {
-        return (int) $this->data['user_ally_register_time'];
+        return (int) $this->data['ally_register_time'];
     }
 
     /**
@@ -228,16 +228,6 @@ class UserEntity extends Entity
      */
     public function getUserAllyRankId(): int
     {
-        return (int) $this->data['user_ally_rank_id'];
-    }
-
-    /**
-     * Return the user banned time
-     *
-     * @return integer
-     */
-    public function getUserBanned(): int
-    {
-        return (int) $this->data['user_banned'];
+        return (int) $this->data['ally_rank_id'];
     }
 }

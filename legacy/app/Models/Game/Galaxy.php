@@ -35,13 +35,13 @@ class Galaxy extends Model
                 p.`planet_image`,
                 p.`planet_last_update`,
                 p.`planet_user_id`,
-                u.`user_id`,
-                u.`user_ally_id`,
-                u.`user_banned`,
+                u.`id`,
+                u.`ally_id`,
+                u.`banned`,
                 pr.`preference_vacation_mode`,
-                u.`user_onlinetime`,
-                u.`user_name`,
-                u.`user_authlevel`,
+                u.`onlinetime`,
+                u.`name`,
+                u.`authlevel`,
                 s.`user_statistic_total_rank`,
                 s.`user_statistic_total_points`,
                 m.`planet_id` AS `id_luna`,
@@ -54,19 +54,19 @@ class Galaxy extends Model
                 a.`alliance_web`,
                 (
                     SELECT
-                        COUNT(`user_id`) AS `ally_members`
+                        COUNT(`id`) AS `ally_members`
                     FROM `' . USERS . '`
-                    WHERE `user_ally_id` = a.`alliance_id`
+                    WHERE `ally_id` = a.`alliance_id`
                 ) AS `ally_members`
             FROM `' . PLANETS . '` AS p
                 INNER JOIN `' . USERS . '` AS u
-                    ON p.`planet_user_id` = u.`user_id`
+                    ON p.`planet_user_id` = u.`id`
                 INNER JOIN `' . PREFERENCES . '` AS pr
-                    ON pr.`preference_user_id` = u.`user_id`
+                    ON pr.`preference_user_id` = u.`id`
                 INNER JOIN `' . USERS_STATISTICS . '` AS s
-                    ON s.`user_statistic_user_id` = u.`user_id`
+                    ON s.`user_statistic_user_id` = u.`id`
                 LEFT JOIN `' . ALLIANCE . '` AS a
-                    ON a.`alliance_id` = u.`user_ally_id`
+                    ON a.`alliance_id` = u.`ally_id`
                 LEFT JOIN `' . PLANETS . '` AS m
                     ON m.`planet_id` = (
                         SELECT mp.`planet_id`
@@ -112,13 +112,13 @@ class Galaxy extends Model
     {
         return $this->db->queryFetch(
             'SELECT
-                u.`user_id`,
-                u.`user_onlinetime`,
-                u.`user_authlevel`,
+                u.`id`,
+                u.`onlinetime`,
+                u.`authlevel`,
                 pr.`preference_vacation_mode`
             FROM `' . USERS . '` AS u
-            INNER JOIN `' . PREFERENCES . '` AS pr ON pr.preference_user_id = u.user_id
-            WHERE u.user_id = (
+            INNER JOIN `' . PREFERENCES . '` AS pr ON pr.preference_user_id = u.id
+            WHERE u.id = (
                 SELECT `planet_user_id`
                 FROM `' . PLANETS . '`
                 WHERE planet_galaxy = ' . $galaxy . '  AND

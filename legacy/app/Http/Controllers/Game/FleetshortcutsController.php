@@ -44,7 +44,7 @@ class FleetshortcutsController extends BaseController
     private function setUpShortcuts(): void
     {
         $this->_shortcuts = new Shortcuts(
-            $this->user['user_fleet_shortcuts']
+            $this->user['fleet_shortcuts']
         );
     }
 
@@ -213,7 +213,7 @@ class FleetshortcutsController extends BaseController
                 }
 
                 $this->shortcutsModel->updateShortcuts(
-                    $this->user['user_id'],
+                    $this->user['id'],
                     $this->_shortcuts->getAllAsJsonString()
                 );
             }

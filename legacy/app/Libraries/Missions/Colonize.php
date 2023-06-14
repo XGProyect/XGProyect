@@ -18,7 +18,7 @@ class Colonize extends Missions
     {
         if ($fleet_row['fleet_mess'] == 0) {
             $colonization_check = $this->missionsModel->getPlanetAndUserCountsCounts([
-                'user_id' => $fleet_row['fleet_owner'],
+                'id' => $fleet_row['fleet_owner'],
                 'coords' => [
                     'galaxy' => $fleet_row['fleet_end_galaxy'],
                     'system' => $fleet_row['fleet_end_system'],

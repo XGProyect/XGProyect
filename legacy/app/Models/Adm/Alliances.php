@@ -82,29 +82,29 @@ class Alliances extends Model
     {
         $ally_data = $this->db->queryFetch(
             'SELECT
-                `user_ally_id`,
-                `user_ally_request`
+                `ally_id`,
+                `ally_request`
             FROM `' . USERS . "`
-            WHERE `user_id` = '" . $userId . "';"
+            WHERE `id` = '" . $userId . "';"
         );
 
-        return ($ally_data['user_ally_id'] > 0 && !empty($ally_data['user_ally_id']) && $ally_data['user_ally_request'] > 0 && !empty($ally_data['user_ally_request']));
+        return ($ally_data['ally_id'] > 0 && !empty($ally_data['ally_id']) && $ally_data['ally_request'] > 0 && !empty($ally_data['ally_request']));
     }
 
     public function getAllianceMembers(int $alliance_id): array
     {
         return $this->db->queryFetchAll(
-            'SELECT u.`user_id`,
-                u.`user_name`,
-                u.`user_ally_request`,
-                u.`user_ally_request_text`,
-                u.`user_ally_register_time`,
-                u.`user_ally_rank_id`,
+            'SELECT u.`id`,
+                u.`name`,
+                u.`ally_request`,
+                u.`ally_request_text`,
+                u.`ally_register_time`,
+                u.`ally_rank_id`,
                 a.`alliance_owner`,
                 a.`alliance_ranks`
             FROM `' . USERS . '` AS u
-            LEFT JOIN `' . ALLIANCE . "` AS a ON a.`alliance_id` = u.`user_ally_id`
-            WHERE u.`user_ally_id` = '" . $alliance_id . "';"
+            LEFT JOIN `' . ALLIANCE . "` AS a ON a.`alliance_id` = u.`ally_id`
+            WHERE u.`ally_id` = '" . $alliance_id . "';"
         );
     }
 
@@ -112,11 +112,11 @@ class Alliances extends Model
     {
         $this->db->query(
             'UPDATE `' . USERS . "` SET
-                `user_ally_id` = 0,
-                `user_ally_request` = 0,
-                `user_ally_request_text` = '',
-                `user_ally_rank_id` = 0
-            WHERE `user_id` IN (" . rtrim($ids_string, ',') . ')'
+                `ally_id` = 0,
+                `ally_request` = 0,
+                `ally_request_text` = '',
+                `ally_rank_id` = 0
+            WHERE `id` IN (" . rtrim($ids_string, ',') . ')'
         );
     }
 
@@ -124,8 +124,8 @@ class Alliances extends Model
     {
         return $this->db->queryFetchAll(
             'SELECT
-                `user_id`,
-                `user_name`
+                `id`,
+                `name`
             FROM `' . USERS . '`;'
         );
     }
@@ -151,9 +151,9 @@ class Alliances extends Model
     {
         return $this->db->queryFetch(
             'SELECT
-                COUNT(`user_id`) AS `Amount`
+                COUNT(`id`) AS `Amount`
             FROM `' . USERS . "`
-            WHERE `user_ally_id` = '" . $alliance_id . "';"
+            WHERE `ally_id` = '" . $alliance_id . "';"
         );
     }
 

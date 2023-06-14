@@ -20,13 +20,12 @@ require_once XGP_ROOT . 'config' . DIRECTORY_SEPARATOR . 'constants.php';
 class Common
 {
     private const APPLICATIONS = [
-        'home' => ['setSystemTimezone', 'setSession', 'setUpdates', 'isServerOpen'],
-        'admin' => ['setSystemTimezone', 'setSecure', 'setSession'],
-        'game' => ['setSystemTimezone', 'setSecure', 'setSession', 'setUpdates', 'isServerOpen', 'checkBanStatus'],
+        'home' => ['setSystemTimezone', 'setUpdates', 'isServerOpen'],
+        'admin' => ['setSystemTimezone', 'setSecure'],
+        'game' => ['setSystemTimezone', 'setSecure', 'setUpdates', 'isServerOpen', 'checkBanStatus'],
         'install' => [],
     ];
     private bool $is_installed = false;
-    private ?Sessions $sessions = null;
 
     /**
      * Start the system
@@ -42,11 +41,6 @@ class Common
                 $this->$method();
             }
         }
-    }
-
-    public function getSession(): Sessions
-    {
-        return $this->sessions;
     }
 
     private function isServerInstalled(): void
@@ -92,11 +86,6 @@ class Common
         date_default_timezone_set(Options::getInstance()->get('date_time_zone'));
     }
 
-    private function setSession(): void
-    {
-        $this->sessions = new Sessions();
-    }
-
     private function setSecure(): void
     {
         $current_page = isset($_GET['page']) ? $_GET['page'] : '';
@@ -121,9 +110,9 @@ class Common
     {
         if (Options::getInstance()->get('game_enable') == SwitchInt::off) {
             $user = (new Users())->getUserData();
-            $user_level = $user['user_authlevel'] ?? 0;
+            $level = $user['authlevel'] ?? 0;
 
-            if ($user_level < UserRanks::ADMIN) {
+            if ($level < UserRanks::ADMIN) {
                 Functions::message(Options::getInstance()->get('close_reason'), '', '', false, false);
                 exit;
             }
@@ -135,19 +124,13 @@ class Common
         Users::checkSession();
         $user = (new Users())->getUserData();
 
-        if ($user['user_banned'] > 0) {
-            Functions::message(
+        if ($user['banned_longer'] > 0) {
+            Functions::popupMessage(
                 StringsHelper::parseReplacements(
                     __('game/global.bg_banned'),
-                    [Timing::formatShortDate($user['user_banned'])]
-                ),
-                '',
-                '',
-                false,
-                false
+                    [Timing::formatShortDate($user['banned_longer'])]
+                )
             );
-
-            exit;
         }
     }
 }
