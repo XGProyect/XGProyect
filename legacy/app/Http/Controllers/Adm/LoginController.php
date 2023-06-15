@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use App\Models\User;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Models\Adm\Login;
 
 class LoginController extends BaseController
 {
-    private Login $loginModel;
-
     public function __invoke(): void
     {
         Administration::checkSession();
-
-        $this->loginModel = new Login();
 
         $this->runAction();
         $this->setAlert();
@@ -39,11 +37,27 @@ class LoginController extends BaseController
         ]);
 
         if (!empty($loginData['inputEmail']) && !empty($loginData['inputPassword'])) {
-            $login = $this->loginModel->getLoginData($loginData['inputEmail']);
+            if (Auth::attempt(['email' => $loginData['inputEmail'], 'password' => $loginData['inputPassword']])) {
+                /** @var User $authUser */
+                $authUser = Auth::getUser();
 
-            if ($login) {
-                if (password_verify($loginData['inputPassword'], $login['password'])
-                    && Administration::adminLogin((int) $login['id'], $login['password'])) {
+                if ($authUser->authlevel > 1) {
+                    $request = request();
+
+                    $request->session()->regenerate();
+
+                    $request->session([
+                        'user_id' => $authUser->id,
+                        'user_password' => Hash::make(
+                            ($authUser->password . '-' . config('SECRETWORD'))
+                        ),
+                        'admin_id' => $authUser->id,
+                        'admin_password' => Hash::make(
+                            ($authUser->password . '-' . config('SECRETWORD'))
+                        ),
+                    ]);
+                    $request->session()->save();
+
                     $redirect = filter_input(INPUT_GET, 'redirect', FILTER_UNSAFE_RAW) ?? 'home';
 
                     if ($redirect == '') {

@@ -50,20 +50,6 @@ class Users
         return self::$instance;
     }
 
-    public function userLogin(int $userId = 0, string $password = ''): bool
-    {
-        if ($userId != 0 && !empty($password) && (strlen($password) == 60)) {
-            session([
-                'user_id' => $userId,
-                'user_password' => Functions::hash($password . '-' . config('SECRETWORD')),
-            ]);
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public function getUserData(): array
     {
         return $this->userData;

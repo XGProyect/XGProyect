@@ -291,7 +291,7 @@ class Fleet3Controller extends BaseController
          */
         $ships = $this->getSessionShips();
         $acs = $this->fleetModel->getAcsCount(
-            $_SESSION['fleet_data']['target']['group']
+            session('fleet_data')['target']['group']
         );
 
         $missions = [];
@@ -299,10 +299,10 @@ class Fleet3Controller extends BaseController
         $ocuppied = false;
 
         $selected_planet = $this->fleetModel->getPlanetOwnerByCoords(
-            $_SESSION['fleet_data']['target']['galaxy'],
-            $_SESSION['fleet_data']['target']['system'],
-            $_SESSION['fleet_data']['target']['planet'],
-            $_SESSION['fleet_data']['target']['type']
+            session('fleet_data')['target']['galaxy'],
+            session('fleet_data')['target']['system'],
+            session('fleet_data')['target']['planet'],
+            session('fleet_data')['target']['type']
         );
 
         if ($selected_planet) {
@@ -313,10 +313,10 @@ class Fleet3Controller extends BaseController
             }
         }
 
-        if ($_SESSION['fleet_data']['target']['planet'] == (MAX_PLANET_IN_SYSTEM + 1)) {
+        if (session('fleet_data')['target']['planet'] == (MAX_PLANET_IN_SYSTEM + 1)) {
             $possible_missions = [Missions::EXPEDITION];
         } else {
-            $possible_missions = $mission_rules[$_SESSION['fleet_data']['target']['type']][$action_type];
+            $possible_missions = $mission_rules[session('fleet_data')['target']['type']][$action_type];
 
             if (!$acs && in_array(Missions::ACS, $possible_missions)) {
                 unset($possible_missions[array_search(Missions::ACS, $possible_missions)]);
@@ -426,19 +426,24 @@ class Fleet3Controller extends BaseController
         );
 
         // attach speed and target data
-        $_SESSION['fleet_data'] += [
-            'speed' => $data['speed'],
-            'target' => [
-                'galaxy' => $data['galaxy'],
-                'system' => $data['system'],
-                'planet' => $data['planet'],
-                'type' => $data['planettype'],
-                'group' => $data['fleet_group'],
-                'acs_target' => $data['acs_target'],
-            ],
-            'distance' => $distance,
-            'consumption' => $consumption,
-        ];
+        session([
+            'fleet_data' => array_merge(
+                session('fleet_data'),
+                [
+                    'speed' => $data['speed'],
+                    'target' => [
+                        'galaxy' => $data['galaxy'],
+                        'system' => $data['system'],
+                        'planet' => $data['planet'],
+                        'type' => $data['planettype'],
+                        'group' => $data['fleet_group'],
+                        'acs_target' => $data['acs_target'],
+                    ],
+                    'distance' => $distance,
+                    'consumption' => $consumption,
+                ]
+            )
+        ]);
 
         return [
             'this_metal' => floor($this->planet['planet_metal']),
@@ -459,8 +464,8 @@ class Fleet3Controller extends BaseController
 
     private function getSessionShips()
     {
-        if (isset($_SESSION['fleet_data']['fleetarray'])) {
-            return unserialize(base64_decode(str_rot13($_SESSION['fleet_data']['fleetarray'])));
+        if (isset(session('fleet_data')['fleetarray'])) {
+            return unserialize(base64_decode(str_rot13(session('fleet_data')['fleetarray'])));
         }
 
         Functions::redirect(self::REDIRECT_TARGET);

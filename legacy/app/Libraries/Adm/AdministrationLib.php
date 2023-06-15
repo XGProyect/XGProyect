@@ -78,22 +78,6 @@ class AdministrationLib
         );
     }
 
-    public static function adminLogin($admin_id = 0, $password = ''): bool
-    {
-        if ($admin_id != 0 && !empty($password)) {
-            // login as a user
-            (new Users())->userLogin($admin_id, $password);
-
-            // admin login
-            $_SESSION['admin_id'] = $admin_id;
-            $_SESSION['admin_password'] = Functions::hash($password . '-' . config('SECRETWORD'));
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public static function checkSession(): void
     {
         if (!self::isSessionSet()) {
@@ -107,12 +91,12 @@ class AdministrationLib
 
     public static function closeSession(): void
     {
-        unset($_SESSION['admin_id'], $_SESSION['admin_password']);
+        session()->forget(['admin_id', 'admin_password']);
     }
 
     private static function isSessionSet(): bool
     {
-        return !(!isset($_SESSION['admin_id']) or !isset($_SESSION['admin_password']));
+        return session('admin_id', false) && session('admin_password', false);
     }
 
     public static function updateRequired(): void

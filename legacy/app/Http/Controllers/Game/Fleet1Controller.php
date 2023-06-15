@@ -270,7 +270,7 @@ class Fleet1Controller extends BaseController
         ]);
 
         // always reset, and define as array
-        $_SESSION['fleet_data'] = [];
+        session('fleet_data', []);
 
         return [
             'galaxy' => $data['galaxy'] ?? $this->planet['planet_galaxy'],

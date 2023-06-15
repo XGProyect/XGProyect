@@ -660,7 +660,7 @@ class Fleet4Controller extends BaseController
 
     private function getFleetData(): array
     {
-        return $_SESSION['fleet_data'];
+        return session()->get('fleet_data');
     }
 
     private function getSessionShips(): array
@@ -670,7 +670,7 @@ class Fleet4Controller extends BaseController
 
     private function getTargetData(): array
     {
-        return $_SESSION['fleet_data']['target'];
+        return session()->get('fleet_data')['target'];
     }
 
     private function showMessage($message): void

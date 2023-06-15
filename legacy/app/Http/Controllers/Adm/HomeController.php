@@ -46,7 +46,6 @@ class HomeController extends BaseController
                     'numberReports' => Format::prettyNumber((int) $userStats['number_reports']),
                     'averageUserPoints' => Format::shortlyNumber((int) $userStats['average_user_points']),
                     'averageAlliancePoints' => Format::shortlyNumber((int) $userStats['average_alliance_points']),
-
                     'databaseSize' => Format::prettyBytes($this->homeModel->getDbSize()['db_size']),
                     'databaseServer' => $this->homeModel->getDbVersion(),
                     'phpVersion' => PHP_VERSION,

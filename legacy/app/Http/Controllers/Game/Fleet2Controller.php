@@ -308,10 +308,12 @@ class Fleet2Controller extends BaseController
         }
 
         // attach fleet data
-        $_SESSION['fleet_data'] = [
-            'fleet_speed' => min($this->_fleet_data['speed_all']),
-            'fleetarray' => str_rot13(base64_encode(serialize($this->_fleet_data['fleet_array']))),
-        ];
+        session([
+            'fleet_data' => [
+                'fleet_speed' => min($this->_fleet_data['speed_all']),
+                'fleetarray' => str_rot13(base64_encode(serialize($this->_fleet_data['fleet_array']))),
+            ]
+        ]);
 
         return [
             'speedfactor' => Functions::fleetSpeedFactor(),
