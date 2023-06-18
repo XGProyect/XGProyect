@@ -107,7 +107,7 @@ define('ACS', '{xgp_prefix}acs');
 define('ACS_MEMBERS', '{xgp_prefix}acs_members');
 define('ALLIANCE', '{xgp_prefix}alliance');
 define('ALLIANCE_STATISTICS', '{xgp_prefix}alliance_statistics');
-define('BANNED', '{xgp_prefix}banned');
+define('BANNED', '{xgp_prefix}bans');
 define('BUDDY', '{xgp_prefix}buddys');
 define('BUILDINGS', '{xgp_prefix}buildings');
 define('CHANGELOG', '{xgp_prefix}changelog');

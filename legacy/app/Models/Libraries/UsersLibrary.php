@@ -125,15 +125,13 @@ class UsersLibrary extends Model
                         SELECT COUNT(`message_id`) AS `new_message`
                         FROM `' . MESSAGES . '`
                         WHERE `message_receiver` = u.`id` AND `message_read` = 0
-                    ) AS `new_message`,
-                    b.banned_longer
+                    ) AS `new_message`
                 FROM `' . USERS . '` AS u
                 INNER JOIN `' . PREFERENCES . '` AS pr ON pr.preference_user_id = u.id
                 INNER JOIN `' . USERS_STATISTICS . '` AS usul ON usul.user_statistic_user_id = u.id
                 INNER JOIN `' . PREMIUM . '` AS pre ON pre.premium_user_id = u.id
                 INNER JOIN `' . RESEARCH . '` AS r ON r.research_user_id = u.id
-                LEFT JOIN `' . ALLIANCE . '` AS a ON a.alliance_id = u.ally_id
-                LEFT JOIN `' . BANNED . "` AS b ON b.banned_who = u.name
+                LEFT JOIN `' . ALLIANCE . "` AS a ON a.alliance_id = u.ally_id
                 WHERE (u.`id` = '" . session('user_id') . "')
                 LIMIT 1;"
             );

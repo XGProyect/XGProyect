@@ -34,7 +34,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int                $ally_request
  * @property int                $ally_register_time
  * @property int                $ally_rank_id
- * @property Banned             $banned
+ * @property Ban                $ban
  * @property Planets            $planets
  * @property Preferences        $preferences
  * @property Premium            $premium
@@ -92,6 +92,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'id' => 'int',
         'name' => 'string',
         'password' => 'string',
         'email' => 'string',
@@ -141,9 +142,9 @@ class User extends Authenticatable
     }
 
     // Relations ...
-    public function banned(): HasOne
+    public function ban(): HasOne
     {
-        return $this->hasOne(Banned::class, 'banned_who', 'name');
+        return $this->hasOne(Ban::class);
     }
 
     public function planets(): HasMany

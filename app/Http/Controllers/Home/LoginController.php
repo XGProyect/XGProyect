@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Home;
 
 use App\Http\Requests\LoginRequest;
-use App\Models\Banned;
 use App\Models\User;
 use App\Services\SessionService;
 use Illuminate\Http\RedirectResponse;
@@ -34,10 +33,8 @@ class LoginController extends BaseController
             User::where('id', $authUser->id)->update(['current_planet' => DB::raw('`home_planet_id`')]);
 
             // check suspension status
-            $banned = $authUser->banned;
-
-            if ($banned !== null && $banned->banned_longer <= time()) {
-                Banned::where('banned_who', $authUser->name)->delete();
+            if ($authUser->ban !== null && $authUser->ban->until <= time()) {
+                $authUser->ban->delete();
             }
 
             $request->session()->regenerate();

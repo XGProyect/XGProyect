@@ -37,7 +37,7 @@ class Galaxy extends Model
                 p.`planet_user_id`,
                 u.`id`,
                 u.`ally_id`,
-                u.`banned`,
+                b.`user_id` AS `banned`,
                 pr.`preference_vacation_mode`,
                 u.`onlinetime`,
                 u.`name`,
@@ -70,7 +70,7 @@ class Galaxy extends Model
                 LEFT JOIN `' . PLANETS . '` AS m
                     ON m.`planet_id` = (
                         SELECT mp.`planet_id`
-                        FROM `' . PLANETS . "` AS mp
+                        FROM `' . PLANETS . '` AS mp
                         WHERE (
                             mp.`planet_galaxy` = p.`planet_galaxy`
                             AND
@@ -78,9 +78,11 @@ class Galaxy extends Model
                             AND
                             mp.`planet_planet` = p.`planet_planet`
                             AND
-                            mp.`planet_type` = '3'
+                            mp.`planet_type` = "3"
                         )
                     )
+                LEFT JOIN `' . BANNED . "` AS b
+                    ON b.`user_id` = u.`id`
             WHERE (
                     p.planet_galaxy = '" . $galaxy . "'
                     AND

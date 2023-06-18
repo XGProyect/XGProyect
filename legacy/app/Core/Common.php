@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Core;
 
+use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Helpers\StringsHelper;
@@ -121,13 +123,14 @@ class Common
 
     private function checkBanStatus(): void
     {
-        $user = (new Users())->getUserData();
+        /** @var User $user */
+        $user = Auth::getUser();
 
-        if ($user['banned_longer'] > 0) {
+        if ($user->ban !== null && $user->ban->until > time()) {
             Functions::popupMessage(
                 StringsHelper::parseReplacements(
                     __('game/global.bg_banned'),
-                    [Timing::formatShortDate($user['banned_longer'])]
+                    [Timing::formatExtendedDate($user->ban->until)]
                 )
             );
         }
