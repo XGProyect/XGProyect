@@ -27,4 +27,6 @@ return [
     Now you are fully armed for the future - good luck!
     <br><br>
     This message will be deleted in 24 hours.',
+    're_username_not_available' => 'This username is not available anymore',
+    're_email_not_available' => 'The E-mail address is already in use!',
 ];

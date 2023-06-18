@@ -41,8 +41,8 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'username.unique' => __('home/home.hm_username_not_available'),
-            'email.unique' => __('home/home.hm_email_not_available'),
+            'username.unique' => __('home/register.re_username_not_available'),
+            'email.unique' => __('home/register.re_email_not_available'),
         ];
     }
 }

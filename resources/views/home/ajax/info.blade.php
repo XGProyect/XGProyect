@@ -5,26 +5,26 @@
     </head>
     <body>
         <div class="inner-box clearfix">
-            <h2>{{ __('ajax/info.aj_info_about_title') }}</h2>
-            <p>{!! __('ajax/info.aj_info_about_description') !!}</p>
+            <h2>{{ __('home/ajax/info.aj_info_about_title') }}</h2>
+            <p>{!! __('home/ajax/info.aj_info_about_description') !!}</p>
         </div>
         <div class="inner-box clearfix">
-            <h2>{{ __('ajax/info.aj_info_features') }}</h2>
+            <h2>{{ __('home/ajax/info.aj_info_features') }}</h2>
             <ul>
-                <li>{!! __('ajax/info.aj_info_description_line1') !!}</li>
-                <li>{!! __('ajax/info.aj_info_description_line2') !!}</li>
-                <li>{!! __('ajax/info.aj_info_description_line3') !!}</li>
-                <li>{!! __('ajax/info.aj_info_description_line4') !!}</li>
-                <li>{!! __('ajax/info.aj_info_description_line5') !!}</li>
-                <li>{!! __('ajax/info.aj_info_description_line6') !!}</li>
-                <li>{!! __('ajax/info.aj_info_description_line7') !!}</li>
-                <li>{!! __('ajax/info.aj_info_description_line8') !!}</li>
+                <li>{!! __('home/ajax/info.aj_info_description_line1') !!}</li>
+                <li>{!! __('home/ajax/info.aj_info_description_line2') !!}</li>
+                <li>{!! __('home/ajax/info.aj_info_description_line3') !!}</li>
+                <li>{!! __('home/ajax/info.aj_info_description_line4') !!}</li>
+                <li>{!! __('home/ajax/info.aj_info_description_line5') !!}</li>
+                <li>{!! __('home/ajax/info.aj_info_description_line6') !!}</li>
+                <li>{!! __('home/ajax/info.aj_info_description_line7') !!}</li>
+                <li>{!! __('home/ajax/info.aj_info_description_line8') !!}</li>
             </ul>
-            <a class="overlay button" href="index.php?page=team" title="{{ __('ajax/info.aj_info_team') }}">{{ __('ajax/info.aj_info_team') }}</a>
-            <a class="overlay button" href="index.php?page=credits" title="{{ __('ajax/info.aj_info_credits') }}">{{ __('ajax/info.aj_info_credits') }}</a>
+            <a class="overlay button" href="index.php?page=team" title="{{ __('home/ajax/info.aj_info_team') }}">{{ __('home/ajax/info.aj_info_team') }}</a>
+            <a class="overlay button" href="index.php?page=credits" title="{{ __('home/ajax/info.aj_info_credits') }}">{{ __('home/ajax/info.aj_info_credits') }}</a>
         </div>
         <div class="inner-box last clearfix">
-            <h2>{{ __('ajax/info.aj_info_images') }}</h2>
+            <h2>{{ __('home/ajax/info.aj_info_images') }}</h2>
             <div id="screens">
             </div>
             <br class="clearfloat" />

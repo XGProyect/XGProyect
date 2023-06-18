@@ -8,8 +8,8 @@
     <meta name="copyright" content="XG Proyect">
     <meta name="audience" content="all">
     <meta name="Expires" content="never">
-    <meta name="Keywords" content="{{ __('home/home.hm_keywords') }}">
-    <meta name="Description" content="{{ __('home/home.hm_description') }}">
+    <meta name="Keywords" content="{{ __('home/welcome.hm_keywords') }}">
+    <meta name="Description" content="{{ __('home/welcome.hm_description') }}">
     <meta name="robots" content="index,follow">
     <meta name="Revisit" content="After 14 days">
     <title>{{ $servername }}</title>
@@ -34,15 +34,15 @@
                     $.validationEngineLanguage.allRules = {
                         "required":{ // Add your regex rules here, you can take telephone as an example
                             "regex":"none",
-                            "alertText":"{{ __('home/home.hm_field_required') }}",
+                            "alertText":"{{ __('home/welcome.hm_field_required') }}",
                             "alertTextCheckboxMultiple":"Toma una decisi\u00f3n",
-                            "alertTextCheckboxe":"{{ __('home/home.hm_must_accept_tandc') }}"},
+                            "alertTextCheckboxe":"{{ __('home/welcome.hm_must_accept_tandc') }}"},
                         "length":{
                             "regex":"none",
-                            "alertText":"{{ __('home/home.hm_username_length') }}"},
+                            "alertText":"{{ __('home/welcome.hm_username_length') }}"},
                         "pwLength":{
                             "regex":"none",
-                            "alertText":"{{ __('home/home.hm_password_length') }}"},
+                            "alertText":"{{ __('home/welcome.hm_password_length') }}"},
                         "maxCheckbox":{
                             "regex":"none",
                             "alertText":"* Checks allowed Exceeded"},
@@ -58,7 +58,7 @@
                             "alertText":"* Unzulässige Telefonnummer"},
                         "email":{
                             "regex":"/^[a-zA-Z0-9_\\.\\-]+\\@([a-zA-Z0-9\\-]+\\.)+[a-zA-Z0-9]{2,4}$/",
-                            "alertText":"{{ __('home/home.hm_valid_email_address') }}"},
+                            "alertText":"{{ __('home/welcome.hm_valid_email_address') }}"},
                         "date":{
                                 "regex":"/^[0-9]{4}\-\[0-9]{1,2}\-\[0-9]{1,2}$/",
                                 "alertText":"* Invalid date, must be in YYYY-MM-DD format"},
@@ -67,47 +67,47 @@
                             "alertText":"* Bitte nur Nummern"},
                         "noSpecialCharacters":{
                             "regex":"/^[a-zA-Z0-9\\s_\\-]+$/",
-                            "alertText":"{{ __('home/home.hm_not_valid_characters') }}"},
+                            "alertText":"{{ __('home/welcome.hm_not_valid_characters') }}"},
                         "noBeginOrEndUnderscore":{
                             "regex":/^([^_]+(.*[^_])?)?$/,
-                            "alertText":"{{ __('home/home.hm_username_underscore') }}"},
+                            "alertText":"{{ __('home/welcome.hm_username_underscore') }}"},
                         "noBeginOrEndHyphen":{
                             "regex":/^([^\-]+(.*[^\-])?)?$/,
                             "alertText":""},
                         "noBeginOrEndWhitespace":{
                             "regex":/^([^\s]+(.*[^\s])?)?$/,
-                            "alertText":"{{ __('home/home.hm_username_space') }}"},
+                            "alertText":"{{ __('home/welcome.hm_username_space') }}"},
                         "notMoreThanThreeUnderscores":{
                             "regex":/^[^_]*(_[^_]*){0,3}$/,
-                            "alertText":"{{ __('home/home.hm_username_many_underscore') }}"},
+                            "alertText":"{{ __('home/welcome.hm_username_many_underscore') }}"},
                         "notMoreThanThreeHyphen":{
                             "regex":/^[^\-]*(\-[^\-]*){0,3}$/,
                             "alertText":""},
                         "notMoreThanThreeWhitespaces":{
                             "regex":/^[^\s]*(\s[^\s]*){0,3}$/,
-                            "alertText":"{{ __('home/home.hm_username_many_spaces') }}"},
+                            "alertText":"{{ __('home/welcome.hm_username_many_spaces') }}"},
                         "noCollocateUnderscores":{
                             "regex":/^[^_]*(_[^_]+)*_?$/,
-                            "alertText":"{{ __('home/home.hm_username_underscore_continued') }}"},
+                            "alertText":"{{ __('home/welcome.hm_username_underscore_continued') }}"},
                         "noCollocateHyphen":{
                             "regex":/^[^\-]*(\-[^\-]+)*-?$/,
                             "alertText":""},
                         "noCollocateWhitespaces":{
                             "regex":/^[^\s]*(\s[^\s]+)*\s?$/,
-                            "alertText":"{{ __('home/home.hm_username_spaces_continued') }}"},
+                            "alertText":"{{ __('home/welcome.hm_username_spaces_continued') }}"},
                         "ajaxUser":{
                             "file":"../validateUser.php",
-                            "alertTextOk":"{{ __('home/home.hm_username_available') }}",
-                            "alertTextLoad":"{{ __('home/home.hm_username_loading') }}",
-                            "alertText":"{{ __('home/home.hm_username_not_available') }}"},
+                            "alertTextOk":"{{ __('home/welcome.hm_username_available') }}",
+                            "alertTextLoad":"{{ __('home/welcome.hm_username_loading') }}",
+                            "alertText":"{{ __('home/register.re_username_not_available') }}"},
                         "ajaxName":{
                             "file":"../validateUser.php",
-                            "alertTextOk":"{{ __('home/home.hm_username_available') }}",
-                            "alertTextLoad":"{{ __('home/home.hm_username_available') }}"},
-                            "alertText":"{{ __('home/home.hm_username_not_available') }}",
+                            "alertTextOk":"{{ __('home/welcome.hm_username_available') }}",
+                            "alertTextLoad":"{{ __('home/welcome.hm_username_available') }}"},
+                            "alertText":"{{ __('home/register.re_username_not_available') }}",
                         "onlyLetter":{
                             "regex":"/^[a-zA-Z\ \']+$/",
-                            "alertText":"{{ __('home/home.hm_only_characters') }}"}
+                            "alertText":"{{ __('home/welcome.hm_only_characters') }}"}
                         }
                 }
             }
@@ -135,41 +135,41 @@
 	    <div id="header">
             <h1>
                 <img src="{{ $gameLogo }}" width="200px" alt=""/>
-                <a href="./" title="{{ __('home/home.hm_hidden_title') }}">
-                    {{ __('home/home.hm_hidden_title') }}
+                <a href="./" title="{{ __('home/welcome.hm_hidden_title') }}">
+                    {{ __('home/welcome.hm_hidden_title') }}
                 </a>
             </h1>
             <a id="loginBtn" href="javascript:void(0)" title="Login">
-                {{ __('home/home.hm_login_button') }}
+                {{ __('home/welcome.hm_login_button') }}
             </a>
             <div id="login">
                 <form id="loginForm" name="loginForm" method="post" action="{{ route('login') }}">
                     @csrf
                     <input type="hidden" name="kid" value="">
 			        <div class="input-wrap">
-			            <label for="serverLogin">{{ __('home/home.hm_universe') }}</label>
+			            <label for="serverLogin">{{ __('home/welcome.hm_universe') }}</label>
                         <div class="black-border">
                             <select class="js_uniUrl" id="serverLogin" name="uni">
-                                <option value="0">{{ __('home/home.hm_universe_name') }}</option>
+                                <option value="0">{{ __('home/welcome.hm_universe_name') }}</option>
                             </select>
                         </div>
 			        </div>
 		            <div class="input-wrap">
-						<label for="usernameLogin">{{ __('home/home.hm_username_mail') }}</label>
+						<label for="usernameLogin">{{ __('home/welcome.hm_username_mail') }}</label>
 						<div class="black-border">
                             <input class="js_userName" type="text" onkeydown="hideLoginErrorBox();" id="usernameLogin" name="username" value="">
 						</div>
 					</div>
 					<div class="input-wrap">
-                        <label for="passwordLogin">{{ __('home/home.hm_password') }}</label>
+                        <label for="passwordLogin">{{ __('home/welcome.hm_password') }}</label>
 						<div class="black-border">
                             <input type="password" onkeydown="hideLoginErrorBox();" id="passwordLogin" name="password" maxlength="20">
 						</div>
 					</div>
-                    <input type="submit" id="loginSubmit" value="{{ __('home/home.hm_login_button') }}">
-					<a href="#" id="pwLost" target="_blank" title="{{ __('home/home.hm_password_forgot') }}">{{ __('home/home.hm_password_forgot') }}</a>
+                    <input type="submit" id="loginSubmit" value="{{ __('home/welcome.hm_login_button') }}">
+					<a href="#" id="pwLost" target="_blank" title="{{ __('home/welcome.hm_password_forgot') }}">{{ __('home/welcome.hm_password_forgot') }}</a>
                     <p id="TermsAndConditionsAcceptWithLogin">
-                        {{ __('home/home.hm_terms_accept') }} <a class="" href="index.php?page=terms" target="_blank" title="{{ __('home/home.hm_terms') }}">{{ __('home/home.hm_terms') }}</a>
+                        {{ __('home/welcome.hm_terms_accept') }} <a class="" href="index.php?page=terms" target="_blank" title="{{ __('home/welcome.hm_terms') }}">{{ __('home/welcome.hm_terms') }}</a>
                     </p>
                 </form>
 			</div>
@@ -183,15 +183,15 @@
                     <input type="hidden" name="kid" value="">
                     <input type="hidden" name="errorCodeOn" value="1">
                     <input type="hidden" name="is_utf8" value="1">
-                    <h2>{{ __('home/home.hm_play_for_free') }}</h2>
+                    <h2>{{ __('home/welcome.hm_play_for_free') }}</h2>
                     <div class="input-wrap first">
-                        <label for="server">{{ __('home/home.hm_universe') }}</label>
+                        <label for="server">{{ __('home/welcome.hm_universe') }}</label>
                         <div id="server" style="position:relative;">
                             <table cellspacing="0" cellpadding="0" onclick="switch_uni_selection()" onmouseover="this.style.cursor=&#39;pointer&#39;" class="server_table" style="cursor: pointer;">
                                 <tbody>
                                     <tr>
                                         <td id="uni_select_box" class="select" style="height:19px;overflow:hidden;">
-                                            <span id="uni_name" class="">{{ __('home/home.hm_universe_name') }}</span>
+                                            <span id="uni_name" class="">{{ __('home/welcome.hm_universe_name') }}</span>
                                         </td>
                                         <td style="width:18px; background: url('{img_path}dropdownmenu_arrow.png') no-repeat scroll 0 0 #8D9AA7;"></td>
                                     </tr>
@@ -201,36 +201,36 @@
                             <div id="uni_selection" style="display: none;">
                                 <script type="text/javascript">
                                 <!--
-                                    select_uni('{{ $basePath }}'.replace('http://', '').replace('https://', ''), '{{ __('home/home.hm_universe_name') }}','');
+                                    select_uni('{{ $basePath }}'.replace('http://', '').replace('https://', ''), '{{ __('home/welcome.hm_universe_name') }}','');
                                 //-->
                                 </script>
-                                <div id="row-0" class="server-row " title="" onclick="select_uni('{{ $basePath }}','{{ __('home/home.hm_universe_name') }}');" onmouseover="highlightRow(&#39;row-0&#39;);this.style.cursor=&#39;pointer&#39;" onmouseout="unHighlightRow(&#39;row-0&#39;);">
-                                    <span class="uni_span ">{{ __('home/home.hm_universe_name') }}</span>
+                                <div id="row-0" class="server-row " title="" onclick="select_uni('{{ $basePath }}','{{ __('home/welcome.hm_universe_name') }}');" onmouseover="highlightRow(&#39;row-0&#39;);this.style.cursor=&#39;pointer&#39;" onmouseout="unHighlightRow(&#39;row-0&#39;);">
+                                    <span class="uni_span ">{{ __('home/welcome.hm_universe_name') }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 					<div class="input-wrap">
-                        <label for="username">{{ __('home/home.hm_username') }}</label>
+                        <label for="username">{{ __('home/welcome.hm_username') }}</label>
 						<div class="black-border">
                             <input id="username" class="js_userName validate[required,custom[noSpecialCharacters],custom[noBeginOrEndUnderscore],custom[noBeginOrEndWhitespace],custom[noBeginOrEndHyphen],custom[notMoreThanThreeUnderscores],custom[notMoreThanThreeWhitespaces],custom[notMoreThanThreeHyphen],custom[noCollocateUnderscores],custom[noCollocateWhitespaces],custom[noCollocateHyphen],length[3,20]]" type="text" name="username" value="{{ $userName }}">
 						</div>
 					</div>
                     <div class="input-wrap">
-                        <label for="password">{{ __('home/home.hm_password') }}</label>
+                        <label for="password">{{ __('home/welcome.hm_password') }}</label>
                         <div class="black-border">
                             <input class="validate[required,pwLength[8,20]]" type="password" id="password" name="password" value="" maxlength="20">
                         </div>
                     </div>
 					<div class="input-wrap">
-                        <label for="email">{{ __('home/home.hm_mail_address') }}</label>
+                        <label for="email">{{ __('home/welcome.hm_mail_address') }}</label>
 						<div class="black-border">
                             <input class="validate[required,custom[email],length[0,255]]" type="text" id="email" name="email" value="{{ $userEmail }}">
 						</div>
 					</div>
 					<div class="input-wrap">
                         <div id="securePwd">
-							<p>{{ __('home/home.hm_password_level') }}</p>
+							<p>{{ __('home/welcome.hm_password_level') }}</p>
 							<div class="valid-icon invalid"></div>
 							<div class="securePwdBarBox">
 								<div id="securePwdBar"></div>
@@ -242,18 +242,18 @@
 						<input class="validate[required]" type="checkbox" id="agb" name="agb"/>
                         <label for="agb">
                             <span>
-                                {{ __('home/home.hm_accept') }}
-                                <a class="" target="_blank" href="index.php?page=terms" title="{{ __('home/home.hm_terms') }}">
-                                    {{ __('home/home.hm_terms') }}
+                                {{ __('home/welcome.hm_accept') }}
+                                <a class="" target="_blank" href="index.php?page=terms" title="{{ __('home/welcome.hm_terms') }}">
+                                    {{ __('home/welcome.hm_terms') }}
                                 </a>
-                                {{ __('home/home.hm_and') }}
-                                <a class="" target="_blank" href="index.php?page=policy" title="{{ __('home/home.hm_policy') }}">
-                                    {{ __('home/home.hm_policy') }}
+                                {{ __('home/welcome.hm_and') }}
+                                <a class="" target="_blank" href="index.php?page=policy" title="{{ __('home/welcome.hm_policy') }}">
+                                    {{ __('home/welcome.hm_policy') }}
                                 </a>
                             </span>
 						</label>
                         <div onclick="if($.validationEngine.submitValidation(&#39;subscribeForm&#39;)) {document.forms[&#39;subscribeForm&#39;].submit();}">
-                            <input type="submit" onclick="setServerCookie(&#39;subscribeForm&#39;);setUserNameCookie(&#39;subscribeForm&#39;);" id="regSubmit" value="{{ __('home/home.hm_register') }}">
+                            <input type="submit" onclick="setServerCookie(&#39;subscribeForm&#39;);setUserNameCookie(&#39;subscribeForm&#39;);" id="regSubmit" value="{{ __('home/welcome.hm_register') }}">
                         </div>
 					</div>
 				</form>
@@ -261,11 +261,11 @@
 			<div id="contentWrap">
 				<div id="menu" style="background-position: 15px -33px;">
 					<ul id="tabs">
-						<li><a id="tab1" href="home/ajax/home" class="current">{{ __('home/home.hm_home') }}</a></li>
-                        <li><a id="tab2" href="home/ajax/info">{{ __('home/home.hm_about') }}</a></li>
-                        <li><a id="tab3" href="home/ajax/media">{{ __('home/home.hm_media') }}</a></li>
+						<li><a id="tab1" href="home/ajax/home" class="current">{{ __('home/welcome.hm_home') }}</a></li>
+                        <li><a id="tab2" href="home/ajax/info">{{ __('home/welcome.hm_about') }}</a></li>
+                        <li><a id="tab3" href="home/ajax/media">{{ __('home/welcome.hm_media') }}</a></li>
 					</ul>
-                    <a id="tab4" href="{{ $forumUrl }}" target="_blank">{{ __('home/home.hm_forum') }}</a>
+                    <a id="tab4" href="{{ $forumUrl }}" target="_blank">{{ __('home/welcome.hm_forum') }}</a>
                     <br class="clearfloat">
 				</div>
 				<div id="tabContent">
@@ -284,7 +284,7 @@
 	</div>
     <!-- OVERLAY DIVISION -->
     <script type="text/javascript">
-        JSLoca = new Array('{{ __('home/home.hm_login_button') }}', '{{ __('home/home.hm_close_button') }}');
+        JSLoca = new Array('{{ __('home/welcome.hm_login_button') }}', '{{ __('home/welcome.hm_close_button') }}');
     </script>
     <script type="text/javascript" src="{{ asset('js/home/xgproyect.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/home/xgproyect.start.js') }}"></script>

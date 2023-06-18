@@ -22,7 +22,7 @@ class WelcomeController extends BaseController
             'home.welcome',
             array_merge(
                 [
-                    'servername' => __('home/home.hm_title', ['game' => $this->settingsService->get('game_name')]),
+                    'servername' => __('home/welcome.hm_title', ['game' => $this->settingsService->get('game_name')]),
                     'gameLogo' => $this->settingsService->get('game_logo'),
                     'basePath' => url('/'),
                     'userName' => '',

@@ -20,4 +20,6 @@ return [
     Como las minas no producen nada sin energía, deberías construir también una planta de energía solar, vuelve a "Recursos", selecciona la planta de energía solar y construyela.<br>
     Para ver todas las naves, estructuras defensivas, edificios e investigaciones que podrás desarrollar puedes echar un vistazo al árbol tecnológico en "Tecnología" en el menu de la izquierda.<br>
     Ahora puede comentar la conquista del universo... ¡Buena suerte!',
+    're_username_not_available' => 'Este nombre de usuario ya no est\u00e1 disponible.',
+    're_email_not_available' => '¡La dirección de E-mail ya está en uso!',
 ];

@@ -51,7 +51,7 @@ class LoginController extends BaseController
         }
 
         return back()->withErrors([
-            'username' => __('home/home.hm_invalid_login'),
+            'username' => __('home/welcome.hm_invalid_login'),
         ], 'login')->onlyInput('username');
     }
 }

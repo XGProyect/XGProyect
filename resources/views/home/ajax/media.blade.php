@@ -6,15 +6,15 @@
     </head>
     <body>
         <div class="inner-box clearfix">
-            <h2>{{ __('ajax/media.aj_media_wallpapers') }}</h2>
+            <h2>{{ __('home/ajax/media.aj_media_wallpapers') }}</h2>
             <div id="wallpapers" class="clearfix"></div>
         </div>
         <div class="inner-box last clearfix">
-            <h2>{{ __('ajax/media.aj_media_pictures') }}</h2>
+            <h2>{{ __('home/ajax/media.aj_media_pictures') }}</h2>
             <div id="screens"></div>
         </div>
         <div class="inner-box last clearfix">
-            <h2>{{ __('ajax/media.aj_media_concept_art') }}</h2>
+            <h2>{{ __('home/ajax/media.aj_media_concept_art') }}</h2>
             <div id="screens"></div>
         </div>
         <script type="text/javascript">

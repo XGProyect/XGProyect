@@ -6,15 +6,15 @@
     </head>
     <body>
         <div class="inner-box clearfix">
-            <h2>{{ __('ajax/home.aj_home_conquer_universe') }}</h2>
-            <p>{!! __('ajax/home.aj_home_description') !!}</p>
-            <a class="overlay button" href="index.php?page=rules" title="{{ __('ajax/home.aj_home_rules') }}">
-                {{ __('ajax/home.aj_home_rules') }}
+            <h2>{{ __('home/ajax/home.aj_home_conquer_universe') }}</h2>
+            <p>{!! __('home/ajax/home.aj_home_description') !!}</p>
+            <a class="overlay button" href="index.php?page=rules" title="{{ __('home/ajax/home.aj_home_rules') }}">
+                {{ __('home/ajax/home.aj_home_rules') }}
             </a>
         </div>
 
     <div id="trailer" class="inner-box last clearfix">
-        <h2 id="trailer">{{ __('ajax/home.aj_home_trailer') }}</h2>
+        <h2 id="trailer">{{ __('home/ajax/home.aj_home_trailer') }}</h2>
         <div id="flashTrailer">
             <video width="425" height="270" controls autoplay muted poster="video/trailer_play.png" style="background-color: #000">
                 <source src="video/trailer.mp4" type="video/mp4">
