@@ -74,13 +74,6 @@ class Users
         return $this->planetData;
     }
 
-    public static function checkSession(): void
-    {
-        if (!self::isSessionSet()) {
-            Functions::redirect(SYSTEM_ROOT);
-        }
-    }
-
     public function deleteUser(int $userId): void
     {
         $userData = $this->usersModel->getAllyIdByUserId($userId);

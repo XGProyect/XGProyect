@@ -16,8 +16,6 @@ class TraderLayerController extends BaseController
 
     public function __invoke()
     {
-        Users::checkSession();
-
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->planet = Users::getInstance()->getPlanetData();

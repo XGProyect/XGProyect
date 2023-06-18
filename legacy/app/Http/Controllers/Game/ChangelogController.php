@@ -6,7 +6,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\TimingLibrary as Timing;
-use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Changelog;
 
 class ChangelogController extends BaseController
@@ -17,8 +16,6 @@ class ChangelogController extends BaseController
 
     public function __invoke(): void
     {
-        Users::checkSession();
-
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->changelogModel = new Changelog();

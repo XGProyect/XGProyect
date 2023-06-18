@@ -27,8 +27,6 @@ class PreferencesController extends BaseController
 
     public function __invoke()
     {
-        Users::checkSession();
-
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->user = Users::getInstance()->getUserData();

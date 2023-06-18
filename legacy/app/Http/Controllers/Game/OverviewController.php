@@ -29,8 +29,6 @@ class OverviewController extends BaseController
 
     public function __invoke(): void
     {
-        Users::checkSession();
-
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->user = Users::getInstance()->getUserData();

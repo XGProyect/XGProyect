@@ -11,7 +11,6 @@ use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\NoobsProtectionLib;
-use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Search;
 
 class SearchController extends BaseController
@@ -37,8 +36,6 @@ class SearchController extends BaseController
 
     public function __invoke(): void
     {
-        Users::checkSession();
-
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->noob = new NoobsProtectionLib();

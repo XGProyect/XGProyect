@@ -10,7 +10,6 @@ use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\TimingLibrary as Timing;
-use Xgp\App\Libraries\Users;
 
 class BannedController extends BaseController
 {
@@ -20,8 +19,6 @@ class BannedController extends BaseController
 
     public function __invoke(): void
     {
-        Users::checkSession();
-
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         Template::legacyView(

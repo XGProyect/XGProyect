@@ -28,8 +28,6 @@ class FederationController extends BaseController
 
     public function __invoke()
     {
-        Users::checkSession();
-
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
         $this->user = Users::getInstance()->getUserData();
@@ -43,13 +41,7 @@ class FederationController extends BaseController
         $this->buildPage();
     }
 
-    /**
-     * Creates a new fleets object that will handle all the fleets
-     * creation methods and actions
-     *
-     * @return void
-     */
-    private function setUpFleets()
+    private function setUpFleets(): void
     {
         $this->_fleets = new Fleets(
             $this->fleetModel->getAllFleetsByUserId($this->user['id']),
@@ -57,12 +49,7 @@ class FederationController extends BaseController
         );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
-    private function runAction()
+    private function runAction(): void
     {
         $data = filter_input_array(INPUT_POST);
 
