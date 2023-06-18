@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $building_id
@@ -127,4 +128,8 @@ class Buildings extends Model
     // Functions ...
 
     // Relations ...
+    public function planet(): BelongsTo
+    {
+        return $this->belongsTo(Planets::class);
+    }
 }
