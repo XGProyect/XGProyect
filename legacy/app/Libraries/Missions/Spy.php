@@ -40,8 +40,8 @@ class Spy extends Missions
                 ],
             ]);
 
-            $CurrentSpyLvl = OfficiersLib::getMaxEspionage($current_data['research_espionage_technology'], $current_data['premium_officier_technocrat']);
-            $TargetSpyLvl = OfficiersLib::getMaxEspionage($target_data['research_espionage_technology'], $target_data['premium_officier_technocrat']);
+            $CurrentSpyLvl = OfficiersLib::getMaxEspionage((int) $current_data['research_espionage_technology'], (int) $current_data['premium_officier_technocrat']);
+            $TargetSpyLvl = OfficiersLib::getMaxEspionage((int) $target_data['research_espionage_technology'], (int) $target_data['premium_officier_technocrat']);
             $fleet = FleetsLib::getFleetShipsArray($fleet_row['fleet_array']);
 
             foreach ($fleet as $id => $amount) {

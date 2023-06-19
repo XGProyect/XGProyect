@@ -13,7 +13,7 @@ use Xgp\App\Libraries\Messenger\Messenger;
 
 abstract class Functions
 {
-    public static function chronoApplet(string $type, string $ref, string $value, bool $init): string
+    public static function chronoApplet(string $type, string $ref, int $value, bool $init): string
     {
         if ($init == true) {
             $template = 'scripts.chrono_applet_init';

@@ -114,7 +114,7 @@ class MovementController extends BaseController
             foreach ($this->fleets->getFleets() as $fleet) {
                 $list_of_movements[] = [
                     'num' => ++$fleet_count,
-                    'fleet_mission' => __('game/global.type_mission')[$fleet->getFleetMission()],
+                    'fleet_mission' => __('game/missions.type_mission')[$fleet->getFleetMission()],
                     'title' => $this->buildTitleBlock($fleet->getFleetMess()),
                     'tooltip' => $this->buildToolTipBlock($fleet->getFleetMess()),
                     'fleet_amount' => FormatLib::prettyNumber($fleet->getFleetAmount()),

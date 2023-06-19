@@ -39,13 +39,13 @@
                 <a title="{{ $item['fleet'] }}">{{ $item['fleet_amount'] }}</a>
             </th>
             <th role="cell">
-                {{ $item['fleet_start'] }}
+                {!! $item['fleet_start'] !!}
             </th>
             <th role="cell">
                 {{ $item['fleet_start_time'] }}
             </th>
             <th role="cell">
-                {{ $item['fleet_end'] }}
+                {!! $item['fleet_end'] !!}
             </th>
             <th role="cell">
                 {{ $item['fleet_end_time'] }}
@@ -54,7 +54,7 @@
                 {{ $item['fleet_arrival'] }}
             </th>
             <th role="cell" style="vertical-align: middle">
-                {{ $item['fleet_actions'] }}
+                {!! $item['fleet_actions'] !!}
             </th>
         </tr>
         @endforeach

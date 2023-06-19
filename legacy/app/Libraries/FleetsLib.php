@@ -147,9 +147,9 @@ class FleetsLib
     public static function startLink(array $fleetRow, string $fleetType): string
     {
         $coords = FormatLib::prettyCoords(
-            $fleetRow['fleet_start_galaxy'],
-            $fleetRow['fleet_start_system'],
-            $fleetRow['fleet_start_planet']
+            (int) $fleetRow['fleet_start_galaxy'],
+            (int) $fleetRow['fleet_start_system'],
+            (int) $fleetRow['fleet_start_planet']
         );
 
         $link = 'game.php?page=galaxy&mode=3&galaxy=' .
@@ -161,9 +161,9 @@ class FleetsLib
     public static function targetLink(array $fleetRow, string $fleetType): string
     {
         $coords = FormatLib::prettyCoords(
-            $fleetRow['fleet_end_galaxy'],
-            $fleetRow['fleet_end_system'],
-            $fleetRow['fleet_end_planet']
+            (int) $fleetRow['fleet_end_galaxy'],
+            (int) $fleetRow['fleet_end_system'],
+            (int) $fleetRow['fleet_end_planet']
         );
 
         $link = 'game.php?page=galaxy&mode=3&galaxy=' .
@@ -210,8 +210,8 @@ class FleetsLib
         $pop_up .= '<table width=200>';
 
         $espionage_tech = OfficiersLib::getMaxEspionage(
-            $current_user['research_espionage_technology'],
-            $current_user['premium_officier_technocrat']
+            (int) $current_user['research_espionage_technology'],
+            (int) $current_user['premium_officier_technocrat']
         );
 
         if ($espionage_tech < 2 && $fleetRow['fleet_owner'] != $current_user['id']) {
