@@ -33,7 +33,7 @@
                 <tr>
                     <td>
                         <div align="center">
-                            <a href="admin.php" target="_blank" title="{{ __('game/menu.lm_administration') }}">
+                            <a href="admin" target="_blank" title="{{ __('game/menu.lm_administration') }}">
                                 <span style="color: lime;">{{ __('game/menu.lm_administration') }}</span>
                             </a>
                         </div>

@@ -1,7 +1,6 @@
 <?php
 
 use Xgp\App\Core\Common;
-use Xgp\App\Libraries\Adm\AdministrationLib;
 use Xgp\App\Libraries\Functions;
 
 define('IN_ADMIN', true);
@@ -12,8 +11,6 @@ require XGP_ROOT . 'app' . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 
 $system = new Common();
 $system->bootUp('admin');
 
-include_once LIB_PATH . 'Adm' . DIRECTORY_SEPARATOR . 'AdministrationLib.php';
-
 // check updates
 $page = filter_input(INPUT_GET, 'page');
 
@@ -22,12 +19,6 @@ if (is_null($page)) {
 }
 
 $file_name = ADMIN_PATH . ucfirst($page) . 'Controller.php';
-
-// logout
-if ($page == 'logout') {
-    AdministrationLib::closeSession();
-    Functions::redirect(SYSTEM_ROOT . 'admin.php?page=login');
-}
 
 if (file_exists($file_name)) {
     include $file_name;

@@ -17,4 +17,14 @@ class SessionService
             ),
         ]);
     }
+
+    public function setAdminData(int $userId, string $password): void
+    {
+        session([
+            'admin_id' => $userId,
+            'admin_password' => Hash::make(
+                ($password . '-' . config('SECRETWORD'))
+            ),
+        ]);
+    }
 }

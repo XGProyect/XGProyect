@@ -84,14 +84,9 @@ class AdministrationLib
             $page = filter_input(INPUT_GET, 'page', FILTER_UNSAFE_RAW);
 
             if ($page != 'login') {
-                Functions::redirect(SYSTEM_ROOT . 'admin.php?page=login&redirect=' . $page);
+                Functions::redirect(SYSTEM_ROOT . 'admin/?redirect=' . $page);
             }
         }
-    }
-
-    public static function closeSession(): void
-    {
-        session()->forget(['admin_id', 'admin_password']);
     }
 
     private static function isSessionSet(): bool

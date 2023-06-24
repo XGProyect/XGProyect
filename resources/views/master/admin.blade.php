@@ -63,7 +63,7 @@
                 <div class="modal-body">{{ __('admin/popups.ready_to_leave_instructions') }}</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ __('admin/popups.ready_to_leave_cancel') }}</button>
-                    <a class="btn btn-primary" href="admin.php?page=logout">{{ __('admin/popups.ready_to_leave_logout') }}</a>
+                    <a class="btn btn-primary" href="{{ route('admin.logout') }}">{{ __('admin/popups.ready_to_leave_logout') }}</a>
                 </div>
             </div>
         </div>

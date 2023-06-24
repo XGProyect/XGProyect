@@ -10,19 +10,19 @@
     <title>XG Proyect | Admin CP</title>
 
     <!-- Custom fonts for this template-->
-    <link href="{{ asset('admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{ asset('admin/css/admin.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/admin.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 </head>
 <body class="bg-gradient-primary">
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
             <div class="col-xl-10 col-lg-12 col-md-9">
-                <div class="card o-hidden border-0 shadow-lg my-5" style="top: 50%;">
+                <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0 bg-login-image">
                         <!-- Nested Row within Card Body -->
                         <div class="row" style="background-color: rgba(0,0,0,0.2);">
@@ -35,7 +35,9 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-white mb-4">{{ __('admin/login.lg_welcome_back') }}</h1>
                                     </div>
-                                    <form class="user" method="post" action="admin.php?page=login&redirect={{ $redirect }}">
+                                    <form class="user" method="post" action="{{ route('admin.login') }}">
+                                        @csrf
+                                        <input type="hidden" name="redirect" value="{{ $redirect }}">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="inputEmail"
                                                 name="inputEmail" aria-describedby="emailHelp"
