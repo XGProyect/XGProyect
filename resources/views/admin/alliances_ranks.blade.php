@@ -19,39 +19,39 @@
                             </td>
                             <th>{{ __('admin/alliances.al_rank_name') }}</th>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r1.png') }}" alt="{{ __('admin/alliances.al_rank_delete_alliance') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r1.png') }}" alt="{{ __('admin/alliances.al_rank_delete_alliance') }}"
                                     title="{{ __('admin/alliances.al_rank_delete_alliance') }}">
                             </td>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r2.png') }}" alt="{{ __('admin/alliances.al_rank_kick_members') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r2.png') }}" alt="{{ __('admin/alliances.al_rank_kick_members') }}"
                                     title="{{ __('admin/alliances.al_rank_kick_members') }}">
                             </td>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r3.png') }}" alt="{{ __('admin/alliances.al_rank_see_requests') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r3.png') }}" alt="{{ __('admin/alliances.al_rank_see_requests') }}"
                                     title="{{ __('admin/alliances.al_rank_see_requests') }}">
                             </td>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r4.png') }}" alt="{{ __('admin/alliances.al_rank_see_memberslist') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r4.png') }}" alt="{{ __('admin/alliances.al_rank_see_memberslist') }}"
                                     title="{{ __('admin/alliances.al_rank_see_memberslist') }}">
                             </td>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r5.png') }}" alt="{{ __('admin/alliances.al_rank_check_requests') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r5.png') }}" alt="{{ __('admin/alliances.al_rank_check_requests') }}"
                                     title="{{ __('admin/alliances.al_rank_check_requests') }}">
                             </td>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r6.png') }}" alt="{{ __('admin/alliances.al_rank_manage_alliance') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r6.png') }}" alt="{{ __('admin/alliances.al_rank_manage_alliance') }}"
                                     title="{{ __('admin/alliances.al_rank_manage_alliance') }}">
                             </td>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r7.png') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r7.png') }}"
                                     alt="{{ __('admin/alliances.al_rank_see_online_members') }}" title="{{ __('admin/alliances.al_rank_see_online_members') }}">
                             </td>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r8.png') }}" alt="{{ __('admin/alliances.al_rank_create_circular') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r8.png') }}" alt="{{ __('admin/alliances.al_rank_create_circular') }}"
                                     title="{{ __('admin/alliances.al_rank_create_circular') }}">
                             </td>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r9.png') }}" alt="{{ __('admin/alliances.al_rank_right_hand') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r9.png') }}" alt="{{ __('admin/alliances.al_rank_right_hand') }}"
                                     title="{{ __('admin/alliances.al_rank_right_hand') }}">
                             </td>
                         </tr>
@@ -100,63 +100,63 @@
                         </tr>
                         <tr>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r1.png') }}" alt="{{ __('admin/alliances.al_rank_delete_alliance') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r1.png') }}" alt="{{ __('admin/alliances.al_rank_delete_alliance') }}"
                                     title="{{ __('admin/alliances.al_rank_delete_alliance') }}">
                             </td>
                             <td class="align_center">{{ __('admin/alliances.al_rank_delete_alliance') }}</td>
                         </tr>
                         <tr>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r2.png') }}" alt="{{ __('admin/alliances.al_rank_kick_members') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r2.png') }}" alt="{{ __('admin/alliances.al_rank_kick_members') }}"
                                     title="{{ __('admin/alliances.al_rank_kick_members') }}">
                                 </td>
                             <td class="align_center">{{ __('admin/alliances.al_rank_kick_members') }}</td>
                         </tr>
                         <tr>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r3.png') }}" alt="{{ __('admin/alliances.al_rank_see_requests') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r3.png') }}" alt="{{ __('admin/alliances.al_rank_see_requests') }}"
                                     title="{{ __('admin/alliances.al_rank_see_requests') }}">
                                 </td>
                             <td class="align_center">{{ __('admin/alliances.al_rank_see_requests') }}</td>
                         </tr>
                         <tr>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r4.png') }}" alt="{{ __('admin/alliances.al_rank_see_memberslist') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r4.png') }}" alt="{{ __('admin/alliances.al_rank_see_memberslist') }}"
                                     title="{{ __('admin/alliances.al_rank_see_memberslist') }}">
                                 </td>
                             <td class="align_center">{{ __('admin/alliances.al_rank_see_memberslist') }}</td>
                         </tr>
                         <tr>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r5.png') }}" alt="{{ __('admin/alliances.al_rank_check_requests') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r5.png') }}" alt="{{ __('admin/alliances.al_rank_check_requests') }}"
                                     title="{{ __('admin/alliances.al_rank_check_requests') }}">
                                 </td>
                             <td class="align_center">{{ __('admin/alliances.al_rank_check_requests') }}</td>
                         </tr>
                         <tr>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r6.png') }}" alt="{{ __('admin/alliances.al_rank_manage_alliance') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r6.png') }}" alt="{{ __('admin/alliances.al_rank_manage_alliance') }}"
                                     title="{{ __('admin/alliances.al_rank_manage_alliance') }}">
                                 </td>
                             <td class="align_center">{{ __('admin/alliances.al_rank_manage_alliance') }}</td>
                         </tr>
                         <tr>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r7.png') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r7.png') }}"
                                     alt="{{ __('admin/alliances.al_rank_see_online_members') }}" title="{{ __('admin/alliances.al_rank_see_online_members') }}">
                             </td>
                             <td class="align_center">{{ __('admin/alliances.al_rank_see_online_members') }}</td>
                         </tr>
                         <tr>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r8.png') }}" alt="{{ __('admin/alliances.al_rank_create_circular') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r8.png') }}" alt="{{ __('admin/alliances.al_rank_create_circular') }}"
                                     title="{{ __('admin/alliances.al_rank_create_circular') }}">
                                 </td>
                             <td class="align_center">{{ __('admin/alliances.al_rank_create_circular') }}</td>
                         </tr>
                         <tr>
                             <td class="align_center">
-                                <img src="{{ asset('upload/skins/xgproyect/img/r9.png') }}" alt="{{ __('admin/alliances.al_rank_right_hand') }}"
+                                <img src="{{ asset('assets/upload/skins/xgproyect/img/r9.png') }}" alt="{{ __('admin/alliances.al_rank_right_hand') }}"
                                     title="{{ __('admin/alliances.al_rank_right_hand') }}">
                                 </td>
                             <td class="align_center">{{ __('admin/alliances.al_rank_right_hand') }}</td>

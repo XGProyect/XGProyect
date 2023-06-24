@@ -26,7 +26,7 @@
             <th role="cell">{{ $item['name'] }}</th>
             <th role="cell">
                 <a href="game.php?page=chat&playerId={{ $item['id'] }}">
-                    <img src="{{ asset('upload/skins/xgproyect/img/m.gif') }}" border="0" title="{{ $item['write_message'] }}" alt="{{ $item['write_message'] }}"/>
+                    <img src="{{ asset('assets/upload/skins/xgproyect/img/m.gif') }}" border="0" title="{{ $item['write_message'] }}" alt="{{ $item['write_message'] }}"/>
                 </a>
             </th>
             <th role="cell">{!! $item['ally_range'] !!}</th>

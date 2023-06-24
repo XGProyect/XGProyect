@@ -15,15 +15,15 @@
             </tr>
             <tr>
                 <th colspan="2"></th>
-                <th><img src="{{ asset('upload/skins/xgproyect/img/r3.png') }}" alt="{{ __('game/alliance.al_legend_see_requests') }}"/></th>
-                <th><img src="{{ asset('upload/skins/xgproyect/img/r5.png') }}" alt="{{ __('game/alliance.al_legend_check_requests') }}"/></th>
-                <th><img src="{{ asset('upload/skins/xgproyect/img/r4.png') }}" alt="{{ __('game/alliance.al_legend_see_users_list') }}"/></th>
-                <th><img src="{{ asset('upload/skins/xgproyect/img/r2.png') }}" alt="{{ __('game/alliance.al_legend_kick_users') }}"/></th>
-                <th><img src="{{ asset('upload/skins/xgproyect/img/r7.png') }}" alt="{{ __('game/alliance.al_legend_see_connected_users') }}"/></th>
-                <th><img src="{{ asset('upload/skins/xgproyect/img/r8.png') }}" alt="{{ __('game/alliance.al_legend_create_circular') }}"/></th>
-                <th><img src="{{ asset('upload/skins/xgproyect/img/r1.png') }}" alt="{{ __('game/alliance.al_legend_disolve_alliance') }}"/></th>
-                <th><img src="{{ asset('upload/skins/xgproyect/img/r6.png') }}" alt="{{ __('game/alliance.al_legend_admin_alliance') }}"/></th>
-                <th><img src="{{ asset('upload/skins/xgproyect/img/r9.png') }}" alt="{{ __('game/alliance.al_legend_right_hand') }}"/></th>
+                <th><img src="{{ asset('assets/upload/skins/xgproyect/img/r3.png') }}" alt="{{ __('game/alliance.al_legend_see_requests') }}"/></th>
+                <th><img src="{{ asset('assets/upload/skins/xgproyect/img/r5.png') }}" alt="{{ __('game/alliance.al_legend_check_requests') }}"/></th>
+                <th><img src="{{ asset('assets/upload/skins/xgproyect/img/r4.png') }}" alt="{{ __('game/alliance.al_legend_see_users_list') }}"/></th>
+                <th><img src="{{ asset('assets/upload/skins/xgproyect/img/r2.png') }}" alt="{{ __('game/alliance.al_legend_kick_users') }}"/></th>
+                <th><img src="{{ asset('assets/upload/skins/xgproyect/img/r7.png') }}" alt="{{ __('game/alliance.al_legend_see_connected_users') }}"/></th>
+                <th><img src="{{ asset('assets/upload/skins/xgproyect/img/r8.png') }}" alt="{{ __('game/alliance.al_legend_create_circular') }}"/></th>
+                <th><img src="{{ asset('assets/upload/skins/xgproyect/img/r1.png') }}" alt="{{ __('game/alliance.al_legend_disolve_alliance') }}"/></th>
+                <th><img src="{{ asset('assets/upload/skins/xgproyect/img/r6.png') }}" alt="{{ __('game/alliance.al_legend_admin_alliance') }}"/></th>
+                <th><img src="{{ asset('assets/upload/skins/xgproyect/img/r9.png') }}" alt="{{ __('game/alliance.al_legend_right_hand') }}"/></th>
             </tr>
             @foreach ($list_of_ranks as $item)
             <tr>
@@ -72,39 +72,39 @@
                 <td class="c" colspan="2">{{ __('game/alliance.al_legend') }}</td>
             </tr>
             <tr>
-                <th role="cell"><img src="{{ asset('upload/skins/xgproyect/img/r1.png') }}" alt="{{ __('game/alliance.al_legend_disolve_alliance') }}"/></th>
+                <th role="cell"><img src="{{ asset('assets/upload/skins/xgproyect/img/r1.png') }}" alt="{{ __('game/alliance.al_legend_disolve_alliance') }}"/></th>
                 <th role="cell">{{ __('game/alliance.al_legend_disolve_alliance') }}</th>
             </tr>
             <tr>
-                <th role="cell"><img src="{{ asset('upload/skins/xgproyect/img/r2.png') }}" alt="{{ __('game/alliance.al_legend_kick_users') }}"/></th>
+                <th role="cell"><img src="{{ asset('assets/upload/skins/xgproyect/img/r2.png') }}" alt="{{ __('game/alliance.al_legend_kick_users') }}"/></th>
                 <th role="cell">{{ __('game/alliance.al_legend_kick_users') }}</th>
             </tr>
             <tr>
-                <th role="cell"><img src="{{ asset('upload/skins/xgproyect/img/r3.png') }}" alt="{{ __('game/alliance.al_legend_see_requests') }}"/></th>
+                <th role="cell"><img src="{{ asset('assets/upload/skins/xgproyect/img/r3.png') }}" alt="{{ __('game/alliance.al_legend_see_requests') }}"/></th>
                 <th role="cell">{{ __('game/alliance.al_legend_see_requests') }}</th>
             </tr>
             <tr>
-                <th role="cell"><img src="{{ asset('upload/skins/xgproyect/img/r4.png') }}" alt="{{ __('game/alliance.al_legend_see_users_list') }}"/></th>
+                <th role="cell"><img src="{{ asset('assets/upload/skins/xgproyect/img/r4.png') }}" alt="{{ __('game/alliance.al_legend_see_users_list') }}"/></th>
                 <th role="cell">{{ __('game/alliance.al_legend_see_users_list') }}</th>
             </tr>
             <tr>
-                <th role="cell"><img src="{{ asset('upload/skins/xgproyect/img/r5.png') }}" alt="{{ __('game/alliance.al_legend_check_requests') }}"/></th>
+                <th role="cell"><img src="{{ asset('assets/upload/skins/xgproyect/img/r5.png') }}" alt="{{ __('game/alliance.al_legend_check_requests') }}"/></th>
                 <th role="cell">{{ __('game/alliance.al_legend_check_requests') }}</th>
             </tr>
             <tr>
-                <th role="cell"><img src="{{ asset('upload/skins/xgproyect/img/r6.png') }}" alt="{{ __('game/alliance.al_legend_admin_alliance') }}"/></th>
+                <th role="cell"><img src="{{ asset('assets/upload/skins/xgproyect/img/r6.png') }}" alt="{{ __('game/alliance.al_legend_admin_alliance') }}"/></th>
                 <th role="cell">{{ __('game/alliance.al_legend_admin_alliance') }}</th>
             </tr>
             <tr>
-                <th role="cell"><img src="{{ asset('upload/skins/xgproyect/img/r7.png') }}" alt="{{ __('game/alliance.al_legend_see_connected_users') }}"/></th>
+                <th role="cell"><img src="{{ asset('assets/upload/skins/xgproyect/img/r7.png') }}" alt="{{ __('game/alliance.al_legend_see_connected_users') }}"/></th>
                 <th role="cell">{{ __('game/alliance.al_legend_see_connected_users') }}</th>
             </tr>
             <tr>
-                <th role="cell"><img src="{{ asset('upload/skins/xgproyect/img/r8.png') }}" alt="{{ __('game/alliance.al_legend_create_circular') }}"/></th>
+                <th role="cell"><img src="{{ asset('assets/upload/skins/xgproyect/img/r8.png') }}" alt="{{ __('game/alliance.al_legend_create_circular') }}"/></th>
                 <th role="cell">{{ __('game/alliance.al_legend_create_circular') }}</th>
             </tr>
             <tr>
-                <th role="cell"><img src="{{ asset('upload/skins/xgproyect/img/r9.png') }}" alt="{{ __('game/alliance.al_legend_right_hand') }}"/></th>
+                <th role="cell"><img src="{{ asset('assets/upload/skins/xgproyect/img/r9.png') }}" alt="{{ __('game/alliance.al_legend_right_hand') }}"/></th>
                 <th role="cell"><a title="{{ __('game/alliance.al_legend_right_hand_detail') }}">{{ __('game/alliance.al_legend_right_hand') }}</a></th>
             </tr>
         </table>

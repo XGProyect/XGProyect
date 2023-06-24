@@ -288,7 +288,7 @@ class OverviewController extends BaseController
         if ($this->planet['moon_id'] != 0 && $this->planet['moon_destroyed'] == 0 && $this->planet['planet_type'] == PlanetTypesEnumerator::PLANET) {
             $moon_name = $this->planet['moon_name'] . ' (' . __('game/global.moon') . ')';
             $url = 'game.php?page=overview&cp=' . $this->planet['moon_id'] . '&re=0';
-            $image = asset('upload/skins/xgproyect/planets/' . $this->planet['moon_image'] . '.jpg');
+            $image = asset('assets/upload/skins/xgproyect/planets/' . $this->planet['moon_image'] . '.jpg');
             $attributes = 'height="50" width="50"';
 
             $return['moonImg'] = UrlHelper::setUrl($url, Functions::setImage($image, $moon_name, $attributes), $moon_name);
@@ -308,7 +308,7 @@ class OverviewController extends BaseController
         foreach ($planets_query as $user_planet) {
             if ($user_planet['planet_id'] != $this->user['current_planet'] && $user_planet['planet_type'] != PlanetTypesEnumerator::MOON) {
                 $url = 'game.php?page=overview&cp=' . $user_planet['planet_id'] . '&re=0';
-                $image = asset('upload/skins/xgproyect/planets/small/s_' . $user_planet['planet_image'] . '.jpg');
+                $image = asset('assets/upload/skins/xgproyect/planets/small/s_' . $user_planet['planet_image'] . '.jpg');
                 $attributes = 'height="50" width="50"';
 
                 $planet_block .= '<th>' . $user_planet['planet_name'] . '<br>';

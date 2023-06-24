@@ -10,7 +10,7 @@
         <tr>
             <td class="l" width="120" height="120">
                 <a href="game.php?page=technologydetails&technology={{ $item['i'] }}">
-                    <img alt="{{ $item['n'] }}" border="0" src="{{ asset('upload/skins/xgproyect/elements/' . $item['i'] . '.gif') }}" align="top" width="120" height="120">
+                    <img alt="{{ $item['n'] }}" border="0" src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['i'] . '.gif') }}" align="top" width="120" height="120">
                 </a>
             </td>
             <td class="l">

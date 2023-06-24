@@ -22,7 +22,7 @@
         {!! $fleetList !!}
         <tr>
             <th role="cell">{!! $moonImg !!}<br>{{ $moon }}</th>
-            <th role="cell" colspan="2"><img src="{{ asset('upload/skins/xgproyect/planets/' . $planetImage . '.jpg') }}" height="200" width="200" alt=""/><br>{!! $building !!}</th>
+            <th role="cell" colspan="2"><img src="{{ asset('assets/upload/skins/xgproyect/planets/' . $planetImage . '.jpg') }}" height="200" width="200" alt=""/><br>{!! $building !!}</th>
             <th role="cell" class="s">
                 <table role="presentation" class="s" align="top" border="0">
                     <tr>{!! $otherPlanets !!}</tr>

@@ -14,7 +14,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <img src="{{ asset('upload/skins/xgproyect/elements/' . $id . '.gif') }}" align="top" border="0" height="120px" width="120px" alt="{{ $name }}"/>
+                                    <img src="{{ asset('assets/upload/skins/xgproyect/elements/' . $id . '.gif') }}" align="top" border="0" height="120px" width="120px" alt="{{ $name }}"/>
                                 </td>
                                 <td style="vertical-align: top">{{ $description }}</td>
                             </tr>

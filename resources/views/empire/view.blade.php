@@ -13,7 +13,7 @@
                     @foreach ($image as $item)
                     <th width="75px">
                         <a href="game.php?page=overview&cp={{ $item['planetId'] }}&re=0">
-                            <img src="{{ asset('upload/skins/xgproyect/planets/small/s_' . $item['planetImage'] . '.jpg') }}" border="0" width="80px" height="80px" alt="{{ $item['planetName'] }}"/>
+                            <img src="{{ asset('assets/upload/skins/xgproyect/planets/small/s_' . $item['planetImage'] . '.jpg') }}" border="0" width="80px" height="80px" alt="{{ $item['planetName'] }}"/>
                         </a>
                     </th>
                     @endforeach

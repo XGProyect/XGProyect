@@ -1,8 +1,8 @@
 @extends('master.admin')
 
 @section('content')
-<script type="text/javascript" src="{{ asset('js/cntchar-min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/filterlist-min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/cntchar-min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/filterlist-min.js') }}"></script>
 <div class="container-fluid">
     <x-alert/>
     <!-- Page Heading -->

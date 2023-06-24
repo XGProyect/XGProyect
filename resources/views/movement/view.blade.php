@@ -1,8 +1,8 @@
 @extends('master.game')
 
 @section('content')
-<script type="text/javascript" src="{{ asset('js/flotten-min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/ocnt-min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/flotten-min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/ocnt-min.js') }}"></script>
 <br>
 <div id="content" role="main">
     <table width="519" border="0" cellpadding="0" cellspacing="1">

@@ -9,7 +9,7 @@
         </tr>
         <tr>
             <td class="l">
-                <img src="{{ asset('upload/skins/xgproyect/premium/DMaterie.jpg') }}" width="120" height="120" alt=""/>
+                <img src="{{ asset('assets/upload/skins/xgproyect/premium/DMaterie.jpg') }}" width="120" height="120" alt=""/>
             </td>
             <td class="l">
                 <strong>{{ __('game/global.darkmatter') }}</strong><br>
@@ -18,7 +18,7 @@
                     <table role="presentation">
                         <tr>
                             <td>
-                                <img src="{{ asset('upload/skins/xgproyect/premium/dm_klein_1.jpg') }}" width="32" height="32" style="vertical-align:middle;" alt=""/></td>
+                                <img src="{{ asset('assets/upload/skins/xgproyect/premium/dm_klein_1.jpg') }}" width="32" height="32" style="vertical-align:middle;" alt=""/></td>
                             <td style='background-color:transparent;'>
                                 <strong style="color:skyblue; vertical-align:middle;">{{ __('game/officier.of_darkmatter_description_short') }}</strong>
                             </td>
@@ -38,7 +38,7 @@
         @foreach ($officier_list as $item)
         <tr>
             <td class="l" rowspan="2">
-                <img src="{{ asset('upload/skins/xgproyect/premium/' . $item['img_big'] .'.jpg') }}" width="120" height="120" alt=""/>
+                <img src="{{ asset('assets/upload/skins/xgproyect/premium/' . $item['img_big'] .'.jpg') }}" width="120" height="120" alt=""/>
             </td>
             <td class="l" rowspan="2">
                 <strong role="heading" aria-level="3">{{ $item['name'] }}</strong> (<strong>{!! $item['status'] !!}</strong>)<br>
@@ -47,7 +47,7 @@
                     <table role="presentation">
                         <tr>
                             <td>
-                                <img src="{{ asset('upload/skins/xgproyect/premium/' . $item['img_small'] .'.gif') }}" width="32" height="32" style="vertical-align:middle;" alt="{{ $item['name'] }}"/>
+                                <img src="{{ asset('assets/upload/skins/xgproyect/premium/' . $item['img_small'] .'.gif') }}" width="32" height="32" style="vertical-align:middle;" alt="{{ $item['name'] }}"/>
                             </td>
                             <td style='background-color:transparent;'>
                                 <strong style="color:skyblue; vertical-align:middle;">{{ $item['benefits'] }}</strong>

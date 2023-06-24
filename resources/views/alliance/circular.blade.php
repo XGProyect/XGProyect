@@ -1,7 +1,7 @@
 @extends('master.game')
 
 @section('content')
-<script type="text/javascript" src="{{ asset('js/cntchar-min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/cntchar-min.js') }}"></script>
 <br>
 <div id="content" role="main">
     <form action="game.php?page=alliance&mode=circular&sendmail=1" method="POST" role="form">

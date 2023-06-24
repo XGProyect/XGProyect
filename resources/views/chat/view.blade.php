@@ -1,7 +1,7 @@
 @extends('master.game')
 
 @section('content')
-<script src="{{ asset('js/cntchar-min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/js/cntchar-min.js') }}" type="text/javascript"></script>
 <br>
 <div id="content" role="main">
     <x-notice width="519px" :color="$error_color" :message="$error_text" />

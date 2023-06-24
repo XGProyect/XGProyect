@@ -9,7 +9,7 @@
         <tr>
             <th class="l">
                 <a href="game.php?page=technologydetails&technology={{ $item['tech_id'] }}">
-                    <img border="0" src="{{ asset('upload/skins/xgproyect/elements/' . $item['tech_id'] . '.gif') }}" align="top" width="120" height="120" alt="{{ $item['tech_name'] }}"/>
+                    <img border="0" src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['tech_id'] . '.gif') }}" align="top" width="120" height="120" alt="{{ $item['tech_name'] }}"/>
                 </a>
             </th>
             <td class="l">

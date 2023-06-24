@@ -14,17 +14,17 @@
     <meta name="Revisit" content="After 14 days">
     <title>{{ $servername }}</title>
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/home/reset.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/home/forms.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/home/all.css') }}">
-    <script type="text/javascript" src="{{ asset('js/home/jquery.tools.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/home/reset.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/home/forms.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/home/all.css') }}">
+    <script type="text/javascript" src="{{ asset('assets/js/home/jquery.tools.min.js') }}"></script>
     <style type="text/css"></style>
-    <script type="text/javascript" src="{{ asset('js/home/jquery.easing-1.3.pack.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/home/jquery.jparallax.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/home/jquery.fancybox-1.3.1.pack.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/home/jquery.validationEngine.modified.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/home/xgproyect.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/home/test.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/home/jquery.easing-1.3.pack.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/home/jquery.jparallax.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/home/jquery.fancybox-1.3.1.pack.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/home/jquery.validationEngine.modified.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/home/xgproyect.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/home/test.js') }}"></script>
     <script type="text/javascript">
         // <![CDATA[
         (function($) {
@@ -143,7 +143,7 @@
                 {{ __('home/welcome.hm_login_button') }}
             </a>
             <div id="login">
-                <form id="loginForm" name="loginForm" method="post" action="{{ route('login') }}">
+                <form id="loginForm" name="loginForm" method="post" action="{{ route('home.login') }}">
                     @csrf
                     <input type="hidden" name="kid" value="">
 			        <div class="input-wrap">
@@ -286,8 +286,8 @@
     <script type="text/javascript">
         JSLoca = new Array('{{ __('home/welcome.hm_login_button') }}', '{{ __('home/welcome.hm_close_button') }}');
     </script>
-    <script type="text/javascript" src="{{ asset('js/home/xgproyect.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/home/xgproyect.start.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/home/xgproyect.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/home/xgproyect.start.js') }}"></script>
     <div id="fancybox-tmp"></div>
     <div id="fancybox-loading">
         <div></div>

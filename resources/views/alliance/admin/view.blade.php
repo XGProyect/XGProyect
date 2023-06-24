@@ -1,7 +1,7 @@
 @extends('master.game')
 
 @section('content')
-<script type="text/javascript" src="{{ asset('js/cntchar-min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/cntchar-min.js') }}"></script>
 <br>
 <div id="content" role="main">
     <table role="presentation" width="519px">
@@ -17,11 +17,11 @@
         <tr>
             <th colspan="2">
                 <a href="game.php?page=alliance&mode=admin&edit=tag">
-                <img src="{{ asset('upload/skins/xgproyect/alliance/appwiz.gif') }}" border="0" alt="{{ __('game/alliance.al_manage_change_tag') }}"/>
+                <img src="{{ asset('assets/upload/skins/xgproyect/alliance/appwiz.gif') }}" border="0" alt="{{ __('game/alliance.al_manage_change_tag') }}"/>
                 </a>
                 &nbsp;
                 <a href="game.php?page=alliance&mode=admin&edit=name">
-                    <img src="{{ asset('upload/skins/xgproyect/alliance/appwiz.gif') }}" border="0" alt="{{ __('game/alliance.al_manage_change_name') }}"/>
+                    <img src="{{ asset('assets/upload/skins/xgproyect/alliance/appwiz.gif') }}" border="0" alt="{{ __('game/alliance.al_manage_change_name') }}"/>
                 </a>
             </th>
         </tr>

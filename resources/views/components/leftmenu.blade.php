@@ -16,7 +16,7 @@
                 @foreach ($blocks as $blockIndex => $block)
                 <tr>
                     <td>
-                        <img src="{{ asset('upload/skins/xgproyect/menu/' . $block[0]) }}" width="{{ $block[1] }}" height="{{ $block[2] }}" />
+                        <img src="{{ asset('assets/upload/skins/xgproyect/menu/' . $block[0]) }}" width="{{ $block[1] }}" height="{{ $block[2] }}" />
                     </td>
                 </tr>
                 @foreach ($menu[$blockIndex] as $item)
@@ -42,7 +42,7 @@
                 @endif
                 <tr>
                     <td>
-                        <img src="{{ asset('upload/skins/xgproyect/menu/info-help.jpg') }}" width="110" height="19">
+                        <img src="{{ asset('assets/upload/skins/xgproyect/menu/info-help.jpg') }}" width="110" height="19">
                     </td>
                 </tr>
                 <tr>

@@ -12,7 +12,7 @@
                 <tr>
                     <td class="text-left">
                         <div class="btn-group">
-                            <img src="{{ asset('upload/skins/xgproyect/planets/small/s_' .  $item['planet_image'] . '.jpg') }}" alt="{{ $item['planet_image'] }}.jpg"
+                            <img src="{{ asset('assets/upload/skins/xgproyect/planets/small/s_' .  $item['planet_image'] . '.jpg') }}" alt="{{ $item['planet_image'] }}.jpg"
                                 title="{{ $item['planet_image'] }}.jpg" border="0" {{ $item['planet_image_style'] }}>
                             {!! $item['moon_image'] !!}
                             <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">{{ $item['planet_name'] }}

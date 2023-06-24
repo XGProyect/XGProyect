@@ -1,7 +1,7 @@
 @extends('master.game')
 
 @section('content')
-<script type="text/javascript" src="{{ asset('js/flotten-min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/flotten-min.js') }}"></script>
 <script type="text/javascript">
     function getStorageFaktor() {
         return 1

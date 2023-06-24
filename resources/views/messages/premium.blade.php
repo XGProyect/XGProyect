@@ -94,7 +94,7 @@
                                         <th role="cell" colspan="4">
                                             {{ $item['name'] }}
                                             <a href="game.php?page=chat&playerId={{ $item['id'] }}">
-                                                <img src="{{ asset('upload/skins/xgproyect/img/m.gif') }}" alt=""/>
+                                                <img src="{{ asset('assets/upload/skins/xgproyect/img/m.gif') }}" alt=""/>
                                             </a>
                                         </th>
                                     </tr>
@@ -109,7 +109,7 @@
                                         <th role="cell" colspan="4">
                                             {{ $item['name'] }}
                                             <a href="game.php?page=chat&playerId={{ $item['id'] }}">
-                                                <img src="{{ asset('upload/skins/xgproyect/img/m.gif') }}" alt=""/>
+                                                <img src="{{ asset('assets/upload/skins/xgproyect/img/m.gif') }}" alt=""/>
                                             </a>
                                         </th>
                                     </tr>
@@ -124,7 +124,7 @@
                                         <th role="cell" colspan="4">
                                             {{ $item['name'] }}
                                             <a href="mailto:{{ $item['email'] }}">
-                                                <img src="{{ asset('upload/skins/xgproyect/img/m.gif') }}" alt=""/>
+                                                <img src="{{ asset('assets/upload/skins/xgproyect/img/m.gif') }}" alt=""/>
                                             </a>
                                         </th>
                                     </tr>

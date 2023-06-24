@@ -7,7 +7,7 @@
                 <table class="header">
                     <tr class="header">
                         <td class="header">
-                            <img src="{{ asset('upload/skins/xgproyect/planets/small/s_' . $planetImage . '.jpg') }}" height="50" width="50">
+                            <img src="{{ asset('assets/upload/skins/xgproyect/planets/small/s_' . $planetImage . '.jpg') }}" height="50" width="50">
                         </td>
                         <td class="header">
                             <table class="header">
@@ -28,7 +28,7 @@
                     <tr class="header" style="text-align:center">
                         @foreach ($resources as $resource)
                         <td width="85" class="header">
-                            <img src="{{ asset('upload/skins/xgproyect/resources/' . $resource  . '.gif') }}" width="42" height="22" alt="{{ __('game/global.' . $resource) }}" title="{{ __('game/global.' . $resource) }}" />
+                            <img src="{{ asset('assets/upload/skins/xgproyect/resources/' . $resource  . '.gif') }}" width="42" height="22" alt="{{ __('game/global.' . $resource) }}" title="{{ __('game/global.' . $resource) }}" />
                         </td>
                         @endforeach
                     </tr>
@@ -53,7 +53,7 @@
                         @foreach ($officers as $officer)
                         <td style="margin: 0 auto;" width="35px" class='header'>
                             <a href="game.php?page=premium" accesskey="o">
-                                <img style="border:0;" src="{{ asset('upload/skins/xgproyect/premium/' . $officer['icon'] .'.gif') }}" width="32" height="32" alt="{{ $officer['name'] }}" onmouseover="return overlib('<table width=390px><tr><td class=c>{{ $officer['name'] }}</td></tr><tr><th style=text-align:left>{{ $officer['status'] }}</th></tr></table>');" onmouseout="return nd();">
+                                <img style="border:0;" src="{{ asset('assets/upload/skins/xgproyect/premium/' . $officer['icon'] .'.gif') }}" width="32" height="32" alt="{{ $officer['name'] }}" onmouseover="return overlib('<table width=390px><tr><td class=c>{{ $officer['name'] }}</td></tr><tr><th style=text-align:left>{{ $officer['status'] }}</th></tr></table>');" onmouseout="return nd();">
                             </a>
                         </td>
                         @endforeach

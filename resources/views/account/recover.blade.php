@@ -3,8 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>{{ $gameName }}</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/home/reset.css') }}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/home/recover.css') }}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/home/reset.css') }}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/home/recover.css') }}" media="screen" />
 </head>
 <body id="login">
     <form id="recoverpassword" name="recoverpassword" method="POST">

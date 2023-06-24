@@ -33,7 +33,7 @@
         }
 
     </script>
-    <script src="{{ asset('js/tw-sack-min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/tw-sack-min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         var ajax = new sack();
         var strInfo = "";

@@ -1,7 +1,7 @@
 @extends('master.game', ['noTopnav' => true, 'noLeftMenu' => true])
 
 @section('content')
-<script src="{{ asset('js/cntchar-min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/js/cntchar-min.js') }}" type="text/javascript"></script>
 <form action="game.php?page=notices" method="POST">
     <input type="hidden" name="s" value="{{ $s }}">
     {!! $note_id !!}
