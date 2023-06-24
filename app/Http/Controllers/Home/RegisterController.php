@@ -13,7 +13,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Home\Register;
 
@@ -28,7 +27,7 @@ class RegisterController extends BaseController
 
     public function __invoke(RegisterRequest $request): RedirectResponse
     {
-        if ($this->settingsService->get('reg_enable') == SwitchInt::off) {
+        if ($this->settingsService->getBool('reg_enable') === false) {
             return back()->withErrors([
                 'username' => __('home/register.re_disabled'),
             ], 'register')->onlyInput('username');
@@ -44,7 +43,7 @@ class RegisterController extends BaseController
         );
 
         // send welcome message
-        if ($this->settingsService->get('reg_welcome_message')) {
+        if ($this->settingsService->getString('reg_welcome_message')) {
             Functions::sendMessage(
                 $newUser->id,
                 0,
@@ -57,7 +56,7 @@ class RegisterController extends BaseController
         }
 
         // send welcome email
-        if ($this->settingsService->get('reg_welcome_email')) {
+        if ($this->settingsService->getString('reg_welcome_email')) {
             Mail::to($newUser->email)->send(new Welcome(
                 $newUser->name,
                 $request->validated('password')

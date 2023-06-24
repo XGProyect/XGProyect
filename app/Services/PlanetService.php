@@ -15,9 +15,9 @@ class PlanetService
     public function calculateNewPlanetPosition(): array
     {
         return $this->isPlanetFree(
-            (int) $this->settingsService->get('lastsettedgalaxypos'),
-            (int) $this->settingsService->get('lastsettedsystempos'),
-            max((int) $this->settingsService->get('lastsettedplanetpos'), 4) // new users need to start at position 4
+            $this->settingsService->getInt('lastsettedgalaxypos'),
+            $this->settingsService->getInt('lastsettedsystempos'),
+            max($this->settingsService->getInt('lastsettedplanetpos'), 4) // new users need to start at position 4
         );
     }
 

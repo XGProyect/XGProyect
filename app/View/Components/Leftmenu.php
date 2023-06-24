@@ -32,7 +32,7 @@ class Leftmenu extends Component
         // :$this->current_planet['stats_users'] : $this->current_user['user_statistic_total_rank'];
 
         $menu = [];
-        $modules = explode(';', $this->settingsService->get('modules'));
+        $modules = explode(';', $this->settingsService->getString('modules'));
         $pages = [
             ['game.php?page=overview', 'lm_overview', '', '#ffffff', false, '1', '1'],
             ['game.php?page=supplies', 'lm_resources', '', '#ffffff', false, '1', '3'],
@@ -56,7 +56,7 @@ class Leftmenu extends Component
             ['game.php?page=search', 'lm_search', '', '#ffffff', false, '2', '17'],
             ['game.php?page=preferences', 'lm_options', '', '#ffffff', false, '2', '21'],
             ['game.php?page=logout', 'lm_logout', '', '#ffffff', false, '2', ''],
-            [$this->settingsService->get('forum_url'), 'lm_forums', '', '#ffffff', false, '3', '14'],
+            [$this->settingsService->getString('forum_url'), 'lm_forums', '', '#ffffff', false, '3', '14'],
         ];
         $blocks = [
             '1' => ['ogame-produktion.jpg', '110', '40'],
@@ -88,7 +88,7 @@ class Leftmenu extends Component
                 'blocks' => $blocks,
                 'menu' => $menu,
                 'isAdmin' => $user->authlevel > UserRanksEnumerator::PLAYER,
-                'servername' => $this->settingsService->get('game_name'),
+                'servername' => $this->settingsService->getString('game_name'),
                 'changelog' => UrlHelper::setUrl('game.php?page=changelog', config('version.files')),
                 'year' => date('Y'),
             ]

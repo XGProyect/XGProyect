@@ -26,7 +26,7 @@ class RecoverController extends BaseController
         return view(
             'account.recover',
             [
-                'gameName' => $this->settingsService->get('game_name'),
+                'gameName' => $this->settingsService->getString('game_name'),
             ]
         );
     }
