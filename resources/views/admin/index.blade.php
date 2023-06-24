@@ -17,7 +17,7 @@
     <link href="{{ asset('assets/admin/css/admin.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 </head>
-<body class="bg-gradient-primary">
+<body class="bg-gradient-primary-xgp">
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
@@ -59,6 +59,13 @@
                 </div>
             </div>
         </div>
+        <footer class="sticky-footer">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto text-white">
+                    <span>Powered by XG Proyect&reg; Version {{ config('version.files') }} Copyright &copy; {{ now()->year }}</span>
+                </div>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

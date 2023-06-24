@@ -28,7 +28,6 @@ class WelcomeController extends BaseController
                     'userName' => '',
                     'userEmail' => '',
                     'forumUrl' => $this->settingsService->getString('forum_url'),
-                    'year' => date('Y'),
                 ],
                 $this->getErrors($request)
             )

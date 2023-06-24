@@ -279,7 +279,7 @@
 	</div>
 	<div id="footer">
 	    <div id="footerContent">
-            <p id="copyright">Powered by <a href="https://xgproyect.org/" target="_blank" title="XG Proyect {{ config('version.files') }}">XG Proyect</a> © 2008 - {{ $year }}.</p>
+            <p id="copyright">Powered by <a href="https://xgproyect.org/" target="_blank" title="XG Proyect {{ config('version.files') }}">XG Proyect</a> © 2008 - {{ now()->year }}.</p>
         </div>
 	</div>
     <!-- OVERLAY DIVISION -->

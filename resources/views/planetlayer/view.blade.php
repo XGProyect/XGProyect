@@ -6,7 +6,7 @@
     <tbody>
         <tr>
             <td colspan="1">
-                <img src="{{ asset('/upload/skins/xgproyect/planets/small/s_' . $planetImage . '.jpg') }}" />
+                <img src="{{ asset('assets/upload/skins/xgproyect/planets/small/s_' . $planetImage . '.jpg') }}" />
             </td>
             <td colspan="2" style="vertical-align: top">
                 <p>{{ __('game/planetlayer.description') }}</p>
