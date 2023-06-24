@@ -82,7 +82,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="game_speed" value="{game_speed}"
+                                                <input class="form-control" name="game_speed" value="{{ $game_speed }}"
                                                     type="number" min="1" max="100">
                                             </td>
                                         </tr>
@@ -96,7 +96,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="fleet_speed" value="{fleet_speed}"
+                                                <input class="form-control" name="fleet_speed" value="{{ $fleet_speed }}"
                                                     type="number" min="1" max="100">
                                             </td>
                                         </tr>
@@ -143,7 +143,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <input class="form-check-input" type="checkbox" name="closed" {closed}>
+                                                <input class="form-check-input" type="checkbox" name="closed" {{ $closed }}>
                                             </td>
                                         </tr>
                                         <tr>
@@ -165,7 +165,7 @@
                                             </td>
                                             <td>
                                                 <select class="form-control" name="date_time_zone">
-                                                    {{ $date_time_zone }}
+                                                    {!! $date_time_zone !!}
                                                 </select>
                                             </td>
                                         </tr>

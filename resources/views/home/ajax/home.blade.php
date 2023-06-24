@@ -16,9 +16,9 @@
     <div id="trailer" class="inner-box last clearfix">
         <h2 id="trailer">{{ __('home/ajax/home.aj_home_trailer') }}</h2>
         <div id="flashTrailer">
-            <video width="425" height="270" controls autoplay muted poster="video/trailer_play.png" style="background-color: #000">
-                <source src="video/trailer.mp4" type="video/mp4">
-                <img src="video/trailer_play.png">
+            <video width="425" height="270" controls autoplay muted poster="{{ asset('assets/video/trailer_play.png') }}" style="background-color: #000">
+                <source src="{{ asset('assets/video/trailer.mp4') }}" type="video/mp4">
+                <img src="{{ asset('assets/video/trailer_play.png') }}">
             </video>
         </div>
     </div>

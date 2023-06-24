@@ -14,7 +14,6 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\SecurePageLib;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\UpdatesLibrary;
-use Xgp\App\Libraries\Users;
 
 // Require some stuff
 require_once XGP_ROOT . 'config' . DIRECTORY_SEPARATOR . 'constants.php';
@@ -111,12 +110,11 @@ class Common
     private function isServerOpen(): void
     {
         if (Options::getInstance()->get('game_enable') == SwitchInt::off) {
-            $user = (new Users())->getUserData();
-            $level = $user['authlevel'] ?? 0;
+            /** @var User $user */
+            $user = Auth::getUser();
 
-            if ($level < UserRanks::ADMIN) {
-                Functions::message(Options::getInstance()->get('close_reason'), '', '', false, false);
-                exit;
+            if ($user->authlevel < UserRanks::ADMIN) {
+                Functions::popupMessage(Options::getInstance()->get('close_reason'));
             }
         }
     }

@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Home\Register;
 
@@ -27,6 +28,12 @@ class RegisterController extends BaseController
 
     public function __invoke(RegisterRequest $request): RedirectResponse
     {
+        if ($this->settingsService->get('reg_enable') == SwitchInt::off) {
+            return back()->withErrors([
+                'username' => __('home/register.re_disabled'),
+            ], 'register')->onlyInput('username');
+        }
+
         // define new planet
         $newPlanetCoords = $this->planetService->calculateNewPlanetPosition();
 
