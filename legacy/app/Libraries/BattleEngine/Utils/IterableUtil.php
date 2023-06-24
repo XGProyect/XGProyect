@@ -57,7 +57,7 @@ class IterableUtil implements Iterator
     #[ReturnTypeWillChange]
     public function next(): void
     {
-        return next($this->array);
+        next($this->array);
     }
 
     #[ReturnTypeWillChange]

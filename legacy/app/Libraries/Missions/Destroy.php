@@ -75,7 +75,7 @@ class Destroy extends Missions
         ]);
 
         if ($fleet_row['fleet_mess'] == 0 && $fleet_row['fleet_start_time'] <= time()) {
-            require XGP_ROOT . LIB_PATH . 'BattleEngine' . DIRECTORY_SEPARATOR . 'Utils' . DIRECTORY_SEPARATOR . 'Includer.php';
+            require LIB_PATH . 'BattleEngine' . DIRECTORY_SEPARATOR . 'Utils' . DIRECTORY_SEPARATOR . 'Includer.php';
 
             // set language for the reports
             LangManager::getInstance()->setImplementation(new AttackLang($this->resource));
