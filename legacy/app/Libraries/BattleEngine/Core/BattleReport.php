@@ -87,22 +87,21 @@ class BattleReport
 
     /**
      * Alias of getRound(). Get the round after it was processed
-     * @param int $number: the corrispective round number(from 0)
      */
-    private function getResultRound(int $number): Round
+    private function getResultRound(string|int $number): Round
     {
         return $this->getRound($number);
     }
 
     /**
      * Get the round before it was processed.
-     * @param int $number: the corrispective round (from 1)
      */
-    private function getPresentationRound(int $number): Round
+    private function getPresentationRound(string|int $number): Round
     {
         if ($number !== 'START' && $number !== 'END') {
             $number -= 1;
         }
+
         return $this->getRound($number);
     }
 

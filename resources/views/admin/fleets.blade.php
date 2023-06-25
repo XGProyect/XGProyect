@@ -50,9 +50,9 @@
                                         <td>{{ $item['metal'] }}</td>
                                         <td>{{ $item['crystal'] }}</td>
                                         <td>{{ $item['deuterium'] }}</td>
-                                        <td>{{ $item['beginning'] }}</td>
+                                        <td>{!! $item['beginning'] !!}</td>
                                         <td>{{ $item['departure'] }}</td>
-                                        <td>{{ $item['objective'] }}</td>
+                                        <td>{!! $item['objective'] !!}</td>
                                         <td>{{ $item['arrival'] }}</td>
                                         <td>{{ $item['return'] }}</td>
                                         <th>

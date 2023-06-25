@@ -90,9 +90,9 @@ class FleetsController extends BaseController
     {
         return [
             'mission' => __('admin/fleets.ff_type_mission')[$fleet['fleet_mission']] . ' ' . (FleetsLib::isFleetReturning($fleet['fleet_mess']) ? __('admin/fleets.ff_r') : __('admin/fleets.ff_a')),
-            'metal' => Format::prettyNumber($fleet['fleet_resource_metal']),
-            'crystal' => Format::prettyNumber($fleet['fleet_resource_crystal']),
-            'deuterium' => Format::prettyNumber($fleet['fleet_resource_deuterium']),
+            'metal' => Format::prettyNumber((int) $fleet['fleet_resource_metal']),
+            'crystal' => Format::prettyNumber((int) $fleet['fleet_resource_crystal']),
+            'deuterium' => Format::prettyNumber((int) $fleet['fleet_resource_deuterium']),
         ];
     }
 
@@ -101,7 +101,7 @@ class FleetsController extends BaseController
         $pop_up = [];
 
         foreach (FleetsLib::getFleetShipsArray($fleet['fleet_array']) as $ship => $amount) {
-            $pop_up[] = __('admin/objects.objects')[$ship] . ': ' . Format::prettyNumber($amount);
+            $pop_up[] = __('admin/objects.objects')[$ship] . ': ' . Format::prettyNumber((int) $amount);
         }
 
         return [

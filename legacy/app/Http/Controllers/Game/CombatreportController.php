@@ -29,7 +29,10 @@ class CombatreportController extends BaseController
         $this->runAction();
 
         Template::legacyView(
-            $this->getReportTemplate()
+            'combatreport.view',
+            [
+                'report' => $this->getReportTemplate(),
+            ]
         );
     }
 
