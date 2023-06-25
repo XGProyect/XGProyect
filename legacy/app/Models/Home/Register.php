@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Home;
 
-use App\Http\Requests\RegisterRequest;
 use App\Models\Planets;
 use App\Models\User;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
 use Throwable;
+use Xgp\App\Core\Enumerators\UserRanksEnumerator;
 use Xgp\App\Core\Model;
 use Xgp\App\Libraries\PlanetLib;
 
 class Register extends Model
 {
-    public function createNewUser(RegisterRequest $request, array $coords): ?User
+    public function createNewUser(FormRequest $request, array $coords, bool $isAdmin = false): ?User
     {
         try {
             DB::beginTransaction();
@@ -32,6 +33,7 @@ class Register extends Model
                     'current_page' => $request->getRequestUri(),
                     'register_time' => time(),
                     'onlinetime' => time(),
+                    'authlevel' => $isAdmin ? UserRanksEnumerator::ADMIN : UserRanksEnumerator::PLAYER,
                 ]
             ));
 
