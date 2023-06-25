@@ -24,6 +24,6 @@
         </tr>
     </table>
 </form>
-{{ $errorBlock }}
+<p style="text-align: center">{{ $errorBlock }}</p>
 {!! $searchResults !!}
 @endsection
