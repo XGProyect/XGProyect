@@ -27,68 +27,65 @@
         <input type="hidden" name="capacity{{ $item['ship_id'] }}" value="{{ $item['capacity'] }}" />
         <input type="hidden" name="ship{{ $item['ship_id'] }}" value="{{ $item['ship'] }}" />
     @endforeach
-    <br>
-    <div id="content" role="main">
-        <table role="presentation" border="0" cellpadding="0" cellspacing="1" width="519">
-            <tr align="left" height="20">
-                <td class="c" colspan="2">{!! $title !!}</td>
-            </tr>
-            <tr align="left" valign="top">
-                <th width="50%">
-                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="259">
-                        <tr height="20">
-                            <td class="c" colspan="2">{{ __('game/fleet.fl_mission') }}</td>
-                        </tr>
-                        @foreach ($mission_selector as $item)
-                        <tr height="20">
-                            <th>
-                                <input id="{{ $item['id'] }}" type="radio" name="mission" value="{{ $item['value'] }}"{!! $item['checked'] !!}/>
-                                <label for="{{ $item['id'] }}">{{ $item['mission'] }}</label>
-                                <br>
-                                {{ $item['expedition_message'] }}
-                            </th>
-                        </tr>
-                        @endforeach
-                    </table>
-                </th>
-                <th>
-                    <table border="0" cellpadding="0" cellspacing="0" width="259">
-                        <tr height="20">
-                            <td colspan="3" class="c">{{ __('game/fleet.fl_resources') }}</td>
-                        </tr>
-                        <tr height="20">
-                            <th scope="row">{{ __('game/global.metal') }}</th>
-                            <th role="cell"><a href="javascript:maxResource('1');">{{ __('game/fleet.fl_max') }}</a></th>
-                            <th role="cell"><input name="resource1" size="10" onchange="calculateTransportCapacity();" type="text"></th>
-                        </tr>
-                        <tr height="20">
-                            <th scope="row">{{ __('game/global.crystal') }}</th>
-                            <th role="cell"><a href="javascript:maxResource('2');">{{ __('game/fleet.fl_max') }}</a></th>
-                            <th role="cell"><input name="resource2" size="10" onchange="calculateTransportCapacity();" type="text"></th>
-                        </tr>
-                        <tr height="20">
-                            <th scope="row">{{ __('game/global.deuterium') }}</th>
-                            <th role="cell"><a href="javascript:maxResource('3');">{{ __('game/fleet.fl_max') }}</a></th>
-                            <th role="cell"><input name="resource3" size="10" onchange="calculateTransportCapacity();" type="text"></th>
-                        </tr>
-                        <tr height="20">
-                            <th scope="row">{{ __('game/fleet.fl_resources_left') }}</th>
-                            <th role="cell" colspan="2"><div id="remainingresources">-</div></th>
-                        </tr>
-                        <tr height="20">
-                            <th role="cell" colspan="3"><a href="javascript:maxResources()">{{ __('game/fleet.fl_all_resources') }}</a></th>
-                        </tr>
-                        <tr height="20">
-                            <th role="cell" colspan="3">&nbsp;</th>
-                        </tr>
-                        {!! $stay_block !!}
-                    </table>
-                </th>
-            </tr>
-            <tr height="20">
-                <th colspan="2"><input value="{{ __('game/fleet.fl_continue') }}" type="submit" name="submit"></th>
-            </tr>
-        </table>
-    </div>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="1" width="519">
+        <tr align="left" height="20">
+            <td class="c" colspan="2">{!! $title !!}</td>
+        </tr>
+        <tr align="left" valign="top">
+            <th width="50%">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="259">
+                    <tr height="20">
+                        <td class="c" colspan="2">{{ __('game/fleet.fl_mission') }}</td>
+                    </tr>
+                    @foreach ($mission_selector as $item)
+                    <tr height="20">
+                        <th>
+                            <input id="{{ $item['id'] }}" type="radio" name="mission" value="{{ $item['value'] }}"{!! $item['checked'] !!}/>
+                            <label for="{{ $item['id'] }}">{{ $item['mission'] }}</label>
+                            <br>
+                            {{ $item['expedition_message'] }}
+                        </th>
+                    </tr>
+                    @endforeach
+                </table>
+            </th>
+            <th>
+                <table border="0" cellpadding="0" cellspacing="0" width="259">
+                    <tr height="20">
+                        <td colspan="3" class="c">{{ __('game/fleet.fl_resources') }}</td>
+                    </tr>
+                    <tr height="20">
+                        <th scope="row">{{ __('game/global.metal') }}</th>
+                        <th role="cell"><a href="javascript:maxResource('1');">{{ __('game/fleet.fl_max') }}</a></th>
+                        <th role="cell"><input name="resource1" size="10" onchange="calculateTransportCapacity();" type="text"></th>
+                    </tr>
+                    <tr height="20">
+                        <th scope="row">{{ __('game/global.crystal') }}</th>
+                        <th role="cell"><a href="javascript:maxResource('2');">{{ __('game/fleet.fl_max') }}</a></th>
+                        <th role="cell"><input name="resource2" size="10" onchange="calculateTransportCapacity();" type="text"></th>
+                    </tr>
+                    <tr height="20">
+                        <th scope="row">{{ __('game/global.deuterium') }}</th>
+                        <th role="cell"><a href="javascript:maxResource('3');">{{ __('game/fleet.fl_max') }}</a></th>
+                        <th role="cell"><input name="resource3" size="10" onchange="calculateTransportCapacity();" type="text"></th>
+                    </tr>
+                    <tr height="20">
+                        <th scope="row">{{ __('game/fleet.fl_resources_left') }}</th>
+                        <th role="cell" colspan="2"><div id="remainingresources">-</div></th>
+                    </tr>
+                    <tr height="20">
+                        <th role="cell" colspan="3"><a href="javascript:maxResources()">{{ __('game/fleet.fl_all_resources') }}</a></th>
+                    </tr>
+                    <tr height="20">
+                        <th role="cell" colspan="3">&nbsp;</th>
+                    </tr>
+                    {!! $stay_block !!}
+                </table>
+            </th>
+        </tr>
+        <tr height="20">
+            <th colspan="2"><input value="{{ __('game/fleet.fl_continue') }}" type="submit" name="submit"></th>
+        </tr>
+    </table>
 </form>
 @endsection

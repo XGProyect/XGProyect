@@ -1,6 +1,4 @@
-<br>
-<div id="content" role="main">
-    <table width="519">
+<table width="519">
         <tbody>
             <tr>
                 <td class="c" colspan="2">{in_title_head} {element_typ}</td>
@@ -30,4 +28,3 @@
             </tr>
         </tbody>
     </table>
-</div>
