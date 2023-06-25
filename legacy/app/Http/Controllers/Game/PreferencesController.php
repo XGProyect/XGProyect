@@ -182,20 +182,23 @@ class PreferencesController extends BaseController
     {
         if ($this->preferences->isVacationModeOn()) {
             return [
-                'hide_vacation_invalid' => 'style="display: none"',
+                'hide_no_vacation' => '',
                 'pr_vacation_mode_active' => Format::strongText(
                     Format::colorRed(__('game/preferences.pr_vacation_mode_active'))
                 ),
+                'hide_vacation_invalid' => 'style="display: none"',
                 'disabled' => ($this->preferences->isVacationModeRemovalAllowed() ? '' : 'style="display: none"'),
             ];
         }
 
         if ($this->preferencesModel->isEmpireActive((int) $this->user['id'])) {
             return [
-                'disabled' => 'style="display: none"',
+                'hide_no_vacation' => '',
                 'pr_vacation_mode_active' => Format::strongText(
                     Format::colorRed(__('game/preferences.pr_empire_active') . __('game/preferences.pr_empire_active_fleet'))
                 ),
+                'hide_vacation_invalid' => '',
+                'disabled' => 'style="display: none"',
             ];
         }
 
