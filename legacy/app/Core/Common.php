@@ -15,22 +15,17 @@ use Xgp\App\Libraries\SecurePageLib;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\UpdatesLibrary;
 
-// Require some stuff
+// require some stuff
 require_once XGP_ROOT . 'config' . DIRECTORY_SEPARATOR . 'constants.php';
 
 class Common
 {
     private const APPLICATIONS = [
-        'home' => ['setSystemTimezone', 'setUpdates', 'isServerOpen'],
         'admin' => ['setSystemTimezone', 'setSecure'],
         'game' => ['setSystemTimezone', 'setSecure', 'setUpdates', 'isServerOpen', 'checkBanStatus'],
-        'install' => [],
     ];
     private bool $is_installed = false;
 
-    /**
-     * Start the system
-     */
     public function bootUp(string $app): void
     {
         // overall loads

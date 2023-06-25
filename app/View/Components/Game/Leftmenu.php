@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Game;
 
 use App\Models\User;
 use App\Services\SettingsService;
@@ -82,7 +82,7 @@ class Leftmenu extends Component
         }
 
         return view(
-            'components.leftmenu',
+            'components.game.leftmenu',
             [
                 'userName' => UrlHelper::setUrl('game.php?page=preferences', $user->name),
                 'blocks' => $blocks,

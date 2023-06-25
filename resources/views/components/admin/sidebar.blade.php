@@ -18,7 +18,7 @@
     @foreach ($sections as $sectionTitle => $menuItems)
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item{{ $activeBlock === $sectionTitle ? ' show' : '' }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse{{ $loop->iteration }}" aria-expanded="true"
+        <a class="nav-link{{ $activeBlock === $sectionTitle ? '' : ' collapsed' }}" href="#" data-toggle="collapse" data-target="#collapse{{ $loop->iteration }}" aria-expanded="true"
             aria-controls="collapse{{ $loop->iteration }}">
             <i class="fas fa-fw {{ $menuItems['icon'] }}"></i>
             <span>{{ __('admin/menu.' . $sectionTitle) }}</span>

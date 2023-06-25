@@ -21,14 +21,14 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        <x-sidebar />
+        <x-admin.sidebar />
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <!-- Topbar -->
-                <x-navigation />
+                <x-admin.navigation />
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -37,7 +37,7 @@
             </div>
 
             <!-- Footer -->
-            <x-footer />
+            <x-admin.footer />
             <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Admin;
 
 use App\Models\User;
 use Closure;
@@ -24,7 +24,7 @@ class Navigation extends Component
     public function render(): View|Closure|string
     {
         return view(
-            'components.navigation',
+            'components.admin.navigation',
             [
                 'username' => User::find(session('user_id'))->name,
                 'currentDate' => TimingLibrary::formatShortDate(time()),

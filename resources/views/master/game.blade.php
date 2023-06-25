@@ -17,13 +17,13 @@
         <div id="container">
             <div id="menu">
                 @if (!isset($noLeftMenu))
-                <x-leftmenu />
+                <x-game.leftmenu />
                 @endif
             </div>
             <div id="page-content">
                 <div id="navbar">
                     @if (!isset($noTopnav))
-                    <x-topnav />
+                    <x-game.topnav />
                     @endif
                 </div>
                 <div id="content" role="main">

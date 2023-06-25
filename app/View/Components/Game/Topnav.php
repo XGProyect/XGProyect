@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Game;
 
 use App\Models\Planets;
 use App\Models\User;
@@ -60,7 +60,7 @@ class Topnav extends Component
         }
 
         return view(
-            'components.topnav',
+            'components.game.topnav',
             array_merge(
                 [
                     'planetImage' => $planet->planet_image,

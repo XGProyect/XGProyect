@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Admin;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -80,7 +80,7 @@ class Sidebar extends Component
         $activeBlock = collect($sections)->filter(fn ($v) => in_array($activePage, array_keys($v['items'])))->keys()->first();
 
         return view(
-            'components.sidebar',
+            'components.admin.sidebar',
             [
                 'sections' => $sections,
                 'activePage' => $activePage,
