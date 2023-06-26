@@ -2,7 +2,8 @@
 
 namespace Xgp\App\Libraries;
 
-use Xgp\App\Core\Database;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
@@ -155,76 +156,51 @@ abstract class Functions
         exit;
     }
 
-    public static function getCurrentLanguage(bool $installed = false): string
+    public static function setLanguage(string $locale = ''): void
     {
-        if ($installed) {
-            return Options::getInstance()->get('lang');
+        if (empty($locale)) {
+            if (session()->has('locale')) {
+                $locale = session('locale');
+            } else {
+                $locale = Options::getInstance()->get('lang');
+            }
         }
 
-        // set the user language reading the config file
-        if ($installed && !isset($_COOKIE['current_lang'])) {
-            $_COOKIE['current_lang'] = Options::getInstance()->get('lang');
+        // force english
+        if (!in_array($locale, self::getLanguagesList())) {
+            $locale = 'en';
         }
 
-        // get the language from the session
-        if (isset($_COOKIE['current_lang'])) {
-            return $_COOKIE['current_lang'];
-        }
+        session(['locale' => $locale]);
 
-        return 'english'; // the universal language if nothing was set
+        App::setLocale($locale);
     }
 
-    public static function setCurrentLanguage(string $lang = ''): void
+    public static function getLanguages(string $currentLang): string
     {
-        // force english
-        if (!in_array($lang, self::getLanguagesList())) {
-            $lang = 'english';
+        $options = '';
+
+        foreach (self::getLanguagesList() as $lang) {
+            $options .= '<option ';
+
+            if ($currentLang == $lang) {
+                $options .= 'selected = selected';
+            }
+
+            $options .= ' value="' . $lang . '">' . $lang . '</option>';
         }
 
-        $db = new Database();
-
-        // set the user language reading the config file
-        if ($db != null && $db->testConnection() && !isset($_COOKIE['current_lang'])) {
-            Options::getInstance()->write('lang', $lang);
-        }
-
-        setcookie('current_lang', $lang);
+        return $options;
     }
 
     public static function getLanguagesList(): array
     {
-        $langs_dir = opendir(lang_path());
-        $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store'];
-        $langs = [];
+        $disk = Storage::build([
+            'driver' => 'local',
+            'root' => lang_path(),
+        ]);
 
-        while (($lang_dir = readdir($langs_dir)) !== false) {
-            if (!in_array($lang_dir, $exceptions)) {
-                $langs[] = $lang_dir;
-            }
-        }
-
-        return $langs;
-    }
-
-    public static function getLanguages(string $current_lang): string
-    {
-        $langs_dir = opendir(lang_path());
-        $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store'];
-        $lang_options = '';
-
-        while (($lang_dir = readdir($langs_dir)) !== false) {
-            if (!in_array($lang_dir, $exceptions)) {
-                $lang_options .= '<option ';
-
-                if ($current_lang == $lang_dir) {
-                    $lang_options .= 'selected = selected';
-                }
-
-                $lang_options .= ' value="' . $lang_dir . '">' . $lang_dir . '</option>';
-            }
-        }
-
-        return $lang_options;
+        return $disk->directories();
     }
 
     public static function messageBox(string $title, string $message, string $goto = '', string $button = ' ok ', bool $twoLines = false): void

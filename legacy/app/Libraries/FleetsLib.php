@@ -181,7 +181,7 @@ class FleetsLib
             $popup['fleet_resource_crystal'] = FormatLib::prettyNumber($fleetRow['fleet_resource_crystal']);
             $popup['fleet_resource_deuterium'] = FormatLib::prettyNumber($fleetRow['fleet_resource_deuterium']);
 
-            $resources_popup = (new Page())->jsReady(
+            $resources_popup = Page::jsReady(
                 Template::getInstance()->render(
                     'overview.fleets_popup',
                     $popup

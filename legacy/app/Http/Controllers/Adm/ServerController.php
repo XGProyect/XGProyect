@@ -74,6 +74,8 @@ class ServerController extends BaseController
         // LANGUAGE
         if (isset($_POST['language'])) {
             $this->gameConfig['lang'] = $_POST['language'];
+
+            Functions::setLanguage($_POST['language']);
         }
 
         // GENERAL RATE

@@ -56,7 +56,7 @@ class Common
             }
 
             // set language
-            $this->initLanguage();
+            Functions::setLanguage();
 
             if (!$this->is_installed && !defined('IN_INSTALL')) {
                 Functions::redirect(SYSTEM_ROOT . 'install.php');
@@ -64,17 +64,6 @@ class Common
         } catch (Exception $e) {
             die('Error #0001' . $e->getMessage());
         }
-    }
-
-    private function initLanguage(): void
-    {
-        $set = false;
-
-        if ($this->is_installed && !defined('IN_INSTALL')) {
-            $set = true;
-        }
-
-        define('DEFAULT_LANG', Functions::getCurrentLanguage($set));
     }
 
     private function setSystemTimezone(): void
