@@ -53,7 +53,7 @@ class InstallationController extends BaseController
 
         if (!$continue) {
             $this->page->displayInstall(
-                Template::getInstance()->render(
+                Template::render(
                     'install/in_welcome_view',
                     array_merge(
                         ['alert' => $alert],
@@ -106,7 +106,7 @@ class InstallationController extends BaseController
                 $parse['v_user'] = $this->db_user;
                 $parse['v_prefix'] = $this->db_prefix;
 
-                $current_page = Template::getInstance()->render(
+                $current_page = Template::render(
                     'install/in_database_view',
                     $parse
                 );
@@ -119,7 +119,7 @@ class InstallationController extends BaseController
                 }
 
                 $parse['alert'] = $this->saveMessage($alerts, 'warning');
-                $current_page = Template::getInstance()->render(
+                $current_page = Template::render(
                     'install/in_database_view',
                     $parse
                 );
@@ -137,7 +137,7 @@ class InstallationController extends BaseController
                 }
 
                 $parse['alert'] = $this->saveMessage($alerts, 'warning');
-                $current_page = Template::getInstance()->render(
+                $current_page = Template::render(
                     'install/in_database_view',
                     $parse
                 );
@@ -160,7 +160,7 @@ class InstallationController extends BaseController
 
                     $parse['alert'] = $this->saveMessage($error_message, 'warning');
 
-                    $current_page = Template::getInstance()->render(
+                    $current_page = Template::render(
                         'install/in_create_admin_view',
                         $parse
                     );
@@ -175,7 +175,7 @@ class InstallationController extends BaseController
                     // set the installation language to the game language
                     Options::getInstance()->write('lang', Functions::getCurrentLanguage());
 
-                    $current_page = Template::getInstance()->render(
+                    $current_page = Template::render(
                         'install/in_create_admin_done_view',
                         $parse
                     );
@@ -193,7 +193,7 @@ class InstallationController extends BaseController
         if ($continue) {
             switch ((isset($_GET['mode']) ? $_GET['mode'] : '')) {
                 case 'step1':
-                    $current_page = Template::getInstance()->render(
+                    $current_page = Template::render(
                         'install/in_database_view',
                         [
                             'alert' => '',
@@ -212,7 +212,7 @@ class InstallationController extends BaseController
                     $parse['done_config'] = '';
                     $parse['done_connected'] = __('installation/installation.ins_done_connected');
                     $parse['done_insert'] = '';
-                    $current_page = Template::getInstance()->render(
+                    $current_page = Template::render(
                         'install/in_done_actions_view',
                         $parse
                     );
@@ -224,7 +224,7 @@ class InstallationController extends BaseController
                     $parse['done_config'] = __('installation/installation.ins_done_config');
                     $parse['done_connected'] = '';
                     $parse['done_insert'] = '';
-                    $current_page = Template::getInstance()->render(
+                    $current_page = Template::render(
                         'install/in_done_actions_view',
                         $parse
                     );
@@ -236,7 +236,7 @@ class InstallationController extends BaseController
                     $parse['done_config'] = '';
                     $parse['done_connected'] = '';
                     $parse['done_insert'] = __('installation/installation.ins_done_insert');
-                    $current_page = Template::getInstance()->render(
+                    $current_page = Template::render(
                         'install/in_done_actions_view',
                         $parse
                     );
@@ -245,7 +245,7 @@ class InstallationController extends BaseController
 
                 case 'step5':
                     $parse['step'] = 'step5';
-                    $current_page = Template::getInstance()->render(
+                    $current_page = Template::render(
                         'install/in_create_admin_view',
                         $parse
                     );
@@ -253,7 +253,7 @@ class InstallationController extends BaseController
                     break;
 
                 case 'license':
-                    $current_page = Template::getInstance()->render(
+                    $current_page = Template::render(
                         'install/in_license_view'
                     );
 
@@ -262,7 +262,7 @@ class InstallationController extends BaseController
                 case '':
                 case 'overview':
                 default:
-                    $current_page = Template::getInstance()->render(
+                    $current_page = Template::render(
                         'install/in_welcome_view',
                         $parse
                     );
@@ -563,7 +563,7 @@ class InstallationController extends BaseController
 
         $parse['message'] = $message;
 
-        return Template::getInstance()->render(
+        return Template::render(
             'install/save_message_view',
             $parse
         );

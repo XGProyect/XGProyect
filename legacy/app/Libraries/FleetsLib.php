@@ -181,8 +181,8 @@ class FleetsLib
             $popup['fleet_resource_crystal'] = FormatLib::prettyNumber($fleetRow['fleet_resource_crystal']);
             $popup['fleet_resource_deuterium'] = FormatLib::prettyNumber($fleetRow['fleet_resource_deuterium']);
 
-            $resources_popup = Page::jsReady(
-                Template::getInstance()->render(
+            $resources_popup = Template::jsReady(
+                Template::render(
                     'overview.fleets_popup',
                     $popup
                 )
@@ -442,7 +442,7 @@ class FleetsLib
         $bloc['fleet_javas'] = Functions::chronoApplet($Label, $Record, $Rest, false);
         $bloc['fleet_time'] = Timing::formatExtendedDate($Time);
 
-        return Template::getInstance()->render(
+        return Template::render(
             'overview.fleets',
             $bloc
         );

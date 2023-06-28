@@ -1156,7 +1156,7 @@ class AllianceController extends BaseController
             ];
         }
 
-        return Template::getInstance()->render(
+        return Template::render(
             'alliance.admin.members_edit',
             [
                 'id' => $member_id,

@@ -69,7 +69,7 @@ class AdministrationLib
 
     public static function showPopUp(string $content, string $popupCcontent): string
     {
-        return Template::getInstance()->render(
+        return Template::render(
             'admin.popup',
             [
                 'content' => $content,

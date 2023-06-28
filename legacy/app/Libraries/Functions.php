@@ -26,7 +26,7 @@ abstract class Functions
         $parse['ref'] = $ref;
         $parse['value'] = $value;
 
-        return Template::getInstance()->render(
+        return Template::render(
             $template,
             $parse
         );

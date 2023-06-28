@@ -169,7 +169,7 @@ class ResourcesettingsController extends BaseController
                 $CurrRow['deuterium_type'] = FormatLib::colorNumber($CurrRow['deuterium_type']);
                 $CurrRow['energy_type'] = FormatLib::colorNumber($CurrRow['energy_type']);
 
-                $parse['resource_row'] .= Template::getInstance()->render(
+                $parse['resource_row'] .= Template::render(
                     'resourcesettings.resources_row',
                     $CurrRow
                 );

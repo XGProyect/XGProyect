@@ -20,7 +20,7 @@ class TraderLayerController extends BaseController
 
         $this->planet = Users::getInstance()->getPlanetData();
 
-        Template::getInstance()->render(
+        Template::render(
             'game/trader_layer_view',
             $this->getMode()
         );
@@ -206,7 +206,7 @@ class TraderLayerController extends BaseController
     }
     }
 
-    $this->page->display(Template::getInstance()->render($template, $parse));*/
+    $this->page->display(Template::render($template, $parse));*/
     //}
 
     /**
@@ -221,7 +221,7 @@ class TraderLayerController extends BaseController
 
         if (in_array($mode, ['traderResources', 'traderAuctioneer', 'traderScrap', 'traderImportExport'])) {
             $view_to_get = strtolower(strtr($mode, ['trader' => '']));
-            $template = Template::getInstance()->render(
+            $template = Template::render(
                 'game/trader_' . $view_to_get . '_view',
                 [
                     'list_of_resources' => $this->{'build' . ucfirst($view_to_get) . 'Section'}(),

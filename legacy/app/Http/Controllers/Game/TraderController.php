@@ -129,7 +129,7 @@ class TraderController extends BaseController
     private function getPage(): array
     {
         return [
-            'currentMode' => Template::getInstance()->render(
+            'currentMode' => Template::render(
                 'game/trader_resources_view',
                 [
                     'list_of_resources' => $this->buildResourcesSection(),

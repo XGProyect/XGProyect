@@ -187,7 +187,7 @@ class Fleet3Controller extends BaseController
         }
 
         if (count($options) > 0) {
-            return Template::getInstance()->render(
+            return Template::render(
                 'fleet/fleet3_stay_row',
                 [
                     'stay_type' => $stay_type,

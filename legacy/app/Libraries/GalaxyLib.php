@@ -67,7 +67,7 @@ class GalaxyLib
         $row['planet'] = '';
         $row['planetname'] = $this->planetNameBlock();
         $row['moon'] = '';
-        $row['debris'] = $debris_block != '' ? Template::getInstance()->render($block['debris'], $debris_block) : '';
+        $row['debris'] = $debris_block != '' ? Template::render($block['debris'], $debris_block) : '';
         $row['username'] = '';
         $row['alliance'] = '';
         $row['actions'] = '';
@@ -79,10 +79,10 @@ class GalaxyLib
             $user_block = $this->usernameBlock();
 
             // PARSE DATA
-            $row['planet'] = Template::getInstance()->render($block['planet'], $this->planetBlock());
-            $row['moon'] = $moon_block != '' ? Template::getInstance()->render($block['moon'], $moon_block) : '';
-            $row['username'] = $this->no_popup ? $user_block['status'] : Template::getInstance()->render($block['username'], $user_block);
-            $row['alliance'] = Template::getInstance()->render($block['alliance'], $this->allyBlock());
+            $row['planet'] = Template::render($block['planet'], $this->planetBlock());
+            $row['moon'] = $moon_block != '' ? Template::render($block['moon'], $moon_block) : '';
+            $row['username'] = $this->no_popup ? $user_block['status'] : Template::render($block['username'], $user_block);
+            $row['alliance'] = Template::render($block['alliance'], $this->allyBlock());
             $row['actions'] = $this->actionsBlock();
         }
 

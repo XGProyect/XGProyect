@@ -91,7 +91,7 @@ class Fleet1Controller extends BaseController
     private function buildNoSlotBlock(): ?string
     {
         if (!$this->checkAvailableSlot()) {
-            return Template::getInstance()->render('fleet.fleet1_noslots_row');
+            return Template::render('fleet.fleet1_noslots_row');
         }
 
         return null;
@@ -194,7 +194,7 @@ class Fleet1Controller extends BaseController
     {
         if ($this->_ship_count > 0
             && $this->checkAvailableSlot()) {
-            return Template::getInstance()->render('fleet.fleet1_selector_row');
+            return Template::render('fleet.fleet1_selector_row');
         }
 
         return '';
@@ -208,7 +208,7 @@ class Fleet1Controller extends BaseController
     private function buildNoShipsBlock()
     {
         if ($this->_ship_count <= 0) {
-            return Template::getInstance()->render('fleet.fleet1_noships_row');
+            return Template::render('fleet.fleet1_noships_row');
         }
 
         return '';
@@ -223,7 +223,7 @@ class Fleet1Controller extends BaseController
     {
         if ($this->_ship_count > 0
             && $this->checkAvailableSlot()) {
-            return Template::getInstance()->render('fleet.fleet1_button');
+            return Template::render('fleet.fleet1_button');
         }
 
         return '';

@@ -331,7 +331,7 @@ class BuildingsController extends BaseController
                 'call_program' => $this->page,
             ];
 
-            return Template::getInstance()->render(
+            return Template::render(
                 'buildings.build_single_script',
                 $block
             );

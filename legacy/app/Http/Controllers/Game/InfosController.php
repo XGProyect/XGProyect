@@ -152,7 +152,7 @@ class InfosController extends BaseController
         }
 
         if ($TableHeadTPL != '') {
-            $parse['table_head'] = Template::getInstance()->render($TableHeadTPL);
+            $parse['table_head'] = Template::render($TableHeadTPL);
 
             if ($this->_element_id >= 22 && $this->_element_id <= 24) {
                 $parse['table_data'] = $this->storage_table($TableTPL);
@@ -167,10 +167,10 @@ class InfosController extends BaseController
 
         $parse['table_footer'] = '';
         if ($TableFooterTPL != '') {
-            $parse['table_footer'] = Template::getInstance()->render($TableFooterTPL);
+            $parse['table_footer'] = Template::render($TableFooterTPL);
         }
 
-        $page = Template::getInstance()->render($PageTPL, $parse);
+        $page = Template::render($PageTPL, $parse);
 
         if ($GateTPL != '') {
             if ($this->planet[$this->_resource[$this->_element_id]] > 0) {
@@ -187,7 +187,7 @@ class InfosController extends BaseController
                 }
                 $parse['gate_dest_moons'] = $this->BuildJumpableMoonCombo();
                 $parse['gate_fleet_rows'] = $this->BuildFleetListRows();
-                $page .= Template::getInstance()->render($GateTPL, $parse);
+                $page .= Template::render($GateTPL, $parse);
             }
         }
 
@@ -224,7 +224,7 @@ class InfosController extends BaseController
                 $ProdFirst = floor($Prod);
             }
 
-            $Table .= Template::getInstance()->render($template, $bloc);
+            $Table .= Template::render($template, $bloc);
         }
 
         return $Table;
@@ -246,7 +246,7 @@ class InfosController extends BaseController
             $bloc['tech_colonies'] = FormatLib::prettyNumber(FleetsLib::getMaxColonies($BuildLevel));
             $bloc['tech_expeditions'] = FormatLib::prettyNumber(FleetsLib::getMaxExpeditions($BuildLevel));
 
-            $Table .= Template::getInstance()->render($template, $bloc);
+            $Table .= Template::render($template, $bloc);
         }
 
         return $Table;
@@ -373,7 +373,7 @@ class InfosController extends BaseController
                     $bloc['fleet_name'] = __('game/ships.' . $this->_resource[$Ship]);
                     $bloc['fleet_max'] = FormatLib::prettyNumber($this->planet[$this->_resource[$Ship]]);
                     $bloc['gate_ship_dispo'] = __('game/infos.in_jump_gate_available');
-                    $Result .= Template::getInstance()->render($RowsTPL, $bloc);
+                    $Result .= Template::render($RowsTPL, $bloc);
                     $CurrIdx++;
                 }
             }
@@ -418,7 +418,7 @@ class InfosController extends BaseController
             $bloc['build_lvl'] = ($current_built_lvl == $BuildLevel) ? '<font color="#ff0000">' . $BuildLevel . '</font>' : $BuildLevel;
             $bloc['build_range'] = ($BuildLevel * $BuildLevel) - 1;
 
-            $Table .= Template::getInstance()->render($Template, $bloc);
+            $Table .= Template::render($Template, $bloc);
         }
 
         return $Table;
@@ -550,7 +550,7 @@ class InfosController extends BaseController
                 $ProdFirst = floor($Prod[4]);
             }
 
-            $Table .= Template::getInstance()->render($Template, $bloc);
+            $Table .= Template::render($Template, $bloc);
         }
 
         return $Table;
@@ -626,7 +626,7 @@ class InfosController extends BaseController
 
             $tear_down_url = 'game.php?page=' . DevelopmentsLib::setBuildingPage($this->_element_id) . '&cmd=destroy&building=' . $this->_element_id;
 
-            $page .= Template::getInstance()->render(
+            $page .= Template::render(
                 'infos/info_buildings_destroy',
                 [
                     'tear_down_url' => UrlHelper::setUrl(

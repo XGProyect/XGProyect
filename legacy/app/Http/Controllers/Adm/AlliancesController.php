@@ -116,7 +116,7 @@ class AlliancesController extends BaseController
         $parse['sel1'] = $this->alliance_query['alliance_request_notallow'] == 1 ? 'selected' : '';
         $parse['sel0'] = $this->alliance_query['alliance_request_notallow'] == 0 ? 'selected' : '';
 
-        return Template::getInstance()->render('admin.alliances_information', $parse);
+        return Template::render('admin.alliances_information', $parse);
     }
 
     private function getDataRanks(): string
@@ -144,13 +144,13 @@ class AlliancesController extends BaseController
                 $rank_data['rechtehand'] = (($details['rights'][AllianceRanks::RIGHT_HAND] == SwitchInt::on) ? ' checked="checked"' : '');
                 $rank_data['i'] = $i++;
 
-                $rank_row .= Template::getInstance()->render('admin.alliances_ranks_row', $rank_data);
+                $rank_row .= Template::render('admin.alliances_ranks_row', $rank_data);
             }
         }
 
         $parse['ranks_table'] = empty($rank_row) ? __('admin/alliances.al_no_ranks') : $rank_row;
 
-        return Template::getInstance()->render('admin.alliances_ranks', $parse);
+        return Template::render('admin.alliances_ranks', $parse);
     }
 
     private function getDataMembers(): string
@@ -176,13 +176,13 @@ class AlliancesController extends BaseController
                     $member['ally_rank'] = __('admin/alliances.al_rank_not_defined');
                 }
 
-                $members .= Template::getInstance()->render('admin.alliances_members_row', $member);
+                $members .= Template::render('admin.alliances_members_row', $member);
             }
         }
 
         $parse['members_table'] = empty($members) ? '<tr><td colspan="6" class="align_center text-error">' . __('admin/alliances.al_no_ranks') . '</td></tr>' : $members;
 
-        return Template::getInstance()->render('admin.alliances_members', $parse);
+        return Template::render('admin.alliances_members', $parse);
     }
 
     //#####################################

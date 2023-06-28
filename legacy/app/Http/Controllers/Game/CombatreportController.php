@@ -69,8 +69,8 @@ class CombatreportController extends BaseController
         $content = str_replace($search, $replace, $content);
         }
 
-        $no_fleet = Template::getInstance()->render('combatreport/combatreport_no_fleet_view');
-        $destroyed = Template::getInstance()->render('combatreport/combatreport_destroyed_view');
+        $no_fleet = Template::render('combatreport/combatreport_no_fleet_view');
+        $destroyed = Template::render('combatreport/combatreport_destroyed_view');
 
         $search = [$no_fleet];
         $replace = [$destroyed];

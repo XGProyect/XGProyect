@@ -229,7 +229,7 @@ class UsersController extends BaseController
         $parse['banned'] .= ($this->user_query['banned'] > 0) ? __('admin/users.us_user_information_banned_until') . date(Options::getInstance()->get('date_format'), $this->user_query['banned']) . '</p>' : '</p>';
         $parse['fleet_shortcuts'] = $this->buildShortcutsCombo($this->user_query['fleet_shortcuts']);
 
-        return Template::getInstance()->render('admin.users_information', $parse);
+        return Template::render('admin.users_information', $parse);
     }
 
     private function getDataSettings(): string
@@ -242,7 +242,7 @@ class UsersController extends BaseController
         $parse['preference_vacation_mode'] = ($this->user_query['preference_vacation_mode'] > 0) ? $this->vacationSet() : '';
         $parse['preference_delete_mode'] = ($this->user_query['preference_delete_mode']) ? ' checked="checked" ' : '';
 
-        return Template::getInstance()->render('admin.users_settings', $parse);
+        return Template::render('admin.users_settings', $parse);
     }
 
     private function getDataResearch(): string
@@ -251,7 +251,7 @@ class UsersController extends BaseController
         $parse['research'] = str_replace(['%s', '%d'], [$this->user_query['name'], $this->id], __('admin/users.us_user_research'));
         $parse['technologies_list'] = $this->researchTable();
 
-        return Template::getInstance()->render('admin.users_research', $parse);
+        return Template::render('admin.users_research', $parse);
     }
 
     private function getDataPremium(): string
@@ -260,7 +260,7 @@ class UsersController extends BaseController
         $parse['premium_dark_matter'] = $this->user_query['premium_dark_matter'];
         $parse['premium_list'] = $this->premiumTable();
 
-        return Template::getInstance()->render('admin.users_premium', $parse);
+        return Template::render('admin.users_premium', $parse);
     }
 
     private function getDataPlanets(): string
@@ -298,7 +298,7 @@ class UsersController extends BaseController
                 break;
         }
 
-        return Template::getInstance()->render($view, $parse);
+        return Template::render($view, $parse);
     }
 
     private function getDataMoons(): string
@@ -337,7 +337,7 @@ class UsersController extends BaseController
                 break;
         }
 
-        return Template::getInstance()->render($view, $parse);
+        return Template::render($view, $parse);
     }
 
     //#####################################

@@ -110,7 +110,7 @@ class GalaxyController extends BaseController
         $parse['current_planet'] = $this->planet['planet_planet'];
         $parse['coords'] = FormatLib::prettyCoords((int) $this->_galaxy, (int) $this->_system, (int) $planet);
         $parse['planet_type'] = $this->planet['planet_type'];
-        $parse['mip'] = ($mode == 2) ? Template::getInstance()->render(
+        $parse['mip'] = ($mode == 2) ? Template::render(
             'galaxy/galaxy_missile_selector',
             $parse
         ) : ' ';

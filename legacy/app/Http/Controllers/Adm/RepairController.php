@@ -33,7 +33,7 @@ class RepairController extends BaseController
             $tables = $this->repairModel->getAllTables();
 
             $parse['display'] = 'block';
-            $parse['head'] = Template::getInstance()->render('admin.repair_row_head');
+            $parse['head'] = Template::render('admin.repair_row_head');
             $parse['tables'] = '';
             $parse['results'] = '';
 
@@ -44,14 +44,14 @@ class RepairController extends BaseController
                 $row['overhead'] = FormatLib::prettyBytes($row['DATA_FREE']);
                 $row['status_style'] = 'text-info';
 
-                $parse['tables'] .= Template::getInstance()->render(
+                $parse['tables'] .= Template::render(
                     'admin.repair_row',
                     $row
                 );
             }
         } else {
             $parse['display'] = 'none';
-            $parse['head'] = Template::getInstance()->render('admin.repair_result_head');
+            $parse['head'] = Template::render('admin.repair_result_head');
             $parse['tables'] = '';
 
             if (isset($_POST['table']) && is_array($_POST['table'])) {
@@ -62,18 +62,18 @@ class RepairController extends BaseController
 
                     $this->repairModel->checkTable($table);
                     $parse['result'] = __('admin/repair.db_check_ok');
-                    $result_rows .= Template::getInstance()->render('admin.repair_result', $parse);
+                    $result_rows .= Template::render('admin.repair_result', $parse);
 
                     if (isset($_POST['optimize']) && $_POST['optimize'] === 'on') {
                         $this->repairModel->optimizeTable($table);
                         $parse['result'] = __('admin/repair.db_opt');
-                        $result_rows .= Template::getInstance()->render('admin.repair_result', $parse);
+                        $result_rows .= Template::render('admin.repair_result', $parse);
                     }
 
                     if (isset($_POST['repair']) && $_POST['repair'] === 'on') {
                         $this->repairModel->repairTable($table);
                         $parse['result'] = __('admin/repair.db_rep');
-                        $result_rows .= Template::getInstance()->render('admin.repair_result', $parse);
+                        $result_rows .= Template::render('admin.repair_result', $parse);
                     }
                 }
 

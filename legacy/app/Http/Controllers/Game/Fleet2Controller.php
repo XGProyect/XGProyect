@@ -190,7 +190,7 @@ class Fleet2Controller extends BaseController
                 }
             }
 
-            $shortcut_row = Template::getInstance()->render(
+            $shortcut_row = Template::render(
                 'fleet/fleet2_shortcuts_row',
                 [
                     'select' => 'shortcuts',
@@ -198,13 +198,13 @@ class Fleet2Controller extends BaseController
                 ]
             );
         } else {
-            $shortcut_row = Template::getInstance()->render(
+            $shortcut_row = Template::render(
                 'fleet/fleet2_shortcuts_noshortcuts_row',
                 ['shorcut_message' => __('game/fleet.fl_no_shortcuts')]
             );
         }
 
-        return Template::getInstance()->render(
+        return Template::render(
             'fleet.fleet2_shortcuts',
             [
                 'shortcuts_rows' => $shortcut_row
@@ -235,7 +235,7 @@ class Fleet2Controller extends BaseController
                 ];
             }
 
-            return Template::getInstance()->render(
+            return Template::render(
                 'fleet.fleet2_shortcuts_row',
                 [
                     'select' => 'colonies',
@@ -244,7 +244,7 @@ class Fleet2Controller extends BaseController
             );
         }
 
-        return Template::getInstance()->render(
+        return Template::render(
             'fleet.fleet2_shortcuts_noshortcuts_row',
             ['shorcut_message' => __('game/fleet.fl_no_colony')]
         );

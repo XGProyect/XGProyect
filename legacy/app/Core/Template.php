@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\View;
 
 class Template
 {
-    private static ?Template $instance = null;
-
     public static function legacyView($view = null, $data = [], $mergeData = []): void
     {
         View::share('gameTitle', Options::getInstance()->get('game_name'));
@@ -20,16 +18,7 @@ class Template
         );
     }
 
-    public static function getInstance(): self
-    {
-        if (self::$instance === null) {
-            self::$instance = new Template();
-        }
-
-        return self::$instance;
-    }
-
-    public function render(string $template = '', array $data = [])
+    public static function render(string $template = '', array $data = [])
     {
         $bladeFile = resource_path('views') . DIRECTORY_SEPARATOR . strtr($template, ['/' => DIRECTORY_SEPARATOR, '.' => DIRECTORY_SEPARATOR]) . '.blade.php';
 
@@ -40,5 +29,23 @@ class Template
         View::share('gameTitle', Options::getInstance()->get('game_name'));
 
         return View::make($template, $data)->render();
+    }
+
+    /**
+     * Removes speacial chars like tabs, new lines and carriage return.
+     */
+    public static function jsReady(string $template = ''): string
+    {
+        $output = str_replace(["\r\n", "\r"], "\n", $template);
+        $lines = explode("\n", $output);
+        $new_lines = [];
+
+        foreach ($lines as $i => $line) {
+            if (!empty($line)) {
+                $new_lines[] = trim($line);
+            }
+        }
+
+        return join($new_lines);
     }
 }

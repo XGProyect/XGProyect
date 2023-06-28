@@ -86,7 +86,7 @@ class ResearchController extends BaseController
                             $bloc['tech_home'] = $this->planet['planet_id'];
                             $bloc['tech_id'] = $this->planet['planet_b_tech_id'];
                         }
-                        $action_link = Template::getInstance()->render(
+                        $action_link = Template::render(
                             'research.script',
                             $bloc
                         );

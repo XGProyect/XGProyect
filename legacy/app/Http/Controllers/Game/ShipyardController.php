@@ -229,7 +229,7 @@ class ShipyardController extends BaseController
                 $box_data['item_id'] = $itemId;
                 $box_data['tab_index'] = $itemId;
 
-                return Template::getInstance()->render(
+                return Template::render(
                     'shipyard/shipyard_build_box',
                     $box_data
                 );
@@ -247,7 +247,7 @@ class ShipyardController extends BaseController
     private function getBuildItemsButton(): string
     {
         if (!$this->building_in_progress && !$this->userLibrary->isOnVacations($this->user)) {
-            return Template::getInstance()->render(
+            return Template::render(
                 'shipyard/shipyard_build_button'
             );
         }
@@ -293,7 +293,7 @@ class ShipyardController extends BaseController
             $block['current_page'] = $this->page;
             $block['pretty_time_b_hangar'] = FormatLib::prettyTime($queue_time - $this->planet['planet_b_hangar']);
 
-            return Template::getInstance()->render('shipyard/shipyard_script', $block);
+            return Template::render('shipyard/shipyard_script', $block);
         }
 
         return '';
