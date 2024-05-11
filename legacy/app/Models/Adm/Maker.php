@@ -124,6 +124,7 @@ class Maker extends Model
                     `email` = '" . $this->db->escapeValue($email) . "',
                     `ip_at_reg` = '" . $_SERVER['REMOTE_ADDR'] . "',
                     `home_planet_id` = '0',
+                    `current_planet` = '0',
                     `register_time` = '" . $time . "',
                     `onlinetime` = '" . $time . "',
                     `authlevel` = '" . $auth . "',
