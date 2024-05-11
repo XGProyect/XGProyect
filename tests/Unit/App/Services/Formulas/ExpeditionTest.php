@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ExpeditionTest extends TestCase
 {
-    public function testGetMaxExpeditionPoints()
+    public function testGetMaxExpeditionPoints(): void
     {
         $expedition = new Expedition();
 
@@ -21,7 +21,7 @@ class ExpeditionTest extends TestCase
         $this->assertEquals(25000, $expedition->getMaxExpeditionPoints(120000000));
     }
 
-    public function testGetMaxShipsExpeditionPoints()
+    public function testGetMaxShipsExpeditionPoints(): void
     {
         $expedition = new Expedition();
 
@@ -35,7 +35,7 @@ class ExpeditionTest extends TestCase
         $this->assertEquals(2500000, $expedition->getMaxShipsExpeditionPoints(120000000));
     }
 
-    public function testCalculateExpeditionPoints()
+    public function testCalculateExpeditionPoints(): void
     {
         $exampleIntegrity = 800;
 
@@ -47,7 +47,7 @@ class ExpeditionTest extends TestCase
         $this->assertEquals($expectedResult, $result);
     }
 
-    public function testGetExpeditionResult()
+    public function testGetExpeditionResult(): void
     {
         $expedition = new Expedition();
         $result = $expedition->getExpeditionResult();
@@ -59,7 +59,7 @@ class ExpeditionTest extends TestCase
         $this->assertContains($result, $validResults);
     }
 
-    public function testCalculateDarkMatterSourceSize()
+    public function testCalculateDarkMatterSourceSize(): void
     {
         $expedition = new Expedition();
         $result = $expedition->calculateDarkMatterSourceSize();
@@ -69,7 +69,7 @@ class ExpeditionTest extends TestCase
         $this->assertContains($result, $validResults);
     }
 
-    public function testGetDarkMatterSourceSize()
+    public function testGetDarkMatterSourceSize(): void
     {
         $expedition = new Expedition();
 
@@ -86,7 +86,7 @@ class ExpeditionTest extends TestCase
         $this->assertLessThanOrEqual(1800, $resultLarge);
     }
 
-    public function testCalculateResourceTypeObtained()
+    public function testCalculateResourceTypeObtained(): void
     {
         $expedition = new Expedition();
         $result = $expedition->calculateResourceTypeObtained();
@@ -96,7 +96,7 @@ class ExpeditionTest extends TestCase
         $this->assertContains($result, $validResults);
     }
 
-    public function testCalculateResourceSourceSize()
+    public function testCalculateResourceSourceSize(): void
     {
         $expedition = new Expedition();
         $result = $expedition->calculateResourceSourceSize();
@@ -106,7 +106,7 @@ class ExpeditionTest extends TestCase
         $this->assertContains($result, $validResults);
     }
 
-    public function testGetResourceSourceSizeMultChances()
+    public function testGetResourceSourceSizeMultChances(): void
     {
         $expedition = new Expedition();
 
@@ -123,7 +123,7 @@ class ExpeditionTest extends TestCase
         $this->assertLessThanOrEqual(200, $resultXl);
     }
 
-    public function testGetResourceFoundAmount()
+    public function testGetResourceFoundAmount(): void
     {
         $expedition = new Expedition();
 
@@ -140,7 +140,7 @@ class ExpeditionTest extends TestCase
         $this->assertEquals(266, $result);
     }
 
-    public function testCalculateShipFoundAmount()
+    public function testCalculateShipFoundAmount(): void
     {
         $expedition = new Expedition();
 
@@ -148,7 +148,7 @@ class ExpeditionTest extends TestCase
         $this->assertEquals(225, $result);
     }
 
-    public function testGetPossibleShips()
+    public function testGetPossibleShips(): void
     {
         $expedition = new Expedition();
 
@@ -170,7 +170,7 @@ class ExpeditionTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetShipsObtainableChances()
+    public function testGetShipsObtainableChances(): void
     {
         $expedition = new Expedition();
 
@@ -192,7 +192,7 @@ class ExpeditionTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFleetDeplay()
+    public function testGetFleetDeplay(): void
     {
         $expedition = new Expedition();
 
