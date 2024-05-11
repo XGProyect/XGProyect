@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckInstalled
@@ -12,10 +14,14 @@ class CheckInstalled
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle($request, Closure $next): Response
+    public function handle(Request $request, Closure $next): Response
     {
         if (config('INSTALLED', 'false') === 'true') {
-            return redirect()->route('admin.index');
+            $redirect = redirect();
+
+            if ($redirect instanceof Redirector) {
+                return $redirect->route('admin.index');
+            }
         }
 
         return $next($request);
