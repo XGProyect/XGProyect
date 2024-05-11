@@ -17,7 +17,7 @@ class HighscoreController extends BaseController
     private array $planet = [];
     private Statistics $statisticsModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

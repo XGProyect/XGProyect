@@ -18,7 +18,7 @@ class ChatController extends BaseController
     private array $_message_data = [];
     private Messages $messagesModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

@@ -42,6 +42,10 @@ class RegisterController extends BaseController
             $newPlanetCoords
         );
 
+        if ($newUser === null) {
+            return back()->withErrors($request);
+        }
+
         // send welcome message
         if ($this->settingsService->getString('reg_welcome_message')) {
             Functions::sendMessage(

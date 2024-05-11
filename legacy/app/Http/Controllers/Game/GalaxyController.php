@@ -34,7 +34,7 @@ class GalaxyController extends BaseController
     private Galaxy $galaxyModel;
     private Fleet $fleetModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

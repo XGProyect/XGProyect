@@ -25,7 +25,7 @@ class PreferencesController extends BaseController
     private bool $post = false;
     private Preferences $preferencesModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

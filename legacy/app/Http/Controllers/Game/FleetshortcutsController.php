@@ -21,7 +21,7 @@ class FleetshortcutsController extends BaseController
     private array $_clean_data = [];
     private ShortcutsModel $shortcutsModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

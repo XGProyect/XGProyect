@@ -33,7 +33,7 @@ class InfosController extends BaseController
     private $_prod_grid;
     private Infos $infosModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

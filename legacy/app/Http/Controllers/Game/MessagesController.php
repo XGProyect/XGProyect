@@ -29,7 +29,7 @@ class MessagesController extends BaseController
     ];
     private Messages $messagesModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

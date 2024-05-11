@@ -7,14 +7,14 @@ use Illuminate\View\View;
 
 class LegacyView extends Exception
 {
-    protected $view;
+    protected View $view;
 
     public function __construct(View $view)
     {
         $this->view = $view;
     }
 
-    public function getView()
+    public function getView(): View
     {
         return $this->view;
     }

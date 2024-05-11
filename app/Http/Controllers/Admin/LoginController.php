@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\SessionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator;
 
@@ -18,7 +19,7 @@ class LoginController extends BaseController
     {
     }
 
-    public function __invoke(LoginRequest $request): RedirectResponse
+    public function __invoke(LoginRequest $request): Redirector|RedirectResponse
     {
         $credentials = [
             'email' => $request->validated('inputEmail'),

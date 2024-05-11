@@ -33,7 +33,7 @@ class Fleet2Controller extends BaseController
     private Fleet $fleetModel;
     private Objects $objects;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

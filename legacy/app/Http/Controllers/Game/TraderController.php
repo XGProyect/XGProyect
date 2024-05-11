@@ -22,7 +22,7 @@ class TraderController extends BaseController
     private string $error = '';
     private Trader $traderModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

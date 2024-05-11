@@ -27,7 +27,7 @@ class ResourcesettingsController extends BaseController
     private Resources $resourcesModel;
     private Users $userLibrary;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

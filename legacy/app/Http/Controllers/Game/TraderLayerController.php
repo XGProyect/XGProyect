@@ -14,7 +14,7 @@ class TraderLayerController extends BaseController
 
     private array $planet = [];
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

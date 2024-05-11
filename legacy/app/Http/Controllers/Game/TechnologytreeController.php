@@ -18,7 +18,7 @@ class TechnologytreeController extends BaseController
     private $_resource;
     private $_requirements;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

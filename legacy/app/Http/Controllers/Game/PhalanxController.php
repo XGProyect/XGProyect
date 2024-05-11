@@ -19,7 +19,7 @@ class PhalanxController extends BaseController
     private array $planet = [];
     private Phalanx $phalanxModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

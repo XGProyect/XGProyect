@@ -29,7 +29,7 @@ class MovementController extends BaseController
     private ?Premium $premium = null;
     private Fleet $fleetModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

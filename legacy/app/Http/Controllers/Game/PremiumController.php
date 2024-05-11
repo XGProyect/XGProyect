@@ -21,7 +21,7 @@ class PremiumController extends BaseController
     private Officier $officierModel;
     private Objects $objects;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

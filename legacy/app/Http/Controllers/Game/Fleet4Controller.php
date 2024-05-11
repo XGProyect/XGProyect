@@ -61,7 +61,7 @@ class Fleet4Controller extends BaseController
     private Users $userLibrary;
     private Objects $objects;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

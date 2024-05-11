@@ -50,7 +50,7 @@ class ShipyardController extends BaseController
     private Objects $objects;
     private Users $userLibrary;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

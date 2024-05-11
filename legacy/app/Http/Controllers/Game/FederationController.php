@@ -26,7 +26,7 @@ class FederationController extends BaseController
     private Fleet $fleetModel;
     private Buddies $buddiesModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

@@ -19,7 +19,7 @@ class TechnologydetailsController extends BaseController
 
     private int $technology;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 

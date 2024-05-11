@@ -22,7 +22,7 @@ class NoticesController extends BaseController
     private ?Note $notes = null;
     private Notes $notesModel;
 
-    public function __invoke()
+    public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
 
