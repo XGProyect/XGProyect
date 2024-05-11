@@ -185,12 +185,12 @@ class Expedition
             'deuterium' => 3,
         ];
 
-        return floor($chancesMultiplier * $expeditionPoints / $resource[$resourceType]);
+        return (int) floor($chancesMultiplier * $expeditionPoints / $resource[$resourceType]);
     }
 
     public function calculateShipFoundAmount(int $chancesMultiplier, int $expeditionPoints): int
     {
-        return floor($chancesMultiplier * $expeditionPoints / 2);
+        return (int) floor($chancesMultiplier * $expeditionPoints / 2);
     }
 
     /**
