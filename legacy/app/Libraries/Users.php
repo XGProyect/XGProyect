@@ -169,30 +169,4 @@ class Users
             }
         }
     }
-
-    public function createUserWithOptions(array $data, $full_insert = true): int
-    {
-        $insert_query = 'INSERT INTO ' . USERS . ' SET ';
-
-        foreach ($data as $column => $value) {
-            $insert_query .= '`' . $column . "` = '" . $value . "', ";
-        }
-
-        // Remove last comma
-        $insert_query = substr_replace($insert_query, '', -2) . ';';
-
-        // get the last inserted user id
-        $userId = $this->usersModel->createNewUser($insert_query);
-
-        // insert extra required tables
-        if ($full_insert) {
-            // create the buildings, defenses and ships tables
-            $this->usersModel->createPremium($userId);
-            $this->usersModel->createResearch($userId);
-            $this->usersModel->createSettings($userId);
-            $this->usersModel->createUserStatistics($userId);
-        }
-
-        return $userId;
-    }
 }
