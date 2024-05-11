@@ -195,6 +195,8 @@ class Expedition
 
     /**
      * Only these ships are computed for the expeditions points
+     *
+     * @return array<Int, Int>
      */
     public function getPossibleShips(): array
     {
@@ -214,6 +216,8 @@ class Expedition
 
     /**
      * Only these ships are obtainable on an expedition
+     *
+     * @return array<Int, Float>
      */
     public function getShipsObtainableChances(): array
     {
