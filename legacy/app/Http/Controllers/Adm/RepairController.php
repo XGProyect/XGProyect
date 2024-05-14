@@ -16,11 +16,7 @@ class RepairController extends BaseController
     public function __invoke(): void
     {
         Administration::checkSession();
-
-        if (!Administration::authorization(__CLASS__)) {
-            Administration::noAccessMessage(__('admin/global.no_permissions'));
-            exit;
-        }
+        Administration::authorization(__CLASS__);
 
         $this->repairModel = new Repair();
 

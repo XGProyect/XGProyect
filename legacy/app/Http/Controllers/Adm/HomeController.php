@@ -21,11 +21,8 @@ class HomeController extends BaseController
     public function __invoke(): void
     {
         Administration::checkSession();
+        Administration::authorization(__CLASS__);
 
-        if (!Administration::authorization(__CLASS__)) {
-            Administration::noAccessMessage(__('admin/global.no_permissions'));
-            exit;
-        }
         $this->user = Users::getInstance()->getUserData();
         $userStats = $this->getUsersStats();
 
