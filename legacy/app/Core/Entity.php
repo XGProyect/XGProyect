@@ -4,6 +4,9 @@ namespace Xgp\App\Core;
 
 use Exception;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Entity
 {
     protected array $data = [];

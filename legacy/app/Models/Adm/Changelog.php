@@ -8,6 +8,9 @@ use Exception;
 use Xgp\App\Core\Entity\ChangelogEntity;
 use Xgp\App\Core\Model;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Changelog extends Model
 {
     /**

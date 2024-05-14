@@ -4,6 +4,9 @@ namespace Xgp\App\Models\Game;
 
 use Xgp\App\Core\Model;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Trader extends Model
 {
     public function refillStorage(int $dark_matter, string $resource, float $amount, int $userId, int $planet_id): void

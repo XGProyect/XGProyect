@@ -7,6 +7,9 @@ namespace Xgp\App\Models\Adm;
 use Exception;
 use Xgp\App\Core\Model;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Ban extends Model
 {
     public function unbanUser(string $username): void

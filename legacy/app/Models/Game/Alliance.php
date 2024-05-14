@@ -5,6 +5,9 @@ namespace Xgp\App\Models\Game;
 use Exception;
 use Xgp\App\Core\Model;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Alliance extends Model
 {
     public function getAllianceDataById(?int $alliance_id): array

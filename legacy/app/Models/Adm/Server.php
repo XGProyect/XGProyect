@@ -7,6 +7,9 @@ namespace Xgp\App\Models\Adm;
 use Xgp\App\Core\Model;
 use Xgp\App\Core\Options;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Server extends Model
 {
     public function readAllConfigs(): array

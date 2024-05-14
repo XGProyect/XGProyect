@@ -5,6 +5,9 @@ namespace Xgp\App\Models\Adm;
 use Xgp\App\Core\Model;
 use Xgp\App\Libraries\Functions;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Users extends Model
 {
     public function checkUser(string $user): array

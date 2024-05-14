@@ -6,6 +6,9 @@ namespace Xgp\App\Core\Entity;
 
 use Xgp\App\Core\Entity;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class ChangelogEntity extends Entity
 {
     public function __construct(array $data)

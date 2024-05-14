@@ -5,13 +5,11 @@ namespace Xgp\App\Models\Adm;
 use Exception;
 use Xgp\App\Core\Model;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Fleets extends Model
 {
-    /**
-     * Get all fleets
-     *
-     * @return array
-     */
     public function getAllFleets(): array
     {
         return $this->db->queryFetchAll(

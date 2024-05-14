@@ -6,6 +6,9 @@ use Xgp\App\Core\Model;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\StatisticsLibrary;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Missions extends Model
 {
     public function deleteFleetById(int $fleedId): void

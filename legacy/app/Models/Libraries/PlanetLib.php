@@ -7,6 +7,9 @@ namespace Xgp\App\Models\Libraries;
 use App\Models\Planets;
 use Xgp\App\Core\Model;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class PlanetLib extends Model
 {
     public function checkPlanetExists(int $galaxy, int $system, int $position): bool

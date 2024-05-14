@@ -5,6 +5,9 @@ namespace Xgp\App\Models\Libraries;
 use Xgp\App\Core\Model;
 use Xgp\App\Core\Options;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class StatisticsLibrary extends Model
 {
     public function getResearchToUpdate(int $userId): array

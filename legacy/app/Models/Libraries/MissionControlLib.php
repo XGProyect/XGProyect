@@ -4,6 +4,9 @@ namespace Xgp\App\Models\Libraries;
 
 use Xgp\App\Core\Model;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class MissionControlLib extends Model
 {
     /**

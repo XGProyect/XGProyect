@@ -4,6 +4,9 @@ namespace Xgp\App\Core\Entity;
 
 use Exception;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class ShipsEntity
 {
     private array $_ships = [];

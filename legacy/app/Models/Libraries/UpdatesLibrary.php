@@ -5,6 +5,9 @@ namespace Xgp\App\Models\Libraries;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Model;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class UpdatesLibrary extends Model
 {
     public function deleteUsersByDeletedAndInactive(int $del_deleted, int $del_inactive): ?array

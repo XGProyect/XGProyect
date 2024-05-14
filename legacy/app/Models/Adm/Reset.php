@@ -10,6 +10,9 @@ use Xgp\App\Core\Model;
 use Xgp\App\Core\Options;
 use Xgp\App\Libraries\PlanetLib;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Reset extends Model
 {
     public function resetDefenses(): void

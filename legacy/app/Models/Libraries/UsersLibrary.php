@@ -5,6 +5,9 @@ namespace Xgp\App\Models\Libraries;
 use Xgp\App\Core\Model;
 use Xgp\App\Core\Options;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class UsersLibrary extends Model
 {
     public function getAllyIdByUserId(int $userId): array

@@ -7,6 +7,9 @@ namespace Xgp\App\Models\Game;
 use Exception;
 use Xgp\App\Core\Model;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Infos extends Model
 {
     public function getTargetGate(int $target_planet_id): array

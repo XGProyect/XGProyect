@@ -8,6 +8,9 @@ use Xgp\App\Core\Options;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Maker extends Model
 {
     /**

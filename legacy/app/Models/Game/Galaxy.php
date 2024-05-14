@@ -6,6 +6,9 @@ namespace Xgp\App\Models\Game;
 
 use Xgp\App\Core\Model;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Galaxy extends Model
 {
     public function getGalaxyDataByGalaxyAndSystem(int $galaxy, int $system, int $userId): array

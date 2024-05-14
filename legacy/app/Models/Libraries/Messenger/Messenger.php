@@ -7,6 +7,9 @@ namespace Xgp\App\Models\Libraries\Messenger;
 use Xgp\App\Core\Model;
 use Xgp\App\Libraries\Messenger\MessagesOptions;
 
+/**
+ * @deprecated v4.0.0 use laravel instead
+ */
 class Messenger extends Model
 {
     /**
