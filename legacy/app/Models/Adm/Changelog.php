@@ -13,11 +13,6 @@ use Xgp\App\Core\Model;
  */
 class Changelog extends Model
 {
-    /**
-     * Get all changelog items
-     *
-     * @return array|null
-     */
     public function getAllEntries(): ?array
     {
         return $this->db->queryFetchAll(
