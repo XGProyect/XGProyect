@@ -85,15 +85,6 @@ class Users extends Model
         ) ?? [];
     }
 
-    public function deleteSessionByUserId(int $userId): void
-    {
-        $this->db->query(
-            'DELETE FROM `' . SESSIONS . "`
-            WHERE `payload`
-            LIKE '%id|s:1:\"" . $userId . "\"%'"
-        );
-    }
-
     public function getAllPlanetsData(int $userId, int $planet_id = 0, string $edit = ''): array
     {
         $sub_query = '';

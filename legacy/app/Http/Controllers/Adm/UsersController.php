@@ -2,6 +2,7 @@
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use App\Models\Sessions;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
@@ -413,7 +414,7 @@ class UsersController extends BaseController
             ]);
 
             if ($this->user['id'] != $this->id) {
-                $this->usersModel->deleteSessionByUserId($this->id);
+                Sessions::where('user_id', $this->user['id'])->delete();
             }
         }
     }

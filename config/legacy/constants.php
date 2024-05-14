@@ -122,7 +122,6 @@ define('PREFERENCES', '{xgp_prefix}preferences');
 define('PREMIUM', '{xgp_prefix}premium');
 define('RESEARCH', '{xgp_prefix}research');
 define('REPORTS', '{xgp_prefix}reports');
-define('SESSIONS', '{xgp_prefix}sessions');
 define('SHIPS', '{xgp_prefix}ships');
 define('USERS', '{xgp_prefix}users');
 define('USERS_STATISTICS', '{xgp_prefix}users_statistics');
