@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use JsonException;
+use stdClass;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Adm\Home;
 
 class HomeController extends BaseController
 {
-    private Home $homeModel;
     private array $user;
 
     public function __invoke(): void
@@ -26,28 +26,24 @@ class HomeController extends BaseController
             Administration::noAccessMessage(__('admin/global.no_permissions'));
             exit;
         }
-
-        $this->homeModel = new Home();
         $this->user = Users::getInstance()->getUserData();
-
-        $userStats = $this->homeModel->getUsersStats();
+        $userStats = $this->getUsersStats();
 
         Template::legacyView(
             'admin.home',
             array_merge(
-                $userStats,
                 $this->buildAlertsBlock(),
                 [
-                    'numberUsers' => Format::prettyNumber((int) $userStats['number_users']),
-                    'numberAlliances' => Format::prettyNumber((int) $userStats['number_alliances']),
-                    'numberPlanets' => Format::prettyNumber((int) $userStats['number_planets']),
-                    'numberMoons' => Format::prettyNumber((int) $userStats['number_moons']),
-                    'numberFleets' => Format::prettyNumber((int) $userStats['number_fleets']),
-                    'numberReports' => Format::prettyNumber((int) $userStats['number_reports']),
-                    'averageUserPoints' => Format::shortlyNumber((int) $userStats['average_user_points']),
-                    'averageAlliancePoints' => Format::shortlyNumber((int) $userStats['average_alliance_points']),
-                    'databaseSize' => Format::prettyBytes($this->homeModel->getDbSize()['db_size']),
-                    'databaseServer' => $this->homeModel->getDbVersion(),
+                    'numberUsers' => Format::prettyNumber((int) $userStats->number_users),
+                    'numberAlliances' => Format::prettyNumber((int) $userStats->number_alliances),
+                    'numberPlanets' => Format::prettyNumber((int) $userStats->number_planets),
+                    'numberMoons' => Format::prettyNumber((int) $userStats->number_moons),
+                    'numberFleets' => Format::prettyNumber((int) $userStats->number_fleets),
+                    'numberReports' => Format::prettyNumber((int) $userStats->number_reports),
+                    'averageUserPoints' => Format::shortlyNumber((int) $userStats->average_user_points),
+                    'averageAlliancePoints' => Format::shortlyNumber((int) $userStats->average_alliance_points),
+                    'databaseSize' => $this->getDbSize(),
+                    'databaseServer' => $this->getDbVersion(),
                     'phpVersion' => PHP_VERSION,
                     'serverVersion' => config('version.files'),
                 ]
@@ -72,7 +68,7 @@ class HomeController extends BaseController
                 $alert[] = __('admin/home.hm_old_version');
             }
 
-            if (Administration::installDirExists()) {
+            if ($this->installDirExists()) {
                 $alert[] = __('admin/home.hm_install_file_detected');
             }
 
@@ -141,5 +137,89 @@ class HomeController extends BaseController
     private function getServerErrors(): bool
     {
         return (count(glob(storage_path('logs') . '/xgproyect.log')) > 0);
+    }
+
+    private function getUsersStats(): stdClass
+    {
+        return DB::selectOne(
+            'SELECT
+                (
+                    SELECT
+                        COUNT(u.`id`) AS `total_users`
+                    FROM
+                        `' . config('DB_PREFIX') . 'users` u
+                ) AS `number_users`,
+                (
+                    SELECT
+                        COUNT(a.`alliance_id`) AS `total_alliances`
+                    FROM
+                        `' . config('DB_PREFIX') . 'alliance` a
+                ) AS `number_alliances`,
+                (
+                    SELECT
+                        COUNT(p.`planet_id`) AS `total_planets`
+                    FROM
+                        `' . config('DB_PREFIX') . 'planets` p
+                    WHERE
+                        p.`planet_type` = "1"
+                ) AS `number_planets`,
+                (
+                    SELECT
+                        COUNT(m.`planet_id`) AS `total_moons`
+                    FROM
+                        `' . config('DB_PREFIX') . 'planets` m
+                    WHERE
+                        m.`planet_type` = "3"
+                ) AS `number_moons`,
+                (
+                    SELECT
+                        COUNT(f.`fleet_id`) AS `total_fleets`
+                    FROM
+                        `' . config('DB_PREFIX') . 'fleets` f
+                ) AS `number_fleets`,
+                (
+                    SELECT
+                        COUNT(r.`report_rid`) AS `total_reports`
+                    FROM
+                        `' . config('DB_PREFIX') . 'reports` r
+                ) AS `number_reports`,
+                (
+                    SELECT
+                        FLOOR(AVG(s.`user_statistic_total_points`)) AS `average_user_total_points`
+                    FROM
+                        `' . config('DB_PREFIX') . 'users_statistics` s
+                ) AS `average_user_points`,
+                (
+                    SELECT
+                        FLOOR(AVG(s.`alliance_statistic_total_points`)) AS `average_alliance_total_points`
+                    FROM
+                        `' . config('DB_PREFIX') . 'alliance_statistics` s
+                ) AS `average_alliance_points`'
+        );
+    }
+
+    private function installDirExists(): bool
+    {
+        return (file_exists(PUBLIC_PATH . 'install.php'));
+    }
+
+    private function getDbVersion(): string
+    {
+        return DB::selectOne('SHOW VARIABLES LIKE "version"')->Value;
+    }
+
+    private function getDbSize(): string
+    {
+        return Format::prettyBytes(
+            (int) DB::selectOne(
+                "SELECT
+                    SUM(data_length + index_length) AS 'db_size'
+                FROM information_schema.TABLES
+                WHERE table_schema = :table_schema;",
+                [
+                    'table_schema' => config('DB_DATABASE')
+                ]
+            )->db_size
+        );
     }
 }

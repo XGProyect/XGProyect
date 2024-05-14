@@ -292,16 +292,7 @@ class FormatLib
         return '<strong>' . $value . '</strong>';
     }
 
-    /**
-     * prettyBytes
-     *
-     * @param int     $bytes     Bytes
-     * @param int     $precision Precision
-     * @param boolean $bitwise   Bitwise Arithmetic
-     *
-     * @return int
-     */
-    public static function prettyBytes($bytes, $precision = 2, $bitwise = false)
+    public static function prettyBytes(int $bytes, int $precision = 2, bool $bitwise = false): string
     {
         $units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 
