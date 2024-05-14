@@ -7,16 +7,15 @@ namespace Xgp\App\Http\Controllers\Adm;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Models\Adm\Server;
 
 class ServerController extends BaseController
 {
     private $gameConfig = [];
-    private Server $serverModel;
 
     public function __invoke(): void
     {
@@ -27,11 +26,9 @@ class ServerController extends BaseController
             exit;
         }
 
-        $this->serverModel = new Server();
-
         $this->runAction();
 
-        $this->gameConfig = $this->serverModel->readAllConfigs();
+        $this->gameConfig = Options::getInstance()->get();
 
         Template::legacyView(
             'admin.server',
@@ -181,18 +178,20 @@ class ServerController extends BaseController
 
         if (isset($_POST['opt_save']) && $_POST['opt_save'] == '1') {
             // update all the settings
-            $this->serverModel->updateConfigs($this->gameConfig);
+            foreach ($this->gameConfig as $config_name => $config_value) {
+                Options::getInstance()->write($config_name, $config_value);
+            }
 
             session()->flash('success', __('admin/server.se_all_ok_message'));
         }
     }
 
-    private function timeZonePicker()
+    private function timeZonePicker(): string
     {
         $utc = new DateTimeZone('UTC');
         $dt = new DateTime('now', $utc);
         $time_zones = '';
-        $current_time_zone = $this->serverModel->readConfig('date_time_zone');
+        $current_time_zone = Options::getInstance()->get('date_time_zone');
         $time_zones_data = [];
 
         // Get the data
@@ -224,7 +223,7 @@ class ServerController extends BaseController
         return $time_zones;
     }
 
-    private function formatOffset($offset)
+    private function formatOffset($offset): string
     {
         $hours = $offset / 3600;
         $remainder = $offset % 3600;
