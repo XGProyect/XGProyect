@@ -2,9 +2,10 @@
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use App\Services\AdministrationService;
+use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Models\Adm\Repair;
@@ -12,11 +13,19 @@ use Xgp\App\Models\Adm\Repair;
 class RepairController extends BaseController
 {
     private Repair $repairModel;
+    private AdministrationService $administrationService;
+
+    public function __construct()
+    {
+        $this->administrationService = new AdministrationService(
+            new SettingsService()
+        );
+    }
 
     public function __invoke(): void
     {
-        Administration::checkSession();
-        Administration::authorization(__CLASS__);
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
         $this->repairModel = new Repair();
 

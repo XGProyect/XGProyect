@@ -2,18 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Xgp\App\Libraries\Adm;
+namespace App\Services;
 
-use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
+use Xgp\App\Libraries\Adm\Permissions;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 
-class AdministrationLib
+class AdministrationService
 {
-    public static function checkSession(): void
+    public function __construct(private SettingsService $settingsService)
     {
-        if (!self::isSessionSet()) {
+    }
+
+    public function checkSession(): void
+    {
+        if (!$this->isSessionSet()) {
             $page = filter_input(INPUT_GET, 'page', FILTER_UNSAFE_RAW);
 
             if ($page != 'login') {
@@ -22,13 +26,13 @@ class AdministrationLib
         }
     }
 
-    public static function authorization(string $module): void
+    public function authorization(string $module): void
     {
         $lastOcurrence = strrchr($module, '\\');
 
         if ($lastOcurrence !== false) {
             $cleanedModuleName = strtolower(substr($lastOcurrence, 1));
-            $permissions = new Permissions(Options::getInstance()->get('admin_permissions'));
+            $permissions = new Permissions($this->settingsService->getString('admin_permissions'));
 
             if ($permissions->isAccessAllowed($cleanedModuleName, (int) Users::getInstance()->getUserData()['authlevel'])) {
                 return;
@@ -39,7 +43,7 @@ class AdministrationLib
         exit;
     }
 
-    public static function showPopUp(string $content, string $popupCcontent): string
+    public function showPopUp(string $content, string $popupCcontent): string
     {
         return Template::render(
             'admin.popup',
@@ -50,7 +54,7 @@ class AdministrationLib
         );
     }
 
-    private static function isSessionSet(): bool
+    private function isSessionSet(): bool
     {
         return session('admin_id', false) && session('admin_password', false);
     }

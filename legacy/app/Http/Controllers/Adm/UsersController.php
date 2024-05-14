@@ -2,12 +2,13 @@
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use App\Services\AdministrationService;
+use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\StatisticsLibrary;
@@ -27,11 +28,19 @@ class UsersController extends BaseController
     private Users $usersModel;
     private array $user;
     private UsersLibrary $userLibrary;
+    private AdministrationService $administrationService;
+
+    public function __construct()
+    {
+        $this->administrationService = new AdministrationService(
+            new SettingsService()
+        );
+    }
 
     public function __invoke(): void
     {
-        Administration::checkSession();
-        Administration::authorization(__CLASS__);
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
         $this->stats = new StatisticsLibrary();
         $this->usersModel = new Users();

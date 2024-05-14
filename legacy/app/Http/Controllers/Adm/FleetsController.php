@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use App\Services\AdministrationService;
+use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\TimingLibrary as Timing;
@@ -15,11 +16,19 @@ use Xgp\App\Models\Adm\Fleets;
 class FleetsController extends BaseController
 {
     private Fleets $fleetsModel;
+    private AdministrationService $administrationService;
+
+    public function __construct()
+    {
+        $this->administrationService = new AdministrationService(
+            new SettingsService()
+        );
+    }
 
     public function __invoke(): void
     {
-        Administration::checkSession();
-        Administration::authorization(__CLASS__);
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
         $this->fleetsModel = new Fleets();
 

@@ -2,10 +2,11 @@
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use App\Services\AdministrationService;
+use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Models\Adm\Update;
 
 class UpdateController extends BaseController
@@ -15,11 +16,19 @@ class UpdateController extends BaseController
     private $demo;
     private $output = [];
     private Update $updateModel;
+    private AdministrationService $administrationService;
+
+    public function __construct()
+    {
+        $this->administrationService = new AdministrationService(
+            new SettingsService()
+        );
+    }
 
     public function __invoke(): void
     {
-        Administration::checkSession();
-        Administration::authorization(__CLASS__);
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
         $this->updateModel = new Update();
 

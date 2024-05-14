@@ -4,23 +4,32 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use App\Services\AdministrationService;
+use App\Services\SettingsService;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
-use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
 
 class ServerController extends BaseController
 {
     private $gameConfig = [];
+    private AdministrationService $administrationService;
+
+    public function __construct()
+    {
+        $this->administrationService = new AdministrationService(
+            new SettingsService()
+        );
+    }
 
     public function __invoke(): void
     {
-        Administration::checkSession();
-        Administration::authorization(__CLASS__);
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
         $this->runAction();
 

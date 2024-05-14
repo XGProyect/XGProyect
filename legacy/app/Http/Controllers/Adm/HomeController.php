@@ -4,24 +4,34 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use App\Services\AdministrationService;
+use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use JsonException;
 use stdClass;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Users;
 
 class HomeController extends BaseController
 {
+    /** @var array<string, mixed> $user */
     private array $user;
+    private AdministrationService $administrationService;
+
+    public function __construct()
+    {
+        $this->administrationService = new AdministrationService(
+            new SettingsService()
+        );
+    }
 
     public function __invoke(): void
     {
-        Administration::checkSession();
-        Administration::authorization(__CLASS__);
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
         $this->user = Users::getInstance()->getUserData();
         $userStats = $this->getUsersStats();
@@ -48,6 +58,9 @@ class HomeController extends BaseController
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function buildAlertsBlock(): array
     {
         $alert = [];

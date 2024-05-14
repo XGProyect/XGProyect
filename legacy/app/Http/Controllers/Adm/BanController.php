@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use App\Services\AdministrationService;
+use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Adm\Ban;
@@ -19,10 +20,19 @@ class BanController extends BaseController
     private int $_banned_count = 0;
     private Ban $banModel;
 
+    private AdministrationService $administrationService;
+
+    public function __construct()
+    {
+        $this->administrationService = new AdministrationService(
+            new SettingsService()
+        );
+    }
+
     public function __invoke(): void
     {
-        Administration::checkSession();
-        Administration::authorization(__CLASS__);
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
         $this->user = Users::getInstance()->getUserData();
         $this->banModel = new Ban();
@@ -72,7 +82,7 @@ class BanController extends BaseController
             if ($banned_user) {
                 $parse['banned_until'] = '<tr><th>' . __('admin/ban.bn_banned_until') . '</th><td>' . date(Options::getInstance()->get('date_format_extended'), (int) $banned_user['banned_longer']) . '</td></tr>';
                 $parse['reason'] = $banned_user['banned_theme'];
-                $parse['changedate'] = Administration::showPopUp(__('admin/ban.bn_change_date'), __('admin/ban.bn_edit_ban_help'));
+                $parse['changedate'] = $this->administrationService->showPopUp(__('admin/ban.bn_change_date'), __('admin/ban.bn_edit_ban_help'));
                 $parse['vacation'] = $banned_user['preference_vacation_mode'] ? 'checked="checked"' : '';
             }
 
