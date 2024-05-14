@@ -30,44 +30,13 @@ class AdministrationLib
             $cleanedModuleName = strtolower(substr($lastOcurrence, 1));
             $permissions = new Permissions(Options::getInstance()->get('admin_permissions'));
 
-            if (!$permissions->isAccessAllowed($cleanedModuleName, (int) Users::getInstance()->getUserData()['authlevel'])) {
-                self::saveMessage('error', __('admin/global.no_permissions'), false);
-                exit;
+            if ($permissions->isAccessAllowed($cleanedModuleName, (int) Users::getInstance()->getUserData()['authlevel'])) {
+                return;
             }
         }
-    }
 
-    public static function saveMessage(string $result, string $message, bool $dismissible = true): void
-    {
-        switch ($result) {
-            case 'ok':
-                $parse['color'] = 'alert-success';
-                $parse['status'] = __('admin/global.gn_ok_title');
-                break;
-            case 'error':
-                $parse['color'] = 'alert-danger';
-                $parse['status'] = __('admin/global.gn_error_title');
-                break;
-            case 'warning':
-                $parse['color'] = 'alert-warning';
-                $parse['status'] = __('admin/global.gn_warning_title');
-                break;
-            case 'info':
-                $parse['color'] = 'alert-info';
-                $parse['status'] = '';
-                break;
-        }
-
-        $parse['message'] = $message;
-
-        if (!$dismissible) {
-            $parse['dismissible'] = 'd-none';
-        }
-
-        Template::legacyView(
-            'admin.save_message',
-            $parse
-        );
+        Template::legacyView('admin.save_message');
+        exit;
     }
 
     public static function showPopUp(string $content, string $popupCcontent): string
