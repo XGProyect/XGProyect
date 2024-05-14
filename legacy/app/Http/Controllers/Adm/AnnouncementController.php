@@ -6,6 +6,7 @@ namespace Xgp\App\Http\Controllers\Adm;
 
 use Illuminate\Mail\SentMessage;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
@@ -14,12 +15,10 @@ use Xgp\App\Libraries\Adm\AdministrationLib as Administration;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Adm\Announcement;
 
 class AnnouncementController extends BaseController
 {
     private array $user = [];
-    private Announcement $announcementModel;
 
     public function __invoke(): void
     {
@@ -31,7 +30,6 @@ class AnnouncementController extends BaseController
         }
 
         $this->user = Users::getInstance()->getUserData();
-        $this->announcementModel = new Announcement();
 
         $this->runAction();
 
@@ -78,7 +76,7 @@ class AnnouncementController extends BaseController
 
     private function doMessageAction(array $post): void
     {
-        $players = $this->announcementModel->getAllPlayers();
+        $players = DB::table('users')->get(['id', 'name', 'email']);
 
         if (isset($post['color-picker'])) {
             $color = $post['color-picker'];
@@ -95,13 +93,13 @@ class AnnouncementController extends BaseController
 
         foreach ($players as $player) {
             Functions::sendMessage(
-                (int) $player['id'],
+                (int) $player->id,
                 (int) $this->user['id'],
                 $time,
                 MessagesEnumerator::GENERAL,
                 $from,
                 $subject,
-                strtr($message, ['%player%' => Format::strongText($player['name'])]),
+                strtr($message, ['%player%' => Format::strongText($player->name)]),
                 true
             );
         }
@@ -111,17 +109,17 @@ class AnnouncementController extends BaseController
 
     private function doEmailAction(array $post): void
     {
-        $players = $this->announcementModel->getAllPlayers();
+        $players = DB::table('users')->get(['id', 'name', 'email']);
         $sentCount = 0;
         $results = [];
 
         foreach ($players as $player) {
-            $result = Mail::to($player['email'], $player['name'])->send(new \App\Mail\Announcement(
+            $result = Mail::to($player->email, $player->name)->send(new \App\Mail\Announcement(
                 $post['subject'],
-                strtr($post['text'], ['%player%' => Format::strongText($player['name'])])
+                strtr($post['text'], ['%player%' => Format::strongText($player->name)])
             ));
 
-            $results[] = $player['name'] . ': ' . ($result instanceof SentMessage ? __('admin/announcement.an_email_sent') : __('admin/announcement.an_email_failed'));
+            $results[] = $player->name . ': ' . ($result instanceof SentMessage ? __('admin/announcement.an_email_sent') : __('admin/announcement.an_email_failed'));
 
             // 20 per row
             if ($sentCount % 20 == 0) {
