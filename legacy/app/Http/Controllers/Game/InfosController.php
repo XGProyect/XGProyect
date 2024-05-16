@@ -254,6 +254,7 @@ class InfosController extends BaseController
 
     /**
      * @param $CurMoon
+     *
      * @return mixed
      */
     private function GetNextJumpWaitTime($CurMoon)
@@ -400,6 +401,7 @@ class InfosController extends BaseController
 
     /**
      * @param $Template
+     *
      * @return mixed
      */
     private function phalanxRange($Template)
@@ -426,6 +428,7 @@ class InfosController extends BaseController
 
     /**
      * @param $Template
+     *
      * @return mixed
      */
     private function showProductionTable($Template)

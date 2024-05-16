@@ -434,6 +434,7 @@ class Reset extends Model
      * Reset buildings by type
      *
      * @param integer $planet_type
+     *
      * @return void
      */
     private function resetBuildingsByType(int $planet_type): void

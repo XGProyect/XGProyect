@@ -18,6 +18,7 @@ class Renameplanet extends Model
      * @param integer $galaxy
      * @param integer $system
      * @param integer $planet
+     *
      * @return array|null
      */
     public function getFleets(int $userId, int $galaxy, int $system, int $planet): ?array
@@ -53,6 +54,7 @@ class Renameplanet extends Model
      * @param integer $galaxy
      * @param integer $system
      * @param integer $planet
+     *
      * @return void
      */
     public function deleteMoonAndPlanet(int $userId, int $planet_id, int $galaxy, int $system, int $planet): void
@@ -76,6 +78,7 @@ class Renameplanet extends Model
      *
      * @param integer $userId
      * @param integer $planet_id
+     *
      * @return void
      */
     public function deletePlanet(int $userId, int $planet_id): void
@@ -94,6 +97,7 @@ class Renameplanet extends Model
      *
      * @param string $new_name
      * @param integer $planet_id
+     *
      * @return void
      */
     public function updatePlanetName(string $new_name, int $planet_id): void

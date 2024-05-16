@@ -30,6 +30,7 @@ class Changelog extends Model
      * Get a single changelog entry
      *
      * @param integer $changelog_id
+     *
      * @return ChangelogEntity
      */
     public function getSingleEntry(int $changelog_id): ChangelogEntity
@@ -46,6 +47,7 @@ class Changelog extends Model
      * Add a new entry validating the language id
      *
      * @param array $data
+     *
      * @return void
      */
     public function addEntry(array $data): void
@@ -77,6 +79,7 @@ class Changelog extends Model
      * Edit an existing entry validating the language id
      *
      * @param array $data
+     *
      * @return void
      */
     public function updateEntry(array $data): void
@@ -109,6 +112,7 @@ class Changelog extends Model
      * Delete a changelog entry
      *
      * @param integer $changelog_id
+     *
      * @return void
      */
     public function deleteEntry(int $changelog_id): void

@@ -59,6 +59,7 @@ class Infos extends Model
      * Get a list of moons
      *
      * @param integer $userId
+     *
      * @return array
      */
     public function getListOfMoons(int $userId): array

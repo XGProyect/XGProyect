@@ -74,6 +74,7 @@ abstract class TimingLibrary
      * Get the amount of days left
      *
      * @param int $time
+     *
      * @return float
      */
     public static function getDaysLeft(int $time): float
@@ -85,6 +86,7 @@ abstract class TimingLibrary
      * Get the amount of hours and minutes left
      *
      * @param int $time
+     *
      * @return string
      */
     public static function formatHoursMinutesLeft(int $time): string

@@ -26,10 +26,13 @@ use Xgp\App\Libraries\BattleEngine\Models\PlayerGroup;
  * along with OPBE.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package OPBE
+ *
  * @author Jstar <frascafresca@gmail.com>
  * @copyright 2013 Jstar <frascafresca@gmail.com>
  * @license http://www.gnu.org/licenses/ GNU AGPLv3 License
+ *
  * @version beta(26-10-2013)
+ *
  * @link https://github.com/jstar88/opbe
  */
 
@@ -111,6 +114,7 @@ class Round
     /**
      * Round::getAttackersFire()
      * Return the FireManager of the attacker
+     *
      * @return FireManager: attacker
      */
     public function getAttackersFire()
@@ -121,6 +125,7 @@ class Round
     /**
      * Round::getDefendersFire()
      * Return the FireManager of the defender
+     *
      * @return FireManager: defender
      */
     public function getDefendersFire()
@@ -131,6 +136,7 @@ class Round
     /**
      * Round::getAttachersPhysicShots()
      * Return an array of attacker PhysicShots (multidimensional)
+     *
      * @return array
      */
     public function getAttachersPhysicShots()
@@ -141,6 +147,7 @@ class Round
     /**
      * Round::getDefendersPhysicShots()
      * Return an array of defender PhysicShots (multidimensional)
+     *
      * @return array
      */
     public function getDefendersPhysicShots()
@@ -151,6 +158,7 @@ class Round
     /**
      * Round::getAttachersShipsCleaner()
      * Return an array of attacker ShipsCleaner (multidimensional)
+     *
      * @return array
      */
     public function getAttachersShipsCleaner()
@@ -161,6 +169,7 @@ class Round
     /**
      * Round::getDefendersShipsCleaner()
      * Return an array of defender ShipsCleaner (multidimensional)
+     *
      * @return array
      */
     public function getDefendersShipsCleaner()
@@ -171,6 +180,7 @@ class Round
     /**
      * Round::getAfterBattleAttackers()
      * Return the attackers after the round.
+     *
      * @return PlayerGroup: attackers
      */
     public function getAfterBattleAttackers()
@@ -181,6 +191,7 @@ class Round
     /**
      * Round::getAfterBattleDefenders()
      * Return the defenders after the round.
+     *
      * @return PlayerGroup: defenders
      */
     public function getAfterBattleDefenders()
@@ -191,6 +202,7 @@ class Round
     /**
      * Round::__toString()
      * An html rappresentation of this object
+     *
      * @return string
      */
     public function __toString()
@@ -205,6 +217,7 @@ class Round
     /**
      * Round::getNumber()
      * Return this round number
+     *
      * @return int: number
      */
     public function getNumber()

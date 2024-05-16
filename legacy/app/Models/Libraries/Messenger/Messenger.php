@@ -16,6 +16,7 @@ class Messenger extends Model
      * Insert a new message
      *
      * @param MessagesOptions $options
+     *
      * @return void
      */
     public function insertMessage(MessagesOptions $options): void

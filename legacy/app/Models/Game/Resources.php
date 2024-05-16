@@ -16,6 +16,7 @@ class Resources extends Model
      *
      * @param array $planet
      * @param string $sub_query
+     *
      * @return void
      */
     public function updateCurrentPlanet(array $planet, string $sub_query): void

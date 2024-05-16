@@ -22,10 +22,13 @@ namespace Xgp\App\Libraries\BattleEngine\Utils;
  * along with OPBE.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package OPBE
+ *
  * @author Jstar <frascafresca@gmail.com>
  * @copyright 2015 Jstar <frascafresca@gmail.com>
  * @license http://www.gnu.org/licenses/ GNU AGPLv3 License
+ *
  * @version 21-03-2015)
+ *
  * @link https://github.com/jstar88/opbe
  */
 abstract class GeometricDistribution
@@ -34,6 +37,7 @@ abstract class GeometricDistribution
      * GeometricDistribution::getProbabilityFromMean()
      *
      * @param int $m: the mean
+     *
      * @return int
      */
     public static function getProbabilityFromMean($m)
@@ -48,6 +52,7 @@ abstract class GeometricDistribution
      * GeometricDistribution::getMeanFromProbability()
      *
      * @param int $p: the probability
+     *
      * @return int
      */
     public static function getMeanFromProbability($p)
@@ -62,6 +67,7 @@ abstract class GeometricDistribution
      * GeometricDistribution::getVarianceFromProbability()
      *
      * @param int $p: the probability
+     *
      * @return int
      */
     public static function getVarianceFromProbability($p)
@@ -76,6 +82,7 @@ abstract class GeometricDistribution
      * GeometricDistribution::getStandardDeviationFromProbability()
      *
      * @param int $p: the probability
+     *
      * @return int
      */
     public static function getStandardDeviationFromProbability($p)

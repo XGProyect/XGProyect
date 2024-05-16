@@ -69,6 +69,7 @@ class Maker extends Model
      * Check if the username exists
      *
      * @param string $username
+     *
      * @return array
      */
     public function checkUserName(string $username): array
@@ -86,6 +87,7 @@ class Maker extends Model
      * Check if the email exists
      *
      * @param string $email
+     *
      * @return array
      */
     public function checkUserEmail(string $email): array
@@ -184,6 +186,7 @@ class Maker extends Model
      *
      * @param string $alliance_name
      * @param string $alliance_tag
+     *
      * @return array
      */
     public function checkAlliance(string $alliance_name, string $alliance_tag): array
@@ -324,6 +327,7 @@ class Maker extends Model
      * @param integer $max_fields
      * @param integer $mintemp
      * @param integer $maxtemp
+     *
      * @return void
      */
     public function createNewMoon(int $galaxy, int $system, int $planet, int $owner, string $moon_name, int $size, int $max_fields, int $mintemp, int $maxtemp): void

@@ -129,6 +129,7 @@ class Colonize extends Missions
      * @param int $owner
      * @param string $message
      * @param int $time
+     *
      * @return void
      */
     private function colonizeMessage($owner, $message, $time)
@@ -141,6 +142,7 @@ class Colonize extends Missions
      *
      * @param int $position
      * @param int $level
+     *
      * @return bool
      */
     private function positionAllowed(int $position, int $level): bool

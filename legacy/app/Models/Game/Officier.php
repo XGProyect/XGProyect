@@ -16,6 +16,7 @@ class Officier extends Model
      * @param integer $price
      * @param string $officier
      * @param integer $time_to_add
+     *
      * @return void
      */
     public function setPremium(int $userId, int $price, string $officier, int $time_to_add): void

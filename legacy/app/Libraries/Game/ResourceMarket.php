@@ -30,6 +30,7 @@ class ResourceMarket
      *
      * @param integer $max_storage
      * @param integer $base_dm
+     *
      * @return float
      */
     public function calculateBasePriceToRefill(int $max_storage, int $base_dm): float
@@ -42,6 +43,7 @@ class ResourceMarket
      * Get the price to refill the storage a 10%
      *
      * @param string $resource
+     *
      * @return float
      */
     public function getPriceToFill10Percent(string $resource): float
@@ -56,6 +58,7 @@ class ResourceMarket
      * Get the price to refill the storage a 50%
      *
      * @param string $resource
+     *
      * @return float
      */
     public function getPriceToFill50Percent(string $resource): float
@@ -70,6 +73,7 @@ class ResourceMarket
      * Get the price to completely refill the storage
      *
      * @param string $resource
+     *
      * @return float
      */
     public function getPriceToFill100Percent(string $resource): float

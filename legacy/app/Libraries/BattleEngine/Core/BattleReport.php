@@ -27,10 +27,13 @@ use Xgp\App\Libraries\BattleEngine\Utils\Math;
  * along with OPBE.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package OPBE
+ *
  * @author Jstar <frascafresca@gmail.com>
  * @copyright 2013 Jstar <frascafresca@gmail.com>
  * @license http://www.gnu.org/licenses/ GNU AGPLv3 License
+ *
  * @version beta(26-10-2013)
+ *
  * @link https://github.com/jstar88/opbe
  */
 class BattleReport
@@ -54,7 +57,9 @@ class BattleReport
     /**
      * BattleReport::addRound()
      * Store a round
+     *
      * @param Round $round
+     *
      * @return void
      */
     public function addRound(Round $round)
@@ -69,7 +74,9 @@ class BattleReport
     /**
      * BattleReport::getRound()
      * Retrive a round.
+     *
      * @param mixed $number: "START" to get the first round, "END" to get the last one, an integer(from zero) to get the corrispective round
+     *
      * @return Round
      */
     public function getRound($number)
@@ -107,8 +114,10 @@ class BattleReport
 
     /**
      * Set the result of a battle
+     *
      * @param int $att (BATTLE_WIN ,BATTLE_LOSE, BATTLE_DRAW)
      * @param int $def (BATTLE_WIN ,BATTLE_LOSE, BATTLE_DRAW)
+     *
      * @return void
      */
     public function setBattleResult(int $att, int $def)
@@ -120,6 +129,7 @@ class BattleReport
     /**
      * BattleReport::attackerHasWin()
      * Check if attackers won the battle
+     *
      * @return boolean
      */
     public function attackerHasWin()
@@ -130,6 +140,7 @@ class BattleReport
     /**
      * BattleReport::defenderHasWin()
      * Check if defenders won the battle
+     *
      * @return boolean
      */
     public function defenderHasWin()
@@ -140,6 +151,7 @@ class BattleReport
     /**
      * BattleReport::isAdraw()
      * Check if the battle ended with a draw
+     *
      * @return boolean
      */
     public function isAdraw()

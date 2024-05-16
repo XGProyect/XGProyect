@@ -15,6 +15,7 @@ class Phalanx extends Model
      * Reduce the phalanx cost from the planet
      *
      * @param integer $planet_id
+     *
      * @return void
      */
     public function reduceDeuterium(int $planet_id): void
@@ -32,6 +33,7 @@ class Phalanx extends Model
      * @param integer $galaxy
      * @param integer $system
      * @param integer $planet
+     *
      * @return array
      */
     public function getTargetPlanetIdAndName(int $galaxy, int $system, int $planet): array
@@ -54,6 +56,7 @@ class Phalanx extends Model
      * @param integer $galaxy
      * @param integer $system
      * @param integer $planet
+     *
      * @return array|null
      */
     public function getTargetMoonStatus(int $galaxy, int $system, int $planet): ?array
@@ -75,6 +78,7 @@ class Phalanx extends Model
      * @param integer $galaxy
      * @param integer $system
      * @param integer $planet
+     *
      * @return array|null
      */
     public function getFleetsToTarget(int $galaxy, int $system, int $planet): ?array

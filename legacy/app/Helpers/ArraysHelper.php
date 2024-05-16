@@ -11,6 +11,7 @@ abstract class ArraysHelper
      *
      * @param string $needle
      * @param array $haystack
+     *
      * @return boolean
      */
     public static function inMultiArray(string $needle, array $haystack): bool

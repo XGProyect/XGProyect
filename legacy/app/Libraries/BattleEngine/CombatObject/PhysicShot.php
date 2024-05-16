@@ -25,10 +25,13 @@ use Xgp\App\Libraries\BattleEngine\Models\ShipType;
  * along with OPBE.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package OPBE
+ *
  * @author Jstar <frascafresca@gmail.com>
  * @copyright 2015 Jstar <frascafresca@gmail.com>
  * @license http://www.gnu.org/licenses/ GNU AGPLv3 License
+ *
  * @version 6-03-2015
+ *
  * @link https://github.com/jstar88/opbe
  */
 class PhysicShot
@@ -82,6 +85,7 @@ class PhysicShot
 
     /**
      * Return the total amount of damage from enemy
+     *
      * @return int
      */
     public function getPureDamage()

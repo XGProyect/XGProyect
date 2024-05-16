@@ -495,6 +495,7 @@ class Fleet3Controller extends BaseController
      * Check if it is the current planet
      *
      * @param array $target
+     *
      * @return boolean
      */
     private function isCurrentPlanet(array $target): bool

@@ -20,6 +20,7 @@ class Transport extends Missions
      * Transport mission - deliver resources between planets
      *
      * @param array $fleet
+     *
      * @return void
      */
     public function transportMission(array $fleet): void
@@ -59,6 +60,7 @@ class Transport extends Missions
      * Get data for the planets that are trading resources
      *
      * @param array $fleet
+     *
      * @return array
      */
     private function getTradingPlanetsData(array $fleet): array
@@ -86,6 +88,7 @@ class Transport extends Missions
      *
      * @param array $fleet
      * @param array $trading_planets
+     *
      * @return void
      */
     private function sendDeliveryMessageToOwner(array $fleet, array $trading_planets): void
@@ -115,6 +118,7 @@ class Transport extends Missions
      *
      * @param array $fleet
      * @param array $trading_planets
+     *
      * @return void
      */
     private function sendDeliveryMessageToReceiver(array $fleet, array $trading_planets): void
@@ -153,6 +157,7 @@ class Transport extends Missions
      *
      * @param array $fleet
      * @param array $trading_planets
+     *
      * @return void
      */
     private function sendReturnMessage(array $fleet, array $trading_planets): void

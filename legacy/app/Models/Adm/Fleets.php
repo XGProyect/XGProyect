@@ -65,6 +65,7 @@ class Fleets extends Model
      * Delete fleet by ID
      *
      * @param integer $fleet_id
+     *
      * @return void
      */
     public function endFleetById(int $fleet_id): void
@@ -84,6 +85,7 @@ class Fleets extends Model
      * Delete fleet by ID
      *
      * @param integer $fleet_id
+     *
      * @return void
      */
     public function returnFleetById(int $fleet_id): void
@@ -103,6 +105,7 @@ class Fleets extends Model
      * Delete fleet by ID
      *
      * @param integer $fleet_id
+     *
      * @return void
      */
     public function deleteFleetById(int $fleet_id): void

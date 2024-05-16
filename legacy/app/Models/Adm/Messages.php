@@ -13,6 +13,7 @@ class Messages extends Model
      * Get all messages filtered
      *
      * @param array $to_query
+     *
      * @return array
      */
     public function getAllMessagesFiltered(array $to_query): array
@@ -32,6 +33,7 @@ class Messages extends Model
      * Delete all messages in the set of IDs
      *
      * @param array $ids
+     *
      * @return void
      */
     public function deleteAllMessagesByIds(array $ids): void
@@ -46,6 +48,7 @@ class Messages extends Model
      * Build the search query
      *
      * @param array $to_query
+     *
      * @return string
      */
     private function buildSearchQuery(array $to_query): string

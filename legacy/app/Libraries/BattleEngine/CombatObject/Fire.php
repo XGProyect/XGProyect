@@ -29,10 +29,13 @@ use Xgp\App\Libraries\BattleEngine\Utils\Number;
  * along with OPBE.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package OPBE
+ *
  * @author Jstar <frascafresca@gmail.com>
  * @copyright 2015 Jstar <frascafresca@gmail.com>
  * @license http://www.gnu.org/licenses/ GNU AGPLv3 License
+ *
  * @version 21-03-2015
+ *
  * @link https://github.com/jstar88/opbe
  *
  *
@@ -78,6 +81,7 @@ class Fire
     /**
      * Fire::getAttackerTotalFire()
      * Return the total fire
+     *
      * @return int
      */
     public function getAttackerTotalFire()
@@ -88,6 +92,7 @@ class Fire
     /**
      * Fire::getAttackerTotalShots()
      * Return the total shots
+     *
      * @return int
      */
     public function getAttackerTotalShots()
@@ -98,6 +103,7 @@ class Fire
     /**
      * Fire::calculateTotal()
      * Calculate the total power and shots amount of attacker, including RF and standart fire
+     *
      * @return void
      */
     private function calculateTotal()
@@ -127,6 +133,7 @@ class Fire
     /**
      * Fire::calculateRf()
      * This function implement the RF component of above function
+     *
      * @return void
      */
     private function calculateRf()
@@ -151,7 +158,9 @@ class Fire
     /**
      * Fire::getShotsFromOneAttackerShipOfType()
      * This function return the number of shots caused by RF from one ShipType to all defenders
+     *
      * @param ShipType $shipType_A
+     *
      * @return int
      */
     private function getShotsFromOneAttackerShipOfType(ShipType $shipType_A)
@@ -172,7 +181,9 @@ class Fire
     /**
      * Fire::getProbabilityToShotAgainForAttackerShipOfType()
      * This function return the probability of a ShipType to shot thanks RF
+     *
      * @param ShipType $shipType_A
+     *
      * @return int
      */
     private function getProbabilityToShotAgainForAttackerShipOfType(ShipType $shipType_A)
@@ -206,6 +217,7 @@ class Fire
     /**
      * Fire::getNormalPower()
      * Return the total fire shotted from attacker ShipType to all defenders without RF
+     *
      * @return int
      */
     private function getNormalPower()

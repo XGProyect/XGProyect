@@ -42,6 +42,7 @@ class Preferences extends Model
      * Check if the email exists
      *
      * @param string $email
+     *
      * @return array
      */
     public function checkIfEmailExists(string $email): array
@@ -59,6 +60,7 @@ class Preferences extends Model
      *
      * @param array $fields
      * @param integer $userId
+     *
      * @return void
      */
     public function updateValidatedFields(array $fields, int $userId): void
@@ -87,6 +89,7 @@ class Preferences extends Model
      * Check the empire current activity
      *
      * @param integer $userId
+     *
      * @return boolean
      */
     public function isEmpireActive(int $userId): bool
@@ -124,6 +127,7 @@ class Preferences extends Model
      * Start vacation mode first checking if it's possible to set
      *
      * @param integer $userId
+     *
      * @return boolean
      */
     public function startVacation(int $userId): bool
@@ -152,6 +156,7 @@ class Preferences extends Model
      * Remove vacation mode and set production to maximum
      *
      * @param integer $userId
+     *
      * @return void
      */
     public function endVacation(int $userId): void

@@ -22,10 +22,13 @@ namespace Xgp\App\Libraries\BattleEngine\Constants;
  * along with OPBE.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package OPBE
+ *
  * @author Jstar <frascafresca@gmail.com>
  * @copyright 2015 Jstar <frascafresca@gmail.com>
  * @license http://www.gnu.org/licenses/ GNU AGPLv3 License
+ *
  * @version 21-3-2015
+ *
  * @link https://github.com/jstar88/opbe
  */
 /* * * System constants, do not edit! ** */

@@ -39,6 +39,7 @@ abstract class StringsHelper
      * Replicates the behavior of mysql_real_escape_string
      *
      * @param string $value
+     *
      * @return string
      */
     public static function escapeString(string $value): string
@@ -59,6 +60,7 @@ abstract class StringsHelper
      *
      * @param string $text
      * @param array ...$replacements
+     *
      * @return string
      */
     public static function parseReplacements(string $text, array $replacements): string

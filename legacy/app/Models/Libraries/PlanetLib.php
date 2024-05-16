@@ -48,6 +48,7 @@ class PlanetLib extends Model
      *
      * @param array $data
      * @param boolean $full_insert
+     *
      * @return void
      */
     public function createNewPlanet(array $data, bool $full_insert = true): void
@@ -81,6 +82,7 @@ class PlanetLib extends Model
      * Insert a new record into buildings table
      *
      * @param integer $planet_id
+     *
      * @return void
      */
     private function insertPlanetBuildings(int $planet_id): void
@@ -94,6 +96,7 @@ class PlanetLib extends Model
      * Insert a new record into defenses table
      *
      * @param integer $planet_id
+     *
      * @return void
      */
     private function insertPlanetDefenses(int $planet_id): void
@@ -107,6 +110,7 @@ class PlanetLib extends Model
      * Insert a new record into ships table
      *
      * @param integer $planet_id
+     *
      * @return void
      */
     private function insertPlanetShips(int $planet_id): void

@@ -749,6 +749,7 @@ class Attack extends Missions
      *
      * @param integer $userId
      * @param integer $level
+     *
      * @return void
      */
     private function setHyperspaceTechLevel(int $userId, int $level): void

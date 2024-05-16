@@ -33,6 +33,7 @@ class Ban extends Model
      * Get banned user data
      *
      * @param string $ban_name
+     *
      * @return array|null
      */
     public function getBannedUserData(string $ban_name): ?array
@@ -119,6 +120,7 @@ class Ban extends Model
      * @param string $where_authlevel
      * @param string $where_banned
      * @param string $query_order
+     *
      * @return array
      */
     public function getListOfUsers(string $where_authlevel, string $where_banned, string $query_order): array

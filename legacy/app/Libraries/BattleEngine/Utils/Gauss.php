@@ -24,10 +24,13 @@ use Exception;
  * along with OPBE.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package OPBE
+ *
  * @author Jstar <frascafresca@gmail.com>
  * @copyright 2013 Jstar <frascafresca@gmail.com>
  * @license http://www.gnu.org/licenses/ GNU AGPLv3 License
+ *
  * @version beta(26-10-2013)
+ *
  * @link https://github.com/jstar88/opbe
  */
 class Gauss
@@ -35,6 +38,7 @@ class Gauss
     /**
      * Random::getNext()
      * Return an random normal number
+     *
      * @return int
      */
     public static function getNext()
@@ -49,8 +53,10 @@ class Gauss
     /**
      * Random::getNextMs()
      * Generates a random number from the normal distribution with specific mean and standard deviation
+     *
      * @param int $m: mean
      * @param int $s: standard deviation
+     *
      * @return int
      */
     public static function getNextMs($m, $s)
@@ -62,10 +68,12 @@ class Gauss
      * Random::getNextMsBetween()
      * Generates a random number from the normal distribution with specific mean and standard deviation.
      * The number must be between min and max.
+     *
      * @param int $m: mean
      * @param int $s: standard deviation
      * @param int $min: the minimum
      * @param int $max: the maximum
+     *
      * @return int
      */
     public static function getNextMsBetween($m, $s, $min, $max)

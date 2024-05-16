@@ -33,6 +33,7 @@ class Repair extends Model
      * Check a table
      *
      * @param string $table
+     *
      * @return void
      */
     public function checkTable(string $table): void
@@ -44,6 +45,7 @@ class Repair extends Model
      * Optimize a table
      *
      * @param string $table
+     *
      * @return void
      */
     public function optimizeTable(string $table): void
@@ -55,6 +57,7 @@ class Repair extends Model
      * Repair a table
      *
      * @param string $table
+     *
      * @return void
      */
     public function repairTable(string $table): void

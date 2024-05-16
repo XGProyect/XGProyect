@@ -20,6 +20,7 @@ class Deploy extends Missions
      * Deploy mission - move fleets from one planet to another
      *
      * @param array $fleet
+     *
      * @return void
      */
     public function deployMission(array $fleet): void
@@ -49,6 +50,7 @@ class Deploy extends Missions
      * Send a deploymeny message to the fleet owner
      *
      * @param array $fleet
+     *
      * @return void
      */
     private function sendDeploymentMessage(array $fleet): void
@@ -77,6 +79,7 @@ class Deploy extends Missions
      * Send a message informing that the fleet is back
      *
      * @param array $fleet
+     *
      * @return void
      */
     private function sendReturnMessage(array $fleet): void

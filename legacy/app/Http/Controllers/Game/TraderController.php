@@ -75,6 +75,7 @@ class TraderController extends BaseController
      *
      * @param string $resource
      * @param integer $percentage
+     *
      * @return void
      */
     private function refillResource(string $resource, int $percentage): void
@@ -164,6 +165,7 @@ class TraderController extends BaseController
      * Set the different refill options
      *
      * @param string $resource
+     *
      * @return array
      */
     private function setRefillOptions(string $resource): array

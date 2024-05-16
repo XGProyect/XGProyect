@@ -103,6 +103,7 @@ class Fleet extends Model
      * Get ongoing ACS attacks
      *
      * @param int $userId
+     *
      * @return mixed
      */
     public function getOngoingAcs($userId)
@@ -210,6 +211,7 @@ class Fleet extends Model
      * Insert a new missiles mission into the fleets table
      *
      * @param array $data
+     *
      * @return void
      */
     public function insertNewMissilesMission(array $data): void

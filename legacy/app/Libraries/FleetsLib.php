@@ -465,6 +465,7 @@ class FleetsLib
      *
      * @param integer $ship_storage
      * @param integer $hyperspace_tech_level
+     *
      * @return integer
      */
     public static function getMaxStorage(int $ship_storage, int $hyperspace_tech_level): int
@@ -493,6 +494,7 @@ class FleetsLib
      * Check if the fleet has resources
      *
      * @param array $fleet
+     *
      * @return boolean
      */
     public static function hasResources(array $fleet): bool

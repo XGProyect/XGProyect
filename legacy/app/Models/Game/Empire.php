@@ -13,6 +13,7 @@ class Empire extends Model
      * Get all player data
      *
      * @param integer $userId
+     *
      * @return array
      */
     public function getAllPlayerData(int $userId): array

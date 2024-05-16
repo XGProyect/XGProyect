@@ -22,10 +22,13 @@ namespace Xgp\App\Libraries\BattleEngine\Utils;
  * along with OPBE.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package OPBE
+ *
  * @author Jstar <frascafresca@gmail.com>
  * @copyright 2015 Jstar <frascafresca@gmail.com>
  * @license http://www.gnu.org/licenses/ GNU AGPLv3 License
+ *
  * @version 6-3-2015
+ *
  * @link https://github.com/jstar88/opbe
  */
 class DebugManager
@@ -45,7 +48,9 @@ class DebugManager
     /**
      * DebugManager::runDebugged()
      * Return a new function that will run the function given as argument under debug
+     *
      * @param callable $func
+     *
      * @return callable
      */
     public static function runDebugged($func, $errorHandler = null, $exceptionHandler = null)
@@ -73,6 +78,7 @@ class DebugManager
     /**
      * DebugManager::myErrorHandler()
      * default error handler function
+     *
      * @param mixed $errno
      * @param mixed $errstr
      * @param mixed $errfile
@@ -108,6 +114,7 @@ class DebugManager
     /**
      * DebugManager::save()
      * default exception handler function
+     *
      * @param mixed $other
      */
     public static function save($other)

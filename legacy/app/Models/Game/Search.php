@@ -13,6 +13,7 @@ class Search extends Model
      * Search results by player name
      *
      * @param string $playerName
+     *
      * @return array
      */
     public function getResultsByPlayerName(string $playerName): array
@@ -46,6 +47,7 @@ class Search extends Model
      * Search results by alliance name or alliance tag
      *
      * @param string $allianceTag
+     *
      * @return array
      */
     public function getResultsByAllianceTag(string $allianceTag): array
@@ -78,6 +80,7 @@ class Search extends Model
      * Search results by planet name
      *
      * @param string $planetName
+     *
      * @return array
      */
     public function getResultsByPlanetName(string $planetName): array

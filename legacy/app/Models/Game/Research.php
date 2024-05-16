@@ -16,6 +16,7 @@ class Research extends Model
      *
      * @param array $working_planet
      * @param array $current_user
+     *
      * @return void
      */
     public function startNewResearch(array $working_planet, array $current_user): void
@@ -37,6 +38,7 @@ class Research extends Model
      * Get planet that's currently researching
      *
      * @param integer $current_research
+     *
      * @return array
      */
     public function getPlanetResearching(int $current_research): array
@@ -60,6 +62,7 @@ class Research extends Model
      *
      * @param integer $userId
      * @param integer $labs_limit
+     *
      * @return integer
      */
     public function getAllLabsLevel(int $userId, int $labs_limit): int

@@ -206,6 +206,7 @@ class DevelopmentsLib
      * @param integer $robotics_factory
      * @param integer $nanite_factory
      * @param integer $level
+     *
      * @return float
      */
     public static function tearDownTime(int $building, int $robotics_factory, int $nanite_factory, int $level): float

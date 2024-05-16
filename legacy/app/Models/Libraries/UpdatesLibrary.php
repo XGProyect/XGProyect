@@ -143,6 +143,7 @@ class UpdatesLibrary extends Model
      * Updated planet queue and disocunt resources
      *
      * @param array $planet
+     *
      * @return void
      */
     public function updateQueueResources($planet)
