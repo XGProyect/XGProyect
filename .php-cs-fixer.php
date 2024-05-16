@@ -98,7 +98,12 @@ return (new PhpCsFixer\Config())
         'whitespace_after_comma_in_array' => true,
         'space_after_semicolon' => true,
         // 'single_blank_line_at_eof' => false
+        // 'single_line_throw' => false,
         'yoda_style' => ['equal' => false, 'identical' => false, 'less_and_greater' => false],
+        // 'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
+        'types_spaces' => ['space' => 'single'],
+        // 'global_namespace_import' => ['import_classes' => true, 'import_functions' => null, 'import_constants' => null],
+        // 'method_chaining_indentation' => true,
         'operator_linebreak' => ['position' => 'end', 'only_booleans' => true],
         'declare_strict_types' => true,
     ])
