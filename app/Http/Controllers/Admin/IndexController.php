@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends BaseController
 {
-    public function __invoke(Request $request): View|Factory
+    public function __invoke(Request $request): View | Factory
     {
         return view(
             'admin.index',

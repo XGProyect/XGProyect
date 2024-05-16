@@ -14,7 +14,7 @@ class Ranks
 {
     private array $_ranks = [];
 
-    public function __construct(string|array $alliance_ranks)
+    public function __construct(string | array $alliance_ranks)
     {
         try {
             if (is_array($alliance_ranks)) {

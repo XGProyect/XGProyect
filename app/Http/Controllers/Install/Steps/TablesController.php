@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class TablesController extends BaseController
 {
-    public function __invoke(Request $request): View|Factory
+    public function __invoke(Request $request): View | Factory
     {
         // @phpstan-ignore-next-line
         session(['last_step' => $request->route()->getName()]);

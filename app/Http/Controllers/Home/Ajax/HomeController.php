@@ -10,7 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 class HomeController extends BaseController
 {
-    public function __invoke(): View|Factory
+    public function __invoke(): View | Factory
     {
         return view('home.ajax.home');
     }

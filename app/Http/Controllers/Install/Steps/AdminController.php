@@ -15,7 +15,7 @@ use Xgp\App\Models\Home\Register;
 
 class AdminController extends BaseController
 {
-    public function __invoke(Request $request): View|Factory
+    public function __invoke(Request $request): View | Factory
     {
         // @phpstan-ignore-next-line
         session(['last_step' => $request->route()->getName()]);

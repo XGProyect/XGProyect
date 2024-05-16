@@ -9,9 +9,9 @@ final class Queue
     public const QUEUE_SEPARATOR = ';';
     public const ITEM_SEPARATOR = ',';
 
-    private array|string $queue = [];
+    private array | string $queue = [];
 
-    public function __construct(array|string $current_queue = [])
+    public function __construct(array | string $current_queue = [])
     {
         $this->queue = $current_queue;
     }

@@ -11,7 +11,7 @@ use Xgp\App\Core\Model;
  */
 class Changelog extends Model
 {
-    public function getAllChangelogEntries(): null|array|bool
+    public function getAllChangelogEntries(): null | array | bool
     {
         return $this->db->queryFetchAll(
             'SELECT

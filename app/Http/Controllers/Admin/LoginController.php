@@ -19,7 +19,7 @@ class LoginController extends BaseController
     {
     }
 
-    public function __invoke(LoginRequest $request): Redirector|RedirectResponse
+    public function __invoke(LoginRequest $request): Redirector | RedirectResponse
     {
         $credentials = [
             'email' => $request->validated('inputEmail'),

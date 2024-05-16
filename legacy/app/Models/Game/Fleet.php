@@ -411,7 +411,7 @@ class Fleet extends Model
         }
     }
 
-    public function createNewAcs(string $acs_code, FleetEntity $fleet): bool|int
+    public function createNewAcs(string $acs_code, FleetEntity $fleet): bool | int
     {
         try {
             $this->db->beginTransaction();

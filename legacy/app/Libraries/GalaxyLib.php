@@ -271,7 +271,7 @@ class GalaxyLib
         return $parse;
     }
 
-    private function debrisBlock(): string|array
+    private function debrisBlock(): string | array
     {
         if ($this->row_data['metal'] + $this->row_data['crystal'] >= DEBRIS_MIN_VISIBLE_SIZE) {
             $recyclers_storage = FleetsLib::getMaxStorage(

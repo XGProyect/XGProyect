@@ -18,7 +18,7 @@ use Xgp\App\Helpers\StringsHelper;
 
 class DatabaseController extends BaseController
 {
-    public function __invoke(Request $request): View|Factory
+    public function __invoke(Request $request): View | Factory
     {
         // @phpstan-ignore-next-line
         session(['last_step' => $request->route()->getName()]);

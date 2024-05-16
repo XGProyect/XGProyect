@@ -21,7 +21,7 @@ class RecoverController extends BaseController
     {
     }
 
-    public function __invoke(): View|Factory
+    public function __invoke(): View | Factory
     {
         return view(
             'account.recover',

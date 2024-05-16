@@ -97,7 +97,7 @@ class BattleReport
     /**
      * Alias of getRound(). Get the round after it was processed
      */
-    private function getResultRound(string|int $number): Round
+    private function getResultRound(string | int $number): Round
     {
         return $this->getRound($number);
     }
@@ -105,7 +105,7 @@ class BattleReport
     /**
      * Get the round before it was processed.
      */
-    private function getPresentationRound(string|int $number): Round
+    private function getPresentationRound(string | int $number): Round
     {
         if ($number !== 'START' && $number !== 'END') {
             $number -= 1;
