@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Xgp\App\Core\Common;
 use Xgp\App\Libraries\Functions;
 

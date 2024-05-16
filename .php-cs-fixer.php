@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return (new PhpCsFixer\Config())
     ->setRules([
         '@PSR12' => true,
@@ -96,7 +98,9 @@ return (new PhpCsFixer\Config())
         'whitespace_after_comma_in_array' => true,
         'space_after_semicolon' => true,
         // 'single_blank_line_at_eof' => false
+        'declare_strict_types' => true,
     ])
     // ->setIndent("\t")
     ->setLineEnding("\n")
+    ->setRiskyAllowed(true)
 ;

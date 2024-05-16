@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 //##########################################################################
 //
 // Constants should not be changed, unless you know what you are doing!

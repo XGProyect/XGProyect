@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Libraries\Users;
 
 use Xgp\App\Core\Entity\NotesEntity;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Models\Adm;
 
 use Xgp\App\Core\Model;

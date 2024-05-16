@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $resource = [
     1 => 'building_metal_mine',
     2 => 'building_crystal_mine',

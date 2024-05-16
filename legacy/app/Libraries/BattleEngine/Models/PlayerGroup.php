@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Libraries\BattleEngine\Models;
 
 use Xgp\App\Libraries\BattleEngine\CombatObject\FireManager;

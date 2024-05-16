@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  *  OPBE
  *  Copyright (C) 2013  Jstar

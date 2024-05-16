@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Libraries\Messenger;
 
 use Xgp\App\Core\Enumerators\MessagesEnumerator;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Http\Controllers\Adm;
 
 use App\Services\AdministrationService;

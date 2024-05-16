@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xgp\App\Http\Controllers\Game;
 
 class SuppliesController extends BuildingsController
