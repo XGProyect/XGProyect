@@ -110,8 +110,8 @@ class FederationController extends BaseController
                     $own_fleet->getFleetGroup()
                 );
 
-                if ($acs['acs_members'] < 5
-                    && $member != $this->user['id']) {
+                if ($acs['acs_members'] < 5 &&
+                    $member != $this->user['id']) {
                     $this->fleetModel->insertNewAcsMember(
                         $member,
                         $own_fleet->getFleetGroup()
@@ -151,8 +151,8 @@ class FederationController extends BaseController
                     $own_fleet->getFleetGroup()
                 );
 
-                if ($acs['acs_members'] >= 1
-                    && $member != $this->user['id']) {
+                if ($acs['acs_members'] >= 1 &&
+                    $member != $this->user['id']) {
                     $this->fleetModel->removeAcsMember(
                         $member,
                         $own_fleet->getFleetGroup()

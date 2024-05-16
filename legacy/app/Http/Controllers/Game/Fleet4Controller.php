@@ -217,14 +217,14 @@ class Fleet4Controller extends BaseController
     private function validateAdmin(): bool
     {
         // skip if it's our own planet or it's an empty planet
-        if ($this->_own_planet
-            or !$this->_occupied_planet) {
+        if ($this->_own_planet or
+            !$this->_occupied_planet) {
             return true;
         }
 
-        if (Options::getInstance()->get('adm_attack') != 0
-            && $this->_target_data['authlevel'] >= 1
-            && $this->user['authlevel'] == 0) {
+        if (Options::getInstance()->get('adm_attack') != 0 &&
+            $this->_target_data['authlevel'] >= 1 &&
+            $this->user['authlevel'] == 0) {
             $this->showMessage(
                 __('game/fleet.fl_admins_cannot_be_attacked')
             );
@@ -248,14 +248,14 @@ class Fleet4Controller extends BaseController
     private function validateTargetVacations(): bool
     {
         // skip if it's our own planet or it's an empty planet
-        if ($this->_own_planet
-            or !$this->_occupied_planet) {
+        if ($this->_own_planet or
+            !$this->_occupied_planet) {
             return true;
         }
 
-        if (isset($this->_target_data)
-            && $this->userLibrary->isOnVacations($this->_target_data)
-            && $this->_clean_input_data['mission'] != Missions::RECYCLE) {
+        if (isset($this->_target_data) &&
+            $this->userLibrary->isOnVacations($this->_target_data) &&
+            $this->_clean_input_data['mission'] != Missions::RECYCLE) {
             $this->showMessage(__('game/fleet.fl_in_vacation_player'));
         }
 
@@ -266,15 +266,15 @@ class Fleet4Controller extends BaseController
     {
         $target_data = $this->getTargetData();
 
-        if ($target_data['group'] > 0
-            && $this->_clean_input_data['mission'] == Missions::ACS) {
+        if ($target_data['group'] > 0 &&
+            $this->_clean_input_data['mission'] == Missions::ACS) {
             $target_string = 'g' . (int) $target_data['galaxy'] .
             's' . (int) $target_data['system'] .
             'p' . (int) $target_data['planet'] .
             't' . (int) $target_data['type'];
 
-            if ($target_data['acs_target'] == $target_string
-                && $this->fleetModel->getAcsCount($target_data['group']) > 0) {
+            if ($target_data['acs_target'] == $target_string &&
+                $this->fleetModel->getAcsCount($target_data['group']) > 0) {
                 // set acs group
                 $this->_fleet_data['fleet_group'] = $target_data['group'];
 
@@ -303,8 +303,8 @@ class Fleet4Controller extends BaseController
             $total_ships = 0;
 
             foreach ($fleet as $ship_id => $amount) {
-                if (!isset($planet_ships[$objects[$ship_id]])
-                    or ((int) $amount > $planet_ships[$objects[$ship_id]])) {
+                if (!isset($planet_ships[$objects[$ship_id]]) or
+                    ((int) $amount > $planet_ships[$objects[$ship_id]])) {
                     return false;
                 }
 
@@ -358,8 +358,8 @@ class Fleet4Controller extends BaseController
         }
 
         if (
-            $data['mission'] == Missions::DEPLOY
-            && !$this->_own_planet
+            $data['mission'] == Missions::DEPLOY &&
+            !$this->_own_planet
         ) {
             $this->showMessage(
                 FormatLib::colorRed(__('game/fleet.fl_deploy_only_your_planets'))
@@ -392,26 +392,26 @@ class Fleet4Controller extends BaseController
         }
 
         if ($data['mission'] == Missions::RECYCLE) {
-            if ((count($target) <= 0)
-                or ($target['planet_debris_metal'] == 0
-                    && $target['planet_debris_crystal'] == 0
-                    && time() > ($target['planet_invisible_start_time'] + DEBRIS_LIFE_TIME))) {
+            if ((count($target) <= 0) or
+                ($target['planet_debris_metal'] == 0 &&
+                    $target['planet_debris_crystal'] == 0 &&
+                    time() > ($target['planet_invisible_start_time'] + DEBRIS_LIFE_TIME))) {
                 return false;
             }
         }
 
         if ($data['mission'] == Missions::DESTROY) {
-            if ($this->_own_planet
-                or !$this->_occupied_planet
-                or ($this->getTargetData()['type'] != PlanetTypes::MOON)
-                or !isset($fleet[Ships::ship_deathstar])) {
+            if ($this->_own_planet or
+                !$this->_occupied_planet or
+                ($this->getTargetData()['type'] != PlanetTypes::MOON) or
+                !isset($fleet[Ships::ship_deathstar])) {
                 return false;
             }
         }
 
         if (
-            $data['mission'] == Missions::EXPEDITION
-            && !$this->_occupied_planet
+            $data['mission'] == Missions::EXPEDITION &&
+            !$this->_occupied_planet
         ) {
             $expeditions = $this->_fleets->getExpeditionsCount();
             $max_expeditions = FleetsLib::getMaxExpeditions(
@@ -431,8 +431,8 @@ class Fleet4Controller extends BaseController
             }
         } else {
             if (
-                $data['mission'] != Missions::COLONIZE
-                && !$this->_occupied_planet
+                $data['mission'] != Missions::COLONIZE &&
+                !$this->_occupied_planet
             ) {
                 return false;
             }
@@ -453,8 +453,8 @@ class Fleet4Controller extends BaseController
     {
         // skip if it's our own planet or it's an empty planet
         if (
-            $this->_own_planet
-            || !$this->_occupied_planet
+            $this->_own_planet ||
+            !$this->_occupied_planet
         ) {
             return true;
         }
@@ -478,15 +478,15 @@ class Fleet4Controller extends BaseController
                 Missions::ATTACK, Missions::ACS, Missions::STAY, Missions::SPY, Missions::DESTROY,
             ];
 
-            if ($noob->isWeak(intval($user_points), intval($target_points))
-                && in_array($this->_clean_input_data['mission'], $disallow_weak)) {
+            if ($noob->isWeak(intval($user_points), intval($target_points)) &&
+                in_array($this->_clean_input_data['mission'], $disallow_weak)) {
                 $this->showMessage(
                     FormatLib::customColor(__('game/fleet.fl_week_player'), 'lime')
                 );
             }
 
-            if ($noob->isStrong(intval($user_points), intval($target_points))
-                && in_array($this->_clean_input_data['mission'], $disallow_strong)) {
+            if ($noob->isStrong(intval($user_points), intval($target_points)) &&
+                in_array($this->_clean_input_data['mission'], $disallow_strong)) {
                 $this->showMessage(
                     FormatLib::colorRed(__('game/fleet.fl_strong_player'))
                 );
@@ -530,8 +530,8 @@ class Fleet4Controller extends BaseController
         $crystal = $this->_clean_input_data['resource2'];
         $deuterium = $this->_clean_input_data['resource3'];
 
-        if ($metal + $crystal + $deuterium < 1
-            && $this->_clean_input_data['mission'] == Missions::TRANSPORT) {
+        if ($metal + $crystal + $deuterium < 1 &&
+            $this->_clean_input_data['mission'] == Missions::TRANSPORT) {
             $this->showMessage(
                 FormatLib::customColor(__('game/fleet.fl_empty_transport'), 'lime')
             );

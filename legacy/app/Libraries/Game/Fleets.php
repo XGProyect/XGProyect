@@ -56,9 +56,9 @@ class Fleets
     {
         $fleet = $this->getOwnFleetById($fleet_id);
 
-        if ($fleet->getFleetStartTime() <= time()
-            or $fleet->getFleetEndTime() < time()
-            or $fleet->getFleetMess() == 1) {
+        if ($fleet->getFleetStartTime() <= time() or
+            $fleet->getFleetEndTime() < time() or
+            $fleet->getFleetMess() == 1) {
             return null;
         }
 

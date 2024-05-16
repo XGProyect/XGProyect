@@ -611,9 +611,9 @@ class AllianceController extends BaseController
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $new_rank = filter_input(INPUT_POST, 'newrang', FILTER_VALIDATE_INT, ['options' => ['default' => 0]]);
 
-        if (isset($kick)
-            && $this->alliance->hasAccess(AllianceRanks::KICK)
-            && $kick != $this->alliance->getCurrentAlliance()->getAllianceOwner()) {
+        if (isset($kick) &&
+            $this->alliance->hasAccess(AllianceRanks::KICK) &&
+            $kick != $this->alliance->getCurrentAlliance()->getAllianceOwner()) {
             $this->allianceModel->exitAlliance(
                 $this->getAllianceId(),
                 $kick
@@ -621,9 +621,9 @@ class AllianceController extends BaseController
         }
 
         if (
-            isset($new_rank)
-            && isset($id)
-            && $id != $this->alliance->getCurrentAlliance()->getAllianceOwner()
+            isset($new_rank) &&
+            isset($id) &&
+            $id != $this->alliance->getCurrentAlliance()->getAllianceOwner()
         ) {
             $ranks = $this->alliance->getCurrentAllianceRankObject();
 
@@ -976,9 +976,9 @@ class AllianceController extends BaseController
      */
     private function buildPublicRequestsBlock()
     {
-        if (!$this->user['ally_id']
-            && !$this->user['ally_request']
-            && $this->alliance->getCurrentAlliance()->getAllianceRequestNotAllow()) {
+        if (!$this->user['ally_id'] &&
+            !$this->user['ally_request'] &&
+            $this->alliance->getCurrentAlliance()->getAllianceRequestNotAllow()) {
             $url = UrlHelper::setUrl(
                 'game.php?page=alliance&mode=apply&allyid=' . $this->getAllianceId(),
                 __('game/alliance.al_click_to_send_request'),
@@ -1173,8 +1173,8 @@ class AllianceController extends BaseController
         $change_rank = '';
 
         if (
-            $this->alliance->getCurrentAlliance()->getAllianceOwner() == $member_id
-            or $requested_rank == $member_id
+            $this->alliance->getCurrentAlliance()->getAllianceOwner() == $member_id or
+            $requested_rank == $member_id
         ) {
             return '-';
         }

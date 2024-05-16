@@ -77,8 +77,8 @@ class BackupController extends BaseController
 
         // download or delete a file
         if ($file_actions) {
-            if (in_array($file_actions['action'], ['download', 'delete'])
-                && $file_actions['file'] != null) {
+            if (in_array($file_actions['action'], ['download', 'delete']) &&
+                $file_actions['file'] != null) {
                 $this->{'do' . ucfirst($file_actions['action']) . 'Action'}($file_actions['file']);
             }
         }

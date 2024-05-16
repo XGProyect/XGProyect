@@ -235,9 +235,9 @@ class PreferencesController extends BaseController
 
     private function validateNewUserName(array $preferences): void
     {
-        if (isset($preferences['new_user_name'])
-            && isset($preferences['confirmation_user_password'])
-            && $this->preferences->isNickNameChangeAllowed()) {
+        if (isset($preferences['new_user_name']) &&
+            isset($preferences['confirmation_user_password']) &&
+            $this->preferences->isNickNameChangeAllowed()) {
             if (password_verify($preferences['confirmation_user_password'], $this->user['password'])) {
                 $username_len = strlen(trim($preferences['new_user_name']));
 
@@ -262,8 +262,8 @@ class PreferencesController extends BaseController
 
     private function validateNewPassword(array $preferences): void
     {
-        if (isset($preferences['current_user_password'])
-            && isset($preferences['new_user_password'])) {
+        if (isset($preferences['current_user_password']) &&
+            isset($preferences['new_user_password'])) {
             if (password_verify($preferences['current_user_password'], $this->user['password'])) {
                 $this->fields_to_update['password'] = Functions::hash(trim($preferences['new_user_password']));
             } else {
@@ -274,8 +274,8 @@ class PreferencesController extends BaseController
 
     private function validateNewEmail(array $preferences): void
     {
-        if (isset($preferences['new_user_email'])
-            && isset($preferences['confirmation_email_password'])) {
+        if (isset($preferences['new_user_email']) &&
+            isset($preferences['confirmation_email_password'])) {
             if (password_verify($preferences['confirmation_email_password'], $this->user['password'])) {
                 $user_email_len = strlen(trim($preferences['new_user_email']));
 
@@ -325,8 +325,8 @@ class PreferencesController extends BaseController
 
     private function validateDeleteMode(array $preferences): void
     {
-        if (isset($preferences['preference_delete_mode'])
-            && $preferences['preference_delete_mode'] == 'on') {
+        if (isset($preferences['preference_delete_mode']) &&
+            $preferences['preference_delete_mode'] == 'on') {
             $this->fields_to_update['preference_delete_mode'] = time();
         } else {
             $this->fields_to_update['preference_delete_mode'] = null;

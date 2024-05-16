@@ -98,9 +98,9 @@ class ShipyardController extends BaseController
 
             foreach ($items as $item => $amount) {
                 // avoid elements that not match the criteria
-                if (!in_array($item, $this->allowedStructures)
-                    or ($amount <= 0)
-                    or $this->isShieldDomeAvailable($item)) {
+                if (!in_array($item, $this->allowedStructures) or
+                    ($amount <= 0) or
+                    $this->isShieldDomeAvailable($item)) {
                     continue;
                 }
 
@@ -500,8 +500,8 @@ class ShipyardController extends BaseController
         ];
 
         foreach ($current_queue as $item => $amount) {
-            if ($item == Defenses::defense_anti_ballistic_missile
-                or $item == Defenses::defense_interplanetary_missile) {
+            if ($item == Defenses::defense_anti_ballistic_missile or
+                $item == Defenses::defense_interplanetary_missile) {
                 $queue_missiles[$item] += $amount;
             }
         }

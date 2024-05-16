@@ -30,9 +30,9 @@ class Buddy
         $list_of_buddies = [];
 
         foreach ($this->_buddies as $buddy) {
-            if (($buddy instanceof BuddyEntity)
-                && !$this->isBuddy($buddy)
-                && $this->isOwnRequest($buddy)) {
+            if (($buddy instanceof BuddyEntity) &&
+                !$this->isBuddy($buddy) &&
+                $this->isOwnRequest($buddy)) {
                 $list_of_buddies[] = $buddy;
             }
         }
@@ -50,9 +50,9 @@ class Buddy
         $list_of_buddies = [];
 
         foreach ($this->_buddies as $buddy) {
-            if (($buddy instanceof BuddyEntity)
-                && !$this->isBuddy($buddy)
-                && !$this->isOwnRequest($buddy)) {
+            if (($buddy instanceof BuddyEntity) &&
+                !$this->isBuddy($buddy) &&
+                !$this->isOwnRequest($buddy)) {
                 $list_of_buddies[] = $buddy;
             }
         }

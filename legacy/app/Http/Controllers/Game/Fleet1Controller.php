@@ -194,8 +194,8 @@ class Fleet1Controller extends BaseController
      */
     private function buildActionsBlock()
     {
-        if ($this->_ship_count > 0
-            && $this->checkAvailableSlot()) {
+        if ($this->_ship_count > 0 &&
+            $this->checkAvailableSlot()) {
             return Template::render('fleet.fleet1_selector_row');
         }
 
@@ -223,8 +223,8 @@ class Fleet1Controller extends BaseController
      */
     private function buildContinueBlock()
     {
-        if ($this->_ship_count > 0
-            && $this->checkAvailableSlot()) {
+        if ($this->_ship_count > 0 &&
+            $this->checkAvailableSlot()) {
             return Template::render('fleet.fleet1_button');
         }
 

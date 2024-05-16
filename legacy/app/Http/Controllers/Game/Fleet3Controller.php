@@ -481,10 +481,10 @@ class Fleet3Controller extends BaseController
         ) >= 1;
 
         if (
-            !$is_buddy
-            && (
-                ($target_planet['ally_id'] == 0 && $this->user['ally_id'] == 0)
-                or ($target_planet['ally_id'] != $this->user['ally_id'])
+            !$is_buddy &&
+            (
+                ($target_planet['ally_id'] == 0 && $this->user['ally_id'] == 0) or
+                ($target_planet['ally_id'] != $this->user['ally_id'])
             )
         ) {
             return false;

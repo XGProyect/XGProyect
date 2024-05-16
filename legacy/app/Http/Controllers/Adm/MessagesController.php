@@ -75,8 +75,8 @@ class MessagesController extends BaseController
             }
         }
 
-        if (isset($single_delete['action']) == 'delete'
-            && isset($single_delete['messageId'])) {
+        if (isset($single_delete['action']) == 'delete' &&
+            isset($single_delete['messageId'])) {
             $this->deleteMessage($single_delete['messageId']);
         }
     }

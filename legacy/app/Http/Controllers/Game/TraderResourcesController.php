@@ -142,8 +142,8 @@ class TraderResourcesController extends BaseController
             $dmPrice = $this->trader->{'getPriceToFill' . $percentage . 'Percent'}($resource);
 
             if (
-                !$this->trader->{'is' . ucfirst($resource) . 'StorageFillable'}($percentage)
-                || $dmPrice == 0
+                !$this->trader->{'is' . ucfirst($resource) . 'StorageFillable'}($percentage) ||
+                $dmPrice == 0
             ) {
                 $price = Format::colorRed('-');
                 $button = '';

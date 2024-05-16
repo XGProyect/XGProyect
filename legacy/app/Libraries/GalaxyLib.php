@@ -155,8 +155,8 @@ class GalaxyLib
             $parse['links'] = __('game/galaxy.gl_no_action');
         }
 
-        if ($this->row_data['authlevel'] >= UserRanks::GO
-            && $this->row_data['id'] != $this->current_user['id']) {
+        if ($this->row_data['authlevel'] >= UserRanks::GO &&
+            $this->row_data['id'] != $this->current_user['id']) {
             $parse['links'] = $this->transportLink(self::PLANET_TYPE);
         }
 
@@ -259,8 +259,8 @@ class GalaxyLib
             $parse['links'] = __('game/galaxy.gl_no_action');
         }
 
-        if ($this->row_data['authlevel'] >= UserRanks::GO
-            && $this->row_data['id'] != $this->current_user['id']) {
+        if ($this->row_data['authlevel'] >= UserRanks::GO &&
+            $this->row_data['id'] != $this->current_user['id']) {
             $parse['links'] = $this->transportLink(self::PLANET_TYPE);
         }
 
@@ -649,10 +649,10 @@ class GalaxyLib
             $is_buddy = in_array($this->row_data['id'], $friends);
         }
 
-        if (!$is_buddy
-            && (
-                ($this->row_data['ally_id'] == 0 && $this->current_user['ally_id'] == 0)
-                or ($this->row_data['ally_id'] != $this->current_user['ally_id'])
+        if (!$is_buddy &&
+            (
+                ($this->row_data['ally_id'] == 0 && $this->current_user['ally_id'] == 0) or
+                ($this->row_data['ally_id'] != $this->current_user['ally_id'])
             )
         ) {
             return false;
@@ -663,9 +663,9 @@ class GalaxyLib
 
     private function isMissileActive(): bool
     {
-        if (($this->current_planet['defense_interplanetary_missile'] != 0)
-            && ($this->row_data['id'] != $this->current_user['id'])
-            && ($this->row_data['planet_galaxy'] == $this->current_planet['planet_galaxy'])) {
+        if (($this->current_planet['defense_interplanetary_missile'] != 0) &&
+            ($this->row_data['id'] != $this->current_user['id']) &&
+            ($this->row_data['planet_galaxy'] == $this->current_planet['planet_galaxy'])) {
             return $this->isInRange(Formulas::missileRange($this->current_user['research_impulse_drive']));
         }
 
@@ -674,10 +674,10 @@ class GalaxyLib
 
     private function isPhalanxActive(): bool
     {
-        if (($this->current_planet['building_phalanx'] != 0)
-            && ($this->row_data['id'] != $this->current_user['id'])
-            && ($this->row_data['planet_galaxy'] == $this->current_planet['planet_galaxy'])
-            && ($this->current_planet['planet_type']) == PlanetTypesEnumerator::MOON) {
+        if (($this->current_planet['building_phalanx'] != 0) &&
+            ($this->row_data['id'] != $this->current_user['id']) &&
+            ($this->row_data['planet_galaxy'] == $this->current_planet['planet_galaxy']) &&
+            ($this->current_planet['planet_type']) == PlanetTypesEnumerator::MOON) {
             return $this->isInRange(Formulas::phalanxRange($this->current_planet['building_phalanx']));
         }
 

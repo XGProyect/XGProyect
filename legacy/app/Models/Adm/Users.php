@@ -240,9 +240,9 @@ class Users extends Model
                 p.`planet_building_solar_plant_percent` = '10',
                 p.`planet_building_fusion_reactor_percent` = '10',
                 p.`planet_ship_solar_satellite_percent` = '10',";
-        } elseif ($current_user['preference_vacation_mode'] == 0
-            or is_null($current_user['preference_vacation_mode'])
-            && $preference_vacations_status == 1) {
+        } elseif ($current_user['preference_vacation_mode'] == 0 or
+            is_null($current_user['preference_vacation_mode']) &&
+            $preference_vacations_status == 1) {
             // WE HAVE TO ADD HIM TO VACATION AND REMOVE PLANET PRODUCTION
             $vacation_head = ' , `' . PLANETS . '` AS p';
             $vacation_condition = " AND p.`planet_user_id` = '" . (int) $userId . "'";

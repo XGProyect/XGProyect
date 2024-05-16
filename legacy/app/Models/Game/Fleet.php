@@ -365,9 +365,9 @@ class Fleet extends Model
             if ($fleet->getFleetGroup() > 0) {
                 $acs = $this->getAcsOwner($fleet->getFleetGroup());
 
-                if (!empty($acs['acs_owner'])
-                    && $acs['acs_owner'] == $fleet->getFleetOwner()
-                    && $fleet->getFleetMission() == Missions::ATTACK) {
+                if (!empty($acs['acs_owner']) &&
+                    $acs['acs_owner'] == $fleet->getFleetOwner() &&
+                    $fleet->getFleetMission() == Missions::ATTACK) {
                     $this->removeAcs($fleet->getFleetGroup());
                 }
 
@@ -386,8 +386,8 @@ class Fleet extends Model
             $flight_lenght = $fleet->getFleetStartTime() - $fleet_creation;
             $return_time = $base_time + $current_time;
 
-            if ($fleet->getFleetEndStay() != 0
-                && $current_time > $flight_lenght) {
+            if ($fleet->getFleetEndStay() != 0 &&
+                $current_time > $flight_lenght) {
                 $return_time = $base_time + $flight_lenght;
             }
 
