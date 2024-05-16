@@ -98,6 +98,7 @@ return (new PhpCsFixer\Config())
         'whitespace_after_comma_in_array' => true,
         'space_after_semicolon' => true,
         // 'single_blank_line_at_eof' => false
+        'yoda_style' => ['equal' => false, 'identical' => false, 'less_and_greater' => false],
         'declare_strict_types' => true,
     ])
     // ->setIndent("\t")

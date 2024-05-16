@@ -717,7 +717,7 @@ class UsersController extends BaseController
                 if ($flag <= 2) { // SKIP NOT REQUIRED FIELDS
                     $flag++;
                 } else {
-                    if (null === __('admin/users.us_user_' . $officier)) {
+                    if (__('admin/users.us_user_' . $officier) === null) {
                         continue;
                     }
 

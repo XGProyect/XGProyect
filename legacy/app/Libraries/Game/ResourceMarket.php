@@ -138,7 +138,7 @@ class ResourceMarket
 
     public function isRefillPayable(string $resource, int $percentage): bool
     {
-        return ($this->{'getPriceToFill' . $percentage . 'Percent'}($resource) <= $this->premium->getPremiumDarkMatter());
+        return ($this->premium->getPremiumDarkMatter() >= $this->{'getPriceToFill' . $percentage . 'Percent'}($resource));
     }
 
     private function isStorageFillable(string $resource, int $percentage): bool
