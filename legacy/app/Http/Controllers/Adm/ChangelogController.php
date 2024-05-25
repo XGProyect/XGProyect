@@ -65,6 +65,7 @@ class ChangelogController extends BaseController
     {
         $entries = Changelog::orderBy('changelog_date', 'DESC')
             ->orderBy('changelog_version', 'DESC')
+            ->join('languages', 'languages.id', '=', 'changelog.changelog_lang_id')
             ->get();
 
         $entriesList = [];
@@ -74,7 +75,7 @@ class ChangelogController extends BaseController
                 'changelog_id' => $entry->changelog_id,
                 'changelog_date' => $entry->changelog_date->toDateString(),
                 'changelog_version' => $entry->changelog_version,
-                'changelog_language' => $entry->language->name,
+                'changelog_language' => $entry->name,
                 'changelog_description' => $entry->changelog_description,
             ];
         }
