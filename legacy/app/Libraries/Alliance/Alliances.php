@@ -13,15 +13,13 @@ class Alliances
     private int $_current_user_id = 0;
     private int $_current_user_rank_id = 0;
 
-    public function __construct($alliances, $current_user_id, $current_user_rank_id = 0)
+    public function __construct(array $alliances, int $current_user_id, int $current_user_rank_id = 0)
     {
-        if (is_array($alliances)) {
-            $alliances = array_filter($alliances);
+        $alliances = array_filter($alliances);
 
-            $this->setUp($alliances);
-            $this->setUserId($current_user_id);
-            $this->setUserRankId($current_user_rank_id);
-        }
+        $this->setUp($alliances);
+        $this->setUserId($current_user_id);
+        $this->setUserRankId($current_user_rank_id);
     }
 
     public function getAlliances(): array

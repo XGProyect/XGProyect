@@ -50,10 +50,8 @@ class Fleet3Controller extends BaseController
     private function setUpFleets(): void
     {
         $this->_research = new Researches(
-            [
-                $this->user
-            ],
-            $this->user['id']
+            [$this->user],
+            (int) $this->user['id']
         );
     }
 

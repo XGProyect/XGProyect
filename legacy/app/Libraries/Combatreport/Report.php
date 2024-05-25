@@ -12,20 +12,13 @@ class Report
     private array $_reports = [];
     private int $_current_user_id = 0;
 
-    public function __construct($reports, $current_user_id)
+    public function __construct(array $reports, int $current_user_id)
     {
-        if (is_array($reports)) {
-            $this->setUp($reports);
-            $this->setUserId($current_user_id);
-        }
+        $this->setUp($reports);
+        $this->setUserId($current_user_id);
     }
 
-    /**
-     * Get all the reports provided by the query result
-     *
-     * @return array
-     */
-    public function getAllReports()
+    public function getAllReports(): array
     {
         $list_of_reports = [];
 

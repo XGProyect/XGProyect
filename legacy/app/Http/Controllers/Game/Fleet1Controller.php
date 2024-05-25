@@ -47,18 +47,18 @@ class Fleet1Controller extends BaseController
     private function setUpFleets(): void
     {
         $this->_fleets = new Fleets(
-            $this->fleetModel->getAllFleetsByUserId($this->user['id']),
-            $this->user['id']
+            $this->fleetModel->getAllFleetsByUserId((int) $this->user['id']),
+            (int) $this->user['id']
         );
 
         $this->_research = new Researches(
             [$this->user],
-            $this->user['id']
+            (int) $this->user['id']
         );
 
         $this->_premium = new Premium(
             [$this->user],
-            $this->user['id']
+            (int) $this->user['id']
         );
     }
 

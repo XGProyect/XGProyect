@@ -85,7 +85,7 @@ class NoticesController extends BaseController
     private function setUpNotes(): void
     {
         $this->notes = new Note(
-            $this->notesModel->getAllNotesByUserId($this->user['id'])
+            $this->notesModel->getAllNotesByUserId((int) $this->user['id'])
         );
     }
 

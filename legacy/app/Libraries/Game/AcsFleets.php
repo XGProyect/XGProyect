@@ -11,12 +11,10 @@ class AcsFleets
     private array $_acs = [];
     private int $_current_user_id = 0;
 
-    public function __construct($acs, $current_user_id)
+    public function __construct(array $acs, int $current_user_id)
     {
-        if (is_array($acs)) {
-            $this->setUp($acs);
-            $this->setUserId($current_user_id);
-        }
+        $this->setUp($acs);
+        $this->setUserId($current_user_id);
     }
 
     public function getAcs(): array

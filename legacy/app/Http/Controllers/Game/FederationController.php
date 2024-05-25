@@ -46,8 +46,8 @@ class FederationController extends BaseController
     private function setUpFleets(): void
     {
         $this->_fleets = new Fleets(
-            $this->fleetModel->getAllFleetsByUserId($this->user['id']),
-            $this->user['id']
+            $this->fleetModel->getAllFleetsByUserId((int) $this->user['id']),
+            (int) $this->user['id']
         );
     }
 

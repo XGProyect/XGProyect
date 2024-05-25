@@ -49,7 +49,7 @@
                                             <select class="form-control" name="changelog_language" required>
                                                 <option value="">{{ __('admin/changelog.ch_pick_language') }}</option>
                                                 @foreach ($languages as $item)
-                                                <option value="{{ $item['language_id'] }}" {{ $item['selected'] }}>{{ $item['language_name'] }}</option>
+                                                <option value="{{ $item['id'] }}" {{ $item['selected'] }}>{{ $item['name'] }}</option>
                                                 @endforeach
                                             </select>
                                         </td>

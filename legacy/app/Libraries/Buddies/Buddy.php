@@ -12,12 +12,10 @@ class Buddy
     private array $_buddies = [];
     private int $_current_user_id = 0;
 
-    public function __construct($buddies, $current_user_id)
+    public function __construct(array $buddies, int $current_user_id)
     {
-        if (is_array($buddies)) {
-            $this->setUp($buddies);
-            $this->setUserId($current_user_id);
-        }
+        $this->setUp($buddies);
+        $this->setUserId($current_user_id);
     }
 
     /**

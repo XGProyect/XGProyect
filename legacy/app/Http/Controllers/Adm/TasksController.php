@@ -53,7 +53,7 @@ class TasksController extends BaseController
         $last_run = '-';
 
         if ($this->isTaskScheduled($task)) {
-            $task_time = Options::getInstance()->get($task);
+            $task_time = (int) Options::getInstance()->get($task);
             $next_run = Timing::formatExtendedDate($task_time);
             $last_run = Format::prettyTimeAgo(date('Y-m-d H:i:s', (int) $task_time)) . ' ago';
         }

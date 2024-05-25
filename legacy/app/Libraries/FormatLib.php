@@ -332,7 +332,7 @@ class FormatLib
         return 'lime';
     }
 
-    public static function formatLevel(string $object, string $level): string
+    public static function formatLevel(string $object, int $level): string
     {
         return $object . ' (' . __('game/global.level') . $level . ')';
     }

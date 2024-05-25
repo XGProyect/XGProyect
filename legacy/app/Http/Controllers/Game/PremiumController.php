@@ -116,7 +116,7 @@ class PremiumController extends BaseController
 
     private function setOfficierStatusWithFormat(int $item_id): string
     {
-        if (OfficiersLib::isOfficierActive($this->user[$this->objects->getObjects($item_id)])) {
+        if (OfficiersLib::isOfficierActive((int) $this->user[$this->objects->getObjects($item_id)])) {
             return FormatLib::customColor(
                 OfficiersLib::getOfficierTimeLeft(
                     $this->user[$this->objects->getObjects($item_id)],
@@ -135,7 +135,7 @@ class PremiumController extends BaseController
 
     private function getOfficierPrice(int $officier, string $time): int
     {
-        return floor($this->objects->getPrice($officier, $time));
+        return (int) floor($this->objects->getPrice($officier, $time));
     }
 
     private function getOfficierImage(int $officier, string $type): string

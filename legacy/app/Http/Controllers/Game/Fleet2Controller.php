@@ -52,12 +52,12 @@ class Fleet2Controller extends BaseController
     {
         $this->_research = new Researches(
             [$this->user],
-            $this->user['id']
+            (int) $this->user['id']
         );
 
         $this->_premium = new Premium(
             [$this->user],
-            $this->user['id']
+            (int) $this->user['id']
         );
     }
 

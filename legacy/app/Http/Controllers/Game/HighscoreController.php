@@ -92,7 +92,7 @@ class HighscoreController extends BaseController
             );
 
             $start = floor(intval($range / 100) % 100) * 100;
-            $query = $this->statisticsModel->getUsers($Order, $start);
+            $query = $this->statisticsModel->getUsers($Order, (int) $start);
 
             $start++;
             $parse['stat_values'] = '';

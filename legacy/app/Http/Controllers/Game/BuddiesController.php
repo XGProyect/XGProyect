@@ -48,8 +48,8 @@ class BuddiesController extends BaseController
     private function setUpBudies(): void
     {
         $this->buddy = new Buddy(
-            $this->buddiesModel->getBuddiesByUserId($this->user['id']),
-            $this->user['id']
+            $this->buddiesModel->getBuddiesByUserId((int) $this->user['id']),
+            (int) $this->user['id']
         );
     }
 

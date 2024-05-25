@@ -72,8 +72,11 @@ class GalaxyController extends BaseController
     private function buildPage(): void
     {
         // fleets
-        $max_fleets = FleetsLib::getMaxFleets($this->user['research_computer_technology'], $this->user['premium_officier_admiral']);
-        $current_fleets = $this->galaxyModel->countAmountFleetsByUserId($this->user['id']);
+        $max_fleets = FleetsLib::getMaxFleets(
+            (int) $this->user['research_computer_technology'],
+            (int) $this->user['premium_officier_admiral']
+        );
+        $current_fleets = $this->galaxyModel->countAmountFleetsByUserId((int) $this->user['id']);
 
         // missiles and espionage probes
         $CurrentPlID = $this->planet['planet_id'];
@@ -86,8 +89,8 @@ class GalaxyController extends BaseController
         }
 
         $setted_position = $this->validatePosition($mode);
-        $this->_galaxy = $setted_position['galaxy'];
-        $this->_system = $setted_position['system'];
+        $this->_galaxy = (int) $setted_position['galaxy'];
+        $this->_system = (int) $setted_position['system'];
         $planet = $setted_position['planet'];
 
         if ($mode == 2 && $this->planet['defense_interplanetary_missile'] < 1) {
@@ -95,7 +98,7 @@ class GalaxyController extends BaseController
             exit;
         }
 
-        $this->galaxy = $this->galaxyModel->getGalaxyDataByGalaxyAndSystem($this->_galaxy, $this->_system, $this->user['id']);
+        $this->galaxy = $this->galaxyModel->getGalaxyDataByGalaxyAndSystem($this->_galaxy, $this->_system, (int) $this->user['id']);
 
         $parse['selected_galaxy'] = $this->_galaxy;
         $parse['selected_system'] = $this->_system;
@@ -110,7 +113,7 @@ class GalaxyController extends BaseController
         $parse['current_galaxy'] = $this->planet['planet_galaxy'];
         $parse['current_system'] = $this->planet['planet_system'];
         $parse['current_planet'] = $this->planet['planet_planet'];
-        $parse['coords'] = FormatLib::prettyCoords((int) $this->_galaxy, (int) $this->_system, (int) $planet);
+        $parse['coords'] = FormatLib::prettyCoords($this->_galaxy, $this->_system, (int) $planet);
         $parse['planet_type'] = $this->planet['planet_type'];
         $parse['mip'] = ($mode == 2) ? Template::render(
             'galaxy/galaxy_missile_selector',
@@ -462,7 +465,7 @@ class GalaxyController extends BaseController
             die('614 ');
         }
 
-        $current_fleets = $this->galaxyModel->countAmountFleetsByUserId($this->user['id']);
+        $current_fleets = $this->galaxyModel->countAmountFleetsByUserId((int) $this->user['id']);
 
         $target_user = $this->galaxyModel->getTargetUserDataByCoords($galaxy, $system, $planet, $_POST['planettype']);
 

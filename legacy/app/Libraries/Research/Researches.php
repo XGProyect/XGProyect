@@ -13,10 +13,8 @@ class Researches
 
     public function __construct(array $research, int $current_user_id)
     {
-        if (is_array($research)) {
-            $this->setUp($research);
-            $this->setUserId($current_user_id);
-        }
+        $this->setUp($research);
+        $this->setUserId($current_user_id);
     }
 
     public function getResearch(): array

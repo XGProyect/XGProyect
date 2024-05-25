@@ -46,18 +46,18 @@ class MovementController extends BaseController
     private function setUpFleets(): void
     {
         $this->fleets = new Fleets(
-            $this->fleetModel->getAllFleetsByUserId($this->user['id']),
-            $this->user['id']
+            $this->fleetModel->getAllFleetsByUserId((int) $this->user['id']),
+            (int) $this->user['id']
         );
 
         $this->research = new Researches(
             [$this->user],
-            $this->user['id']
+            (int) $this->user['id']
         );
 
         $this->premium = new Premium(
             [$this->user],
-            $this->user['id']
+            (int) $this->user['id']
         );
     }
 

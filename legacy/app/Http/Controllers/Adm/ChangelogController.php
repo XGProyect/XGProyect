@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Adm;
 
+use App\Models\Changelog;
+use App\Models\Languages;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use DateTime;
 use Exception;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Models\Adm\Changelog;
 
 class ChangelogController extends BaseController
 {
-    private Changelog $changelogModel;
     private AdministrationService $administrationService;
 
     public function __construct()
@@ -29,8 +30,6 @@ class ChangelogController extends BaseController
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
-
-        $this->changelogModel = new Changelog();
 
         $this->runAction();
         $this->getAlertMessage();
@@ -46,28 +45,41 @@ class ChangelogController extends BaseController
     private function runAction(): void
     {
         // route to the right page
-        $sub_page = filter_input(INPUT_GET, 'action');
-        $changelog_id = filter_input(INPUT_GET, 'changelogId', FILTER_VALIDATE_INT);
+        $subPage = filter_input(INPUT_GET, 'action');
+        $changelogId = filter_input(INPUT_GET, 'changelogId', FILTER_VALIDATE_INT);
 
-        if (isset($sub_page) && isset($changelog_id)) {
-            $this->{$sub_page . 'Action'}($changelog_id);
+        if ($subPage === 'add') {
+            $this->addAction();
         }
 
-        if (isset($sub_page) && !isset($changelog_id)) {
-            $this->{$sub_page . 'Action'}();
+        if ($subPage === 'edit' && isset($changelogId)) {
+            $this->editAction((int) $changelogId);
+        }
+
+        if ($subPage === 'delete' && isset($changelogId)) {
+            $this->deleteAction((int) $changelogId);
         }
     }
 
     private function buildListOfEntries(): array
     {
-        $entries = $this->changelogModel->getAllEntries();
-        $entries_list = [];
+        $entries = Changelog::orderBy('changelog_date', 'DESC')
+            ->orderBy('changelog_version', 'DESC')
+            ->get();
+
+        $entriesList = [];
 
         foreach ($entries as $entry) {
-            $entries_list[] = $entry;
+            $entriesList[] = [
+                'changelog_id' => $entry->changelog_id,
+                'changelog_date' => $entry->changelog_date->toDateString(),
+                'changelog_version' => $entry->changelog_version,
+                'changelog_language' => $entry->language->name,
+                'changelog_description' => $entry->changelog_description,
+            ];
         }
 
-        return $entries_list;
+        return $entriesList;
     }
 
     private function getAlertMessage(): void
@@ -104,19 +116,21 @@ class ChangelogController extends BaseController
         );
     }
 
-    private function getActionData(string $action, int $changelog_id = 0): array
+    private function getActionData(string $action, int $changelogId = 0): array
     {
-        $changelog_lang_id = 0;
-        $changelog_version = '';
-        $changelog_date = date('Y-m-d');
-        $changelog_description = '';
+        $changelogLangId = 0;
+        $changelogVersion = '';
+        $changelogDate = date('Y-m-d');
+        $changelogDescription = '';
 
         if ($action == 'edit') {
-            if ($result = $this->changelogModel->getSingleEntry($changelog_id)) {
-                $changelog_lang_id = $result->getChangelogLangId();
-                $changelog_version = $result->getChangelogVersion();
-                $changelog_date = $result->getChangelogDate();
-                $changelog_description = $result->getChangelogDescription();
+            $result = Changelog::find($changelogId);
+
+            if ($result) {
+                $changelogLangId = $result->changelog_lang_id;
+                $changelogVersion = $result->changelog_version;
+                $changelogDate = $result->changelog_date->toDateString();
+                $changelogDescription = $result->changelog_description;
             } else {
                 Functions::redirect('admin.php?page=changelog');
             }
@@ -124,15 +138,15 @@ class ChangelogController extends BaseController
 
         return [
             'action' => $action,
-            'changelog_id' => $changelog_id,
+            'changelog_id' => $changelogId,
             'current_action' => strtr(
                 __('admin/changelog.ch_' . $action . '_action'),
-                ['%s' => $changelog_date]
+                ['%s' => $changelogDate]
             ),
-            'changelog_date' => $changelog_date,
-            'changelog_version' => $changelog_version,
-            'languages' => $this->getAllLanguages($changelog_lang_id),
-            'changelog_description' => $changelog_description,
+            'changelog_date' => $changelogDate,
+            'changelog_version' => $changelogVersion,
+            'languages' => $this->getAllLanguages($changelogLangId),
+            'changelog_description' => $changelogDescription,
         ];
     }
 
@@ -166,7 +180,7 @@ class ChangelogController extends BaseController
             ],
         ]);
 
-        if ($data) {
+        if (count($data) > 0) {
             $valid = true;
 
             foreach ($data as $value) {
@@ -178,11 +192,25 @@ class ChangelogController extends BaseController
 
             if ($valid) {
                 if ($data['action'] == 'add') {
-                    $this->changelogModel->addEntry($data);
+                    DB::transaction(function () use ($data) {
+                        Changelog::create([
+                            'changelog_lang_id' => $data['changelog_language'],
+                            'changelog_version' => $data['changelog_version'],
+                            'changelog_description' => $data['text'],
+                            'changelog_date' => $data['changelog_date'],
+                        ]);
+                    });
                 }
 
                 if ($data['action'] == 'edit') {
-                    $this->changelogModel->updateEntry($data);
+                    DB::transaction(function () use ($data) {
+                        Changelog::where('changelog_id', $data['changelog_id'])->update([
+                            'changelog_lang_id' => $data['changelog_language'],
+                            'changelog_version' => $data['changelog_version'],
+                            'changelog_description' => $data['text'],
+                            'changelog_date' => $data['changelog_date'],
+                        ]);
+                    });
                 }
 
                 Functions::redirect('admin.php?page=changelog&success=' . $data['action']);
@@ -190,28 +218,30 @@ class ChangelogController extends BaseController
         }
     }
 
-    private function deleteAction(int $changelog_id): void
+    private function deleteAction(int $changelogId): void
     {
-        $this->changelogModel->deleteEntry($changelog_id);
+        Changelog::where('changelog_id', $changelogId)->delete();
 
         Functions::redirect('admin.php?page=changelog&success=delete');
     }
 
-    private function getAllLanguages(int $default_language): array
+    /**
+     * @return array<int<0, max>, array<string, int|string>>
+     */
+    private function getAllLanguages(int $defaultLanguageId): array
     {
-        $languages = $this->changelogModel->getAllLanguages();
-        $list_of_languages = [];
+        $languages = [];
 
-        foreach ($languages as $language) {
-            $list_of_languages[] = array_merge(
-                $language,
-                [
-                    'selected' => ($default_language == $language['language_id'] ? 'selected' : ''),
-                ]
-            );
+        foreach (Languages::orderBy('name')->get() as $language) {
+            $languages[] = [
+                'id' => $language->id,
+                'name' => $language->name,
+                'code' => $language->code,
+                'selected' => ($defaultLanguageId == $language->id ? 'selected' : ''),
+            ];
         }
 
-        return $list_of_languages;
+        return $languages;
     }
 
     private function isValidAction(?string $action): ?string
@@ -223,7 +253,7 @@ class ChangelogController extends BaseController
         return null;
     }
 
-    private function isValidDate(?string $date): ?string
+    private function isValidDate(string $date): ?string
     {
         try {
             $datetime = new DateTime($date);

@@ -11,78 +11,43 @@ use Xgp\App\Core\Entity;
  */
 class PremiumEntity extends Entity
 {
-    public function __construct($data)
+    public function __construct(array $data)
     {
         parent::__construct($data);
     }
 
-    /**
-     * Return the premium user id
-     *
-     * @return string
-     */
-    public function getPremiumUserId()
+    public function getPremiumUserId(): int
     {
-        return $this->data['premium_user_id'];
+        return (int) $this->data['premium_user_id'];
     }
 
-    /**
-     * Return the premium dark matter
-     *
-     * @return string
-     */
-    public function getPremiumDarkMatter()
+    public function getPremiumDarkMatter(): int
     {
-        return $this->data['premium_dark_matter'];
+        return (int) $this->data['premium_dark_matter'];
     }
 
-    /**
-     * Return the premium officier commander
-     *
-     * @return string
-     */
-    public function getPremiumOfficierCommander()
+    public function getPremiumOfficierCommander(): int
     {
         return $this->data['premium_officier_commander'];
     }
 
-    /**
-     * Return the premium officier admiral
-     *
-     * @return string
-     */
-    public function getPremiumOfficierAdmiral()
+    public function getPremiumOfficierAdmiral(): int
     {
-        return $this->data['premium_officier_admiral'];
+        return (int) $this->data['premium_officier_admiral'];
     }
 
-    /**
-     * Return the premium officier engineer
-     *
-     * @return string
-     */
-    public function getPremiumOfficierEngineer()
+    public function getPremiumOfficierEngineer(): int
     {
-        return $this->data['premium_officier_engineer'];
+        return (int) $this->data['premium_officier_engineer'];
     }
 
-    /**
-     * Return the premium officier geologist
-     *
-     * @return string
-     */
-    public function getPremiumOfficierGeologist()
+    public function getPremiumOfficierGeologist(): int
     {
-        return $this->data['premium_officier_geologist'];
+        return (int) $this->data['premium_officier_geologist'];
     }
 
-    /**
-     * Return the premium officier technocrat
-     *
-     * @return string
-     */
-    public function getPremiumOfficierTechnocrat()
+    public function getPremiumOfficierTechnocrat(): int
     {
-        return $this->data['premium_officier_technocrat'];
+        return (int) $this->data['premium_officier_technocrat'];
     }
 }

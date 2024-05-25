@@ -11,12 +11,10 @@ class Premium
     private array $premium = [];
     private int $current_user_id = 0;
 
-    public function __construct($premium, $current_user_id)
+    public function __construct(array $premium, int $current_user_id)
     {
-        if (is_array($premium)) {
-            $this->setUp($premium);
-            $this->setUserId($current_user_id);
-        }
+        $this->setUp($premium);
+        $this->setUserId($current_user_id);
     }
 
     public function getPremium(): array

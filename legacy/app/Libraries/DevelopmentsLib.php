@@ -158,7 +158,7 @@ class DevelopmentsLib
             }
 
             $time = Formulas::getResearchTime($cost_metal, $cost_crystal, $lablevel, (int) $current_user[$resource[Research::research_astrophysics]]);
-            $time = floor($time * (1 - ((OfficiersLib::isOfficierActive($current_user['premium_officier_technocrat'])) ? TECHNOCRATE_SPEED : 0)));
+            $time = floor($time * (1 - ((OfficiersLib::isOfficierActive((int) $current_user['premium_officier_technocrat'])) ? TECHNOCRATE_SPEED : 0)));
         }
 
         if (in_array($element, $reslist['defense']) or in_array($element, $reslist['fleet'])) {

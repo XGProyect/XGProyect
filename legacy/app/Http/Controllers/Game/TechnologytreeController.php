@@ -94,7 +94,7 @@ class TechnologytreeController extends BaseController
             $requirementsList[] = FormatLib::{'color' . $color}(
                 FormatLib::formatLevel(
                     $this->setRequirementText($this->_resource[$requirement]),
-                    $displayLevel
+                    (int) $displayLevel
                 )
             );
         }

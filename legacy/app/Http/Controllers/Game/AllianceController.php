@@ -47,8 +47,8 @@ class AllianceController extends BaseController
     {
         $this->alliance = new Alliances(
             $this->allianceModel->getAllianceDataById($this->getAllianceId()),
-            $this->user['id'],
-            $this->user['ally_rank_id']
+            (int) $this->user['id'],
+            (int) $this->user['ally_rank_id']
         );
     }
 

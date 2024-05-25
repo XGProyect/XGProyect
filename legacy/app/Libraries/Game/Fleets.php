@@ -15,12 +15,10 @@ class Fleets
     private int $_expedition_count = 0;
     private array $_fleets_index = [];
 
-    public function __construct($fleets, $current_user_id)
+    public function __construct(array $fleets, int $current_user_id)
     {
-        if (is_array($fleets)) {
-            $this->setUp($fleets);
-            $this->setUserId($current_user_id);
-        }
+        $this->setUp($fleets);
+        $this->setUserId($current_user_id);
     }
 
     public function getFleets(): array

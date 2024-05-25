@@ -6,7 +6,7 @@ namespace App\View\Components\Game;
 
 use App\Models\Planets;
 use App\Models\User;
-use Closure;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
@@ -28,7 +28,7 @@ class Topnav extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View | Closure | string
+    public function render(): View | Htmlable | \Closure | string
     {
         $user = User::find(session('user_id'));
         $planet = Planets::where([
@@ -107,7 +107,7 @@ class Topnav extends Component
         }
 
         foreach ($orderBy as $order) {
-            if ($user->preferences->preference_planet_sort_sequence === 1) {
+            if ($user->preferences->preference_planet_sort_sequence) {
                 $allUserPlanets->orderByDesc($order);
             } else {
                 $allUserPlanets->orderBy($order);
@@ -139,6 +139,9 @@ class Topnav extends Component
         return $planetList;
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     private function getOfficersDetails(User $user): array
     {
         $officers = [];
@@ -163,6 +166,9 @@ class Topnav extends Component
         return $officers;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function buildNotices(User $user): array
     {
         $notice = ['color' => '', 'message' => ''];

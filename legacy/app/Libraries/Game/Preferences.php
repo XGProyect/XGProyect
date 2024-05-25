@@ -13,10 +13,8 @@ class Preferences
 
     public function __construct(array $preferences, int $current_user_id)
     {
-        if (is_array($preferences)) {
-            $this->setUp($preferences);
-            $this->setUserId($current_user_id);
-        }
+        $this->setUp($preferences);
+        $this->setUserId($current_user_id);
     }
 
     /**
