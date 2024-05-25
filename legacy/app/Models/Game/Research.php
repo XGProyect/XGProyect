@@ -11,14 +11,6 @@ use Xgp\App\Core\Model;
  */
 class Research extends Model
 {
-    /**
-     * Start a new research
-     *
-     * @param array $working_planet
-     * @param array $current_user
-     *
-     * @return void
-     */
     public function startNewResearch(array $working_planet, array $current_user): void
     {
         $this->db->query(
@@ -34,13 +26,6 @@ class Research extends Model
         );
     }
 
-    /**
-     * Get planet that's currently researching
-     *
-     * @param integer $current_research
-     *
-     * @return array
-     */
     public function getPlanetResearching(int $current_research): array
     {
         return $this->db->queryFetch(
@@ -55,26 +40,5 @@ class Research extends Model
             FROM `' . PLANETS . "`
             WHERE `planet_id` = '" . $current_research . "';"
         );
-    }
-
-    /**
-     * Get the total amount of laboratory levels
-     *
-     * @param integer $userId
-     * @param integer $labs_limit
-     *
-     * @return integer
-     */
-    public function getAllLabsLevel(int $userId, int $labs_limit): int
-    {
-        return (int) $this->db->queryFetch(
-            'SELECT
-                SUM(`building_laboratory`) AS `total_level`
-            FROM `' . BUILDINGS . '` AS b
-            INNER JOIN `' . PLANETS . "` AS p ON p.`planet_id` = b.building_planet_id
-            WHERE planet_user_id = '" . $userId . "'
-            ORDER BY building_laboratory DESC
-            LIMIT " . $labs_limit . ''
-        )['total_level'];
     }
 }

@@ -443,8 +443,8 @@ class InfosController extends BaseController
         $game_resource_multiplier = Options::getInstance()->get('resource_multiplier');
 
         // BOOST
-        $geologe_boost = 1 + (1 * (OfficiersLib::isOfficierActive($this->user['premium_officier_geologist']) ? GEOLOGUE : 0));
-        $engineer_boost = 1 + (1 * (OfficiersLib::isOfficierActive($this->user['premium_officier_engineer']) ? ENGINEER_ENERGY : 0));
+        $geologe_boost = 1 + (1 * (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_geologist']) ? GEOLOGUE : 0));
+        $engineer_boost = 1 + (1 * (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_engineer']) ? ENGINEER_ENERGY : 0));
 
         // PRODUCTION FORMULAS
         $metal_prod = eval($this->_prod_grid[$this->_element_id]['formule']['metal']);

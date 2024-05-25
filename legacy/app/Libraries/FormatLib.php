@@ -198,7 +198,7 @@ class FormatLib
         return '<span style="' . $style . '">' . $content . '</span>';
     }
 
-    public static function prettyNumber(int $n, bool $floor = true): string
+    public static function prettyNumber(float | int $n, bool $floor = true): string
     {
         if (empty($n)) {
             $n = 0.0;

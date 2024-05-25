@@ -280,7 +280,7 @@ class UpdatesLibrary
                         foreach ($queue_array as $queue_item => $data) {
                             $element_data = explode(',', $data);
                             $previous_time = $element_data[2];
-                            $element_data[2] = Developments::developmentTime($current_user, $current_planet, $element_data[0]);
+                            $element_data[2] = Developments::developmentTime($current_user, $current_planet, (int) $element_data[0]);
                             if ($for_destroy) {
                                 $element_data[2] = DevelopmentsLib::tearDownTime(
                                     $element_data[0],
@@ -705,7 +705,7 @@ class UpdatesLibrary
                         $AcumTime = Developments::developmentTime(
                             $current_user,
                             $current_planet,
-                            $Item[0]
+                            (int) $Item[0]
                         );
                         $BuildArray[$Node] = [$Item[0], $Item[1], $AcumTime];
                     }

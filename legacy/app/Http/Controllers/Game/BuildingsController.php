@@ -158,14 +158,7 @@ class BuildingsController extends BaseController
         return $return;
     }
 
-    /**
-     * Build each building block
-     *
-     * @param int $building_id Building ID
-     *
-     * @return array
-     */
-    private function setListOfBuildingsItem($building_id)
+    private function setListOfBuildingsItem(int $building_id): array
     {
         $item_to_parse = [];
 
@@ -180,26 +173,12 @@ class BuildingsController extends BaseController
         return $item_to_parse;
     }
 
-    /**
-     * Expects a building ID to calculate and format the level
-     *
-     * @param int $building_id Building ID
-     *
-     * @return string
-     */
-    private function getBuildingLevelWithFormat($building_id)
+    private function getBuildingLevelWithFormat(int $building_id): string
     {
         return Developments::setLevelFormat($this->getBuildingLevel($building_id));
     }
 
-    /**
-     * Expects a building ID to calculate and format the price
-     *
-     * @param int $building_id Building ID
-     *
-     * @return string
-     */
-    private function getBuildingPriceWithFormat($building_id)
+    private function getBuildingPriceWithFormat(int $building_id): string
     {
         return Developments::formatedDevelopmentPrice(
             $this->user,
@@ -210,14 +189,7 @@ class BuildingsController extends BaseController
         );
     }
 
-    /**
-     * Expects a building ID to calculate and format the time
-     *
-     * @param int $building_id Building ID
-     *
-     * @return string
-     */
-    private function getBuildingTimeWithFormat($building_id)
+    private function getBuildingTimeWithFormat(int $building_id): string
     {
         return Developments::formatedDevelopmentTime(
             $this->getBuildingTime($building_id),
@@ -225,24 +197,12 @@ class BuildingsController extends BaseController
         );
     }
 
-    /**
-     * Expects a building ID to calculate the building level
-     *
-     * @param int $building_id Building ID
-     */
-    private function getBuildingLevel($building_id): int
+    private function getBuildingLevel(int $building_id): int
     {
         return (int) $this->planet[$this->objects->getObjects()[$building_id]];
     }
 
-    /**
-     * Expects a building ID to calculate the building time
-     *
-     * @param int $building_id Building ID
-     *
-     * @return int
-     */
-    private function getBuildingTime($building_id)
+    private function getBuildingTime(int $building_id): int
     {
         return Developments::developmentTime(
             $this->user,
@@ -252,15 +212,7 @@ class BuildingsController extends BaseController
         );
     }
 
-    /**
-     * Expects a building ID, runs several validations and then returns a button,
-     * based on the validations
-     *
-     * @param int $building_id Building ID
-     *
-     * @return string
-     */
-    private function getActionButton($building_id)
+    private function getActionButton(int $building_id): string
     {
         $build_url = 'game.php?page=' . $this->page . '&cmd=insert&building=' . $building_id;
 
@@ -449,7 +401,7 @@ class BuildingsController extends BaseController
                         $ListIDArray[1] -= 1;
                     }
 
-                    $current_build_time = Developments::developmentTime($this->user, $this->planet, $ListIDArray[0]);
+                    $current_build_time = Developments::developmentTime($this->user, $this->planet, (int) $ListIDArray[0]);
                     $BuildEndTime += $current_build_time;
                     $ListIDArray[2] = $current_build_time;
                     $ListIDArray[3] = $BuildEndTime;
@@ -535,13 +487,7 @@ class BuildingsController extends BaseController
         return $QueueID;
     }
 
-    /**
-     * method addToQueue
-     * param $building
-     * param $AddMode
-     * return (int) the queue ID
-     */
-    private function addToQueue($building, $AddMode = true)
+    private function addToQueue(int $building, bool $AddMode = true)
     {
         $resource = $this->objects->getObjects();
         $CurrentQueue = $this->planet['planet_b_building_id'];

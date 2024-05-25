@@ -35,7 +35,7 @@ class DevelopmentsLib
         );
     }
 
-    public static function developmentPrice(array $current_user, array $current_planet, int $element, $incremental = true, $destroy = false): array
+    public static function developmentPrice(array $current_user, array $current_planet, int $element, bool $incremental = true, bool $destroy = false): array
     {
         $resource = Objects::getInstance()->getObjects();
         $pricelist = Objects::getInstance()->getPrice();
@@ -43,13 +43,15 @@ class DevelopmentsLib
         $cost = [];
 
         if ($incremental) {
-            $level = (isset($current_planet[$resource[$element]])) ? $current_planet[$resource[$element]] : $current_user[$resource[$element]];
+            $level = (int) (
+                isset($current_planet[$resource[$element]]) ? $current_planet[$resource[$element]] : $current_user[$resource[$element]]
+            );
         }
 
         foreach (['metal', 'crystal', 'deuterium', 'energy_max'] as $type) {
             if (isset($pricelist[$element][$type])) {
                 if ($incremental) {
-                    $cost[$type] = Formulas::getDevelopmentCost($pricelist[$element][$type], $pricelist[$element]['factor'], $level);
+                    $cost[$type] = Formulas::getDevelopmentCost((int) $pricelist[$element][$type], (float) $pricelist[$element]['factor'], $level);
                 } else {
                     $cost[$type] = floor($pricelist[$element][$type]);
                 }
@@ -68,18 +70,7 @@ class DevelopmentsLib
         return $cost;
     }
 
-    /**
-     * isDevelopmentPayable
-     *
-     * @param array   $current_user   Current user
-     * @param array   $current_planet Current planet
-     * @param string  $element        Element
-     * @param boolean $incremental    Incremental
-     * @param boolean $destroy        Destroy
-     *
-     * @return boolean
-     */
-    public static function isDevelopmentPayable($current_user, $current_planet, $element, $incremental = true, $destroy = false)
+    public static function isDevelopmentPayable(array $current_user, array $current_planet, int $element, bool $incremental = true, bool $destroy = false): bool
     {
         $return = true;
         $costs = self::developmentPrice($current_user, $current_planet, $element, $incremental, $destroy);
@@ -93,24 +84,15 @@ class DevelopmentsLib
         return $return;
     }
 
-    /**
-     * formatedDevelopmentPrice
-     *
-     * @param array   $current_user   Current user
-     * @param array   $current_planet Current planet
-     * @param string  $element        Element
-     * @param boolean $userfactor     User factor
-     * @param boolean $level          Level
-     *
-     * @return string
-     */
-    public static function formatedDevelopmentPrice($current_user, $current_planet, $element, $userfactor = true, $level = false)
+    public static function formatedDevelopmentPrice(array $current_user, array $current_planet, int $element, bool $userfactor = true, int | bool $level = false): string
     {
         $resource = Objects::getInstance()->getObjects();
         $pricelist = Objects::getInstance()->getPrice();
 
         if ($userfactor && ($level === false)) {
-            $level = (isset($current_planet[$resource[$element]])) ? $current_planet[$resource[$element]] : $current_user[$resource[$element]];
+            $level = (int) (
+                isset($current_planet[$resource[$element]]) ? $current_planet[$resource[$element]] : $current_user[$resource[$element]]
+            );
         }
 
         $text = __('game/buildings.require');
@@ -145,18 +127,7 @@ class DevelopmentsLib
         return $text;
     }
 
-    /**
-     * developmentTime
-     *
-     * @param array   $current_user    Current user
-     * @param array   $current_planet  Current planet
-     * @param string  $element         Element
-     * @param boolean $level           Level
-     * @param int     $total_lab_level Total lab level
-     *
-     * @return int
-     */
-    public static function developmentTime($current_user, $current_planet, $element, $level = false, $total_lab_level = 0)
+    public static function developmentTime(array $current_user, array $current_planet, int $element, int | false $level = false, int $total_lab_level = 0): int
     {
         $resource = Objects::getInstance()->getObjects();
         $pricelist = Objects::getInstance()->getPrice();
@@ -165,26 +136,28 @@ class DevelopmentsLib
 
         // IF ROUTINE FIX BY JSTAR
         if ($level === false) {
-            $level = (isset($current_planet[$resource[$element]])) ? $current_planet[$resource[$element]] : $current_user[$resource[$element]];
+            $level = (int) (
+                isset($current_planet[$resource[$element]]) ? $current_planet[$resource[$element]] : $current_user[$resource[$element]]
+            );
         }
 
         $cost_metal = Formulas::getDevelopmentCost($pricelist[$element]['metal'], $pricelist[$element]['factor'], $level);
         $cost_crystal = Formulas::getDevelopmentCost($pricelist[$element]['crystal'], $pricelist[$element]['factor'], $level);
 
         if (in_array($element, $reslist['build'])) {
-            $time = Formulas::getBuildingTime($cost_metal, $cost_crystal, $element, $current_planet[$resource['14']], $current_planet[$resource['15']], $level);
+            $time = Formulas::getBuildingTime($cost_metal, $cost_crystal, $element, (int) $current_planet[$resource['14']], (int) $current_planet[$resource['15']], $level);
         }
 
         if (in_array($element, $reslist['tech'])) {
             $intergal_lab = $current_user[$resource[Research::research_intergalactic_research_network]];
 
             if ($intergal_lab < 1) {
-                $lablevel = $current_planet[$resource[Buildings::BUILDING_LABORATORY]];
+                $lablevel = (int) $current_planet[$resource[Buildings::BUILDING_LABORATORY]];
             } else {
                 $lablevel = $total_lab_level;
             }
 
-            $time = Formulas::getResearchTime($cost_metal, $cost_crystal, $lablevel, $current_user[$resource[Research::research_astrophysics]]);
+            $time = Formulas::getResearchTime($cost_metal, $cost_crystal, $lablevel, (int) $current_user[$resource[Research::research_astrophysics]]);
             $time = floor($time * (1 - ((OfficiersLib::isOfficierActive($current_user['premium_officier_technocrat'])) ? TECHNOCRATE_SPEED : 0)));
         }
 
@@ -198,19 +171,9 @@ class DevelopmentsLib
             );
         }
 
-        return ($time < 1 ? 1 : $time);
+        return (int) ($time < 1 ? 1 : $time);
     }
 
-    /**
-     * Calculate tear down time
-     *
-     * @param integer $building
-     * @param integer $robotics_factory
-     * @param integer $nanite_factory
-     * @param integer $level
-     *
-     * @return float
-     */
     public static function tearDownTime(int $building, int $robotics_factory, int $nanite_factory, int $level): float
     {
         $pricelist = Objects::getInstance()->getPrice();
@@ -235,7 +198,7 @@ class DevelopmentsLib
      *
      * @return boolean
      */
-    public static function isDevelopmentAllowed($current_user, $current_planet, $element)
+    public static function isDevelopmentAllowed(array $current_user, array $current_planet, $element): bool
     {
         $resource = Objects::getInstance()->getObjects();
         $requeriments = Objects::getInstance()->getRelations();
@@ -289,14 +252,14 @@ class DevelopmentsLib
 
         switch ($element) {
             case 106:
-                if (OfficiersLib::isOfficierActive($current_user['premium_officier_technocrat'])) {
+                if (OfficiersLib::isOfficierActive((int) $current_user['premium_officier_technocrat'])) {
                     $return_level .= FormatLib::strongText(
                         FormatLib::colorGreen(' +' . TECHNOCRATE_SPY . __('game/research.re_spy'))
                     );
                 }
                 break;
             case 108:
-                if (OfficiersLib::isOfficierActive($current_user['premium_officier_admiral'])) {
+                if (OfficiersLib::isOfficierActive((int) $current_user['premium_officier_admiral'])) {
                     $return_level .= FormatLib::strongText(
                         FormatLib::colorGreen(' +' . AMIRAL . __('game/research.re_commander'))
                     );

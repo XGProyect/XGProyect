@@ -232,7 +232,7 @@ abstract class Formulas
     /**
      * Get the time to produce ships and defenses
      */
-    public static function getShipyardProductionTime(int $metal_cost, int $cystal_cost, int $ship_defense, int $shipyard_level, int $nanite_factory_level): float
+    public static function getShipyardProductionTime(float $metal_cost, float $cystal_cost, int $ship_defense, int $shipyard_level, int $nanite_factory_level): float
     {
         return self::getDevelopmentTime($metal_cost, $cystal_cost, $ship_defense, $shipyard_level, $nanite_factory_level, 0, false);
     }
@@ -245,7 +245,7 @@ abstract class Formulas
         return self::getDevelopmentTime($metal_cost, $cystal_cost, $building, $robotics_factory, $nanite_factory, $level);
     }
 
-    public static function getResearchTime(int $metal_cost, int $cystal_cost, int $total_lab_level, int $expedition_level): float
+    public static function getResearchTime(float $metal_cost, float $cystal_cost, int $total_lab_level, int $expedition_level): float
     {
         $universe_speed = (int) Options::getInstance()->get('game_speed') / 2500;
 

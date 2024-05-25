@@ -101,8 +101,8 @@ class ResourcesettingsController extends BaseController
                 $BuildEnergy = $this->user['research_energy_technology'];
 
                 // BOOST
-                $geologe_boost = 1 + (1 * (OfficiersLib::isOfficierActive($this->user['premium_officier_geologist']) ? GEOLOGUE : 0));
-                $engineer_boost = 1 + (1 * (OfficiersLib::isOfficierActive($this->user['premium_officier_engineer']) ? ENGINEER_ENERGY : 0));
+                $geologe_boost = 1 + (1 * (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_geologist']) ? GEOLOGUE : 0));
+                $engineer_boost = 1 + (1 * (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_engineer']) ? ENGINEER_ENERGY : 0));
 
                 // PRODUCTION FORMULAS
                 $metal_prod = eval($this->prodGrid[$ProdID]['formule']['metal']);

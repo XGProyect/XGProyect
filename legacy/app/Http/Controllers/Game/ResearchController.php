@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Models\Buildings;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
@@ -57,7 +58,7 @@ class ResearchController extends BaseController
         foreach ($this->_reslist['tech'] as $tech) {
             if (DevelopmentsLib::isDevelopmentAllowed($this->user, $this->planet, $tech)) {
                 $RowParse['tech_id'] = $tech;
-                $building_level = $this->user[$this->_resource[$tech]];
+                $building_level = (int) $this->user[$this->_resource[$tech]];
                 $RowParse['tech_level'] = DevelopmentsLib::setLevelFormat($building_level, $tech, $this->user);
                 $RowParse['tech_name'] = __('game/technologies.' . $this->_resource[$tech]);
                 $RowParse['tech_descr'] = __('game/research.descriptions')[$this->_resource[$tech]];
@@ -250,7 +251,12 @@ class ResearchController extends BaseController
 
     private function setLabsAmount(): void
     {
-        $labs_limit = $this->user[$this->_resource[123]] + 1;
-        $this->_lab_level = $this->researchModel->getAllLabsLevel($this->user['id'], $labs_limit);
+        $labsLimit = $this->user[$this->_resource[123]] + 1;
+        $this->_lab_level = (int) Buildings::selectRaw('SUM(building_laboratory) AS total_level')
+            ->leftJoin('planets', 'planet_id', '=', 'building_planet_id')
+            ->where('planet_user_id', $this->user['id'])
+            ->orderBy('building_laboratory', 'DESC')
+            ->limit($labsLimit)
+            ->value('total_level');
     }
 }
