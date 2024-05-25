@@ -244,7 +244,7 @@ class GalaxyLib
         $parse['system'] = $this->system;
         $parse['planet'] = $this->planet;
         $parse['image'] = strtr(DPATH, ['\\' => '/']) . 'planets/small/s_mond.jpg';
-        $parse['planet_diameter'] = FormatLib::prettyNumber($this->row_data['planet_diameter']);
+        $parse['planet_diameter'] = FormatLib::prettyNumber((int) $this->row_data['planet_diameter']);
         $parse['links'] = '';
 
         // LOOP THRU ACTIONS
@@ -296,8 +296,8 @@ class GalaxyLib
             $parse['image'] = strtr(DPATH, ['\\' => '/']) . 'planets/debris.jpg';
             $parse['planettype'] = self::PLANET_TYPE;
             $parse['recsended'] = $recyclers_sended;
-            $parse['planet_debris_metal'] = FormatLib::prettyNumber($this->row_data['metal']);
-            $parse['planet_debris_crystal'] = FormatLib::prettyNumber($this->row_data['crystal']);
+            $parse['planet_debris_metal'] = FormatLib::prettyNumber((int) $this->row_data['metal']);
+            $parse['planet_debris_crystal'] = FormatLib::prettyNumber((int) $this->row_data['crystal']);
 
             return $parse;
         }

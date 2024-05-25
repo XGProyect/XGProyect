@@ -117,9 +117,9 @@ class Missile extends Missions
 
             if (isset($result) && count($result) > 0) {
                 foreach (Objects::getInstance()->getObjectsList('defense') as $defense_id) {
-                    $message .= FormatLib::prettyNumber($target_data[$this->resource[$defense_id]]) . ' ' . __('game/defenses.' . $this->resource[$defense_id]);
+                    $message .= FormatLib::prettyNumber((int) $target_data[$this->resource[$defense_id]]) . ' ' . __('game/defenses.' . $this->resource[$defense_id]);
                     if (isset($result[$defense_id])) {
-                        $message .= ' (-' . FormatLib::prettyNumber($result[$defense_id]) . ')';
+                        $message .= ' (-' . FormatLib::prettyNumber((int) $result[$defense_id]) . ')';
                     }
                     $message .= '<br>';
                 }

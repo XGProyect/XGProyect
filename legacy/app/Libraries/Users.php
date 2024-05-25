@@ -152,8 +152,8 @@ class Users
     private function setPlanetData(): void
     {
         $this->planetData = $this->usersModel->setPlanetData(
-            $this->userData['current_planet'],
-            Options::getInstance()->get('stat_admin_level')
+            (int) $this->userData['current_planet'],
+            (int) Options::getInstance()->get('stat_admin_level')
         );
     }
 

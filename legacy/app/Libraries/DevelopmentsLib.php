@@ -135,9 +135,9 @@ class DevelopmentsLib
                     $text .= '<b style="color:red;"> <t title="-' . FormatLib::prettyNumber(
                         $cost - $current_planet['planet_' . $res_type]
                     ) . '">';
-                    $text .= '<span class="noresources">' . FormatLib::prettyNumber($cost) . '</span></t></b> ';
+                    $text .= '<span class="noresources">' . FormatLib::prettyNumber((int) $cost) . '</span></t></b> ';
                 } else {
-                    $text .= '<b style="color:lime;">' . FormatLib::prettyNumber($cost) . '</b> ';
+                    $text .= '<b style="color:lime;">' . FormatLib::prettyNumber((int) $cost) . '</b> ';
                 }
             }
         }

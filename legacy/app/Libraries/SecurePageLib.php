@@ -21,7 +21,7 @@ class SecurePageLib
     private function validate($value)
     {
         if (!is_array($value)) {
-            $value = str_ireplace('script', 'blocked', $value);
+            $value = str_ireplace('script', 'blocked', (string) $value);
             $value = htmlentities($value, ENT_QUOTES, 'UTF-8', false);
         } else {
             $c = 0;

@@ -70,7 +70,7 @@ class BuildingsController extends BaseController
 
         $this->setAllowedBuildings();
 
-        $this->_commander_active = OfficiersLib::isOfficierActive($this->user['premium_officier_commander']);
+        $this->_commander_active = OfficiersLib::isOfficierActive((int) $this->user['premium_officier_commander']);
     }
 
     private function runAction(): void
@@ -229,12 +229,10 @@ class BuildingsController extends BaseController
      * Expects a building ID to calculate the building level
      *
      * @param int $building_id Building ID
-     *
-     * @return int
      */
-    private function getBuildingLevel($building_id)
+    private function getBuildingLevel($building_id): int
     {
-        return $this->planet[$this->objects->getObjects()[$building_id]];
+        return (int) $this->planet[$this->objects->getObjects()[$building_id]];
     }
 
     /**

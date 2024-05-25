@@ -581,7 +581,7 @@ class Fleet4Controller extends BaseController
 
         if (!$stock_valid) {
             $this->showMessage(
-                FormatLib::colorRed(__('game/fleet.fl_no_enought_deuterium') . FormatLib::prettyNumber($consumption))
+                FormatLib::colorRed(__('game/fleet.fl_no_enought_deuterium') . FormatLib::prettyNumber((int) $consumption))
             );
         }
 

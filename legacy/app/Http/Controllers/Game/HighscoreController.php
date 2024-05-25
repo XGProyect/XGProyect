@@ -75,7 +75,7 @@ class HighscoreController extends BaseController
                 $parse['alliance_name'] = $StatRow['alliance_name'];
                 $parse['ally_members'] = $StatRow['ally_members'];
                 $parse['ally_action'] = $StatRow['alliance_request_notallow'] == 1 ? '<a href="game.php?page=alliance&mode=apply&allyid=' . $StatRow['alliance_id'] . '"><img src="' . DPATH . 'img/m.gif" border="0" title="' . __('game/statistics.st_ally_request') . '" /></a>' : '';
-                $parse['ally_points'] = FormatLib::prettyNumber($StatRow['alliance_statistic_' . $Order]);
+                $parse['ally_points'] = FormatLib::prettyNumber((int) $StatRow['alliance_statistic_' . $Order]);
                 $parse['ally_members_points'] = FormatLib::prettyNumber(floor($StatRow['alliance_statistic_' . $Order] / $StatRow['ally_members']));
                 $parse['stat_values'] .= Template::render(
                     'highscore.alliance_table',
@@ -125,7 +125,7 @@ class HighscoreController extends BaseController
                 }
 
                 $parse['player_rankplus'] = $this->rank_difference($ranking);
-                $parse['player_points'] = FormatLib::prettyNumber($StatRow['user_statistic_' . $Order]);
+                $parse['player_points'] = FormatLib::prettyNumber((int) $StatRow['user_statistic_' . $Order]);
                 $parse['stat_values'] .= Template::render(
                     'highscore.player_table',
                     $parse

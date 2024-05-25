@@ -68,14 +68,14 @@ class Building
     {
         $queue_size = 1;
 
-        if (OfficiersLib::isOfficierActive($this->user['premium_officier_commander'])) {
+        if (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_commander'])) {
             $queue_size = MAX_BUILDING_QUEUE_SIZE;
         }
 
         return !($this->getCountElementsOnQueue() < $queue_size);
     }
 
-    private function buildQueueElementsBlock(string $buildMode): QueueElements
+    private function buildQueueElementsBlock(string $buildMode): ?QueueElements
     {
         $buildLevel = $this->calculateBuildLevel($buildMode);
 

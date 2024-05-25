@@ -9,9 +9,9 @@ use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class OfficiersLib
 {
-    public static function isOfficierActive(int $expireTime): int
+    public static function isOfficierActive(int $expireTime): bool
     {
-        return ($expireTime > time() && $expireTime != 0);
+        return $expireTime > time();
     }
 
     public static function getMaxEspionage(int $espionageTech, int $technocrateLevel): int

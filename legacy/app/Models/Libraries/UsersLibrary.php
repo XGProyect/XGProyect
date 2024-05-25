@@ -159,7 +159,7 @@ class UsersLibrary extends Model
                 `current_page` = '" . $this->db->escapeValue($request_uri) . "',
                 `lastip` = '" . $this->db->escapeValue($remote_addr) . "',
                 `agent` = '" . $this->db->escapeValue($agent) . "'
-            WHERE `id` = '" . $this->db->escapeValue($userId) . "'
+            WHERE `id` = '" . $userId . "'
             LIMIT 1;"
         );
     }

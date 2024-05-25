@@ -68,9 +68,9 @@ class Deploy extends Missions
                 Fleets::startLink($fleet, ''),
                 $fleet['planet_end_name'],
                 Fleets::targetLink($fleet, ''),
-                Format::prettyNumber($fleet['fleet_resource_metal']),
-                Format::prettyNumber($fleet['fleet_resource_crystal']),
-                Format::prettyNumber($fleet['fleet_resource_deuterium']),
+                Format::prettyNumber((int) $fleet['fleet_resource_metal']),
+                Format::prettyNumber((int) $fleet['fleet_resource_crystal']),
+                Format::prettyNumber((int) $fleet['fleet_resource_deuterium']),
             ])
         );
     }
@@ -99,9 +99,9 @@ class Deploy extends Missions
                 Fleets::targetLink($fleet, ''),
                 $fleet['planet_start_name'],
                 Fleets::startLink($fleet, ''),
-                Format::prettyNumber($fleet['fleet_resource_metal']),
-                Format::prettyNumber($fleet['fleet_resource_crystal']),
-                Format::prettyNumber($fleet['fleet_resource_deuterium']),
+                Format::prettyNumber((int) $fleet['fleet_resource_metal']),
+                Format::prettyNumber((int) $fleet['fleet_resource_crystal']),
+                Format::prettyNumber((int) $fleet['fleet_resource_deuterium']),
             ];
         }
 

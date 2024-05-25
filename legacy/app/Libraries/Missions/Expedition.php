@@ -93,9 +93,9 @@ class Expedition extends Missions
                     FormatLib::prettyCoords($fleet['fleet_end_galaxy'], $fleet['fleet_end_system'], $fleet['fleet_end_planet']),
                     $fleet['planet_start_name'],
                     FormatLib::prettyCoords($fleet['fleet_start_galaxy'], $fleet['fleet_start_system'], $fleet['fleet_start_planet']),
-                    FormatLib::prettyNumber($fleet['fleet_resource_metal']),
-                    FormatLib::prettyNumber($fleet['fleet_resource_crystal']),
-                    FormatLib::prettyNumber($fleet['fleet_resource_deuterium'])
+                    FormatLib::prettyNumber((int) $fleet['fleet_resource_metal']),
+                    FormatLib::prettyNumber((int) $fleet['fleet_resource_crystal']),
+                    FormatLib::prettyNumber((int) $fleet['fleet_resource_deuterium'])
                 );
 
                 $this->expeditionMessage(

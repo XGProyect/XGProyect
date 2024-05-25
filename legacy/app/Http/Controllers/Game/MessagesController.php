@@ -45,7 +45,7 @@ class MessagesController extends BaseController
 
     private function getCurrentSection(): string
     {
-        if (OfficiersLib::isOfficierActive($this->user['premium_officier_commander'])) {
+        if (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_commander'])) {
             return 'premium';
         }
 

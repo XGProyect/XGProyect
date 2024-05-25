@@ -177,9 +177,9 @@ class FleetsLib
         $total_resources = $fleetRow['fleet_resource_metal'] + $fleetRow['fleet_resource_crystal'] + $fleetRow['fleet_resource_deuterium'];
 
         if ($total_resources != 0) {
-            $popup['fleet_resource_metal'] = FormatLib::prettyNumber($fleetRow['fleet_resource_metal']);
-            $popup['fleet_resource_crystal'] = FormatLib::prettyNumber($fleetRow['fleet_resource_crystal']);
-            $popup['fleet_resource_deuterium'] = FormatLib::prettyNumber($fleetRow['fleet_resource_deuterium']);
+            $popup['fleet_resource_metal'] = FormatLib::prettyNumber((int) $fleetRow['fleet_resource_metal']);
+            $popup['fleet_resource_crystal'] = FormatLib::prettyNumber((int) $fleetRow['fleet_resource_crystal']);
+            $popup['fleet_resource_deuterium'] = FormatLib::prettyNumber((int) $fleetRow['fleet_resource_deuterium']);
 
             $resources_popup = Template::jsReady(
                 Template::render(
@@ -233,7 +233,7 @@ class FleetsLib
                     $pop_up .= '<tr><td width=50% align=left><font color=white>' .
                     __('game/ships.' . $objects[$ship]) .
                     ':</font></td><td width=50% align=right><font color=white>' .
-                    FormatLib::prettyNumber($amount) . '</font></td></tr>';
+                    FormatLib::prettyNumber((int) $amount) . '</font></td></tr>';
                 } elseif ($fleetRow['fleet_owner'] != $current_user['id']) {
                     if ($espionage_tech >= 4 && $espionage_tech < 8) {
                         $pop_up .= '<tr><td width=50% align=left><font color=white>' .
@@ -243,7 +243,7 @@ class FleetsLib
                         $pop_up .= '<tr><td width=50% align=left><font color=white>' .
                         __('game/ships.' . $objects[$ship]) .
                         ':<font></td><td width=50% align=right><font color=white>' .
-                        FormatLib::prettyNumber($amount) . '</font></td></tr>';
+                        FormatLib::prettyNumber((int) $amount) . '</font></td></tr>';
                     }
                 }
             }

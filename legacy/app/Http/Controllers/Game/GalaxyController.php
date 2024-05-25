@@ -103,8 +103,8 @@ class GalaxyController extends BaseController
         $parse['currentmip'] = $this->planet['defense_interplanetary_missile'];
         $parse['maxfleetcount'] = $current_fleets;
         $parse['fleetmax'] = $max_fleets;
-        $parse['recyclers'] = FormatLib::prettyNumber($this->planet['ship_recycler']);
-        $parse['spyprobes'] = FormatLib::prettyNumber($CurrentSP);
+        $parse['recyclers'] = FormatLib::prettyNumber((int) $this->planet['ship_recycler']);
+        $parse['spyprobes'] = FormatLib::prettyNumber((int) $CurrentSP);
         $parse['missile_count'] = sprintf(__('game/galaxy.gl_missil_to_launch'), $this->planet['defense_interplanetary_missile']);
         $parse['current'] = isset($_GET['current']) ? $_GET['current'] : null;
         $parse['current_galaxy'] = $this->planet['planet_galaxy'];

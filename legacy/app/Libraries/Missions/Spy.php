@@ -190,11 +190,11 @@ class Spy extends Missions
                 $String .= $report_title;
                 $String .= '</td>';
                 $String .= '</tr><tr>';
-                $String .= '<td width=220>' . __('game/global.metal') . '</td><td width=220 align=right>' . FormatLib::prettyNumber($target_data['planet_metal']) . '</td><td>&nbsp;</td>';
-                $String .= '<td width=220>' . __('game/global.crystal') . '</td></td><td width=220 align=right>' . FormatLib::prettyNumber($target_data['planet_crystal']) . '</td>';
+                $String .= '<td width=220>' . __('game/global.metal') . '</td><td width=220 align=right>' . FormatLib::prettyNumber((int) $target_data['planet_metal']) . '</td><td>&nbsp;</td>';
+                $String .= '<td width=220>' . __('game/global.crystal') . '</td></td><td width=220 align=right>' . FormatLib::prettyNumber((int) $target_data['planet_crystal']) . '</td>';
                 $String .= '</tr><tr>';
-                $String .= '<td width=220>' . __('game/global.deuterium') . '</td><td width=220 align=right>' . FormatLib::prettyNumber($target_data['planet_deuterium']) . '</td><td>&nbsp;</td>';
-                $String .= '<td width=220>' . __('game/global.energy') . '</td><td width=220 align=right>' . FormatLib::prettyNumber($target_data['planet_energy_max']) . '</td>';
+                $String .= '<td width=220>' . __('game/global.deuterium') . '</td><td width=220 align=right>' . FormatLib::prettyNumber((int) $target_data['planet_deuterium']) . '</td><td>&nbsp;</td>';
+                $String .= '<td width=220>' . __('game/global.energy') . '</td><td width=220 align=right>' . FormatLib::prettyNumber((int) $target_data['planet_energy_max']) . '</td>';
                 $String .= '</tr>';
 
                 $LookAtLoop = false;
@@ -236,7 +236,7 @@ class Spy extends Missions
                             $String .= '<tr>';
                         }
 
-                        $String .= '<td align=left>' . __('game/constructions.' . $this->resource[$Item]) . '</td><td align=right>' . FormatLib::prettyNumber($target_data[$this->resource[$Item]]) . '</td>';
+                        $String .= '<td align=left>' . __('game/constructions.' . $this->resource[$Item]) . '</td><td align=right>' . FormatLib::prettyNumber((int) $target_data[$this->resource[$Item]]) . '</td>';
 
                         if ($row < 2 - 1) {
                             $String .= '<td>&nbsp;</td>';

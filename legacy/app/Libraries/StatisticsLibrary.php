@@ -108,7 +108,7 @@ class StatisticsLibrary
         $this->time = time();
         $starttime = microtime(true);
 
-        $result['initial_memory'] = [round(memory_get_usage() / 1024, 1), round(memory_get_usage(1) / 1024, 1)];
+        $result['initial_memory'] = [round(memory_get_usage() / 1024, 1), round(memory_get_usage(true) / 1024, 1)];
 
         self::makeUserRank();
         self::makeAllyRank();
@@ -117,24 +117,19 @@ class StatisticsLibrary
 
         $result['stats_time'] = $this->time;
         $result['totaltime'] = ($endtime - $starttime);
-        $result['memory_peak'] = [round(memory_get_peak_usage() / 1024, 1), round(memory_get_peak_usage(1) / 1024, 1)];
-        $result['end_memory'] = [round(memory_get_usage() / 1024, 1), round(memory_get_usage(1) / 1024, 1)];
+        $result['memory_peak'] = [round(memory_get_peak_usage() / 1024, 1), round(memory_get_peak_usage(true) / 1024, 1)];
+        $result['end_memory'] = [round(memory_get_usage() / 1024, 1), round(memory_get_usage(true) / 1024, 1)];
 
         return $result;
     }
 
-    /**
-     * makeUserRank
-     *
-     * @return void
-     */
-    private function makeUserRank()
+    private function makeUserRank(): void
     {
         // GET ALL DATA FROM THE USERS TO UPDATE
         $all_stats_data = $this->statisticsLibraryModel->getAllUserStatsData();
 
         // ANY USER ?
-        if (empty($all_stats_data) or count($all_stats_data) == 0) {
+        if (empty($all_stats_data)) {
             return;
         }
 
@@ -273,18 +268,13 @@ class StatisticsLibrary
         unset($all_stats_data, $build, $defs, $ships, $tech, $rank, $update_query, $values);
     }
 
-    /**
-     * makeAllyRank
-     *
-     * @return void
-     */
-    private function makeAllyRank()
+    private function makeAllyRank(): void
     {
         // GET ALL DATA FROM THE USERS TO UPDATE
         $all_stats_data = $this->statisticsLibraryModel->getAllAllianceStatsData();
 
         // ANY ALLIANCE ?
-        if (empty($all_stats_data) or count($all_stats_data) == 0) {
+        if (empty($all_stats_data)) {
             return;
         }
 

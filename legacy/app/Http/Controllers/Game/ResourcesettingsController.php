@@ -162,10 +162,10 @@ class ResourcesettingsController extends BaseController
                 $CurrRow['type'] = $this->setLangLine($this->resource[$ProdID]);
                 $CurrRow['level'] = ($ProdID > 200) ? __('game/resources.rs_amount') : __('game/global.level');
                 $CurrRow['level_type'] = $this->planet[$this->resource[$ProdID]];
-                $CurrRow['metal_type'] = FormatLib::prettyNumber($metal);
-                $CurrRow['crystal_type'] = FormatLib::prettyNumber($crystal);
-                $CurrRow['deuterium_type'] = FormatLib::prettyNumber($deuterium);
-                $CurrRow['energy_type'] = FormatLib::prettyNumber($energy);
+                $CurrRow['metal_type'] = FormatLib::prettyNumber((int) $metal);
+                $CurrRow['crystal_type'] = FormatLib::prettyNumber((int) $crystal);
+                $CurrRow['deuterium_type'] = FormatLib::prettyNumber((int) $deuterium);
+                $CurrRow['energy_type'] = FormatLib::prettyNumber((int) $energy);
                 $CurrRow['metal_type'] = FormatLib::colorNumber($CurrRow['metal_type']);
                 $CurrRow['crystal_type'] = FormatLib::colorNumber($CurrRow['crystal_type']);
                 $CurrRow['deuterium_type'] = FormatLib::colorNumber($CurrRow['deuterium_type']);
@@ -187,9 +187,9 @@ class ResourcesettingsController extends BaseController
         $parse['energy_basic_income'] = $game_energy_basic_income;
 
         $parse['plasma_level'] = $this->user['research_plasma_technology'];
-        $parse['plasma_metal'] = FormatLib::colorNumber(FormatLib::prettyNumber($plasmaBoost['metal']));
-        $parse['plasma_crystal'] = FormatLib::colorNumber(FormatLib::prettyNumber($plasmaBoost['crystal']));
-        $parse['plasma_deuterium'] = FormatLib::colorNumber(FormatLib::prettyNumber($plasmaBoost['deuterium']));
+        $parse['plasma_metal'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $plasmaBoost['metal']));
+        $parse['plasma_crystal'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $plasmaBoost['crystal']));
+        $parse['plasma_deuterium'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $plasmaBoost['deuterium']));
 
         $parse['planet_metal_max'] = $this->resource_color($this->planet['planet_metal'], $this->planet['planet_metal_max']);
         $parse['planet_crystal_max'] = $this->resource_color($this->planet['planet_crystal'], $this->planet['planet_crystal_max']);
@@ -209,14 +209,14 @@ class ResourcesettingsController extends BaseController
         $parse['daily_deuterium'] = $this->calculate_daily($this->planet['planet_deuterium_perhour'], $parse['production_level'], $parse['deuterium_basic_income']);
         $parse['weekly_deuterium'] = $this->calculate_weekly($this->planet['planet_deuterium_perhour'], $parse['production_level'], $parse['deuterium_basic_income']);
 
-        $parse['daily_metal'] = FormatLib::colorNumber(FormatLib::prettyNumber($parse['daily_metal']));
-        $parse['weekly_metal'] = FormatLib::colorNumber(FormatLib::prettyNumber($parse['weekly_metal']));
+        $parse['daily_metal'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $parse['daily_metal']));
+        $parse['weekly_metal'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $parse['weekly_metal']));
 
-        $parse['daily_crystal'] = FormatLib::colorNumber(FormatLib::prettyNumber($parse['daily_crystal']));
-        $parse['weekly_crystal'] = FormatLib::colorNumber(FormatLib::prettyNumber($parse['weekly_crystal']));
+        $parse['daily_crystal'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $parse['daily_crystal']));
+        $parse['weekly_crystal'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $parse['weekly_crystal']));
 
-        $parse['daily_deuterium'] = FormatLib::colorNumber(FormatLib::prettyNumber($parse['daily_deuterium']));
-        $parse['weekly_deuterium'] = FormatLib::colorNumber(FormatLib::prettyNumber($parse['weekly_deuterium']));
+        $parse['daily_deuterium'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $parse['daily_deuterium']));
+        $parse['weekly_deuterium'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $parse['weekly_deuterium']));
 
         $ValidList['percent'] = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
         $SubQry = '';

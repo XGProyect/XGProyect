@@ -238,8 +238,6 @@ class TraderLayerController extends BaseController
 
     /**
      * Build resources section
-     *
-     * @return array
      */
     private function buildResourcesSection(): array
     {

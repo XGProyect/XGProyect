@@ -127,7 +127,7 @@ class SearchController extends BaseController
                 $resultsList[] = array_merge(
                     $results,
                     [
-                        'alliance_points' => FormatLib::prettyNumber($results['alliance_points']),
+                        'alliance_points' => FormatLib::prettyNumber((int) $results['alliance_points']),
                         'alliance_actions' => $this->getAllianceApplicationAction((int) $results['alliance_id'], (int) $results['alliance_requests']),
                     ]
                 );
@@ -153,7 +153,7 @@ class SearchController extends BaseController
         if ($this->noob->isRankVisible($userLevel)) {
             return UrlHelper::setUrl(
                 'game.php?page=statistics&start=' . $userRank,
-                FormatLib::prettyNumber($userRank)
+                FormatLib::prettyNumber((int) $userRank)
             );
         } else {
             return '-';

@@ -183,9 +183,9 @@ class Attack extends Missions
                 FleetsLib::targetLink($fleet_row, ''),
                 $fleet_row['planet_start_name'],
                 FleetsLib::startLink($fleet_row, ''),
-                FormatLib::prettyNumber($fleet_row['fleet_resource_metal']),
-                FormatLib::prettyNumber($fleet_row['fleet_resource_crystal']),
-                FormatLib::prettyNumber($fleet_row['fleet_resource_deuterium'])
+                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_metal']),
+                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_crystal']),
+                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_deuterium'])
             );
 
             Functions::sendMessage(

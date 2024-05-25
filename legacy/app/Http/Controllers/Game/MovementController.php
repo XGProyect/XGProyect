@@ -119,7 +119,7 @@ class MovementController extends BaseController
                     'fleet_mission' => __('game/missions.type_mission')[$fleet->getFleetMission()],
                     'title' => $this->buildTitleBlock($fleet->getFleetMess()),
                     'tooltip' => $this->buildToolTipBlock($fleet->getFleetMess()),
-                    'fleet_amount' => FormatLib::prettyNumber($fleet->getFleetAmount()),
+                    'fleet_amount' => FormatLib::prettyNumber((int) $fleet->getFleetAmount()),
                     'fleet' => $this->buildShipsBlock($fleet->getFleetArray()),
                     'fleet_start' => FormatLib::prettyCoords(
                         $fleet->getFleetStartGalaxy(),

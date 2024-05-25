@@ -149,7 +149,7 @@ class TraderResourcesController extends BaseController
                 $button = '';
             } else {
                 $price = Format::customColor(
-                    Format::prettyNumber($dmPrice),
+                    Format::prettyNumber((int) $dmPrice),
                     '#2cbef2'
                 ) . ' ' . __('game/global.dark_matter_short');
                 $button = '<input type="submit" name="' . $resource . '-' . $percentage . '" value="' . __('game/trader.tr_refill_button') . '">';

@@ -329,7 +329,7 @@ class Users extends Model
         $query_string = substr_replace($query_string, '', -1);
 
         // end
-        $query_string .= " WHERE `premium_user_id` = '" . $this->db->escapeValue($userId) . "';";
+        $query_string .= " WHERE `premium_user_id` = '" . $userId . "';";
 
         // run
         $this->db->query($query_string);

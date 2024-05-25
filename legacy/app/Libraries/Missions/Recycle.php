@@ -59,13 +59,13 @@ class Recycle extends Missions
 
             $message = sprintf(
                 __('game/recycle.rec_result'),
-                FormatLib::prettyNumber($fleet_row['fleet_amount']),
-                FormatLib::prettyNumber($this->recyclers_capacity),
+                FormatLib::prettyNumber((int) $fleet_row['fleet_amount']),
+                FormatLib::prettyNumber((int) $this->recyclers_capacity),
                 FleetsLib::targetLink($fleet_row, ''),
-                FormatLib::prettyNumber($this->planet_debris['metal']),
-                FormatLib::prettyNumber($this->planet_debris['crystal']),
-                FormatLib::prettyNumber($recycled_resources['metal']),
-                FormatLib::prettyNumber($recycled_resources['crystal'])
+                FormatLib::prettyNumber((int) $this->planet_debris['metal']),
+                FormatLib::prettyNumber((int) $this->planet_debris['crystal']),
+                FormatLib::prettyNumber((int) $recycled_resources['metal']),
+                FormatLib::prettyNumber((int) $recycled_resources['crystal'])
             );
 
             $this->recycleMessage(
@@ -81,9 +81,9 @@ class Recycle extends Missions
                 FleetsLib::targetLink($fleet_row, ''),
                 $fleet_row['planet_start_name'],
                 FleetsLib::startLink($fleet_row, ''),
-                FormatLib::prettyNumber($fleet_row['fleet_resource_metal']),
-                FormatLib::prettyNumber($fleet_row['fleet_resource_crystal']),
-                FormatLib::prettyNumber($fleet_row['fleet_resource_deuterium']),
+                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_metal']),
+                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_crystal']),
+                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_deuterium']),
             );
 
             $this->recycleMessage(

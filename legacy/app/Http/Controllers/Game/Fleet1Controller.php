@@ -152,7 +152,7 @@ class Fleet1Controller extends BaseController
      */
     private function buildShipAmount($ship_amount)
     {
-        return FormatLib::prettyNumber($ship_amount);
+        return FormatLib::prettyNumber((int) $ship_amount);
     }
 
     /**

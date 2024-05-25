@@ -106,9 +106,9 @@ class Transport extends Missions
                 Fleets::startLink($fleet, ''),
                 $trading_planets['target_name'],
                 Fleets::targetLink($fleet, ''),
-                Format::prettyNumber($fleet['fleet_resource_metal']),
-                Format::prettyNumber($fleet['fleet_resource_crystal']),
-                Format::prettyNumber($fleet['fleet_resource_deuterium']),
+                Format::prettyNumber((int) $fleet['fleet_resource_metal']),
+                Format::prettyNumber((int) $fleet['fleet_resource_crystal']),
+                Format::prettyNumber((int) $fleet['fleet_resource_deuterium']),
             ])
         );
     }
@@ -138,12 +138,12 @@ class Transport extends Missions
                     Fleets::startLink($fleet, ''),
                     $trading_planets['target_name'],
                     Fleets::targetLink($fleet, ''),
-                    Format::prettyNumber($fleet['fleet_resource_metal']),
-                    Format::prettyNumber($fleet['fleet_resource_crystal']),
-                    Format::prettyNumber($fleet['fleet_resource_deuterium']),
-                    Format::prettyNumber($trading_planets['target_metal']),
-                    Format::prettyNumber($trading_planets['target_crystal']),
-                    Format::prettyNumber($trading_planets['target_deuterium']),
+                    Format::prettyNumber((int) $fleet['fleet_resource_metal']),
+                    Format::prettyNumber((int) $fleet['fleet_resource_crystal']),
+                    Format::prettyNumber((int) $fleet['fleet_resource_deuterium']),
+                    Format::prettyNumber((int) $trading_planets['target_metal']),
+                    Format::prettyNumber((int) $trading_planets['target_crystal']),
+                    Format::prettyNumber((int) $trading_planets['target_deuterium']),
                     Format::prettyNumber($trading_planets['target_metal'] + $fleet['fleet_resource_metal']),
                     Format::prettyNumber($trading_planets['target_crystal'] + $fleet['fleet_resource_crystal']),
                     Format::prettyNumber($trading_planets['target_deuterium'] + $fleet['fleet_resource_deuterium']),
@@ -177,9 +177,9 @@ class Transport extends Missions
                 Fleets::targetLink($fleet, ''),
                 $fleet['planet_start_name'],
                 Fleets::startLink($fleet, ''),
-                Format::prettyNumber($fleet['fleet_resource_metal']),
-                Format::prettyNumber($fleet['fleet_resource_crystal']),
-                Format::prettyNumber($fleet['fleet_resource_deuterium']),
+                Format::prettyNumber((int) $fleet['fleet_resource_metal']),
+                Format::prettyNumber((int) $fleet['fleet_resource_crystal']),
+                Format::prettyNumber((int) $fleet['fleet_resource_deuterium']),
             ];
         }
 

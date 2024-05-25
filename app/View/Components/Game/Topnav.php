@@ -37,10 +37,10 @@ class Topnav extends Component
             ['planet_destroyed', '=', 0],
         ])->firstOrFail();
 
-        $metal = FormatLib::prettyNumber($planet->planet_metal);
-        $crystal = FormatLib::prettyNumber($planet->planet_crystal);
-        $deuterium = FormatLib::prettyNumber($planet->planet_deuterium);
-        $darkmatter = FormatLib::prettyNumber($user->premium->premium_dark_matter);
+        $metal = FormatLib::prettyNumber((int) $planet->planet_metal);
+        $crystal = FormatLib::prettyNumber((int) $planet->planet_crystal);
+        $deuterium = FormatLib::prettyNumber((int) $planet->planet_deuterium);
+        $darkmatter = FormatLib::prettyNumber((int) $user->premium->premium_dark_matter);
         $energy = FormatLib::prettyNumber(
             $planet->planet_energy_max + $planet->planet_energy_used
         ) . ' / ' . FormatLib::prettyNumber($planet->planet_energy_max);

@@ -51,7 +51,7 @@ class OverviewController extends BaseController
                     'planetImage' => $this->planet['planet_image'],
                     'building' => $this->getCurrentWork($this->planet),
                     'otherPlanets' => $this->getPlanets(),
-                    'planetDiameter' => FormatLib::prettyNumber($this->planet['planet_diameter']),
+                    'planetDiameter' => FormatLib::prettyNumber((int) $this->planet['planet_diameter']),
                     'planetCurrentFields' => $this->planet['planet_field_current'],
                     'planetMaxFields' => DevelopmentsLib::maxFields($this->planet),
                     'planetMinTemp' => $this->planet['planet_temp_min'],
@@ -118,7 +118,7 @@ class OverviewController extends BaseController
             }
 
             if ($this->user['new_message'] > 1) {
-                $link_text = str_replace('%m', FormatLib::prettyNumber($this->user['new_message']), __('game/overview.ov_have_new_messages'));
+                $link_text = str_replace('%m', FormatLib::prettyNumber((int) $this->user['new_message']), __('game/overview.ov_have_new_messages'));
                 $new_message .= '<th role="cell" colspan="4">' . UrlHelper::setUrl('game.php?page=messages', $link_text, $link_text) . '</th>';
             }
 
@@ -134,7 +134,7 @@ class OverviewController extends BaseController
         $fleet_row = [];
         $record = 0;
 
-        $own_fleets = $this->overviewModel->getOwnFleets($this->user['id']);
+        $own_fleets = $this->overviewModel->getOwnFleets((int) $this->user['id']);
 
         foreach ($own_fleets as $fleets) {
             //#####################################
@@ -304,7 +304,7 @@ class OverviewController extends BaseController
     {
         $colony = 1;
 
-        $planets_query = $this->overviewModel->getPlanets($this->user['id']);
+        $planets_query = $this->overviewModel->getPlanets((int) $this->user['id']);
         $planet_block = '<tr>';
 
         foreach ($planets_query as $user_planet) {
@@ -340,9 +340,9 @@ class OverviewController extends BaseController
         $userRank = '-';
         $totalRank = $this->user['user_statistic_total_rank'] == '' ? $this->planet['stats_users'] : $this->user['user_statistic_total_rank'];
 
-        if ($this->noob->isRankVisible($this->user['authlevel'])) {
+        if ($this->noob->isRankVisible((int) $this->user['authlevel'])) {
             $userRank = __('game/overview.ov_place', [
-                'points' => FormatLib::prettyNumber($this->user['user_statistic_total_points']),
+                'points' => FormatLib::prettyNumber((int) $this->user['user_statistic_total_points']),
                 'url' => UrlHelper::setUrl('game.php?page=statistics&range=' . $totalRank, $totalRank, $totalRank),
                 'total' => $this->planet['stats_users'],
             ]);
