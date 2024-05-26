@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xgp\App\Core;
 
 use Exception;
+use Illuminate\Support\Facades\DB;
 use mysqli;
 
 class Database
@@ -97,17 +98,6 @@ class Database
         } else {
             return false;
         }
-    }
-
-    public function testConnection(): bool
-    {
-        if (is_resource($this->connection) or is_object($this->connection)) {
-            if ($this->connection->ping()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public function closeConnection(): bool
@@ -220,11 +210,6 @@ class Database
         return $result_set->fetch_row();
     }
 
-    public function numRows($result_set)
-    {
-        return $result_set->num_rows;
-    }
-
     public function numFields($result_set)
     {
         return $result_set->field_count;
@@ -234,21 +219,6 @@ class Database
     {
         // get the last id inserted over the current db connection
         return $this->connection->insert_id;
-    }
-
-    public function affectedRows()
-    {
-        return $this->connection->affected_rows;
-    }
-
-    public function serverInfo()
-    {
-        return $this->connection->server_info;
-    }
-
-    public function freeResult($result_set): void
-    {
-        $result_set->free_result();
     }
 
     public function setAutoCommit(bool $status = true): void
@@ -342,6 +312,6 @@ class Database
 
     private function prepareSql(string $query): string
     {
-        return strtr($query, ['{xgp_prefix}' => $this->db_data['prefix']]);
+        return strtr($query, ['{xgp_prefix}' => DB::getTablePrefix()]);
     }
 }

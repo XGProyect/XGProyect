@@ -12,7 +12,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int    $user_id
  * @property int    $admin_id
  * @property string $details
- * @property string $until
+ * @property Date   $until
+ * @property User   $user
+ * @property User   $admin
  */
 class Ban extends Model
 {
@@ -65,11 +67,11 @@ class Ban extends Model
     // Relations ...
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id', 'user_id');
     }
 
     public function admin(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'admin_id');
+        return $this->belongsTo(User::class, 'id', 'admin_id');
     }
 }

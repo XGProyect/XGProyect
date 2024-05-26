@@ -6,6 +6,9 @@ namespace Xgp\App\Http\Controllers\Adm;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
+use Carbon\Carbon;
+use DateInterval;
+use DateTime;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
@@ -50,10 +53,12 @@ class BanController extends BaseController
 
     private function showDefault(): array
     {
-        if (isset($_POST['unban_name']) && $_POST['unban_name']) {
-            $username = $_POST['unban_name'];
+        $username = request()->get('unban_name');
 
-            $this->banModel->unbanUser($username);
+        if (!empty($username)) {
+            \App\Models\Ban::where('name', $username)
+                ->join('users', 'users.id', '=', 'bans.user_id')
+                ->delete();
 
             session()->flash('success', (str_replace('%s', $username, __('admin/ban.bn_lift_ban_success'))));
         }
@@ -66,66 +71,71 @@ class BanController extends BaseController
         return $parse;
     }
 
-    private function showBan()
+    private function showBan(): array
     {
         $parse['reason'] = '';
-        $ban_name = isset($_GET['ban_name']) ? $_GET['ban_name'] : null;
+        $banName = isset($_GET['ban_name']) ? $_GET['ban_name'] : null;
 
-        if (isset($_GET['banuser']) && isset($ban_name)) {
-            $parse['name'] = $ban_name;
+        if (isset($_GET['banuser']) && isset($banName)) {
+            $parse['name'] = $banName;
             $parse['banned_until'] = '';
             $parse['changedate'] = __('admin/ban.bn_auto_lift_ban_message');
             $parse['vacation'] = '';
 
-            $banned_user = $this->banModel->getBannedUserData($ban_name);
+            $bannedUser = $this->banModel->getBannedUserData($banName);
 
-            if ($banned_user) {
-                $parse['banned_until'] = '<tr><th>' . __('admin/ban.bn_banned_until') . '</th><td>' . date(Options::getInstance()->get('date_format_extended'), (int) $banned_user['banned_longer']) . '</td></tr>';
-                $parse['reason'] = $banned_user['banned_theme'];
+            if ($bannedUser) {
+                $parse['banned_until'] = '<tr><th>' . __('admin/ban.bn_banned_until') . '</th><td>' . (new DateTime($bannedUser['until']))->format(Options::getInstance()->get('date_format_extended')) . '</td></tr>';
+                $parse['reason'] = $bannedUser['details'];
                 $parse['changedate'] = $this->administrationService->showPopUp(__('admin/ban.bn_change_date'), __('admin/ban.bn_edit_ban_help'));
-                $parse['vacation'] = $banned_user['preference_vacation_mode'] ? 'checked="checked"' : '';
+                $parse['vacation'] = $bannedUser['preference_vacation_mode'] ? 'checked="checked"' : '';
             }
 
             if (isset($_POST['bannow']) && $_POST['bannow']) {
                 if (!is_numeric($_POST['days']) or !is_numeric($_POST['hour'])) {
                     session()->flash('warning', __('admin/ban.bn_all_fields_required'));
                 } else {
-                    $reas = (string) $_POST['text'];
+                    // involved users
+                    $userName = (string) $banName;
+                    $adminId = (int) $this->user['id'];
+
+                    // ban data
+                    $details = (string) $_POST['text'];
                     $days = (int) $_POST['days'];
                     $hour = (int) $_POST['hour'];
-                    $admin_name = $this->user['name'];
-                    $admin_mail = $this->user['email'];
-                    $current_time = time();
-                    $ban_time = $days * 86400;
-                    $ban_time += $hour * 3600;
-                    $vacation_mode = isset($_POST['vacat']) ? $_POST['vacat'] : null;
+                    $vacationMode = isset($_POST['vacat']) ? $_POST['vacat'] : null;
 
-                    if (isset($banned_user)) {
-                        if ($banned_user['banned_longer'] > time()) {
-                            $ban_time += ($banned_user['banned_longer'] - time());
+                    // time calculation
+                    $currentTime = new DateTime();
+                    $banInterval = new DateInterval('P' . $days . 'D');
+                    $banInterval->h = $hour;
+
+                    $banEndTime = clone $currentTime;
+                    $banEndTime->add($banInterval);
+
+                    if (isset($bannedUser) && isset($bannedUser['until'])) {
+                        $bannedUntil = new DateTime($bannedUser['until']);
+                        if ($bannedUntil > $currentTime) {
+                            // Extend the ban time if the user is already banned
+                            $remainingBanInterval = $bannedUntil->diff($currentTime);
+                            $banEndTime->add($remainingBanInterval);
                         }
                     }
 
-                    if (($ban_time + $current_time) < time()) {
-                        $banned_until = $current_time;
-                    } else {
-                        $banned_until = $current_time + $ban_time;
-                    }
+                    $until = $banEndTime > $currentTime ? $banEndTime : $currentTime;
 
                     $this->banModel->setOrUpdateBan(
-                        $banned_user,
+                        $bannedUser,
                         [
-                            'ban_name' => $ban_name,
-                            'ban_reason' => $reas,
-                            'ban_time' => $current_time,
-                            'ban_until' => $banned_until,
-                            'ban_author' => $admin_name,
-                            'ban_author_email' => $admin_mail,
+                            'user_name' => $userName,
+                            'admin_id' => $adminId,
+                            'details' => $details,
+                            'until' => Carbon::createFromTimestamp($until->getTimestamp())->toDateTimeString(),
                         ],
-                        $vacation_mode
+                        $vacationMode
                     );
 
-                    session()->flash('success', (str_replace('%s', $ban_name, __('admin/ban.bn_ban_success'))));
+                    session()->flash('success', (str_replace('%s', $banName, (string) __('admin/ban.bn_ban_success'))));
                 }
             }
         } else {
@@ -135,7 +145,7 @@ class BanController extends BaseController
         return $parse;
     }
 
-    private function getUsersList()
+    private function getUsersList(): string
     {
         $query_order = (isset($_GET['order']) && $_GET['order'] == 'id') ? 'id' : 'name';
         $where_authlevel = '';
@@ -148,9 +158,9 @@ class BanController extends BaseController
 
         if (isset($_GET['view']) && ($_GET['view'] == 'banned')) {
             if ($this->user['authlevel'] == 3) {
-                $where_banned = "WHERE `banned` <> '0'";
+                $where_banned = 'WHERE `until` <> NULL';
             } else {
-                $where_banned = "AND `banned` <> '1'";
+                $where_banned = "AND `until` > '0'";
             }
         }
 
@@ -160,11 +170,11 @@ class BanController extends BaseController
         foreach ($users_query as $user) {
             $status = '';
 
-            if ($user['banned'] == 1) {
-                $status = __('admin/ban.bn_status');
+            if ($user['until'] > 0) {
+                $status = (string) __('admin/ban.bn_status');
             }
 
-            $users_list .= '<option value="' . $user['name'] . '">' . $user['name'] . '&nbsp;&nbsp;(ID:&nbsp;' . $user['id'] . ')' . $status . '</option>';
+            $users_list .= '<option value="' . $user['name'] . '">' . $user['name'] . ' (ID: ' . $user['id'] . ')' . $status . '</option>';
 
             $this->_users_count++;
         }
@@ -172,7 +182,7 @@ class BanController extends BaseController
         return $users_list;
     }
 
-    private function getBannedList()
+    private function getBannedList(): string
     {
         $order = (isset($_GET['order2']) && $_GET['order2'] == 'id') ? 'id' : 'name';
         $banned_list = '';
@@ -180,7 +190,7 @@ class BanController extends BaseController
         $banned_query = $this->banModel->getBannedUsers($order);
 
         foreach ($banned_query as $user) {
-            $banned_list .= '<option value="' . $user['name'] . '">' . $user['name'] . '&nbsp;&nbsp;(ID:&nbsp;' . $user['id'] . ')</option>';
+            $banned_list .= '<option value="' . $user['name'] . '">' . $user['name'] . ' (ID: ' . $user['id'] . ')</option>';
 
             $this->_banned_count++;
         }
