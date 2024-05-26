@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     're_disabled' => 'New user registration is not currently available.',
     're_welcome_message_from' => 'Admin',

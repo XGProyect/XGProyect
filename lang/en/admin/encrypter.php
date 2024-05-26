@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'et_title' => 'Password encrypter (Bcrypt)',
     'et_sub_title' => 'Here you can quickly encrypt a password using the default encryption system provided by XGP.',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'of_title' => 'Officers',
     'of_recruit' => 'Recruit',

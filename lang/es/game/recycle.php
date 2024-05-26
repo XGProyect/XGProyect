@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'rec_report_title' => 'Informe desde el campo de escombros en %s.', // ok
     'rec_report_from' => 'Flota', // ok

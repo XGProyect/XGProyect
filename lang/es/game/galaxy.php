@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'gl_no_access_vm_on' => '¡No puedes utilizar la vista de galaxia mientras estés de vacaciones!',
     'gl_legend' => 'Leyenda',

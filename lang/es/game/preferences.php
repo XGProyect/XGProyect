@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'pr_user_data' => 'Datos de usuario',
     'pr_players_name' => 'Nombre del jugador',

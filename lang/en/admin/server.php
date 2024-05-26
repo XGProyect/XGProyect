@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'se_server_parameters' => 'Server settings',
     'se_name' => 'Name',

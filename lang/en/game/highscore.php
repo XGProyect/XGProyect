@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'st_player' => 'Player',
     'st_alliance' => 'Alliance',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'bn_title' => 'Suspensiones',
     'bn_sub_title' => 'Esta página proporciona información útil para prohibir usuarios en tu plataforma. Sigue las pautas cuidadosamente para garantizar que tu plataforma siga siendo segura para todos los usuarios.',
@@ -17,7 +19,7 @@ return [
     'bn_button_ban' => 'Suspender',
     'bn_button_lift_ban' => 'Remover suspensión',
     'bn_button_reset' => 'Reiniciar',
-    'bn_status' => '&nbsp; (Suspendido)',
+    'bn_status' => ' (Suspendido)',
     'bn_username' => 'Nombre de usuario',
     'bn_reason' => 'Motivo',
     'bn_characters' => 'Caracteres disponibles:',

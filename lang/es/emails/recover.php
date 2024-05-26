@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     're_mail_title' => 'Nueva contraseña',
     're_mail_text_part1' => '<strong>Nuevos datos de acceso al juego:</strong>',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'sh_search_universe' => 'Search Universe',
     'sh_put_in_leyend' => 'Put in player, alliance or planet name',

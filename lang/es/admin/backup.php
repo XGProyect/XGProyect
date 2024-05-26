@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'bku_title' => 'Resguardos',
     'bku_sub_title' => 'Los resguardos automáticos te ayudarán a proteger tus datos, nunca sabes cuando algo puede salir mal.',

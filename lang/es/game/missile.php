@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'mis_attack' => 'Ataque con misiles',
     'mis_all_destroyed' => 'Todos los misiles interplanetarios han sido destruidos por los misiles de intercepción.',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     're_disabled' => 'En estos momentos el registro a nuevos usuarios se encuentra cerrado.',
     're_welcome_message_from' => 'Admin',

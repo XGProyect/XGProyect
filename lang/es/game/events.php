@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'ev_no_fleet_data' => 'No hay datos de la flota',
     'ev_aproaching' => 'Se aproximan ',

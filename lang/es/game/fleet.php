@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'fl_returning' => 'Regresando',
     'fl_onway' => 'En camino',

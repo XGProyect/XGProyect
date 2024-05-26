@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'pr_title' => 'Permisos',
     'pr_save_all' => 'Guardar permisos',

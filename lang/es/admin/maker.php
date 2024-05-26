@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'mk_title' => 'Creador',
     'mk_sub_title' => 'Desde aquí podrás crear nuevos jugadores, alianzas, planetas y lunas.',

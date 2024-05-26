@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'spy_report_title' => 'Espionage report from %s %s', // ok
     'spy_report_resources' => 'Resources', // ok

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'sy_remaining' => 'Remaining',
     'sy_shipyard_required' => 'You need to build a shipyard on this planet first!',

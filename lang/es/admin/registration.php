@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'ur_title' => 'Ajustes de registro',
     'ur_sub_title' => 'Desde aquí puedes controlar configuraciones para nuevos jugadores.',

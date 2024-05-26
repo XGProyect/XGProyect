@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'up_title' => 'Actualizar',
     'up_no_update_required' => 'Ya tienes la última versión',

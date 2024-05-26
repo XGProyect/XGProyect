@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'mk_title' => 'Creator',
     'mk_sub_title' => 'From here you will be able to create new users, alliances, planets and moons.',

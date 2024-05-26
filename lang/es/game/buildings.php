@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'bd_dismantle' => 'Desmontar',
     'bd_interrupt' => 'Interrumpir',

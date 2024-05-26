@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'gl_no_access_vm_on' => 'You cannot use the galaxy view whilst in vacation mode!',
     'gl_legend' => 'Legend',
