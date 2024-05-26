@@ -14,7 +14,6 @@ class IndexController extends BaseController
 {
     public function __invoke(Request $request): View | Factory
     {
-        // @phpstan-ignore-next-line
         session(['last_step' => $request->route()->getName()]);
 
         return view(
