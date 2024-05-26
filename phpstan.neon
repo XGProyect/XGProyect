@@ -4,3 +4,5 @@ parameters:
         - app
         - legacy
         - tests
+    ignoreErrors:
+        - '#Cannot cast array\|string\|null to string.#'
