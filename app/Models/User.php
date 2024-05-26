@@ -23,7 +23,6 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string             $agent
  * @property string             $current_page
  * @property string             $fleet_shortcuts
- * @property string             $ally_request_text
  * @property int                $authlevel
  * @property int                $home_planet_id
  * @property int                $galaxy
@@ -34,6 +33,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int                $onlinetime
  * @property int                $ally_id
  * @property int                $ally_request
+ * @property string             $ally_request_text
  * @property int                $ally_register_time
  * @property int                $ally_rank_id
  * @property Ban                $ban

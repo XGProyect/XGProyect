@@ -74,8 +74,8 @@ class UsersController extends BaseController
                 session()->flash('danger', __('admin/users.us_nothing_found'));
                 $user = '';
             } else {
-                $this->id = $checked_user['id'];
-                $this->authlevel = $checked_user['authlevel'];
+                $this->id = (int) $checked_user['id'];
+                $this->authlevel = (int) $checked_user['authlevel'];
 
                 // initial data
                 $this->user_query = $this->usersModel->getUserDataById($this->id);
@@ -230,11 +230,11 @@ class UsersController extends BaseController
         $parse['main_planet'] = $this->buildPlanetCombo($this->user_query, 'home_planet_id');
         $parse['current_planet'] = $this->buildPlanetCombo($this->user_query, 'current_planet');
         $parse['alliances'] = $this->buildAllianceCombo($this->user_query);
-        $parse['register_time'] = ($this->user_query['register_time'] == 0) ? '-' : date(Options::getInstance()->get('date_format_extended'), $this->user_query['register_time']);
-        $parse['onlinetime'] = $this->lastActivity($this->user_query['onlinetime']);
+        $parse['register_time'] = ($this->user_query['register_time'] == 0) ? '-' : date(Options::getInstance()->get('date_format_extended'), (int) $this->user_query['register_time']);
+        $parse['onlinetime'] = $this->lastActivity((int) $this->user_query['onlinetime']);
         $parse['user_roles'] = $this->buildUsersRolesList();
-        $parse['banned'] = ($this->user_query['banned'] <= 0) ? '<p class="text-error">' . __('admin/global.ge_no') : '<p class="text-success">' . __('admin/global.ge_yes');
-        $parse['banned'] .= ($this->user_query['banned'] > 0) ? __('admin/users.us_user_information_banned_until') . date(Options::getInstance()->get('date_format'), $this->user_query['banned']) . '</p>' : '</p>';
+        $parse['banned'] = ($this->user_query['until'] === null) ? '<p class="text-error">' . __('admin/global.ge_no') : '<p class="text-success">' . __('admin/global.ge_yes');
+        $parse['banned'] .= ($this->user_query['until'] > 0) ? __('admin/users.us_user_information_banned_until') . date(Options::getInstance()->get('date_format'), (int) $this->user_query['until']) . '</p>' : '</p>';
         $parse['fleet_shortcuts'] = $this->buildShortcutsCombo($this->user_query['fleet_shortcuts']);
 
         return Template::render('admin.users_information', $parse);

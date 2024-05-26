@@ -294,7 +294,7 @@ class FormatLib
         return '<strong>' . $value . '</strong>';
     }
 
-    public static function prettyBytes(int $bytes, int $precision = 2, bool $bitwise = false): string
+    public static function prettyBytes(float | int $bytes, int $precision = 2, bool $bitwise = false): string
     {
         $units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 

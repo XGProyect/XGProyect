@@ -46,9 +46,9 @@ class RepairController extends BaseController
 
             foreach ($tables as $row) {
                 $row['row'] = $row['TABLE_NAME'];
-                $row['data'] = FormatLib::prettyBytes($row['DATA_LENGTH']);
-                $row['index'] = FormatLib::prettyBytes($row['INDEX_LENGTH']);
-                $row['overhead'] = FormatLib::prettyBytes($row['DATA_FREE']);
+                $row['data'] = FormatLib::prettyBytes((int) $row['DATA_LENGTH']);
+                $row['index'] = FormatLib::prettyBytes((int) $row['INDEX_LENGTH']);
+                $row['overhead'] = FormatLib::prettyBytes((int) $row['DATA_FREE']);
                 $row['status_style'] = 'text-info';
 
                 $parse['tables'] .= Template::render(

@@ -139,7 +139,7 @@ class UsersLibrary extends Model
                 LEFT JOIN `' . ALLIANCE . "` AS a ON a.alliance_id = u.ally_id
                 WHERE (u.`id` = '" . session('user_id') . "')
                 LIMIT 1;"
-            );
+            ) ?? [];
         }
 
         return $this->db->queryFetch(

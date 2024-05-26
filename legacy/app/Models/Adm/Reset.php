@@ -198,45 +198,32 @@ class Reset extends Model
         );
     }
 
-    /**
-     * Removes all the notes
-     *
-     * @return void
-     */
     public function resetNotes(): void
     {
-        $this->db->query('TRUNCATE TABLE `' . NOTES . '`');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('notes')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
-    /**
-     * Removes all reports
-     *
-     * @return void
-     */
     public function resetReports(): void
     {
-        $this->db->query('TRUNCATE TABLE `' . REPORTS . '`');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('reports')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
-    /**
-     * Removes all friends
-     *
-     * @return void
-     */
     public function resetFriends(): void
     {
-        $this->db->query('TRUNCATE TABLE `' . BUDDY . '`');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('buddys')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
-    /**
-     * Removes all alliances and their related data
-     *
-     * @return void
-     */
     public function resetAlliances(): void
     {
-        $this->db->query('TRUNCATE TABLE `' . ALLIANCE . '`');
-        $this->db->query('TRUNCATE TABLE `' . ALLIANCE_STATISTICS . '`');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('alliance')->truncate();
+        DB::table('alliance_statistics')->truncate();
         $this->db->query(
             'UPDATE `' . USERS . "` SET
                 `ally_id` = '0',
@@ -245,54 +232,58 @@ class Reset extends Model
                 `ally_register_time` = '0',
                 `ally_rank_id` = '0'"
         );
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
-    /**
-     * Removes all fleets and their related data including ACS
-     *
-     * @return void
-     */
     public function resetFleets(): void
     {
-        $this->db->query('TRUNCATE TABLE `' . ACS . '`');
-        $this->db->query('TRUNCATE TABLE `' . ACS_MEMBERS . '`');
-        $this->db->query('TRUNCATE TABLE `' . FLEETS . '`');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('acs')->truncate();
+        DB::table('acs_members')->truncate();
+        DB::table('fleets')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
-    /**
-     * Removes all suspensions (bans)
-     *
-     * @return void
-     */
     public function resetBanned(): void
     {
-        $this->db->query('TRUNCATE TABLE `' . BANNED . '`');
-        $this->db->query(
-            'UPDATE `' . USERS . "` SET
-                `banned` = '0'
-                WHERE `id` > '1'"
-        );
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('bans')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
-    /**
-     * Removes all messages
-     *
-     * @return void
-     */
     public function resetMessages(): void
     {
-        $this->db->query('TRUNCATE TABLE `' . MESSAGES . '`');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('messages')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
      * Set to 0 all the statistics
-     *
-     * @return void
      */
     public function resetStatistics(): void
     {
-        $this->db->query('TRUNCATE TABLE `' . USERS_STATISTICS . '`');
-        $this->db->query('TRUNCATE TABLE `' . ALLIANCE_STATISTICS . '`');
+        $this->db->query(
+            'UPDATE `' . USERS_STATISTICS . "` SET
+            `user_statistic_buildings_old_rank` = '0',
+            `user_statistic_buildings_rank` = '0',
+            `user_statistic_defenses_old_rank` = '0',
+            `user_statistic_defenses_rank` = '0',
+            `user_statistic_ships_old_rank` = '0',
+            `user_statistic_ships_rank` = '0',
+            `user_statistic_technology_old_rank` = '0',
+            `user_statistic_technology_rank` = '0',
+            `user_statistic_total_old_rank` = '0',
+            `user_statistic_total_rank` = '0',
+            `user_statistic_update_time` = '0',
+            `user_statistic_buildings_points` = '0',
+            `user_statistic_defenses_points` = '0',
+            `user_statistic_ships_points` = '0',
+            `user_statistic_technology_points` = '0',
+            `user_statistic_total_points` = '0'"
+        );
+
+        DB::table('alliance_statistics')->truncate();
     }
 
     /**
@@ -316,6 +307,8 @@ class Reset extends Model
             $this->db->beginTransaction();
 
             // initial resets
+            $this->resetAlliances();
+            //$this->resetBanned();
             $this->resetFleets();
             $this->resetFriends();
             $this->resetMessages();
@@ -324,28 +317,25 @@ class Reset extends Model
             $this->resetStatistics();
 
             // other resets
-            $this->db->query('TRUNCATE TABLE `' . ALLIANCE . '`');
-            $this->db->query('TRUNCATE TABLE `' . BANNED . '`');
-            $this->db->query('TRUNCATE TABLE `' . BUILDINGS . '`');
-            $this->db->query('TRUNCATE TABLE `' . DEFENSES . '`');
-            $this->db->query('TRUNCATE TABLE `' . PREFERENCES . '`');
-            $this->db->query('TRUNCATE TABLE `' . PREMIUM . '`');
-            $this->db->query('TRUNCATE TABLE `' . RESEARCH . '`');
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            // planets and their data
+            DB::table('planets')->truncate();
+            DB::table('buildings')->truncate();
+            DB::table('defenses')->truncate();
+            DB::table('ships')->truncate();
+            // users data
+            DB::table('preferences')->truncate();
+            DB::table('premium')->truncate();
+            DB::table('research')->truncate();
             DB::table('sessions')->truncate();
-            $this->db->query('TRUNCATE TABLE `' . SHIPS . '`');
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
             // new creator
             $creator = $this->newCreator();
 
-            // users and planets resets
-            $this->db->query('RENAME TABLE `' . USERS . '` TO `' . USERS . '_s`');
-            $this->db->query('RENAME TABLE `' . PLANETS . '` TO `' . PLANETS . '_s`');
-
-            $this->db->query('CREATE TABLE IF NOT EXISTS `' . USERS . '` ( LIKE `' . USERS . '_s` );');
-            $this->db->query('CREATE TABLE IF NOT EXISTS `' . PLANETS . '` ( LIKE `' . PLANETS . '_s` );');
-
-            $all_users = $this->db->query(
+            $allUsers = $this->db->query(
                 'SELECT
+                    `id`,
                     `name`,
                     `password`,
                     `email`,
@@ -353,76 +343,70 @@ class Reset extends Model
                     `galaxy`,
                     `system`,
                     `planet`,
-                    `onlinetime`,
-                    `register_time`,
-                    `home_planet_id`
-                FROM `' . USERS . '_s`
-                WHERE 1;'
+                    `register_time`
+                FROM `' . USERS . '`;'
             );
 
-            $limit_time = time() - (ONE_WEEK * 2 + ONE_DAY); // 15 days
+            while ($user = $this->db->fetchAssoc($allUsers)) {
+                $this->db->query(
+                    'UPDATE `' . USERS . "` SET
+                        `name` = '" . $user['name'] . "',
+                        `password` = '" . $user['password'] . "',
+                        `email` = '" . $user['email'] . "',
+                        `lastip` = '',
+                        `ip_at_reg` = '',
+                        `agent` = '',
+                        `current_page` = '',
+                        `fleet_shortcuts` = '',
+                        `authlevel` = '" . $user['authlevel'] . "',
+                        `home_planet_id` = '0',
+                        `galaxy` = '" . $user['galaxy'] . "',
+                        `system` = '" . $user['system'] . "',
+                        `planet` = '" . $user['planet'] . "',
+                        `current_planet` = '0',
+                        `register_time` = '" . $user['register_time'] . "',
+                        `onlinetime` = '" . time() . "',
+                        `ally_id` = '0',
+                        `ally_request` = '0',
+                        `ally_request_text` = NULL,
+                        `ally_register_time` = '0',
+                        `ally_rank_id` = '0'
+                    WHERE `id` = '" . $user['id'] . "';"
+                );
 
-            while ($user = $this->db->fetchAssoc($all_users)) {
-                if ($user['onlinetime'] > $limit_time) {
-                    $time = time();
+                $this->db->query(
+                    'INSERT INTO `' . RESEARCH . "` SET
+                        `research_user_id` = '" . $user['id'] . "';"
+                );
 
-                    $this->db->query(
-                        'INSERT INTO `' . USERS . "` SET
-                            `name` = '" . $user['name'] . "',
-                            `email` = '" . $user['email'] . "',
-                            `home_planet_id` = '0',
-                            `authlevel` = '" . $user['authlevel'] . "',
-                            `galaxy` = '" . $user['galaxy'] . "',
-                            `system` = '" . $user['system'] . "',
-                            `planet` = '" . $user['planet'] . "',
-                            `register_time` = '" . $user['register_time'] . "',
-                            `onlinetime` = '" . $time . "',
-                            `password` = '" . $user['password'] . "';"
-                    );
+                $this->db->query(
+                    'INSERT INTO `' . PREMIUM . "` (`premium_user_id`, `premium_dark_matter`)
+                    VALUES('" . $user['id'] . "', '" . Options::getInstance()->get('registration_dark_matter') . "');"
+                );
 
-                    $last_id = $this->db->insertId();
-                    $new_user = $last_id;
+                $this->db->query(
+                    'INSERT INTO `' . PREFERENCES . "` SET
+                        `preference_user_id` = '" . $user['id'] . "';"
+                );
 
-                    $this->db->query(
-                        'INSERT INTO `' . RESEARCH . "` SET
-                            `research_user_id` = '" . $last_id . "';"
-                    );
+                $creator->setNewPlanet(
+                    (int) $user['galaxy'],
+                    (int) $user['system'],
+                    (int) $user['planet'],
+                    $user['id'],
+                    '',
+                    true
+                );
 
-                    $this->db->query(
-                        'INSERT INTO `' . USERS_STATISTICS . "` SET
-                            `user_statistic_user_id` = '" . $last_id . "';"
-                    );
+                $lastPlanetId = $this->db->insertId();
 
-                    $this->db->query(
-                        'INSERT INTO `' . PREMIUM . "` (`premium_user_id`, `premium_dark_matter`)
-                        VALUES('" . $last_id . "', '" . Options::getInstance()->get('registration_dark_matter') . "');"
-                    );
-
-                    $this->db->query(
-                        'INSERT INTO `' . PREFERENCES . "` SET
-                            `preference_user_id` = '" . $last_id . "';"
-                    );
-
-                    $creator->setNewPlanet(
-                        $user['galaxy'],
-                        $user['system'],
-                        $user['planet'],
-                        $new_user,
-                        '',
-                        true
-                    );
-
-                    $this->db->query(
-                        'UPDATE `' . USERS . "` SET
-                        `home_planet_id` = '" . $new_user . "',
-                        `current_planet` = '" . $new_user . "'
-                        WHERE `id` = '" . $new_user . "';"
-                    );
-                }
+                $this->db->query(
+                    'UPDATE `' . USERS . "` SET
+                    `home_planet_id` = '" . $lastPlanetId . "',
+                    `current_planet` = '" . $lastPlanetId . "'
+                    WHERE `id` = '" . $user['id'] . "';"
+                );
             }
-
-            $this->db->query('DROP TABLE `' . PLANETS . '_s`');
-            $this->db->query('DROP TABLE `' . USERS . '_s`');
 
             $this->db->commitTransaction();
         } catch (Exception $e) {

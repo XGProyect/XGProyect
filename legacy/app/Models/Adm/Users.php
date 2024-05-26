@@ -30,10 +30,12 @@ class Users extends Model
     {
         return $this->db->queryFetch(
             'SELECT u.*,
+                    b.*,
                     p.*,
                     pr.*,
                     r.*
             FROM `' . USERS . '` AS u
+                LEFT JOIN `' . BANNED . '` AS b ON b.`user_id` = u.`id`
                 INNER JOIN `' . PREFERENCES . '` AS pr ON pr.`preference_user_id` = u.`id`
                 INNER JOIN `' . PREMIUM . '` AS p ON p.`premium_user_id` = u.`id`
                 INNER JOIN `' . RESEARCH . "` AS r ON r.`research_user_id` = u.`id`

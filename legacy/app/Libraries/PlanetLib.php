@@ -19,8 +19,6 @@ class PlanetLib
     }
 
     /**
-     * setNewPlanet
-     *
      * @param int     $galaxy   Galaxy
      * @param int     $system   System
      * @param int     $position Position
