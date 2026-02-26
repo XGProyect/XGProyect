@@ -78,6 +78,9 @@
         ],
         "phpstan-baseline": [
             "vendor/bin/phpstan analyse --level 9 --configuration=phpstan.neon --generate-baseline=phpstan-baseline.neon app/ legacy/ tests/ --memory-limit 1024M"
+        ],
+        "phpmd-baseline": [
+            "vendor/bin/phpmd --generate-baseline app/ legacy/ github phpmd.xml"
         ]
     },
     "extra": {

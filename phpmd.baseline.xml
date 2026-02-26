@@ -1,0 +1,1179 @@
+<?xml version="1.0"?>
+<phpmd-baseline>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="app/Console/Kernel.php"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="app/Exceptions/Handler.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Account/RecoverController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/LoginController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/LogoutController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Home/LoginController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Home/RegisterController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Install/SetLocaleController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Install/Steps/DatabaseController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Install/Steps/FinalController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Install/Steps/RequirementsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ErrorControlOperator" file="app/Http/Controllers/Install/Steps/RequirementsController.php" method="checkPhpExtensions"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Install/Steps/TablesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="app/Http/Controllers/Install/Steps/TablesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Middleware/Locale.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Middleware/SetFileSessionDriver.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Mail/Announcement.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Mail/Recover.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Mail/Welcome.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Models/User.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Providers/BroadcastServiceProvider.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Providers/RouteServiceProvider.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Services/AdministrationService.php"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="app/Services/AdministrationService.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Services/SessionService.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Services/SettingsService.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/View/Components/Admin/Navigation.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/View/Components/Admin/Sidebar.php" method="render"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="app/View/Components/Alert.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/View/Components/Game/Leftmenu.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/View/Components/Game/Topnav.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/View/Components/Game/Topnav.php" method="buildPlanetList"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/View/Components/Game/Topnav.php" method="buildPlanetList"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/View/Components/Game/Topnav.php" method="buildPlanetList"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/View/Components/Game/Topnav.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/View/Components/Install/Navigation.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Core/Common.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Core/Common.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Core/Common.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Core/Common.php"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Core/Common.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Core/Common.php" method="setSystemTimezone"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Core/Common.php" method="setSecure"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Core/Common.php" method="setSecure"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Core/Common.php" method="setUpdates"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Core/Common.php" method="isServerOpen"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Core/Common.php" method="checkBanStatus"/>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Core/Database.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Core/Database.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Core/Database.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Core/Database.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Core/Database.php" method="tryDatabase"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Core/Database.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Core/Database.php" method="fetchArray"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Core/Database.php" method="fetchAll"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Core/Database.php" method="fetchAssoc"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Core/Database.php" method="fetchRow"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Core/Database.php" method="numFields"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Core/Database.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Core/Database.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Core/Entity/ShipsEntity.php"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Core/Entity/ShipsEntity.php"/>
+  <violation rule="PHPMD\Rule\Naming\ConstantNamingConventions" file="legacy/app/Core/Enumerators/BuddiesStatusEnumerator.php"/>
+  <violation rule="PHPMD\Rule\Naming\ConstantNamingConventions" file="legacy/app/Core/Enumerators/DefensesEnumerator.php"/>
+  <violation rule="PHPMD\Rule\Naming\ConstantNamingConventions" file="legacy/app/Core/Enumerators/ImportanceEnumerator.php"/>
+  <violation rule="PHPMD\Rule\Naming\ConstantNamingConventions" file="legacy/app/Core/Enumerators/PreferencesEnumerator.php"/>
+  <violation rule="PHPMD\Rule\Naming\ConstantNamingConventions" file="legacy/app/Core/Enumerators/ReportStatusEnumerator.php"/>
+  <violation rule="PHPMD\Rule\Naming\ConstantNamingConventions" file="legacy/app/Core/Enumerators/ResearchEnumerator.php"/>
+  <violation rule="PHPMD\Rule\Naming\ConstantNamingConventions" file="legacy/app/Core/Enumerators/ShipsEnumerator.php"/>
+  <violation rule="PHPMD\Rule\Naming\ConstantNamingConventions" file="legacy/app/Core/Enumerators/SwitchIntEnumerator.php"/>
+  <violation rule="PHPMD\Rule\Design\NumberOfChildren" file="legacy/app/Core/Model.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Core/Objects.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Core/Objects.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Core/Objects.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Core/Objects.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Core/Options.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Core/Template.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Core/Template.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Core/Template.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Helpers/ArraysHelper.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Helpers/ArraysHelper.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\DuplicatedArrayKey" file="legacy/app/Helpers/StringsHelper.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Helpers/UrlHelper.php" method="getUrlProtocol"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Adm/AlliancesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Adm/AlliancesController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="__invoke"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="__invoke"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="__invoke"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/AlliancesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Adm/AlliancesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/AlliancesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="saveData"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="getDataRanks"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="getDataRanks"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/AlliancesController.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Http/Controllers/Adm/AlliancesController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="saveInfo"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="saveInfo"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="saveInfo"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="saveRanks"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="saveRanks"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="saveRanks"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="saveMembers"/>
+  <violation rule="PHPMD\Rule\CleanCode\IfStatementAssignment" file="legacy/app/Http/Controllers/Adm/AlliancesController.php" method="checkAlliance"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/AnnouncementController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/AnnouncementController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="legacy/app/Http/Controllers/Adm/AnnouncementController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/AnnouncementController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/AnnouncementController.php" method="isValidColor"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/BackupController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/BackupController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/BackupController.php" method="doDownloadAction"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/BackupController.php" method="doDownloadAction"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Http/Controllers/Adm/BackupController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/BackupController.php" method="doDeleteAction"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/BackupController.php" method="doDeleteAction"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/BackupController.php" method="formatFileName"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/BackupController.php" method="isValidFile"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/BackupController.php" method="isValidFile"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Adm/BackupController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Adm/BanController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/BanController.php" method="__invoke"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/BanController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Adm/BanController.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/BanController.php" method="showBan"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/BanController.php" method="showBan"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/BanController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/BanController.php" method="getUsersList"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/BanController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/BanController.php" method="getBannedList"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/ChangelogController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/ChangelogController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/ChangelogController.php" method="editAction"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/ChangelogController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/ChangelogController.php" method="isValidAction"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/ChangelogController.php" method="isValidDate"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/ChangelogController.php" method="isValidVersion"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/EncrypterController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/ErrorsController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/ErrorsController.php"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Http/Controllers/Adm/ErrorsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Adm/ErrorsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/FleetsController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/FleetsController.php" method="doRestartAction"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/FleetsController.php" method="doEndAction"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/FleetsController.php" method="doReturnAction"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/FleetsController.php" method="doDeleteAction"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/FleetsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/HomeController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ErrorControlOperator" file="legacy/app/Http/Controllers/Adm/HomeController.php" method="buildAlertsBlock"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/HomeController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ErrorControlOperator" file="legacy/app/Http/Controllers/Adm/HomeController.php" method="checkUpdates"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/LanguagesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ErrorControlOperator" file="legacy/app/Http/Controllers/Adm/LanguagesController.php" method="doSaveAction"/>
+  <violation rule="PHPMD\Rule\CleanCode\ErrorControlOperator" file="legacy/app/Http/Controllers/Adm/LanguagesController.php" method="getContents"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/MailingController.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Adm/MakerController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/MakerController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="makeUser"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="makeUser"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="makeUser"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Http/Controllers/Adm/MakerController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/MakerController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/MakerController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="makeAlliace"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Adm/MakerController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="makePlanet"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="makePlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="makePlanet"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="makeMoon"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="makeMoon"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="buildUsersCombo"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="buildPlanetCombo"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/MakerController.php" method="generatePassword"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/MessagesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/MessagesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/MessagesController.php" method="doSearch"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/MessagesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/MessagesController.php" method="deleteMessage"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/ModulesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/ModulesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Adm/ModulesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/PermissionsController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/PermissionsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/PermissionsController.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Adm/PermissionsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/PlanetsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/PremiumController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/RebuildHighscoresController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/RegistrationController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/RepairController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Adm/RepairController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/RepairController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/RepairController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/RepairController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/ResetController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Adm/ResetController.php" method="runAction"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Adm/ResetController.php" method="runAction"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/ResetController.php" method="runAction"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/ResetController.php" method="runAction"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/ResetController.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Adm/ServerController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/ServerController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Adm/ServerController.php" method="runAction"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Adm/ServerController.php" method="runAction"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/ServerController.php" method="runAction"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/ServerController.php" method="runAction"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/ServerController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/ServerController.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Adm/ServerController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Adm/StatisticsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/StatisticsController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/StatisticsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/TasksController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/TasksController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/TasksController.php" method="getStatLastUpdateActions"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/TasksController.php" method="getLastBackupActions"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/TasksController.php" method="getLastCleanupActions"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Adm/UpdateController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/UpdateController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Adm/UpdateController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/UpdateController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/UpdateController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/UpdateController.php"/>
+  <violation rule="PHPMD\Rule\Design\TooManyMethods" file="legacy/app/Http/Controllers/Adm/UsersController.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Adm/UsersController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Adm/UsersController.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="legacy/app/Http/Controllers/Adm/UsersController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Adm/UsersController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Adm/UsersController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Adm/UsersController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Adm/UsersController.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="saveData"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="deleteData"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="refreshPage"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="saveInfo"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="saveInfo"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="saveInfo"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="saveSettings"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="saveResearch"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="savePremium"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="savePlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="saveBuildings"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="saveShips"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="saveDefenses"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="buildPlanetCombo"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="buildAllianceCombo"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Adm/UsersController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="buildPercentCombo"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="buildImageCombo"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="planetsTable"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="moonsTable"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="editMain"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="editMain"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="editBuildings"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="editShips"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="editDefenses"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="deletePlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="deletePlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Adm/UsersController.php" method="deleteMoon"/>
+  <violation rule="PHPMD\Rule\Design\LongClass" file="legacy/app/Http/Controllers/Game/AllianceController.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/AllianceController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/AllianceController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/AllianceController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getDefaultSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getDefaultPublicSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getDefaultAwaitingApprovalSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getDefaultIsMemberSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAinfoSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getSearchSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getMakeSection"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/AllianceController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getApplySection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getMemberslistSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getCircularSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getExitSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminAllySection"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminAllySection"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminAllySection"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Http/Controllers/Game/AllianceController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminExitSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminMembersSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminNameSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminRequestsSection"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminRequestsSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminRightsSection"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminRightsSection"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminRightsSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminTagSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getAdminTransferSection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="buildTagBlock"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="buildNameBlock"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="buildMembersBlock"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="buildRankBlock"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="buildRequestsBlock"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="buildCircularBlock"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="getUserRank"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="buildAdminMembersRankBlock"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/AllianceController.php" method="buildAdminMembersActionBlock"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/BannedController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/BuddiesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/BuddiesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/BuddiesController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/BuddiesController.php" method="execAction"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Http/Controllers/Game/BuddiesController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/BuddiesController.php" method="removeRequest"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/BuddiesController.php" method="acceptRequest"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/BuddiesController.php" method="sendRequest"/>
+  <violation rule="PHPMD\Rule\CleanCode\IfStatementAssignment" file="legacy/app/Http/Controllers/Game/BuddiesController.php" method="sendRequest"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/BuddiesController.php" method="buildRequestForm"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/BuildingsController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/BuildingsController.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="legacy/app/Http/Controllers/Game/BuildingsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/BuildingsController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/BuildingsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/BuildingsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/BuildingsController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="setListOfBuildingsItem"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="getBuildingLevelWithFormat"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="getBuildingPriceWithFormat"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="getBuildingTimeWithFormat"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="getBuildingLevel"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="getBuildingTime"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="getActionButton"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="getActionButton"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="buildCountDownClock"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="isWorkInProgress"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="removeFromQueue"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="addToQueue"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="addToQueue"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="addToQueue"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Http/Controllers/Game/BuildingsController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="addToQueue"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="showQueue"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="showQueue"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/ChangelogController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/ChatController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/ChatController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/ChatController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/CombatreportController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/EmpireController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/EmpireController.php" method="setImage"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/EmpireController.php" method="setName"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/EmpireController.php" method="setCoords"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/EmpireController.php" method="setFields"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/FederationController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/FederationController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/FederationController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/FederationController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/FederationController.php" method="saveAcsName"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/Fleet1Controller.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/Fleet1Controller.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/Fleet1Controller.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/Fleet1Controller.php" method="buildShipName"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/Fleet1Controller.php" method="buildShipAmount"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/Fleet1Controller.php" method="buildMaxShipsLink"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/Fleet1Controller.php" method="buildShipsInput"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/Fleet2Controller.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/Fleet2Controller.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/Fleet2Controller.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/Fleet2Controller.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/Fleet3Controller.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/Fleet3Controller.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/Fleet3Controller.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/Fleet3Controller.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/Fleet3Controller.php" method="getAllowedMissions"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/Fleet3Controller.php" method="getAllowedMissions"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/Fleet3Controller.php" method="getAllowedMissions"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/Fleet3Controller.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/Fleet3Controller.php" method="isFriendly"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateAdmin"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateOwnVacations"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateTargetVacations"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateAcs"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateShips"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateMission"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateMission"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateMission"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateMission"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateNoobProtection"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateFleets"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateResources"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateResources"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php" method="validateTime"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Http/Controllers/Game/Fleet4Controller.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/FleetshortcutsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/FleetshortcutsController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/FleetshortcutsController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/FleetshortcutsController.php" method="addShortcut"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/FleetshortcutsController.php" method="editShortcut"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/FleetshortcutsController.php" method="deleteShortcut"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/FleetshortcutsController.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/GalaxyController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/GalaxyController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/GalaxyController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="runAction"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/GalaxyController.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Game/GalaxyController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/GalaxyController.php"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Http/Controllers/Game/GalaxyController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/GalaxyController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="validatePosition"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="validatePosition"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="validatePosition"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="sendMissiles"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="sendMissiles"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="sendMissiles"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="sendMissiles"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="sendFleet"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="sendFleet"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="sendFleet"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/GalaxyController.php" method="sendFleet"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/HighscoreController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/HighscoreController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/HighscoreController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/HighscoreController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/HighscoreController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/HighscoreController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/HighscoreController.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Game/HighscoreController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/HighscoreController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/HighscoreController.php" method="rank_difference"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/HighscoreController.php" method="build_range_list"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/HighscoreController.php" method="ranking_type"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/InfosController.php" method="__invoke"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/InfosController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/InfosController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/InfosController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/InfosController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="storage_table"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="astrophysics_table"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="GetNextJumpWaitTime"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="GetNextJumpWaitTime"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/InfosController.php" method="doFleetJump"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/InfosController.php" method="doFleetJump"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="BuildFleetListRows"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="BuildJumpableMoonCombo"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="phalanxRange"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/InfosController.php" method="showProductionTable"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/InfosController.php" method="showProductionTable"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/InfosController.php" method="showProductionTable"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="showProductionTable"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
+  <violation rule="PHPMD\Rule\Design\EvalExpression" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="ShowRapidFireTo"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="ShowRapidFireFrom"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="planet_link"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="planet_link"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/LogoutController.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/MessagesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/MessagesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/MessagesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/MessagesController.php" method="getPremiumSection"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/MessagesController.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Game/MessagesController.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/MessagesController.php" method="doDeleteAction"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/MessagesController.php" method="doDeleteAction"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/MessagesController.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="legacy/app/Http/Controllers/Game/MovementController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/MovementController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/MovementController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/MovementController.php" method="buildTitleBlock"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/MovementController.php" method="buildToolTipBlock"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/MovementController.php" method="buildShipsBlock"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/MovementController.php" method="execFleetReturn"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/NoticesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/NoticesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/NoticesController.php" method="buildEditBlock"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/OverviewController.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="legacy/app/Http/Controllers/Game/OverviewController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/OverviewController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Http/Controllers/Game/OverviewController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/OverviewController.php" method="getCurrentWork"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/OverviewController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/OverviewController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/OverviewController.php" method="getFleetMovements"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/OverviewController.php" method="getFleetMovements"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/OverviewController.php" method="getFleetMovements"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Game/OverviewController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/OverviewController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/PhalanxController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/PhalanxController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/PhalanxController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/PhalanxController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/PhalanxController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/PhalanxController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/PhalanxController.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Game/PhalanxController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/PhalanxController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/PlanetlayerController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/PlanetlayerController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/PlanetlayerController.php" method="deletePlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/PlanetlayerController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/PlanetlayerController.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/PreferencesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/PreferencesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/PreferencesController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/PreferencesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/PreferencesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/PremiumController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/PremiumController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/PremiumController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/PremiumController.php" method="setOfficier"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/PremiumController.php" method="setOfficierStatusWithFormat"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/ResearchController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/ResearchController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/ResearchController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/ResearchController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/ResearchController.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/ResearchController.php" method="doCommand"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/ResearchController.php" method="doCommand"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="buildPage"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php"/>
+  <violation rule="PHPMD\Rule\Design\EvalExpression" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="build_options"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="build_options"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="calculate_daily"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="calculate_daily"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="calculate_weekly"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="calculate_weekly"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="resource_color"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="resource_color"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="prod_level"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="prod_level"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/SearchController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/SearchController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/SearchController.php" method="getAllianceApplicationAction"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/SearchController.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/ShipyardController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/ShipyardController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/ShipyardController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/ShipyardController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/ShipyardController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/ShipyardController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/ShipyardController.php" method="getMaxBuildableItems"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/ShipyardController.php" method="getMissilesItemLimit"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/TechnologydetailsController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/TechnologytreeController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/TechnologytreeController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/TechnologytreeController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/TraderController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/TraderController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/TraderController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/TraderLayerController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/TraderLayerController.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/TraderLayerController.php" method="buildResourcesSection"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/TraderOverviewController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/TraderResourcesController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/TraderResourcesController.php"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Libraries/Adm/Permissions.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/Adm/Permissions.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Adm/Permissions.php" method="getRoles"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Adm/Permissions.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Adm/Permissions.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/Adm/Permissions.php" method="getPermissions"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Alliance/Alliances.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Alliance/Alliances.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Alliance/Alliances.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Alliance/Alliances.php" method="setUserRankId"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Alliance/Ranks.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Alliance/Ranks.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Alliance/Ranks.php"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Libraries/Alliance/Ranks.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Alliance/Ranks.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Alliance/Ranks.php" method="editRankById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Alliance/Ranks.php" method="editRankNameById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Alliance/Ranks.php" method="deleteRankById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Alliance/Ranks.php" method="getRankById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Alliance/Ranks.php" method="validateRankId"/>
+  <violation rule="PHPMD\Rule\Design\EvalExpression" file="legacy/app/Libraries/BBCodeLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/BBCodeLib.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setLineJump"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setReturn"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setList"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setBold"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setItalic"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setUnderline"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setStrike"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setUrl"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/BBCodeLib.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setEmail"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setImage"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setFontColor"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setFontFamiliy"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setBackgroundColor"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setFontSize"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setCoordinates"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/BattleEngine/CombatObject/Fire.php" method="getShotsFromOneAttackerShipOfType"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/BattleEngine/CombatObject/Fire.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/BattleEngine/CombatObject/Fire.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/BattleEngine/CombatObject/Fire.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/BattleEngine/CombatObject/Fire.php" method="getProbabilityToShotAgainForAttackerShipOfType"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/BattleEngine/CombatObject/Fire.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/BattleEngine/CombatObject/Fire.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/BattleEngine/CombatObject/Fire.php" method="getShotsFiredByAttackerTypeToDefenderType"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/BattleEngine/CombatObject/Fire.php" method="getShotsFiredByAttackerToOne"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/BattleEngine/CombatObject/Fire.php" method="getShotsFiredByAllToDefenderType"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/BattleEngine/CombatObject/Fire.php" method="getShotsFiredByAttackerToAll"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/BattleEngine/CombatObject/FireManager.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateField" file="legacy/app/Libraries/BattleEngine/CombatObject/PhysicShot.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/BattleEngine/CombatObject/PhysicShot.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/BattleEngine/CombatObject/ShipsCleaner.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/BattleEngine/Core/Battle.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/BattleEngine/Core/Battle.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/BattleEngine/Core/Battle.php" method="checkWhoWon"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/BattleEngine/Core/Battle.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Libraries/BattleEngine/Core/BattleReport.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateField" file="legacy/app/Libraries/BattleEngine/Core/BattleReport.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/BattleEngine/Core/BattleReport.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/BattleEngine/Core/BattleReport.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/BattleEngine/Core/BattleReport.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/BattleEngine/Core/BattleReport.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/BattleEngine/Core/BattleReport.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/BattleEngine/Core/Round.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/BattleEngine/Core/Round.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/BattleEngine/Core/Round.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/BattleEngine/Models/Fleet.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/BattleEngine/Models/Fleet.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/BattleEngine/Models/Fleet.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/BattleEngine/Models/Fleet.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/BattleEngine/Models/Fleet.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/BattleEngine/Models/Fleet.php"/>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Libraries/BattleEngine/Models/Player.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Libraries/BattleEngine/Models/Player.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/BattleEngine/Models/Player.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/BattleEngine/Models/Player.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/BattleEngine/Models/Player.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/BattleEngine/Models/Player.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/BattleEngine/Models/Player.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/BattleEngine/Models/PlayerGroup.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/BattleEngine/Models/PlayerGroup.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/BattleEngine/Models/PlayerGroup.php"/>
+  <violation rule="PHPMD\Rule\Design\TooManyFields" file="legacy/app/Libraries/BattleEngine/Models/ShipType.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/BattleEngine/Models/ShipType.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/BattleEngine/Models/ShipType.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/BattleEngine/Models/ShipType.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/BattleEngine/Models/ShipType.php" method="inflictDamage"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/BattleEngine/Models/Type.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/BattleEngine/Models/Type.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateField" file="legacy/app/Libraries/BattleEngine/Utils/DebugManager.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/BattleEngine/Utils/DebugManager.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Libraries/BattleEngine/Utils/DebugManager.php" method="save"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Libraries/BattleEngine/Utils/DebugManager.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Libraries/BattleEngine/Utils/Events.php" method="event_moon"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/BattleEngine/Utils/Events.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/BattleEngine/Utils/Gauss.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/BattleEngine/Utils/Gauss.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/BattleEngine/Utils/GeometricDistribution.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/BattleEngine/Utils/Math.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/BattleEngine/Utils/Math.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/BattleEngine/Utils/Math.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/BattleEngine/Utils/Math.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Libraries/BattleEngine/Utils/Math.php" method="recursive_sum"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/BattleEngine/Utils/Math.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/BattleEngine/Utils/Math.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Buddies/Buddy.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Buddies/Buddy.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Buddies/Buddy.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateField" file="legacy/app/Libraries/Buildings/Building.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Buildings/Building.php" method="addBuilding"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Buildings/Building.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Buildings/Building.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Buildings/Building.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Buildings/Queue.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Buildings/Queue.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Buildings/Queue.php" method="addElementToQueue"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Buildings/Queue.php" method="removeElementFromQueue"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Buildings/Queue.php" method="getElementFromQueueAsArray"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Combatreport/Report.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Combatreport/Report.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Combatreport/Report.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Combatreport/Report.php" method="getReportOwnersAsArrayByReportId"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Libraries/DevelopmentsLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/DevelopmentsLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="maxFields"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/DevelopmentsLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="developmentPrice"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/DevelopmentsLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/DevelopmentsLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="isDevelopmentPayable"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/DevelopmentsLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="formatedDevelopmentPrice"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="developmentTime"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="tearDownTime"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="isDevelopmentAllowed"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="currentBuilding"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/DevelopmentsLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="setLevelFormat"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="isLabWorking"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="isShipyardWorking"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/DevelopmentsLib.php" method="areFieldsAvailable"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/FleetsLib.php"/>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Libraries/FleetsLib.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Libraries/FleetsLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/FleetsLib.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/FleetsLib.php" method="fleetMaxSpeed"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/FleetsLib.php" method="fleetMaxSpeed"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/FleetsLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/FleetsLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/FleetsLib.php" method="fleetConsumption"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/FleetsLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/FleetsLib.php" method="fleetResourcesPopup"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/FleetsLib.php" method="fleetShipsPopup"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/FleetsLib.php" method="fleetShipsPopup"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/FleetsLib.php" method="flyingFleetsTable"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Libraries/FleetsLib.php" method="flyingFleetsTable"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/FleetsLib.php" method="flyingFleetsTable"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/FleetsLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/FleetsLib.php" method="flyingFleetsTable"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/FleetsLib.php" method="isFleetReturning"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/FleetsLib.php" method="getMaxStorage"/>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Libraries/FormatLib.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Libraries/FormatLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/FormatLib.php" method="prettyTime"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/FormatLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/FormatLib.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/FormatLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/FormatLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/FormatLib.php"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Libraries/FormatLib.php" method="getHTMLColorsNameList"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/Formulas.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/Formulas.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/Formulas.php" method="setPlanetImage"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/Formulas.php" method="setPlanetImage"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Formulas.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Formulas.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Formulas.php" method="getIonTechnologyBonus"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Formulas.php" method="getTearDownCost"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Formulas.php" method="getTearDownTime"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Formulas.php" method="getShipyardProductionTime"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Formulas.php" method="getBuildingTime"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Formulas.php" method="getResearchTime"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Formulas.php" method="getDevelopmentTime"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Functions.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/Functions.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Functions.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/Functions.php"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Libraries/Functions.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Libraries/GalaxyLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/GalaxyLib.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="legacy/app/Libraries/GalaxyLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/GalaxyLib.php" method="buildRow"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/GalaxyLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/GalaxyLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/GalaxyLib.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/GalaxyLib.php" method="planetBlock"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/GalaxyLib.php" method="planetBlock"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/GalaxyLib.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/GalaxyLib.php" method="moonBlock"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/GalaxyLib.php" method="moonBlock"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/GalaxyLib.php" method="usernameBlock"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Libraries/GalaxyLib.php" method="usernameBlock"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/GalaxyLib.php" method="usernameBlock"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/GalaxyLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/GalaxyLib.php" method="attackLink"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/GalaxyLib.php" method="transportLink"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/GalaxyLib.php" method="deployLink"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/GalaxyLib.php" method="holdPositionLink"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/GalaxyLib.php" method="spyLink"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/GalaxyLib.php" method="destroyLink"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/GalaxyLib.php" method="missileLink"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="legacy/app/Libraries/GalaxyLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/GalaxyLib.php" method="phalanxLink"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Game/AcsFleets.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Game/AcsFleets.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Game/AcsFleets.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/Game/AcsFleets.php" method="getUserId"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Game/Fleets.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Game/Fleets.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Game/Fleets.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Game/Fleets.php" method="getFleetById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Game/Fleets.php" method="getOwnFleetById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Game/Fleets.php" method="getOwnValidFleetById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Game/Fleets.php" method="validateIndex"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Game/Preferences.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Game/Preferences.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Game/Preferences.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Game/ResourceMarket.php" method="calculateBasePriceToRefill"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Game/ResourceMarket.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Game/ResourceMarket.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Game/ResourceMarket.php" method="calculateRefillStoragePrice"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Messenger/MessagesOptions.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Messenger/MessagesOptions.php" method="setMessageText"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Messenger/MessagesOptions.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Messenger/MessagesOptions.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Messenger/MessagesOptions.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Messenger/MessagesOptions.php" method="setMessageFormat"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/MissionControlLib.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Libraries/Missions/Attack.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Missions/Attack.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="legacy/app/Libraries/Missions/Attack.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/Missions/Attack.php" method="attackMission"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Libraries/Missions/Attack.php" method="attackMission"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/Missions/Attack.php" method="attackMission"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Attack.php" method="attackMission"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Missions/Attack.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Missions/Attack.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Missions/Attack.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Attack.php" method="updateDebris"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Attack.php" method="getPlayerGroup"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/Missions/Attack.php" method="getPlayerGroupFromQuery"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Attack.php" method="getPlayerGroupFromQuery"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Attack.php" method="updateMoon"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Attack.php" method="createNewReportAndSendIt"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/Missions/Attack.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/Missions/Attack.php" method="updateAttackers"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Attack.php" method="updateAttackers"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Attack.php" method="updateDefenders"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Attack.php" method="buildReportLink"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/Missions/Attack.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Colonize.php" method="colonizeMission"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Missions/Colonize.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Missions/Colonize.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/Missions/Colonize.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Missions/Colonize.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Colonize.php" method="startCreation"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Missions/Deploy.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Missions/Deploy.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Libraries/Missions/Destroy.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Missions/Destroy.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="legacy/app/Libraries/Missions/Destroy.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/Missions/Destroy.php" method="destroyMission"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Libraries/Missions/Destroy.php" method="destroyMission"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/Missions/Destroy.php" method="destroyMission"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Destroy.php" method="destroyMission"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Missions/Destroy.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Missions/Destroy.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Missions/Destroy.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Destroy.php" method="updateDebris"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Destroy.php" method="getPlayerGroup"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/Missions/Destroy.php" method="getPlayerGroupFromQuery"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Destroy.php" method="getPlayerGroupFromQuery"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Destroy.php" method="updateMoon"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Destroy.php" method="createNewReportAndSendIt"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/Missions/Destroy.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/Missions/Destroy.php" method="updateAttackers"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Destroy.php" method="updateAttackers"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Destroy.php" method="updateDefenders"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Destroy.php" method="buildReportLink"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/Missions/Destroy.php"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="legacy/app/Libraries/Missions/Destroy.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Destroy.php" method="buildDestroyReport"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/Missions/Destroy.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/Missions/Expedition.php" method="expeditionMission"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Missions/Expedition.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Missions/Expedition.php"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="legacy/app/Libraries/Missions/Expedition.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Missions/Expedition.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/Missions/Expedition.php" method="resultPirates"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="legacy/app/Libraries/Missions/Expedition.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/Missions/Expedition.php" method="resultAliens"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/Missions/Expedition.php" method="resultMerchant"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/Missions/Missile.php" method="missileMission"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Libraries/Missions/Missile.php" method="missileMission"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/Missions/Missile.php" method="missileMission"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Missile.php" method="missileMission"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Missions/Missile.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Missions/Missile.php"/>
+  <violation rule="PHPMD\Rule\Design\CountInLoopExpression" file="legacy/app/Libraries/Missions/Missile.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/Missions/Missile.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Missions/Missile.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Missions/Missions.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/Missions/Missions.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Missions/Missions.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Missions/Missions.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Missions/Missions.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Missions/Recycle.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Recycle.php" method="recycleMission"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Missions/Recycle.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Missions/Recycle.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Recycle.php" method="calculateCapacity"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Missions/Recycle.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/Missions/Recycle.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Recycle.php" method="recycleMessage"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/Missions/Spy.php" method="spyMission"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Libraries/Missions/Spy.php" method="spyMission"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/Missions/Spy.php" method="spyMission"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Spy.php" method="spyMission"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Missions/Spy.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Missions/Spy.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Missions/Spy.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/Missions/Spy.php" method="generateSpyReport"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Spy.php" method="generateSpyReport"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/Missions/Spy.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Stay.php" method="stayMission"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Missions/Stay.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/Missions/Stay.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Missions/Stay.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Stay.php" method="startStay"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Stay.php" method="stayMessage"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Missions/Transport.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Transport.php" method="sendDeliveryMessageToOwner"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Missions/Transport.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Transport.php" method="sendDeliveryMessageToReceiver"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Missions/Transport.php" method="sendReturnMessage"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/NoobsProtectionLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/NoobsProtectionLib.php" method="isWeak"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/NoobsProtectionLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/NoobsProtectionLib.php" method="isStrong"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/NoobsProtectionLib.php" method="returnPoints"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/NoobsProtectionLib.php" method="isRankVisible"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/OfficiersLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/OfficiersLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Planet/Ships.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Planet/Ships.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Planet/Ships.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/PlanetLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/PlanetLib.php"/>
+  <violation rule="PHPMD\Rule\Design\LongParameterList" file="legacy/app/Libraries/PlanetLib.php" method="setNewMoon"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/PlanetLib.php" method="setNewMoon"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/PlanetLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Premium/Premium.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Premium/Premium.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Premium/Premium.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/Premium/Premium.php" method="getUserId"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/ProductionLib.php" method="maxStorable"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/ProductionLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/ProductionLib.php" method="maxProduction"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/ProductionLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/ProductionLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/ProductionLib.php" method="productionAmount"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/ProductionLib.php" method="currentProduction"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Research/Researches.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Research/Researches.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Research/Researches.php"/>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/Research/Researches.php" method="getUserId"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Libraries/SecurePageLib.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/SecurePageLib.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/SecurePageLib.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Libraries/StatisticsLibrary.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/StatisticsLibrary.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/StatisticsLibrary.php" method="rebuildPoints"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/StatisticsLibrary.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/StatisticsLibrary.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/StatisticsLibrary.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/StatisticsLibrary.php" method="makeUserRank"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Libraries/StatisticsLibrary.php" method="makeUserRank"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/StatisticsLibrary.php" method="makeUserRank"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/StatisticsLibrary.php" method="makeAllyRank"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Libraries/StatisticsLibrary.php" method="makeAllyRank"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/StatisticsLibrary.php" method="makeAllyRank"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/StatisticsLibrary.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/TimingLibrary.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="legacy/app/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/UpdatesLibrary.php" method="updateBuildingsQueue"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/UpdatesLibrary.php" method="checkBuildingQueue"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="legacy/app/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/UpdatesLibrary.php" method="setFirstElement"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Libraries/UpdatesLibrary.php" method="setFirstElement"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/UpdatesLibrary.php" method="setFirstElement"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/UpdatesLibrary.php" method="setFirstElement"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Libraries/UpdatesLibrary.php" method="updatePlanetResources"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Libraries/UpdatesLibrary.php" method="updatePlanetResources"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/UpdatesLibrary.php" method="updatePlanetResources"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/UpdatesLibrary.php" method="updatePlanetResources"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\Design\EvalExpression" file="legacy/app/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/UpdatesLibrary.php" method="updateHangarQueue"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/UpdatesLibrary.php" method="updateHangarQueue"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Users.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Users.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Libraries/Users.php" method="setUserData"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Libraries/Users.php" method="setPlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Users/Notes.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Users/Notes.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Users/Notes.php" method="getNoteById"/>
+  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Libraries/Users/Shortcuts.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Libraries/Users/Shortcuts.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Users/Shortcuts.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Users/Shortcuts.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Users/Shortcuts.php" method="editById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Users/Shortcuts.php" method="deleteById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Users/Shortcuts.php" method="getById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Users/Shortcuts.php" method="validateShortcutId"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="checkAllianceTag"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Alliances.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="checkAllianceName"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="getAllianceMembers"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="removeAllianceMembers"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="updateAllianceData"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="countAllianceMembers"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="updateAllianceRanks"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Ban.php" method="getBannedUserData"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Ban.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Models/Adm/Ban.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Models/Adm/Ban.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Ban.php" method="getListOfUsers"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Fleets.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Fleets.php" method="endFleetById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Fleets.php" method="returnFleetById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Fleets.php" method="deleteFleetById"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Models/Adm/Maker.php" method="createNewUser"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Models/Adm/Maker.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Maker.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Maker.php" method="checkAlliance"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Maker.php" method="createAlliance"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Maker.php" method="createNewPlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Maker.php" method="checkMoon"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Maker.php" method="createNewMoon"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Messages.php" method="getAllMessagesFiltered"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Messages.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Models/Adm/Messages.php" method="buildSearchQuery"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Models/Adm/Messages.php" method="buildSearchQuery"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Messages.php" method="buildSearchQuery"/>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Models/Adm/Reset.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Models/Adm/Reset.php"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Models/Adm/Reset.php" method="resetAll"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Reset.php" method="resetBuildingsByType"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Reset.php"/>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Models/Adm/Users.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Models/Adm/Users.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="getAllPlanetsData"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Users.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="getAllMoonsData"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Models/Adm/Users.php" method="saveUserPreferences"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Models/Adm/Users.php" method="saveUserPreferences"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="saveUserPreferences"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Models/Adm/Users.php"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="legacy/app/Models/Adm/Users.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="savePremium"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Models/Adm/Users.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="savePlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="saveBuildings"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="saveShips"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="saveDefenses"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="deletePlanetById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="softDeletePlanetById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="deleteMoonById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="softDeleteMoonById"/>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Models/Game/Alliance.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="getAllianceDataById"/>
+  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Models/Game/Alliance.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Alliance.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="createNewAlliance"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="searchAllianceByNameTag"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="createNewUserRequest"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="exitAlliance"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="getAllianceRequestsCount"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="getAllianceMembers"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="getAllianceMembersById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="getAllianceMembersByIdAndRankId"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="updateAllianceRanks"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="updateAllianceSettings"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="updateAllianceRequestText"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="updateAllianceText"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="updateAllianceDescription"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="addUserToAlliance"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="getAllianceRequests"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="updateAllianceName"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="updateAllianceTag"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="deleteAlliance"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="transferAlliance"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="checkAllianceName"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="checkAllianceTag"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="returnSort"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Buddies.php" method="getBuddyDataByBuddyId"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Buddies.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Buddies.php" method="removeBuddyById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Buddies.php" method="setBuddyStatusById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Buddies.php" method="getBuddiesDetailsForAcsById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Combatreport.php" method="getReportById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Combatreport.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="getShipsByPlanetId"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Fleet.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="getAcsDataByGroupId"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="legacy/app/Models/Game/Fleet.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="getAcsCount"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="insertNewFleet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="updatePlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="getBuddies"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="getAcsMaxTime"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="updateAcsTimes"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="getAcsOwner"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="removeAcs"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="createNewAcs"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="getListOfAcsMembers"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="updateAcsName"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="insertNewAcsMember"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="removeAcsMember"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Fleet.php" method="getUserIdByName"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Galaxy.php" method="getTargetUserDataByCoords"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Galaxy.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Infos.php" method="getTargetGate"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Infos.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Infos.php" method="doJump"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Messages.php" method="getByUserIdAndType"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Messages.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Messages.php" method="markAsReadByType"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Messages.php" method="deleteByOwnerAndIds"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Messages.php" method="deleteByOwnerAndMessageType"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Messages.php" method="countAddressBookAndNotes"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Messages.php" method="getAllianceMembers"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Notes.php" method="getNoteById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Notes.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Notes.php" method="createNewNote"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Notes.php" method="updateNoteById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Notes.php" method="deleteNoteById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Officier.php" method="setPremium"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Officier.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Phalanx.php" method="reduceDeuterium"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Phalanx.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Preferences.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Renameplanet.php" method="deleteMoonAndPlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Renameplanet.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Renameplanet.php" method="deletePlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Renameplanet.php" method="updatePlanetName"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Research.php" method="startNewResearch"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Research.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Research.php" method="getPlanetResearching"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Resources.php" method="updateCurrentPlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Resources.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Trader.php" method="refillStorage"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Game/Trader.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Models/Home/Register.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Models/Home/Register.php"/>
+  <violation rule="PHPMD\Rule\Design\TooManyMethods" file="legacy/app/Models/Libraries/Missions/Missions.php"/>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Models/Libraries/Missions/Missions.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Models/Libraries/Missions/Missions.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/Missions/Missions.php" method="deleteAcsFleetById"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Libraries/Missions/Missions.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/Missions/Missions.php" method="updateAcsFleetStatusByGroupId"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/Missions/Missions.php" method="getAllAcsFleetsByGroupId"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/Missions/Missions.php" method="deleteMultipleFleetsByIds"/>
+  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Models/Libraries/Missions/Missions.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Models/Libraries/Missions/Missions.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/NoobsProtectionLib.php" method="returnBothPartiesPoints"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Libraries/NoobsProtectionLib.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Models/Libraries/PlanetLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/PlanetLib.php" method="createNewPlanet"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Libraries/PlanetLib.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/PlanetLib.php" method="insertPlanetBuildings"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/PlanetLib.php" method="insertPlanetDefenses"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/PlanetLib.php" method="insertPlanetShips"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/StatisticsLibrary.php" method="getPlanetElementToUpdate"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Libraries/StatisticsLibrary.php"/>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Models/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/UpdatesLibrary.php" method="deleteUsersByDeletedAndInactive"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/UpdatesLibrary.php" method="deleteMessages"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/UpdatesLibrary.php" method="deleteReports"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/UpdatesLibrary.php" method="deleteDestroyedPlanets"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/UpdatesLibrary.php" method="updatePlanet"/>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Models/Libraries/UsersLibrary.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Libraries/UsersLibrary.php" method="updateUserActivityData"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Libraries/UsersLibrary.php"/>
+</phpmd-baseline>
