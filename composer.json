@@ -34,9 +34,11 @@
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^8.1",
+        "phpmd/phpmd": "^2.15",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^11.0",
-        "spatie/laravel-ignition": "^2.0"
+        "spatie/laravel-ignition": "^2.0",
+        "squizlabs/php_codesniffer": "^4.0"
     },
     "autoload": {
         "psr-4": {
@@ -73,6 +75,9 @@
         ],
         "phpstan": [
             "vendor/bin/phpstan analyse app legacy tests"
+        ],
+        "phpstan-baseline": [
+            "vendor/bin/phpstan analyse --level 9 --configuration=phpstan.neon --generate-baseline=phpstan-baseline.neon app/ legacy/ tests/ --memory-limit 1024M"
         ]
     },
     "extra": {

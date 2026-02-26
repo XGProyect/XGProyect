@@ -1,8 +1,9 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
     level: 9 # The level 9 is the highest level
     paths:
         - app
         - legacy
         - tests
-    ignoreErrors:
-        - '#Cannot cast array\|string\|null to string.#'
