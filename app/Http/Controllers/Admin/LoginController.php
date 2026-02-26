@@ -46,7 +46,7 @@ class LoginController extends BaseController
             );
 
             return redirect(
-                'admin.php?page=' . (!empty($request->get('redirect')) ? $request->get('redirect') : 'home')
+                'admin/' . (!empty($request->get('redirect')) ? $request->get('redirect') : 'home')
             );
         }
 

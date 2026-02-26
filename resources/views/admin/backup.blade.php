@@ -5,7 +5,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/backup.bku_title') }}</h1>
-        <form name="frm_backup_now" method="POST" action="admin.php?page=backup">
+        <form name="frm_backup_now" method="POST" action="/admin/backup">
             <input type="hidden" name="backup" value="1">
             <button type="submit" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
@@ -29,7 +29,7 @@
                 <div class="collapse show" id="collapseGeneral" style="">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form name="frm_backup" method="POST" action="admin.php?page=backup">
+                            <form name="frm_backup" method="POST" action="/admin/backup">
                                 <input type="hidden" name="save" value="1">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tbody>
@@ -84,11 +84,11 @@
                                         {{ $item['file_size'] }}
                                     </td>
                                     <td>
-                                        <a href="admin.php?page=backup&action=download&file={{ $item['full_file_name'] }}"
+                                        <a href="/admin/backup?action=download&file={{ $item['full_file_name'] }}"
                                             target="_blank" class="btn btn-primary btn-circle btn-sm">
                                             <i class="fas fa-file-download"></i>
                                         </a>
-                                        <a href="admin.php?page=backup&action=delete&file={{ $item['full_file_name'] }}"
+                                        <a href="/admin/backup?action=delete&file={{ $item['full_file_name'] }}"
                                             class="btn btn-danger btn-circle btn-sm">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>

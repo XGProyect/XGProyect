@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xgp\App\Http\Controllers\Adm;
+namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
@@ -74,7 +74,7 @@ class TasksController extends BaseController
     private function getStatLastUpdateActions(): string
     {
         return UrlHelper::setUrl(
-            'admin.php?page=rebuildhighscores',
+            'admin/rebuildhighscores',
             '<i class="fas fa-play" data-toggle="popover" data-placement="top"
             data-trigger="hover" data-content="' . __('admin/tasks.ta_buildstats_title') . '"></i>',
             __('admin/tasks.ta_buildstats_title')
@@ -84,7 +84,7 @@ class TasksController extends BaseController
     private function getLastBackupActions(): string
     {
         return UrlHelper::setUrl(
-            'admin.php?page=backup',
+            'admin/backup',
             '<i class="fas fa-cogs" data-toggle="popover" data-placement="top"
             data-trigger="hover" data-content="' . __('admin/tasks.ta_backup_title') . '"></i>',
             __('admin/tasks.ta_backup_title')

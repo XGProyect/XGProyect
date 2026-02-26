@@ -22,25 +22,25 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item"
-                                        href="admin.php?page=users&type=planets&edit=planet&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">
+                                        href="/admin/users?type=planets&edit=planet&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">
                                         {{ __('admin/users.us_user_planets_edit') }}
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item"
-                                        href="admin.php?page=users&type=planets&edit=buildings&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">
+                                        href="/admin/users?type=planets&edit=buildings&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">
                                         {{ __('admin/users.us_user_buildings_edit') }}
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item"
-                                        href="admin.php?page=users&type=planets&edit=ships&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">
+                                        href="/admin/users?type=planets&edit=ships&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">
                                         {{ __('admin/users.us_user_ships_edit') }}
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item"
-                                        href="admin.php?page=users&type=planets&edit=defenses&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">
+                                        href="/admin/users?type=planets&edit=defenses&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">
                                         {{ __('admin/users.us_user_defenses_edit') }}
                                     </a>
                                 </li>
@@ -49,26 +49,26 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item"
-                                        href="admin.php?page=users&type=planets&edit=delete&dltmode=soft&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">
+                                        href="/admin/users?type=planets&edit=delete&dltmode=soft&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">
                                         {{ __('admin/users.us_user_delete_planet') }}
                                         {{ __('admin/users.us_user_delete_pm_soft') }}
                                     </a>
                                 </li>
-                                <!--<li><a href="admin.php?page=users&type=planets&edit=delete&dltmode=physical&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">{{ __('admin/users.us_user_delete_planet') }} {{ __('admin/users.us_user_delete_pm_physical') }}</a></li>-->
+                                <!--<li><a href="/admin/users?type=planets&edit=delete&dltmode=physical&user={{ $item['user'] }}&planet={{ $item['planet_id'] }}">{{ __('admin/users.us_user_delete_planet') }} {{ __('admin/users.us_user_delete_pm_physical') }}</a></li>-->
                                 <li>
                                     <hr>
                                 </li>
                                 <li>
                                     <a class="dropdown-item"
-                                        href="admin.php?page=maker&mode=moon&planet={{ $item['planet_id'] }}">{{ __('admin/users.us_user_add_moon') }}</a>
+                                        href="/admin/maker?mode=moon&planet={{ $item['planet_id'] }}">{{ __('admin/users.us_user_add_moon') }}</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item"
-                                        href="admin.php?page=users&type=moons&edit=delete&dltmode=soft&user={{ $item['user'] }}&moon={moon_id}">{{ __('admin/users.us_user_delete_moon') }}
+                                        href="/admin/users?type=moons&edit=delete&dltmode=soft&user={{ $item['user'] }}&moon={moon_id}">{{ __('admin/users.us_user_delete_moon') }}
                                         {{ __('admin/users.us_user_delete_pm_soft') }}
                                     </a>
                                 </li>
-                                <!--<li><a href="admin.php?page=users&type=moons&edit=delete&dltmode=physical&user={{ $item['user'] }}&moon={moon_id}">{{ __('admin/users.us_user_delete_moon') }} {{ __('admin/users.us_user_delete_pm_physical') }}</a></li>-->
+                                <!--<li><a href="/admin/users?type=moons&edit=delete&dltmode=physical&user={{ $item['user'] }}&moon={moon_id}">{{ __('admin/users.us_user_delete_moon') }} {{ __('admin/users.us_user_delete_pm_physical') }}</a></li>-->
                             </ul>
                         </div>
                     </td>

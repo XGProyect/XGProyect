@@ -43,28 +43,28 @@
                                         <div class="dropdown-menu">
                                             <li>
                                                 <a class="dropdown-item"
-                                                    href="admin.php?page=users&type={{ $type }}&user={{ $user }}&mode=edit">
+                                                    href="/admin/users?type={{ $type }}&user={{ $user }}&mode=edit">
                                                     <i class="fas fa-pencil-alt"></i>
                                                     {{ __('admin/users.us_edit') }}
                                                 </a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item"
-                                                    href="admin.php?page=users&user={{ $user }}&mode=delete"
+                                                    href="/admin/users?user={{ $user }}&mode=delete"
                                                     onclick="return confirm('{{ __('admin/users.us_delete_confirm') }}')">
                                                     <i class="fas fa-trash-alt"></i> {{ __('admin/users.us_delete') }}
                                                 </a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item"
-                                                    href="admin.php?page=ban&mode=ban&ban_name={{ $user }}&regexp=">
+                                                    href="/admin/ban?mode=ban&ban_name={{ $user }}&regexp=">
                                                     <i class="fas fa-user-slash"></i>
                                                     {{ __('admin/users.us_ban') }}
                                                 </a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item"
-                                                    href="admin.php?page=permissions">
+                                                    href="/admin/permissions">
                                                     <i class="fas fa-user-tag"></i>
                                                     {{ __('admin/users.us_change_permissions') }}
                                                 </a>
@@ -76,42 +76,42 @@
                         </form>
                         <div class="text-center">
                             <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="admin.php?page=users&type=info&user={{ $user }}">
+                                href="/admin/users?type=info&user={{ $user }}">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-user"></i>
                                 </span>
                                 <span class="text">{{ __('admin/users.us_general_info') }}</span>
                             </{{ $tag }}>
                             <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="admin.php?page=users&type=settings&user={{ $user }}">
+                                href="/admin/users?type=settings&user={{ $user }}">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-user-cog"></i>
                                 </span>
                                 <span class="text">{{ __('admin/users.us_settings') }}</span>
                             </{{ $tag }}>
                             <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="admin.php?page=users&type=research&user={{ $user }}">
+                                href="/admin/users?type=research&user={{ $user }}">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-flask"></i>
                                 </span>
                                 <span class="text">{{ __('admin/users.us_research') }}</span>
                             </{{ $tag }}>
                             <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="admin.php?page=users&type=premium&user={{ $user }}">
+                                href="/admin/users?type=premium&user={{ $user }}">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-gem"></i>
                                 </span>
                                 <span class="text">{{ __('admin/users.us_premium') }}</span>
                             </{{ $tag }}>
                             <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="admin.php?page=users&type=planets&user={{ $user }}">
+                                href="/admin/users?type=planets&user={{ $user }}">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-globe-americas"></i>
                                 </span>
                                 <span class="text">{{ __('admin/users.us_planets') }}</span>
                             </{{ $tag }}>
                             <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="admin.php?page=users&type=moons&user={{ $user }}">
+                                href="/admin/users?type=moons&user={{ $user }}">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-moon"></i>
                                 </span>

@@ -6,13 +6,13 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/errors.er_title') }}</h1>
         <div class="align-items-right">
-            <a href="admin.php?page=errors&exportall=yes" class="btn btn-success btn-icon-split">
+            <a href="/admin/errors?exportall=yes" class="btn btn-success btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-file-export"></i>
                 </span>
                 <span class="text">{{ __('admin/errors.er_export') }}</span>
             </a>
-            <a href="admin.php?page=errors&deleteall=yes" class="btn btn-danger btn-icon-split">
+            <a href="/admin/errors?deleteall=yes" class="btn btn-danger btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-trash-alt"></i>
                 </span>
@@ -68,7 +68,7 @@
     </div>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"></h1>
-        <a href="admin.php?page=errors&deleteall=yes" class="btn btn-danger btn-icon-split">
+        <a href="/admin/errors?deleteall=yes" class="btn btn-danger btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-trash-alt"></i>
             </span>

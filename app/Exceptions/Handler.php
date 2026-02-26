@@ -43,6 +43,10 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
+        $this->renderable(function (LegacyView $e) {
+            return response($e->getView());
+        });
+
         $this->reportable(function (Throwable $e) {
             //
         });

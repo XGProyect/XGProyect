@@ -23,7 +23,7 @@ class Sidebar extends Component
      */
     public function render(): View | Closure | string
     {
-        $activePage = isset($_GET['page']) ? $_GET['page'] : null;
+        $activePage = request()->segment(2);
 
         $sections = [
             'configuration' => [

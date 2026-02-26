@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xgp\App\Http\Controllers\Adm;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Sessions;
 use App\Services\AdministrationService;

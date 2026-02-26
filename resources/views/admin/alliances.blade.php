@@ -43,14 +43,14 @@
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <a class="dropdown-item"
-                                                    href="admin.php?page=alliances&type={type}&alliance={{ $alliance }}&mode=edit">
+                                                    href="/admin/alliances?type={type}&alliance={{ $alliance }}&mode=edit">
                                                     <i class="fas fa-pencil-alt"></i>
                                                     {{ __('admin/alliances.al_edit') }}
                                                 </a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item"
-                                                    href="admin.php?page=alliances&alliance={{ $alliance }}&mode=delete"
+                                                    href="/admin/alliances?alliance={{ $alliance }}&mode=delete"
                                                     onclick="return confirm('{{ __('admin/alliances.al_delete_confirm') }}')">
                                                     <i class="fas fa-trash-alt"></i>
                                                     {{ __('admin/alliances.al_delete') }}
@@ -63,21 +63,21 @@
                         </form>
                         <div class="text-center">
                             <{{ $tag }} class="btn btn-info btn-icon-split{{ $status }}"
-                                href="admin.php?page=alliances&type=info&alliance={{ $alliance }}">
+                                href="/admin/alliances?type=info&alliance={{ $alliance }}">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-info-circle"></i>
                                 </span>
                                 <span class="text">{{ __('admin/alliances.al_general_info') }}</span>
                             </{{ $tag }}>
                             <{{ $tag }} class="btn btn-info btn-icon-split{{ $status }}"
-                                href="admin.php?page=alliances&type=ranks&alliance={{ $alliance }}">
+                                href="/admin/alliances?type=ranks&alliance={{ $alliance }}">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-sitemap"></i>
                                 </span>
                                 <span class="text">{{ __('admin/alliances.al_ranks') }}</span>
                             </{{ $tag }}>
                             <{{ $tag }} class="btn btn-info btn-icon-split{{ $status }}"
-                                href="admin.php?page=alliances&type=members&alliance={{ $alliance }}">
+                                href="/admin/alliances?type=members&alliance={{ $alliance }}">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-users"></i>
                                 </span>

@@ -6,7 +6,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/update.up_title') }}</h1>
-        <button type="submit" class="btn btn-primary btn-icon-split" onclick="window.location.href='admin.php?page=update'; return false;">
+        <button type="submit" class="btn btn-primary btn-icon-split" onclick="window.location.href='/admin/update'; return false;">
             <span class="icon text-white-50">
                 <i class="fas fa-chevron-left"></i>
             </span>

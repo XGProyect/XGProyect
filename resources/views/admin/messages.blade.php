@@ -11,7 +11,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <form name="frm_message_filter" method="POST" action="admin.php?page=messages">
+            <form name="frm_message_filter" method="POST" action="/admin/messages">
                 <input type="hidden" name="search" value="1">
                 <div class="card shadow mb-4">
                     <!-- Card Header - Accordion -->
@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </form>
-            <form name="frm_message_results" method="POST" action="admin.php?page=messages">
+            <form name="frm_message_results" method="POST" action="/admin/messages">
                 <div class="card shadow mb-4">
                     <!-- Card Header - Accordion -->
                     <a href="#collapseResults" class="d-block card-header py-3" data-toggle="collapse" role="button"
@@ -118,7 +118,7 @@
                                             <button type="button" class="btn btn-primary btn-circle btn-sm">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <a href="admin.php?page=messages&action=delete&messageId={{ $item['message_id'] }}"
+                                            <a href="/admin/messages?action=delete&messageId={{ $item['message_id'] }}"
                                                 class="btn btn-danger btn-circle btn-sm">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
@@ -144,7 +144,7 @@
                                                                 x-placement="bottom-end"
                                                                 style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(17px, 19px, 0px);">
                                                                 <div class="dropdown-header">{{ __('admin/messages.mg_actions') }}</div>
-                                                                <a class="dropdown-item" href="admin.php?page=messages&action=delete&messageId={{ $item['message_id'] }}">
+                                                                <a class="dropdown-item" href="/admin/messages?action=delete&messageId={{ $item['message_id'] }}">
                                                                     {{ __('admin/messages.mg_delete_this') }}
                                                                 </a>
                                                             </div>

@@ -42,7 +42,7 @@
                                         @foreach ($item['modules_list'] as $module)
                                         <tr>
                                             <td>
-                                                <a href="admin.php?page={{ $module['page_module'] }}">{{ $module['page_module_title'] }}</a>
+                                                <a href="/admin/{{ $module['page_module'] }}">{{ $module['page_module_title'] }}</a>
                                             </td>
                                             @foreach($module['permissions_list'] as $permission)
                                             <td class="text-center">

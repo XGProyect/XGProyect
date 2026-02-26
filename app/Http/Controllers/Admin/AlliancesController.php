@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xgp\App\Http\Controllers\Adm;
+namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
@@ -315,7 +315,7 @@ class AlliancesController extends BaseController
             session()->flash('success', __('admin/alliances.al_rank_removed'));
         }
 
-        Functions::redirect('admin.php?' . $_SERVER['QUERY_STRING']);
+        Functions::redirect('admin/' . $_SERVER['QUERY_STRING']);
     }
 
     private function saveMembers(): void

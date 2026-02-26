@@ -21,7 +21,7 @@ class LegacyController extends BaseController
                 $file = 'index';
             }
 
-            if (in_array($file, ['admin', 'game'])) {
+            if (in_array($file, ['game'])) {
                 require app_path('Http') . '/' . $file . '.php';
             }
 

@@ -7,7 +7,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/changelog.ch_title') }}</h1>
-            <a href="admin.php?page=changelog&action=add" class="btn btn-primary btn-icon-split">
+            <a href="/admin/changelog?action=add" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-save"></i>
                 </span>
@@ -42,14 +42,14 @@
                                         <td>{{ $item['changelog_version'] }}</td>
                                         <td>{{ $item['changelog_language'] }}</td>
                                         <td>
-                                            <a href="admin.php?page=changelog&action=edit&changelogId={{ $item['changelog_id'] }}"
+                                            <a href="/admin/changelog?action=edit&changelogId={{ $item['changelog_id'] }}"
                                                 class="btn btn-primary btn-circle btn-sm">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
                                             <button type="button" class="btn btn-primary btn-circle btn-sm">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <a href="admin.php?page=changelog&action=delete&changelogId={{ $item['changelog_id'] }}"
+                                            <a href="/admin/changelog?action=delete&changelogId={{ $item['changelog_id'] }}"
                                                 class="btn btn-danger btn-circle btn-sm">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
@@ -75,10 +75,10 @@
                                                                 x-placement="bottom-end"
                                                                 style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(17px, 19px, 0px);">
                                                                 <div class="dropdown-header">{{ __('admin/changelog.ch_actions') }}</div>
-                                                                <a class="dropdown-item" href="admin.php?page=changelog&action=edit&changelogId={{ $item['changelog_id'] }}">
+                                                                <a class="dropdown-item" href="/admin/changelog?action=edit&changelogId={{ $item['changelog_id'] }}">
                                                                     {{ __('admin/changelog.ch_edit_this') }}
                                                                 </a>
-                                                                <a class="dropdown-item" href="admin.php?page=changelog&action=delete&changelogId={{ $item['changelog_id'] }}">
+                                                                <a class="dropdown-item" href="/admin/changelog?action=delete&changelogId={{ $item['changelog_id'] }}">
                                                                     {{ __('admin/changelog.ch_delete_this') }}
                                                                 </a>
                                                             </div>

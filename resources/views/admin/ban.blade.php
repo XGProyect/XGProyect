@@ -119,9 +119,9 @@
                                                                 <br>
                                                                 <span class="small_font">
                                                                     {{ __('admin/ban.bn_sort') }}:
-                                                                    <a href="admin.php?page=ban">{{ __('admin/ban.bn_sort_by_user') }}</a>
-                                                                    <a href="admin.php?page=ban&order=id">{{ __('admin/ban.bn_sort_by_id') }}</a>
-                                                                    <a href="admin.php?page=ban&view=user_banned">{{ __('admin/ban.bn_sort_suspended') }}</a>
+                                                                    <a href="/admin/ban">{{ __('admin/ban.bn_sort_by_user') }}</a>
+                                                                    <a href="/admin/ban?order=id">{{ __('admin/ban.bn_sort_by_id') }}</a>
+                                                                    <a href="/admin/ban?view=user_banned">{{ __('admin/ban.bn_sort_suspended') }}</a>
                                                                 </span>
                                                                 <br><br>
                                                                 <br>
@@ -259,9 +259,9 @@
                                                                 <br>
                                                                 <span class="small_font">
                                                                     {{ __('admin/ban.bn_sort') }}:
-                                                                    <a href="admin.php?page=ban">{{ __('admin/ban.bn_sort_by_user') }}</a>
+                                                                    <a href="/admin/ban">{{ __('admin/ban.bn_sort_by_user') }}</a>
                                                                     <a
-                                                                        href="admin.php?page=ban&order2=id">{{ __('admin/ban.bn_sort_by_id') }}</a>
+                                                                        href="/admin/ban?order2=id">{{ __('admin/ban.bn_sort_by_id') }}</a>
                                                                 </span>
                                                                 <br><br>
                                                                 <br>

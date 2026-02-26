@@ -11,6 +11,1221 @@ parameters:
 			path: app/Http/Controllers/Account/RecoverController.php
 
 		-
+			message: "#^Binary operation \"\\.\" between '\\<tr\\>\\<td colspan\\=\"6\"…' and array\\|string\\|null results in an error\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Binary operation \"\\.\" between array\\|string\\|null and '\\<br\\>' results in an error\\.$#"
+			count: 3
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot call method addNew\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot call method deleteRankById\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot call method editRankById\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot call method getAllRanksAsArray\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot call method getAllRanksAsJsonString\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
+			count: 3
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot call method getRankById\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AlliancesController\\:\\:buildUsersCombo\\(\\) has parameter \\$userId with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Parameter \\#1 \\$format of function date expects string, mixed given\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Parameter \\#1 \\$type of method App\\\\Http\\\\Controllers\\\\Admin\\\\AlliancesController\\:\\:saveData\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, array\\|string\\|null given\\.$#"
+			count: 3
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\AlliancesController\\:\\:\\$alliance_query has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\AlliancesController\\:\\:\\$edit has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\AlliancesController\\:\\:\\$edit is never read, only written\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\AlliancesController\\:\\:\\$id has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 3
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Binary operation \"\\.\" between non\\-falsy\\-string and array\\|string\\|null results in an error\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:buildColorPicker\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:doEmailAction\\(\\) has parameter \\$post with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:doMessageAction\\(\\) has parameter \\$post with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:getMessageColor\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^Offset mixed does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:\\$user type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\BackupController\\:\\:getBackupList\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\BackupController\\:\\:getBackupSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\BackupController\\:\\:setChecked\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\BackupController\\:\\:setChecked\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Offset 1 does not exist on array\\{0\\?\\: string, 1\\?\\: numeric\\-string\\}\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Parameter \\#1 \\$bytes of static method Xgp\\\\App\\\\Libraries\\\\FormatLib\\:\\:prettyBytes\\(\\) expects float\\|int, int\\<0, max\\>\\|false given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function ucfirst expects string, string\\|false\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Binary operation \"\\.\" between '\\<tr\\>\\<th\\>' and array\\|string\\|null results in an error\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Ban\\:\\:where\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Cannot cast array\\|string\\|null to string\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\BanController\\:\\:showBan\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\BanController\\:\\:showDefault\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Parameter \\#1 \\$content of method App\\\\Services\\\\AdministrationService\\:\\:showPopUp\\(\\) expects string, array\\|string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Parameter \\#1 \\$format of method DateTime\\:\\:format\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Parameter \\#2 \\$popupCcontent of method App\\\\Services\\\\AdministrationService\\:\\:showPopUp\\(\\) expects string, array\\|string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Parameter \\#2 \\$replace of function str_replace expects array\\|string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, array\\|string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\BanController\\:\\:\\$user type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:create\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ChangelogController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:find\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ChangelogController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:orderBy\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ChangelogController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:where\\(\\)\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/ChangelogController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Languages\\:\\:orderBy\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ChangelogController.php
+
+		-
+			message: "#^Comparison operation \"\\>\" between 6 and 0 is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ChangelogController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ChangelogController\\:\\:buildListOfEntries\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ChangelogController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ChangelogController\\:\\:getActionData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ChangelogController.php
+
+		-
+			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ChangelogController.php
+
+		-
+			message: "#^Parameter \\#2 \\$subject of function preg_match_all expects string, string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ChangelogController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ErrorsController\\:\\:getListOfLogFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ErrorsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ErrorsController\\:\\:getListOfLogFiles\\(\\) should return array but returns array\\<int, string\\>\\|false\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ErrorsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ErrorsController\\:\\:processErrorsLogs\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ErrorsController.php
+
+		-
+			message: "#^Binary operation \"\\.\" between non\\-falsy\\-string and array\\|string\\|null results in an error\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildActionsBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildActionsBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildAmountBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildAmountBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildArrivalBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildArrivalBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildBeginningBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildBeginningBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildDepartureBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildDepartureBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildFleetMovementsBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildMissionBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildMissionBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildObjectiveBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildObjectiveBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildReturnBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildReturnBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Offset \\(int\\|string\\) does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Offset mixed does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function ucfirst expects string, string\\|false\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Cannot access property \\$Value on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/HomeController.php
+
+		-
+			message: "#^Cannot access property \\$db_size on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/HomeController.php
+
+		-
+			message: "#^Cannot access property \\$version on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/HomeController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\HomeController\\:\\:getUsersStats\\(\\) should return stdClass but returns mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/HomeController.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, array\\<int, string\\>\\|false given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/HomeController.php
+
+		-
+			message: "#^Parameter \\#1 \\$version1 of function version_compare expects string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/HomeController.php
+
+		-
+			message: "#^Parameter \\#2 \\$array of function join expects array\\<string\\>, array\\<int, array\\|string\\|null\\> given\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/HomeController.php
+
+		-
+			message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/LanguagesController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\LanguagesController\\:\\:getContents\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/LanguagesController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\LanguagesController\\:\\:getFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/LanguagesController.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MailingController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MailingController\\:\\:buildCryptoDropdown\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MailingController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MailingController\\:\\:buildProtocolsDropdown\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MailingController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MailingController\\:\\:getMailingSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MailingController.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MailingController.php
+
+		-
+			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MailingController.php
+
+		-
+			message: "#^Result of && is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MailingController.php
+
+		-
+			message: "#^Binary operation \"\\.\\=\" between '' and array\\|string\\|null results in an error\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Binary operation \"\\.\\=\" between array\\|string\\|null and array\\|string\\|null results in an error\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Constant MAX_GALAXY_IN_WORLD not found\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Constant MAX_PLANET_IN_SYSTEM not found\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Constant MAX_SYSTEM_IN_GALAXY not found\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Else branch is unreachable because previous condition is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:buildLevelCombo\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:generatePassword\\(\\) is unused\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:makeAlliace\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:makeMoon\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:makePlanet\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:makeUser\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Offset 0\\|1\\|2\\|3 does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Parameter \\#6 \\$name of method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:createNewPlanet\\(\\) expects string, array\\|string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 3
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Result of && is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:buildMessageTypeBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:deleteMessages\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:doSearch\\(\\) has parameter \\$to_search with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Offset 0\\|1\\|2\\|3\\|4\\|5 does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Offset mixed does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Parameter \\#1 \\$message_id of method App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:deleteMessage\\(\\) expects int, int\\<0, max\\>\\|false given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:\\$results type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ModulesController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ModulesController\\:\\:buildModulesList\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ModulesController.php
+
+		-
+			message: "#^Offset int does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ModulesController.php
+
+		-
+			message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/ModulesController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\PermissionsController\\:\\:buildListOfPermissions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PermissionsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\PermissionsController\\:\\:buildRolesList\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PermissionsController.php
+
+		-
+			message: "#^Offset mixed does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PermissionsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$permissions of class Xgp\\\\App\\\\Libraries\\\\Adm\\\\Permissions constructor expects string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PermissionsController.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PlanetsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\PlanetsController\\:\\:getNewPlanetSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PlanetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PlanetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PlanetsController.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PremiumController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\PremiumController\\:\\:getPremiumSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PremiumController.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PremiumController.php
+
+		-
+			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/PremiumController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RebuildHighscoresController\\:\\:getStatisticsResult\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RebuildHighscoresController.php
+
+		-
+			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RebuildHighscoresController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\RebuildHighscoresController\\:\\:\\$result type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RebuildHighscoresController.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RegistrationController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RegistrationController\\:\\:getNewUserRegistrationSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RegistrationController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RegistrationController\\:\\:setChecked\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RegistrationController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RegistrationController\\:\\:setChecked\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RegistrationController.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RegistrationController.php
+
+		-
+			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RegistrationController.php
+
+		-
+			message: "#^Cannot access offset 'adm_attack' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'admin_email' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'close_reason' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'date_format' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'date_format_extended' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'defs_cdr' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'fleet_cdr' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'fleet_speed' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'forum_url' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'game_enable' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'game_logo' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'game_name' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'game_speed' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'lang' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'noobprotection' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'noobprotectionmulti' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'noobprotectiontime' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot access offset 'resource_multiplier' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Cannot cast mixed to int\\.$#"
+			count: 4
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ServerController\\:\\:formatOffset\\(\\) has parameter \\$offset with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Parameter \\#1 \\$currentLang of static method Xgp\\\\App\\\\Libraries\\\\Functions\\:\\:getLanguages\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function stripslashes expects string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\ServerController\\:\\:\\$gameConfig has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/StatisticsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\StatisticsController\\:\\:getStatisticsSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/StatisticsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\StatisticsController\\:\\:userLevels\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/StatisticsController.php
+
+		-
+			message: "#^Offset 0\\|1\\|2\\|3 does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/StatisticsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/StatisticsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/StatisticsController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\StatisticsController\\:\\:\\$user_level has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/StatisticsController.php
+
+		-
+			message: "#^Binary operation \"\\.\" between '\\<i class\\=\"fas fa…' and array\\|string\\|null results in an error\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/TasksController.php
+
+		-
+			message: "#^Cannot cast mixed to int\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/TasksController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\TasksController\\:\\:buildUpdatesBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/TasksController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\TasksController\\:\\:getTaskData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/TasksController.php
+
+		-
+			message: "#^Parameter \\#1 \\$time of static method Xgp\\\\App\\\\Libraries\\\\TimingLibrary\\:\\:formatExtendedDate\\(\\) expects string, int given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/TasksController.php
+
+		-
+			message: "#^Parameter \\#3 \\$title of static method Xgp\\\\App\\\\Helpers\\\\UrlHelper\\:\\:setUrl\\(\\) expects string, array\\|string\\|null given\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/TasksController.php
+
+		-
+			message: "#^Comparison operation \"\\>\" between 0 and 0 is always false\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Comparison operation \"\\>\" between int\\<1, max\\> and 0 is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Constant UPDATE_PATH not found\\.$#"
+			count: 3
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Parameter \\#1 \\$dir_handle of function readdir expects resource\\|null, resource\\|false given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Parameter \\#1 \\$format of function sprintf expects string, array\\|string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:\\$db_version has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:\\$demo has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:\\$output has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:\\$system_version has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Binary operation \"\\.\" between ' \\<strong\\>\\<a title\\=\"' and array\\|string\\|null results in an error\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Binary operation \"\\.\" between '\\<p class\\=\"text…' and array\\|string\\|null results in an error\\.$#"
+			count: 5
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Binary operation \"\\.\" between '\\<strong\\>\\<a title\\=\"' and array\\|string\\|null results in an error\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Binary operation \"\\.\" between array\\|string\\|null and '\\<br\\>' results in an error\\.$#"
+			count: 6
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Binary operation \"\\.\" between array\\|string\\|null and string results in an error\\.$#"
+			count: 3
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Binary operation \"\\.\" between non\\-falsy\\-string and array\\|string\\|null results in an error\\.$#"
+			count: 3
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Binary operation \"\\.\\=\" between non\\-falsy\\-string and array\\|string\\|null results in an error\\.$#"
+			count: 3
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Sessions\\:\\:where\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:buildAllianceCombo\\(\\) has parameter \\$user_data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:buildPlanetCombo\\(\\) has parameter \\$user_data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:buildProcessQueue\\(\\) has parameter \\$currentQueue with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:buildShortcutsCombo\\(\\) has parameter \\$shortcuts with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:buildUsersRolesList\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:deleteData\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:deleteData\\(\\) is unused\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:deleteMoon\\(\\) has parameter \\$id_moon with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:deletePlanet\\(\\) has parameter \\$id_planet with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:deletePlanet\\(\\) is unused\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:editBuildings\\(\\) has parameter \\$planets_data with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:editBuildings\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:editBuildings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:editDefenses\\(\\) has parameter \\$planets_data with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:editDefenses\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:editDefenses\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:editMain\\(\\) has parameter \\$planets_data with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:editMain\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:editShips\\(\\) has parameter \\$planets_data with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:editShips\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:moonsTable\\(\\) has parameter \\$moons_data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:moonsTable\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:planetsTable\\(\\) has parameter \\$planets_data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:planetsTable\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:premiumTable\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:researchTable\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Offset 0\\|1\\|2\\|3 does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Offset int does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Offset string does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Parameter \\#1 \\$dir_handle of function readdir expects resource\\|null, resource\\|false given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Parameter \\#1 \\$format of function date expects string, mixed given\\.$#"
+			count: 11
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Parameter \\#1 \\$type of method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:saveData\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Parameter \\#2 \\$timestamp of function date expects int\\|null, string given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, array\\|string\\|null given\\.$#"
+			count: 9
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Part \\$name \\(array\\|string\\|null\\) of encapsed string cannot be cast to string\\.$#"
+			count: 3
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:\\$moon \\(int\\) does not accept int\\|string\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:\\$planet \\(int\\) does not accept int\\|string\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:\\$stats has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:\\$user type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:\\$user_query has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 6
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
 			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: app/Http/Controllers/Home/LoginController.php
@@ -1559,1221 +2774,6 @@ parameters:
 			message: "#^Method Xgp\\\\App\\\\Helpers\\\\StringsHelper\\:\\:parseReplacements\\(\\) has parameter \\$replacements with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: legacy/app/Helpers/StringsHelper.php
-
-		-
-			message: "#^Binary operation \"\\.\" between '\\<tr\\>\\<td colspan\\=\"6\"…' and array\\|string\\|null results in an error\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Binary operation \"\\.\" between array\\|string\\|null and '\\<br\\>' results in an error\\.$#"
-			count: 3
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Cannot call method addNew\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Cannot call method deleteRankById\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Cannot call method editRankById\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Cannot call method getAllRanksAsArray\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Cannot call method getAllRanksAsJsonString\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
-			count: 3
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Cannot call method getRankById\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\AlliancesController\\:\\:buildUsersCombo\\(\\) has parameter \\$userId with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Parameter \\#1 \\$format of function date expects string, mixed given\\.$#"
-			count: 2
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Parameter \\#1 \\$type of method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\AlliancesController\\:\\:saveData\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, array\\|string\\|null given\\.$#"
-			count: 3
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\AlliancesController\\:\\:\\$alliance_query has no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\AlliancesController\\:\\:\\$edit has no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\AlliancesController\\:\\:\\$edit is never read, only written\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\AlliancesController\\:\\:\\$id has no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 3
-			path: legacy/app/Http/Controllers/Adm/AlliancesController.php
-
-		-
-			message: "#^Binary operation \"\\.\" between non\\-falsy\\-string and array\\|string\\|null results in an error\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AnnouncementController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\AnnouncementController\\:\\:buildColorPicker\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AnnouncementController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\AnnouncementController\\:\\:doEmailAction\\(\\) has parameter \\$post with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AnnouncementController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\AnnouncementController\\:\\:doMessageAction\\(\\) has parameter \\$post with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AnnouncementController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\AnnouncementController\\:\\:getMessageColor\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AnnouncementController.php
-
-		-
-			message: "#^Offset mixed does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AnnouncementController.php
-
-		-
-			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AnnouncementController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\AnnouncementController\\:\\:\\$user type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/AnnouncementController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BackupController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\BackupController\\:\\:getBackupList\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BackupController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\BackupController\\:\\:getBackupSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BackupController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\BackupController\\:\\:setChecked\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BackupController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\BackupController\\:\\:setChecked\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BackupController.php
-
-		-
-			message: "#^Offset 1 does not exist on array\\{0\\?\\: string, 1\\?\\: numeric\\-string\\}\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BackupController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BackupController.php
-
-		-
-			message: "#^Parameter \\#1 \\$bytes of static method Xgp\\\\App\\\\Libraries\\\\FormatLib\\:\\:prettyBytes\\(\\) expects float\\|int, int\\<0, max\\>\\|false given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BackupController.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BackupController.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function ucfirst expects string, string\\|false\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BackupController.php
-
-		-
-			message: "#^Binary operation \"\\.\" between '\\<tr\\>\\<th\\>' and array\\|string\\|null results in an error\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BanController.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Ban\\:\\:where\\(\\)\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BanController.php
-
-		-
-			message: "#^Cannot cast array\\|string\\|null to string\\.$#"
-			count: 2
-			path: legacy/app/Http/Controllers/Adm/BanController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\BanController\\:\\:showBan\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BanController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\BanController\\:\\:showDefault\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BanController.php
-
-		-
-			message: "#^Parameter \\#1 \\$content of method App\\\\Services\\\\AdministrationService\\:\\:showPopUp\\(\\) expects string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BanController.php
-
-		-
-			message: "#^Parameter \\#1 \\$format of method DateTime\\:\\:format\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BanController.php
-
-		-
-			message: "#^Parameter \\#2 \\$popupCcontent of method App\\\\Services\\\\AdministrationService\\:\\:showPopUp\\(\\) expects string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BanController.php
-
-		-
-			message: "#^Parameter \\#2 \\$replace of function str_replace expects array\\|string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BanController.php
-
-		-
-			message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BanController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\BanController\\:\\:\\$user type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/BanController.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:create\\(\\)\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ChangelogController.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:find\\(\\)\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ChangelogController.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:orderBy\\(\\)\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ChangelogController.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:where\\(\\)\\.$#"
-			count: 2
-			path: legacy/app/Http/Controllers/Adm/ChangelogController.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Languages\\:\\:orderBy\\(\\)\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ChangelogController.php
-
-		-
-			message: "#^Comparison operation \"\\>\" between 6 and 0 is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ChangelogController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\ChangelogController\\:\\:buildListOfEntries\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ChangelogController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\ChangelogController\\:\\:getActionData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ChangelogController.php
-
-		-
-			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ChangelogController.php
-
-		-
-			message: "#^Parameter \\#2 \\$subject of function preg_match_all expects string, string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ChangelogController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\ErrorsController\\:\\:getListOfLogFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ErrorsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\ErrorsController\\:\\:getListOfLogFiles\\(\\) should return array but returns array\\<int, string\\>\\|false\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ErrorsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\ErrorsController\\:\\:processErrorsLogs\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ErrorsController.php
-
-		-
-			message: "#^Binary operation \"\\.\" between non\\-falsy\\-string and array\\|string\\|null results in an error\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildActionsBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildActionsBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildAmountBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildAmountBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildArrivalBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildArrivalBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildBeginningBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildBeginningBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildDepartureBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildDepartureBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildFleetMovementsBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildMissionBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildMissionBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildObjectiveBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildObjectiveBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildReturnBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\FleetsController\\:\\:buildReturnBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Offset \\(int\\|string\\) does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Offset mixed does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function ucfirst expects string, string\\|false\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/FleetsController.php
-
-		-
-			message: "#^Cannot access property \\$Value on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/HomeController.php
-
-		-
-			message: "#^Cannot access property \\$db_size on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/HomeController.php
-
-		-
-			message: "#^Cannot access property \\$version on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/HomeController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\HomeController\\:\\:getUsersStats\\(\\) should return stdClass but returns mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/HomeController.php
-
-		-
-			message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, array\\<int, string\\>\\|false given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/HomeController.php
-
-		-
-			message: "#^Parameter \\#1 \\$version1 of function version_compare expects string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/HomeController.php
-
-		-
-			message: "#^Parameter \\#2 \\$array of function join expects array\\<string\\>, array\\<int, array\\|string\\|null\\> given\\.$#"
-			count: 2
-			path: legacy/app/Http/Controllers/Adm/HomeController.php
-
-		-
-			message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/LanguagesController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\LanguagesController\\:\\:getContents\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/LanguagesController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\LanguagesController\\:\\:getFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/LanguagesController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MailingController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MailingController\\:\\:buildCryptoDropdown\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MailingController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MailingController\\:\\:buildProtocolsDropdown\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MailingController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MailingController\\:\\:getMailingSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MailingController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MailingController.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MailingController.php
-
-		-
-			message: "#^Result of && is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MailingController.php
-
-		-
-			message: "#^Binary operation \"\\.\\=\" between '' and array\\|string\\|null results in an error\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Binary operation \"\\.\\=\" between array\\|string\\|null and array\\|string\\|null results in an error\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Constant MAX_GALAXY_IN_WORLD not found\\.$#"
-			count: 2
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Constant MAX_PLANET_IN_SYSTEM not found\\.$#"
-			count: 2
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Constant MAX_SYSTEM_IN_GALAXY not found\\.$#"
-			count: 2
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Else branch is unreachable because previous condition is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MakerController\\:\\:buildLevelCombo\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MakerController\\:\\:generatePassword\\(\\) is unused\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MakerController\\:\\:makeAlliace\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MakerController\\:\\:makeMoon\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MakerController\\:\\:makePlanet\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MakerController\\:\\:makeUser\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Offset 0\\|1\\|2\\|3 does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Parameter \\#6 \\$name of method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:createNewPlanet\\(\\) expects string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Result of && is always false\\.$#"
-			count: 3
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Result of && is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MakerController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MessagesController\\:\\:buildMessageTypeBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MessagesController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MessagesController\\:\\:deleteMessages\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MessagesController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MessagesController\\:\\:doSearch\\(\\) has parameter \\$to_search with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MessagesController.php
-
-		-
-			message: "#^Offset 0\\|1\\|2\\|3\\|4\\|5 does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MessagesController.php
-
-		-
-			message: "#^Offset mixed does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MessagesController.php
-
-		-
-			message: "#^Parameter \\#1 \\$message_id of method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MessagesController\\:\\:deleteMessage\\(\\) expects int, int\\<0, max\\>\\|false given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MessagesController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\MessagesController\\:\\:\\$results type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/MessagesController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ModulesController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\ModulesController\\:\\:buildModulesList\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ModulesController.php
-
-		-
-			message: "#^Offset int does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ModulesController.php
-
-		-
-			message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
-			count: 2
-			path: legacy/app/Http/Controllers/Adm/ModulesController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\PermissionsController\\:\\:buildListOfPermissions\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PermissionsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\PermissionsController\\:\\:buildRolesList\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PermissionsController.php
-
-		-
-			message: "#^Offset mixed does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PermissionsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$permissions of class Xgp\\\\App\\\\Libraries\\\\Adm\\\\Permissions constructor expects string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PermissionsController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PlanetsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\PlanetsController\\:\\:getNewPlanetSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PlanetsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PlanetsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PlanetsController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PremiumController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\PremiumController\\:\\:getPremiumSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PremiumController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PremiumController.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/PremiumController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\RebuildHighscoresController\\:\\:getStatisticsResult\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/RebuildHighscoresController.php
-
-		-
-			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/RebuildHighscoresController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\RebuildHighscoresController\\:\\:\\$result type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/RebuildHighscoresController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/RegistrationController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\RegistrationController\\:\\:getNewUserRegistrationSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/RegistrationController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\RegistrationController\\:\\:setChecked\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/RegistrationController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\RegistrationController\\:\\:setChecked\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/RegistrationController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/RegistrationController.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/RegistrationController.php
-
-		-
-			message: "#^Cannot access offset 'adm_attack' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'admin_email' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'close_reason' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'date_format' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'date_format_extended' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'defs_cdr' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'fleet_cdr' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'fleet_speed' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'forum_url' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'game_enable' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'game_logo' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'game_name' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'game_speed' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'lang' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'noobprotection' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'noobprotectionmulti' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'noobprotectiontime' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'resource_multiplier' on mixed\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Cannot cast mixed to int\\.$#"
-			count: 4
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\ServerController\\:\\:formatOffset\\(\\) has parameter \\$offset with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Parameter \\#1 \\$currentLang of static method Xgp\\\\App\\\\Libraries\\\\Functions\\:\\:getLanguages\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function stripslashes expects string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\ServerController\\:\\:\\$gameConfig has no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/ServerController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/StatisticsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\StatisticsController\\:\\:getStatisticsSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/StatisticsController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\StatisticsController\\:\\:userLevels\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/StatisticsController.php
-
-		-
-			message: "#^Offset 0\\|1\\|2\\|3 does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/StatisticsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/StatisticsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/StatisticsController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\StatisticsController\\:\\:\\$user_level has no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/StatisticsController.php
-
-		-
-			message: "#^Binary operation \"\\.\" between '\\<i class\\=\"fas fa…' and array\\|string\\|null results in an error\\.$#"
-			count: 2
-			path: legacy/app/Http/Controllers/Adm/TasksController.php
-
-		-
-			message: "#^Cannot cast mixed to int\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/TasksController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\TasksController\\:\\:buildUpdatesBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/TasksController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\TasksController\\:\\:getTaskData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/TasksController.php
-
-		-
-			message: "#^Parameter \\#1 \\$time of static method Xgp\\\\App\\\\Libraries\\\\TimingLibrary\\:\\:formatExtendedDate\\(\\) expects string, int given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/TasksController.php
-
-		-
-			message: "#^Parameter \\#3 \\$title of static method Xgp\\\\App\\\\Helpers\\\\UrlHelper\\:\\:setUrl\\(\\) expects string, array\\|string\\|null given\\.$#"
-			count: 2
-			path: legacy/app/Http/Controllers/Adm/TasksController.php
-
-		-
-			message: "#^Comparison operation \"\\>\" between 0 and 0 is always false\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UpdateController.php
-
-		-
-			message: "#^Comparison operation \"\\>\" between int\\<1, max\\> and 0 is always true\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UpdateController.php
-
-		-
-			message: "#^Constant UPDATE_PATH not found\\.$#"
-			count: 3
-			path: legacy/app/Http/Controllers/Adm/UpdateController.php
-
-		-
-			message: "#^Parameter \\#1 \\$dir_handle of function readdir expects resource\\|null, resource\\|false given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UpdateController.php
-
-		-
-			message: "#^Parameter \\#1 \\$format of function sprintf expects string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UpdateController.php
-
-		-
-			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UpdateController.php
-
-		-
-			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UpdateController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UpdateController\\:\\:\\$db_version has no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UpdateController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UpdateController\\:\\:\\$demo has no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UpdateController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UpdateController\\:\\:\\$output has no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UpdateController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UpdateController\\:\\:\\$system_version has no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UpdateController.php
-
-		-
-			message: "#^Binary operation \"\\.\" between ' \\<strong\\>\\<a title\\=\"' and array\\|string\\|null results in an error\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Binary operation \"\\.\" between '\\<p class\\=\"text…' and array\\|string\\|null results in an error\\.$#"
-			count: 5
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Binary operation \"\\.\" between '\\<strong\\>\\<a title\\=\"' and array\\|string\\|null results in an error\\.$#"
-			count: 2
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Binary operation \"\\.\" between array\\|string\\|null and '\\<br\\>' results in an error\\.$#"
-			count: 6
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Binary operation \"\\.\" between array\\|string\\|null and string results in an error\\.$#"
-			count: 3
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Binary operation \"\\.\" between non\\-falsy\\-string and array\\|string\\|null results in an error\\.$#"
-			count: 3
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Binary operation \"\\.\\=\" between non\\-falsy\\-string and array\\|string\\|null results in an error\\.$#"
-			count: 3
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Sessions\\:\\:where\\(\\)\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:buildAllianceCombo\\(\\) has parameter \\$user_data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:buildPlanetCombo\\(\\) has parameter \\$user_data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:buildProcessQueue\\(\\) has parameter \\$currentQueue with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:buildShortcutsCombo\\(\\) has parameter \\$shortcuts with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:buildUsersRolesList\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:deleteData\\(\\) has parameter \\$type with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:deleteData\\(\\) is unused\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:deleteMoon\\(\\) has parameter \\$id_moon with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:deletePlanet\\(\\) has parameter \\$id_planet with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:deletePlanet\\(\\) is unused\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:editBuildings\\(\\) has parameter \\$planets_data with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:editBuildings\\(\\) has parameter \\$type with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:editBuildings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:editDefenses\\(\\) has parameter \\$planets_data with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:editDefenses\\(\\) has parameter \\$type with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:editDefenses\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:editMain\\(\\) has parameter \\$planets_data with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:editMain\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:editShips\\(\\) has parameter \\$planets_data with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:editShips\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:moonsTable\\(\\) has parameter \\$moons_data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:moonsTable\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:planetsTable\\(\\) has parameter \\$planets_data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:planetsTable\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:premiumTable\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:researchTable\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Offset 0\\|1\\|2\\|3 does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Offset int does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Offset string does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Parameter \\#1 \\$dir_handle of function readdir expects resource\\|null, resource\\|false given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Parameter \\#1 \\$format of function date expects string, mixed given\\.$#"
-			count: 11
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Parameter \\#1 \\$type of method Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:saveData\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Parameter \\#2 \\$timestamp of function date expects int\\|null, string given\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, array\\|string\\|null given\\.$#"
-			count: 9
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Part \\$name \\(array\\|string\\|null\\) of encapsed string cannot be cast to string\\.$#"
-			count: 3
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:\\$moon \\(int\\) does not accept int\\|string\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:\\$planet \\(int\\) does not accept int\\|string\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:\\$stats has no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:\\$user type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Adm\\\\UsersController\\:\\:\\$user_query has no type specified\\.$#"
-			count: 1
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 6
-			path: legacy/app/Http/Controllers/Adm/UsersController.php
 
 		-
 			message: "#^Binary operation \"\\.\" between '\\<tr\\>\\<th role\\=\"cell\"…' and array\\|string\\|null results in an error\\.$#"
@@ -12529,16 +12529,6 @@ parameters:
 			message: "#^Method Xgp\\\\App\\\\Models\\\\Libraries\\\\UsersLibrary\\:\\:setUserDataByUserId\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: legacy/app/Models/Libraries/UsersLibrary.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:__invoke\\(\\)\\.$#"
-			count: 1
-			path: legacy/public/admin.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function ucfirst expects string, string\\|false given\\.$#"
-			count: 2
-			path: legacy/public/admin.php
 
 		-
 			message: "#^Call to an undefined method object\\:\\:__invoke\\(\\)\\.$#"

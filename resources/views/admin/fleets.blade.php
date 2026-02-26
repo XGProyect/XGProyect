@@ -56,25 +56,25 @@
                                         <td>{{ $item['arrival'] }}</td>
                                         <td>{{ $item['return'] }}</td>
                                         <th>
-                                            <a href="admin.php?page=fleets&action=restart&fleetId={{ $item['fleet_id'] }}"
+                                            <a href="/admin/fleets?action=restart&fleetId={{ $item['fleet_id'] }}"
                                                 class="btn btn-primary btn-circle btn-sm">
                                                 <i class="fas fa-fast-backward" title="{{ __('admin/fleets.ff_restart_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"
                                                     data-content="{{ __('admin/fleets.ff_restart_action_description') }}" data-html="true"></i>
                                             </a>
-                                            <a href="admin.php?page=fleets&action=end&fleetId={{ $item['fleet_id'] }}"
+                                            <a href="/admin/fleets?action=end&fleetId={{ $item['fleet_id'] }}"
                                                 class="btn btn-success btn-circle btn-sm">
                                                 <i class="fas fa-fast-forward" title="{{ __('admin/fleets.ff_end_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"
                                                     data-content="{{ __('admin/fleets.ff_end_action_description') }}" data-html="true"></i>
                                             </a>
-                                            <a href="admin.php?page=fleets&action=return&fleetId={{ $item['fleet_id'] }}"
+                                            <a href="/admin/fleets?action=return&fleetId={{ $item['fleet_id'] }}"
                                                 class="btn btn-warning btn-circle btn-sm">
                                                 <i class="fas fa-undo-alt" title="{{ __('admin/fleets.ff_return_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"
                                                     data-content="{{ __('admin/fleets.ff_return_action_description') }}" data-html="true"></i>
                                             </a>
-                                            <a href="admin.php?page=fleets&action=delete&fleetId={{ $item['fleet_id'] }}"
+                                            <a href="/admin/fleets?action=delete&fleetId={{ $item['fleet_id'] }}"
                                                 class="btn btn-danger btn-circle btn-sm">
                                                 <i class="fas fa-trash-alt" title="{{ __('admin/fleets.ff_delete_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"

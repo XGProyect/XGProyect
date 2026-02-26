@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xgp\App\Http\Controllers\Adm;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Changelog;
 use App\Models\Languages;
@@ -133,7 +133,7 @@ class ChangelogController extends BaseController
                 $changelogDate = $result->changelog_date->toDateString();
                 $changelogDescription = $result->changelog_description;
             } else {
-                Functions::redirect('admin.php?page=changelog');
+                Functions::redirect('admin/changelog');
             }
         }
 
@@ -214,7 +214,7 @@ class ChangelogController extends BaseController
                     });
                 }
 
-                Functions::redirect('admin.php?page=changelog&success=' . $data['action']);
+                Functions::redirect('admin/changelog&success=' . $data['action']);
             }
         }
     }
@@ -223,7 +223,7 @@ class ChangelogController extends BaseController
     {
         Changelog::where('changelog_id', $changelogId)->delete();
 
-        Functions::redirect('admin.php?page=changelog&success=delete');
+        Functions::redirect('admin/changelog&success=delete');
     }
 
     /**

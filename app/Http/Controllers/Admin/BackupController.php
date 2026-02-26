@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xgp\App\Http\Controllers\Adm;
+namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
@@ -104,7 +104,7 @@ class BackupController extends BaseController
             unlink($to_delete);
         }
 
-        Functions::redirect('admin.php?page=backup');
+        Functions::redirect('admin/backup');
     }
 
     private function getBackupSettings(): array
