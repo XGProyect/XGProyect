@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Alliance;
+use App\Models\User;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
+use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Models\Adm\Maker;
+use Xgp\App\Libraries\PlanetLib;
 
 class MakerController extends BaseController
 {
-    private Maker $makerModel;
     private AdministrationService $administrationService;
 
     public function __construct()
@@ -30,8 +33,6 @@ class MakerController extends BaseController
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
-
-        $this->makerModel = new Maker();
 
         Template::legacyView(
             'admin.maker',
@@ -59,9 +60,9 @@ class MakerController extends BaseController
             $i = 0;
             $error = '';
 
-            $check_user = $this->makerModel->checkUserName($name);
-            $check_email = $this->makerModel->checkUserEmail($email);
-            $check_planet = $this->makerModel->checkPlanet($galaxy, $system, $planet);
+            $check_user = $this->checkUserName($name);
+            $check_email = $this->checkUserEmail($email);
+            $check_planet = $this->checkPlanet($galaxy, $system, $planet);
 
             if (!is_numeric($galaxy) && !is_numeric($system) && !is_numeric($planet)) {
                 $error = __('admin/maker.mk_user_only_numbers');
@@ -106,7 +107,7 @@ class MakerController extends BaseController
             }
 
             if ($i == 0) {
-                $this->makerModel->createNewUser($name, $email, $auth, $pass, $galaxy, $system, $planet);
+                $this->createNewUser($name, $email, $auth, $pass, $galaxy, $system, $planet);
 
                 session()->flash('success', strtr(__('admin/maker.mk_user_added'), ['%s' => $pass]));
             } else {
@@ -126,10 +127,10 @@ class MakerController extends BaseController
             $alliance_tag = (string) $_POST['tag'];
             $alliance_founder = (int) $_POST['founder'];
 
-            $check_alliance = $this->makerModel->checkAlliance($alliance_name, $alliance_tag);
+            $check_alliance = $this->checkAlliance($alliance_name, $alliance_tag);
 
             if (!$check_alliance && !empty($alliance_founder) && $alliance_founder > 0) {
-                $this->makerModel->createAlliance($alliance_name, $alliance_tag, $alliance_founder);
+                $this->createAlliance($alliance_name, $alliance_tag, $alliance_founder);
 
                 session()->flash('success', __('admin/maker.mk_alliance_added'));
             } else {
@@ -159,8 +160,8 @@ class MakerController extends BaseController
             $i = 0;
             $error = '';
 
-            $check_planet = $this->makerModel->checkPlanet($galaxy, $system, $planet);
-            $user_query = $this->makerModel->checkUserById($userId);
+            $check_planet = $this->checkPlanet($galaxy, $system, $planet);
+            $user_query = $this->checkUserById($userId);
 
             if ($check_planet['count'] == 0 && $user_query) {
                 if ($galaxy < 1 or $system < 1 or $planet < 1 or !is_numeric($galaxy) or !is_numeric($system) or !is_numeric($planet)) {
@@ -182,7 +183,7 @@ class MakerController extends BaseController
                         $name = __('admin/maker.mk_planet_default_name');
                     }
 
-                    $this->makerModel->createNewPlanet($galaxy, $system, $planet, $userId, $field_max, $name);
+                    $this->createNewPlanet($galaxy, $system, $planet, $userId, $field_max, $name);
 
                     session()->flash('success', __('admin/maker.mk_planet_added'));
                 } else {
@@ -213,7 +214,7 @@ class MakerController extends BaseController
             $temp_max = (int) $_POST['planet_temp_max'];
             $max_fields = (int) $_POST['planet_field_max'];
 
-            $moon_planet = $this->makerModel->checkMoon($planet_id);
+            $moon_planet = $this->checkMoon($planet_id);
 
             if ($moon_planet && is_numeric($planet_id)) {
                 if ($moon_planet['id_moon'] == '' && $moon_planet['planet_type'] == PlanetTypesEnumerator::PLANET && $moon_planet['planet_destroyed'] == 0) {
@@ -247,7 +248,7 @@ class MakerController extends BaseController
                     }
 
                     if ($errors == 0) {
-                        $this->makerModel->createNewMoon(
+                        $this->createNewMoon(
                             $galaxy,
                             $system,
                             $planet,
@@ -280,7 +281,7 @@ class MakerController extends BaseController
     private function buildUsersCombo(): string
     {
         $combo_rows = '';
-        $users = $this->makerModel->getAllServerUsers();
+        $users = $this->getAllServerUsers();
 
         foreach ($users as $users_row) {
             if (isset($_GET['user']) && $_GET['user'] > 0) {
@@ -301,7 +302,7 @@ class MakerController extends BaseController
     private function buildPlanetCombo(): string
     {
         $combo_rows = '';
-        $planets = $this->makerModel->getAllActivePlanets();
+        $planets = $this->getAllActivePlanets();
 
         foreach ($planets as $planets_row) {
             if (isset($_GET['planet']) && $_GET['planet'] > 0) {
@@ -349,7 +350,7 @@ class MakerController extends BaseController
     private function buildAllianceUsersCombo(): string
     {
         $combo_rows = '';
-        $users = $this->makerModel->getUsersWithoutAlliance();
+        $users = $this->getUsersWithoutAlliance();
 
         foreach ($users as $users_row) {
             $combo_rows .= '<option value="' . $users_row['id'] . '">' . $users_row['name'] . '</option>';
@@ -358,24 +359,190 @@ class MakerController extends BaseController
         return $combo_rows;
     }
 
-    /**
-     * Generates a new random password
-     *
-     * @return string
-     */
-    private function generatePassword(): string
-    {
-        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        $count = strlen($characters);
-        $new_pass = '';
-        $lenght = 16;
-        srand((int) microtime() * 1000000);
+    //#####################################
+    //
+    // query helper methods
+    //
+    //#####################################
 
-        for ($i = 0; $i < $lenght; $i++) {
-            $character_boucle = mt_rand(0, $count - 1);
-            $new_pass = $new_pass . substr($characters, $character_boucle, 1);
+    private function checkUserName(string $name): bool
+    {
+        return User::where('name', $name)->exists();
+    }
+
+    private function checkUserEmail(string $email): bool
+    {
+        return User::where('email', $email)->exists();
+    }
+
+    private function checkPlanet(int $galaxy, int $system, int $planet): array
+    {
+        return [
+            'count' => DB::table('planets')
+                ->where('planet_galaxy', $galaxy)
+                ->where('planet_system', $system)
+                ->where('planet_planet', $planet)
+                ->count(),
+        ];
+    }
+
+    private function getAllServerUsers(): array
+    {
+        return User::select('id', 'name')
+            ->get()
+            ->map(fn($u) => ['id' => $u->id, 'name' => $u->name])
+            ->toArray();
+    }
+
+    private function getUsersWithoutAlliance(): array
+    {
+        return User::where('ally_id', 0)
+            ->where('ally_request', 0)
+            ->select('id', 'name')
+            ->get()
+            ->map(fn($u) => ['id' => $u->id, 'name' => $u->name])
+            ->toArray();
+    }
+
+    private function getAllActivePlanets(): array
+    {
+        return DB::table('planets')
+            ->select('planet_id', 'planet_name', 'planet_galaxy', 'planet_system', 'planet_planet')
+            ->where('planet_destroyed', 0)
+            ->where('planet_type', 1)
+            ->get()
+            ->map(fn($r) => (array) $r)
+            ->toArray();
+    }
+
+    private function checkUserById(int $userId): ?User
+    {
+        return User::find($userId);
+    }
+
+    private function createNewUser(string $name, string $email, int $auth, string $pass, int $galaxy, int $system, int $planet): void
+    {
+        try {
+            DB::transaction(function () use ($name, $email, $auth, $pass, $galaxy, $system, $planet) {
+                $time = time();
+
+                $user = User::create([
+                    'name' => $name,
+                    'email' => $email,
+                    'ip_at_reg' => request()->ip() ?? '',
+                    'home_planet_id' => 0,
+                    'current_planet' => 0,
+                    'register_time' => $time,
+                    'onlinetime' => $time,
+                    'authlevel' => $auth,
+                    'password' => $pass,
+                ]);
+
+                $lastUserId = $user->id;
+
+                DB::table('research')->insert(['research_user_id' => $lastUserId]);
+                DB::table('users_statistics')->insert(['user_statistic_user_id' => $lastUserId]);
+                DB::table('premium')->insert([
+                    'premium_user_id' => $lastUserId,
+                    'premium_dark_matter' => Options::getInstance()->get('registration_dark_matter'),
+                ]);
+                DB::table('preferences')->insert(['preference_user_id' => $lastUserId]);
+
+                (new PlanetLib())->setNewPlanet($galaxy, $system, $planet, $lastUserId, '', true);
+
+                $lastPlanetId = (int) DB::getPdo()->lastInsertId();
+
+                User::where('id', $lastUserId)->update([
+                    'home_planet_id' => $lastPlanetId,
+                    'current_planet' => $lastPlanetId,
+                    'galaxy' => $galaxy,
+                    'system' => $system,
+                    'planet' => $planet,
+                ]);
+            });
+        } catch (\Exception $e) {
+            // transaction rolled back automatically
+        }
+    }
+
+    private function checkAlliance(string $allianceName, string $allianceTag): bool
+    {
+        return Alliance::where('alliance_name', $allianceName)
+            ->orWhere('alliance_tag', $allianceTag)
+            ->exists();
+    }
+
+    private function createAlliance(string $allianceName, string $allianceTag, int $allianceFounder): void
+    {
+        try {
+            DB::transaction(function () use ($allianceName, $allianceTag, $allianceFounder) {
+                $time = time();
+                $rightsString = '[{"rank":"' . __('admin/maker.mk_alliance_founder_rank') . '","rights":{"1":1,"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1}},{"rank":"Newcomer","rights":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0}}]';
+
+                $allianceId = DB::table('alliance')->insertGetId([
+                    'alliance_name' => $allianceName,
+                    'alliance_tag' => $allianceTag,
+                    'alliance_owner' => $allianceFounder,
+                    'alliance_register_time' => $time,
+                    'alliance_ranks' => $rightsString,
+                ]);
+
+                DB::table('alliance_statistics')->insert(['alliance_statistic_alliance_id' => $allianceId]);
+
+                User::where('id', $allianceFounder)->update([
+                    'ally_id' => $allianceId,
+                    'ally_register_time' => $time,
+                ]);
+            });
+        } catch (\Exception $e) {
+            // transaction rolled back automatically
+        }
+    }
+
+    private function createNewPlanet(int $galaxy, int $system, int $planet, int $userId, int $fieldMax, string $name): void
+    {
+        try {
+            DB::transaction(function () use ($galaxy, $system, $planet, $userId, $fieldMax, $name) {
+                (new PlanetLib())->setNewPlanet($galaxy, $system, $planet, $userId, '', false);
+
+                DB::table('planets')
+                    ->where('planet_galaxy', $galaxy)
+                    ->where('planet_system', $system)
+                    ->where('planet_planet', $planet)
+                    ->where('planet_type', 1)
+                    ->update([
+                        'planet_field_max' => $fieldMax,
+                        'planet_name' => $name,
+                    ]);
+            });
+        } catch (\Exception $e) {
+            // transaction rolled back automatically
+        }
+    }
+
+    private function checkMoon(int $planetId): array
+    {
+        $planet = DB::table('planets')
+            ->where('planet_id', $planetId)
+            ->where('planet_type', 1)
+            ->first();
+
+        if (!$planet) {
+            return [];
         }
 
-        return $new_pass;
+        $moonId = DB::table('planets')
+            ->where('planet_galaxy', $planet->planet_galaxy)
+            ->where('planet_system', $planet->planet_system)
+            ->where('planet_planet', $planet->planet_planet)
+            ->where('planet_type', 3)
+            ->value('planet_id');
+
+        return array_merge((array) $planet, ['id_moon' => $moonId]);
+    }
+
+    private function createNewMoon(int $galaxy, int $system, int $planet, int $owner, string $moonName, int $size, int $maxFields, int $mintemp, int $maxtemp): void
+    {
+        (new PlanetLib())->setNewMoon($galaxy, $system, $planet, $owner, $moonName, 0, $size, $maxFields, $mintemp, $maxtemp);
     }
 }
