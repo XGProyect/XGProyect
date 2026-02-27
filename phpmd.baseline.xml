@@ -22,7 +22,8 @@
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/AlliancesController.php" method="saveRanks"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/AlliancesController.php" method="saveRanks"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/AlliancesController.php" method="saveMembers"/>
-  <violation rule="PHPMD\Rule\CleanCode\IfStatementAssignment" file="app/Http/Controllers/Admin/AlliancesController.php" method="checkAlliance"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/AlliancesController.php" method="checkAllianceTag"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/AlliancesController.php" method="checkAllianceName"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/AnnouncementController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/AnnouncementController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="app/Http/Controllers/Admin/AnnouncementController.php"/>
@@ -78,6 +79,7 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/LogoutController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/MailingController.php"/>
   <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="app/Http/Controllers/Admin/MakerController.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="app/Http/Controllers/Admin/MakerController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/MakerController.php"/>
   <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/MakerController.php" method="makeUser"/>
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/MakerController.php" method="makeUser"/>
@@ -94,9 +96,9 @@
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/MakerController.php" method="makeMoon"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/MakerController.php" method="buildUsersCombo"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/MakerController.php" method="buildPlanetCombo"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/MakerController.php" method="generatePassword"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/MessagesController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/MessagesController.php"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/MessagesController.php" method="doSearch"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/MessagesController.php" method="doSearch"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/MessagesController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/MessagesController.php" method="deleteMessage"/>
@@ -116,12 +118,15 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/RepairController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/RepairController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/RepairController.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="app/Http/Controllers/Admin/ResetController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ResetController.php"/>
   <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/ResetController.php" method="runAction"/>
   <violation rule="PHPMD\Rule\Design\LongMethod" file="app/Http/Controllers/Admin/ResetController.php" method="runAction"/>
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/ResetController.php" method="runAction"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/ResetController.php" method="runAction"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/ResetController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/ResetController.php" method="resetBuildingsByType"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/ResetController.php"/>
   <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="app/Http/Controllers/Admin/ServerController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ServerController.php"/>
   <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/ServerController.php" method="runAction"/>
@@ -145,6 +150,7 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/UpdateController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/UpdateController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/UpdateController.php"/>
+  <violation rule="PHPMD\Rule\Design\LongClass" file="app/Http/Controllers/Admin/UsersController.php"/>
   <violation rule="PHPMD\Rule\Design\TooManyMethods" file="app/Http/Controllers/Admin/UsersController.php"/>
   <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="app/Http/Controllers/Admin/UsersController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="app/Http/Controllers/Admin/UsersController.php"/>
@@ -163,7 +169,9 @@
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/UsersController.php" method="saveInfo"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="saveInfo"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="saveSettings"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="app/Http/Controllers/Admin/UsersController.php"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="saveResearch"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/UsersController.php" method="savePremium"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="savePremium"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="savePlanet"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="saveBuildings"/>
@@ -184,6 +192,7 @@
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/UsersController.php" method="deletePlanet"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="deletePlanet"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="deleteMoon"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="app/Http/Controllers/Admin/UsersController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Home/LoginController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Home/RegisterController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Install/SetLocaleController.php"/>
@@ -1003,61 +1012,6 @@
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Users/Shortcuts.php" method="deleteById"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Users/Shortcuts.php" method="getById"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Users/Shortcuts.php" method="validateShortcutId"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="checkAllianceTag"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Alliances.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="checkAllianceName"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="getAllianceMembers"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="removeAllianceMembers"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="updateAllianceData"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="countAllianceMembers"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Alliances.php" method="updateAllianceRanks"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Ban.php" method="getBannedUserData"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Ban.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Models/Adm/Ban.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Models/Adm/Ban.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Ban.php" method="getListOfUsers"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Fleets.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Fleets.php" method="endFleetById"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Fleets.php" method="returnFleetById"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Fleets.php" method="deleteFleetById"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Models/Adm/Maker.php" method="createNewUser"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Models/Adm/Maker.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Maker.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Maker.php" method="checkAlliance"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Maker.php" method="createAlliance"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Maker.php" method="createNewPlanet"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Maker.php" method="checkMoon"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Maker.php" method="createNewMoon"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Messages.php" method="getAllMessagesFiltered"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Messages.php"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Models/Adm/Messages.php" method="buildSearchQuery"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Models/Adm/Messages.php" method="buildSearchQuery"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Messages.php" method="buildSearchQuery"/>
-  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Models/Adm/Reset.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Models/Adm/Reset.php"/>
-  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Models/Adm/Reset.php" method="resetAll"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Reset.php" method="resetBuildingsByType"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Reset.php"/>
-  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Models/Adm/Users.php"/>
-  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Models/Adm/Users.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="getAllPlanetsData"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Models/Adm/Users.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="getAllMoonsData"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Models/Adm/Users.php" method="saveUserPreferences"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Models/Adm/Users.php" method="saveUserPreferences"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="saveUserPreferences"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Models/Adm/Users.php"/>
-  <violation rule="PHPMD\Rule\Naming\LongVariable" file="legacy/app/Models/Adm/Users.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="savePremium"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Models/Adm/Users.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="savePlanet"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="saveBuildings"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="saveShips"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="saveDefenses"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="deletePlanetById"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="softDeletePlanetById"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="deleteMoonById"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Adm/Users.php" method="softDeleteMoonById"/>
   <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="legacy/app/Models/Game/Alliance.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Models/Game/Alliance.php" method="getAllianceDataById"/>
   <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Models/Game/Alliance.php"/>

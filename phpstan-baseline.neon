@@ -21,6 +21,71 @@ parameters:
 			path: app/Http/Controllers/Admin/AlliancesController.php
 
 		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Alliance\\:\\:where\\(\\)\\.$#"
+			count: 7
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:select\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:where\\(\\)\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:whereIn\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot access offset 'alliance_register…' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot access offset 'alliance_request' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot access offset 'ally_rank' on mixed\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot access offset 'ally_rank_id' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot access offset 'ally_register_time' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot access offset 'ally_request' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot access offset 'ally_request_text' on mixed\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot access offset 'id' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Cannot access offset 'member_id' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
 			message: "#^Cannot call method addNew\\(\\) on Xgp\\\\App\\\\Libraries\\\\Alliance\\\\Ranks\\|null\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/AlliancesController.php
@@ -56,12 +121,27 @@ parameters:
 			path: app/Http/Controllers/Admin/AlliancesController.php
 
 		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AlliancesController\\:\\:getAllAllianceDataById\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
 			message: "#^Parameter \\#1 \\$format of function date expects string, mixed given\\.$#"
 			count: 2
 			path: app/Http/Controllers/Admin/AlliancesController.php
 
 		-
 			message: "#^Parameter \\#1 \\$type of method App\\\\Http\\\\Controllers\\\\Admin\\\\AlliancesController\\:\\:saveData\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Parameter \\#2 \\$data of static method Xgp\\\\App\\\\Core\\\\Template\\:\\:render\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AlliancesController.php
+
+		-
+			message: "#^Parameter \\#2 \\$timestamp of function date expects int\\|null, mixed given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/AlliancesController.php
 
@@ -136,6 +216,31 @@ parameters:
 			path: app/Http/Controllers/Admin/AnnouncementController.php
 
 		-
+			message: "#^Cannot access offset 1 on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Cannot call method columnCount\\(\\) on PDOStatement\\|false\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Cannot call method fetch\\(\\) on PDOStatement\\|false\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Cannot call method fetchAll\\(\\) on PDOStatement\\|false\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Comparison operation \"\\>\" between array and 0 results in an error\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
 			message: "#^If condition is always true\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/BackupController.php
@@ -181,6 +286,16 @@ parameters:
 			path: app/Http/Controllers/Admin/BackupController.php
 
 		-
+			message: "#^Parameter \\#1 \\$stream of function fclose expects resource, resource\\|false given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
+			message: "#^Parameter \\#1 \\$stream of function fwrite expects resource, resource\\|false given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BackupController.php
+
+		-
 			message: "#^Parameter \\#1 \\$string of function ucfirst expects string, string\\|false\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/BackupController.php
@@ -191,13 +306,38 @@ parameters:
 			path: app/Http/Controllers/Admin/BanController.php
 
 		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Ban\\:\\:create\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
 			message: "#^Call to an undefined static method App\\\\Models\\\\Ban\\:\\:where\\(\\)\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/BanController.php
 
 		-
 			message: "#^Cannot cast array\\|string\\|null to string\\.$#"
 			count: 2
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\BanController\\:\\:getBannedUserData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\BanController\\:\\:setOrUpdateBan\\(\\) has parameter \\$banData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\BanController\\:\\:setOrUpdateBan\\(\\) has parameter \\$bannedUser with no value type specified in iterable type array\\.$#"
+			count: 1
 			path: app/Http/Controllers/Admin/BanController.php
 
 		-
@@ -311,6 +451,11 @@ parameters:
 			path: app/Http/Controllers/Admin/FleetsController.php
 
 		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Fleets\\:\\:where\\(\\)\\.$#"
+			count: 5
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildActionsBlock\\(\\) has parameter \\$fleet with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/FleetsController.php
@@ -406,6 +551,46 @@ parameters:
 			path: app/Http/Controllers/Admin/FleetsController.php
 
 		-
+			message: "#^Parameter \\#1 \\$fleet of method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildActionsBlock\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$fleet of method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildAmountBlock\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$fleet of method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildArrivalBlock\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$fleet of method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildBeginningBlock\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$fleet of method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildDepartureBlock\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$fleet of method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildMissionBlock\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$fleet of method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildObjectiveBlock\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$fleet of method App\\\\Http\\\\Controllers\\\\Admin\\\\FleetsController\\:\\:buildReturnBlock\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/FleetsController.php
+
+		-
 			message: "#^Parameter \\#1 \\$string of function ucfirst expects string, string\\|false\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/FleetsController.php
@@ -496,6 +681,11 @@ parameters:
 			path: app/Http/Controllers/Admin/MailingController.php
 
 		-
+			message: "#^Binary operation \"\\.\" between '\\[\\{\"rank\"\\:\"' and array\\|string\\|null results in an error\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
 			message: "#^Binary operation \"\\.\\=\" between '' and array\\|string\\|null results in an error\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/MakerController.php
@@ -503,6 +693,31 @@ parameters:
 		-
 			message: "#^Binary operation \"\\.\\=\" between array\\|string\\|null and array\\|string\\|null results in an error\\.$#"
 			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Alliance\\:\\:where\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:create\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:find\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:select\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:where\\(\\)\\.$#"
+			count: 5
 			path: app/Http/Controllers/Admin/MakerController.php
 
 		-
@@ -536,7 +751,27 @@ parameters:
 			path: app/Http/Controllers/Admin/MakerController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:generatePassword\\(\\) is unused\\.$#"
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:checkMoon\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:checkPlanet\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:getAllActivePlanets\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:getAllServerUsers\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:getUsersWithoutAlliance\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/MakerController.php
 
@@ -571,7 +806,7 @@ parameters:
 			path: app/Http/Controllers/Admin/MakerController.php
 
 		-
-			message: "#^Parameter \\#6 \\$name of method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:createNewPlanet\\(\\) expects string, array\\|string\\|null given\\.$#"
+			message: "#^Parameter \\#6 \\$name of method App\\\\Http\\\\Controllers\\\\Admin\\\\MakerController\\:\\:createNewPlanet\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/MakerController.php
 
@@ -584,6 +819,26 @@ parameters:
 			message: "#^Result of && is always true\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/MakerController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Messages\\:\\:whereIn\\(\\)\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Cannot access offset 'message_text' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Cannot access offset 'message_time' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Cannot access offset 'message_type' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
 
 		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:buildMessageTypeBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -612,6 +867,21 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$message_id of method App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:deleteMessage\\(\\) expects int, int\\<0, max\\>\\|false given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function nl2br expects string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Parameter \\#1 \\$time of static method Xgp\\\\App\\\\Libraries\\\\TimingLibrary\\:\\:formatExtendedDate\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/MessagesController.php
+
+		-
+			message: "#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/MessagesController.php
 
@@ -744,6 +1014,11 @@ parameters:
 			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/RegistrationController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RepairController\\:\\:getAllTables\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RepairController.php
 
 		-
 			message: "#^Cannot access offset 'adm_attack' on mixed\\.$#"
@@ -1021,6 +1296,71 @@ parameters:
 			path: app/Http/Controllers/Admin/UsersController.php
 
 		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:select\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:where\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Call to function is_null\\(\\) with mixed will always evaluate to false\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Cannot access offset 'alliance_id' on mixed\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Cannot access offset 'alliance_name' on mixed\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Cannot access offset 'alliance_tag' on mixed\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Cannot access offset 'planet_galaxy' on mixed\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Cannot access offset 'planet_id' on mixed\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Cannot access offset 'planet_name' on mixed\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Cannot access offset 'planet_planet' on mixed\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Cannot access offset 'planet_system' on mixed\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Constant FIELDS_BY_MOONBASIS_LEVEL not found\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Constant PLANETS_LIFE_TIME not found\\.$#"
+			count: 3
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:buildAllianceCombo\\(\\) has parameter \\$user_data with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/UsersController.php
@@ -1042,6 +1382,11 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:buildUsersRolesList\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:checkUser\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/UsersController.php
 
@@ -1117,6 +1462,21 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:editShips\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:getAllMoonsData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:getAllPlanetsData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UsersController\\:\\:getUserDataById\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/UsersController.php
 
@@ -2953,6 +3313,11 @@ parameters:
 		-
 			message: "#^Parameter \\#1 \\$tag of method Xgp\\\\App\\\\Http\\\\Controllers\\\\Game\\\\AllianceController\\:\\:allianceTagExists\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
+			path: legacy/app/Http/Controllers/Game/AllianceController.php
+
+		-
+			message: "#^Parameter \\#1 \\$time of static method Xgp\\\\App\\\\Libraries\\\\TimingLibrary\\:\\:formatExtendedDate\\(\\) expects string, int given\\.$#"
+			count: 3
 			path: legacy/app/Http/Controllers/Game/AllianceController.php
 
 		-
@@ -10564,476 +10929,6 @@ parameters:
 			message: "#^Property Xgp\\\\App\\\\Libraries\\\\Users\\\\Shortcuts\\:\\:\\$shortcuts type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: legacy/app/Libraries/Users/Shortcuts.php
-
-		-
-			message: "#^Call to function is_null\\(\\) with non\\-empty\\-string will always evaluate to false\\.$#"
-			count: 2
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Constant ALLIANCE not found\\.$#"
-			count: 7
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Constant ALLIANCE_STATISTICS not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Constant USERS not found\\.$#"
-			count: 5
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Alliances\\:\\:checkAllianceByNameOrTag\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Alliances\\:\\:countAllianceMembers\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Alliances\\:\\:getAllAllianceDataById\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Alliances\\:\\:getAllUsers\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Alliances\\:\\:getAllianceMembers\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Alliances\\:\\:updateAllianceData\\(\\) has parameter \\$alliance_data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Alliances\\:\\:updateAllianceRanks\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Alliances\\:\\:updateAllianceRanks\\(\\) has parameter \\$alliance_id with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Alliances\\:\\:updateAllianceRanks\\(\\) has parameter \\$ranks with no type specified\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Alliances.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Ban\\:\\:create\\(\\)\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Ban\\:\\:where\\(\\)\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:where\\(\\)\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Constant BANNED not found\\.$#"
-			count: 3
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Constant PLANETS not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Constant PREFERENCES not found\\.$#"
-			count: 2
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Constant USERS not found\\.$#"
-			count: 4
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Ban\\:\\:getBannedUserData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Ban\\:\\:getBannedUsers\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Ban\\:\\:getListOfUsers\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Ban\\:\\:setOrUpdateBan\\(\\) has parameter \\$banData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Ban\\:\\:setOrUpdateBan\\(\\) has parameter \\$bannedUser with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Ban.php
-
-		-
-			message: "#^Constant FLEETS not found\\.$#"
-			count: 6
-			path: legacy/app/Models/Adm/Fleets.php
-
-		-
-			message: "#^Constant USERS not found\\.$#"
-			count: 2
-			path: legacy/app/Models/Adm/Fleets.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Fleets\\:\\:getAllFleets\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Fleets.php
-
-		-
-			message: "#^Binary operation \"\\.\" between '\\[\\{\"rank\"\\:\"' and array\\|string\\|null results in an error\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Constant ALLIANCE not found\\.$#"
-			count: 2
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Constant ALLIANCE_STATISTICS not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Constant PLANETS not found\\.$#"
-			count: 8
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Constant PREFERENCES not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Constant PREMIUM not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Constant RESEARCH not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Constant USERS not found\\.$#"
-			count: 8
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Constant USERS_STATISTICS not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:checkAlliance\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:checkMoon\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:checkPlanet\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:checkUserById\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:checkUserEmail\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:checkUserName\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:getAllActivePlanets\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:getAllServerUsers\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Maker\\:\\:getUsersWithoutAlliance\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Maker.php
-
-		-
-			message: "#^Constant MESSAGES not found\\.$#"
-			count: 2
-			path: legacy/app/Models/Adm/Messages.php
-
-		-
-			message: "#^Constant USERS not found\\.$#"
-			count: 4
-			path: legacy/app/Models/Adm/Messages.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Messages\\:\\:buildSearchQuery\\(\\) has parameter \\$to_query with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Messages.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Messages\\:\\:deleteAllMessagesByIds\\(\\) has parameter \\$ids with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Messages.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Messages\\:\\:getAllMessagesFiltered\\(\\) has parameter \\$to_query with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Messages.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Messages\\:\\:getAllMessagesFiltered\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Messages.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Repair\\:\\:getAllTables\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Repair.php
-
-		-
-			message: "#^Constant BUILDINGS not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Reset.php
-
-		-
-			message: "#^Constant DEFENSES not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Reset.php
-
-		-
-			message: "#^Constant PLANETS not found\\.$#"
-			count: 6
-			path: legacy/app/Models/Adm/Reset.php
-
-		-
-			message: "#^Constant PREFERENCES not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Reset.php
-
-		-
-			message: "#^Constant PREMIUM not found\\.$#"
-			count: 3
-			path: legacy/app/Models/Adm/Reset.php
-
-		-
-			message: "#^Constant RESEARCH not found\\.$#"
-			count: 3
-			path: legacy/app/Models/Adm/Reset.php
-
-		-
-			message: "#^Constant SHIPS not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Reset.php
-
-		-
-			message: "#^Constant USERS not found\\.$#"
-			count: 4
-			path: legacy/app/Models/Adm/Reset.php
-
-		-
-			message: "#^Constant USERS_STATISTICS not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Reset.php
-
-		-
-			message: "#^Constant ALLIANCE not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Constant BANNED not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Constant BUILDINGS not found\\.$#"
-			count: 5
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Constant DEFENSES not found\\.$#"
-			count: 5
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Constant FIELDS_BY_MOONBASIS_LEVEL not found\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Constant PLANETS not found\\.$#"
-			count: 14
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Constant PLANETS_LIFE_TIME not found\\.$#"
-			count: 4
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Constant PREFERENCES not found\\.$#"
-			count: 2
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Constant PREMIUM not found\\.$#"
-			count: 2
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Constant RESEARCH not found\\.$#"
-			count: 2
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Constant SHIPS not found\\.$#"
-			count: 5
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Constant USERS not found\\.$#"
-			count: 8
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Left side of && is always false\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:checkEmail\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:checkUser\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:checkUsername\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:getAllAlliances\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:getAllMoonsData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:getAllPlanetsByUserId\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:getAllPlanetsData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:getAllUsers\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:getUserDataById\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:saveBuildings\\(\\) has parameter \\$buildings with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:saveDefenses\\(\\) has parameter \\$defenses with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:savePlanet\\(\\) has parameter \\$planet_data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:savePremium\\(\\) has parameter \\$premium_data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:savePremium\\(\\) has parameter \\$user_query with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:saveShips\\(\\) has parameter \\$ships with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:saveTechnologies\\(\\) has parameter \\$technologies with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:saveUserData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:saveUserPreferences\\(\\) has parameter \\$current_user with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Adm\\\\Users\\:\\:saveUserPreferences\\(\\) has parameter \\$post with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Models/Adm/Users.php
 
 		-
 			message: "#^Constant ALLIANCE not found\\.$#"
