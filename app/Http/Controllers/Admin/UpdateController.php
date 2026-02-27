@@ -7,9 +7,9 @@ namespace App\Http\Controllers\Admin;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
-use Xgp\App\Models\Adm\Update;
 
 class UpdateController extends BaseController
 {
@@ -17,7 +17,6 @@ class UpdateController extends BaseController
     private $db_version;
     private $demo;
     private $output = [];
-    private Update $updateModel;
     private AdministrationService $administrationService;
 
     public function __construct()
@@ -31,8 +30,6 @@ class UpdateController extends BaseController
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
-
-        $this->updateModel = new Update();
 
         $this->buildPage();
     }
@@ -145,7 +142,7 @@ class UpdateController extends BaseController
         if (count($queries) > 0) {
             foreach ($queries as $query) {
                 if (!$this->demo) {
-                    $this->output[] = $this->updateModel->runQuery($query);
+                    $this->output[] = DB::unprepared($query);
                 } else {
                     $this->output[] = $query;
                 }
