@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Alliance;
+use App\Models\User;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Alliance\Ranks;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Models\Adm\Alliances;
 
 class AlliancesController extends BaseController
 {
@@ -21,7 +23,6 @@ class AlliancesController extends BaseController
     private $id;
     private $alliance_query;
     private ?Ranks $ranks = null;
-    private Alliances $alliancesModel;
     private AdministrationService $administrationService;
 
     public function __construct()
@@ -36,8 +37,6 @@ class AlliancesController extends BaseController
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->alliancesModel = new Alliances();
-
         $alliance = isset($_GET['alliance']) ? trim($_GET['alliance']) : null;
         $type = isset($_GET['type']) ? trim($_GET['type']) : null;
         $this->edit = isset($_GET['edit']) ? trim($_GET['edit']) : null;
@@ -47,11 +46,10 @@ class AlliancesController extends BaseController
                 session()->flash('danger', __('admin/alliances.al_nothing_found'));
                 $alliance = '';
             } else {
-                $this->alliance_query = $this->alliancesModel->getAllAllianceDataById($this->id);
+                $this->alliance_query = $this->getAllAllianceDataById($this->id);
                 $this->ranks = new Ranks($this->alliance_query['alliance_ranks']);
 
                 if ($_POST) {
-                    // save the data
                     $this->saveData($type);
                 }
             }
@@ -94,7 +92,6 @@ class AlliancesController extends BaseController
             case 'info':
             case '':
             default:
-                // save the data
                 if (isset($_POST['send_data']) && $_POST['send_data']) {
                     $this->saveInfo();
                 }
@@ -134,7 +131,6 @@ class AlliancesController extends BaseController
         $i = 0;
         $rank_row = '';
 
-        // build the UI
         $rank_data = [];
 
         if (is_array($alliance_ranks)) {
@@ -167,7 +163,14 @@ class AlliancesController extends BaseController
             $this->alliance_query['alliance_name'],
             __('admin/alliances.al_alliance_members')
         );
-        $all_members = $this->alliancesModel->getAllianceMembers($this->id);
+
+        $all_members = DB::table('users AS u')
+            ->select('u.id', 'u.name', 'u.ally_request', 'u.ally_request_text', 'u.ally_register_time', 'u.ally_rank_id', 'a.alliance_owner', 'a.alliance_ranks')
+            ->leftJoin('alliance AS a', 'a.alliance_id', '=', 'u.ally_id')
+            ->where('u.ally_id', $this->id)
+            ->get()
+            ->map(fn($r) => (array) $r)
+            ->toArray();
 
         $members = '';
 
@@ -218,19 +221,19 @@ class AlliancesController extends BaseController
         $errors = '';
 
         if ($alliance_name != $alliance_name_orig) {
-            if ($alliance_name == '' or !$this->alliancesModel->checkAllianceName($alliance_name)) {
+            if ($alliance_name == '' or !$this->checkAllianceName($alliance_name)) {
                 $errors .= __('admin/alliances.al_error_alliance_name') . '<br>';
             }
         }
 
         if ($alliance_tag != $alliance_tag_orig) {
-            if ($alliance_tag == '' or !$this->alliancesModel->checkAllianceTag($alliance_tag)) {
+            if ($alliance_tag == '' or !$this->checkAllianceTag($alliance_tag)) {
                 $errors .= __('admin/alliances.al_error_alliance_tag') . '<br>';
             }
         }
 
         if ($alliance_owner != $alliance_owner_orig) {
-            if ($alliance_owner <= 0 or $this->alliancesModel->checkAllianceFounder($alliance_owner)) {
+            if ($alliance_owner <= 0 or $this->checkAllianceFounder($alliance_owner)) {
                 $errors .= __('admin/alliances.al_error_founder') . '<br>';
             }
         }
@@ -238,7 +241,7 @@ class AlliancesController extends BaseController
         if ($errors != '') {
             session()->flash('warning', $errors);
         } else {
-            $this->alliancesModel->updateAllianceData([
+            Alliance::where('alliance_id', $this->id)->update([
                 'alliance_name' => $alliance_name,
                 'alliance_tag' => $alliance_tag,
                 'alliance_owner' => $alliance_owner,
@@ -248,7 +251,6 @@ class AlliancesController extends BaseController
                 'alliance_text' => $alliance_text,
                 'alliance_request' => $alliance_request,
                 'alliance_request_notallow' => $alliance_request_notallow,
-                'alliance_id' => $this->id,
             ]);
 
             session()->flash('success', __('admin/alliances.al_all_ok_message'));
@@ -259,14 +261,11 @@ class AlliancesController extends BaseController
     {
         if (isset($_POST['create_rank'])) {
             if (!empty($_POST['rank_name'])) {
-                $this->ranks->addNew(
-                    $_POST['rank_name']
-                );
+                $this->ranks->addNew($_POST['rank_name']);
 
-                $this->alliancesModel->updateAllianceRanks(
-                    $this->id,
-                    $this->ranks->getAllRanksAsJsonString()
-                );
+                Alliance::where('alliance_id', $this->id)->update([
+                    'alliance_ranks' => $this->ranks->getAllRanksAsJsonString(),
+                ]);
 
                 session()->flash('success', __('admin/alliances.al_rank_added'));
             } else {
@@ -274,7 +273,6 @@ class AlliancesController extends BaseController
             }
         }
 
-        // edit rights for each rank
         if (isset($_POST['save_ranks']) && !empty($_POST['id'])) {
             foreach ($_POST['id'] as $id) {
                 $this->ranks->editRankById(
@@ -293,24 +291,21 @@ class AlliancesController extends BaseController
                 );
             }
 
-            $this->alliancesModel->updateAllianceRanks(
-                $this->id,
-                $this->ranks->getAllRanksAsJsonString()
-            );
+            Alliance::where('alliance_id', $this->id)->update([
+                'alliance_ranks' => $this->ranks->getAllRanksAsJsonString(),
+            ]);
 
             session()->flash('success', __('admin/alliances.al_rank_saved'));
         }
 
-        // delete a rank
         if (isset($_POST['delete_message'])) {
             foreach ($_POST['delete_message'] as $rankId) {
                 $this->ranks->deleteRankById($rankId);
             }
 
-            $this->alliancesModel->updateAllianceRanks(
-                $this->id,
-                $this->ranks->getAllRanksAsJsonString()
-            );
+            Alliance::where('alliance_id', $this->id)->update([
+                'alliance_ranks' => $this->ranks->getAllRanksAsJsonString(),
+            ]);
 
             session()->flash('success', __('admin/alliances.al_rank_removed'));
         }
@@ -321,19 +316,24 @@ class AlliancesController extends BaseController
     private function saveMembers(): void
     {
         if (isset($_POST['delete_members'])) {
-            $ids_string = '';
-
             if (isset($_POST['delete_message'])) {
+                $ids = [];
+
                 foreach ($_POST['delete_message'] as $userId => $delete_status) {
                     if ($delete_status == 'on' && $userId > 0 && is_numeric($userId)) {
-                        $ids_string .= $userId . ',';
+                        $ids[] = $userId;
                     }
                 }
 
-                $amount = $this->alliancesModel->countAllianceMembers($this->id);
+                $amount = User::where('ally_id', $this->id)->count();
 
-                if ($amount['Amount'] > 1) {
-                    $this->alliancesModel->removeAllianceMembers($ids_string);
+                if ($amount > 1) {
+                    User::whereIn('id', $ids)->update([
+                        'ally_id' => 0,
+                        'ally_request' => 0,
+                        'ally_request_text' => '',
+                        'ally_rank_id' => 0,
+                    ]);
 
                     session()->flash('success', __('admin/alliances.us_all_ok_message'));
                 } else {
@@ -352,10 +352,9 @@ class AlliancesController extends BaseController
     private function buildUsersCombo($userId): string
     {
         $combo_rows = '';
-        $users = $this->alliancesModel->getAllUsers();
 
-        foreach ($users as $users_row) {
-            $combo_rows .= '<option value="' . $users_row['id'] . '" ' . ($users_row['id'] == $userId ? ' selected' : '') . '>' . $users_row['name'] . '</option>';
+        foreach (User::select('id', 'name')->get() as $user) {
+            $combo_rows .= '<option value="' . $user->id . '" ' . ($user->id == $userId ? ' selected' : '') . '>' . $user->name . '</option>';
         }
 
         return $combo_rows;
@@ -363,18 +362,62 @@ class AlliancesController extends BaseController
 
     //#####################################
     //
-    // other required methods
+    // query helper methods
     //
     //#####################################
 
+    private function getAllAllianceDataById(int $id): array
+    {
+        $result = DB::table('alliance AS a')
+            ->select('a.*', 'als.*')
+            ->join('alliance_statistics AS als', 'als.alliance_statistic_alliance_id', '=', 'a.alliance_id')
+            ->where('a.alliance_id', $id)
+            ->first();
+
+        return $result ? (array) $result : [];
+    }
+
     private function checkAlliance(string $alliance): bool
     {
-        if ($alliance_query = $this->alliancesModel->checkAllianceByNameOrTag($alliance)) {
-            $this->id = $alliance_query['alliance_id'];
+        $result = Alliance::where('alliance_name', $alliance)
+            ->orWhere('alliance_tag', $alliance)
+            ->first(['alliance_id']);
+
+        if ($result) {
+            $this->id = $result->alliance_id;
 
             return true;
         }
 
         return false;
+    }
+
+    private function checkAllianceTag(string $alliance_tag): bool
+    {
+        $alliance_tag = trim(htmlspecialchars_decode($alliance_tag, ENT_QUOTES));
+
+        if ($alliance_tag == '' || strlen($alliance_tag) < 3 || strlen($alliance_tag) > 8) {
+            return false;
+        }
+
+        return !Alliance::where('alliance_tag', $alliance_tag)->exists();
+    }
+
+    private function checkAllianceName(string $alliance_name): bool
+    {
+        $alliance_name = trim(htmlspecialchars_decode($alliance_name, ENT_QUOTES));
+
+        if ($alliance_name == '' || strlen($alliance_name) < 3 || strlen($alliance_name) > 30) {
+            return false;
+        }
+
+        return !Alliance::where('alliance_name', $alliance_name)->exists();
+    }
+
+    private function checkAllianceFounder(int $userId): bool
+    {
+        $user = User::where('id', $userId)->first(['ally_id', 'ally_request']);
+
+        return $user && $user->ally_id > 0 && $user->ally_request > 0;
     }
 }
