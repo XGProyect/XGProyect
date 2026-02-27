@@ -1,6 +1,6 @@
 <tr>
     <td class="align_center">
-        <input type="checkbox" class="form-check-input" name="delete_message[{{ $userId }}]">
+        <input type="checkbox" class="form-check-input" name="delete_message[{{ $member_id }}]">
     </td>
     <td class="align_center">{{ $name }}</td>
     <td class="align_center">{{ $alliance_request }}</td>

@@ -169,13 +169,14 @@ class AlliancesController extends BaseController
             ->leftJoin('alliance AS a', 'a.alliance_id', '=', 'u.ally_id')
             ->where('u.ally_id', $this->id)
             ->get()
-            ->map(fn($r) => (array) $r)
+            ->map(fn ($r) => (array) $r)
             ->toArray();
 
         $members = '';
 
         if (!empty($all_members)) {
             foreach ($all_members as $member) {
+                $member['member_id'] = $member['id'];
                 $member['alliance_request'] = ($member['ally_request']) ? __('admin/alliances.al_request_yes') : __('admin/alliances.al_request_no');
                 $member['ally_request_text'] = ($member['ally_request_text']) ? $member['ally_request_text'] : '-';
                 $member['alliance_register_time'] = date(Options::getInstance()->get('date_format_extended'), $member['ally_register_time']);
