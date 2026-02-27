@@ -89,14 +89,14 @@ class BackupController extends BaseController
             $tables[] = $row[0];
         }
 
-        $dump = '';
+        $dump = "SET FOREIGN_KEY_CHECKS=0;\n\n";
 
         foreach ($tables as $table) {
             $rows = $pdo->query('SELECT * FROM ' . $table)->fetchAll(\PDO::FETCH_NUM);
             $stmt = $pdo->query('SELECT * FROM ' . $table . ' LIMIT 0');
             $numFields = $stmt->columnCount();
 
-            $dump .= 'DROP TABLE ' . $table . ';';
+            $dump .= 'DROP TABLE IF EXISTS ' . $table . ';';
             $createRow = $pdo->query('SHOW CREATE TABLE ' . $table)->fetch(\PDO::FETCH_NUM);
             $dump .= "\n\n" . $createRow[1] . ";\n\n";
 
@@ -104,9 +104,13 @@ class BackupController extends BaseController
                 $dump .= 'INSERT INTO ' . $table . ' VALUES(';
 
                 for ($j = 0; $j < $numFields; $j++) {
-                    $value = addslashes((string) ($row[$j] ?? ''));
-                    $value = str_replace("\n", '\\n', $value);
-                    $dump .= '"' . $value . '"';
+                    if ($row[$j] === null) {
+                        $dump .= 'NULL';
+                    } else {
+                        $value = addslashes((string) $row[$j]);
+                        $value = str_replace("\n", '\\n', $value);
+                        $dump .= '"' . $value . '"';
+                    }
 
                     if ($j < ($numFields - 1)) {
                         $dump .= ',';
@@ -118,6 +122,8 @@ class BackupController extends BaseController
 
             $dump .= "\n\n\n";
         }
+
+        $dump .= "SET FOREIGN_KEY_CHECKS=1;\n";
 
         $fileName = 'db-backup-' . date('Ymd') . '-' . time() . '-' . sha1(join(',', $tables)) . '.sql';
         $handle = fopen(storage_path('backups') . DIRECTORY_SEPARATOR . $fileName, 'w+');
