@@ -14,7 +14,9 @@
                         <div class="btn-group">
                             <img src="{{ asset('assets/upload/skins/xgproyect/planets/small/s_' .  $item['planet_image'] . '.jpg') }}" alt="{{ $item['planet_image'] }}.jpg"
                                 title="{{ $item['planet_image'] }}.jpg" border="0" {{ $item['planet_image_style'] }}>
-                            {!! $item['moon_image'] !!}
+                            @if ($item['moon_image'])
+                                <img src="{{ asset('assets/upload/skins/xgproyect/planets/small/s_' . $item['moon_image'] . '.jpg') }}" alt="{{ $item['moon_image'] }}.jpg" title="{{ $item['moon_image'] }}.jpg" border="0" {{ $item['moon_image_style'] }}>
+                            @endif
                             <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">{{ $item['planet_name'] }}
                                 {{ $item['planet_status'] }}
                                 [{{ $item['moon_name'] }}{!! $item['moon_status'] !!}]
@@ -64,11 +66,11 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item"
-                                        href="/admin/users?type=moons&edit=delete&dltmode=soft&user={{ $item['user'] }}&moon={moon_id}">{{ __('admin/users.us_user_delete_moon') }}
+                                        href="/admin/users?type=moons&edit=delete&dltmode=soft&user={{ $item['user'] }}&moon={{ $item['moon_id'] }}">{{ __('admin/users.us_user_delete_moon') }}
                                         {{ __('admin/users.us_user_delete_pm_soft') }}
                                     </a>
                                 </li>
-                                <!--<li><a href="/admin/users?type=moons&edit=delete&dltmode=physical&user={{ $item['user'] }}&moon={moon_id}">{{ __('admin/users.us_user_delete_moon') }} {{ __('admin/users.us_user_delete_pm_physical') }}</a></li>-->
+                                <!--<li><a href="/admin/users?type=moons&edit=delete&dltmode=physical&user={{ $item['user'] }}&moon={{ $item['moon_id'] }}">{{ __('admin/users.us_user_delete_moon') }} {{ __('admin/users.us_user_delete_pm_physical') }}</a></li>-->
                             </ul>
                         </div>
                     </td>

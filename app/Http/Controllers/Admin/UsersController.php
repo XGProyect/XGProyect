@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Sessions;
+use App\Models\User;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Core\Options;
@@ -17,7 +19,6 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\StatisticsLibrary;
 use Xgp\App\Libraries\Users as UsersLibrary;
 use Xgp\App\Libraries\Users\Shortcuts;
-use Xgp\App\Models\Adm\Users;
 
 class UsersController extends BaseController
 {
@@ -28,7 +29,6 @@ class UsersController extends BaseController
     private int $authlevel = 0;
     private $user_query;
     private $stats;
-    private Users $usersModel;
     private array $user;
     private UsersLibrary $userLibrary;
     private AdministrationService $administrationService;
@@ -46,7 +46,6 @@ class UsersController extends BaseController
         $this->administrationService->authorization(__CLASS__);
 
         $this->stats = new StatisticsLibrary();
-        $this->usersModel = new Users();
         $this->user = UsersLibrary::getInstance()->getUserData();
         $this->userLibrary = new UsersLibrary();
 
@@ -64,11 +63,11 @@ class UsersController extends BaseController
         $user = isset($_GET['user']) ? trim($_GET['user']) : null;
         $type = isset($_GET['type']) ? trim($_GET['type']) : null;
         $this->edit = isset($_GET['edit']) ? trim($_GET['edit']) : '';
-        $this->planet = isset($_GET['planet']) ? trim($_GET['planet']) : 0;
-        $this->moon = isset($_GET['moon']) ? trim($_GET['moon']) : 0;
+        $this->planet = isset($_GET['planet']) ? (int) $_GET['planet'] : 0;
+        $this->moon = isset($_GET['moon']) ? (int) $_GET['moon'] : 0;
 
         if ($user != '') {
-            $checked_user = $this->usersModel->checkUser($user);
+            $checked_user = $this->checkUser($user);
 
             if (!$checked_user) {
                 session()->flash('danger', __('admin/users.us_nothing_found'));
@@ -78,7 +77,7 @@ class UsersController extends BaseController
                 $this->authlevel = (int) $checked_user['authlevel'];
 
                 // initial data
-                $this->user_query = $this->usersModel->getUserDataById($this->id);
+                $this->user_query = $this->getUserDataById($this->id);
 
                 // save the data
                 if (isset($_POST['send_data']) && $_POST['send_data']) {
@@ -86,7 +85,7 @@ class UsersController extends BaseController
                 }
 
                 // get refreshed data
-                $this->user_query = $this->usersModel->getUserDataById($this->id);
+                $this->user_query = $this->getUserDataById($this->id);
             }
         }
 
@@ -210,11 +209,19 @@ class UsersController extends BaseController
 
     private function refreshPage(): void
     {
-        $page = (isset($_GET['page']) ? '?page=' . $_GET['page'] : '');
-        $type = (isset($_GET['type']) ? '&type=' . $_GET['type'] : '');
-        $user = (isset($_GET['user']) ? '&user=' . $_GET['user'] : '');
+        $params = [];
 
-        Functions::redirect("admin.php{$page}{$type}{$user}");
+        if (isset($_GET['type'])) {
+            $params['type'] = $_GET['type'];
+        }
+
+        if (isset($_GET['user'])) {
+            $params['user'] = $_GET['user'];
+        }
+
+        $query = $params ? '?' . http_build_query($params) : '';
+
+        Functions::redirect("/admin/users{$query}");
     }
 
     //#####################################
@@ -273,7 +280,7 @@ class UsersController extends BaseController
 
     private function getDataPlanets(): string
     {
-        $planets_query = $this->usersModel->getAllPlanetsData($this->id, $this->planet, $this->edit);
+        $planets_query = $this->getAllPlanetsData($this->id, $this->planet, $this->edit);
         $view = '';
 
         $parse['planets'] = str_replace('%s', $this->user_query['name'], __('admin/users.us_user_planets'));
@@ -296,7 +303,7 @@ class UsersController extends BaseController
                 $view = 'admin.users_planets_defenses';
                 break;
             case ($this->edit == 'delete'):
-                $this->usersModel->softDeletePlanetById($this->planet);
+                $this->softDeletePlanetById($this->planet);
                 $this->refreshPage();
                 break;
             case '':
@@ -311,7 +318,7 @@ class UsersController extends BaseController
 
     private function getDataMoons(): string
     {
-        $moons_query = $this->usersModel->getAllMoonsData($this->id, $this->moon, $this->edit);
+        $moons_query = $this->getAllMoonsData($this->id, $this->moon, $this->edit);
         $view = '';
 
         $parse['moons'] = str_replace('%s', $this->user_query['name'], __('admin/users.us_user_moons'));
@@ -335,7 +342,7 @@ class UsersController extends BaseController
                 $view = 'admin.users_planets_defenses';
                 break;
             case ($this->edit == 'delete'):
-                $this->usersModel->softDeleteMoonById($this->moon);
+                $this->softDeleteMoonById($this->moon);
                 $this->refreshPage();
                 break;
             case '':
@@ -371,17 +378,11 @@ class UsersController extends BaseController
 
         $errors = '';
 
-        if ($username == '' or $this->usersModel->checkUsername($username, $this->id)) {
+        if ($username == '' or $this->checkUsername($username, $this->id)) {
             $errors .= __('admin/users.us_error_username') . '<br>';
         }
 
-        if ($password != '') {
-            $password = "'" . Functions::hash($password) . "'";
-        } else {
-            $password = '`password`';
-        }
-
-        if ($email == '' or $this->usersModel->checkEmail($email, $this->id)) {
+        if ($email == '' or $this->checkEmail($email, $this->id)) {
             $errors .= __('admin/users.us_error_email') . '<br>';
         }
 
@@ -404,16 +405,20 @@ class UsersController extends BaseController
         if ($errors != '') {
             session()->flash('danger', $errors);
         } else {
-            $this->usersModel->saveUserData([
-                'username' => $username,
-                'password' => $password,
+            $update = [
+                'name' => $username,
                 'email' => $email,
                 'authlevel' => $authlevel,
-                'id_planet' => $id_planet,
-                'cur_planet' => $cur_planet,
+                'home_planet_id' => $id_planet,
+                'current_planet' => $cur_planet,
                 'ally_id' => $ally_id,
-                'id' => $this->id,
-            ]);
+            ];
+
+            if ($password !== '') {
+                $update['password'] = Functions::hash($password);
+            }
+
+            User::where('id', $this->id)->update($update);
 
             if ($this->user['id'] != $this->id) {
                 Sessions::where('user_id', $this->user['id'])->delete();
@@ -423,18 +428,96 @@ class UsersController extends BaseController
 
     private function saveSettings(): void
     {
-        $this->usersModel->saveUserPreferences($_POST, $this->id, $this->user_query);
+        $vacation_time = Functions::getDefaultVacationTime();
+        $preference_planet_sort = (int) ($_POST['preference_planet_sort'] ?? 0);
+        $preference_planet_sort_sequence = (int) ($_POST['preference_planet_sort_sequence'] ?? 0);
+        $preference_spy_probes = (int) ($_POST['preference_spy_probes'] ?? 0);
+        $preference_vacations_status = (isset($_POST['preference_vacations_status']) && $_POST['preference_vacations_status'] == 'on') ? 1 : 0;
+        $preference_vacation_mode = ($preference_vacations_status == 1) ? $vacation_time : null;
+        $preference_delete_mode = (isset($_POST['preference_delete_mode']) && $_POST['preference_delete_mode'] == 'on') ? time() : null;
+
+        DB::table('preferences')->where('preference_user_id', $this->id)->update([
+            'preference_spy_probes' => $preference_spy_probes,
+            'preference_planet_sort' => $preference_planet_sort,
+            'preference_planet_sort_sequence' => $preference_planet_sort_sequence,
+            'preference_vacation_mode' => $preference_vacation_mode,
+            'preference_delete_mode' => $preference_delete_mode,
+        ]);
+
+        $currentVacationMode = $this->user_query['preference_vacation_mode'];
+
+        if (($currentVacationMode > 0) && $preference_vacations_status == 0) {
+            // Remove from vacation — restore planet production
+            DB::table('planets')->where('planet_user_id', $this->id)->update([
+                'planet_last_update' => time(),
+                'planet_building_metal_mine_percent' => 10,
+                'planet_building_crystal_mine_percent' => 10,
+                'planet_building_deuterium_sintetizer_percent' => 10,
+                'planet_building_solar_plant_percent' => 10,
+                'planet_building_fusion_reactor_percent' => 10,
+                'planet_ship_solar_satellite_percent' => 10,
+            ]);
+        } elseif (($currentVacationMode == 0 || is_null($currentVacationMode)) && $preference_vacations_status == 1) {
+            // Add to vacation — remove planet production
+            DB::table('planets')->where('planet_user_id', $this->id)->update([
+                'planet_building_metal_mine_percent' => 0,
+                'planet_building_crystal_mine_percent' => 0,
+                'planet_building_deuterium_sintetizer_percent' => 0,
+                'planet_building_solar_plant_percent' => 0,
+                'planet_building_fusion_reactor_percent' => 0,
+                'planet_ship_solar_satellite_percent' => 0,
+            ]);
+        }
     }
 
     private function saveResearch(): void
     {
-        $this->usersModel->saveTechnologies($_POST, $this->id);
+        $updates = [];
+
+        foreach ($_POST as $tech => $level) {
+            if (strpos($tech, 'research_') !== false) {
+                $updates[$tech] = (int) $level;
+            }
+        }
+
+        if (!empty($updates)) {
+            DB::table('research')->where('research_user_id', $this->id)->update($updates);
+        }
+
         $this->stats->rebuildPoints($this->id, 0, 'research');
     }
 
     private function savePremium(): void
     {
-        $this->usersModel->savePremium($_POST, $this->id, $this->user_query);
+        $updates = [];
+
+        foreach ($_POST as $premium => $data) {
+            if (strpos($premium, 'premium_') !== false) {
+                if ($premium == 'premium_dark_matter') {
+                    $data = (is_numeric($data) && !empty($data)) ? (int) $data : 0;
+                } else {
+                    switch ($data) {
+                        default:
+                        case 0:
+                            $data = $this->user_query[$premium];
+                            break;
+                        case 1:
+                            $data = 0;
+                            break;
+                        case 2:
+                        case 3:
+                            $data = time() + ($data == 3 ? (3600 * 24 * 30 * 3) : (3600 * 24 * 7));
+                            break;
+                    }
+                }
+
+                $updates[$premium] = $data;
+            }
+        }
+
+        if (!empty($updates)) {
+            DB::table('premium')->where('premium_user_id', $this->id)->update($updates);
+        }
     }
 
     private function savePlanet(int $type = 1): void
@@ -449,7 +532,32 @@ class UsersController extends BaseController
             return;
         }
 
-        $this->usersModel->savePlanet($_POST, $id_get);
+        $planet_data = $_POST;
+        unset($planet_data['send_data'], $planet_data['planet_b_building_id'], $planet_data['planet_b_tech_id'], $planet_data['planet_b_hangar_id']);
+        $string_type = ['planet_name', 'planet_image'];
+        $updates = [];
+
+        foreach ($planet_data as $field => $value) {
+            switch ($field) {
+                case 'planet_destroyed':
+                    $updates['planet_destroyed'] = ($value == 1) ? (time() + (PLANETS_LIFE_TIME * 3600)) : 0;
+                    break;
+                case 'planet_last_jump_time':
+                    $updates['planet_last_jump_time'] = 0;
+                    break;
+                default:
+                    if (in_array($field, $string_type)) {
+                        $updates[$field] = (string) $value;
+                    } else {
+                        $updates[$field] = (int) $value;
+                    }
+                    break;
+            }
+        }
+
+        if (!empty($updates)) {
+            DB::table('planets')->where('planet_id', $id_get)->update($updates);
+        }
     }
 
     private function saveBuildings(int $type = 1): void
@@ -460,7 +568,28 @@ class UsersController extends BaseController
             $id_get = $this->moon;
         }
 
-        $this->usersModel->saveBuildings($_POST, $id_get);
+        $buildingUpdates = [];
+        $totalFields = 0;
+
+        foreach ($_POST as $building => $level) {
+            if (strpos($building, 'building_') !== false) {
+                $level = (int) $level;
+                $buildingUpdates[$building] = $level;
+                $totalFields += $level;
+            }
+        }
+
+        if (!empty($buildingUpdates)) {
+            DB::table('buildings')->where('building_planet_id', $id_get)->update($buildingUpdates);
+        }
+
+        $buildingMondbasis = (int) ($_POST['building_mondbasis'] ?? 0);
+
+        DB::table('planets')->where('planet_id', $id_get)->update([
+            'planet_field_current' => $totalFields,
+            'planet_field_max' => DB::raw('IF(`planet_type` = 3, 1 + ' . $buildingMondbasis . ' * ' . FIELDS_BY_MOONBASIS_LEVEL . ', `planet_field_max`)'),
+        ]);
+
         $this->stats->rebuildPoints($this->id, $id_get, 'buildings');
     }
 
@@ -472,7 +601,18 @@ class UsersController extends BaseController
             $id_get = $this->moon;
         }
 
-        $this->usersModel->saveShips($_POST, $id_get);
+        $updates = [];
+
+        foreach ($_POST as $ship => $amount) {
+            if (strpos($ship, 'ship_') !== false) {
+                $updates[$ship] = (int) $amount;
+            }
+        }
+
+        if (!empty($updates)) {
+            DB::table('ships')->where('ship_planet_id', $id_get)->update($updates);
+        }
+
         $this->stats->rebuildPoints($this->id, $id_get, 'ships');
     }
 
@@ -484,7 +624,18 @@ class UsersController extends BaseController
             $id_get = $this->moon;
         }
 
-        $this->usersModel->saveDefenses($_POST, $id_get);
+        $updates = [];
+
+        foreach ($_POST as $defense => $amount) {
+            if (strpos($defense, 'defense_') !== false) {
+                $updates[$defense] = (int) $amount;
+            }
+        }
+
+        if (!empty($updates)) {
+            DB::table('defenses')->where('defense_planet_id', $id_get)->update($updates);
+        }
+
         $this->stats->rebuildPoints($this->id, $id_get, 'defenses');
     }
 
@@ -497,10 +648,9 @@ class UsersController extends BaseController
     private function buildUsersCombo(int $userId): string
     {
         $combo_rows = '';
-        $users = $this->usersModel->getAllUsers();
 
-        foreach ($users as $users_row) {
-            $combo_rows .= '<option value="' . $users_row['id'] . '" ' . ($users_row['id'] == $userId ? ' selected' : '') . '>' . $users_row['name'] . '</option>';
+        foreach (User::select('id', 'name')->get() as $user) {
+            $combo_rows .= '<option value="' . $user->id . '" ' . ($user->id == $userId ? ' selected' : '') . '>' . $user->name . '</option>';
         }
 
         return $combo_rows;
@@ -509,7 +659,12 @@ class UsersController extends BaseController
     private function buildPlanetCombo(array $user_data, string $id_field): string
     {
         $combo_rows = '';
-        $planets = $this->usersModel->getAllPlanetsByUserId($this->id);
+        $planets = DB::table('planets')
+            ->select('planet_id', 'planet_name', 'planet_galaxy', 'planet_system', 'planet_planet')
+            ->where('planet_user_id', $this->id)
+            ->get()
+            ->map(fn($r) => (array) $r)
+            ->toArray();
 
         foreach ($planets as $planets_row) {
             if ($user_data[$id_field] == $planets_row['planet_id']) {
@@ -525,7 +680,11 @@ class UsersController extends BaseController
     private function buildAllianceCombo(array $user_data): string
     {
         $combo_rows = '';
-        $alliances = $this->usersModel->getAllAlliances();
+        $alliances = DB::table('alliance')
+            ->select('alliance_id', 'alliance_name', 'alliance_tag')
+            ->get()
+            ->map(fn($r) => (array) $r)
+            ->toArray();
 
         foreach ($alliances as $alliance_row) {
             if ($user_data['ally_id'] == $alliance_row['alliance_id']) {
@@ -661,7 +820,6 @@ class UsersController extends BaseController
     private function buildImageCombo(string $current_image): string
     {
         $images_dir = opendir(DEFAULT_SKINPATH . 'planets');
-        $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store', 'small'];
         $images_options = '';
 
         while (($image_dir = readdir($images_dir)) !== false) {
@@ -737,7 +895,6 @@ class UsersController extends BaseController
 
     private function planetsTable(array $planets_data): array
     {
-        $imagePath = DEFAULT_SKINPATH . 'planets/small/s_';
         $parse['user'] = $this->user_query['name'];
         $prepare_table = [];
 
@@ -747,7 +904,6 @@ class UsersController extends BaseController
             $parse['planet_image'] = $planets['planet_image'];
             $parse['planet_status'] = '';
             $parse['planet_image_style'] = '';
-            $style = '';
 
             if ($planets['planet_destroyed'] != 0) {
                 $parse['planet_status'] = '<strong><a title="' . __('admin/users.us_user_planets_destroyed') . '">
@@ -758,6 +914,7 @@ class UsersController extends BaseController
             $parse['moon_id'] = '';
             $parse['moon_name'] = '';
             $parse['moon_image'] = '';
+            $parse['moon_image_style'] = '';
             $parse['moon_status'] = '';
 
             if (isset($planets['moon_id'])) {
@@ -767,10 +924,10 @@ class UsersController extends BaseController
                 if ($planets['moon_destroyed'] != 0) {
                     $parse['moon_status'] = ' <strong><a title="' . __('admin/users.us_user_planets_destroyed') . '">
                     (' . __('admin/users.us_user_planets_destroyed_short') . ')</a></strong>';
-                    $style = 'class="greyout"';
+                    $parse['moon_image_style'] = 'class="greyout"';
                 }
 
-                $parse['moon_image'] = "<img src=\"{$imagePath}{$planets['moon_image']}.jpg\" alt=\"{$planets['moon_image']}.jpg\" title=\"{$planets['moon_image']}.jpg\" border=\"0\" " . $style . '>';
+                $parse['moon_image'] = $planets['moon_image'];
             }
 
             $prepare_table[] = $parse;
@@ -913,9 +1070,10 @@ class UsersController extends BaseController
 
         return $prepare_table;
     }
+
     //#####################################
     //
-    // edition methods (pages)
+    // delete methods
     //
     //#####################################
 
@@ -927,7 +1085,7 @@ class UsersController extends BaseController
 
         $this->deleteMoon();
 
-        $this->usersModel->deletePlanetById($id_planet);
+        $this->deletePlanetById($id_planet);
     }
 
     private function deleteMoon($id_moon = 0): void
@@ -936,7 +1094,7 @@ class UsersController extends BaseController
             $id_moon = $this->moon;
         }
 
-        $this->usersModel->deleteMoonById($id_moon);
+        $this->deleteMoonById($id_moon);
     }
 
     //#####################################
@@ -982,5 +1140,209 @@ class UsersController extends BaseController
     private function vacationSet(): string
     {
         return __('admin/users.us_user_preference_vacations_until') . date(Options::getInstance()->get('date_format_extended'), $this->user_query['preference_vacation_mode']);
+    }
+
+    //#####################################
+    //
+    // query helper methods
+    //
+    //#####################################
+
+    private function checkUser(string $user): array
+    {
+        $result = DB::table('users')
+            ->select('id', 'authlevel')
+            ->where('name', $user)
+            ->orWhere('email', $user)
+            ->first();
+
+        return $result ? (array) $result : [];
+    }
+
+    private function checkUsername(string $username, int $userId): bool
+    {
+        return DB::table('users')->where('name', $username)->where('id', '<>', $userId)->exists();
+    }
+
+    private function checkEmail(string $email, int $userId): bool
+    {
+        return DB::table('users')->where('email', $email)->where('id', '<>', $userId)->exists();
+    }
+
+    private function getUserDataById(int $userId): array
+    {
+        $p = DB::getTablePrefix();
+        $result = DB::table('users AS u')
+            ->selectRaw("{$p}u.*, {$p}b.*, {$p}p.*, {$p}pr.*, {$p}r.*")
+            ->leftJoin('bans AS b', 'b.user_id', '=', 'u.id')
+            ->join('premium AS p', 'p.premium_user_id', '=', 'u.id')
+            ->join('preferences AS pr', 'pr.preference_user_id', '=', 'u.id')
+            ->join('research AS r', 'r.research_user_id', '=', 'u.id')
+            ->where('u.id', $userId)
+            ->first();
+
+        return $result ? (array) $result : [];
+    }
+
+    private function getAllPlanetsData(int $userId, int $planetId = 0, string $edit = ''): array
+    {
+        $t = DB::getTablePrefix();
+
+        switch ($edit) {
+            case 'planet':
+                $getQuery = 'p.*';
+                break;
+            case 'buildings':
+                $getQuery = 'b.*';
+                break;
+            case 'ships':
+                $getQuery = 's.*';
+                break;
+            case 'defenses':
+                $getQuery = 'd.*';
+                break;
+            default:
+                $getQuery = 'p.*, b.*, d.*, s.*,
+                    m.planet_id AS moon_id,
+                    m.planet_name AS moon_name,
+                    m.planet_image AS moon_image,
+                    m.planet_destroyed AS moon_destroyed';
+                break;
+        }
+
+        $params = [$userId];
+        $subQuery = '';
+
+        if ($planetId > 0) {
+            $subQuery = ' AND p.`planet_id` = ?';
+            $params[] = $planetId;
+        }
+
+        return array_map(
+            fn($r) => (array) $r,
+            DB::select(
+                "SELECT {$getQuery}
+                FROM `{$t}planets` AS p
+                INNER JOIN `{$t}buildings` AS b ON b.`building_planet_id` = p.`planet_id`
+                INNER JOIN `{$t}defenses` AS d ON d.`defense_planet_id` = p.`planet_id`
+                INNER JOIN `{$t}ships` AS s ON s.`ship_planet_id` = p.`planet_id`
+                LEFT JOIN `{$t}planets` AS m ON m.`planet_id` = (SELECT mp.`planet_id`
+                    FROM `{$t}planets` AS mp
+                    WHERE mp.`planet_galaxy` = p.`planet_galaxy`
+                        AND mp.`planet_system` = p.`planet_system`
+                        AND mp.`planet_planet` = p.`planet_planet`
+                        AND mp.`planet_type` = 3)
+                WHERE p.`planet_user_id` = ?
+                    AND p.`planet_type` = 1{$subQuery}",
+                $params
+            )
+        );
+    }
+
+    private function getAllMoonsData(int $userId, int $moonId = 0, string $edit = ''): array
+    {
+        $t = DB::getTablePrefix();
+
+        switch ($edit) {
+            case 'moon':
+                $getQuery = 'm.*';
+                break;
+            case 'buildings':
+                $getQuery = 'b.*';
+                break;
+            case 'ships':
+                $getQuery = 's.*';
+                break;
+            case 'defenses':
+                $getQuery = 'd.*';
+                break;
+            default:
+                $getQuery = 'm.*, b.*, d.*, s.*';
+                break;
+        }
+
+        $params = [$userId];
+        $subQuery = '';
+
+        if ($moonId > 0) {
+            $subQuery = ' AND m.`planet_id` = ?';
+            $params[] = $moonId;
+        }
+
+        return array_map(
+            fn($r) => (array) $r,
+            DB::select(
+                "SELECT {$getQuery}
+                FROM `{$t}planets` AS m
+                INNER JOIN `{$t}buildings` AS b ON b.`building_planet_id` = m.`planet_id`
+                INNER JOIN `{$t}defenses` AS d ON d.`defense_planet_id` = m.`planet_id`
+                INNER JOIN `{$t}ships` AS s ON s.`ship_planet_id` = m.`planet_id`
+                WHERE m.`planet_user_id` = ?
+                    AND m.`planet_type` = 3{$subQuery}",
+                $params
+            )
+        );
+    }
+
+    private function softDeletePlanetById(int $planetId): void
+    {
+        $t = DB::getTablePrefix();
+        $destroyTime = time() + (PLANETS_LIFE_TIME * 3600);
+
+        DB::statement(
+            "UPDATE `{$t}planets` AS p, `{$t}planets` AS m, `{$t}users` AS u SET
+             p.`planet_destroyed` = ?,
+             m.`planet_destroyed` = ?,
+             u.`current_planet` = u.`home_planet_id`
+             WHERE p.`planet_id` = ?
+                 AND m.`planet_galaxy` = p.`planet_galaxy`
+                 AND m.`planet_system` = p.`planet_system`
+                 AND m.`planet_planet` = p.`planet_planet`
+                 AND m.`planet_type` = '3'",
+            [$destroyTime, $destroyTime, $planetId]
+        );
+    }
+
+    private function softDeleteMoonById(int $moonId): void
+    {
+        $t = DB::getTablePrefix();
+        $destroyTime = time() + (PLANETS_LIFE_TIME * 3600);
+
+        DB::statement(
+            "UPDATE `{$t}planets` AS m, `{$t}users` AS u SET
+             m.`planet_destroyed` = ?,
+             u.`current_planet` = u.`home_planet_id`
+             WHERE m.`planet_id` = ?
+                 AND m.`planet_type` = '3'",
+            [$destroyTime, $moonId]
+        );
+    }
+
+    private function deletePlanetById(int $planetId): void
+    {
+        $t = DB::getTablePrefix();
+
+        DB::statement(
+            "DELETE p, b, d, s FROM `{$t}planets` AS p
+             INNER JOIN `{$t}buildings` AS b ON b.`building_planet_id` = p.`planet_id`
+             INNER JOIN `{$t}defenses` AS d ON d.`defense_planet_id` = p.`planet_id`
+             INNER JOIN `{$t}ships` AS s ON s.`ship_planet_id` = p.`planet_id`
+             WHERE p.`planet_id` = ? AND p.`planet_type` = '1'",
+            [$planetId]
+        );
+    }
+
+    private function deleteMoonById(int $moonId): void
+    {
+        $t = DB::getTablePrefix();
+
+        DB::statement(
+            "DELETE m, b, d, s FROM `{$t}planets` AS m
+             INNER JOIN `{$t}buildings` AS b ON b.`building_planet_id` = m.`planet_id`
+             INNER JOIN `{$t}defenses` AS d ON d.`defense_planet_id` = m.`planet_id`
+             INNER JOIN `{$t}ships` AS s ON s.`ship_planet_id` = m.`planet_id`
+             WHERE m.`planet_id` = ? AND m.`planet_type` = '3'",
+            [$moonId]
+        );
     }
 }
