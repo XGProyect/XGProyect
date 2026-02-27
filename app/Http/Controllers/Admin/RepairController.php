@@ -7,14 +7,13 @@ namespace App\Http\Controllers\Admin;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Models\Adm\Repair;
 
 class RepairController extends BaseController
 {
-    private Repair $repairModel;
     private AdministrationService $administrationService;
 
     public function __construct()
@@ -29,15 +28,13 @@ class RepairController extends BaseController
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->repairModel = new Repair();
-
         $this->buildPage();
     }
 
     private function buildPage(): void
     {
         if (!$_POST) {
-            $tables = $this->repairModel->getAllTables();
+            $tables = $this->getAllTables();
 
             $parse['display'] = 'block';
             $parse['head'] = Template::render('admin.repair_row_head');
@@ -67,18 +64,18 @@ class RepairController extends BaseController
                 foreach ($_POST['table'] as $table) {
                     $parse['row'] = $table;
 
-                    $this->repairModel->checkTable($table);
+                    DB::statement('CHECK TABLE ' . $table);
                     $parse['result'] = __('admin/repair.db_check_ok');
                     $result_rows .= Template::render('admin.repair_result', $parse);
 
                     if (isset($_POST['optimize']) && $_POST['optimize'] === 'on') {
-                        $this->repairModel->optimizeTable($table);
+                        DB::statement('OPTIMIZE TABLE ' . $table);
                         $parse['result'] = __('admin/repair.db_opt');
                         $result_rows .= Template::render('admin.repair_result', $parse);
                     }
 
                     if (isset($_POST['repair']) && $_POST['repair'] === 'on') {
-                        $this->repairModel->repairTable($table);
+                        DB::statement('REPAIR TABLE ' . $table);
                         $parse['result'] = __('admin/repair.db_rep');
                         $result_rows .= Template::render('admin.repair_result', $parse);
                     }
@@ -93,6 +90,19 @@ class RepairController extends BaseController
         Template::legacyView(
             'admin.repair',
             $parse
+        );
+    }
+
+    private function getAllTables(): array
+    {
+        return array_map(
+            fn($row) => (array) $row,
+            DB::select(
+                'SELECT TABLE_NAME, DATA_LENGTH, INDEX_LENGTH, DATA_FREE
+                FROM information_schema.TABLES
+                WHERE table_schema = ?',
+                [config('DB_DATABASE')]
+            )
         );
     }
 }
