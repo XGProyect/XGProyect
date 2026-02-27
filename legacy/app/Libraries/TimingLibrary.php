@@ -39,7 +39,7 @@ abstract class TimingLibrary
             $time = strtotime($time);
         }
 
-        return date(Options::getInstance()->get('date_format_extended'), $time);
+        return date(Options::getInstance()->get('date_format_extended'), (int)$time);
     }
 
     /**
