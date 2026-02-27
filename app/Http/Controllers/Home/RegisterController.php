@@ -75,7 +75,7 @@ class RegisterController extends BaseController
                 Auth::getUser()->getAuthPassword()
             );
 
-            return redirect()->intended('game.php?page=overview');
+            return redirect('game.php?page=overview');
         }
 
         return back()->withErrors($request);

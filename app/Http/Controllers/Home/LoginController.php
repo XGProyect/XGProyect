@@ -44,7 +44,7 @@ class LoginController extends BaseController
                 $authUser->password
             );
 
-            return redirect()->intended('game.php?page=overview');
+            return redirect('game.php?page=overview');
         }
 
         return back()->withErrors([
