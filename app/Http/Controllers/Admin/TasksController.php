@@ -84,7 +84,7 @@ class TasksController extends BaseController
     private function getLastBackupActions(): string
     {
         return UrlHelper::setUrl(
-            'admin/backup',
+            '/admin/backup',
             '<i class="fas fa-cogs" data-toggle="popover" data-placement="top"
             data-trigger="hover" data-content="' . __('admin/tasks.ta_backup_title') . '"></i>',
             __('admin/tasks.ta_backup_title')
