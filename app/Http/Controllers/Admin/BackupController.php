@@ -7,20 +7,18 @@ namespace App\Http\Controllers\Admin;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\TimingLibrary as Timing;
-use Xgp\App\Models\Adm\Backup;
 
 class BackupController extends BaseController
 {
     public const BACKUP_SETTINGS = [
         'auto_backup' => FILTER_UNSAFE_RAW,
     ];
-
-    private Backup $backupModel;
 
     private AdministrationService $administrationService;
 
@@ -35,8 +33,6 @@ class BackupController extends BaseController
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
-
-        $this->backupModel = new Backup();
 
         $this->runAction();
 
@@ -72,7 +68,7 @@ class BackupController extends BaseController
 
         // create a new backup
         if ($backup) {
-            $this->backupModel->performBackup();
+            $this->performBackup();
         }
 
         // download or delete a file
@@ -82,6 +78,51 @@ class BackupController extends BaseController
                 $this->{'do' . ucfirst($file_actions['action']) . 'Action'}($file_actions['file']);
             }
         }
+    }
+
+    private function performBackup(): void
+    {
+        $pdo = DB::getPdo();
+        $tables = [];
+
+        foreach ($pdo->query('SHOW TABLES')->fetchAll(\PDO::FETCH_NUM) as $row) {
+            $tables[] = $row[0];
+        }
+
+        $dump = '';
+
+        foreach ($tables as $table) {
+            $rows = $pdo->query('SELECT * FROM ' . $table)->fetchAll(\PDO::FETCH_NUM);
+            $stmt = $pdo->query('SELECT * FROM ' . $table . ' LIMIT 0');
+            $numFields = $stmt->columnCount();
+
+            $dump .= 'DROP TABLE ' . $table . ';';
+            $createRow = $pdo->query('SHOW CREATE TABLE ' . $table)->fetch(\PDO::FETCH_NUM);
+            $dump .= "\n\n" . $createRow[1] . ";\n\n";
+
+            foreach ($rows as $row) {
+                $dump .= 'INSERT INTO ' . $table . ' VALUES(';
+
+                for ($j = 0; $j < $numFields; $j++) {
+                    $value = addslashes((string) ($row[$j] ?? ''));
+                    $value = str_replace("\n", '\\n', $value);
+                    $dump .= '"' . $value . '"';
+
+                    if ($j < ($numFields - 1)) {
+                        $dump .= ',';
+                    }
+                }
+
+                $dump .= ");\n";
+            }
+
+            $dump .= "\n\n\n";
+        }
+
+        $fileName = 'db-backup-' . date('Ymd') . '-' . time() . '-' . sha1(join(',', $tables)) . '.sql';
+        $handle = fopen(storage_path('backups') . DIRECTORY_SEPARATOR . $fileName, 'w+');
+        fwrite($handle, $dump);
+        fclose($handle);
     }
 
     private function doDownloadAction(string $file_name): void
@@ -104,7 +145,7 @@ class BackupController extends BaseController
             unlink($to_delete);
         }
 
-        Functions::redirect('admin/backup');
+        Functions::redirect('/admin/backup');
     }
 
     private function getBackupSettings(): array
