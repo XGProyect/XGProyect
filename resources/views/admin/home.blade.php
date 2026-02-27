@@ -4,16 +4,22 @@
 <div class="container-fluid">
 
     @if ($secondStyle && $errorType && $errorMessage)
-    <div class="alert {{ $secondStyle }}">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>{{ $errorType }}</strong>
-        <br>
-        {!! $errorMessage !!}
+    <div class="row">
+        <div class="col">
+            <div class="alert {{ $secondStyle }} alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>{{ $errorType }}</strong> {!! $errorMessage !!}
+            </div>
+        </div>
     </div>
     @endif
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-0 text-gray-800">{{ __('admin/home.hm_title') }}</h1>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/home.hm_title') }}</h1>
+    </div>
     <p class="mb-4">{{ __('admin/home.hm_sub_title') }}</p>
 
     <div class="card shadow mb-4">

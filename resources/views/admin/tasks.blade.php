@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
+    <x-alert/>
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/tasks.ta_title') }}</h1>

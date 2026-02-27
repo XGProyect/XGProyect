@@ -1,8 +1,8 @@
 @extends('master.admin')
 
 @section('content')
-<script type="text/javascript" src="{{ asset('assets/js/filterlist-min.js') }}"></script>
 <div class="container-fluid">
+    <script type="text/javascript" src="{{ asset('assets/js/filterlist-min.js') }}"></script>
     <x-alert/>
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -57,12 +57,10 @@
                                                                     {!! $users_list !!}
                                                                 </select>
                                                                 <script type="text/javascript">
-                                                                    <!--
                                                                     var UserList = new filterlist(document.users.ban_name);
-                                                                    //-->
                                                                 </script>
                                                                 <br>
-                                                                <span class="small_font">
+                                                                <span class="small">
                                                                     <a href="javascript:UserList.set('^A')"
                                                                         title="{{ __('admin/ban.bn_select_title') }} A">A</a>
                                                                     <a href="javascript:UserList.set('^B')"
@@ -117,7 +115,7 @@
                                                                         title="{{ __('admin/ban.bn_select_title') }} Z">Z</a>
                                                                 </span>
                                                                 <br>
-                                                                <span class="small_font">
+                                                                <span class="small">
                                                                     {{ __('admin/ban.bn_sort') }}:
                                                                     <a href="/admin/ban">{{ __('admin/ban.bn_sort_by_user') }}</a>
                                                                     <a href="/admin/ban?order=id">{{ __('admin/ban.bn_sort_by_id') }}</a>
@@ -197,12 +195,10 @@
                                                                     {!! $banned_list !!}
                                                                 </select>
                                                                 <script type="text/javascript">
-                                                                    <!--
                                                                     var UsersBan = new filterlist(document.userban.unban_name);
-                                                                    //-->
                                                                 </script>
                                                                 <br>
-                                                                <span class="small_font">
+                                                                <span class="small">
                                                                     <a href="javascript:UsersBan.set('^A')"
                                                                         title="{{ __('admin/ban.bn_select_title') }} A">A</a>
                                                                     <a href="javascript:UsersBan.set('^B')"
@@ -257,7 +253,7 @@
                                                                         title="{{ __('admin/ban.bn_select_title') }} Z">Z</a>
                                                                 </span>
                                                                 <br>
-                                                                <span class="small_font">
+                                                                <span class="small">
                                                                     {{ __('admin/ban.bn_sort') }}:
                                                                     <a href="/admin/ban">{{ __('admin/ban.bn_sort_by_user') }}</a>
                                                                     <a

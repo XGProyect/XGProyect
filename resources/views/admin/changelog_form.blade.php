@@ -1,8 +1,8 @@
 @extends('master.admin')
 
 @section('content')
-<script src="{{ asset('assets/js/cntchar-min.js') }}" type="text/javascript"></script>
 <div class="container-fluid">
+    <script src="{{ asset('assets/js/cntchar-min.js') }}" type="text/javascript"></script>
     <form action="" method="POST" name="changelog">
         <input type="hidden" name="action" value="{{ $action }}">
         <input type="hidden" name="changelog_id" value="{{ $changelog_id }}">

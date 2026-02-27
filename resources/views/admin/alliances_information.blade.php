@@ -44,20 +44,20 @@
                         <tr>
                             <td>{{ __('admin/alliances.al_alliance_information_description') }}</td>
                             <td>
-                                <textarea class="form-control" name="alliance_description" class="field span12"
+                                <textarea class="form-control" name="alliance_description"
                                     rows="10">{{ $alliance_description }}</textarea>
                             </td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/alliances.al_alliance_information_text') }}</td>
                             <td>
-                                <textarea class="form-control" name="alliance_text" class="field span12" rows="10">{{ $alliance_text }}</textarea>
+                                <textarea class="form-control" name="alliance_text" rows="10">{{ $alliance_text }}</textarea>
                             </td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/alliances.al_alliance_information_request') }}</td>
                             <td>
-                                <textarea class="form-control" name="alliance_request" class="field span12"
+                                <textarea class="form-control" name="alliance_request"
                                     rows="10">{{ $alliance_request }}</textarea>
                             </td>
                         </tr>

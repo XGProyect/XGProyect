@@ -11,7 +11,7 @@
                 <form name="save_ranks" method="post" action="">
                     <table class="table table-borderless" width="100%" cellspacing="0">
                         <tr>
-                            <td class="align_center">
+                            <td class="text-center">
                                 <input type="checkbox" class="form-check-input" name="checkall" id="checkall">
                             </td>
                             <th>{{ __('admin/alliances.al_alliance_username') }}</th>

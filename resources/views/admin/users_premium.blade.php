@@ -22,7 +22,7 @@
                             <td>
                                 {{ $item['premium'] }}
                                 <br>
-                                <span class="small_font bold_font {{ $item['status_style'] }}">{{ $item['status'] }}</span>
+                                <span class="small font-weight-bold {{ $item['status_style'] }}">{{ $item['status'] }}</span>
                             </td>
                             <td>
                                 <select name="{{ $item['field'] }}" class="form-control">

@@ -1,8 +1,8 @@
 @extends('master.admin')
 
 @section('content')
-<script src="{{ asset('assets/js/cntchar-min.js') }}" type="text/javascript"></script>
 <div class="container-fluid">
+    <script src="{{ asset('assets/js/cntchar-min.js') }}" type="text/javascript"></script>
     <x-alert/>
     <form action="" method="POST" name="announcement">
         <!-- Page Heading -->

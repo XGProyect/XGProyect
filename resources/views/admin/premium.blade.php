@@ -37,8 +37,8 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <textarea class="form-control" name="premium_url" class="field span12"
-                                                    cols="75" rows="5" placeholder="{{ $premium_url }}">{{ $premium_url }}</textarea>
+                                                <textarea class="form-control" name="premium_url"
+                                                    rows="5" placeholder="{{ $premium_url }}">{{ $premium_url }}</textarea>
                                             </td>
                                         </tr>
                                         <tr>

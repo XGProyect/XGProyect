@@ -1,9 +1,9 @@
 @extends('master.admin')
 
 @section('content')
-<script type="text/javascript" src="{{ asset('assets/js/cntchar-min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/filterlist-min.js') }}"></script>
 <div class="container-fluid">
+    <script type="text/javascript" src="{{ asset('assets/js/cntchar-min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/filterlist-min.js') }}"></script>
     <x-alert/>
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">

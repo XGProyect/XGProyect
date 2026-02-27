@@ -27,7 +27,7 @@
                 <div class="collapse show" id="collapseGeneral" style="">
                     <div class="card-body">
                         <form action="" method="POST" name="change_language">
-                            <select class="form-control" name="file" class="input-xlarge" onchange="submit()">
+                            <select class="form-control" name="file" onchange="submit()">
                                 <option value="">{{ __('admin/languages.le_file') }}</option>
                                 @foreach ($language_files as $item)
                                 <option value="{{ $item['lang_file'] }}" {{ $item['selected'] }}>{{ $item['lang_file'] }}</option>

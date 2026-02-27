@@ -18,26 +18,26 @@
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/maker.mk_user_title') }}</h6>
                 </a>
                 <!-- Card Content - Collapse -->
-                <div class="collapse" id="collapseMakeUser" style="">
+                <div class="collapse" id="collapseMakeUser">
                     <div class="card-body">
                         <div class="table-responsive">
                             <form name="frm_adduser" action="" method="POST">
                                 <input type="hidden" name="add_user" value="1">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tr>
-                                        <td>{{ __('admin/maker.mk_user_name') }}</th>
-                                        <td><input class="form-control" type="text" name="name" minlength="4" maxlength="20"></th>
+                                        <td>{{ __('admin/maker.mk_user_name') }}</td>
+                                        <td><input class="form-control" type="text" name="name" minlength="4" maxlength="20"></td>
                                     </tr>
                                     <tr>
-                                        <td>{{ __('admin/maker.mk_user_pass') }}</th>
+                                        <td>{{ __('admin/maker.mk_user_pass') }}</td>
                                         <td>
                                             <input class="form-control" type="password" name="password" minlength="8">
                                             <input class="form-input-check" type="checkbox" checked="checked"
                                                 name="password_check"> {{ __('admin/maker.mk_user_password_random') }}
-                                            </th>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>{{ __('admin/maker.mk_user_email') }}</th>
+                                        <td>{{ __('admin/maker.mk_user_email') }}</td>
                                         <td><input class="form-control" type="text" name="email"></td>
                                     </tr>
                                     <tr>
@@ -90,19 +90,19 @@
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/maker.mk_alliance_title') }}</h6>
                 </a>
                 <!-- Card Content - Collapse -->
-                <div class="collapse" id="collapseMakeAlliance" style="">
+                <div class="collapse" id="collapseMakeAlliance">
                     <div class="card-body">
                         <div class="table-responsive">
                             <form name="frm_addalliance" action="" method="POST">
                                 <input type="hidden" name="add_alliance" value="1">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tr>
-                                        <td>{{ __('admin/maker.mk_alliance_name') }}</th>
-                                        <td><input class="form-control" type="text" name="name"></th>
+                                        <td>{{ __('admin/maker.mk_alliance_name') }}</td>
+                                        <td><input class="form-control" type="text" name="name"></td>
                                     </tr>
                                     <tr>
-                                        <td>{{ __('admin/maker.mk_alliance_tag') }}</th>
-                                        <td><input class="form-control" type="text" name="tag"></th>
+                                        <td>{{ __('admin/maker.mk_alliance_tag') }}</td>
+                                        <td><input class="form-control" type="text" name="tag"></td>
                                     </tr>
                                     <tr>
                                         <td>{{ __('admin/maker.mk_alliance_founder') }}</td>
@@ -139,7 +139,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/maker.mk_planet_title') }}</h6>
                 </a>
                 <!-- Card Content - Collapse -->
-                <div class="collapse" id="collapseMakePlanet" style="">
+                <div class="collapse" id="collapseMakePlanet">
                     <div class="card-body">
                         <div class="table-responsive">
                             <form name="frm_addplanet" action="" method="POST">
@@ -208,7 +208,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/maker.mk_moon_title') }}</h6>
                 </a>
                 <!-- Card Content - Collapse -->
-                <div class="collapse" id="collapseMakeMoon" style="">
+                <div class="collapse" id="collapseMakeMoon">
                     <div class="card-body">
                         <div class="table-responsive">
                             <form name="frm_addmoon" action="" method="POST">

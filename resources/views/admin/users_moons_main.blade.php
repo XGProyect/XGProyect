@@ -144,7 +144,7 @@
                         <tr>
                             <td>{{ __('admin/users.us_user_main_last_jump_time') }}</td>
                             <td>
-                                <span style="font-size:12px;" class="text-error">{{ __('admin/users.us_user_main_reset') }}</span> <input
+                                <span class="small text-danger">{{ __('admin/users.us_user_main_reset') }}</span> <input
                                     type="checkbox" class="form-input-check" name="planet_last_jump_time">
                                 {{ $planet_last_jump_time }}
                             </td>

@@ -3,7 +3,7 @@
     <td>{{ $data }}</td>
     <td>{{ $index }}</td>
     <td>{{ $overhead }}</td>
-    <td style="text-align:right">
+    <td class="text-right">
         <input type="checkbox" class="form-check-input" name="table[]" value="{{ $row }}">
     </td>
 </tr>

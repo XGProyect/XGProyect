@@ -19,7 +19,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_general') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseGeneral" style="">
+                    <div class="collapse show" id="collapseGeneral">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
@@ -86,7 +86,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_buldings') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseBuildings" style="">
+                    <div class="collapse show" id="collapseBuildings">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
@@ -123,7 +123,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_inve_ofis') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseResearch" style="">
+                    <div class="collapse show" id="collapseResearch">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
@@ -155,12 +155,12 @@
                 </div>
                 <div class="card shadow mb-4">
                     <!-- Card Header - Accordion -->
-                    <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="collapseGeneral">
+                    <a href="#collapseDefensesShips" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                        aria-expanded="true" aria-controls="collapseDefensesShips">
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_defenses_and_ships') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseGeneral" style="">
+                    <div class="collapse show" id="collapseDefensesShips">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
@@ -192,12 +192,12 @@
                 </div>
                 <div class="card shadow mb-4">
                     <!-- Card Header - Accordion -->
-                    <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="collapseGeneral">
+                    <a href="#collapseResources" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                        aria-expanded="true" aria-controls="collapseResources">
                         <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_resources') }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseGeneral" style="">
+                    <div class="collapse show" id="collapseResources">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-borderless" width="100%" cellspacing="0">

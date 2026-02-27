@@ -44,7 +44,7 @@
                             <td>{{ __('admin/users.us_user_preference_vacations_status') }}</td>
                             <td><input type="checkbox" class="form-input-check" name="preference_vacations_status"
                                     {{ $preference_vacations_status }}>
-                                <span class="small_font">{{ $preference_vacation_mode }}</span></td>
+                                <span class="small">{{ $preference_vacation_mode }}</span></td>
                         </tr>
                         <tr>
                             <td>{{ __('admin/users.us_user_preference_delete_mode') }}</td>
