@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Fleets;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\TimingLibrary as Timing;
-use Xgp\App\Models\Adm\Fleets;
 
 class FleetsController extends BaseController
 {
-    private Fleets $fleetsModel;
     private AdministrationService $administrationService;
 
     public function __construct()
@@ -29,8 +29,6 @@ class FleetsController extends BaseController
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
-
-        $this->fleetsModel = new Fleets();
 
         $this->runAction();
 
@@ -52,27 +50,66 @@ class FleetsController extends BaseController
 
     private function doRestartAction(int $fleetId): void
     {
-        $this->fleetsModel->restartFleetById($fleetId);
+        DB::transaction(function () use ($fleetId) {
+            $times = DB::table('fleets')
+                ->selectRaw('(fleet_end_time - fleet_start_time) AS mission_time')
+                ->where('fleet_id', $fleetId)
+                ->first();
+
+            if ($times) {
+                $baseTime = time();
+                $startTime = $baseTime + $times->mission_time;
+                $endTime = $baseTime + $times->mission_time * 2;
+
+                Fleets::where('fleet_id', $fleetId)->update([
+                    'fleet_start_time' => $startTime,
+                    'fleet_end_stay' => 0,
+                    'fleet_end_time' => $endTime,
+                ]);
+            }
+        });
     }
 
     private function doEndAction(int $fleetId): void
     {
-        $this->fleetsModel->endFleetById($fleetId);
+        Fleets::where('fleet_id', $fleetId)->update([
+            'fleet_start_time' => time(),
+            'fleet_end_time' => time(),
+            'fleet_end_stay' => 0,
+        ]);
     }
 
     private function doReturnAction(int $fleetId): void
     {
-        $this->fleetsModel->returnFleetById($fleetId);
+        $fleet = Fleets::where('fleet_id', $fleetId)->first();
+
+        if ($fleet) {
+            Fleets::where('fleet_id', $fleetId)->update([
+                'fleet_start_time' => time(),
+                'fleet_end_stay' => 0,
+                'fleet_end_time' => time() * 2 - $fleet->fleet_creation,
+                'fleet_target_owner' => $fleet->fleet_owner,
+                'fleet_mess' => 1,
+            ]);
+        }
     }
 
     private function doDeleteAction(int $fleetId): void
     {
-        $this->fleetsModel->deleteFleetById($fleetId);
+        Fleets::where('fleet_id', $fleetId)->delete();
     }
 
     private function buildFleetMovementsBlock(): array
     {
-        $fleets = $this->fleetsModel->getAllFleets();
+        $prefix = DB::getTablePrefix();
+
+        $fleets = DB::table(DB::raw("`{$prefix}fleets` AS f"))
+            ->selectRaw("f.*, (SELECT name FROM {$prefix}users WHERE id = f.fleet_owner) AS fleet_username, (SELECT name FROM {$prefix}users WHERE id = f.fleet_target_owner) AS target_username")
+            ->orderByRaw('f.fleet_end_time ASC')
+            ->get()
+            ->map(fn($row) => (array) $row)
+            ->toArray();
+
         $fleetMovements = [];
 
         foreach ($fleets as $fleet) {
