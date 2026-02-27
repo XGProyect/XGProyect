@@ -134,12 +134,12 @@ class MessagesController extends BaseController
                     'message_id' => $message['message_id'],
                     'message_time' => date(
                         strtr(Options::getInstance()->get('date_format_extended'), ['.Y' => '']),
-                        $message['message_time']
+                        (int)$message['message_time']
                     ),
                     'message_from' => $message['message_from'],
                     'message_subject' => $message['message_subject'],
                     'message_text' => nl2br($message['message_text']),
-                    'message_reply' => $this->setMessageReply($message['message_sender']),
+                    'message_reply' => $this->setMessageReply((int)$message['message_sender']),
                 ];
             }
         }
