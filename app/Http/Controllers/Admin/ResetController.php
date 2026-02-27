@@ -361,37 +361,58 @@ class ResetController extends BaseController
 
     private function resetAll(): void
     {
-        DB::transaction(function () {
-            $this->resetAlliances();
-            $this->resetFleets();
-            $this->resetFriends();
-            $this->resetMessages();
-            $this->resetNotes();
-            $this->resetReports();
-            $this->resetStatistics();
+        // FK checks must live outside the transaction — SET is a session variable,
+        // not rolled back by MySQL on transaction rollback.
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            DB::table('planets')->truncate();
-            DB::table('buildings')->truncate();
-            DB::table('defenses')->truncate();
-            DB::table('ships')->truncate();
-            DB::table('preferences')->truncate();
-            DB::table('premium')->truncate();
-            DB::table('research')->truncate();
-            DB::table('sessions')->truncate();
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        try {
+            DB::transaction(function () {
+                // Use DELETE (DML) instead of TRUNCATE (DDL) so the whole
+                // operation can be rolled back if anything fails.
+                DB::table('alliance')->delete();
+                DB::table('alliance_statistics')->delete();
+                DB::table('acs')->delete();
+                DB::table('acs_members')->delete();
+                DB::table('fleets')->delete();
+                DB::table('buddys')->delete();
+                DB::table('messages')->delete();
+                DB::table('notes')->delete();
+                DB::table('reports')->delete();
 
-            $creator = new PlanetLib();
+                DB::table('users_statistics')->update([
+                    'user_statistic_buildings_old_rank' => 0,
+                    'user_statistic_buildings_rank' => 0,
+                    'user_statistic_defenses_old_rank' => 0,
+                    'user_statistic_defenses_rank' => 0,
+                    'user_statistic_ships_old_rank' => 0,
+                    'user_statistic_ships_rank' => 0,
+                    'user_statistic_technology_old_rank' => 0,
+                    'user_statistic_technology_rank' => 0,
+                    'user_statistic_total_old_rank' => 0,
+                    'user_statistic_total_rank' => 0,
+                    'user_statistic_update_time' => 0,
+                    'user_statistic_buildings_points' => 0,
+                    'user_statistic_defenses_points' => 0,
+                    'user_statistic_ships_points' => 0,
+                    'user_statistic_technology_points' => 0,
+                    'user_statistic_total_points' => 0,
+                ]);
 
-            foreach (User::all() as $user) {
-                DB::table('users')->where('id', $user->id)->update([
+                DB::table('planets')->delete();
+                DB::table('buildings')->delete();
+                DB::table('defenses')->delete();
+                DB::table('ships')->delete();
+                DB::table('preferences')->delete();
+                DB::table('premium')->delete();
+                DB::table('research')->delete();
+                DB::table('sessions')->delete();
+
+                DB::table('users')->update([
                     'lastip' => '',
                     'ip_at_reg' => '',
                     'agent' => '',
                     'current_page' => '',
                     'fleet_shortcuts' => '',
-                    'home_planet_id' => 0,
-                    'current_planet' => 0,
                     'ally_id' => 0,
                     'ally_request' => 0,
                     'ally_request_text' => null,
@@ -400,32 +421,38 @@ class ResetController extends BaseController
                     'onlinetime' => time(),
                 ]);
 
-                DB::table('research')->insert(['research_user_id' => $user->id]);
+                $creator = new PlanetLib();
 
-                DB::table('premium')->insert([
-                    'premium_user_id' => $user->id,
-                    'premium_dark_matter' => Options::getInstance()->get('registration_dark_matter'),
-                ]);
+                foreach (User::all() as $user) {
+                    DB::table('research')->insert(['research_user_id' => $user->id]);
 
-                DB::table('preferences')->insert(['preference_user_id' => $user->id]);
+                    DB::table('premium')->insert([
+                        'premium_user_id' => $user->id,
+                        'premium_dark_matter' => Options::getInstance()->get('registration_dark_matter'),
+                    ]);
 
-                $creator->setNewPlanet(
-                    (int) $user->galaxy,
-                    (int) $user->system,
-                    (int) $user->planet,
-                    $user->id,
-                    '',
-                    true
-                );
+                    DB::table('preferences')->insert(['preference_user_id' => $user->id]);
 
-                $lastPlanetId = DB::getPdo()->lastInsertId();
+                    $creator->setNewPlanet(
+                        (int) $user->galaxy,
+                        (int) $user->system,
+                        (int) $user->planet,
+                        $user->id,
+                        '',
+                        true
+                    );
 
-                DB::table('users')->where('id', $user->id)->update([
-                    'home_planet_id' => $lastPlanetId,
-                    'current_planet' => $lastPlanetId,
-                ]);
-            }
-        });
+                    $lastPlanetId = DB::getPdo()->lastInsertId();
+
+                    DB::table('users')->where('id', $user->id)->update([
+                        'home_planet_id' => $lastPlanetId,
+                        'current_planet' => $lastPlanetId,
+                    ]);
+                }
+            });
+        } finally {
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        }
     }
 
     private function resetBuildingsByType(int $planet_type): void
