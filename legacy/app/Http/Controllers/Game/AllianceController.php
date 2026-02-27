@@ -101,7 +101,7 @@ class AllianceController extends BaseController
         }
 
         if ($this->user['ally_id'] != 0) {
-            return $this->user['ally_id'];
+            return (int)$this->user['ally_id'];
         }
 
         if ($this->user['ally_request'] != 0) {
@@ -326,7 +326,7 @@ class AllianceController extends BaseController
         $sort_by_order_rules = [1 => 2, 2 => 1];
 
         $members = $this->allianceModel->getAllianceMembers(
-            $this->user['ally_id'],
+            (int)$this->user['ally_id'],
             $sort_by_field,
             $sort_by_order
         );
@@ -342,13 +342,13 @@ class AllianceController extends BaseController
                 'name' => $member['name'],
                 'id' => $member['id'],
                 'write_message' => __('game/global.write_message'),
-                'ally_range' => $this->getUserRank($member['id'], $member['ally_rank_id']),
+                'ally_range' => $this->getUserRank((int)$member['id'], (int)$member['ally_rank_id']),
                 'points' => FormatLib::prettyNumber((int) $member['user_statistic_total_points']),
                 'galaxy' => $member['galaxy'],
                 'system' => $member['system'],
-                'coords' => FormatLib::prettyCoords($member['galaxy'], $member['system'], $member['planet']),
-                'ally_register_time' => Timing::formatExtendedDate($member['ally_register_time']),
-                'online_time' => $this->alliance->hasAccess(AllianceRanks::ONLINE_STATUS) ? Timing::setOnlineStatus($member['onlinetime']) : '-',
+                'coords' => FormatLib::prettyCoords((int)$member['galaxy'], (int)$member['system'], (int)$member['planet']),
+                'ally_register_time' => Timing::formatExtendedDate((int)$member['ally_register_time']),
+                'online_time' => $this->alliance->hasAccess(AllianceRanks::ONLINE_STATUS) ? Timing::setOnlineStatus((int)$member['onlinetime']) : '-',
             ];
         }
 
@@ -637,7 +637,7 @@ class AllianceController extends BaseController
         $sort_by_order_rules = [1 => 2, 2 => 1];
 
         $members = $this->allianceModel->getAllianceMembers(
-            $this->user['ally_id'],
+            (int)$this->user['ally_id'],
             $sort_by_field,
             $sort_by_order
         );
@@ -658,7 +658,7 @@ class AllianceController extends BaseController
                 'galaxy' => $member['galaxy'],
                 'system' => $member['system'],
                 'coords' => FormatLib::prettyCoords($member['galaxy'], $member['system'], $member['planet']),
-                'ally_register_time' => Timing::formatExtendedDate($member['ally_register_time']),
+                'ally_register_time' => Timing::formatExtendedDate((int)$member['ally_register_time']),
                 'online_time' => Timing::formatDaysTime($member['onlinetime']),
                 'actions' => $this->buildAdminMembersActionBlock((int) $member['id'], (int) $member['name'], $rank),
             ];
@@ -757,7 +757,7 @@ class AllianceController extends BaseController
                 $requestsList[$request['id']] = [
                     'id' => $request['id'],
                     'username' => $request['name'],
-                    'time' => Timing::formatExtendedDate($request['ally_register_time']),
+                    'time' => Timing::formatExtendedDate((int)$request['ally_register_time']),
                     'ally_request_text' => nl2br($request['ally_request_text']),
                 ];
             }
@@ -1034,7 +1034,7 @@ class AllianceController extends BaseController
 
     private function buildRankBlock(): array
     {
-        $rank = $this->getUserRank($this->user['id'], $this->user['ally_rank_id']);
+        $rank = $this->getUserRank((int)$this->user['id'], (int)$this->user['ally_rank_id']);
         $admin_area = '';
 
         if ($this->alliance->hasAccess(AllianceRanks::ADMINISTRATION)) {
