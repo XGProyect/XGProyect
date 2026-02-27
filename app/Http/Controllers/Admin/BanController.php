@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Ban;
+use App\Models\User;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Carbon\Carbon;
 use DateInterval;
 use DateTime;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Adm\Ban;
 
 class BanController extends BaseController
 {
     private array $user;
     private int $_users_count = 0;
     private int $_banned_count = 0;
-    private Ban $banModel;
 
     private AdministrationService $administrationService;
 
@@ -38,7 +39,6 @@ class BanController extends BaseController
         $this->administrationService->authorization(__CLASS__);
 
         $this->user = Users::getInstance()->getUserData();
-        $this->banModel = new Ban();
 
         $view = 'admin.ban';
         $parse = $this->showDefault();
@@ -56,9 +56,10 @@ class BanController extends BaseController
         $username = request()->get('unban_name');
 
         if (!empty($username)) {
-            \App\Models\Ban::where('name', $username)
-                ->join('users', 'users.id', '=', 'bans.user_id')
-                ->delete();
+            $userId = DB::table('users')->where('name', $username)->value('id');
+            if ($userId) {
+                Ban::where('user_id', $userId)->delete();
+            }
 
             session()->flash('success', (str_replace('%s', $username, __('admin/ban.bn_lift_ban_success'))));
         }
@@ -82,7 +83,7 @@ class BanController extends BaseController
             $parse['changedate'] = __('admin/ban.bn_auto_lift_ban_message');
             $parse['vacation'] = '';
 
-            $bannedUser = $this->banModel->getBannedUserData($banName);
+            $bannedUser = $this->getBannedUserData($banName);
 
             if ($bannedUser) {
                 $parse['banned_until'] = '<tr><th>' . __('admin/ban.bn_banned_until') . '</th><td>' . (new DateTime($bannedUser['until']))->format(Options::getInstance()->get('date_format_extended')) . '</td></tr>';
@@ -95,17 +96,13 @@ class BanController extends BaseController
                 if (!is_numeric($_POST['days']) or !is_numeric($_POST['hour'])) {
                     session()->flash('warning', __('admin/ban.bn_all_fields_required'));
                 } else {
-                    // involved users
                     $userName = (string) $banName;
                     $adminId = (int) $this->user['id'];
-
-                    // ban data
                     $details = (string) $_POST['text'];
                     $days = (int) $_POST['days'];
                     $hour = (int) $_POST['hour'];
                     $vacationMode = isset($_POST['vacat']) ? $_POST['vacat'] : null;
 
-                    // time calculation
                     $currentTime = new DateTime();
                     $banInterval = new DateInterval('P' . $days . 'D');
                     $banInterval->h = $hour;
@@ -116,7 +113,6 @@ class BanController extends BaseController
                     if (isset($bannedUser) && isset($bannedUser['until'])) {
                         $bannedUntil = new DateTime($bannedUser['until']);
                         if ($bannedUntil > $currentTime) {
-                            // Extend the ban time if the user is already banned
                             $remainingBanInterval = $bannedUntil->diff($currentTime);
                             $banEndTime->add($remainingBanInterval);
                         }
@@ -124,7 +120,7 @@ class BanController extends BaseController
 
                     $until = $banEndTime > $currentTime ? $banEndTime : $currentTime;
 
-                    $this->banModel->setOrUpdateBan(
+                    $this->setOrUpdateBan(
                         $bannedUser,
                         [
                             'user_name' => $userName,
@@ -145,36 +141,84 @@ class BanController extends BaseController
         return $parse;
     }
 
+    private function getBannedUserData(string $banName): ?array
+    {
+        $result = DB::table('bans AS b')
+            ->select('b.*', 'p.preference_user_id', 'p.preference_vacation_mode')
+            ->join('users AS u', function ($join) use ($banName) {
+                $join->on('u.id', '=', 'b.user_id')
+                    ->where('u.name', '=', $banName);
+            })
+            ->join('preferences AS p', 'p.preference_user_id', '=', 'u.id')
+            ->first();
+
+        return $result ? (array) $result : null;
+    }
+
+    private function setOrUpdateBan(?array $bannedUser, array $banData, ?string $vacationMode): void
+    {
+        DB::transaction(function () use ($bannedUser, $banData, $vacationMode) {
+            $userId = User::where('name', $banData['user_name'])->value('id');
+
+            if (isset($bannedUser)) {
+                Ban::where('user_id', $userId)->update([
+                    'admin_id' => $banData['admin_id'],
+                    'details' => $banData['details'],
+                    'until' => $banData['until'],
+                ]);
+            } else {
+                Ban::create([
+                    'user_id' => $userId,
+                    'admin_id' => $banData['admin_id'],
+                    'details' => $banData['details'],
+                    'until' => $banData['until'],
+                ]);
+            }
+
+            $vacationTime = isset($vacationMode) && $vacationMode != '' ? time() : null;
+
+            DB::table('preferences AS pr')
+                ->join('planets AS p', 'p.planet_user_id', '=', DB::raw($userId))
+                ->where('pr.preference_user_id', $userId)
+                ->update([
+                    'pr.preference_vacation_mode' => $vacationTime,
+                    'p.planet_building_metal_mine_percent' => 0,
+                    'p.planet_building_crystal_mine_percent' => 0,
+                    'p.planet_building_deuterium_sintetizer_percent' => 0,
+                    'p.planet_building_solar_plant_percent' => 0,
+                    'p.planet_building_fusion_reactor_percent' => 0,
+                    'p.planet_ship_solar_satellite_percent' => 0,
+                ]);
+        });
+    }
+
     private function getUsersList(): string
     {
         $query_order = (isset($_GET['order']) && $_GET['order'] == 'id') ? 'id' : 'name';
-        $where_authlevel = '';
-        $where_banned = '';
         $users_list = '';
 
+        $query = DB::table('users AS u')
+            ->select('u.id', 'u.name', 'b.until')
+            ->leftJoin('bans AS b', 'b.user_id', '=', 'u.id');
+
         if ($this->user['authlevel'] != 3) {
-            $where_authlevel = "WHERE `authlevel` < '" . ($this->user['authlevel']) . "'";
+            $query->where('u.authlevel', '<', $this->user['authlevel']);
         }
 
-        if (isset($_GET['view']) && ($_GET['view'] == 'banned')) {
-            if ($this->user['authlevel'] == 3) {
-                $where_banned = 'WHERE `until` <> NULL';
-            } else {
-                $where_banned = "AND `until` > '0'";
-            }
+        if (isset($_GET['view']) && $_GET['view'] == 'banned') {
+            $query->whereNotNull('b.until');
         }
 
-        // get the users according to the filters
-        $users_query = $this->banModel->getListOfUsers($where_authlevel, $where_banned, $query_order);
+        $users_query = $query->orderBy($query_order, 'ASC')->get();
 
         foreach ($users_query as $user) {
             $status = '';
 
-            if ($user['until'] > 0) {
+            if ($user->until > 0) {
                 $status = (string) __('admin/ban.bn_status');
             }
 
-            $users_list .= '<option value="' . $user['name'] . '">' . $user['name'] . ' (ID: ' . $user['id'] . ')' . $status . '</option>';
+            $users_list .= '<option value="' . $user->name . '">' . $user->name . ' (ID: ' . $user->id . ')' . $status . '</option>';
 
             $this->_users_count++;
         }
@@ -187,10 +231,14 @@ class BanController extends BaseController
         $order = (isset($_GET['order2']) && $_GET['order2'] == 'id') ? 'id' : 'name';
         $banned_list = '';
 
-        $banned_query = $this->banModel->getBannedUsers($order);
+        $banned_query = DB::table('bans AS b')
+            ->select('u.id', 'u.name')
+            ->join('users AS u', 'u.id', '=', 'b.user_id')
+            ->orderBy($order, 'ASC')
+            ->get();
 
         foreach ($banned_query as $user) {
-            $banned_list .= '<option value="' . $user['name'] . '">' . $user['name'] . ' (ID: ' . $user['id'] . ')</option>';
+            $banned_list .= '<option value="' . $user->name . '">' . $user->name . ' (ID: ' . $user->id . ')</option>';
 
             $this->_banned_count++;
         }
