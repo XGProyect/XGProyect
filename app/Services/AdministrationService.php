@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Auth;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Adm\Permissions;
-use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Users;
 
 class AdministrationService
 {
+    private const ALWAYS_ALLOWED = ['home'];
+
     public function __construct(private SettingsService $settingsService)
     {
     }
@@ -18,11 +19,7 @@ class AdministrationService
     public function checkSession(): void
     {
         if (!$this->isSessionSet()) {
-            $page = filter_input(INPUT_GET, 'page', FILTER_UNSAFE_RAW);
-
-            if ($page != 'login') {
-                Functions::redirect(SYSTEM_ROOT . 'admin/?redirect=' . $page);
-            }
+            abort(redirect()->route('admin.login'));
         }
     }
 
@@ -31,16 +28,22 @@ class AdministrationService
         $lastOcurrence = strrchr($module, '\\');
 
         if ($lastOcurrence !== false) {
-            $cleanedModuleName = strtolower(substr($lastOcurrence, 1));
+            $cleanedModuleName = strtolower(
+                str_ireplace('controller', '', substr($lastOcurrence, 1))
+            );
+
+            if (in_array($cleanedModuleName, self::ALWAYS_ALLOWED, true)) {
+                return;
+            }
+
             $permissions = new Permissions($this->settingsService->getString('admin_permissions'));
 
-            if ($permissions->isAccessAllowed($cleanedModuleName, (int) Users::getInstance()->getUserData()['authlevel'])) {
+            if ($permissions->isAccessAllowed($cleanedModuleName, (int) Auth::user()->authlevel)) {
                 return;
             }
         }
 
-        Template::legacyView('admin.save_message');
-        exit;
+        abort(403);
     }
 
     public function showPopUp(string $content, string $popupCcontent): string

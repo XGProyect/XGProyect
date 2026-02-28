@@ -6,7 +6,10 @@ namespace App\View\Components\Admin;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
+use Xgp\App\Libraries\Adm\Permissions;
+use App\Services\SettingsService;
 
 class Sidebar extends Component
 {
@@ -76,6 +79,22 @@ class Sidebar extends Component
                 ],
             ],
         ];
+
+        $role = (int) Auth::user()->authlevel;
+        $permissions = new Permissions((new SettingsService())->getString('admin_permissions'));
+
+        // Filter each section's items to only those the current role can access
+        $sections = collect($sections)
+            ->map(function (array $section) use ($permissions, $role) {
+                $section['items'] = array_filter(
+                    $section['items'],
+                    fn (string $item) => $permissions->isAccessAllowed($item, $role),
+                    ARRAY_FILTER_USE_KEY
+                );
+                return $section;
+            })
+            ->filter(fn (array $section) => !empty($section['items']))
+            ->all();
 
         // determine current block of menus based on the current page
         $activeBlock = collect($sections)->filter(fn ($v) => in_array($activePage, array_keys($v['items'])))->keys()->first();
