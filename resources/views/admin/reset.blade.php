@@ -14,7 +14,49 @@
             </button>
         </div>
 
-        {{-- Top row: 4 category cards --}}
+        {{-- General card: full-width, multi-column --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_general') }}</h6>
+                        <div class="custom-control custom-checkbox m-0">
+                            <input type="checkbox" class="custom-control-input card-select-all"
+                                id="all_general" data-group="general">
+                            <label class="custom-control-label" for="all_general"></label>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @php
+                                $generalItems = [
+                                    ['name' => 'moons',      'label' => __('admin/reset.re_reset_moons')],
+                                    ['name' => 'notes',      'label' => __('admin/reset.re_reset_notes')],
+                                    ['name' => 'rw',         'label' => __('admin/reset.re_reset_rw')],
+                                    ['name' => 'friends',    'label' => __('admin/reset.re_reset_buddies')],
+                                    ['name' => 'alliances',  'label' => __('admin/reset.re_reset_allys')],
+                                    ['name' => 'fleets',     'label' => __('admin/reset.re_reset_fleets')],
+                                    ['name' => 'banneds',    'label' => __('admin/reset.re_reset_banned')],
+                                    ['name' => 'messages',   'label' => __('admin/reset.re_reset_messages')],
+                                    ['name' => 'statpoints', 'label' => __('admin/reset.re_reset_statpoints')],
+                                ];
+                            @endphp
+                            @foreach($generalItems as $item)
+                            <div class="col-xl-3 col-md-4 col-sm-6 mb-2">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input reset-item"
+                                        name="{{ $item['name'] }}" id="{{ $item['name'] }}" data-group="general">
+                                    <label class="custom-control-label" for="{{ $item['name'] }}">{{ $item['label'] }}</label>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- 4 category cards --}}
         <div class="row">
             @php
                 $cards = [
@@ -65,55 +107,20 @@
             @endforeach
         </div>
 
-        {{-- Bottom: General card full-width with multi-column layout --}}
+        {{-- Danger zone --}}
         <div class="row">
             <div class="col-12">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_general') }}</h6>
-                        <div class="custom-control custom-checkbox m-0">
-                            <input type="checkbox" class="custom-control-input card-select-all"
-                                id="all_general" data-group="general">
-                            <label class="custom-control-label" for="all_general"></label>
-                        </div>
+                <div class="card border-danger shadow mb-4">
+                    <div class="card-header py-3 bg-danger">
+                        <h6 class="m-0 font-weight-bold text-white">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>{{ __('admin/reset.re_reset_all') }}
+                        </h6>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
-                            @php
-                                $generalItems = [
-                                    ['name' => 'moons',      'label' => __('admin/reset.re_reset_moons')],
-                                    ['name' => 'notes',      'label' => __('admin/reset.re_reset_notes')],
-                                    ['name' => 'rw',         'label' => __('admin/reset.re_reset_rw')],
-                                    ['name' => 'friends',    'label' => __('admin/reset.re_reset_buddies')],
-                                    ['name' => 'alliances',  'label' => __('admin/reset.re_reset_allys')],
-                                    ['name' => 'fleets',     'label' => __('admin/reset.re_reset_fleets')],
-                                    ['name' => 'banneds',    'label' => __('admin/reset.re_reset_banned')],
-                                    ['name' => 'messages',   'label' => __('admin/reset.re_reset_messages')],
-                                    ['name' => 'statpoints', 'label' => __('admin/reset.re_reset_statpoints')],
-                                ];
-                            @endphp
-                            @foreach($generalItems as $item)
-                            <div class="col-xl-3 col-md-4 col-sm-6 mb-2">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input reset-item"
-                                        name="{{ $item['name'] }}" id="{{ $item['name'] }}" data-group="general">
-                                    <label class="custom-control-label" for="{{ $item['name'] }}">{{ $item['label'] }}</label>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-
-                        <hr class="mt-2">
-
-                        <div class="alert alert-danger d-flex align-items-center justify-content-between mb-0">
-                            <div>
-                                <i class="fas fa-exclamation-triangle mr-2"></i>
-                                <strong>{{ __('admin/reset.re_reset_all') }}</strong>
-                            </div>
-                            <div class="custom-control custom-checkbox m-0">
-                                <input type="checkbox" class="custom-control-input" name="resetall" id="resetall">
-                                <label class="custom-control-label" for="resetall"></label>
-                            </div>
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <p class="mb-0 text-gray-800">{{ __('admin/reset.re_reset_universe_confirmation') }}</p>
+                        <div class="custom-control custom-checkbox ml-4 flex-shrink-0">
+                            <input type="checkbox" class="custom-control-input" name="resetall" id="resetall">
+                            <label class="custom-control-label" for="resetall"></label>
                         </div>
                     </div>
                 </div>
