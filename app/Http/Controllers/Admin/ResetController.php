@@ -7,145 +7,67 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Xgp\App\Core\Options;
-use Xgp\App\Core\Template;
 use Xgp\App\Libraries\PlanetLib;
 
 class ResetController extends BaseController
 {
-    private AdministrationService $administrationService;
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+    ) {}
 
-    public function __construct()
+    public static function make(): static
     {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+        return new static(new AdministrationService(new SettingsService()));
     }
 
-    public function __invoke(): void
+    public function __invoke(Request $request): View|RedirectResponse
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->runAction();
+        if ($request->isMethod('post')) {
+            return $this->handlePost($request);
+        }
 
-        Template::legacyView(
-            'admin.reset'
-        );
+        return view('admin.reset');
     }
 
-    private function runAction(): void
+    private function handlePost(Request $request): RedirectResponse
     {
-        if ($_POST) {
-            if (!isset($_POST['resetall'])) {
-                // reset defenses
-                if (isset($_POST['defenses']) && $_POST['defenses'] == 'on') {
-                    $this->resetDefenses();
-                }
+        if ($request->boolean('resetall')) {
+            $this->resetAll();
 
-                // reset ships
-                if (isset($_POST['ships']) && $_POST['ships'] == 'on') {
-                    $this->resetShips();
-                }
-
-                // reset shipyard queues
-                if (isset($_POST['h_d']) && $_POST['h_d'] == 'on') {
-                    $this->resetShipyardQueues();
-                }
-
-                // reset planet buildings
-                if (isset($_POST['edif_p']) && $_POST['edif_p'] == 'on') {
-                    $this->resetPlanetBuildings();
-                }
-
-                // reset moon buildings
-                if (isset($_POST['edif_l']) && $_POST['edif_l'] == 'on') {
-                    $this->resetMoonBuildings();
-                }
-
-                // reset buildings queues
-                if (isset($_POST['edif']) && $_POST['edif'] == 'on') {
-                    $this->resetBuildingsQueues();
-                }
-
-                // reset research
-                if (isset($_POST['inves']) && $_POST['inves'] == 'on') {
-                    $this->resetResearch();
-                }
-
-                // reset research queues
-                if (isset($_POST['inves_c']) && $_POST['inves_c'] == 'on') {
-                    $this->resetResearchQueues();
-                }
-
-                // reset officiers
-                if (isset($_POST['ofis']) && $_POST['ofis'] == 'on') {
-                    $this->resetOfficiers();
-                }
-
-                // reset dark matter
-                if (isset($_POST['dark']) && $_POST['dark'] == 'on') {
-                    $this->resetDarkMatter();
-                }
-
-                // reset resources
-                if (isset($_POST['resources']) && $_POST['resources'] == 'on') {
-                    $this->resetResources();
-                }
-
-                // reset notes
-                if (isset($_POST['notes']) && $_POST['notes'] == 'on') {
-                    $this->resetNotes();
-                }
-
-                // reset reports
-                if (isset($_POST['rw']) && $_POST['rw'] == 'on') {
-                    $this->resetReports();
-                }
-
-                // reset friends
-                if (isset($_POST['friends']) && $_POST['friends'] == 'on') {
-                    $this->resetFriends();
-                }
-
-                // reset alliances
-                if (isset($_POST['alliances']) && $_POST['alliances'] == 'on') {
-                    $this->resetAlliances();
-                }
-
-                // reset fleets
-                if (isset($_POST['fleets']) && $_POST['fleets'] == 'on') {
-                    $this->resetFleets();
-                }
-
-                // reset banned
-                if (isset($_POST['banneds']) && $_POST['banneds'] == 'on') {
-                    $this->resetBanned();
-                }
-
-                // reset messages
-                if (isset($_POST['messages']) && $_POST['messages'] == 'on') {
-                    $this->resetMessages();
-                }
-
-                // reset statistics
-                if (isset($_POST['statpoints']) && $_POST['statpoints'] == 'on') {
-                    $this->resetStatistics();
-                }
-
-                // reset moons
-                if (isset($_POST['moons']) && $_POST['moons'] == 'on') {
-                    $this->resetMoons();
-                }
-            } else {
-                // reset everything
-                $this->resetAll();
-            }
-
-            session()->flash('success', __('admin/reset.re_reset_excess'));
+            return redirect('admin/reset')->with('success', __('admin/reset.re_reset_excess'));
         }
+
+        $request->boolean('defenses')   && $this->resetDefenses();
+        $request->boolean('ships')      && $this->resetShips();
+        $request->boolean('h_d')        && $this->resetShipyardQueues();
+        $request->boolean('edif_p')     && $this->resetPlanetBuildings();
+        $request->boolean('edif_l')     && $this->resetMoonBuildings();
+        $request->boolean('edif')       && $this->resetBuildingsQueues();
+        $request->boolean('inves')      && $this->resetResearch();
+        $request->boolean('inves_c')    && $this->resetResearchQueues();
+        $request->boolean('ofis')       && $this->resetOfficiers();
+        $request->boolean('dark')       && $this->resetDarkMatter();
+        $request->boolean('resources')  && $this->resetResources();
+        $request->boolean('notes')      && $this->resetNotes();
+        $request->boolean('rw')         && $this->resetReports();
+        $request->boolean('friends')    && $this->resetFriends();
+        $request->boolean('alliances')  && $this->resetAlliances();
+        $request->boolean('fleets')     && $this->resetFleets();
+        $request->boolean('banneds')    && $this->resetBanned();
+        $request->boolean('messages')   && $this->resetMessages();
+        $request->boolean('statpoints') && $this->resetStatistics();
+        $request->boolean('moons')      && $this->resetMoons();
+
+        return redirect('admin/reset')->with('success', __('admin/reset.re_reset_excess'));
     }
 
     private function resetDefenses(): void
