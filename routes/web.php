@@ -58,7 +58,8 @@ Route::prefix('admin')->group(function () {
             Route::any('/maker', Admin\MakerController::class)->name('admin.maker');
             Route::any('/messages', Admin\MessagesController::class)->name('admin.messages');
             Route::any('/modules', Admin\ModulesController::class)->name('admin.modules');
-            Route::any('/permissions', Admin\PermissionsController::class)->name('admin.permissions');
+            Route::get('/permissions', [Admin\PermissionsController::class, 'index'])->name('admin.permissions');
+            Route::post('/permissions', [Admin\PermissionsController::class, 'save'])->name('admin.permissions.save');
             Route::any('/planets', Admin\PlanetsController::class)->name('admin.planets');
             Route::any('/premium', Admin\PremiumController::class)->name('admin.premium');
             Route::get('/rebuildhighscores', [Admin\RebuildHighscoresController::class, 'index'])->name('admin.rebuildhighscores');

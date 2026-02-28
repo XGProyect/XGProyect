@@ -4,134 +4,38 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\PermissionsRequest;
+use App\Services\Admin\PermissionsService;
 use App\Services\AdministrationService;
-use App\Services\SettingsService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use Xgp\App\Core\Options;
-use Xgp\App\Core\Template;
-use Xgp\App\Libraries\Adm\Permissions;
 
 class PermissionsController extends BaseController
 {
-    private Permissions $permissions;
-    private AdministrationService $administrationService;
-
-    public function __construct()
-    {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+        private readonly PermissionsService $permissionsService,
+    ) {
     }
 
-    public function __invoke(): void
+    public function index(): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->setUpPermissions();
-        $this->runAction();
-
-        Template::legacyView(
-            'admin.permissions',
-            $this->buildListOfPermissions()
-        );
+        return view('admin.permissions', $this->permissionsService->buildViewData());
     }
 
-    private function setUpPermissions(): void
+    public function save(PermissionsRequest $request): RedirectResponse
     {
-        $this->permissions = new Permissions(
-            Options::getInstance()->get('admin_permissions')
-        );
-    }
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
-    private function runAction(): void
-    {
-        $permissions = filter_input_array(INPUT_POST);
+        $this->permissionsService->updatePermissions($request->except(['_token', '_method']));
 
-        if ($permissions) {
-            $modules = $this->permissions->getAdminModules();
-            $roles = $this->permissions->getRoles(true);
+        session()->flash('success', __('admin/permissions.pr_all_ok_message'));
 
-            foreach ($modules as $module) {
-                foreach ($module as $module_name) {
-                    foreach ($roles as $role) {
-                        if (isset($permissions[$module_name][$role]) && $permissions[$module_name][$role] == 'on') {
-                            $this->permissions->grantAccess($module_name, $role);
-                        } else {
-                            $this->permissions->removeAccess($module_name, $role);
-                        }
-                    }
-                }
-            }
-
-            $this->permissions->savePermissions();
-
-            session()->flash('success', __('admin/permissions.pr_all_ok_message'));
-        }
-    }
-
-    private function buildRolesList(): array
-    {
-        $roles_list = [];
-
-        foreach ($this->permissions->getRoles() as $role) {
-            $roles_list[$role] = [
-                'role_name' => __('admin/global.user_level')[$role],
-            ];
-        }
-
-        return $roles_list;
-    }
-
-    private function buildListOfPermissions(): array
-    {
-        $sections_list = [];
-        $modules_list = [];
-        $permissions_list = [];
-
-        // get necessary data
-        $sections = $this->permissions->getAdminSections();
-        $modules = $this->permissions->getAdminModules();
-        $roles = $this->buildRolesList();
-
-        // build sections array
-        foreach ($sections as $section_id => $section) {
-            // build modules array
-            foreach ($modules[$section_id] as $module) {
-                // build permissions array
-                foreach ($roles as $role => $name) {
-                    $permissions_list[] = [
-                        'module' => $module,
-                        'role' => $role,
-                        'permission_checked' => ($this->permissions->isAccessAllowed($module, $role) ? 'checked' : ''),
-                        'permission_disabled' => ($role == UserRanks::ADMIN ? 'disabled' : ''),
-                    ];
-                }
-
-                // put all inside
-                $modules_list[] = [
-                    'page_module' => $module,
-                    'page_module_title' => __('admin/menu.' . $module),
-                    'permissions_list' => $permissions_list,
-                ];
-
-                $permissions_list = []; // reset
-            }
-
-            // put all inside
-            $sections_list[$section_id] = [
-                'section_name' => ucfirst($section),
-                'section_title' => __('admin/menu.' . $section),
-                'roles_list' => $roles,
-                'modules_list' => $modules_list,
-            ];
-
-            $modules_list = []; // reset
-        }
-
-        return [
-            'sections_list' => $sections_list,
-        ];
+        return redirect()->route('admin.permissions');
     }
 }
