@@ -38,7 +38,7 @@ class LanguagesController extends BaseController
         }
 
         return view('admin.languages', [
-            'language_files' => $this->languagesService->getFiles(),
+            'groupedFiles' => $this->languagesService->getGroupedFiles(),
             'currentFile' => $currentFile,
             'translations' => $translations,
         ]);

@@ -29,8 +29,14 @@
                             <div class="input-group">
                                 <select class="form-control" name="file" onchange="this.form.submit()">
                                     <option value="">— {{ __('admin/languages.le_file') }} —</option>
-                                    @foreach ($language_files as $file)
-                                        <option value="{{ $file }}" @selected($file === $currentFile)>{{ $file }}</option>
+                                    @foreach ($groupedFiles as $locale => $groups)
+                                        @foreach ($groups as $group => $files)
+                                            <optgroup label="{{ $locale }} / {{ $group ?: __('admin/languages.le_group_general') }}">
+                                                @foreach ($files as $file)
+                                                    <option value="{{ $file }}" @selected($file === $currentFile)>{{ basename($file) }}</option>
+                                                @endforeach
+                                            </optgroup>
+                                        @endforeach
                                     @endforeach
                                 </select>
                                 <div class="input-group-append">

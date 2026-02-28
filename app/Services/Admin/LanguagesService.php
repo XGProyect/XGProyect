@@ -15,18 +15,31 @@ class LanguagesService
     }
 
     /**
-     * Returns all .php files under lang/ as relative paths, sorted.
+     * Returns language files grouped by locale, then by subfolder.
+     * The outer key is the locale (e.g. "en").
+     * The inner key is the group path (e.g. "admin", "home/ajax") or "" for root-level files.
+     * Values are relative paths usable as the file selector value (e.g. "en/admin/alliances.php").
      *
-     * @return list<string>
+     * @return array<string, array<string, list<string>>>
      */
-    public function getFiles(): array
+    public function getGroupedFiles(): array
     {
-        return collect($this->files->allFiles(lang_path()))
+        /** @var array<string, array<string, list<string>>> $grouped */
+        $grouped = collect($this->files->allFiles(lang_path()))
             ->filter(fn (SplFileInfo $file) => $file->getExtension() === 'php')
-            ->map(fn (SplFileInfo $file) => $file->getRelativePathname())
+            ->map(fn (SplFileInfo $file) => str_replace(DIRECTORY_SEPARATOR, '/', $file->getRelativePathname()))
             ->sort()
             ->values()
-            ->all();
+            ->reduce(function (array $carry, string $path): array {
+                $parts              = explode('/', $path);
+                $locale             = $parts[0];
+                $group              = implode('/', array_slice($parts, 1, -1));
+                $carry[$locale][$group][] = $path;
+
+                return $carry;
+            }, []);
+
+        return $grouped;
     }
 
     /**
