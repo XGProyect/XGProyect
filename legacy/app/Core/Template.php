@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\View;
 
 class Template
 {
+    /**
+     * @deprecated use view() helper whenever possible.
+     */
     public static function legacyView($view = null, $data = [], $mergeData = []): void
     {
         View::share('gameTitle', Options::getInstance()->get('game_name'));
