@@ -94,7 +94,7 @@
                                     @endphp
                                     <div class="file-block" data-file="{{ strtolower($basename) }}">
                                         <a href="{{ route('admin.languages', ['file' => $targetPath]) }}"
-                                           class="d-block px-4 py-1 small border-top text-decoration-none {{ $isActiveFile ? 'bg-primary text-white font-weight-bold' : 'text-body' }}">
+                                           class="d-block px-4 py-1 border-top text-decoration-none {{ $isActiveFile ? 'bg-primary text-white font-weight-bold' : 'text-body' }}">
                                             <span class="file-label">{{ $basename }}</span>
                                         </a>
                                     </div>
@@ -163,51 +163,42 @@
                             @endforeach
                         </div>
 
-                        <div class="table-responsive">
-                            <table class="table table-borderless" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th width="30%">{{ __('admin/languages.le_col_key') }}</th>
-                                        <th>{{ __('admin/languages.le_col_value') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($translations as $i => $entry)
-                                        @php
-                                            $dotPos   = strrpos($entry['key'], '.');
-                                            $keyGroup = $dotPos !== false ? substr($entry['key'], 0, $dotPos) : null;
-                                            $isNested = $keyGroup !== null;
-                                            $isLong   = strlen($entry['value']) > 80 || str_contains($entry['value'], "\n");
-                                            $rows     = $isLong ? min(max(substr_count($entry['value'], "\n") + 2, 3), 8) : 0;
-                                        @endphp
-                                        <tr class="translation-row" data-key="{{ $entry['key'] }}">
-                                            <td class="align-middle">
-                                                <input type="hidden"
-                                                       name="translations[{{ $i }}][key]"
-                                                       value="{{ $entry['key'] }}">
-                                                @if ($isNested)
-                                                    <small class="text-muted">{{ $keyGroup }}.</small><code>{{ substr($entry['key'], strlen($keyGroup) + 1) }}</code>
-                                                @else
-                                                    <code>{{ $entry['key'] }}</code>
-                                                @endif
-                                            </td>
-                                            <td class="align-middle">
-                                                @if ($isLong)
-                                                    <textarea name="translations[{{ $i }}][value]"
-                                                              class="form-control"
-                                                              rows="{{ $rows }}"
-                                                              style="resize:vertical">{{ $entry['value'] }}</textarea>
-                                                @else
-                                                    <input type="text"
-                                                           name="translations[{{ $i }}][value]"
-                                                           class="form-control"
-                                                           value="{{ $entry['value'] }}">
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                        <div id="translationsList">
+                            @foreach ($translations as $i => $entry)
+                                @php
+                                    $dotPos   = strrpos($entry['key'], '.');
+                                    $keyGroup = $dotPos !== false ? substr($entry['key'], 0, $dotPos) : null;
+                                    $isNested = $keyGroup !== null;
+                                    $isLong   = strlen($entry['value']) > 80 || str_contains($entry['value'], "\n");
+                                    $rows     = $isLong ? min(max(substr_count($entry['value'], "\n") + 2, 3), 8) : 0;
+                                    $inputId  = 'trans_' . $i;
+                                @endphp
+                                <div class="form-group translation-row" data-key="{{ $entry['key'] }}">
+                                    <label for="{{ $inputId }}" class="mb-1">
+                                        <input type="hidden"
+                                               name="translations[{{ $i }}][key]"
+                                               value="{{ $entry['key'] }}">
+                                        @if ($isNested)
+                                            <span class="text-muted">{{ $keyGroup }}.</span><code>{{ substr($entry['key'], strlen($keyGroup) + 1) }}</code>
+                                        @else
+                                            <code>{{ $entry['key'] }}</code>
+                                        @endif
+                                    </label>
+                                    @if ($isLong)
+                                        <textarea id="{{ $inputId }}"
+                                                  name="translations[{{ $i }}][value]"
+                                                  class="form-control"
+                                                  rows="{{ $rows }}"
+                                                  style="resize:vertical">{{ $entry['value'] }}</textarea>
+                                    @else
+                                        <input id="{{ $inputId }}"
+                                               type="text"
+                                               name="translations[{{ $i }}][value]"
+                                               class="form-control"
+                                               value="{{ $entry['value'] }}">
+                                    @endif
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
