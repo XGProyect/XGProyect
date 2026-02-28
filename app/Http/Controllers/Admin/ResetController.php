@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Http\Requests\Admin\ResetRequest;
 use App\Services\AdministrationService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -21,48 +21,49 @@ class ResetController extends BaseController
     ) {
     }
 
-    public function __invoke(Request $request): View | RedirectResponse
+    public function index(): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        if ($request->isMethod('post')) {
-            return $this->handlePost($request);
-        }
-
         return view('admin.reset');
     }
 
-    private function handlePost(Request $request): RedirectResponse
+    public function reset(ResetRequest $request): RedirectResponse
     {
-        if ($request->boolean('resetall')) {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
+
+        $data = $request->validated();
+
+        if (isset($data['resetall'])) {
             $this->resetAll();
 
-            return redirect('admin/reset')->with('success', __('admin/reset.re_reset_excess'));
+            return redirect()->route('admin.reset')->with('success', __('admin/reset.re_reset_excess'));
         }
 
-        $request->boolean('defenses') && $this->resetDefenses();
-        $request->boolean('ships') && $this->resetShips();
-        $request->boolean('h_d') && $this->resetShipyardQueues();
-        $request->boolean('edif_p') && $this->resetPlanetBuildings();
-        $request->boolean('edif_l') && $this->resetMoonBuildings();
-        $request->boolean('edif') && $this->resetBuildingsQueues();
-        $request->boolean('inves') && $this->resetResearch();
-        $request->boolean('inves_c') && $this->resetResearchQueues();
-        $request->boolean('ofis') && $this->resetOfficiers();
-        $request->boolean('dark') && $this->resetDarkMatter();
-        $request->boolean('resources') && $this->resetResources();
-        $request->boolean('notes') && $this->resetNotes();
-        $request->boolean('rw') && $this->resetReports();
-        $request->boolean('friends') && $this->resetFriends();
-        $request->boolean('alliances') && $this->resetAlliances();
-        $request->boolean('fleets') && $this->resetFleets();
-        $request->boolean('banneds') && $this->resetBanned();
-        $request->boolean('messages') && $this->resetMessages();
-        $request->boolean('statpoints') && $this->resetStatistics();
-        $request->boolean('moons') && $this->resetMoons();
+        isset($data['defenses'])   && $this->resetDefenses();
+        isset($data['ships'])      && $this->resetShips();
+        isset($data['h_d'])        && $this->resetShipyardQueues();
+        isset($data['edif_p'])     && $this->resetPlanetBuildings();
+        isset($data['edif_l'])     && $this->resetMoonBuildings();
+        isset($data['edif'])       && $this->resetBuildingsQueues();
+        isset($data['inves'])      && $this->resetResearch();
+        isset($data['inves_c'])    && $this->resetResearchQueues();
+        isset($data['ofis'])       && $this->resetOfficiers();
+        isset($data['dark'])       && $this->resetDarkMatter();
+        isset($data['resources'])  && $this->resetResources();
+        isset($data['notes'])      && $this->resetNotes();
+        isset($data['rw'])         && $this->resetReports();
+        isset($data['friends'])    && $this->resetFriends();
+        isset($data['alliances'])  && $this->resetAlliances();
+        isset($data['fleets'])     && $this->resetFleets();
+        isset($data['banneds'])    && $this->resetBanned();
+        isset($data['messages'])   && $this->resetMessages();
+        isset($data['statpoints']) && $this->resetStatistics();
+        isset($data['moons'])      && $this->resetMoons();
 
-        return redirect('admin/reset')->with('success', __('admin/reset.re_reset_excess'));
+        return redirect()->route('admin.reset')->with('success', __('admin/reset.re_reset_excess'));
     }
 
     private function resetDefenses(): void

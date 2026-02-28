@@ -52,23 +52,29 @@ class BanController extends BaseController
         ]);
     }
 
-    public function ban(BanRequest $request): View | RedirectResponse
+    public function ban(BanRequest $request): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
         /** @var User $targetUser */
         $targetUser = User::where('name', $request->input('ban_name'))->firstOrFail();
-        $existingBan = $this->getBanWithPreferences($targetUser->id);
-
-        if ($request->isMethod('post')) {
-            return $this->applyBan($request, $targetUser, $existingBan);
-        }
 
         return view('admin.ban_result', [
             'target_user' => $targetUser,
-            'existing_ban' => $existingBan,
+            'existing_ban' => $this->getBanWithPreferences($targetUser->id),
         ]);
+    }
+
+    public function storeBan(BanRequest $request): RedirectResponse
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
+
+        /** @var User $targetUser */
+        $targetUser = User::where('name', $request->input('ban_name'))->firstOrFail();
+
+        return $this->applyBan($request, $targetUser, $this->getBanWithPreferences($targetUser->id));
     }
 
     public function unban(Request $request): RedirectResponse

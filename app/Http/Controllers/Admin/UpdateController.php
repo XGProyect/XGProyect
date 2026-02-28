@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\UpdateRequest;
 use App\Services\AdministrationService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -19,7 +19,7 @@ class UpdateController extends BaseController
     ) {
     }
 
-    public function __invoke(Request $request): View | RedirectResponse
+    public function index(): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
@@ -37,18 +37,21 @@ class UpdateController extends BaseController
             ]);
         }
 
-        if ($request->isMethod('post')) {
-            return $this->handlePost($request, $dbVersion, $subTitle);
-        }
-
         return view('admin.update', [
             'continue' => true,
             'up_sub_title' => $subTitle,
         ]);
     }
 
-    private function handlePost(Request $request, string $dbVersion, string $subTitle): View | RedirectResponse
+    public function run(UpdateRequest $request): View | RedirectResponse
     {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
+
+        $systemVersion = config('version.files');
+        $dbVersion = Options::getInstance()->get('version');
+        $subTitle = sprintf(__('admin/update.up_sub_title'), $dbVersion, $systemVersion);
+
         if (!$this->checkVersion()) {
             session()->flash('warning', __('admin/update.up_no_version_file'));
 
@@ -58,7 +61,7 @@ class UpdateController extends BaseController
             ]);
         }
 
-        $demo = $request->boolean('demo_mode');
+        $demo = isset($request->validated()['demo_mode']);
         $output = $this->startUpdate($dbVersion, $demo);
 
         if ($demo) {
@@ -70,7 +73,7 @@ class UpdateController extends BaseController
             ]);
         }
 
-        return redirect('admin/update')->with('success', __('admin/update.up_success'));
+        return redirect()->route('admin.update')->with('success', __('admin/update.up_success'));
     }
 
     private function checkVersion(): bool

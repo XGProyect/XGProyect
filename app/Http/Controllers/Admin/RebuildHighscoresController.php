@@ -18,7 +18,7 @@ class RebuildHighscoresController extends BaseController
     ) {
     }
 
-    public function __invoke(): View
+    public function index(): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\RepairRequest;
 use App\Services\AdministrationService;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -20,18 +19,11 @@ class RepairController extends BaseController
     ) {
     }
 
-    public function __invoke(Request $request): View | RedirectResponse
+    public function index(): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        return $request->isMethod('post')
-            ? $this->handlePost($request)
-            : $this->showTables();
-    }
-
-    private function showTables(): View
-    {
         $tables = $this->getAllTables()->map(fn (array $row) => [
             'name' => $row['TABLE_NAME'],
             'data' => FormatLib::prettyBytes((int) $row['DATA_LENGTH']),
@@ -45,13 +37,15 @@ class RepairController extends BaseController
         ]);
     }
 
-    private function handlePost(Request $request): View | RedirectResponse
+    public function run(RepairRequest $request): View
     {
-        $selected = $request->input('table', []);
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
-        if (empty($selected) || !is_array($selected)) {
-            return redirect('admin/repair');
-        }
+        $validated = $request->validated();
+        $selected  = $validated['table'];
+        $optimize  = isset($validated['optimize']);
+        $repair    = isset($validated['repair']);
 
         $results = collect();
 
@@ -59,12 +53,12 @@ class RepairController extends BaseController
             DB::statement('CHECK TABLE ' . $table);
             $results->push(['table' => $table, 'result' => __('admin/repair.db_check_ok')]);
 
-            if ($request->boolean('optimize')) {
+            if ($optimize) {
                 DB::statement('OPTIMIZE TABLE ' . $table);
                 $results->push(['table' => $table, 'result' => __('admin/repair.db_opt')]);
             }
 
-            if ($request->boolean('repair')) {
+            if ($repair) {
                 DB::statement('REPAIR TABLE ' . $table);
                 $results->push(['table' => $table, 'result' => __('admin/repair.db_rep')]);
             }
