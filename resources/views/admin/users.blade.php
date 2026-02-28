@@ -57,7 +57,7 @@
                                             </li>
                                             <li>
                                                 <a class="dropdown-item"
-                                                    href="/admin/ban?mode=ban&ban_name={{ $user }}&regexp=">
+                                                    href="/admin/ban/form?ban_name={{ $name }}&banuser=1">
                                                     <i class="fas fa-user-slash"></i>
                                                     {{ __('admin/users.us_ban') }}
                                                 </a>
