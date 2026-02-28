@@ -6,147 +6,136 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Xgp\App\Core\Options;
-use Xgp\App\Core\Template;
 
 class UpdateController extends BaseController
 {
-    private $system_version;
-    private $db_version;
-    private $demo;
-    private $output = [];
-    private AdministrationService $administrationService;
-
-    public function __construct()
-    {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+    ) {
     }
 
-    public function __invoke(): void
+    public static function make(): static
+    {
+        return new static(new AdministrationService(new SettingsService()));
+    }
+
+    public function __invoke(Request $request): View | RedirectResponse
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->buildPage();
+        $systemVersion = config('version.files');
+        $dbVersion = Options::getInstance()->get('version');
+        $subTitle = sprintf(__('admin/update.up_sub_title'), $dbVersion, $systemVersion);
+
+        // if ($systemVersion === $dbVersion) {
+        //     session()->flash('danger', __('admin/update.up_no_update_required'));
+
+        //     return view('admin.update', [
+        //         'continue' => false,
+        //         'up_sub_title' => $subTitle,
+        //     ]);
+        // }
+
+        if ($request->isMethod('post')) {
+            return $this->handlePost($request, $dbVersion, $subTitle);
+        }
+
+        return view('admin.update', [
+            'continue' => true,
+            'up_sub_title' => $subTitle,
+        ]);
     }
 
-    private function buildPage(): void
+    private function handlePost(Request $request, string $dbVersion, string $subTitle): View | RedirectResponse
     {
-        $continue = true;
-        $alerts = '';
+        if (!$this->checkVersion()) {
+            session()->flash('warning', __('admin/update.up_no_version_file'));
 
-        $this->system_version = config('version.files');
-        $this->db_version = Options::getInstance()->get('version');
-
-        if ($this->system_version == $this->db_version) {
-            session()->flash('danger', __('admin/update.up_no_update_required'));
-            $continue = false;
+            return view('admin.update', [
+                'continue' => false,
+                'up_sub_title' => $subTitle,
+            ]);
         }
 
-        $parse['up_sub_title'] = sprintf(__('admin/update.up_sub_title'), $this->db_version, $this->system_version);
+        $demo = $request->boolean('demo_mode');
+        $output = $this->startUpdate($dbVersion, $demo);
 
-        if ($_POST && isset($_POST['send'])) {
-            $this->demo = (isset($_POST['demo_mode']) && $_POST['demo_mode'] == 'on') ? true : false;
+        if ($demo) {
+            session()->flash('success', __('admin/update.up_success'));
 
-            if (!$this->checkVersion()) {
-                $alerts = __('admin/update.up_no_version_file');
-                $continue = false;
-            }
-
-            if ($continue) {
-                $this->startUpdate();
-
-                session()->flash('success', __('admin/update.up_success'));
-
-                if ($this->demo) {
-                    $parse['result'] = print_r($this->output, true);
-
-                    Template::legacyView(
-                        'admin.update_result',
-                        $parse
-                    );
-                } else {
-                    session()->flash('danger', __('admin/update.up_success'));
-                    $continue = false;
-                }
-            } else {
-                session()->flash('warning', $alerts);
-            }
+            return view('admin.update_result', [
+                'up_sub_title' => $subTitle,
+                'result' => print_r($output, true),
+            ]);
         }
 
-        $parse['continue'] = $continue;
-
-        Template::legacyView(
-            'admin.update',
-            $parse
-        );
+        return redirect('admin/update')->with('success', __('admin/update.up_success'));
     }
 
     private function checkVersion(): bool
     {
-        return file_exists(
-            UPDATE_PATH . 'update_common.php'
-        );
+        return file_exists($this->updatePath() . 'update_common.php');
     }
 
-    private function startUpdate(): void
+    private function startUpdate(string $dbVersion, bool $demo): array
     {
-        $updates_dir = opendir(UPDATE_PATH);
+        $updatesDir = opendir($this->updatePath());
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store', 'update_common.php'];
-        $files_to_read = [];
-        $db_version = strtr($this->db_version, ['v' => '', '.' => '']);
+        $filesToRead = [];
+        $numericDbVersion = strtr($dbVersion, ['v' => '', '.' => '']);
 
-        while (($update_dir = readdir($updates_dir)) !== false) {
-            if (!in_array($update_dir, $exceptions)) {
-                $file_version = strtr(
-                    $update_dir,
-                    ['update_' => '', '.php' => '']
-                );
-
-                // ignore previous versions, we only want the newer ones
-                if ($db_version >= $file_version) {
-                    continue;
-                }
-
-                array_push($files_to_read, $file_version);
+        while (($file = readdir($updatesDir)) !== false) {
+            if (in_array($file, $exceptions)) {
+                continue;
             }
+
+            $fileVersion = strtr($file, ['update_' => '', '.php' => '']);
+
+            if ($numericDbVersion >= $fileVersion) {
+                continue;
+            }
+
+            $filesToRead[] = $fileVersion;
         }
 
-        // sort very important to keep versions order
-        asort($files_to_read);
+        closedir($updatesDir);
+        asort($filesToRead);
+        $filesToRead[] = 'common';
 
-        // add common
-        array_push($files_to_read, 'common');
+        $output = [];
 
-        // Do we have something? Go...
-        if (count($files_to_read) > 0) {
-            foreach ($files_to_read as $version) {
-                $this->executeFile($version);
-            }
+        foreach ($filesToRead as $version) {
+            $output = array_merge($output, $this->executeFile($version, $demo));
         }
+
+        return $output;
     }
 
-    private function executeFile(string $version): void
+    private function executeFile(string $version, bool $demo): array
     {
-        // Define some stuff
-        $update_path = UPDATE_PATH . 'update_' . $version . '.php';
+        $updatePath = $this->updatePath() . 'update_' . $version . '.php';
         $queries = [];
 
-        require_once $update_path;
+        require_once $updatePath;
 
-        // Check if there was something
-        if (count($queries) > 0) {
-            foreach ($queries as $query) {
-                if (!$this->demo) {
-                    $this->output[] = DB::unprepared($query);
-                } else {
-                    $this->output[] = $query;
-                }
-            }
+        $output = [];
+
+        foreach ($queries as $query) {
+            $output[] = $demo ? $query : DB::unprepared($query);
         }
+
+        return $output;
+    }
+
+    private function updatePath(): string
+    {
+        return base_path('updates') . DIRECTORY_SEPARATOR;
     }
 }
