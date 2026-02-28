@@ -26,18 +26,6 @@
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/AlliancesController.php" method="checkAllianceName"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="app/Http/Controllers/Admin/AnnouncementController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/AnnouncementController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/BackupController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/BackupController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/BackupController.php"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/BackupController.php" method="doDownloadAction"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/BackupController.php" method="doDownloadAction"/>
-  <violation rule="PHPMD\Rule\Design\ExitExpression" file="app/Http/Controllers/Admin/BackupController.php"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/BackupController.php" method="doDeleteAction"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/BackupController.php" method="doDeleteAction"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/BackupController.php" method="formatFileName"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/BackupController.php" method="isValidFile"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/BackupController.php" method="isValidFile"/>
-  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="app/Http/Controllers/Admin/BackupController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/BanController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/BanController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ChangelogController.php"/>
@@ -94,10 +82,6 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ModulesController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/ModulesController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="app/Http/Controllers/Admin/ModulesController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/PermissionsController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/PermissionsController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/PermissionsController.php"/>
-  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="app/Http/Controllers/Admin/PermissionsController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/PlanetsController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/PremiumController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/RebuildHighscoresController.php"/>
@@ -185,8 +169,8 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Models/User.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Providers/BroadcastServiceProvider.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Providers/RouteServiceProvider.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="app/Services/Admin/PermissionsService.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Services/AdministrationService.php"/>
-  <violation rule="PHPMD\Rule\Design\ExitExpression" file="app/Services/AdministrationService.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Services/SessionService.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Services/SettingsService.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/View/Components/Admin/Navigation.php"/>
@@ -557,11 +541,6 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/TraderResourcesController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/TraderResourcesController.php"/>
   <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Libraries/Adm/Permissions.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/Adm/Permissions.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Adm/Permissions.php" method="getRoles"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Adm/Permissions.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/Adm/Permissions.php"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/Adm/Permissions.php" method="getPermissions"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Libraries/Alliance/Alliances.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/Alliance/Alliances.php" method="__construct"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/Alliance/Alliances.php"/>

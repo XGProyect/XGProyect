@@ -27,7 +27,7 @@ class Options
         return self::$instance;
     }
 
-    public function get(?string $option = null): mixed
+    public function get(?string $option = null): ?string
     {
         if (empty($option)) {
             return $this->options;

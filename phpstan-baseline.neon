@@ -126,7 +126,7 @@ parameters:
 			path: app/Http/Controllers/Admin/AlliancesController.php
 
 		-
-			message: "#^Parameter \\#1 \\$format of function date expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$format of function date expects string, string\\|null given\\.$#"
 			count: 2
 			path: app/Http/Controllers/Admin/AlliancesController.php
 
@@ -516,7 +516,7 @@ parameters:
 			path: app/Http/Controllers/Admin/HomeController.php
 
 		-
-			message: "#^Parameter \\#1 \\$version1 of function version_compare expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$version1 of function version_compare expects string, string\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/HomeController.php
 
@@ -561,12 +561,7 @@ parameters:
 			path: app/Http/Controllers/Admin/MailingController.php
 
 		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MailingController.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, string\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/MailingController.php
 
@@ -801,29 +796,9 @@ parameters:
 			path: app/Http/Controllers/Admin/ModulesController.php
 
 		-
-			message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
+			message: "#^Parameter \\#2 \\$string of function explode expects string, string\\|null given\\.$#"
 			count: 2
 			path: app/Http/Controllers/Admin/ModulesController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\PermissionsController\\:\\:buildListOfPermissions\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PermissionsController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\PermissionsController\\:\\:buildRolesList\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PermissionsController.php
-
-		-
-			message: "#^Offset mixed does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PermissionsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$permissions of class Xgp\\\\App\\\\Libraries\\\\Adm\\\\Permissions constructor expects string, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PermissionsController.php
 
 		-
 			message: "#^If condition is always true\\.$#"
@@ -836,12 +811,7 @@ parameters:
 			path: app/Http/Controllers/Admin/PlanetsController.php
 
 		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PlanetsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, string\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/PlanetsController.php
 
@@ -856,12 +826,7 @@ parameters:
 			path: app/Http/Controllers/Admin/PremiumController.php
 
 		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PremiumController.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, string\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/PremiumController.php
 
@@ -896,12 +861,7 @@ parameters:
 			path: app/Http/Controllers/Admin/RegistrationController.php
 
 		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/RegistrationController.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, string\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/RegistrationController.php
 
@@ -1056,112 +1016,97 @@ parameters:
 			path: app/Http/Controllers/Admin/ResetController.php
 
 		-
-			message: "#^Cannot access offset 'adm_attack' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'admin_email' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'close_reason' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'date_format' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'date_format_extended' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'defs_cdr' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'fleet_cdr' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'fleet_speed' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'forum_url' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'game_enable' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'game_logo' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'game_name' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'game_speed' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'lang' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'noobprotection' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'noobprotectionmulti' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'noobprotectiontime' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot access offset 'resource_multiplier' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Cannot cast mixed to int\\.$#"
-			count: 4
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ServerController\\:\\:formatOffset\\(\\) has parameter \\$offset with no type specified\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/ServerController.php
 
 		-
-			message: "#^Parameter \\#1 \\$currentLang of static method Xgp\\\\App\\\\Libraries\\\\Functions\\:\\:getLanguages\\(\\) expects string, mixed given\\.$#"
+			message: "#^Offset 'adm_attack' does not exist on string\\|null\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/ServerController.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function stripslashes expects string, mixed given\\.$#"
+			message: "#^Offset 'admin_email' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'close_reason' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'date_format' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'date_format_extended' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'defs_cdr' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'fleet_cdr' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'fleet_speed' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'forum_url' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'game_enable' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'game_logo' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'game_name' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'game_speed' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'lang' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'noobprotection' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'noobprotectionmulti' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'noobprotectiontime' does not exist on string\\|null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ServerController.php
+
+		-
+			message: "#^Offset 'resource_multiplier' does not exist on string\\|null\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/ServerController.php
 
@@ -1191,12 +1136,7 @@ parameters:
 			path: app/Http/Controllers/Admin/StatisticsController.php
 
 		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/StatisticsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$array of function array_filter expects array, string\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/StatisticsController.php
 
@@ -1208,11 +1148,6 @@ parameters:
 		-
 			message: "#^Binary operation \"\\.\" between '\\<i class\\=\"fas fa…' and array\\|string\\|null results in an error\\.$#"
 			count: 2
-			path: app/Http/Controllers/Admin/TasksController.php
-
-		-
-			message: "#^Cannot cast mixed to int\\.$#"
-			count: 1
 			path: app/Http/Controllers/Admin/TasksController.php
 
 		-
@@ -1266,7 +1201,7 @@ parameters:
 			path: app/Http/Controllers/Admin/UpdateController.php
 
 		-
-			message: "#^Parameter \\#1 \\$dbVersion of method App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:startUpdate\\(\\) expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$dbVersion of method App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:startUpdate\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/UpdateController.php
 
@@ -1282,11 +1217,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$format of function sprintf expects string, array\\|string\\|null given\\.$#"
-			count: 2
-			path: app/Http/Controllers/Admin/UpdateController.php
-
-		-
-			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
 			count: 2
 			path: app/Http/Controllers/Admin/UpdateController.php
 
@@ -1312,7 +1242,7 @@ parameters:
 
 		-
 			message: "#^Binary operation \"\\.\" between array\\|string\\|null and '\\<br\\>' results in an error\\.$#"
-			count: 6
+			count: 7
 			path: app/Http/Controllers/Admin/UsersController.php
 
 		-
@@ -1387,6 +1317,16 @@ parameters:
 
 		-
 			message: "#^Cannot access offset 'planet_system' on mixed\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Cannot access property \\$authlevel on Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UsersController.php
+
+		-
+			message: "#^Cannot access property \\$id on Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null\\.$#"
 			count: 2
 			path: app/Http/Controllers/Admin/UsersController.php
 
@@ -1571,7 +1511,7 @@ parameters:
 			path: app/Http/Controllers/Admin/UsersController.php
 
 		-
-			message: "#^Parameter \\#1 \\$format of function date expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$format of function date expects string, string\\|null given\\.$#"
 			count: 11
 			path: app/Http/Controllers/Admin/UsersController.php
 
@@ -1791,12 +1731,7 @@ parameters:
 			path: app/Http/Requests/RegisterRequest.php
 
 		-
-			message: "#^Parameter \\#1 \\$address of class Illuminate\\\\Mail\\\\Mailables\\\\Address constructor expects string, mixed given\\.$#"
-			count: 1
-			path: app/Mail/Announcement.php
-
-		-
-			message: "#^Parameter \\#2 \\$name of class Illuminate\\\\Mail\\\\Mailables\\\\Address constructor expects string\\|null, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$address of class Illuminate\\\\Mail\\\\Mailables\\\\Address constructor expects string, string\\|null given\\.$#"
 			count: 1
 			path: app/Mail/Announcement.php
 
@@ -1806,12 +1741,7 @@ parameters:
 			path: app/Mail/Announcement.php
 
 		-
-			message: "#^Parameter \\#1 \\$address of class Illuminate\\\\Mail\\\\Mailables\\\\Address constructor expects string, mixed given\\.$#"
-			count: 1
-			path: app/Mail/Recover.php
-
-		-
-			message: "#^Parameter \\#2 \\$name of class Illuminate\\\\Mail\\\\Mailables\\\\Address constructor expects string\\|null, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$address of class Illuminate\\\\Mail\\\\Mailables\\\\Address constructor expects string, string\\|null given\\.$#"
 			count: 1
 			path: app/Mail/Recover.php
 
@@ -1821,12 +1751,7 @@ parameters:
 			path: app/Mail/Recover.php
 
 		-
-			message: "#^Parameter \\#1 \\$address of class Illuminate\\\\Mail\\\\Mailables\\\\Address constructor expects string, mixed given\\.$#"
-			count: 1
-			path: app/Mail/Welcome.php
-
-		-
-			message: "#^Parameter \\#2 \\$name of class Illuminate\\\\Mail\\\\Mailables\\\\Address constructor expects string\\|null, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$address of class Illuminate\\\\Mail\\\\Mailables\\\\Address constructor expects string, string\\|null given\\.$#"
 			count: 1
 			path: app/Mail/Welcome.php
 
@@ -2621,6 +2546,21 @@ parameters:
 			path: app/Providers/RouteServiceProvider.php
 
 		-
+			message: "#^Offset int does not exist on array\\|string\\|null\\.$#"
+			count: 1
+			path: app/Services/Admin/PermissionsService.php
+
+		-
+			message: "#^Property App\\\\Services\\\\Admin\\\\PermissionsService\\:\\:\\$permissions \\(array\\<string, array\\<int, int\\>\\>\\) does not accept mixed\\.$#"
+			count: 1
+			path: app/Services/Admin/PermissionsService.php
+
+		-
+			message: "#^Cannot access property \\$authlevel on Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null\\.$#"
+			count: 1
+			path: app/Services/AdministrationService.php
+
+		-
 			message: "#^Call to an undefined static method App\\\\Models\\\\Planets\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: app/Services/PlanetService.php
@@ -2716,6 +2656,11 @@ parameters:
 			path: app/View/Components/Admin/Sidebar.php
 
 		-
+			message: "#^Cannot access property \\$authlevel on Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null\\.$#"
+			count: 1
+			path: app/View/Components/Admin/Sidebar.php
+
+		-
 			message: "#^Binary operation \"\\.\" between 'onClick\\=\"f\\(\\\\'game…' and array\\|string\\|null results in an error\\.$#"
 			count: 1
 			path: app/View/Components/Game/Leftmenu.php
@@ -2781,7 +2726,12 @@ parameters:
 			path: app/View/Components/Game/Topnav.php
 
 		-
-			message: "#^Parameter \\#1 \\$mes of static method Xgp\\\\App\\\\Libraries\\\\Functions\\:\\:popupMessage\\(\\) expects string, mixed given\\.$#"
+			message: "#^Binary operation \"/\" between string\\|null and 100 results in an error\\.$#"
+			count: 2
+			path: legacy/app/Core/Common.php
+
+		-
+			message: "#^Parameter \\#1 \\$mes of static method Xgp\\\\App\\\\Libraries\\\\Functions\\:\\:popupMessage\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: legacy/app/Core/Common.php
 
@@ -2796,7 +2746,7 @@ parameters:
 			path: legacy/app/Core/Common.php
 
 		-
-			message: "#^Parameter \\#1 \\$timezoneId of function date_default_timezone_set expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$timezoneId of function date_default_timezone_set expects string, string\\|null given\\.$#"
 			count: 1
 			path: legacy/app/Core/Common.php
 
@@ -3117,6 +3067,11 @@ parameters:
 
 		-
 			message: "#^Cannot access offset 'value' on mixed\\.$#"
+			count: 1
+			path: legacy/app/Core/Options.php
+
+		-
+			message: "#^Method Xgp\\\\App\\\\Core\\\\Options\\:\\:get\\(\\) should return string\\|null but returns array\\.$#"
 			count: 1
 			path: legacy/app/Core/Options.php
 
@@ -4661,6 +4616,11 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
+			message: "#^Binary operation \"/\" between \\(float\\|int\\<75000, max\\>\\) and string\\|null results in an error\\.$#"
+			count: 1
+			path: legacy/app/Http/Controllers/Game/GalaxyController.php
+
+		-
 			message: "#^Call to an undefined method object\\:\\:buildRow\\(\\)\\.$#"
 			count: 1
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
@@ -5001,7 +4961,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/InfosController.php
 
 		-
-			message: "#^Parameter \\#3 \\$mult of static method Xgp\\\\App\\\\Libraries\\\\ProductionLib\\:\\:productionAmount\\(\\) expects int, mixed given\\.$#"
+			message: "#^Parameter \\#3 \\$mult of static method Xgp\\\\App\\\\Libraries\\\\ProductionLib\\:\\:productionAmount\\(\\) expects int, string\\|null given\\.$#"
 			count: 6
 			path: legacy/app/Http/Controllers/Game/InfosController.php
 
@@ -5156,7 +5116,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/MessagesController.php
 
 		-
-			message: "#^Parameter \\#1 \\$str of function strtr expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$str of function strtr expects string, string\\|null given\\.$#"
 			count: 1
 			path: legacy/app/Http/Controllers/Game/MessagesController.php
 
@@ -5791,6 +5751,16 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/ResearchController.php
 
 		-
+			message: "#^Binary operation \"\\+\" between float and 0\\|string\\|null results in an error\\.$#"
+			count: 3
+			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
+
+		-
+			message: "#^Binary operation \"\\+\" between int\\<0, max\\> and string\\|null results in an error\\.$#"
+			count: 1
+			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
+
+		-
 			message: "#^Constant ENGINEER_ENERGY not found\\.$#"
 			count: 1
 			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
@@ -5896,7 +5866,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
 
 		-
-			message: "#^Parameter \\#3 \\$mult of static method Xgp\\\\App\\\\Libraries\\\\ProductionLib\\:\\:productionAmount\\(\\) expects int, mixed given\\.$#"
+			message: "#^Parameter \\#3 \\$mult of static method Xgp\\\\App\\\\Libraries\\\\ProductionLib\\:\\:productionAmount\\(\\) expects int, string\\|null given\\.$#"
 			count: 6
 			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
 
@@ -6284,46 +6254,6 @@ parameters:
 			message: "#^Property Xgp\\\\App\\\\Http\\\\Controllers\\\\Game\\\\TraderResourcesController\\:\\:\\$user type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: legacy/app/Http/Controllers/Game/TraderResourcesController.php
-
-		-
-			message: "#^Call to function is_array\\(\\) with string will always evaluate to false\\.$#"
-			count: 1
-			path: legacy/app/Libraries/Adm/Permissions.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Libraries\\\\Adm\\\\Permissions\\:\\:getAdminModules\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Libraries/Adm/Permissions.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Libraries\\\\Adm\\\\Permissions\\:\\:getAdminSections\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Libraries/Adm/Permissions.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Libraries\\\\Adm\\\\Permissions\\:\\:getAllPermissionsAsArray\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Libraries/Adm/Permissions.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Libraries\\\\Adm\\\\Permissions\\:\\:getPermissions\\(\\) is unused\\.$#"
-			count: 1
-			path: legacy/app/Libraries/Adm/Permissions.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Libraries\\\\Adm\\\\Permissions\\:\\:getPermissions\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Libraries/Adm/Permissions.php
-
-		-
-			message: "#^Method Xgp\\\\App\\\\Libraries\\\\Adm\\\\Permissions\\:\\:getRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: legacy/app/Libraries/Adm/Permissions.php
-
-		-
-			message: "#^Parameter \\#1 \\$role of method Xgp\\\\App\\\\Libraries\\\\Adm\\\\Permissions\\:\\:roleExists\\(\\) expects string, int given\\.$#"
-			count: 2
-			path: legacy/app/Libraries/Adm/Permissions.php
 
 		-
 			message: "#^Property Xgp\\\\App\\\\Libraries\\\\Adm\\\\Permissions\\:\\:\\$permissions \\(array\\) does not accept mixed\\.$#"
@@ -9006,11 +8936,6 @@ parameters:
 			path: legacy/app/Libraries/FormatLib.php
 
 		-
-			message: "#^Cannot cast mixed to int\\.$#"
-			count: 2
-			path: legacy/app/Libraries/Formulas.php
-
-		-
 			message: "#^Constant PLANETSIZE_MULTIPLER not found\\.$#"
 			count: 1
 			path: legacy/app/Libraries/Formulas.php
@@ -9056,12 +8981,12 @@ parameters:
 			path: legacy/app/Libraries/Formulas.php
 
 		-
-			message: "#^Constant VACATION_TIME_FORCED not found\\.$#"
+			message: "#^Binary operation \"/\" between string\\|null and 2500 results in an error\\.$#"
 			count: 1
 			path: legacy/app/Libraries/Functions.php
 
 		-
-			message: "#^Method Xgp\\\\App\\\\Libraries\\\\Functions\\:\\:fleetSpeedFactor\\(\\) should return string but returns \\(float\\|int\\)\\.$#"
+			message: "#^Constant VACATION_TIME_FORCED not found\\.$#"
 			count: 1
 			path: legacy/app/Libraries/Functions.php
 
@@ -9096,7 +9021,7 @@ parameters:
 			path: legacy/app/Libraries/Functions.php
 
 		-
-			message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
+			message: "#^Parameter \\#2 \\$string of function explode expects string, string\\|null given\\.$#"
 			count: 1
 			path: legacy/app/Libraries/Functions.php
 
@@ -10596,6 +10521,11 @@ parameters:
 			path: legacy/app/Libraries/SecurePageLib.php
 
 		-
+			message: "#^Binary operation \"/\" between \\(float\\|int\\) and string\\|null results in an error\\.$#"
+			count: 1
+			path: legacy/app/Libraries/StatisticsLibrary.php
+
+		-
 			message: "#^Constant ALLIANCE_STATISTICS not found\\.$#"
 			count: 1
 			path: legacy/app/Libraries/StatisticsLibrary.php
@@ -10651,7 +10581,7 @@ parameters:
 			path: legacy/app/Libraries/TimingLibrary.php
 
 		-
-			message: "#^Parameter \\#1 \\$format of function date expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$format of function date expects string, string\\|null given\\.$#"
 			count: 2
 			path: legacy/app/Libraries/TimingLibrary.php
 
@@ -10666,6 +10596,11 @@ parameters:
 			path: legacy/app/Libraries/TimingLibrary.php
 
 		-
+			message: "#^Binary operation \"\\*\" between 60 and string\\|null results in an error\\.$#"
+			count: 1
+			path: legacy/app/Libraries/UpdatesLibrary.php
+
+		-
 			message: "#^Binary operation \"\\*\" between int\\<1, max\\> and float\\|string results in an error\\.$#"
 			count: 1
 			path: legacy/app/Libraries/UpdatesLibrary.php
@@ -10673,6 +10608,16 @@ parameters:
 		-
 			message: "#^Binary operation \"\\*\" between int\\<1, max\\> and string results in an error\\.$#"
 			count: 1
+			path: legacy/app/Libraries/UpdatesLibrary.php
+
+		-
+			message: "#^Binary operation \"\\+\" between int and 0\\|string\\|null results in an error\\.$#"
+			count: 3
+			path: legacy/app/Libraries/UpdatesLibrary.php
+
+		-
+			message: "#^Binary operation \"\\+\" between string\\|null and 21600 results in an error\\.$#"
+			count: 2
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
@@ -10698,6 +10643,11 @@ parameters:
 		-
 			message: "#^Binary operation \"\\-\\=\" between string and float\\|string results in an error\\.$#"
 			count: 1
+			path: legacy/app/Libraries/UpdatesLibrary.php
+
+		-
+			message: "#^Binary operation \"/\" between 0\\|string\\|null and 3600 results in an error\\.$#"
+			count: 3
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
@@ -10816,7 +10766,7 @@ parameters:
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
-			message: "#^Parameter \\#3 \\$mult of static method Xgp\\\\App\\\\Libraries\\\\ProductionLib\\:\\:productionAmount\\(\\) expects int, mixed given\\.$#"
+			message: "#^Parameter \\#3 \\$mult of static method Xgp\\\\App\\\\Libraries\\\\ProductionLib\\:\\:productionAmount\\(\\) expects int, string\\|null given\\.$#"
 			count: 6
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
@@ -10834,11 +10784,6 @@ parameters:
 			message: "#^Parameter \\#6 \\$subject of static method Xgp\\\\App\\\\Libraries\\\\Functions\\:\\:sendMessage\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 1
 			path: legacy/app/Libraries/UpdatesLibrary.php
-
-		-
-			message: "#^Cannot cast mixed to int\\.$#"
-			count: 1
-			path: legacy/app/Libraries/Users.php
 
 		-
 			message: "#^Constant ONE_WEEK not found\\.$#"
@@ -12181,7 +12126,7 @@ parameters:
 			path: legacy/app/Models/Libraries/NoobsProtectionLib.php
 
 		-
-			message: "#^Method Xgp\\\\App\\\\Models\\\\Libraries\\\\NoobsProtectionLib\\:\\:readAllConfigs\\(\\) should return array but returns mixed\\.$#"
+			message: "#^Method Xgp\\\\App\\\\Models\\\\Libraries\\\\NoobsProtectionLib\\:\\:readAllConfigs\\(\\) should return array but returns string\\|null\\.$#"
 			count: 1
 			path: legacy/app/Models/Libraries/NoobsProtectionLib.php
 

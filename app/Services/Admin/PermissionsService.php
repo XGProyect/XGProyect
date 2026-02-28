@@ -12,15 +12,16 @@ use Xgp\App\Core\Options;
 
 class PermissionsService
 {
-    private const ALLOW_ADMIN_MODIFICATION = false;
-
+    /**
+     * @var array<string, array<int, int>> $permissions
+     */
     private array $permissions = [];
 
     public function __construct(private readonly Options $options)
     {
         try {
             $this->permissions = json_decode(
-                $this->options->get('admin_permissions'),
+                $this->options->get('admin_permissions') ?? '{}',
                 true,
                 512,
                 JSON_THROW_ON_ERROR
@@ -30,6 +31,9 @@ class PermissionsService
         }
     }
 
+    /**
+     * @return array<string, array<int, array<string, mixed>>>
+     */
     public function buildViewData(): array
     {
         $sectionsList = [];
@@ -73,18 +77,21 @@ class PermissionsService
         return ['sections_list' => $sectionsList];
     }
 
+    /**
+     * @param array<string, array<int, string>> $input
+     */
     public function updatePermissions(array $input): void
     {
-        $roles = $this->roles(excludeAdmin: true);
+        $roles = $this->editableRoles();
 
         foreach ($this->modules() as $section) {
             foreach ($section as $module) {
                 foreach ($roles as $role) {
-                    if (isset($input[$module][$role]) && $input[$module][$role] === 'on') {
-                        $this->grantAccess($module, $role);
-                    } else {
-                        $this->removeAccess($module, $role);
-                    }
+                    $checked = isset($input[$module][$role]) && $input[$module][$role] === 'on';
+
+                    $checked
+                        ? $this->grantAccess($module, $role)
+                        : $this->removeAccess($module, $role);
                 }
             }
         }
@@ -106,8 +113,8 @@ class PermissionsService
 
     private function isAccessAllowed(string $module, int $role): bool
     {
-        return $role === UserRanks::ADMIN
-            || (isset($this->permissions[$module][$role]) && $this->permissions[$module][$role] === 1);
+        return $role === UserRanks::ADMIN ||
+            (isset($this->permissions[$module][$role]) && $this->permissions[$module][$role] === 1);
     }
 
     private function grantAccess(string $module, int $role): void
@@ -136,18 +143,28 @@ class PermissionsService
 
     private function isRoleEditable(int $role): bool
     {
-        return $role !== UserRanks::ADMIN || self::ALLOW_ADMIN_MODIFICATION;
+        return $role !== UserRanks::ADMIN;
     }
 
-    private function roles(bool $excludeAdmin = false): array
+    /**
+     * @return array<int, int>
+     */
+    private function roles(): array
     {
-        $roles = [UserRanks::GO, UserRanks::SGO, UserRanks::ADMIN];
-
-        return $excludeAdmin
-            ? array_values(array_filter($roles, fn(int $r) => $r !== UserRanks::ADMIN))
-            : $roles;
+        return [UserRanks::GO, UserRanks::SGO, UserRanks::ADMIN];
     }
 
+    /**
+     * @return array<int, int>
+     */
+    private function editableRoles(): array
+    {
+        return [UserRanks::GO, UserRanks::SGO];
+    }
+
+    /**
+     * @return array<int, array<int, string>>
+     */
     private function modules(): array
     {
         return [
@@ -159,11 +176,17 @@ class PermissionsService
         ];
     }
 
+    /**
+     * @return array<int, string>
+     */
     private function sections(): array
     {
         return AdminPages::SECTIONS;
     }
 
+    /**
+     * @return array<int, array<string, string>>
+     */
     private function buildRolesList(): array
     {
         $rolesList = [];
