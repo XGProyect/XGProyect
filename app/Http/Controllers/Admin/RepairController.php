@@ -6,103 +6,88 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Xgp\App\Core\Template;
+use Illuminate\View\View;
 use Xgp\App\Libraries\FormatLib;
-use Xgp\App\Libraries\Functions;
 
 class RepairController extends BaseController
 {
-    private AdministrationService $administrationService;
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+    ) {}
 
-    public function __construct()
+    public static function make(): static
     {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+        return new static(new AdministrationService(new SettingsService()));
     }
 
-    public function __invoke(): void
+    public function __invoke(Request $request): View|RedirectResponse
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->buildPage();
+        return $request->isMethod('post')
+            ? $this->handlePost($request)
+            : $this->showTables();
     }
 
-    private function buildPage(): void
+    private function showTables(): View
     {
-        if (!$_POST) {
-            $tables = $this->getAllTables();
+        $tables = $this->getAllTables()->map(fn (array $row) => [
+            'name'     => $row['TABLE_NAME'],
+            'data'     => FormatLib::prettyBytes((int) $row['DATA_LENGTH']),
+            'index'    => FormatLib::prettyBytes((int) $row['INDEX_LENGTH']),
+            'overhead' => FormatLib::prettyBytes((int) $row['DATA_FREE']),
+        ]);
 
-            $parse['display'] = 'block';
-            $parse['head'] = Template::render('admin.repair_row_head');
-            $parse['tables'] = '';
-            $parse['results'] = '';
+        return view('admin.repair', [
+            'tables'  => $tables,
+            'results' => null,
+        ]);
+    }
 
-            foreach ($tables as $row) {
-                $row['row'] = $row['TABLE_NAME'];
-                $row['data'] = FormatLib::prettyBytes((int) $row['DATA_LENGTH']);
-                $row['index'] = FormatLib::prettyBytes((int) $row['INDEX_LENGTH']);
-                $row['overhead'] = FormatLib::prettyBytes((int) $row['DATA_FREE']);
-                $row['status_style'] = 'text-info';
+    private function handlePost(Request $request): View|RedirectResponse
+    {
+        $selected = $request->input('table', []);
 
-                $parse['tables'] .= Template::render(
-                    'admin.repair_row',
-                    $row
-                );
+        if (empty($selected) || ! is_array($selected)) {
+            return redirect('admin/repair');
+        }
+
+        $results = collect();
+
+        foreach ($selected as $table) {
+            DB::statement('CHECK TABLE ' . $table);
+            $results->push(['table' => $table, 'result' => __('admin/repair.db_check_ok')]);
+
+            if ($request->boolean('optimize')) {
+                DB::statement('OPTIMIZE TABLE ' . $table);
+                $results->push(['table' => $table, 'result' => __('admin/repair.db_opt')]);
             }
-        } else {
-            $parse['display'] = 'none';
-            $parse['head'] = Template::render('admin.repair_result_head');
-            $parse['tables'] = '';
 
-            if (isset($_POST['table']) && is_array($_POST['table'])) {
-                $result_rows = '';
-
-                foreach ($_POST['table'] as $table) {
-                    $parse['row'] = $table;
-
-                    DB::statement('CHECK TABLE ' . $table);
-                    $parse['result'] = __('admin/repair.db_check_ok');
-                    $result_rows .= Template::render('admin.repair_result', $parse);
-
-                    if (isset($_POST['optimize']) && $_POST['optimize'] === 'on') {
-                        DB::statement('OPTIMIZE TABLE ' . $table);
-                        $parse['result'] = __('admin/repair.db_opt');
-                        $result_rows .= Template::render('admin.repair_result', $parse);
-                    }
-
-                    if (isset($_POST['repair']) && $_POST['repair'] === 'on') {
-                        DB::statement('REPAIR TABLE ' . $table);
-                        $parse['result'] = __('admin/repair.db_rep');
-                        $result_rows .= Template::render('admin.repair_result', $parse);
-                    }
-                }
-
-                $parse['results'] = $result_rows;
-            } else {
-                Functions::redirect('admin/repair');
+            if ($request->boolean('repair')) {
+                DB::statement('REPAIR TABLE ' . $table);
+                $results->push(['table' => $table, 'result' => __('admin/repair.db_rep')]);
             }
         }
 
-        Template::legacyView(
-            'admin.repair',
-            $parse
-        );
+        return view('admin.repair', [
+            'tables'  => collect(),
+            'results' => $results,
+        ]);
     }
 
-    private function getAllTables(): array
+    private function getAllTables(): Collection
     {
-        return array_map(
-            fn($row) => (array) $row,
-            DB::select(
-                'SELECT TABLE_NAME, DATA_LENGTH, INDEX_LENGTH, DATA_FREE
-                FROM information_schema.TABLES
-                WHERE table_schema = ?',
-                [config('DB_DATABASE')]
-            )
-        );
+        return collect(DB::select(
+            'SELECT TABLE_NAME, DATA_LENGTH, INDEX_LENGTH, DATA_FREE
+            FROM information_schema.TABLES
+            WHERE table_schema = ?',
+            [config('DB_DATABASE')]
+        ))->map(fn (object $row) => (array) $row);
     }
 }
