@@ -9,4 +9,7 @@ return [
     'bku_auto_legend' => 'Los resguardos automáticos ocurren una vez cada 6 horas',
     'bku_now' => 'Realizar un resguardo ahora',
     'bku_save' => 'Guardar cambios',
+    'bku_settings_saved' => 'Configuración de resguardo guardada correctamente.',
+    'bku_created' => 'Resguardo creado correctamente.',
+    'bku_deleted' => 'Resguardo eliminado correctamente.',
 ];

@@ -9,4 +9,7 @@ return [
     'bku_auto_legend' => 'Automatic backups occur once every 6 hours',
     'bku_now' => 'Perform a backup now',
     'bku_save' => 'Save changes',
+    'bku_settings_saved' => 'Backup settings saved successfully.',
+    'bku_created' => 'Backup created successfully.',
+    'bku_deleted' => 'Backup deleted successfully.',
 ];

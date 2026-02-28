@@ -1,6 +1,7 @@
 @extends('master.admin')
 
 @section('content')
+<x-alert/>
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -44,7 +45,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="checkbox" name="auto_backup"
-                                                    {{ $auto_backup }}>
+                                                    @checked($auto_backup)>
                                             </td>
                                         </tr>
                                     </tbody>
