@@ -79,7 +79,7 @@
                                  aria-expanded="{{ $isActiveModule ? 'true' : 'false' }}"
                                  aria-controls="{{ $moduleId }}">
                                 <i class="fas fa-chevron-right module-icon text-gray-400 mr-2" style="font-size:.75rem"></i>
-                                <strong class="flex-grow-1 module-label">{{ $groupLabel }}</strong>
+                                <strong class="flex-grow-1 module-label">{{ ucfirst($groupLabel) }}</strong>
                                 <span class="badge badge-light border">{{ count($filesByName) }}</span>
                             </div>
 
@@ -97,7 +97,7 @@
                                     <div class="file-block" data-file="{{ strtolower($basename) }}">
                                         <a href="{{ route('admin.languages', ['file' => $targetPath]) }}"
                                            class="d-block px-4 py-1 border-top text-decoration-none {{ $isActiveFile ? 'bg-primary text-white font-weight-bold' : 'text-body' }}">
-                                            <span class="file-label">{{ $basename }}</span>
+                                            <span class="file-label">{{ ucfirst($basename) }}</span>
                                         </a>
                                     </div>
                                 @endforeach
