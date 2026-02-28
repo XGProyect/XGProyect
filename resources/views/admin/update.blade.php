@@ -5,16 +5,17 @@
     <x-alert/>
 
     <form name="update_form" method="post" action="">
+        @if ($continue)
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/update.up_title') }}</h1>
-            @if ($continue)
+
             <button type="submit" class="btn btn-primary btn-icon-split mt-3 mt-sm-0">
                 <span class="icon text-white-50"><i class="fas fa-sync-alt"></i></span>
                 <span class="text">{{ __('admin/update.up_go') }}</span>
             </button>
-            @endif
         </div>
         <p class="mb-4">{!! $up_sub_title !!}</p>
+        @endif
 
         @if ($continue)
         <div class="row">
