@@ -4,80 +4,86 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\BackupRequest;
 use App\Services\AdministrationService;
-use App\Services\SettingsService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Xgp\App\Core\Options;
-use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib as Format;
-use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class BackupController extends BaseController
 {
-    public const BACKUP_SETTINGS = [
-        'auto_backup' => FILTER_UNSAFE_RAW,
-    ];
+    private const FILE_PATTERN = '/^db-backup-[0-9]+-([0-9]+)-[a-zA-Z0-9]+\.sql$/';
 
-    private AdministrationService $administrationService;
-
-    public function __construct()
-    {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+    ) {
     }
 
-    public function __invoke(): void
+    public function index(): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->runAction();
-
-        Template::legacyView(
-            'admin.backup',
-            array_merge(
-                $this->getBackupSettings(),
-                $this->getBackupList()
-            )
-        );
+        return view('admin.backup', array_merge(
+            $this->getBackupSettings(),
+            $this->getBackupList(),
+        ));
     }
 
-    private function runAction(): void
+    public function save(BackupRequest $request): RedirectResponse
     {
-        $save = filter_input(INPUT_POST, 'save');
-        $backup = filter_input(INPUT_POST, 'backup');
-        $file_actions = filter_input_array(INPUT_GET, [
-            'action' => FILTER_UNSAFE_RAW,
-            'file' => [
-                'filter' => FILTER_CALLBACK,
-                'options' => [$this, 'isValidFile'],
-            ],
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
+
+        Options::getInstance()->write('auto_backup', $request->has('auto_backup') ? 1 : 0);
+
+        return redirect()->route('admin.backup');
+    }
+
+    public function create(): RedirectResponse
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
+
+        $this->performBackup();
+
+        return redirect()->route('admin.backup');
+    }
+
+    public function download(string $file): Response
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
+
+        abort_unless($this->isValidFileName($file), 404);
+
+        $path = storage_path('backups' . DIRECTORY_SEPARATOR . $file);
+
+        abort_unless(file_exists($path), 404);
+
+        return response((string) file_get_contents($path), 200, [
+            'Content-Type' => 'text/plain',
+            'Content-Disposition' => 'attachment; filename="' . $file . '"',
         ]);
+    }
 
-        // save form
-        if ($save) {
-            $data = filter_input_array(INPUT_POST, self::BACKUP_SETTINGS, true);
+    public function destroy(string $file): RedirectResponse
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
-            foreach ($data as $option => $value) {
-                Options::getInstance()->write($option, ($value == 'on' ? 1 : 0));
-            }
+        abort_unless($this->isValidFileName($file), 404);
+
+        $path = storage_path('backups' . DIRECTORY_SEPARATOR . $file);
+
+        if (file_exists($path)) {
+            unlink($path);
         }
 
-        // create a new backup
-        if ($backup) {
-            $this->performBackup();
-        }
-
-        // download or delete a file
-        if ($file_actions) {
-            if (in_array($file_actions['action'], ['download', 'delete']) &&
-                $file_actions['file'] != null) {
-                $this->{'do' . ucfirst($file_actions['action']) . 'Action'}($file_actions['file']);
-            }
-        }
+        return redirect()->route('admin.backup');
     }
 
     private function performBackup(): void
@@ -125,95 +131,59 @@ class BackupController extends BaseController
 
         $dump .= "SET FOREIGN_KEY_CHECKS=1;\n";
 
-        $fileName = 'db-backup-' . date('Ymd') . '-' . time() . '-' . sha1(join(',', $tables)) . '.sql';
-        $handle = fopen(storage_path('backups') . DIRECTORY_SEPARATOR . $fileName, 'w+');
-        fwrite($handle, $dump);
-        fclose($handle);
-    }
+        $fileName = 'db-backup-' . date('Ymd') . '-' . time() . '-' . sha1(implode(',', $tables)) . '.sql';
 
-    private function doDownloadAction(string $file_name): void
-    {
-        $to_download = storage_path('backups') . DIRECTORY_SEPARATOR . $file_name;
-
-        if (file_exists($to_download)) {
-            header('Content-type: text/plain');
-            header('Content-disposition: attachment; filename=' . $file_name);
-            readfile($to_download);
-            exit();
-        }
-    }
-
-    private function doDeleteAction(string $file_name): void
-    {
-        $to_delete = storage_path('backups') . DIRECTORY_SEPARATOR . $file_name;
-
-        if (file_exists($to_delete)) {
-            unlink($to_delete);
-        }
-
-        Functions::redirect('/admin/backup');
+        file_put_contents(storage_path('backups' . DIRECTORY_SEPARATOR . $fileName), $dump);
     }
 
     private function getBackupSettings(): array
     {
-        return $this->setChecked(
-            array_filter(
-                Options::getInstance()->get(),
-                function ($key) {
-                    return array_key_exists($key, self::BACKUP_SETTINGS);
-                },
-                ARRAY_FILTER_USE_KEY
-            )
-        );
-    }
-
-    private function setChecked(array $settings): array
-    {
-        foreach ($settings as $key => $value) {
-            $settings[$key] = $value == 1 ? 'checked="checked"' : '';
-        }
-
-        return $settings;
+        return [
+            'auto_backup' => Options::getInstance()->get('auto_backup') == 1 ? 'checked="checked"' : '',
+        ];
     }
 
     private function getBackupList(): array
     {
-        $backup_list = [];
+        $backupPath = storage_path('backups');
+        $files = glob($backupPath . DIRECTORY_SEPARATOR . '*.sql') ?: [];
 
-        chdir(storage_path('backups'));
-        $files = glob('*.sql');
+        $backupList = array_map(function (string $filePath) {
+            $fileName = basename($filePath);
 
-        if ($files != '') {
-            foreach ($files as $file_name) {
-                $backup_list[] = [
-                    'file_name' => $this->formatFileName($file_name),
-                    'file_size' => Format::prettyBytes(filesize($file_name)),
-                    'full_file_name' => $file_name,
-                ];
-            }
-        }
+            return [
+                'file_name' => $this->formatFileName($fileName),
+                'file_size' => $this->prettyBytes((int) filesize($filePath)),
+                'full_file_name' => $fileName,
+            ];
+        }, $files);
 
-        krsort($backup_list);
+        krsort($backupList);
 
-        return [
-            'backup_list' => $backup_list,
-        ];
+        return ['backup_list' => array_values($backupList)];
     }
 
-    private function formatFileName(string $file_name): string
+    private function formatFileName(string $fileName): string
     {
-        $matches = [];
-        preg_match('/db-backup-(?:[0-9]+)-([0-9]+)-(?:[a-zA-Z0-9]+)\.sql/', $file_name, $matches);
+        preg_match(self::FILE_PATTERN, $fileName, $matches);
 
-        return Timing::formatExtendedDate($matches[1]);
+        return date((string) Options::getInstance()->get('date_format_extended'), (int) ($matches[1] ?? 0));
     }
 
-    private function isValidFile(string $file_name): string
+    private function isValidFileName(string $fileName): bool
     {
-        if ((bool) preg_match('/db-backup-(?:[0-9]+)-([0-9]+)-(?:[a-zA-Z0-9]+)\.sql/', $file_name, $matches) !== false) {
-            return $file_name;
-        }
+        return (bool) preg_match(self::FILE_PATTERN, $fileName);
+    }
 
-        return '';
+    private function prettyBytes(int | float $bytes, int $precision = 2): string
+    {
+        $units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+
+        $bytes = max($bytes, 0);
+        $pow = (int) floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+        $bytes /= pow(1024, $pow);
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
     }
 }

@@ -40,7 +40,11 @@ Route::prefix('admin')->group(function () {
             Route::get('/announcement', [Admin\AnnouncementController::class, 'index'])->name('admin.announcement');
             Route::post('/announcement', [Admin\AnnouncementController::class, 'send'])->name('admin.announcement.send');
             Route::any('/alliances', Admin\AlliancesController::class)->name('admin.alliances');
-            Route::any('/backup', Admin\BackupController::class)->name('admin.backup');
+            Route::get('/backup', [Admin\BackupController::class, 'index'])->name('admin.backup');
+            Route::post('/backup/settings', [Admin\BackupController::class, 'save'])->name('admin.backup.save');
+            Route::post('/backup/create', [Admin\BackupController::class, 'create'])->name('admin.backup.create');
+            Route::get('/backup/{file}/download', [Admin\BackupController::class, 'download'])->name('admin.backup.download');
+            Route::delete('/backup/{file}', [Admin\BackupController::class, 'destroy'])->name('admin.backup.destroy');
             Route::get('/ban', [Admin\BanController::class, 'index'])->name('admin.ban');
             Route::get('/ban/form', [Admin\BanController::class, 'ban'])->name('admin.ban.form');
             Route::post('/ban/form', [Admin\BanController::class, 'storeBan'])->name('admin.ban.form.post');
