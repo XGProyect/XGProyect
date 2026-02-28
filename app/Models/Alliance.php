@@ -111,6 +111,11 @@ class Alliance extends Model
         return $this->hasMany(User::class, 'ally_id');
     }
 
+    public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'alliance_owner', 'id');
+    }
+
     public function stats(): HasOne
     {
         return $this->hasOne(AllianceStatistics::class, 'alliance_statistic_alliance_id');

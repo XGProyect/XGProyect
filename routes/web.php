@@ -39,7 +39,14 @@ Route::prefix('admin')->group(function () {
         ->group(function () {
             Route::get('/announcement', [Admin\AnnouncementController::class, 'index'])->name('admin.announcement');
             Route::post('/announcement', [Admin\AnnouncementController::class, 'send'])->name('admin.announcement.send');
-            Route::any('/alliances', Admin\AlliancesController::class)->name('admin.alliances');
+            Route::get('/alliances', [Admin\AlliancesController::class, 'index'])->name('admin.alliances');
+            Route::get('/alliances/{alliance}', [Admin\AlliancesController::class, 'showInfo'])->name('admin.alliances.info');
+            Route::post('/alliances/{alliance}', [Admin\AlliancesController::class, 'updateInfo'])->name('admin.alliances.info.update');
+            Route::get('/alliances/{alliance}/ranks', [Admin\AlliancesController::class, 'showRanks'])->name('admin.alliances.ranks');
+            Route::post('/alliances/{alliance}/ranks', [Admin\AlliancesController::class, 'updateRanks'])->name('admin.alliances.ranks.update');
+            Route::get('/alliances/{alliance}/members', [Admin\AlliancesController::class, 'showMembers'])->name('admin.alliances.members');
+            Route::post('/alliances/{alliance}/members', [Admin\AlliancesController::class, 'removeMembers'])->name('admin.alliances.members.remove');
+            Route::delete('/alliances/{alliance}', [Admin\AlliancesController::class, 'destroy'])->name('admin.alliances.destroy');
             Route::get('/backup', [Admin\BackupController::class, 'index'])->name('admin.backup');
             Route::post('/backup/settings', [Admin\BackupController::class, 'save'])->name('admin.backup.save');
             Route::post('/backup/create', [Admin\BackupController::class, 'create'])->name('admin.backup.create');
