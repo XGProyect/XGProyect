@@ -15,29 +15,32 @@ class LanguagesService
     }
 
     /**
-     * Returns language files grouped by locale, then by subfolder.
-     * The outer key is the locale (e.g. "en").
-     * The inner key is the group path (e.g. "admin", "home/ajax") or "" for root-level files.
-     * Values are relative paths usable as the file selector value (e.g. "en/admin/alliances.php").
+     * Returns language files grouped by subfolder, then by filename, then by locale.
+     * The outer key is the group path (e.g. "admin", "home/ajax") or "" for root-level files.
+     * The middle key is the filename (e.g. "alliances.php").
+     * The inner key is the locale (e.g. "en"), the value is the relative path for the file selector.
      *
-     * @return array<string, array<string, list<string>>>
+     * @return array<string, array<string, array<string, string>>>
      */
     public function getGroupedFiles(): array
     {
-        /** @var array<string, array<string, list<string>>> $grouped */
+        /** @var array<string, array<string, array<string, string>>> $grouped */
         $grouped = collect($this->files->allFiles(lang_path()))
             ->filter(fn (SplFileInfo $file) => $file->getExtension() === 'php')
             ->map(fn (SplFileInfo $file) => str_replace(DIRECTORY_SEPARATOR, '/', $file->getRelativePathname()))
             ->sort()
             ->values()
             ->reduce(function (array $carry, string $path): array {
-                $parts              = explode('/', $path);
-                $locale             = $parts[0];
-                $group              = implode('/', array_slice($parts, 1, -1));
-                $carry[$locale][$group][] = $path;
+                $parts    = explode('/', $path);
+                $locale   = $parts[0];
+                $filename = basename($path);
+                $group    = implode('/', array_slice($parts, 1, -1));
+                $carry[$group][$filename][$locale] = $path;
 
                 return $carry;
             }, []);
+
+        ksort($grouped);
 
         return $grouped;
     }
