@@ -20,7 +20,7 @@ class LanguagesController extends BaseController
     ) {
     }
 
-    public function index(Request $request): View
+    public function index(Request $request): View | RedirectResponse
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
@@ -31,9 +31,10 @@ class LanguagesController extends BaseController
         if ($currentFile) {
             $translations = $this->languagesService->loadTranslations($currentFile);
 
-            if (empty($translations)) {
-                session()->flash('error', __('admin/languages.le_all_error_reading'));
-                $currentFile = '';
+            if ($translations === null) {
+                return redirect()
+                    ->route('admin.languages')
+                    ->with('danger', __('admin/languages.le_all_error_reading'));
             }
         }
 

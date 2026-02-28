@@ -31,10 +31,10 @@ class LanguagesService
             ->sort()
             ->values()
             ->reduce(function (array $carry, string $path): array {
-                $parts    = explode('/', $path);
-                $locale   = $parts[0];
+                $parts = explode('/', $path);
+                $locale = $parts[0];
                 $filename = basename($path);
-                $group    = implode('/', array_slice($parts, 1, -1));
+                $group = implode('/', array_slice($parts, 1, -1));
                 $carry[$group][$filename][$locale] = $path;
 
                 return $carry;
@@ -49,20 +49,23 @@ class LanguagesService
      * Load and flatten a language file into an ordered list of key/value pairs.
      * Nested arrays are flattened using dot notation (e.g. "user_level.0").
      *
-     * @return list<array{key: string, value: string}>
+     * Returns null when the file cannot be parsed or does not contain a PHP array
+     * (i.e. a real error). Returns an empty array for valid files that have no entries.
+     *
+     * @return list<array{key: string, value: string}>|null
      */
-    public function loadTranslations(string $relativePath): array
+    public function loadTranslations(string $relativePath): ?array
     {
         $path = $this->resolvePath($relativePath);
 
         try {
             $data = require $path;
         } catch (\ParseError) {
-            return [];
+            return null;
         }
 
         if (!is_array($data)) {
-            return [];
+            return null;
         }
 
         return collect($this->flatten($data))
@@ -84,22 +87,18 @@ class LanguagesService
             ->mapWithKeys(fn (array $pair) => [$pair['key'] => $pair['value']])
             ->all();
 
-        $data    = $this->unflatten($flat);
+        $data = $this->unflatten($flat);
         $content = "<?php\n\nreturn " . $this->exportArray($data) . ";\n";
 
         $this->files->put($path, $content);
     }
-
-    // -------------------------------------------------------------------------
-    // Private helpers
-    // -------------------------------------------------------------------------
 
     /**
      * Resolve and validate a relative lang path, guarding against path traversal.
      */
     private function resolvePath(string $relativePath): string
     {
-        $langDir  = realpath(lang_path());
+        $langDir = realpath(lang_path());
         $resolved = realpath(lang_path($relativePath));
 
         if (!$resolved || !$langDir || !str_starts_with($resolved, $langDir . DIRECTORY_SEPARATOR)) {
@@ -113,6 +112,7 @@ class LanguagesService
      * Recursively flatten a nested array into dot-notation keys.
      *
      * @param  array<string|int, mixed> $data
+     *
      * @return array<string, string>
      */
     private function flatten(array $data, string $prefix = ''): array
@@ -138,6 +138,7 @@ class LanguagesService
      * Numeric segments (e.g. "user_level.0") are cast to integer keys.
      *
      * @param  array<string, string> $flat
+     *
      * @return array<string|int, mixed>
      */
     private function unflatten(array $flat): array
@@ -180,9 +181,9 @@ class LanguagesService
      */
     private function exportArray(array $data, int $indent = 1): string
     {
-        $pad        = str_repeat('    ', $indent);
+        $pad = str_repeat('    ', $indent);
         $closingPad = str_repeat('    ', $indent - 1);
-        $lines      = [];
+        $lines = [];
 
         foreach ($data as $key => $value) {
             $keyStr = is_int($key) ? (string) $key : "'" . $this->escapeString((string) $key) . "'";

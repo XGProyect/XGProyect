@@ -21,12 +21,14 @@
         <!-- ── LEFT SIDEBAR: module → file tree ───────────────────────────── -->
         <div class="col-lg-3 mb-4">
             <div class="card shadow">
-                <div class="card-header py-3">
+                <a href="#collapseFileTree" class="d-block card-header py-3" data-toggle="collapse"
+                   role="button" aria-expanded="true" aria-controls="collapseFileTree">
                     <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-folder-open mr-1"></i>
                         {{ __('admin/languages.le_file') }}
                     </h6>
-                </div>
+                </a>
+                <div class="collapse show" id="collapseFileTree">
 
                 <!-- Filter -->
                 <div class="px-3 pt-3 pb-2 border-bottom">
@@ -110,8 +112,9 @@
                         <i class="fas fa-search d-block mb-1"></i>
                         {{ __('admin/languages.le_no_results') }}
                     </div>
-                </div>
-            </div>
+                </div>{{-- #langBrowser --}}
+                </div>{{-- #collapseFileTree --}}
+            </div>{{-- .card --}}
         </div>
 
         <!-- ── RIGHT: key-value editor ────────────────────────────────────── -->
@@ -133,12 +136,14 @@
                 @csrf
                 <input type="hidden" name="file" value="{{ $currentFile }}">
                 <div class="card shadow">
-                    <div class="card-header py-3">
+                    <a href="#collapseEditor" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseEditor">
                         <h6 class="m-0 font-weight-bold text-primary">
                             {{ $currentFile }}
                             <span class="badge badge-secondary ml-1">{{ count($translations) }}</span>
                         </h6>
-                    </div>
+                    </a>
+                    <div class="collapse show" id="collapseEditor">
                     <div class="card-body">
                         <div class="form-group mb-3">
                             <div class="input-group">
@@ -200,8 +205,9 @@
                                 </div>
                             @endforeach
                         </div>
-                    </div>
-                </div>
+                    </div>{{-- .card-body --}}
+                    </div>{{-- #collapseEditor --}}
+                </div>{{-- .card --}}
             </form>
             @else
             <div class="card shadow">
