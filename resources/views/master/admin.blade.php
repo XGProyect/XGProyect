@@ -152,5 +152,7 @@
                 return (result);
             }
     </script>
+
+    @stack('scripts')
 </body>
 </html>

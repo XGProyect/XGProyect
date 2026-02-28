@@ -4,227 +4,143 @@
 <div class="container-fluid">
     <x-alert/>
     <form name="frm_reset" action="" method="post">
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/reset.re_reset_all') }}</h1>
-        </div>
-        <p class="mb-4"></p>
 
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/reset.re_reset_h1') }}</h1>
+            <button type="submit" class="btn btn-danger btn-icon-split mt-3 mt-sm-0"
+                onclick="return confirm('{{ __('admin/reset.re_reset_universe_confirmation') }}');">
+                <span class="icon text-white-50"><i class="fas fa-undo-alt"></i></span>
+                <span class="text">{{ __('admin/reset.re_reset_go') }}</span>
+            </button>
+        </div>
+
+        {{-- Top row: 4 category cards --}}
         <div class="row">
-            <div class="col-lg-6">
-                <div class="card shadow mb-4">
-                    <!-- Card Header - Accordion -->
-                    <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="collapseGeneral">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_general') }}</h6>
-                    </a>
-                    <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseGeneral">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-borderless" width="100%" cellspacing="0">
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_moons') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="moons"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_notes') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="notes"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_rw') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="rw"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_buddies') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="friends"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_allys') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="alliances"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_fleets') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="fleets"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_banned') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="banneds"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_messages') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="messages"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_statpoints') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="statpoints"></td>
-                                    </tr>
-                                    <tr class="bg-danger">
-                                        <td><span class="text-gray-900"><strong>{{ __('admin/reset.re_reset_all') }}</strong></span></td>
-                                        <td><input type="checkbox" class="form-input-check" name="resetall"></td>
-                                    </tr>
-                                </table>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary btn-icon-split"
-                                        onClick="return confirm('{{ __('admin/reset.re_reset_universe_confirmation') }}');">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-undo-alt"></i>
-                                        </span>
-                                        <span class="text">{{ __('admin/reset.re_reset_go') }}</span>
-                                    </button>
-                                </div>
-                            </div>
+            @php
+                $cards = [
+                    ['id' => 'buildings', 'title' => __('admin/reset.re_buldings'), 'items' => [
+                        ['name' => 'edif_p', 'label' => __('admin/reset.re_buildings_pl')],
+                        ['name' => 'edif_l', 'label' => __('admin/reset.re_buildings_lu')],
+                        ['name' => 'edif',   'label' => __('admin/reset.re_reset_buldings')],
+                    ]],
+                    ['id' => 'research', 'title' => __('admin/reset.re_inve_ofis'), 'items' => [
+                        ['name' => 'ofis',    'label' => __('admin/reset.re_ofici')],
+                        ['name' => 'inves',   'label' => __('admin/reset.re_investigations')],
+                        ['name' => 'inves_c', 'label' => __('admin/reset.re_reset_invest')],
+                    ]],
+                    ['id' => 'defenses', 'title' => __('admin/reset.re_defenses_and_ships'), 'items' => [
+                        ['name' => 'defenses', 'label' => __('admin/reset.re_defenses')],
+                        ['name' => 'ships',    'label' => __('admin/reset.re_ships')],
+                        ['name' => 'h_d',      'label' => __('admin/reset.re_reset_hangar')],
+                    ]],
+                    ['id' => 'resources', 'title' => __('admin/reset.re_resources'), 'items' => [
+                        ['name' => 'dark',      'label' => __('admin/reset.re_resources_dark')],
+                        ['name' => 'resources', 'label' => __('admin/reset.re_resources_met_cry')],
+                    ]],
+                ];
+            @endphp
+
+            @foreach($cards as $card)
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100">
+                    <div class="card-header py-3 d-flex align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ $card['title'] }}</h6>
+                        <div class="custom-control custom-checkbox m-0">
+                            <input type="checkbox" class="custom-control-input card-select-all"
+                                id="all_{{ $card['id'] }}" data-group="{{ $card['id'] }}">
+                            <label class="custom-control-label" for="all_{{ $card['id'] }}"></label>
                         </div>
+                    </div>
+                    <div class="card-body">
+                        @foreach($card['items'] as $item)
+                        <div class="custom-control custom-checkbox mb-2">
+                            <input type="checkbox" class="custom-control-input reset-item"
+                                name="{{ $item['name'] }}" id="{{ $item['name'] }}" data-group="{{ $card['id'] }}">
+                            <label class="custom-control-label" for="{{ $item['name'] }}">{{ $item['label'] }}</label>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            @endforeach
+        </div>
+
+        {{-- Bottom: General card full-width with multi-column layout --}}
+        <div class="row">
+            <div class="col-12">
                 <div class="card shadow mb-4">
-                    <!-- Card Header - Accordion -->
-                    <a href="#collapseBuildings" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="collapseBuildings">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_buldings') }}</h6>
-                    </a>
-                    <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseBuildings">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-borderless" width="100%" cellspacing="0">
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_buildings_pl') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="edif_p"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_buildings_lu') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="edif_l"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_buldings') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="edif"></td>
-                                    </tr>
-                                </table>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary btn-icon-split"
-                                        onClick="return confirm('{{ __('admin/reset.re_reset_universe_confirmation') }}');">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-undo-alt"></i>
-                                        </span>
-                                        <span class="text">{{ __('admin/reset.re_reset_go') }}</span>
-                                    </button>
-                                </div>
-                            </div>
+                    <div class="card-header py-3 d-flex align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_general') }}</h6>
+                        <div class="custom-control custom-checkbox m-0">
+                            <input type="checkbox" class="custom-control-input card-select-all"
+                                id="all_general" data-group="general">
+                            <label class="custom-control-label" for="all_general"></label>
                         </div>
                     </div>
-                </div>
-                <div class="card shadow mb-4">
-                    <!-- Card Header - Accordion -->
-                    <a href="#collapseResearch" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="collapseResearch">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_inve_ofis') }}</h6>
-                    </a>
-                    <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseResearch">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-borderless" width="100%" cellspacing="0">
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_ofici') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="ofis"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_investigations') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="inves"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_invest') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="inves_c"></td>
-                                    </tr>
-                                </table>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary btn-icon-split"
-                                        onClick="return confirm('{{ __('admin/reset.re_reset_universe_confirmation') }}');">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-undo-alt"></i>
-                                        </span>
-                                        <span class="text">{{ __('admin/reset.re_reset_go') }}</span>
-                                    </button>
+                    <div class="card-body">
+                        <div class="row">
+                            @php
+                                $generalItems = [
+                                    ['name' => 'moons',      'label' => __('admin/reset.re_reset_moons')],
+                                    ['name' => 'notes',      'label' => __('admin/reset.re_reset_notes')],
+                                    ['name' => 'rw',         'label' => __('admin/reset.re_reset_rw')],
+                                    ['name' => 'friends',    'label' => __('admin/reset.re_reset_buddies')],
+                                    ['name' => 'alliances',  'label' => __('admin/reset.re_reset_allys')],
+                                    ['name' => 'fleets',     'label' => __('admin/reset.re_reset_fleets')],
+                                    ['name' => 'banneds',    'label' => __('admin/reset.re_reset_banned')],
+                                    ['name' => 'messages',   'label' => __('admin/reset.re_reset_messages')],
+                                    ['name' => 'statpoints', 'label' => __('admin/reset.re_reset_statpoints')],
+                                ];
+                            @endphp
+                            @foreach($generalItems as $item)
+                            <div class="col-xl-3 col-md-4 col-sm-6 mb-2">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input reset-item"
+                                        name="{{ $item['name'] }}" id="{{ $item['name'] }}" data-group="general">
+                                    <label class="custom-control-label" for="{{ $item['name'] }}">{{ $item['label'] }}</label>
                                 </div>
                             </div>
+                            @endforeach
                         </div>
-                    </div>
-                </div>
-                <div class="card shadow mb-4">
-                    <!-- Card Header - Accordion -->
-                    <a href="#collapseDefensesShips" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="collapseDefensesShips">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_defenses_and_ships') }}</h6>
-                    </a>
-                    <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseDefensesShips">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-borderless" width="100%" cellspacing="0">
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_defenses') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="defenses"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_ships') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="ships"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_reset_hangar') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="h_d"></td>
-                                    </tr>
-                                </table>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary btn-icon-split"
-                                        onClick="return confirm('{{ __('admin/reset.re_reset_universe_confirmation') }}');">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-undo-alt"></i>
-                                        </span>
-                                        <span class="text">{{ __('admin/reset.re_reset_go') }}</span>
-                                    </button>
-                                </div>
+
+                        <hr class="mt-2">
+
+                        <div class="alert alert-danger d-flex align-items-center justify-content-between mb-0">
+                            <div>
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                <strong>{{ __('admin/reset.re_reset_all') }}</strong>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card shadow mb-4">
-                    <!-- Card Header - Accordion -->
-                    <a href="#collapseResources" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="collapseResources">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/reset.re_resources') }}</h6>
-                    </a>
-                    <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseResources">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-borderless" width="100%" cellspacing="0">
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_resources_dark') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="dark"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('admin/reset.re_resources_met_cry') }}</td>
-                                        <td><input type="checkbox" class="form-input-check" name="resources"></td>
-                                    </tr>
-                                </table>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary btn-icon-split"
-                                        onClick="return confirm('{{ __('admin/reset.re_reset_universe_confirmation') }}');">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-undo-alt"></i>
-                                        </span>
-                                        <span class="text">{{ __('admin/reset.re_reset_go') }}</span>
-                                    </button>
-                                </div>
+                            <div class="custom-control custom-checkbox m-0">
+                                <input type="checkbox" class="custom-control-input" name="resetall" id="resetall">
+                                <label class="custom-control-label" for="resetall"></label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </form>
 </div>
+
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready(function () {
+    $('.card-select-all').on('change', function () {
+        var group = $(this).data('group');
+        $('.reset-item[data-group="' + group + '"]').prop('checked', this.checked);
+    });
+
+    $('.reset-item').on('change', function () {
+        var group   = $(this).data('group');
+        var total   = $('.reset-item[data-group="' + group + '"]').length;
+        var checked = $('.reset-item[data-group="' + group + '"]:checked').length;
+        $('#all_' + group)
+            .prop('indeterminate', checked > 0 && checked < total)
+            .prop('checked', checked === total);
+    });
+});
+</script>
+@endpush
