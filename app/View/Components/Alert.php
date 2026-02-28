@@ -32,7 +32,7 @@ class Alert extends Component
             if (session()->has($status)) {
                 $key = $status;
                 $statusTitle = __('admin/global.gn_' . $status . '_title');
-                $message = session()->get($status);
+                $message = session()->pull($status);
                 break;
             }
         }
