@@ -3,6 +3,11 @@
 declare(strict_types=1);
 
 return (new PhpCsFixer\Config())
+    ->setFinder(
+        PhpCsFixer\Finder::create()
+            ->in(__DIR__)
+            ->exclude(['lang', 'vendor', 'bootstrap/cache', 'storage'])
+    )
     ->setRules([
         '@PSR12' => true,
         'array_indentation' => true,
