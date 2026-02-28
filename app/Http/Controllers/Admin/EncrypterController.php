@@ -4,48 +4,40 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\EncrypterRequest;
 use App\Services\AdministrationService;
-use App\Services\SettingsService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Template;
-use Xgp\App\Libraries\Functions;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\View\View;
 
 class EncrypterController extends BaseController
 {
-    private string $unencrypted = '';
-    private string $encrypted = '';
-    private AdministrationService $administrationService;
-
-    public function __construct()
-    {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+    ) {
     }
 
-    public function __invoke(): void
+    public function index(): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->runAction();
-
-        Template::legacyView(
-            'admin.encrypter',
-            [
-                'unencrypted' => $this->unencrypted ?? '',
-                'encrypted' => $this->encrypted ?? '',
-            ]
-        );
+        return view('admin.encrypter', [
+            'unencrypted' => session('unencrypted', ''),
+            'encrypted' => session('encrypted', ''),
+        ]);
     }
 
-    private function runAction(): void
+    public function encrypt(EncrypterRequest $request): RedirectResponse
     {
-        $unencrypted = filter_input(INPUT_POST, 'unencrypted');
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
-        if ($unencrypted) {
-            $this->unencrypted = $unencrypted;
-            $this->encrypted = Functions::hash($unencrypted);
-        }
+        $unencrypted = (string) $request->input('unencrypted');
+
+        return redirect()->route('admin.encrypter')
+            ->with('unencrypted', $unencrypted)
+            ->with('encrypted', Hash::make($unencrypted));
     }
 }

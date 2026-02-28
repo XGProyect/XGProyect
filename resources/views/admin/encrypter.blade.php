@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <form name="frm_encrypter" method="POST" action="">
+    <form name="frm_encrypter" method="POST" action="{{ route('admin.encrypter.encrypt') }}">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/encrypter.et_title') }}</h1>
