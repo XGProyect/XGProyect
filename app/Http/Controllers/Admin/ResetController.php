@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Services\AdministrationService;
-use App\Services\SettingsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -19,14 +18,10 @@ class ResetController extends BaseController
 {
     public function __construct(
         private readonly AdministrationService $administrationService,
-    ) {}
-
-    public static function make(): static
-    {
-        return new static(new AdministrationService(new SettingsService()));
+    ) {
     }
 
-    public function __invoke(Request $request): View|RedirectResponse
+    public function __invoke(Request $request): View | RedirectResponse
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
@@ -46,26 +41,26 @@ class ResetController extends BaseController
             return redirect('admin/reset')->with('success', __('admin/reset.re_reset_excess'));
         }
 
-        $request->boolean('defenses')   && $this->resetDefenses();
-        $request->boolean('ships')      && $this->resetShips();
-        $request->boolean('h_d')        && $this->resetShipyardQueues();
-        $request->boolean('edif_p')     && $this->resetPlanetBuildings();
-        $request->boolean('edif_l')     && $this->resetMoonBuildings();
-        $request->boolean('edif')       && $this->resetBuildingsQueues();
-        $request->boolean('inves')      && $this->resetResearch();
-        $request->boolean('inves_c')    && $this->resetResearchQueues();
-        $request->boolean('ofis')       && $this->resetOfficiers();
-        $request->boolean('dark')       && $this->resetDarkMatter();
-        $request->boolean('resources')  && $this->resetResources();
-        $request->boolean('notes')      && $this->resetNotes();
-        $request->boolean('rw')         && $this->resetReports();
-        $request->boolean('friends')    && $this->resetFriends();
-        $request->boolean('alliances')  && $this->resetAlliances();
-        $request->boolean('fleets')     && $this->resetFleets();
-        $request->boolean('banneds')    && $this->resetBanned();
-        $request->boolean('messages')   && $this->resetMessages();
+        $request->boolean('defenses') && $this->resetDefenses();
+        $request->boolean('ships') && $this->resetShips();
+        $request->boolean('h_d') && $this->resetShipyardQueues();
+        $request->boolean('edif_p') && $this->resetPlanetBuildings();
+        $request->boolean('edif_l') && $this->resetMoonBuildings();
+        $request->boolean('edif') && $this->resetBuildingsQueues();
+        $request->boolean('inves') && $this->resetResearch();
+        $request->boolean('inves_c') && $this->resetResearchQueues();
+        $request->boolean('ofis') && $this->resetOfficiers();
+        $request->boolean('dark') && $this->resetDarkMatter();
+        $request->boolean('resources') && $this->resetResources();
+        $request->boolean('notes') && $this->resetNotes();
+        $request->boolean('rw') && $this->resetReports();
+        $request->boolean('friends') && $this->resetFriends();
+        $request->boolean('alliances') && $this->resetAlliances();
+        $request->boolean('fleets') && $this->resetFleets();
+        $request->boolean('banneds') && $this->resetBanned();
+        $request->boolean('messages') && $this->resetMessages();
         $request->boolean('statpoints') && $this->resetStatistics();
-        $request->boolean('moons')      && $this->resetMoons();
+        $request->boolean('moons') && $this->resetMoons();
 
         return redirect('admin/reset')->with('success', __('admin/reset.re_reset_excess'));
     }

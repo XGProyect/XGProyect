@@ -8,105 +8,64 @@ use App\Http\Requests\Admin\BanRequest;
 use App\Models\Ban;
 use App\Models\User;
 use App\Services\AdministrationService;
-use App\Services\SettingsService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
-use Xgp\App\Core\Template;
+use Illuminate\View\View;
 use Xgp\App\Libraries\Users;
 
 class BanController extends BaseController
 {
-    private AdministrationService $administrationService;
-
-    public function __construct()
-    {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+    ) {
     }
 
-    public function index(): void
+    public function index(): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
         $adminUser = Users::getInstance()->getUserData();
 
-        $usersQuery = DB::table('users AS u')
-            ->select('u.id', 'u.name')
-            ->leftJoin('bans AS b', 'b.user_id', '=', 'u.id')
-            ->whereNull('b.user_id')  // exclude already-banned users
-            ->orderBy('u.name', 'ASC');
+        $usersQuery = User::query()
+            ->select('users.id', 'users.name')
+            ->leftJoin('bans', 'bans.user_id', '=', 'users.id')
+            ->whereNull('bans.user_id')
+            ->orderBy('users.name');
 
-        if ($adminUser['authlevel'] != 3) {
-            $usersQuery->where('u.authlevel', '<', $adminUser['authlevel']);
+        if ((int) $adminUser['authlevel'] !== 3) {
+            $usersQuery->where('users.authlevel', '<', $adminUser['authlevel']);
         }
 
-        $users = $usersQuery->get();
-
-        $bannedUsers = DB::table('bans AS b')
-            ->select('u.id', 'u.name', 'b.until')
-            ->join('users AS u', 'u.id', '=', 'b.user_id')
-            ->orderBy('u.name', 'ASC')
+        $bannedUsers = Ban::query()
+            ->select('users.id', 'users.name', 'bans.until')
+            ->join('users', 'users.id', '=', 'bans.user_id')
+            ->orderBy('users.name')
             ->get();
 
-        Template::legacyView('admin.ban', [
-            'users' => $users,
+        return view('admin.ban', [
+            'users' => $usersQuery->get(),
             'banned_users' => $bannedUsers,
         ]);
     }
 
-    public function ban(BanRequest $request): void
+    public function ban(BanRequest $request): View | RedirectResponse
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $adminUser = Users::getInstance()->getUserData();
-        $banName = $request->input('ban_name');
-
-        /** @var User|null $targetUser */
-        $targetUser = User::where('name', $banName)->first();
-
-        if (!$targetUser) {
-            session()->flash('danger', __('admin/ban.bn_user_not_found'));
-            redirect()->route('admin.ban')->send();
-            return;
-        }
-
+        /** @var User $targetUser */
+        $targetUser = User::where('name', $request->input('ban_name'))->firstOrFail();
         $existingBan = $this->getBanWithPreferences($targetUser->id);
 
-        if ($request->isMethod('post') && $request->filled('bannow')) {
-            $days = (int) $request->input('days', 0);
-            $hours = (int) $request->input('hour', 0);
-            $details = (string) $request->input('text', '');
-            $vacationMode = $request->filled('vacat');
-
-            $banEndTime = Carbon::now()->addDays($days)->addHours($hours);
-
-            // If already banned and the existing ban is in the future, extend from there
-            if ($existingBan && $existingBan->until) {
-                $bannedUntil = Carbon::parse($existingBan->until);
-                if ($bannedUntil->isFuture()) {
-                    $banEndTime = $bannedUntil->addDays($days)->addHours($hours);
-                }
-            }
-
-            // Ensure the ban end time is always in the future
-            if ($banEndTime->isPast()) {
-                $banEndTime = Carbon::now();
-            }
-
-            $this->upsertBan($targetUser->id, (int) $adminUser['id'], $details, $banEndTime, $vacationMode);
-
-            session()->flash('success', __('admin/ban.bn_ban_success', ['user' => $banName]));
-            redirect()->route('admin.ban.form', ['ban_name' => $banName])->send();
-            return;
+        if ($request->isMethod('post')) {
+            return $this->applyBan($request, $targetUser, $existingBan);
         }
 
-        Template::legacyView('admin.ban_result', [
+        return view('admin.ban_result', [
             'target_user' => $targetUser,
             'existing_ban' => $existingBan,
         ]);
@@ -118,8 +77,6 @@ class BanController extends BaseController
         $this->administrationService->authorization(__CLASS__);
 
         $username = $request->input('unban_name');
-
-        /** @var User|null $user */
         $user = User::where('name', $username)->first();
 
         if ($user) {
@@ -132,12 +89,44 @@ class BanController extends BaseController
         return redirect()->route('admin.ban');
     }
 
+    private function applyBan(BanRequest $request, User $targetUser, ?object $existingBan): RedirectResponse
+    {
+        $days = (int) $request->input('days', 0);
+        $hours = (int) $request->input('hour', 0);
+        $adminUser = Users::getInstance()->getUserData();
+
+        $banEndTime = Carbon::now()->addDays($days)->addHours($hours);
+
+        if ($existingBan?->until) {
+            $bannedUntil = Carbon::parse($existingBan->until);
+            if ($bannedUntil->isFuture()) {
+                $banEndTime = $bannedUntil->copy()->addDays($days)->addHours($hours);
+            }
+        }
+
+        if ($banEndTime->isPast()) {
+            $banEndTime = Carbon::now();
+        }
+
+        $this->upsertBan(
+            $targetUser->id,
+            (int) $adminUser['id'],
+            (string) $request->input('text', ''),
+            $banEndTime,
+            $request->filled('vacat'),
+        );
+
+        session()->flash('success', __('admin/ban.bn_ban_success', ['user' => $targetUser->name]));
+
+        return redirect()->route('admin.ban.form', ['ban_name' => $targetUser->name]);
+    }
+
     private function getBanWithPreferences(int $userId): ?object
     {
-        return DB::table('bans AS b')
-            ->select('b.*', 'p.preference_user_id', 'p.preference_vacation_mode')
-            ->join('preferences AS p', 'p.preference_user_id', '=', 'b.user_id')
-            ->where('b.user_id', $userId)
+        return DB::table('bans')
+            ->select('bans.*', 'preferences.preference_user_id', 'preferences.preference_vacation_mode')
+            ->join('preferences', 'preferences.preference_user_id', '=', 'bans.user_id')
+            ->where('bans.user_id', $userId)
             ->first();
     }
 
@@ -153,11 +142,9 @@ class BanController extends BaseController
                 ]
             );
 
-            $vacationTime = $vacationMode ? time() : null;
-
             DB::table('preferences')
                 ->where('preference_user_id', $userId)
-                ->update(['preference_vacation_mode' => $vacationTime]);
+                ->update(['preference_vacation_mode' => $vacationMode ? time() : null]);
 
             DB::table('planets')
                 ->where('planet_user_id', $userId)

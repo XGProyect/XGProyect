@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
-use App\Services\SettingsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -18,11 +17,6 @@ class UpdateController extends BaseController
     public function __construct(
         private readonly AdministrationService $administrationService,
     ) {
-    }
-
-    public static function make(): static
-    {
-        return new static(new AdministrationService(new SettingsService()));
     }
 
     public function __invoke(Request $request): View | RedirectResponse

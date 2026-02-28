@@ -107,7 +107,7 @@ class FleetsController extends BaseController
             ->selectRaw("f.*, (SELECT name FROM {$prefix}users WHERE id = f.fleet_owner) AS fleet_username, (SELECT name FROM {$prefix}users WHERE id = f.fleet_target_owner) AS target_username")
             ->orderByRaw('f.fleet_end_time ASC')
             ->get()
-            ->map(fn($row) => (array) $row)
+            ->map(fn ($row) => (array) $row)
             ->toArray();
 
         $fleetMovements = [];

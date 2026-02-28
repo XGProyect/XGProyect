@@ -390,7 +390,7 @@ class MakerController extends BaseController
     {
         return User::select('id', 'name')
             ->get()
-            ->map(fn($u) => ['id' => $u->id, 'name' => $u->name])
+            ->map(fn ($u) => ['id' => $u->id, 'name' => $u->name])
             ->toArray();
     }
 
@@ -400,7 +400,7 @@ class MakerController extends BaseController
             ->where('ally_request', 0)
             ->select('id', 'name')
             ->get()
-            ->map(fn($u) => ['id' => $u->id, 'name' => $u->name])
+            ->map(fn ($u) => ['id' => $u->id, 'name' => $u->name])
             ->toArray();
     }
 
@@ -411,7 +411,7 @@ class MakerController extends BaseController
             ->where('planet_destroyed', 0)
             ->where('planet_type', 1)
             ->get()
-            ->map(fn($r) => (array) $r)
+            ->map(fn ($r) => (array) $r)
             ->toArray();
     }
 

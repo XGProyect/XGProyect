@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
-use App\Services\SettingsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -18,14 +17,10 @@ class RepairController extends BaseController
 {
     public function __construct(
         private readonly AdministrationService $administrationService,
-    ) {}
-
-    public static function make(): static
-    {
-        return new static(new AdministrationService(new SettingsService()));
+    ) {
     }
 
-    public function __invoke(Request $request): View|RedirectResponse
+    public function __invoke(Request $request): View | RedirectResponse
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
@@ -38,23 +33,23 @@ class RepairController extends BaseController
     private function showTables(): View
     {
         $tables = $this->getAllTables()->map(fn (array $row) => [
-            'name'     => $row['TABLE_NAME'],
-            'data'     => FormatLib::prettyBytes((int) $row['DATA_LENGTH']),
-            'index'    => FormatLib::prettyBytes((int) $row['INDEX_LENGTH']),
+            'name' => $row['TABLE_NAME'],
+            'data' => FormatLib::prettyBytes((int) $row['DATA_LENGTH']),
+            'index' => FormatLib::prettyBytes((int) $row['INDEX_LENGTH']),
             'overhead' => FormatLib::prettyBytes((int) $row['DATA_FREE']),
         ]);
 
         return view('admin.repair', [
-            'tables'  => $tables,
+            'tables' => $tables,
             'results' => null,
         ]);
     }
 
-    private function handlePost(Request $request): View|RedirectResponse
+    private function handlePost(Request $request): View | RedirectResponse
     {
         $selected = $request->input('table', []);
 
-        if (empty($selected) || ! is_array($selected)) {
+        if (empty($selected) || !is_array($selected)) {
             return redirect('admin/repair');
         }
 
@@ -76,7 +71,7 @@ class RepairController extends BaseController
         }
 
         return view('admin.repair', [
-            'tables'  => collect(),
+            'tables' => collect(),
             'results' => $results,
         ]);
     }

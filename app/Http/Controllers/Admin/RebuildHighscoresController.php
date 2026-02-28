@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
-use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 use Xgp\App\Core\Options;
@@ -16,11 +15,7 @@ class RebuildHighscoresController extends BaseController
 {
     public function __construct(
         private readonly AdministrationService $administrationService,
-    ) {}
-
-    public static function make(): static
-    {
-        return new static(new AdministrationService(new SettingsService()));
+    ) {
     }
 
     public function __invoke(): View

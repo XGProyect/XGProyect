@@ -121,7 +121,7 @@ class MessagesController extends BaseController
             $query->where('m.message_text', 'LIKE', '%' . $to_search['message_text'] . '%');
         }
 
-        $search_results = $query->get()->map(fn($r) => (array) $r)->toArray();
+        $search_results = $query->get()->map(fn ($r) => (array) $r)->toArray();
 
         if ($search_results) {
             $results_list = [];
