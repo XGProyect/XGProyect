@@ -56,7 +56,7 @@ Route::prefix('admin')->group(function () {
             Route::any('/permissions', Admin\PermissionsController::class)->name('admin.permissions');
             Route::any('/planets', Admin\PlanetsController::class)->name('admin.planets');
             Route::any('/premium', Admin\PremiumController::class)->name('admin.premium');
-            Route::any('/rebuild-highscores', Admin\RebuildHighscoresController::class)->name('admin.rebuild-highscores');
+            Route::any('/rebuildhighscores', Admin\RebuildHighscoresController::class)->name('admin.rebuildhighscores');
             Route::any('/registration', Admin\RegistrationController::class)->name('admin.registration');
             Route::any('/repair', Admin\RepairController::class)->name('admin.repair');
             Route::any('/reset', Admin\ResetController::class)->name('admin.reset');

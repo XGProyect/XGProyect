@@ -7,61 +7,46 @@ namespace App\Http\Controllers\Admin;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\View\View;
 use Xgp\App\Core\Options;
-use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\StatisticsLibrary as Statistics;
 
 class RebuildHighscoresController extends BaseController
 {
-    private array $result = [];
-    private AdministrationService $administrationService;
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+    ) {}
 
-    public function __construct()
+    public static function make(): static
     {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+        return new static(new AdministrationService(new SettingsService()));
     }
 
-    public function __invoke(): void
+    public function __invoke(): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->runAction();
+        $result = (new Statistics())->makeStats();
 
-        Template::legacyView(
-            'admin.rebuildhighscores',
-            $this->getStatisticsResult()
-        );
-    }
+        session()->flash('success', strtr(__('admin/rebuildhighscores.sb_stats_update'), ['%t' => $result['totaltime']]));
 
-    private function runAction(): void
-    {
-        $stObject = new Statistics();
-        $this->result = $stObject->makeStats();
+        Options::getInstance()->write('stat_last_update', $result['stats_time']);
 
-        session()->flash('success', strtr(__('admin/rebuildhighscores.sb_stats_update'), ['%t' => $this->result['totaltime']]));
-
-        Options::getInstance()->write('stat_last_update', $this->result['stats_time']);
-    }
-
-    private function getStatisticsResult(): array
-    {
-        return [
+        return view('admin.rebuildhighscores', [
             'memory_p' => strtr('%i / %m', [
-                '%i' => Format::prettyBytes($this->result['memory_peak'][0]),
-                '%m' => Format::prettyBytes($this->result['memory_peak'][0]),
+                '%i' => Format::prettyBytes($result['memory_peak'][0]),
+                '%m' => Format::prettyBytes($result['memory_peak'][0]),
             ]),
             'memory_i' => strtr('%i / %m', [
-                '%i' => Format::prettyBytes($this->result['initial_memory'][0]),
-                '%m' => Format::prettyBytes($this->result['initial_memory'][0]),
+                '%i' => Format::prettyBytes($result['initial_memory'][0]),
+                '%m' => Format::prettyBytes($result['initial_memory'][0]),
             ]),
             'memory_e' => strtr('%i / %m', [
-                '%i' => Format::prettyBytes($this->result['end_memory'][0]),
-                '%m' => Format::prettyBytes($this->result['end_memory'][0]),
+                '%i' => Format::prettyBytes($result['end_memory'][0]),
+                '%m' => Format::prettyBytes($result['end_memory'][0]),
             ]),
-        ];
+        ]);
     }
 }
