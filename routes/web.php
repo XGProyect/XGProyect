@@ -46,8 +46,6 @@ Route::prefix('admin')->group(function () {
             Route::post('/ban/form', [Admin\BanController::class, 'storeBan'])->name('admin.ban.form.post');
             Route::post('/ban/unban', [Admin\BanController::class, 'unban'])->name('admin.ban.unban');
             Route::any('/changelog', Admin\ChangelogController::class)->name('admin.changelog');
-            Route::get('/encrypter', [Admin\EncrypterController::class, 'index'])->name('admin.encrypter');
-            Route::post('/encrypter', [Admin\EncrypterController::class, 'encrypt'])->name('admin.encrypter.encrypt');
             Route::any('/errors', Admin\ErrorsController::class)->name('admin.errors');
             Route::any('/fleets', Admin\FleetsController::class)->name('admin.fleets');
             Route::any('/home', Admin\HomeController::class)->name('admin.home');

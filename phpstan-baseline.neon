@@ -181,22 +181,42 @@ parameters:
 			path: app/Http/Controllers/Admin/AnnouncementController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:buildColorPicker\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Cannot access property \\$email on mixed\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/AnnouncementController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:doEmailAction\\(\\) has parameter \\$post with no value type specified in iterable type array\\.$#"
+			message: "#^Cannot access property \\$id on mixed\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/AnnouncementController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:doMessageAction\\(\\) has parameter \\$post with no value type specified in iterable type array\\.$#"
-			count: 1
+			message: "#^Cannot access property \\$name on mixed\\.$#"
+			count: 4
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^Cannot cast mixed to string\\.$#"
+			count: 4
 			path: app/Http/Controllers/Admin/AnnouncementController.php
 
 		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:getMessageColor\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:index\\(\\) should return Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:sendEmails\\(\\) has parameter \\$players with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Controllers/Admin/AnnouncementController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:sendMessages\\(\\) has parameter \\$players with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: app/Http/Controllers/Admin/AnnouncementController.php
 
@@ -211,7 +231,7 @@ parameters:
 			path: app/Http/Controllers/Admin/AnnouncementController.php
 
 		-
-			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\AnnouncementController\\:\\:\\$user type has no value type specified in iterable type array\\.$#"
+			message: "#^Parameter \\#1 \\$string of static method Xgp\\\\App\\\\Libraries\\\\FormatLib\\:\\:customColor\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/AnnouncementController.php
 
@@ -312,7 +332,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:where\\(\\)\\.$#"
-			count: 2
+			count: 3
 			path: app/Http/Controllers/Admin/BanController.php
 
 		-
@@ -322,6 +342,16 @@ parameters:
 
 		-
 			message: "#^Cannot cast mixed to string\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\BanController\\:\\:ban\\(\\) should return Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/BanController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\BanController\\:\\:index\\(\\) should return Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/BanController.php
 
@@ -916,17 +946,12 @@ parameters:
 			path: app/Http/Controllers/Admin/PremiumController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RebuildHighscoresController\\:\\:__invoke\\(\\) should return Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RebuildHighscoresController\\:\\:index\\(\\) should return Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/RebuildHighscoresController.php
 
 		-
 			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/RebuildHighscoresController.php
-
-		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/RebuildHighscoresController.php
 
@@ -961,17 +986,37 @@ parameters:
 			path: app/Http/Controllers/Admin/RegistrationController.php
 
 		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RepairController.php
+
+		-
+			message: "#^Cannot access offset 'optimize' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RepairController.php
+
+		-
+			message: "#^Cannot access offset 'repair' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RepairController.php
+
+		-
+			message: "#^Cannot access offset 'table' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/RepairController.php
+
+		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RepairController\\:\\:getAllTables\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: app/Http/Controllers/Admin/RepairController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RepairController\\:\\:handlePost\\(\\) should return Illuminate\\\\Http\\\\RedirectResponse\\|Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RepairController\\:\\:index\\(\\) should return Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/RepairController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RepairController\\:\\:showTables\\(\\) should return Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RepairController\\:\\:run\\(\\) should return Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/RepairController.php
 
@@ -981,17 +1026,112 @@ parameters:
 			path: app/Http/Controllers/Admin/RepairController.php
 
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/RepairController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ResetController\\:\\:__invoke\\(\\) should return Illuminate\\\\Http\\\\RedirectResponse\\|Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
+			message: "#^Cannot access offset 'alliances' on mixed\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/ResetController.php
 
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			message: "#^Cannot access offset 'banneds' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'dark' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'defenses' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'edif' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'edif_l' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'edif_p' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'fleets' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'friends' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'h_d' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'inves' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'inves_c' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'messages' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'moons' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'notes' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'ofis' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'resetall' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'resources' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'rw' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'ships' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Cannot access offset 'statpoints' on mixed\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/ResetController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ResetController\\:\\:index\\(\\) should return Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/ResetController.php
 
@@ -1176,13 +1316,13 @@ parameters:
 			path: app/Http/Controllers/Admin/TasksController.php
 
 		-
-			message: "#^Empty array passed to foreach\\.$#"
+			message: "#^Cannot access offset 'demo_mode' on mixed\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/UpdateController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:__invoke\\(\\) should return Illuminate\\\\Http\\\\RedirectResponse\\|Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
-			count: 2
+			message: "#^Empty array passed to foreach\\.$#"
+			count: 1
 			path: app/Http/Controllers/Admin/UpdateController.php
 
 		-
@@ -1191,12 +1331,22 @@ parameters:
 			path: app/Http/Controllers/Admin/UpdateController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:handlePost\\(\\) should return Illuminate\\\\Http\\\\RedirectResponse\\|Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:index\\(\\) should return Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
+			count: 2
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:run\\(\\) should return Illuminate\\\\Http\\\\RedirectResponse\\|Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
 			count: 2
 			path: app/Http/Controllers/Admin/UpdateController.php
 
 		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:startUpdate\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/UpdateController.php
+
+		-
+			message: "#^Parameter \\#1 \\$dbVersion of method App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:startUpdate\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/UpdateController.php
 
@@ -1212,27 +1362,17 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$format of function sprintf expects string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/UpdateController.php
-
-		-
-			message: "#^Parameter \\#2 \\$dbVersion of method App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:handlePost\\(\\) expects string, mixed given\\.$#"
-			count: 1
+			count: 2
 			path: app/Http/Controllers/Admin/UpdateController.php
 
 		-
 			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-			count: 1
+			count: 2
 			path: app/Http/Controllers/Admin/UpdateController.php
 
 		-
 			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/UpdateController.php
-
-		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 1
+			count: 2
 			path: app/Http/Controllers/Admin/UpdateController.php
 
 		-
@@ -1684,6 +1824,11 @@ parameters:
 			message: "#^Result of && is always false\\.$#"
 			count: 1
 			path: app/Http/Middleware/Locale.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Admin\\\\AnnouncementRequest\\:\\:messages\\(\\) should return array\\<string, string\\> but returns array\\<string, array\\|string\\|null\\>\\.$#"
+			count: 1
+			path: app/Http/Requests/Admin/AnnouncementRequest.php
 
 		-
 			message: "#^Method App\\\\Http\\\\Requests\\\\Admin\\\\BanRequest\\:\\:attributes\\(\\) should return array\\<string, string\\> but returns array\\<string, array\\|string\\|null\\>\\.$#"

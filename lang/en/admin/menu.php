@@ -28,7 +28,6 @@ return [
     'changelog' => 'Changelog',
     'permissions' => 'Permissions',
     'backup' => 'Backups',
-    'encrypter' => 'Password encrypter',
     'announcement' => 'Announcement',
     'ban' => 'Banning',
     'rebuildhighscores' => 'Rebuild highscores',

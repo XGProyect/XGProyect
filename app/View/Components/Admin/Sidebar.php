@@ -62,7 +62,6 @@ class Sidebar extends Component
                 'icon' => 'fa-tools',
                 'items' => [
                     'backup' => [],
-                    'encrypter' => [],
                     'announcement' => [],
                     'ban' => [],
                     'rebuildhighscores' => ['onClick="return confirm(\'' . __('admin/menu.tools_manual_update_confirm') . '\');"'],

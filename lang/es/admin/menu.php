@@ -28,7 +28,6 @@ return [
     'changelog' => 'Lista de cambios',
     'permissions' => 'Permisos',
     'backup' => 'Resguardos',
-    'encrypter' => 'Encriptador de claves',
     'announcement' => 'Anuncios',
     'ban' => 'Suspensiones',
     'rebuildhighscores' => 'Regenerar clasificación',

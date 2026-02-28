@@ -41,7 +41,6 @@ abstract class AdminPagesEnumerator
 
     public const TOOLS = [
         'backup',
-        'encrypter',
         'announcement',
         'ban',
         'rebuildhighscores',
