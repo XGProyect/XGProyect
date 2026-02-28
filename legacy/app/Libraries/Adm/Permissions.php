@@ -103,7 +103,7 @@ class Permissions
         return ArraysHelper::inMultiArray($module, $this->getAdminModules());
     }
 
-    public function roleExists(string $role): bool
+    public function roleExists(int $role): bool
     {
         return in_array($role, $this->getRoles());
     }
