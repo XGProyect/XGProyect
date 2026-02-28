@@ -38,12 +38,6 @@ class PermissionsController extends BaseController
         );
     }
 
-    /**
-     * Creates a new preferences object that will handle all the preferences
-     * creation methods and actions
-     *
-     * @return void
-     */
     private function setUpPermissions(): void
     {
         $this->permissions = new Permissions(
@@ -51,11 +45,6 @@ class PermissionsController extends BaseController
         );
     }
 
-    /**
-     * Run an action
-     *
-     * @return void
-     */
     private function runAction(): void
     {
         $permissions = filter_input_array(INPUT_POST);
