@@ -41,16 +41,8 @@
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/BackupController.php" method="isValidFile"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/BackupController.php" method="isValidFile"/>
   <violation rule="PHPMD\Rule\UnusedLocalVariable" file="app/Http/Controllers/Admin/BackupController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="app/Http/Controllers/Admin/BanController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/BanController.php" method="__invoke"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/BanController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="app/Http/Controllers/Admin/BanController.php"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/BanController.php" method="showBan"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/BanController.php" method="showBan"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/BanController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/BanController.php" method="getUsersList"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/BanController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/BanController.php" method="getBannedList"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ChangelogController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/ChangelogController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/ChangelogController.php" method="editAction"/>

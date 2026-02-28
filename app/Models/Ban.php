@@ -67,11 +67,11 @@ class Ban extends Model
     // Relations ...
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function admin(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id', 'admin_id');
+        return $this->belongsTo(User::class, 'admin_id', 'id');
     }
 }

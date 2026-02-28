@@ -42,7 +42,10 @@ Route::prefix('admin')->group(function () {
             Route::any('/announcement', Admin\AnnouncementController::class)->name('admin.announcement');
             Route::any('/alliances', Admin\AlliancesController::class)->name('admin.alliances');
             Route::any('/backup', Admin\BackupController::class)->name('admin.backup');
-            Route::any('/ban', Admin\BanController::class)->name('admin.ban');
+            Route::get('/ban', [Admin\BanController::class, 'index'])->name('admin.ban');
+            Route::get('/ban/form', [Admin\BanController::class, 'ban'])->name('admin.ban.form');
+            Route::post('/ban/form', [Admin\BanController::class, 'ban'])->name('admin.ban.form.post');
+            Route::post('/ban/unban', [Admin\BanController::class, 'unban'])->name('admin.ban.unban');
             Route::any('/changelog', Admin\ChangelogController::class)->name('admin.changelog');
             Route::any('/encrypter', Admin\EncrypterController::class)->name('admin.encrypter');
             Route::any('/errors', Admin\ErrorsController::class)->name('admin.errors');
