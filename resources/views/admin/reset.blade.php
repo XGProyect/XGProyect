@@ -13,6 +13,7 @@
                 <span class="text">{{ __('admin/reset.re_reset_go') }}</span>
             </button>
         </div>
+        <p class="mb-4">{{ __('admin/reset.re_sub_title') }}</p>
 
         {{-- General card: full-width, multi-column --}}
         <div class="row">

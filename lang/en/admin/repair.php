@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'db_sub_title' => 'Here you can repair, optimize and check the integrity of all your database tables.',
     'db_general' => 'General',
     'db_not_opt' => '¡Error!',
     'db_not_check' => 'There\'re errors!',

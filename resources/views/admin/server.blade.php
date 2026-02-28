@@ -15,7 +15,7 @@
                 <span class="text">{{ __('admin/server.se_save_parameters') }}</span>
             </button>
         </div>
-        <p class="mb-4"></p>
+        <p class="mb-4">{{ __('admin/server.se_sub_title') }}</p>
 
 
         <div class="row">

@@ -2,6 +2,7 @@
 
 return [
     'se_server_parameters' => 'Ajustes del servidor',
+    'se_sub_title' => 'Desde aquí puedes configurar todos los ajustes principales del servidor, incluyendo velocidades del universo, opciones de flotas, tasas de economía y más.',
     'se_name' => 'Nombre',
     'se_logo' => 'Logo',
     'se_lang' => 'Idioma',

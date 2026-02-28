@@ -2,6 +2,7 @@
 
 return [
     're_reset_universe' => 'Reset universe',
+    're_sub_title' => 'From here you can reset individual aspects of the universe or wipe everything entirely. This operation cannot be undone — make sure you have a backup first.',
     're_reset_universe_confirmation' => 'When you click OK, the requested options will be reset to zero. This operation can not be reversed, and it is your responsibility to make a backup of the database. In case of restarting the whole universe accounts will not be deleted.',
     're_defenses_and_ships' => 'Shipyard and defenses',
     're_defenses' => 'Reset defenses',

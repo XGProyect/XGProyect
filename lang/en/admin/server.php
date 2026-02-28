@@ -2,6 +2,7 @@
 
 return [
     'se_server_parameters' => 'Server settings',
+    'se_sub_title' => 'From here you can configure all the core settings of your server, including universe speed, fleet options, economy rates and more.',
     'se_name' => 'Name',
     'se_logo' => 'Logo',
     'se_lang' => 'Language',

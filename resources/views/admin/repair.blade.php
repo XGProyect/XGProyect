@@ -7,7 +7,6 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/repair.db_opt_db') }}</h1>
-
             @if($results === null)
                 <div class="d-flex flex-wrap align-items-center mt-3 mt-sm-0" style="gap: .75rem;">
                     <div class="custom-control custom-switch">
@@ -30,6 +29,7 @@
                 </a>
             @endif
         </div>
+        <p class="mb-4">{{ __('admin/repair.db_sub_title') }}</p>
 
         <div class="row">
             <div class="col-12">
