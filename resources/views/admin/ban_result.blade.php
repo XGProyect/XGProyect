@@ -79,7 +79,7 @@
                                         </div>
                                         <input type="number" id="days" name="days"
                                             class="form-control text-center stepper-input"
-                                            value="0" min="{{ $existing_ban ? '-36500' : '0' }}" max="36500" readonly>
+                                            value="0" min="0" max="36500" readonly>
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-outline-secondary stepper-inc"
                                                 data-target="days">+</button>
@@ -99,7 +99,7 @@
                                         </div>
                                         <input type="number" id="hour" name="hour"
                                             class="form-control text-center stepper-input"
-                                            value="0" min="{{ $existing_ban ? '-23' : '0' }}" max="23" readonly>
+                                            value="0" min="0" max="23" readonly>
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-outline-secondary stepper-inc"
                                                 data-target="hour">+</button>
