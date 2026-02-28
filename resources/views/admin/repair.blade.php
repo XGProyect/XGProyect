@@ -41,61 +41,61 @@
                     <div class="collapse show" id="collapseGeneral">
                         <div class="card-body">
                             <div class="table-responsive">
-                                @if($results === null)
-                                    <table class="table table-bordered table-hover" id="dataTable" cellspacing="0">
-                                        <thead class="thead-light">
+                            @if($results === null)
+                                <table class="table table-bordered table-hover" id="repairTable" cellspacing="0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>{{ __('admin/repair.db_table_name') }}</th>
+                                            <th class="d-none d-md-table-cell">{{ __('admin/repair.db_data_length') }}</th>
+                                            <th class="d-none d-md-table-cell">{{ __('admin/repair.db_index_length') }}</th>
+                                            <th class="d-none d-md-table-cell">{{ __('admin/repair.db_overhead') }}</th>
+                                            <th class="text-center" style="width: 56px;">
+                                                <div class="custom-control custom-checkbox m-0">
+                                                    <input type="checkbox" class="custom-control-input form-check-input" id="checkall">
+                                                    <label class="custom-control-label" for="checkall"></label>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($tables as $table)
                                             <tr>
-                                                <th>{{ __('admin/repair.db_table_name') }}</th>
-                                                <th>{{ __('admin/repair.db_data_length') }}</th>
-                                                <th>{{ __('admin/repair.db_index_length') }}</th>
-                                                <th>{{ __('admin/repair.db_overhead') }}</th>
-                                                <th class="text-center" style="width: 56px;">
+                                                <td class="align-middle font-weight-bold">{{ $table['name'] }}</td>
+                                                <td class="align-middle d-none d-md-table-cell">{{ $table['data'] }}</td>
+                                                <td class="align-middle d-none d-md-table-cell">{{ $table['index'] }}</td>
+                                                <td class="align-middle d-none d-md-table-cell">{{ $table['overhead'] }}</td>
+                                                <td class="text-center align-middle">
                                                     <div class="custom-control custom-checkbox m-0">
-                                                        <input type="checkbox" class="custom-control-input form-check-input" id="checkall">
-                                                        <label class="custom-control-label" for="checkall"></label>
+                                                        <input type="checkbox" class="custom-control-input form-check-input"
+                                                            name="table[]" value="{{ $table['name'] }}"
+                                                            id="tbl_{{ $table['name'] }}">
+                                                        <label class="custom-control-label" for="tbl_{{ $table['name'] }}"></label>
                                                     </div>
-                                                </th>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($tables as $table)
-                                                <tr>
-                                                    <td class="align-middle font-weight-bold">{{ $table['name'] }}</td>
-                                                    <td class="align-middle">{{ $table['data'] }}</td>
-                                                    <td class="align-middle">{{ $table['index'] }}</td>
-                                                    <td class="align-middle">{{ $table['overhead'] }}</td>
-                                                    <td class="text-center align-middle">
-                                                        <div class="custom-control custom-checkbox m-0">
-                                                            <input type="checkbox" class="custom-control-input form-check-input"
-                                                                name="table[]" value="{{ $table['name'] }}"
-                                                                id="tbl_{{ $table['name'] }}">
-                                                            <label class="custom-control-label" for="tbl_{{ $table['name'] }}"></label>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                @else
-                                    <table class="table table-bordered table-hover" id="dataTable" cellspacing="0">
-                                        <thead class="thead-light">
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <table class="table table-bordered table-hover" id="repairTable" cellspacing="0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>{{ __('admin/repair.db_table_name') }}</th>
+                                            <th>{{ __('admin/repair.db_table_result') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($results as $result)
                                             <tr>
-                                                <th>{{ __('admin/repair.db_table_name') }}</th>
-                                                <th>{{ __('admin/repair.db_table_result') }}</th>
+                                                <td class="align-middle font-weight-bold">{{ $result['table'] }}</td>
+                                                <td class="align-middle">
+                                                    <span class="badge badge-success p-2">{{ $result['result'] }}</span>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($results as $result)
-                                                <tr>
-                                                    <td class="align-middle font-weight-bold">{{ $result['table'] }}</td>
-                                                    <td class="align-middle">
-                                                        <span class="badge badge-success p-2">{{ $result['result'] }}</span>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
                             </div>
                         </div>
                     </div>
