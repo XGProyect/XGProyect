@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     // sidebar
     'sidebar_heading' => 'Install',

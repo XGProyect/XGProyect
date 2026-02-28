@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'ships' => 'Naves',
     'ship_small_cargo_ship' => 'Nave pequeña de carga',

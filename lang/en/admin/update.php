@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'up_title' => 'Update',
     'up_no_update_required' => 'No update required',

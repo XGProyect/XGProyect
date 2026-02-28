@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'rs_production_on_planet' => 'Opciones de recursos - %s',
     'rs_basic_income' => 'Ingresos básicos',

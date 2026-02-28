@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'al_title' => 'Alliances',
     'al_sub_title' => 'From here you will be able to edit all the alliance data, including their information, ranks and members.',

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'cr_type' => 'Type',
     'cr_total' => 'Total',

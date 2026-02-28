@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'cs_title' => 'Ajustes de estadísticas',
     'cs_sub_title' => 'Modifica aquí cualquier configuración relacionada con las estadísticas del servidor.',

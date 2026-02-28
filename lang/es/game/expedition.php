@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'exp_report_title' => 'Resultado de la expedición %s', // ok
 

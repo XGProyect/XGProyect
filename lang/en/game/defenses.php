@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'defenses' => 'Defence',
     'missiles' => 'Rockets',

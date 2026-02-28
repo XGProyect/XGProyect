@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'an_title' => 'Anuncio',
     'an_sub_title' => '¡Aquí podrás enviar anuncios a todos los jugadores del servidor!<br>Usa con precaución; el mal uso de esta herramienta puede hacer que tu <strong>nombre de dominio sea incluido en una lista negra</strong>. <strong>XGP no se hace responsable</strong> del mal uso de esta herramienta.',

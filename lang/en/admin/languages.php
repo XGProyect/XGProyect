@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'le_edit' => 'Languages edition',
     'le_notice' => 'Here you can modify the languages files, HTML is allowed. Use with caution.',

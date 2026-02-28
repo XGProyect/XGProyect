@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'ov_have_new_message' => 'You have 1 new message',
     'ov_have_new_messages' => 'You have %m new messages',

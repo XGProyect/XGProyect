@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'ff_title' => 'Fleet movements',
     'ff_sub_title' => 'Here you can get an overview of all the fleet movements taking place on the server, you can also execute different actions over them.',

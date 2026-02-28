@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'an_title' => 'Announcement',
     'an_sub_title' => 'From here you will be able to send announcements to all the server players.<br>Use with caution; misuse of this tool can cause your <strong>domain name to be blacklisted</strong>. <strong>XGP is not responsible</strong> for any misuse of this tool.',

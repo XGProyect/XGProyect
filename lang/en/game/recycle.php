@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'rec_report_title' => 'Harvesting report from DF on %s', // ok
     'rec_report_from' => 'Fleet', // ok

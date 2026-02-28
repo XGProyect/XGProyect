@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'mis_attack' => 'Missile Attack', // ok
     'mis_all_destroyed' => 'All Attacking rockets have been destroyed by anty-ballistic missiles.',

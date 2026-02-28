@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'no_permissions' => 'Necesitas permisos especiales para ver esta página',
     'user_level' => [

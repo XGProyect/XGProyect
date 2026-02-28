@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     're_lab_required' => '¡Es necesario construir primero un laboratorio de investigación en este planeta!',
     're_time' => 'Tiempo de investigación: ',

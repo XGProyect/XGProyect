@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'al_title' => 'Alianzas',
     'al_sub_title' => 'Desde aquí podrás editar todos los detalles de una alianza, desde su información básica, incluyendo rangos y miembros.',

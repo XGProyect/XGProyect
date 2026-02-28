@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'et_title' => 'Encriptador de claves (Bcrypt)',
     'et_sub_title' => 'Aquí puedes rápidamente encriptar una clave utilizando el sistema de encriptación por defecto de XGP.',

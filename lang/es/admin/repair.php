@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'db_general' => 'General',
     'db_not_opt' => '¡Error!',

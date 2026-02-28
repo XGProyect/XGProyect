@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'description' => 'En este menú puedes cambiar los nombres de tus planetas y lunas o abandonar completamente una colonia.',
     'rename' => 'Renombrar',

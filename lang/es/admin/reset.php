@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     're_reset_universe' => 'Reiniciar Universo',
     're_reset_universe_confirmation' => 'Al pulsar Aceptar, se reiniciaran las opciones solicitadas a cero. Esta operación no puede ser revertida, y es tu responsabilidad hacerle un backup a la base de datos. En caso de reiniciar todo el universo las cuentas no seran borradas.',

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'aj_media_wallpapers' => 'Fondos de pantalla',
     'aj_media_pictures' => 'Imágenes',

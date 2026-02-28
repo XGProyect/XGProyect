@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'pr_title' => 'Premium settings',
     'pr_sub_title' => 'Everything that involves dark matter can be managed here. From officers to merchants.',

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'lm_players' => 'Player:',
     'lm_overview' => 'Overview',

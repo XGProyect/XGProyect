@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'objects' => [
         1 => 'Metal Mine',

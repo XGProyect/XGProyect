@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'col_max_colonies' => 'El colonizador llega a las coordenadas %s, pero, por desgracia, es imposible colonizar, no puede tener más de %s planetas.',
     'col_successful' => 'El colonizador llega a las coordenadas %s, los colonos están comenzando a construir una nueva colonia.',

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'ev_no_fleet_data' => 'No fleet data',
     'ev_aproaching' => 'They approach ',

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'er_title' => 'Errores del servidor',
     'er_sub_title' => 'Aquí podrás ver un listado de los errores que hayan ocurrido en tu servidor, incluyendo errores en la base datos o errores de PHP. Por favor, reporta cualquier error que veas aquí en el <a href="https://github.com/XGProyect/XGProyect" target="_blank">GitHub de XGP</a>.',

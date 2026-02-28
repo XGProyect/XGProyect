@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'pm_subject' => 'Subject',
     'pm_no_text' => 'Message missing',

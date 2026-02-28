@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'nt_my_notes' => 'Mis notas',
     'nt_new_note' => '+ Nueva Nota',

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'us_title' => 'Usuarios',
     'us_sub_title' => 'Desde aquí podrás editar toda la información de un usuario, desde sus datos personales, incluyendo configuraciones, premium, tecnologías, hasta sus planetas y lunas.',

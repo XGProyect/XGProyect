@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'we_mail_text_part1' => 'Welcome to :game, thanks for joining our game!<br> In this email you\'ll find all the information that you need to login into your account.',
     'we_mail_text_part2' => '<strong>Data to access the game</strong>',

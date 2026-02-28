@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'ma_title' => 'Mailing settings',
     'ma_sub_title' => 'Everything that involves mailing can be managed here. You can configure different mailing protocols and also set them up here.',

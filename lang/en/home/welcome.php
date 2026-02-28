@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'hm_keywords' => 'Game, Browser, online, for free, legendary, MMOG, Science fiction, space, space ship',
     'hm_description' => 'XG Proyect - The legendary game in the space! Discover the universe together with thousands of players.',

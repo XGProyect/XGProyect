@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'description' => 'Using this menu you can change planet names and moons or completely abandon them.',
     'rename' => 'Rename',

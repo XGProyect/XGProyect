@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'lg_welcome_back' => '¡Bievenido!',
     'lg_enter_email_address' => 'Ingrese su correo electrónico',

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'sy_remaining' => 'Restantes',
     'sy_shipyard_required' => '¡Debes construir un hangar en este planeta para continuar!',

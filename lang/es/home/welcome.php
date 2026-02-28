@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'hm_keywords' => 'Juego, navegador, online, gratis, legendario, MMOG, ciencia ficción, espacio, nave',
     'hm_description' => 'XG Proyect - ¡El juego legendario en el espacio! Descubre un universo junto con miles de jugadores.',

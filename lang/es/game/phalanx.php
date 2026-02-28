@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'px_no_deuterium' => '¡No tienes deuterio!',
     'px_scan_position' => 'Escanear posición',

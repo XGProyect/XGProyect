@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'tra_reaching' => 'Reaching a planet', // ok
     'tra_delivered_resources' => 'Your fleet from planet %s %s has reached the planet %s %s and delivered its goods:<br>Metal: %s Crystal: %s Deuterium: %s.', // ok

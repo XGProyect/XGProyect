@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'fl_returning' => 'Returning',
     'fl_onway' => 'On their way',
