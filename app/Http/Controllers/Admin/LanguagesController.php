@@ -4,120 +4,71 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\LanguagesSaveRequest;
 use App\Services\AdministrationService;
-use App\Services\SettingsService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Template;
+use Illuminate\Support\Facades\File;
+use Illuminate\View\View;
+use Symfony\Component\Finder\SplFileInfo;
 
 class LanguagesController extends BaseController
 {
-    private string $currentFile = '';
-    private AdministrationService $administrationService;
-
-    public function __construct()
-    {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+    ) {
     }
 
-    public function __invoke(): void
+    public function index(Request $request): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->runAction();
-
-        Template::legacyView(
-            'admin.languages',
-            array_merge(
-                $this->getFiles(),
-                $this->getContents(),
-                [
-                    'editFile' => $this->currentFile,
-                ]
-            )
-        );
-    }
-
-    private function runAction(): void
-    {
-        $action = filter_input_array(INPUT_POST);
-
-        if ($action) {
-            if (isset($action['file'])) {
-                $this->doFileAction($action['file']);
-            }
-
-            if (isset($action['save']) && $action['save'] != '') {
-                $this->doSaveAction($action['save']);
-            }
-        }
-    }
-
-    private function doFileAction(string $file): void
-    {
-        $this->currentFile = $file;
-    }
-
-    private function doSaveAction(string $fileData): void
-    {
-        $fs = @fopen(lang_path($this->currentFile), 'w');
-
-        if ($fs && $fileData != '') {
-            fwrite($fs, $fileData);
-
-            fclose($fs);
-        }
-
-        session()->flash('success', __('admin/languages.le_all_ok_message'));
-    }
-
-    private function getContents(): array
-    {
-        if (empty($this->currentFile)) {
-            return [
-                'contents' => '',
-            ];
-        }
-
-        $file = lang_path($this->currentFile);
-
-        // open the file
-        $fs = @fopen($file, 'a+');
+        $currentFile = $request->query('file', '');
         $contents = '';
 
-        if ($fs) {
-            while (!feof($fs)) {
-                $contents .= fgets($fs, 1024);
+        if ($currentFile) {
+            $path = lang_path($currentFile);
+
+            if (File::exists($path)) {
+                $contents = File::get($path);
+            } else {
+                session()->flash('error', __('admin/languages.le_all_error_reading'));
             }
-
-            fclose($fs);
         }
 
-        if (!$contents && $this->currentFile != '') {
-            session()->flash('error', __('admin/languages.le_all_error_reading'));
-        }
+        $langFiles = collect(File::allFiles(lang_path()))
+            ->filter(fn (SplFileInfo $file) => $file->getExtension() === 'php')
+            ->map(fn (SplFileInfo $file) => $file->getRelativePathname())
+            ->sort()
+            ->values()
+            ->all();
 
-        return [
-            'contents' => $contents,
-        ];
+        return view('admin.languages', [
+            'language_files' => $langFiles,
+            'currentFile'    => $currentFile,
+            'contents'       => $contents,
+        ]);
     }
 
-    private function getFiles(): array
+    public function save(LanguagesSaveRequest $request): RedirectResponse
     {
-        chdir(lang_path());
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
-        $langFiles = glob('{,*/,*/*/,*/*/*/}*.php', GLOB_BRACE);
-        $langOptions = [];
+        $data = $request->validated();
+        $filePath = realpath(lang_path($data['file']));
+        $langDir = realpath(lang_path());
 
-        foreach ($langFiles as $file) {
-            $langOptions[] = [
-                'lang_file' => $file,
-                'selected' => ($this->currentFile == $file) ? 'selected = selected' : '',
-            ];
+        if (!$filePath || !str_starts_with($filePath, $langDir . DIRECTORY_SEPARATOR)) {
+            abort(403);
         }
 
-        return ['language_files' => $langOptions];
+        File::put($filePath, $data['save']);
+
+        session()->flash('success', __('admin/languages.le_all_ok_message'));
+
+        return redirect()->route('admin.languages', ['file' => $data['file']]);
     }
 }

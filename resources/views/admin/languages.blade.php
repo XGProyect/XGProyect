@@ -26,18 +26,17 @@
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseGeneral" style="">
                     <div class="card-body">
-                        <form action="" method="POST" name="change_language">
-                            @csrf
+                        <form action="{{ route('admin.languages') }}" method="GET" name="change_language">
                             <select class="form-control" name="file" onchange="submit()">
                                 <option value="">{{ __('admin/languages.le_file') }}</option>
-                                @foreach ($language_files as $item)
-                                <option value="{{ $item['lang_file'] }}" {{ $item['selected'] }}>{{ $item['lang_file'] }}</option>
+                                @foreach ($language_files as $file)
+                                <option value="{{ $file }}" @selected($file === $currentFile)>{{ $file }}</option>
                                 @endforeach
                             </select>
                         </form>
-                        <form action="" method="POST" name="edit_language">
+                        <form action="{{ route('admin.languages.save') }}" method="POST" name="edit_language">
                             @csrf
-                            <input type="hidden" name="file" value="{{ $editFile }}">
+                            <input type="hidden" name="file" value="{{ $currentFile }}">
                             <div class="table-responsive">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tbody>
