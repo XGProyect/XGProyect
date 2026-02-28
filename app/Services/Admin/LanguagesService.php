@@ -4,19 +4,24 @@ declare(strict_types=1);
 
 namespace App\Services\Admin;
 
-use Illuminate\Support\Facades\File;
+use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
 
 class LanguagesService
 {
+    public function __construct(
+        private readonly Filesystem $files,
+    ) {
+    }
+
     /**
      * Returns all .php files under lang/ as relative paths, sorted.
      *
-     * @return string[]
+     * @return list<string>
      */
     public function getFiles(): array
     {
-        return collect(File::allFiles(lang_path()))
+        return collect($this->files->allFiles(lang_path()))
             ->filter(fn (SplFileInfo $file) => $file->getExtension() === 'php')
             ->map(fn (SplFileInfo $file) => $file->getRelativePathname())
             ->sort()
@@ -28,7 +33,7 @@ class LanguagesService
      * Load and flatten a language file into an ordered list of key/value pairs.
      * Nested arrays are flattened using dot notation (e.g. "user_level.0").
      *
-     * @return array<int, array{key: string, value: string}>
+     * @return list<array{key: string, value: string}>
      */
     public function loadTranslations(string $relativePath): array
     {
@@ -44,33 +49,29 @@ class LanguagesService
             return [];
         }
 
-        return array_values(
-            array_map(
-                fn (string $key, string $value) => ['key' => $key, 'value' => $value],
-                array_keys($this->flatten($data)),
-                array_values($this->flatten($data)),
-            )
-        );
+        return collect($this->flatten($data))
+            ->map(fn (string $value, string $key) => ['key' => $key, 'value' => $value])
+            ->values()
+            ->all();
     }
 
     /**
      * Reconstruct and overwrite a language file from an ordered list of key/value pairs.
      *
-     * @param array<int, array{key: string, value: string}> $pairs
+     * @param list<array{key: string, value: string}> $pairs
      */
     public function saveTranslations(string $relativePath, array $pairs): void
     {
         $path = $this->resolvePath($relativePath);
 
-        $flat = [];
-        foreach ($pairs as $pair) {
-            $flat[$pair['key']] = $pair['value'] ?? '';
-        }
+        $flat = collect($pairs)
+            ->mapWithKeys(fn (array $pair) => [$pair['key'] => $pair['value']])
+            ->all();
 
         $data    = $this->unflatten($flat);
         $content = "<?php\n\nreturn " . $this->exportArray($data) . ";\n";
 
-        File::put($path, $content);
+        $this->files->put($path, $content);
     }
 
     // -------------------------------------------------------------------------
@@ -95,6 +96,7 @@ class LanguagesService
     /**
      * Recursively flatten a nested array into dot-notation keys.
      *
+     * @param  array<string|int, mixed> $data
      * @return array<string, string>
      */
     private function flatten(array $data, string $prefix = ''): array
@@ -106,9 +108,10 @@ class LanguagesService
 
             if (is_array($value)) {
                 $result = array_merge($result, $this->flatten($value, $fullKey));
-            } else {
-                $result[$fullKey] = (string) $value;
+                continue;
             }
+
+            $result[$fullKey] = is_scalar($value) ? (string) $value : '';
         }
 
         return $result;
@@ -119,19 +122,24 @@ class LanguagesService
      * Numeric segments (e.g. "user_level.0") are cast to integer keys.
      *
      * @param  array<string, string> $flat
+     * @return array<string|int, mixed>
      */
     private function unflatten(array $flat): array
     {
         $result = [];
 
         foreach ($flat as $dotKey => $value) {
-            $segments = explode('.', (string) $dotKey);
+            $segments = explode('.', $dotKey);
             $this->setNested($result, $segments, $value);
         }
 
         return $result;
     }
 
+    /**
+     * @param array<string|int, mixed> $arr
+     * @param list<string>             $keys
+     */
     private function setNested(array &$arr, array $keys, string $value): void
     {
         $key = array_shift($keys);
@@ -151,6 +159,8 @@ class LanguagesService
 
     /**
      * Produce clean, single-quoted PHP array syntax (bracket style).
+     *
+     * @param array<string|int, mixed> $data
      */
     private function exportArray(array $data, int $indent = 1): string
     {
@@ -163,10 +173,10 @@ class LanguagesService
 
             if (is_array($value)) {
                 $lines[] = "$pad$keyStr => " . $this->exportArray($value, $indent + 1) . ',';
-            } else {
-                $escaped = $this->escapeString((string) $value);
-                $lines[] = "$pad$keyStr => '$escaped',";
+                continue;
             }
+
+            $lines[] = "$pad$keyStr => '" . $this->escapeString(is_scalar($value) ? (string) $value : '') . "',";
         }
 
         return "[\n" . implode("\n", $lines) . "\n{$closingPad}]";

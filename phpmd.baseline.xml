@@ -42,9 +42,6 @@
   <violation rule="PHPMD\Rule\CleanCode\ErrorControlOperator" file="app/Http/Controllers/Admin/HomeController.php" method="buildAlertsBlock"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/HomeController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ErrorControlOperator" file="app/Http/Controllers/Admin/HomeController.php" method="checkUpdates"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/LanguagesController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\ErrorControlOperator" file="app/Http/Controllers/Admin/LanguagesController.php" method="doSaveAction"/>
-  <violation rule="PHPMD\Rule\CleanCode\ErrorControlOperator" file="app/Http/Controllers/Admin/LanguagesController.php" method="getContents"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/LoginController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/LogoutController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/MailingController.php"/>

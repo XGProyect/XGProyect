@@ -476,21 +476,6 @@ parameters:
 			path: app/Http/Controllers/Admin/HomeController.php
 
 		-
-			message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/LanguagesController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\LanguagesController\\:\\:getContents\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/LanguagesController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\LanguagesController\\:\\:getFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/LanguagesController.php
-
-		-
 			message: "#^If condition is always true\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/MailingController.php

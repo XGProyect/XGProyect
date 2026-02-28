@@ -7,10 +7,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\LanguagesRequest;
 use App\Services\Admin\LanguagesService;
 use App\Services\AdministrationService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\View\View;
 
 class LanguagesController extends BaseController
 {
@@ -25,7 +25,7 @@ class LanguagesController extends BaseController
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $currentFile = $request->query('file', '');
+        $currentFile = $request->string('file')->toString();
         $translations = [];
 
         if ($currentFile) {
@@ -49,6 +49,7 @@ class LanguagesController extends BaseController
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
+        /** @var array{file: string, translations: list<array{key: string, value: string}>} $data */
         $data = $request->validated();
 
         $this->languagesService->saveTranslations($data['file'], $data['translations']);
