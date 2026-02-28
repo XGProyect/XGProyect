@@ -4,6 +4,7 @@
 <div class="container-fluid">
     <x-alert/>
     <form name="frm_reset" action="" method="post">
+        @csrf
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/reset.re_reset_h1') }}</h1>

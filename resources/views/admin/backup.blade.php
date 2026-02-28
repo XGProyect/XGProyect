@@ -6,6 +6,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/backup.bku_title') }}</h1>
         <form name="frm_backup_now" method="POST" action="/admin/backup">
+            @csrf
             <input type="hidden" name="backup" value="1">
             <button type="submit" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
@@ -30,6 +31,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <form name="frm_backup" method="POST" action="/admin/backup">
+                                @csrf
                                 <input type="hidden" name="save" value="1">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tbody>

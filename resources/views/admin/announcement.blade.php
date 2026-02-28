@@ -6,6 +6,7 @@
     <x-alert/>
 
     <form action="{{ route('admin.announcement.send') }}" method="POST" name="announcement">
+        @csrf
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/announcement.an_title') }}</h1>
             <button type="submit" class="btn btn-primary btn-icon-split">

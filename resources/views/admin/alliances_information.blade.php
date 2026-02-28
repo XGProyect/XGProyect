@@ -9,6 +9,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <form name="save_info" method="post" action="">
+                    @csrf
                     <input type="hidden" name="alliance_name_orig" value="{{ $alliance_name }}">
                     <input type="hidden" name="alliance_tag_orig" value="{{ $alliance_tag }}">
                     <input type="hidden" name="alliance_owner_orig" value="{{ $alliance_owner }}">

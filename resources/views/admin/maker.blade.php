@@ -22,6 +22,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <form name="frm_adduser" action="" method="POST">
+                                @csrf
                                 <input type="hidden" name="add_user" value="1">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tr>
@@ -94,6 +95,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <form name="frm_addalliance" action="" method="POST">
+                                @csrf
                                 <input type="hidden" name="add_alliance" value="1">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tr>
@@ -143,6 +145,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <form name="frm_addplanet" action="" method="POST">
+                                @csrf
                                 <input type="hidden" name="add_planet" value="1">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tr>
@@ -212,6 +215,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <form name="frm_addmoon" action="" method="POST">
+                                @csrf
                                 <input type="hidden" name="add_moon" value="1">
                                 <table class="table table-borderless" width="100%" cellspacing="0">
                                     <tr>

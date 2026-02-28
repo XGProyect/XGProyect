@@ -4,6 +4,7 @@
 <div class="container-fluid">
     <script src="{{ asset('assets/js/cntchar-min.js') }}" type="text/javascript"></script>
     <form action="" method="POST" name="changelog">
+        @csrf
         <input type="hidden" name="action" value="{{ $action }}">
         <input type="hidden" name="changelog_id" value="{{ $changelog_id }}">
         <!-- Page Heading -->

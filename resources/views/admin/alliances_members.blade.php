@@ -9,6 +9,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <form name="save_ranks" method="post" action="">
+                    @csrf
                     <table class="table table-borderless" width="100%" cellspacing="0">
                         <tr>
                             <td class="text-center">

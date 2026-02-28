@@ -4,6 +4,7 @@
 <div class="container-fluid">
     <x-alert/>
     <form action="" method="POST">
+        @csrf
         <input type="hidden" name="opt_save" value="1">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">

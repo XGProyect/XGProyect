@@ -12,6 +12,7 @@
     <div class="row">
         <div class="col-lg-12">
             <form name="frm_message_filter" method="POST" action="/admin/messages">
+                @csrf
                 <input type="hidden" name="search" value="1">
                 <div class="card shadow mb-4">
                     <!-- Card Header - Accordion -->
@@ -67,6 +68,7 @@
                 </div>
             </form>
             <form name="frm_message_results" method="POST" action="/admin/messages">
+                @csrf
                 <div class="card shadow mb-4">
                     <!-- Card Header - Accordion -->
                     <a href="#collapseResults" class="d-block card-header py-3" data-toggle="collapse" role="button"

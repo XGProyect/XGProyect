@@ -27,6 +27,7 @@
                 <div class="collapse show" id="collapseGeneral" style="">
                     <div class="card-body">
                         <form action="" method="POST" name="change_language">
+                            @csrf
                             <select class="form-control" name="file" onchange="submit()">
                                 <option value="">{{ __('admin/languages.le_file') }}</option>
                                 @foreach ($language_files as $item)
@@ -35,6 +36,7 @@
                             </select>
                         </form>
                         <form action="" method="POST" name="edit_language">
+                            @csrf
                             <input type="hidden" name="file" value="{{ $editFile }}">
                             <div class="table-responsive">
                                 <table class="table table-borderless" width="100%" cellspacing="0">

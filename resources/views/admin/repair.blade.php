@@ -4,6 +4,7 @@
 <div class="container-fluid">
     <x-alert/>
     <form action="" method="POST">
+        @csrf
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/repair.db_opt_db') }}</h1>

@@ -4,6 +4,7 @@
 <div class="container-fluid">
     <x-alert/>
     <form name="frm_modules" method="POST" action="/admin/modules">
+        @csrf
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/modules.mdl_title') }}</h1>

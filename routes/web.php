@@ -11,7 +11,6 @@ use App\Http\Controllers\Home\LoginController;
 use App\Http\Controllers\Home\RegisterController;
 use App\Http\Controllers\Home\WelcomeController;
 use App\Http\Middleware\LegacyAdminBootstrap;
-use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/')->group(function () {
@@ -36,8 +35,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', Admin\LoginController::class)->name('admin.login');
     Route::get('/logout', Admin\LogoutController::class)->name('admin.logout');
 
-    Route::withoutMiddleware(VerifyCsrfToken::class)
-        ->middleware(LegacyAdminBootstrap::class)
+    Route::middleware(LegacyAdminBootstrap::class)
         ->group(function () {
             Route::get('/announcement', [Admin\AnnouncementController::class, 'index'])->name('admin.announcement');
             Route::post('/announcement', [Admin\AnnouncementController::class, 'send'])->name('admin.announcement.send');
