@@ -34,14 +34,14 @@ class UpdateController extends BaseController
         $dbVersion = Options::getInstance()->get('version');
         $subTitle = sprintf(__('admin/update.up_sub_title'), $dbVersion, $systemVersion);
 
-        // if ($systemVersion === $dbVersion) {
-        //     session()->flash('danger', __('admin/update.up_no_update_required'));
+        if ($systemVersion === $dbVersion) {
+            session()->flash('danger', __('admin/update.up_no_update_required'));
 
-        //     return view('admin.update', [
-        //         'continue' => false,
-        //         'up_sub_title' => $subTitle,
-        //     ]);
-        // }
+            return view('admin.update', [
+                'continue' => false,
+                'up_sub_title' => $subTitle,
+            ]);
+        }
 
         if ($request->isMethod('post')) {
             return $this->handlePost($request, $dbVersion, $subTitle);
