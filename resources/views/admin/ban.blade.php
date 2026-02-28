@@ -101,7 +101,8 @@
 
                             <select name="unban_name" id="banned-select" class="form-control mb-3" size="12">
                                 @foreach ($banned_users as $user)
-                                    <option value="{{ $user->name }}" data-id="{{ $user->id }}">
+                                    <option value="{{ $user->name }}" data-id="{{ $user->id }}"
+                                        data-href="{{ route('admin.ban.form', ['ban_name' => $user->name]) }}">
                                         {{ $user->name }} (ID: {{ $user->id }})
                                     </option>
                                 @endforeach
@@ -200,6 +201,14 @@
 
     setupFilter('filter-users',  'clear-filter-users',  'users-select');
     setupFilter('filter-banned', 'clear-filter-banned', 'banned-select');
+
+    // ── Double-click banned user → edit view ──────────────────────────────
+    document.getElementById('banned-select').addEventListener('dblclick', function () {
+        var selected = this.options[this.selectedIndex];
+        if (selected && selected.getAttribute('data-href')) {
+            window.location.href = selected.getAttribute('data-href');
+        }
+    });
 </script>
 @endpush
 @endsection

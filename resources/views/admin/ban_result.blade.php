@@ -130,12 +130,28 @@
                                 <span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span>
                                 <span class="text">{{ __('admin/ban.bn_button_back') }}</span>
                             </a>
-                            <button type="submit" name="bannow" value="1" class="btn btn-danger btn-icon-split">
-                                <span class="icon text-white-50"><i class="fas fa-save"></i></span>
-                                <span class="text">{{ __('admin/ban.bn_ban_user') }}</span>
-                            </button>
+                            <div>
+                                @if ($existing_ban)
+                                    <button type="button" class="btn btn-success btn-icon-split mr-2"
+                                        onclick="document.getElementById('form-unban').submit()">
+                                        <span class="icon text-white-50"><i class="fas fa-user-check"></i></span>
+                                        <span class="text">{{ __('admin/ban.bn_button_lift_ban') }}</span>
+                                    </button>
+                                @endif
+                                <button type="submit" name="bannow" value="1" class="btn btn-danger btn-icon-split">
+                                    <span class="icon text-white-50"><i class="fas fa-save"></i></span>
+                                    <span class="text">{{ __('admin/ban.bn_ban_user') }}</span>
+                                </button>
+                            </div>
                         </div>
                     </form>
+
+                    @if ($existing_ban)
+                        <form id="form-unban" action="{{ route('admin.ban.unban') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="unban_name" value="{{ $target_user->name }}">
+                        </form>
+                    @endif
                 </div>
 
             </div>
