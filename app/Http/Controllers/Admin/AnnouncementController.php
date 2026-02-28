@@ -4,103 +4,75 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\AnnouncementRequest;
+use App\Mail\Announcement;
 use App\Services\AdministrationService;
-use App\Services\SettingsService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Mail\SentMessage;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 
 class AnnouncementController extends BaseController
 {
-    private array $user = [];
-
-    private AdministrationService $administrationService;
-
-    public function __construct()
-    {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+    ) {
     }
 
-    public function __invoke(): void
+    public function index(): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->user = Users::getInstance()->getUserData();
-
-        $this->runAction();
-
-        Template::legacyView(
-            'admin.announcement',
-            $this->buildColorPicker()
-        );
+        return view('admin.announcement');
     }
 
-    private function runAction(): void
+    public function send(AnnouncementRequest $request): RedirectResponse
     {
-        $action = filter_input_array(
-            INPUT_POST,
-            [
-                'subject' => FILTER_UNSAFE_RAW,
-                'color-picker' => [
-                    'filter' => FILTER_CALLBACK,
-                    'options' => [$this, 'isValidColor'],
-                ],
-                'message' => FILTER_UNSAFE_RAW,
-                'mail' => FILTER_UNSAFE_RAW,
-                'text' => [
-                    'filter' => FILTER_UNSAFE_RAW,
-                    'options' => ['min_range' => 1, 'max_range' => 5000],
-                ],
-            ],
-            false
-        );
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
-        if ($action) {
-            if (isset($action['text']) && $action['text'] != '') {
-                if (isset($action['message'])) {
-                    $this->doMessageAction($action);
-                }
-
-                if (isset($action['mail'])) {
-                    $this->doEmailAction($action);
-                }
-            } else {
-                session()->flash('warning', __('admin/announcement.an_not_sent'));
-            }
-        }
-    }
-
-    private function doMessageAction(array $post): void
-    {
         $players = DB::table('users')->get(['id', 'name', 'email']);
 
-        if (isset($post['color-picker'])) {
-            $color = $post['color-picker'];
-        } else {
-            $color = $this->getMessageColor()[$this->user['authlevel']];
+        if ($request->filled('message')) {
+            $this->sendMessages($request, $players);
         }
 
-        $level = __('admin/global.user_level')[$this->user['authlevel']];
+        if ($request->filled('mail')) {
+            $this->sendEmails($request, $players);
+        }
+
+        return redirect()->route('admin.announcement');
+    }
+
+    private function sendMessages(AnnouncementRequest $request, Collection $players): void
+    {
+        $user = Users::getInstance()->getUserData();
+
+        $pickedColor = (string) $request->input('color-picker', '');
+        $color = $this->isValidColor($pickedColor)
+            ? $pickedColor
+            : $this->getMessageColor()[$user['authlevel']];
+
+        $level = __('admin/global.user_level')[$user['authlevel']];
         $time = time();
 
         $from = Format::customColor($level, $color);
-        $subject = Format::customColor(($post['subject'] ?? __('admin/announcement.an_none')), $color);
-        $message = Format::customColor($post['text'], $color);
+        $subject = Format::customColor($request->input('subject') ?? __('admin/announcement.an_none'), $color);
+        $message = Format::customColor((string) $request->input('text'), $color);
 
         foreach ($players as $player) {
             Functions::sendMessage(
                 (int) $player->id,
-                (int) $this->user['id'],
+                (int) $user['id'],
                 $time,
                 MessagesEnumerator::GENERAL,
                 $from,
@@ -113,59 +85,38 @@ class AnnouncementController extends BaseController
         session()->flash('success', __('admin/announcement.an_sent'));
     }
 
-    private function doEmailAction(array $post): void
+    private function sendEmails(AnnouncementRequest $request, Collection $players): void
     {
-        $players = DB::table('users')->get(['id', 'name', 'email']);
-        $sentCount = 0;
         $results = [];
 
-        foreach ($players as $player) {
-            $result = Mail::to($player->email, $player->name)->send(new \App\Mail\Announcement(
-                $post['subject'],
-                strtr($post['text'], ['%player%' => Format::strongText($player->name)])
+        foreach ($players as $index => $player) {
+            $result = Mail::to($player->email, $player->name)->send(new Announcement(
+                (string) $request->input('subject'),
+                strtr((string) $request->input('text'), ['%player%' => Format::strongText($player->name)])
             ));
 
-            $results[] = $player->name . ': ' . ($result instanceof SentMessage ? __('admin/announcement.an_email_sent') : __('admin/announcement.an_email_failed'));
+            $results[] = $player->name . ': ' . ($result instanceof SentMessage
+                ? __('admin/announcement.an_email_sent')
+                : __('admin/announcement.an_email_failed'));
 
-            // 20 per row
-            if ($sentCount % 20 == 0) {
-                sleep(1); // wait, prevent flooding
+            // Throttle: pause after every 20 emails to prevent flooding
+            if ($index > 0 && $index % 20 === 0) {
+                sleep(1);
             }
-
-            $sentCount++;
         }
 
         session()->flash(
             'info',
             strtr(
                 __('admin/announcement.an_delivery_result'),
-                ['%s' => join('<br>', $results)]
+                ['%s' => implode('<br>', $results)]
             )
         );
     }
 
-    private function buildColorPicker(): array
+    private function isValidColor(string $color): bool
     {
-        $colors_list = [];
-
-        foreach (Format::getHTMLColorsNameList() as $color) {
-            $colors_list[] = [
-                'color' => $color,
-            ];
-        }
-
-        return [
-            'colors' => $colors_list,
-        ];
-    }
-
-    private function isValidColor(string $color): string
-    {
-        if (in_array($color, Format::getHTMLColorsNameList())) {
-            return $color;
-        }
-
-        return '';
+        return (bool) preg_match('/^#[0-9a-fA-F]{6}$/', $color);
     }
 
     private function getMessageColor(): array

@@ -18,4 +18,5 @@ return [
     'an_email_sent' => 'Sent!',
     'an_email_failed' => 'Failed!',
     'an_color' => 'Pick a color',
+    'an_color_warning' => 'This color may have low contrast and could be hard to read in-game.',
 ];

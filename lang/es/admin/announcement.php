@@ -18,4 +18,5 @@ return [
     'an_email_sent' => '¡Enviado!',
     'an_email_failed' => '¡Fallo el envío!',
     'an_color' => 'Selecciona un color',
+    'an_color_warning' => 'Este color puede tener bajo contraste y podría ser difícil de leer en el juego.',
 ];

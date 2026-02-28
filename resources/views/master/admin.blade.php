@@ -16,6 +16,8 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/admin/css/admin.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+    @stack('styles')
 </head>
 <body id="page-top">
     <!-- Page Wrapper -->

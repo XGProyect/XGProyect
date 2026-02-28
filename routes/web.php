@@ -39,7 +39,8 @@ Route::prefix('admin')->group(function () {
     Route::withoutMiddleware(VerifyCsrfToken::class)
         ->middleware(LegacyAdminBootstrap::class)
         ->group(function () {
-            Route::any('/announcement', Admin\AnnouncementController::class)->name('admin.announcement');
+            Route::get('/announcement', [Admin\AnnouncementController::class, 'index'])->name('admin.announcement');
+            Route::post('/announcement', [Admin\AnnouncementController::class, 'send'])->name('admin.announcement.send');
             Route::any('/alliances', Admin\AlliancesController::class)->name('admin.alliances');
             Route::any('/backup', Admin\BackupController::class)->name('admin.backup');
             Route::get('/ban', [Admin\BanController::class, 'index'])->name('admin.ban');
