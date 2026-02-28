@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\View\Components\Admin;
 
+use App\Services\SettingsService;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 use Xgp\App\Libraries\Adm\Permissions;
-use App\Services\SettingsService;
 
 class Sidebar extends Component
 {
@@ -97,7 +97,10 @@ class Sidebar extends Component
             ->all();
 
         // determine current block of menus based on the current page
-        $activeBlock = collect($sections)->filter(fn ($v) => in_array($activePage, array_keys($v['items'])))->keys()->first();
+        $activeBlock = collect($sections)
+            ->filter(fn ($v) => in_array($activePage, array_keys($v['items'])))
+            ->keys()
+            ->first();
 
         return view(
             'components.admin.sidebar',
