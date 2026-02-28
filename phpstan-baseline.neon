@@ -276,56 +276,6 @@ parameters:
 			path: app/Http/Controllers/Admin/BanController.php
 
 		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:create\\(\\)\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ChangelogController.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:find\\(\\)\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ChangelogController.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:orderBy\\(\\)\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ChangelogController.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Changelog\\:\\:where\\(\\)\\.$#"
-			count: 2
-			path: app/Http/Controllers/Admin/ChangelogController.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\Languages\\:\\:orderBy\\(\\)\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ChangelogController.php
-
-		-
-			message: "#^Comparison operation \"\\>\" between 6 and 0 is always true\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ChangelogController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ChangelogController\\:\\:buildListOfEntries\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ChangelogController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ChangelogController\\:\\:getActionData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ChangelogController.php
-
-		-
-			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ChangelogController.php
-
-		-
-			message: "#^Parameter \\#2 \\$subject of function preg_match_all expects string, string\\|null given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ChangelogController.php
-
-		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ErrorsController\\:\\:getListOfLogFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/ErrorsController.php

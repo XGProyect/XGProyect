@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property int    $changelog_id
- * @property int    $changelog_lang_id
- * @property string $changelog_version
- * @property string $changelog_description
- * @property Date   $changelog_date
+ * @property int           $changelog_id
+ * @property int           $changelog_lang_id
+ * @property string        $changelog_version
+ * @property string        $changelog_description
+ * @property \Carbon\Carbon $changelog_date
+ * @property-read Languages $language
  */
 class Changelog extends Model
 {

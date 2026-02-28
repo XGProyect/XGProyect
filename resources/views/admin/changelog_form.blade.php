@@ -3,10 +3,11 @@
 @section('content')
 <div class="container-fluid">
     <script src="{{ asset('assets/js/cntchar-min.js') }}" type="text/javascript"></script>
-    <form action="" method="POST" name="changelog">
+    <form action="{{ $action === 'edit' ? route('admin.changelog.update', $changelog_id) : route('admin.changelog.store') }}" method="POST" name="changelog">
         @csrf
-        <input type="hidden" name="action" value="{{ $action }}">
-        <input type="hidden" name="changelog_id" value="{{ $changelog_id }}">
+        @if($action === 'edit')
+            @method('PUT')
+        @endif
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/changelog.ch_title') }}</h1>
@@ -19,7 +20,7 @@
                     <!-- Card Header - Accordion -->
                     <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
                         aria-expanded="true" aria-controls="collapseGeneral">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ $current_action }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ str_replace('%s', $changelog_date, __('admin/changelog.ch_' . $action . '_action')) }}</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show" id="collapseGeneral" style="">

@@ -28,13 +28,6 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/AnnouncementController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/BanController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/BanController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ChangelogController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/ChangelogController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/ChangelogController.php" method="editAction"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/ChangelogController.php"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/ChangelogController.php" method="isValidAction"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/ChangelogController.php" method="isValidDate"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/ChangelogController.php" method="isValidVersion"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ErrorsController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/ErrorsController.php"/>
   <violation rule="PHPMD\Rule\Design\ExitExpression" file="app/Http/Controllers/Admin/ErrorsController.php"/>

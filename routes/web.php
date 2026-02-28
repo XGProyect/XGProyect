@@ -49,7 +49,12 @@ Route::prefix('admin')->group(function () {
             Route::get('/ban/form', [Admin\BanController::class, 'ban'])->name('admin.ban.form');
             Route::post('/ban/form', [Admin\BanController::class, 'storeBan'])->name('admin.ban.form.post');
             Route::post('/ban/unban', [Admin\BanController::class, 'unban'])->name('admin.ban.unban');
-            Route::any('/changelog', Admin\ChangelogController::class)->name('admin.changelog');
+            Route::get('/changelog', [Admin\ChangelogController::class, 'index'])->name('admin.changelog');
+            Route::get('/changelog/create', [Admin\ChangelogController::class, 'create'])->name('admin.changelog.create');
+            Route::post('/changelog', [Admin\ChangelogController::class, 'store'])->name('admin.changelog.store');
+            Route::get('/changelog/{changelog}/edit', [Admin\ChangelogController::class, 'edit'])->name('admin.changelog.edit');
+            Route::put('/changelog/{changelog}', [Admin\ChangelogController::class, 'update'])->name('admin.changelog.update');
+            Route::delete('/changelog/{changelog}', [Admin\ChangelogController::class, 'destroy'])->name('admin.changelog.destroy');
             Route::any('/errors', Admin\ErrorsController::class)->name('admin.errors');
             Route::any('/fleets', Admin\FleetsController::class)->name('admin.fleets');
             Route::any('/home', Admin\HomeController::class)->name('admin.home');
