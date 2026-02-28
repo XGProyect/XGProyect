@@ -486,6 +486,8 @@ class AllianceController extends BaseController
         }
 
         Functions::redirect('game.php?page=alliance');
+
+        return ''; // satisfy phpstan - this line will never be reached
     }
 
     private function getAdminAllySection(): void
