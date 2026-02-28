@@ -59,7 +59,7 @@ Route::prefix('admin')->group(function () {
             Route::any('/fleets', Admin\FleetsController::class)->name('admin.fleets');
             Route::any('/home', Admin\HomeController::class)->name('admin.home');
             Route::get('/languages', [Admin\LanguagesController::class, 'index'])->name('admin.languages');
-            Route::post('/languages', [Admin\LanguagesController::class, 'save'])->name('admin.languages.save');
+            Route::post('/languages', [Admin\LanguagesController::class, 'update'])->name('admin.languages.update');
             Route::any('/mailing', Admin\MailingController::class)->name('admin.mailing');
             Route::any('/maker', Admin\MakerController::class)->name('admin.maker');
             Route::any('/messages', Admin\MessagesController::class)->name('admin.messages');

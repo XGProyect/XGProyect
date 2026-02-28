@@ -8,5 +8,8 @@ return [
     'le_sure' => 'Are you sure you want to continue?',
     'le_save_changes' => 'Save changes',
     'le_all_ok_message' => 'Changes saved successfully!',
-    'le_all_error_reading' => 'Couldn\'t read the language file, verify its permissions!',
+    'le_all_error_reading'  => 'Couldn\'t read the language file, verify its permissions!',
+    'le_search_placeholder' => 'Search keys or values…',
+    'le_col_key'            => 'Key',
+    'le_col_value'          => 'Value',
 ];

@@ -8,5 +8,8 @@ return [
     'le_sure' => '¿Estás seguro que deseas continuar?',
     'le_save_changes' => 'Guardar cambios',
     'le_all_ok_message' => '¡Cambios guardados con éxito!',
-    'le_all_error_reading' => '¡No se pudo leer el archivo de idioma. Verifique los permisos!',
+    'le_all_error_reading'  => '¡No se pudo leer el archivo de idioma. Verifique los permisos!',
+    'le_search_placeholder' => 'Buscar claves o valores…',
+    'le_col_key'            => 'Clave',
+    'le_col_value'          => 'Valor',
 ];

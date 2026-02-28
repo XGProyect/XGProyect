@@ -6,7 +6,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LanguagesSaveRequest extends FormRequest
+class LanguagesRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,13 +14,15 @@ class LanguagesSaveRequest extends FormRequest
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, array<int, string>>
      */
     public function rules(): array
     {
         return [
             'file' => ['required', 'string'],
-            'save' => ['required', 'string'],
+            'translations' => ['required', 'array'],
+            'translations.*.key' => ['required', 'string'],
+            'translations.*.value' => ['nullable', 'string'],
         ];
     }
 }
