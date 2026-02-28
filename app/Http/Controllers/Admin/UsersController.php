@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
@@ -98,6 +99,7 @@ class UsersController extends BaseController
 
         $parse['type'] = ($type != '') ? $type : 'info';
         $parse['user'] = ($user != '') ? $user : '';
+        $parse['name'] = ($this->user_query['name'] != '') ? $this->user_query['name'] : '';
         $parse['status'] = ($user != '') ? '' : ' disabled';
         $parse['status_box'] = ($user != '' && $this->id != $this->user['id']) ? '' : ' disabled';
         $parse['tag'] = ($user != '') ? 'a' : 'button';
@@ -388,6 +390,14 @@ class UsersController extends BaseController
 
         if ($authlevel < 0 or $authlevel > 3) {
             $errors .= __('admin/users.us_error_authlevel') . '<br>';
+        } else {
+            $actorLevel = (int) Auth::user()->authlevel;
+            $isSelf = (int) Auth::user()->id === $this->id;
+
+            // Cannot change own role; can only assign roles up to own level
+            if ($isSelf || $authlevel > $actorLevel) {
+                $errors .= __('admin/users.us_error_authlevel') . '<br>';
+            }
         }
 
         if ($id_planet <= 0) {
@@ -1118,6 +1128,10 @@ class UsersController extends BaseController
 
     private function buildUsersRolesList(): array
     {
+        $actorLevel = (int) Auth::user()->authlevel;
+        $targetLevel = (int) $this->user_query['authlevel'];
+        $isSelf = (int) Auth::user()->id === $this->id;
+
         $roles_list = [];
         $roles = [
             UserRanks::PLAYER,
@@ -1127,10 +1141,16 @@ class UsersController extends BaseController
         ];
 
         foreach ($roles as $role) {
+            // A role option is assignable when:
+            //  - actor is not editing themselves
+            //  - the target role is <= actor's own level
+            $assignable = !$isSelf && $role <= $actorLevel;
+
             $roles_list[] = [
                 'role_id' => $role,
-                'role_sel' => ($role == $this->user_query['authlevel'] ? 'selected' : ''),
+                'role_sel' => ($role === $targetLevel ? 'selected' : ''),
                 'role_name' => __('admin/global.user_level')[$role],
+                'role_disabled' => !$assignable,
             ];
         }
 

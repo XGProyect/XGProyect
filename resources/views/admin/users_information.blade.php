@@ -28,7 +28,7 @@
                             <td>
                                 <select name="authlevel" class="form-control">
                                     @foreach ($user_roles as $item)
-                                    <option value="{{ $item['role_id'] }}" {{ $item['role_sel'] }}>{{ $item['role_name'] }}</option>
+                                    <option value="{{ $item['role_id'] }}" {{ $item['role_sel'] }} @disabled($item['role_disabled'])>{{ $item['role_name'] }}</option>
                                     @endforeach
                                 </select>
                             </td>
