@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Tests\Unit\App\Services\Admin;
 
 use App\Services\Admin\BackupService;
+use Illuminate\Contracts\Console\Kernel as ArtisanKernel;
+use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,33 +21,31 @@ use PHPUnit\Framework\TestCase;
 class BackupServiceTest extends TestCase
 {
     private BackupService $service;
-    private string $tempDir;
+    private ArtisanKernel & MockObject $artisan;
+    private FilesystemFactory & MockObject $storageFactory;
+    private Filesystem & MockObject $disk;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'xgp_backup_test_' . uniqid();
-        mkdir($this->tempDir, 0755, true);
+        $this->artisan = $this->createMock(ArtisanKernel::class);
+        $this->disk = $this->createMock(Filesystem::class);
+        $this->storageFactory = $this->createMock(FilesystemFactory::class);
 
-        // Inject the temp dir so storage_path() is never called
-        $this->service = new BackupService($this->tempDir);
+        $this->storageFactory->method('disk')->willReturn($this->disk);
+
+        $this->service = new BackupService($this->artisan, $this->storageFactory, 'test-app', 'Y-m-d H:i:s');
     }
 
-    protected function tearDown(): void
-    {
-        foreach (glob($this->tempDir . DIRECTORY_SEPARATOR . '*') ?: [] as $file) {
-            unlink($file);
-        }
-        rmdir($this->tempDir);
-
-        parent::tearDown();
-    }
+    // -------------------------------------------------------------------------
+    // isValidFileName
+    // -------------------------------------------------------------------------
 
     public function testIsValidFileNameAcceptsWellFormedName(): void
     {
         $this->assertTrue(
-            $this->service->isValidFileName('db-backup-20260228-1740700800-abc123def456.sql')
+            $this->service->isValidFileName('2026-02-28-12-00-00.zip')
         );
     }
 
@@ -62,113 +64,87 @@ class BackupServiceTest extends TestCase
         $this->assertFalse($this->service->isValidFileName(''));
     }
 
-    public function testIsValidFileNameRejectsMissingDatePart(): void
+    public function testIsValidFileNameRejectsMissingTimePart(): void
     {
-        $this->assertFalse($this->service->isValidFileName('db-backup-.sql'));
+        $this->assertFalse($this->service->isValidFileName('2026-02-28.zip'));
     }
 
     public function testIsValidFileNameRejectsWrongExtension(): void
     {
-        $this->assertFalse(
-            $this->service->isValidFileName('db-backup-20260228-1740700800-abc123.txt')
-        );
+        $this->assertFalse($this->service->isValidFileName('2026-02-28-12-00-00.sql'));
     }
 
-    public function testBackupPathWithNoArgumentReturnsBaseDir(): void
+    // -------------------------------------------------------------------------
+    // diskName / filePath
+    // -------------------------------------------------------------------------
+
+    public function testDiskNameReturnsBackups(): void
     {
-        $this->assertSame($this->tempDir, $this->service->backupPath());
+        $this->assertSame('backups', $this->service->diskName());
     }
 
-    public function testBackupPathWithFileAppendsSeparatorAndName(): void
+    public function testFilePathPrefixesWithAppName(): void
     {
-        $this->assertSame(
-            $this->tempDir . DIRECTORY_SEPARATOR . 'test.sql',
-            $this->service->backupPath('test.sql')
-        );
+        $path = $this->service->filePath('2026-02-28-12-00-00.zip');
+        $this->assertSame('test-app/2026-02-28-12-00-00.zip', $path);
     }
 
-    public function testBackupPathWithEmptyStringMatchesNoArgument(): void
+    // -------------------------------------------------------------------------
+    // createBackup
+    // -------------------------------------------------------------------------
+
+    public function testCreateBackupCallsArtisan(): void
     {
-        $this->assertSame(
-            $this->service->backupPath(),
-            $this->service->backupPath('')
-        );
+        $this->artisan
+            ->expects($this->once())
+            ->method('call')
+            ->with('backup:run', ['--only-db' => true]);
+
+        $this->service->createBackup();
     }
 
-    public function testDeleteBackupRemovesExistingFile(): void
+    // -------------------------------------------------------------------------
+    // deleteBackup
+    // -------------------------------------------------------------------------
+
+    public function testDeleteBackupDeletesViaTheDisk(): void
     {
-        $fileName = 'db-backup-20260228-1740700800-abc123def456.sql';
-        $filePath = $this->tempDir . DIRECTORY_SEPARATOR . $fileName;
-        file_put_contents($filePath, 'dummy');
+        $this->disk
+            ->expects($this->once())
+            ->method('delete');
 
-        $this->assertFileExists($filePath);
-
-        $this->service->deleteBackup($fileName);
-
-        $this->assertFileDoesNotExist($filePath);
+        $this->service->deleteBackup('2026-02-28-12-00-00.zip');
     }
 
-    public function testDeleteBackupDoesNotThrowWhenFileIsMissing(): void
-    {
-        $this->service->deleteBackup('nonexistent.sql');
-        $this->assertTrue(true);
-    }
+    // -------------------------------------------------------------------------
+    // getBackupList
+    // -------------------------------------------------------------------------
 
     public function testGetBackupListReturnsMostRecentFirst(): void
     {
-        $names = [
-            'db-backup-20260101-1000000000-aaa000000001.sql',
-            'db-backup-20260201-1100000000-bbb000000002.sql',
-            'db-backup-20260228-1200000000-ccc000000003.sql',
-        ];
+        $this->disk->method('allFiles')->willReturn([
+            'test-app/2026-01-01-00-00-00.zip',
+            'test-app/2026-02-28-12-00-00.zip',
+        ]);
+        $this->disk->method('exists')->willReturn(true);
+        $this->disk->method('size')->willReturn(1024);
 
-        foreach ($names as $name) {
-            file_put_contents($this->tempDir . DIRECTORY_SEPARATOR . $name, 'SELECT 1;');
-        }
+        $list = $this->service->getBackupList();
 
-        // Stub only the protected formatFileName so Options::getInstance() is never called
-        $service = $this->getMockBuilder(BackupService::class)
-            ->setConstructorArgs([$this->tempDir])
-            ->onlyMethods(['formatFileName'])
-            ->getMock();
-
-        $service->method('formatFileName')->willReturnArgument(0);
-
-        $list = $service->getBackupList();
-
-        $this->assertCount(3, $list);
-        $this->assertStringContainsString('1200000000', $list[0]['full_file_name']);
-        $this->assertStringContainsString('1100000000', $list[1]['full_file_name']);
-        $this->assertStringContainsString('1000000000', $list[2]['full_file_name']);
+        $this->assertInstanceOf(Collection::class, $list);
+        $this->assertCount(2, $list);
+        $this->assertStringContainsString('2026-02-28', $list[0]['full_file_name']);
+        $this->assertStringContainsString('2026-01-01', $list[1]['full_file_name']);
     }
 
-    public function testGetBackupListReturnsEmptyArrayWhenNoneExist(): void
+    public function testGetBackupListReturnsEmptyWhenNoneExist(): void
     {
+        $this->disk->method('allFiles')->willReturn([]);
+
         $list = $this->service->getBackupList();
 
         $this->assertInstanceOf(Collection::class, $list);
         $this->assertEmpty($list);
-    }
-
-    /**
-     * @dataProvider prettyBytesProvider
-     */
-    #[DataProvider('prettyBytesProvider')]
-    public function testGetBackupListFileSizeFormatting(int $bytes, string $expected): void
-    {
-        $fileName = 'db-backup-20260228-1740700800-abc123def456.sql';
-        file_put_contents($this->tempDir . DIRECTORY_SEPARATOR . $fileName, str_repeat('x', $bytes));
-
-        $service = $this->getMockBuilder(BackupService::class)
-            ->setConstructorArgs([$this->tempDir])
-            ->onlyMethods(['formatFileName'])
-            ->getMock();
-
-        $service->method('formatFileName')->willReturnArgument(0);
-
-        $list = $service->getBackupList();
-
-        $this->assertSame($expected, $list[0]['file_size']);
     }
 
     /**
@@ -182,4 +158,20 @@ class BackupServiceTest extends TestCase
             'megabytes' => [1048576, '1 MB'],
         ];
     }
+
+    #[DataProvider('prettyBytesProvider')]
+    public function testGetBackupListFileSizeFormatting(int $bytes, string $expected): void
+    {
+        $this->disk->method('allFiles')->willReturn(['test-app/2026-02-28-12-00-00.zip']);
+        $this->disk->method('exists')->willReturn(true);
+        $this->disk->method('size')->willReturn($bytes);
+
+        $list = $this->service->getBackupList();
+
+        $this->assertSame($expected, $list[0]['file_size']);
+    }
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
 }

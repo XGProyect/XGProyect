@@ -7,16 +7,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\BackupRequest;
 use App\Services\Admin\BackupService;
 use App\Services\AdministrationService;
+use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class BackupController extends BaseController
 {
     public function __construct(
         private readonly AdministrationService $administrationService,
         private readonly BackupService $backupService,
+        private readonly FilesystemFactory $storage,
     ) {
     }
 
@@ -26,7 +29,7 @@ class BackupController extends BaseController
         $this->administrationService->authorization(__CLASS__);
 
         return view('admin.backup', [
-            ...$this->backupService->getSettings(),
+            'auto_backup' => $this->backupService->isAutoBackupEnabled(),
             'backup_list' => $this->backupService->getBackupList(),
         ]);
     }
@@ -55,21 +58,20 @@ class BackupController extends BaseController
         return redirect()->route('admin.backup');
     }
 
-    public function download(string $file): Response
+    public function download(string $file): StreamedResponse
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
         abort_unless($this->backupService->isValidFileName($file), 404);
 
-        $path = $this->backupService->backupPath($file);
+        $path = $this->backupService->filePath($file);
+        $disk = $this->storage->disk($this->backupService->diskName());
+        assert($disk instanceof FilesystemAdapter);
 
-        abort_unless(file_exists($path), 404);
+        abort_unless($disk->exists($path), 404);
 
-        return response((string) file_get_contents($path), 200, [
-            'Content-Type' => 'text/plain',
-            'Content-Disposition' => 'attachment; filename="' . $file . '"',
-        ]);
+        return $disk->download($path, $file);
     }
 
     public function destroy(string $file): RedirectResponse
