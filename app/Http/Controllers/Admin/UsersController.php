@@ -421,7 +421,7 @@ class UsersController extends BaseController
             User::where('id', $this->id)->update($update);
 
             if ($this->user['id'] != $this->id) {
-                Sessions::where('user_id', $this->user['id'])->delete();
+                Sessions::where('user_id', $this->id)->delete();
             }
         }
     }
@@ -663,7 +663,7 @@ class UsersController extends BaseController
             ->select('planet_id', 'planet_name', 'planet_galaxy', 'planet_system', 'planet_planet')
             ->where('planet_user_id', $this->id)
             ->get()
-            ->map(fn($r) => (array) $r)
+            ->map(fn ($r) => (array) $r)
             ->toArray();
 
         foreach ($planets as $planets_row) {
@@ -683,7 +683,7 @@ class UsersController extends BaseController
         $alliances = DB::table('alliance')
             ->select('alliance_id', 'alliance_name', 'alliance_tag')
             ->get()
-            ->map(fn($r) => (array) $r)
+            ->map(fn ($r) => (array) $r)
             ->toArray();
 
         foreach ($alliances as $alliance_row) {
@@ -1219,7 +1219,7 @@ class UsersController extends BaseController
         }
 
         return array_map(
-            fn($r) => (array) $r,
+            fn ($r) => (array) $r,
             DB::select(
                 "SELECT {$getQuery}
                 FROM `{$t}planets` AS p
@@ -1270,7 +1270,7 @@ class UsersController extends BaseController
         }
 
         return array_map(
-            fn($r) => (array) $r,
+            fn ($r) => (array) $r,
             DB::select(
                 "SELECT {$getQuery}
                 FROM `{$t}planets` AS m
