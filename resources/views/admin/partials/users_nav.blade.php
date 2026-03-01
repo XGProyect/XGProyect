@@ -23,32 +23,32 @@
 
 {{-- Tab navigation --}}
 <div class="mb-4 d-flex flex-wrap" style="gap: 0.5rem;">
-    <a class="btn btn-icon-split btn-sm {{ $active === 'info' ? 'btn-primary' : 'btn-secondary' }}"
+    <a class="btn btn-icon-split {{ $active === 'info' ? 'btn-primary' : 'btn-secondary' }}"
         href="{{ route('admin.users.info', $user->id) }}">
         <span class="icon text-white-50"><i class="fas fa-user"></i></span>
         <span class="text">{{ __('admin/users.us_tab_info') }}</span>
     </a>
-    <a class="btn btn-icon-split btn-sm {{ $active === 'settings' ? 'btn-primary' : 'btn-secondary' }}"
+    <a class="btn btn-icon-split {{ $active === 'settings' ? 'btn-primary' : 'btn-secondary' }}"
         href="{{ route('admin.users.settings', $user->id) }}">
         <span class="icon text-white-50"><i class="fas fa-cog"></i></span>
         <span class="text">{{ __('admin/users.us_tab_settings') }}</span>
     </a>
-    <a class="btn btn-icon-split btn-sm {{ $active === 'research' ? 'btn-primary' : 'btn-secondary' }}"
+    <a class="btn btn-icon-split {{ $active === 'research' ? 'btn-primary' : 'btn-secondary' }}"
         href="{{ route('admin.users.research', $user->id) }}">
         <span class="icon text-white-50"><i class="fas fa-flask"></i></span>
         <span class="text">{{ __('admin/users.us_tab_research') }}</span>
     </a>
-    <a class="btn btn-icon-split btn-sm {{ $active === 'premium' ? 'btn-primary' : 'btn-secondary' }}"
+    <a class="btn btn-icon-split {{ $active === 'premium' ? 'btn-primary' : 'btn-secondary' }}"
         href="{{ route('admin.users.premium', $user->id) }}">
         <span class="icon text-white-50"><i class="fas fa-star"></i></span>
         <span class="text">{{ __('admin/users.us_tab_premium') }}</span>
     </a>
-    <a class="btn btn-icon-split btn-sm {{ $active === 'planets' ? 'btn-primary' : 'btn-secondary' }}"
+    <a class="btn btn-icon-split {{ $active === 'planets' ? 'btn-primary' : 'btn-secondary' }}"
         href="{{ route('admin.users.planets', $user->id) }}">
         <span class="icon text-white-50"><i class="fas fa-globe"></i></span>
         <span class="text">{{ __('admin/users.us_tab_planets') }}</span>
     </a>
-    <a class="btn btn-icon-split btn-sm {{ $active === 'moons' ? 'btn-primary' : 'btn-secondary' }}"
+    <a class="btn btn-icon-split {{ $active === 'moons' ? 'btn-primary' : 'btn-secondary' }}"
         href="{{ route('admin.users.moons', $user->id) }}">
         <span class="icon text-white-50"><i class="fas fa-moon"></i></span>
         <span class="text">{{ __('admin/users.us_tab_moons') }}</span>
