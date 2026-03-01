@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Options;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 class UserPlanetController extends BaseController
 {
     use UserPlanetTrait;
@@ -141,6 +144,7 @@ class UserPlanetController extends BaseController
         return redirect()->route('admin.users.planet.defenses', [$user->id, $planet]);
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function softDeletePlanet(User $user, int $planet): RedirectResponse
     {
         $this->administrationService->checkSession();
@@ -152,11 +156,11 @@ class UserPlanetController extends BaseController
             return redirect()->route('admin.users.planets', $user->id);
         }
 
-        $t = DB::getTablePrefix();
+        /** @phpstan-ignore constant.notFound */
         $destroyTime = time() + (PLANETS_LIFE_TIME * 3600);
 
         // If this is the user's home planet, reassign home + current to the next available planet first
-        if ((int) $user->home_planet_id === $planet) {
+        if ($user->home_planet_id === $planet) {
             $nextId = $this->resolveNextHomePlanet($user->id, $planet);
             if ($nextId) {
                 DB::table('users')->where('id', $user->id)->update([
@@ -166,9 +170,11 @@ class UserPlanetController extends BaseController
             }
         }
 
+        $prefix = DB::getTablePrefix();
+
         DB::statement(
-            "UPDATE `{$t}planets` AS p
-             LEFT JOIN `{$t}planets` AS m ON m.`planet_galaxy` = p.`planet_galaxy`
+            "UPDATE `{$prefix}planets` AS p
+             LEFT JOIN `{$prefix}planets` AS m ON m.`planet_galaxy` = p.`planet_galaxy`
                 AND m.`planet_system` = p.`planet_system`
                 AND m.`planet_planet` = p.`planet_planet`
                 AND m.`planet_type` = '3'
@@ -183,6 +189,7 @@ class UserPlanetController extends BaseController
         return redirect()->route('admin.users.planets', $user->id);
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function hardDeletePlanet(User $user, int $planet): RedirectResponse
     {
         $this->administrationService->checkSession();
@@ -195,7 +202,7 @@ class UserPlanetController extends BaseController
         }
 
         // If this is the user's home planet, reassign home + current to the next available planet
-        if ((int) $user->home_planet_id === $planet) {
+        if ($user->home_planet_id === $planet) {
             $nextId = $this->resolveNextHomePlanet($user->id, $planet);
             if ($nextId) {
                 DB::table('users')->where('id', $user->id)->update([
@@ -203,8 +210,10 @@ class UserPlanetController extends BaseController
                     'current_planet' => $nextId,
                 ]);
             }
-        } else {
-            // If the user is currently on this planet, send them to the home planet
+        }
+
+        // If the user is currently on this planet, send them to the home planet
+        if ($user->home_planet_id !== $planet) {
             DB::table('users')
                 ->where('id', $user->id)
                 ->where('current_planet', $planet)
@@ -223,7 +232,7 @@ class UserPlanetController extends BaseController
             ->value('m.planet_id');
 
         if ($moonId) {
-            $this->hardDeletePlanetRow((int) $moonId, PlanetTypesEnumerator::MOON);
+            $this->hardDeletePlanetRow((int) $moonId, PlanetTypesEnumerator::MOON); // @phpstan-ignore cast.int
         }
 
         $this->hardDeletePlanetRow($planet, PlanetTypesEnumerator::PLANET);

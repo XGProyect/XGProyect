@@ -7,6 +7,7 @@ namespace App\Http\Traits\Admin\Users;
 use DirectoryIterator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Libraries\StatisticsLibrary;
 
@@ -22,20 +23,22 @@ trait UserPlanetTrait
 
     /**
      * @return array<int, object>
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     private function getPlanetsWithMoons(int $userId): array
     {
-        $t = DB::getTablePrefix();
+        $prefix = DB::getTablePrefix();
 
         return array_map(
-            fn ($r) => (object) $r,
+            fn (object $row): object => $row,
             DB::select(
                 "SELECT p.planet_id, p.planet_name, p.planet_image, p.planet_galaxy, p.planet_system,
                         p.planet_planet, p.planet_destroyed,
                         m.planet_id AS moon_id, m.planet_name AS moon_name,
                         m.planet_image AS moon_image, m.planet_destroyed AS moon_destroyed
-                 FROM `{$t}planets` AS p
-                 LEFT JOIN `{$t}planets` AS m
+                 FROM `{$prefix}planets` AS p
+                 LEFT JOIN `{$prefix}planets` AS m
                      ON m.planet_galaxy = p.planet_galaxy
                      AND m.planet_system = p.planet_system
                      AND m.planet_planet = p.planet_planet
@@ -59,16 +62,17 @@ trait UserPlanetTrait
             ->get()->all();
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     private function getPlanetData(int $planetId, int $type): ?object
     {
-        $t = DB::getTablePrefix();
+        $prefix = DB::getTablePrefix();
 
         $result = DB::select(
             "SELECT p.*, b.*, s.*, d.*
-             FROM `{$t}planets` AS p
-             INNER JOIN `{$t}buildings` AS b ON b.building_planet_id = p.planet_id
-             INNER JOIN `{$t}ships` AS s ON s.ship_planet_id = p.planet_id
-             INNER JOIN `{$t}defenses` AS d ON d.defense_planet_id = p.planet_id
+             FROM `{$prefix}planets` AS p
+             INNER JOIN `{$prefix}buildings` AS b ON b.building_planet_id = p.planet_id
+             INNER JOIN `{$prefix}ships` AS s ON s.ship_planet_id = p.planet_id
+             INNER JOIN `{$prefix}defenses` AS d ON d.defense_planet_id = p.planet_id
              WHERE p.planet_id = ? AND p.planet_type = ?",
             [$planetId, $type]
         );
@@ -76,23 +80,24 @@ trait UserPlanetTrait
         return $result ? (object) (array) $result[0] : null;
     }
 
-    private function getBuildingsData(int $planetId): object
+    private function getBuildingsData(int $planetId): stdClass
     {
-        return (object) ((array) (DB::table('buildings')->where('building_planet_id', $planetId)->first() ?? new \stdClass()));
+        return DB::table('buildings')->where('building_planet_id', $planetId)->first() ?? new stdClass();
     }
 
-    private function getShipsData(int $planetId): object
+    private function getShipsData(int $planetId): stdClass
     {
-        return (object) ((array) (DB::table('ships')->where('ship_planet_id', $planetId)->first() ?? new \stdClass()));
+        return DB::table('ships')->where('ship_planet_id', $planetId)->first() ?? new stdClass();
     }
 
-    private function getDefensesData(int $planetId): object
+    private function getDefensesData(int $planetId): stdClass
     {
-        return (object) ((array) (DB::table('defenses')->where('defense_planet_id', $planetId)->first() ?? new \stdClass()));
+        return DB::table('defenses')->where('defense_planet_id', $planetId)->first() ?? new stdClass();
     }
 
     // ── Persistence ───────────────────────────────────────────────────────────
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     private function savePlanetData(Request $request, int $planetId): void
     {
         $stringFields = ['planet_name', 'planet_image'];
@@ -100,7 +105,8 @@ trait UserPlanetTrait
         $updates = [];
 
         // Explicitly handle the destroyed toggle — defaults to 0 (cancel) if not submitted
-        $destroyedValue = (int) $request->input('planet_destroyed', 0);
+        $destroyedValue = $request->integer('planet_destroyed', 0);
+        /** @phpstan-ignore constant.notFound */
         $updates['planet_destroyed'] = ($destroyedValue === 1) ? (time() + (PLANETS_LIFE_TIME * 3600)) : 0;
 
         foreach ($request->except(['_token', '_method', 'planet_destroyed', ...$skipFields]) as $field => $value) {
@@ -109,91 +115,101 @@ trait UserPlanetTrait
             }
             if (in_array($field, $stringFields, true)) {
                 $updates[$field] = (string) $value;
-            } elseif (str_starts_with((string) $field, 'planet_')) {
+            } elseif (is_string($field) && str_starts_with($field, 'planet_')) {
                 $updates[$field] = is_numeric($value) ? (int) $value : (string) $value;
             }
         }
 
-        if (!empty($updates)) {
+        if ($updates !== []) {
             DB::table('planets')->where('planet_id', $planetId)->update($updates);
         }
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
     private function saveBuildingsData(Request $request, int $planetId, int $type): void
     {
         $updates = [];
         $totalFields = 0;
 
         foreach ($request->all() as $field => $value) {
-            if (str_starts_with((string) $field, 'building_')) {
-                $level = (int) $value;
+            if (is_string($field) && str_starts_with($field, 'building_')) {
+                $level = (int) $value; // @phpstan-ignore cast.int
                 $updates[$field] = $level;
                 $totalFields += $level;
             }
         }
 
-        if (!empty($updates)) {
+        if ($updates !== []) {
             DB::table('buildings')->where('building_planet_id', $planetId)->update($updates);
         }
 
-        $mondbasis = (int) $request->input('building_mondbasis', 0);
+        $mondbasis = $request->integer('building_mondbasis', 0);
+
+        /** @phpstan-ignore constant.notFound */
+        $fieldsPerLevel = FIELDS_BY_MOONBASIS_LEVEL;
 
         DB::table('planets')->where('planet_id', $planetId)->update([
             'planet_field_current' => $totalFields,
-            'planet_field_max' => DB::raw('IF(`planet_type` = 3, 1 + ' . $mondbasis . ' * ' . FIELDS_BY_MOONBASIS_LEVEL . ', `planet_field_max`)'),
+            'planet_field_max' => DB::raw('IF(`planet_type` = 3, 1 + ' . $mondbasis . ' * ' . $fieldsPerLevel . ', `planet_field_max`)'),
         ]);
 
-        $userId = (int) DB::table('planets')->where('planet_id', $planetId)->value('planet_user_id');
+        $userId = (int) DB::table('planets')->where('planet_id', $planetId)->value('planet_user_id'); // @phpstan-ignore cast.int
         (new StatisticsLibrary())->rebuildPoints($userId, $planetId, 'buildings');
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     private function saveShipsData(Request $request, int $planetId): void
     {
         $updates = [];
 
         foreach ($request->all() as $field => $value) {
-            if (str_starts_with((string) $field, 'ship_')) {
-                $updates[$field] = (int) $value;
+            if (is_string($field) && str_starts_with($field, 'ship_')) {
+                $updates[$field] = (int) $value; // @phpstan-ignore cast.int
             }
         }
 
-        if (!empty($updates)) {
+        if ($updates !== []) {
             DB::table('ships')->where('ship_planet_id', $planetId)->update($updates);
         }
 
-        $userId = (int) DB::table('planets')->where('planet_id', $planetId)->value('planet_user_id');
+        $userId = (int) DB::table('planets')->where('planet_id', $planetId)->value('planet_user_id'); // @phpstan-ignore cast.int
         (new StatisticsLibrary())->rebuildPoints($userId, $planetId, 'ships');
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     private function saveDefensesData(Request $request, int $planetId): void
     {
         $updates = [];
 
         foreach ($request->all() as $field => $value) {
-            if (str_starts_with((string) $field, 'defense_')) {
-                $updates[$field] = (int) $value;
+            if (is_string($field) && str_starts_with($field, 'defense_')) {
+                $updates[$field] = (int) $value; // @phpstan-ignore cast.int
             }
         }
 
-        if (!empty($updates)) {
+        if ($updates !== []) {
             DB::table('defenses')->where('defense_planet_id', $planetId)->update($updates);
         }
 
-        $userId = (int) DB::table('planets')->where('planet_id', $planetId)->value('planet_user_id');
+        $userId = (int) DB::table('planets')->where('planet_id', $planetId)->value('planet_user_id'); // @phpstan-ignore cast.int
         (new StatisticsLibrary())->rebuildPoints($userId, $planetId, 'defenses');
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     private function hardDeletePlanetRow(int $planetId, int $type): void
     {
-        $t = DB::getTablePrefix();
+        $prefix = DB::getTablePrefix();
         $alias = $type === PlanetTypesEnumerator::MOON ? 'm' : 'p';
 
         DB::statement(
             "DELETE {$alias}, b, s, d
-             FROM `{$t}planets` AS {$alias}
-             INNER JOIN `{$t}buildings` AS b ON b.`building_planet_id` = {$alias}.`planet_id`
-             INNER JOIN `{$t}ships` AS s ON s.`ship_planet_id` = {$alias}.`planet_id`
-             INNER JOIN `{$t}defenses` AS d ON d.`defense_planet_id` = {$alias}.`planet_id`
+             FROM `{$prefix}planets` AS {$alias}
+             INNER JOIN `{$prefix}buildings` AS b ON b.`building_planet_id` = {$alias}.`planet_id`
+             INNER JOIN `{$prefix}ships` AS s ON s.`ship_planet_id` = {$alias}.`planet_id`
+             INNER JOIN `{$prefix}defenses` AS d ON d.`defense_planet_id` = {$alias}.`planet_id`
              WHERE {$alias}.`planet_id` = ? AND {$alias}.`planet_type` = ?",
             [$planetId, $type]
         );
@@ -215,7 +231,7 @@ trait UserPlanetTrait
      */
     private function resolveNextHomePlanet(int $userId, int $excludePlanetId): ?int
     {
-        return DB::table('planets')
+        $value = DB::table('planets')
             ->where('planet_user_id', $userId)
             ->where('planet_type', PlanetTypesEnumerator::PLANET)
             ->where('planet_destroyed', 0)
@@ -224,6 +240,8 @@ trait UserPlanetTrait
             ->orderBy('planet_system')
             ->orderBy('planet_planet')
             ->value('planet_id');
+
+        return $value !== null ? (int) $value : null; // @phpstan-ignore cast.int
     }
 
     // ── View preparation ──────────────────────────────────────────────────────
@@ -349,7 +367,7 @@ trait UserPlanetTrait
         $skip = 2;
 
         foreach ((array) $row as $key => $value) {
-            if (!str_starts_with((string) $key, 'building_')) {
+            if (!is_string($key) || !str_starts_with($key, 'building_')) {
                 continue;
             }
             if ($skip-- > 0) {
@@ -361,7 +379,7 @@ trait UserPlanetTrait
 
             $list[] = [
                 'field' => $key,
-                'label' => (string) __('admin/users.us_user_' . $key),
+                'label' => (string) __('admin/users.us_user_' . $key), // @phpstan-ignore cast.string
                 'level' => (int) $value,
             ];
         }
@@ -378,7 +396,7 @@ trait UserPlanetTrait
         $skip = 2;
 
         foreach ((array) $row as $key => $value) {
-            if (!str_starts_with((string) $key, 'ship_')) {
+            if (!is_string($key) || !str_starts_with($key, 'ship_')) {
                 continue;
             }
             if ($skip-- > 0) {
@@ -387,7 +405,7 @@ trait UserPlanetTrait
 
             $list[] = [
                 'field' => $key,
-                'label' => (string) __('admin/users.us_user_' . $key),
+                'label' => (string) __('admin/users.us_user_' . $key), // @phpstan-ignore cast.string
                 'amount' => (int) $value,
             ];
         }
@@ -407,7 +425,7 @@ trait UserPlanetTrait
         $skip = 2;
 
         foreach ((array) $row as $key => $value) {
-            if (!str_starts_with((string) $key, 'defense_')) {
+            if (!is_string($key) || !str_starts_with($key, 'defense_')) {
                 continue;
             }
             if ($skip-- > 0) {
@@ -419,7 +437,7 @@ trait UserPlanetTrait
 
             $list[] = [
                 'field' => $key,
-                'label' => (string) __('admin/users.us_user_' . $key),
+                'label' => (string) __('admin/users.us_user_' . $key), // @phpstan-ignore cast.string
                 'amount' => (int) $value,
             ];
         }

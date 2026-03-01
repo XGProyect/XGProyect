@@ -21,6 +21,9 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users as UsersLibrary;
 use Xgp\App\Libraries\Users\Shortcuts;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class UsersController extends BaseController
 {
     public function __construct(
@@ -61,31 +64,37 @@ class UsersController extends BaseController
         $data = $this->loadFullUserData($user->id);
         $dateFormat = $this->dateFormatExtended();
 
+        $registerTime = (int) ($data->register_time ?? 0);
+        $onlineTime = (int) ($data->onlinetime ?? 0);
+
         return view('admin.users_information', [
             'user' => $user,
             'data' => $data,
             'planets' => $this->getUserPlanets($user->id),
             'alliances' => Alliance::query()->select('alliance_id', 'alliance_name', 'alliance_tag')->orderBy('alliance_name')->get(),
             'all_users' => User::query()->select('id', 'name')->orderBy('name')->get(),
-            'register_time' => ($data->register_time == 0) ? '-' : date($dateFormat, (int) $data->register_time),
-            'online_status' => $this->onlineStatus((int) $data->onlinetime),
+            'register_time' => ($registerTime === 0) ? '-' : date($dateFormat, $registerTime),
+            'online_status' => $this->onlineStatus($onlineTime),
             'user_roles' => $this->buildUserRolesList($user),
             'ban' => $this->loadBan($user->id),
             'shortcuts' => $this->parseShortcuts((string) ($data->fleet_shortcuts ?? '')),
         ]);
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function updateInfo(UserInfoRequest $request, User $user): RedirectResponse
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        /** @var array<string, mixed> $validated */
+        /** @var array{username: string, email: string, authlevel: int, home_planet_id: int, current_planet: int, ally_id: int, password?: string} $validated */
         $validated = $request->validated();
 
-        $actorLevel = (int) Auth::user()->authlevel;
-        $isSelf = (int) Auth::user()->id === $user->id;
-        $newLevel = (int) $validated['authlevel'];
+        /** @var User $actor */
+        $actor = Auth::user();
+        $actorLevel = $actor->authlevel;
+        $isSelf = $actor->id === $user->id;
+        $newLevel = $validated['authlevel'];
 
         if ($isSelf || $newLevel > $actorLevel) {
             session()->flash('danger', __('admin/users.us_error_authlevel'));
@@ -96,18 +105,19 @@ class UsersController extends BaseController
             'name' => $validated['username'],
             'email' => $validated['email'],
             'authlevel' => $newLevel,
-            'home_planet_id' => (int) $validated['home_planet_id'],
-            'current_planet' => (int) $validated['current_planet'],
-            'ally_id' => (int) $validated['ally_id'],
+            'home_planet_id' => $validated['home_planet_id'],
+            'current_planet' => $validated['current_planet'],
+            'ally_id' => $validated['ally_id'],
         ];
 
         if (!empty($validated['password'])) {
-            $updateData['password'] = Functions::hash((string) $validated['password']);
+            /** @SuppressWarnings(PHPMD.StaticAccess) */
+            $updateData['password'] = Functions::hash($validated['password']);
         }
 
         $user->update($updateData);
 
-        if ((int) Auth::user()->id !== $user->id) {
+        if ($actor->id !== $user->id) {
             DB::table('sessions')->where('user_id', $user->id)->delete();
         }
 
@@ -135,6 +145,7 @@ class UsersController extends BaseController
         ]);
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function updateSettings(UserSettingsRequest $request, User $user): RedirectResponse
     {
         $this->administrationService->checkSession();
@@ -142,14 +153,15 @@ class UsersController extends BaseController
 
         $vacationOn = $request->input('preference_vacations_status') === 'on';
         $deleteOn = $request->input('preference_delete_mode') === 'on';
+        /** @SuppressWarnings(PHPMD.StaticAccess) */
         $vacationTime = Functions::getDefaultVacationTime();
         $currentPrefs = DB::table('preferences')->where('preference_user_id', $user->id)->first();
         $wasOnVacation = $currentPrefs && $currentPrefs->preference_vacation_mode > 0;
 
         DB::table('preferences')->where('preference_user_id', $user->id)->update([
-            'preference_spy_probes' => (int) $request->input('preference_spy_probes', 0),
-            'preference_planet_sort' => (int) $request->input('preference_planet_sort', 0),
-            'preference_planet_sort_sequence' => (int) $request->input('preference_planet_sort_sequence', 0),
+            'preference_spy_probes' => $request->integer('preference_spy_probes', 0),
+            'preference_planet_sort' => $request->integer('preference_planet_sort', 0),
+            'preference_planet_sort_sequence' => $request->integer('preference_planet_sort_sequence', 0),
             'preference_vacation_mode' => $vacationOn ? $vacationTime : null,
             'preference_delete_mode' => $deleteOn ? time() : null,
         ]);
@@ -198,12 +210,13 @@ class UsersController extends BaseController
 
     // ── Private helpers ───────────────────────────────────────────────────────
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     private function loadFullUserData(int $userId): object
     {
-        $p = DB::getTablePrefix();
+        $prefix = DB::getTablePrefix();
 
         $result = DB::table('users AS u')
-            ->selectRaw("{$p}u.*, {$p}pr.*")
+            ->selectRaw("{$prefix}u.*, {$prefix}pr.*")
             ->join('preferences AS pr', 'pr.preference_user_id', '=', 'u.id')
             ->where('u.id', $userId)
             ->first();
@@ -233,19 +246,26 @@ class UsersController extends BaseController
     }
 
     /**
-     * @return array<int, array<string, mixed>>
+     * @return array<int, array{role_id: int, selected: bool, role_name: string, disabled: bool}>
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     private function buildUserRolesList(User $user): array
     {
-        $actorLevel = (int) Auth::user()->authlevel;
-        $targetLevel = (int) $user->authlevel;
-        $isSelf = (int) Auth::user()->id === $user->id;
+        /** @var User $actor */
+        $actor = Auth::user();
+        $actorLevel = $actor->authlevel;
+        $targetLevel = $user->authlevel;
+        $isSelf = $actor->id === $user->id;
+
+        /** @var array<int, string> $roleNames */
+        $roleNames = __('admin/global.user_level');
 
         return array_map(
             fn (int $role) => [
                 'role_id' => $role,
                 'selected' => $role === $targetLevel,
-                'role_name' => __('admin/global.user_level')[$role],
+                'role_name' => $roleNames[$role],
                 'disabled' => $isSelf || $role > $actorLevel,
             ],
             [UserRanks::PLAYER, UserRanks::GO, UserRanks::SGO, UserRanks::ADMIN]
@@ -267,9 +287,9 @@ class UsersController extends BaseController
 
             foreach ($shortcuts->getAllAsArray() as $value) {
                 $type = match ((int) ($value['pt'] ?? 0)) {
-                    1 => (string) __('admin/users.us_planet_shortcut'),
-                    2 => (string) __('admin/users.us_debris_shortcut'),
-                    3 => (string) __('admin/users.us_moon_shortcut'),
+                    1 => (string) __('admin/users.us_planet_shortcut'), // @phpstan-ignore cast.string
+                    2 => (string) __('admin/users.us_debris_shortcut'), // @phpstan-ignore cast.string
+                    3 => (string) __('admin/users.us_moon_shortcut'), // @phpstan-ignore cast.string
                     default => '',
                 };
 
@@ -289,11 +309,11 @@ class UsersController extends BaseController
     private function planetSortOptions(): array
     {
         return [
-            0 => (string) __('admin/users.us_user_preference_planet_sort_op1'),
-            1 => (string) __('admin/users.us_user_preference_planet_sort_op2'),
-            2 => (string) __('admin/users.us_user_preference_planet_sort_op3'),
-            3 => (string) __('admin/users.us_user_preference_planet_sort_op4'),
-            4 => (string) __('admin/users.us_user_preference_planet_sort_op5'),
+            0 => (string) __('admin/users.us_user_preference_planet_sort_op1'), // @phpstan-ignore cast.string
+            1 => (string) __('admin/users.us_user_preference_planet_sort_op2'), // @phpstan-ignore cast.string
+            2 => (string) __('admin/users.us_user_preference_planet_sort_op3'), // @phpstan-ignore cast.string
+            3 => (string) __('admin/users.us_user_preference_planet_sort_op4'), // @phpstan-ignore cast.string
+            4 => (string) __('admin/users.us_user_preference_planet_sort_op5'), // @phpstan-ignore cast.string
         ];
     }
 
@@ -303,8 +323,8 @@ class UsersController extends BaseController
     private function planetSortSequenceOptions(): array
     {
         return [
-            0 => (string) __('admin/users.us_user_preference_planet_sort_sequence_op1'),
-            1 => (string) __('admin/users.us_user_preference_planet_sort_sequence_op2'),
+            0 => (string) __('admin/users.us_user_preference_planet_sort_sequence_op1'), // @phpstan-ignore cast.string
+            1 => (string) __('admin/users.us_user_preference_planet_sort_sequence_op2'), // @phpstan-ignore cast.string
         ];
     }
 

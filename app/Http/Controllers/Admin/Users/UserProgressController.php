@@ -42,9 +42,12 @@ class UserProgressController extends BaseController
         $this->administrationService->checkSession();
         $this->administrationService->authorization(self::AUTH_MODULE);
 
-        $updates = collect($request->validated())
-            ->filter(fn ($v, $k) => str_starts_with((string) $k, 'research_'))
-            ->map(fn ($v) => (int) $v)
+        /** @var array<string, mixed> $validated */
+        $validated = $request->validated();
+
+        $updates = collect($validated)
+            ->filter(fn (mixed $v, string $k): bool => str_starts_with($k, 'research_'))
+            ->map(fn (mixed $v): int => (int) $v) // @phpstan-ignore cast.int
             ->all();
 
         if (!empty($updates)) {
@@ -82,11 +85,11 @@ class UserProgressController extends BaseController
         $updates = [];
 
         if ($request->filled('premium_dark_matter')) {
-            $updates['premium_dark_matter'] = (int) $request->input('premium_dark_matter');
+            $updates['premium_dark_matter'] = $request->integer('premium_dark_matter');
         }
 
         foreach ($request->all() as $key => $value) {
-            if (str_starts_with((string) $key, 'premium_') && $key !== 'premium_dark_matter') {
+            if (is_string($key) && str_starts_with($key, 'premium_') && $key !== 'premium_dark_matter') {
                 $updates[$key] = match ((int) $value) {
                     1 => 0,
                     2 => time() + (3600 * 24 * 7),
@@ -116,7 +119,7 @@ class UserProgressController extends BaseController
         $skip = 3;
 
         foreach ($row as $key => $value) {
-            if (!str_starts_with((string) $key, 'research_')) {
+            if (!is_string($key) || !str_starts_with($key, 'research_')) {
                 continue;
             }
             if ($skip-- > 0) {
@@ -125,8 +128,8 @@ class UserProgressController extends BaseController
 
             $list[] = [
                 'field' => $key,
-                'label' => (string) __('admin/users.us_user_' . $key),
-                'level' => (int) $value,
+                'label' => (string) __('admin/users.us_user_' . $key), // @phpstan-ignore cast.string
+                'level' => (int) $value, // @phpstan-ignore cast.int
             ];
         }
 
@@ -143,7 +146,7 @@ class UserProgressController extends BaseController
         $list = [];
 
         foreach ($row as $key => $value) {
-            if (!str_starts_with((string) $key, 'premium_') || in_array($key, ['premium_dark_matter', 'premium_user_id'], true)) {
+            if (!is_string($key) || !str_starts_with($key, 'premium_') || in_array($key, ['premium_dark_matter', 'premium_user_id'], true)) {
                 continue;
             }
 
@@ -154,16 +157,16 @@ class UserProgressController extends BaseController
                 continue;
             }
 
-            $expire = (int) $value;
+            $expire = (int) $value; // @phpstan-ignore cast.int
 
             $list[] = [
                 'field' => $key,
-                'label' => (string) $label,
+                'label' => (string) $label, // @phpstan-ignore cast.string
                 'expire' => $expire,
                 'active' => $expire > 0 && $expire > time(),
                 'status_text' => ($expire === 0 || $expire < time())
-                    ? (string) __('admin/users.us_user_premium_inactive')
-                    : (string) __('admin/users.us_user_premium_active_until') . date($dateFormat, $expire),
+                    ? (string) __('admin/users.us_user_premium_inactive') // @phpstan-ignore cast.string
+                    : (string) __('admin/users.us_user_premium_active_until') . date($dateFormat, $expire), // @phpstan-ignore cast.string
             ];
         }
 

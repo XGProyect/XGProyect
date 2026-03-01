@@ -77,49 +77,6 @@
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/TasksController.php" method="getLastBackupActions"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/TasksController.php" method="getLastCleanupActions"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/UpdateController.php"/>
-  <violation rule="PHPMD\Rule\Design\LongClass" file="app/Http/Controllers/Admin/UsersController.php"/>
-  <violation rule="PHPMD\Rule\Design\TooManyMethods" file="app/Http/Controllers/Admin/UsersController.php"/>
-  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="app/Http/Controllers/Admin/UsersController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="app/Http/Controllers/Admin/UsersController.php"/>
-  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="app/Http/Controllers/Admin/UsersController.php"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/UsersController.php" method="buildPage"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/UsersController.php" method="buildPage"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="buildPage"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/UsersController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/UsersController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="app/Http/Controllers/Admin/UsersController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/UsersController.php"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/UsersController.php" method="saveData"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/UsersController.php" method="deleteData"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="refreshPage"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/UsersController.php" method="saveInfo"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/UsersController.php" method="saveInfo"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="saveInfo"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="saveSettings"/>
-  <violation rule="PHPMD\Rule\Naming\LongVariable" file="app/Http/Controllers/Admin/UsersController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="saveResearch"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/UsersController.php" method="savePremium"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="savePremium"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="savePlanet"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="saveBuildings"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="saveShips"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/UsersController.php" method="saveDefenses"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="buildPlanetCombo"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="buildAllianceCombo"/>
-  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="app/Http/Controllers/Admin/UsersController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="buildPercentCombo"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="buildImageCombo"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="planetsTable"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="moonsTable"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/UsersController.php" method="editMain"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="editMain"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="editBuildings"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="editShips"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="editDefenses"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/UsersController.php" method="deletePlanet"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="deletePlanet"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/UsersController.php" method="deleteMoon"/>
-  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="app/Http/Controllers/Admin/UsersController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Home/LoginController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Home/RegisterController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Install/SetLocaleController.php"/>

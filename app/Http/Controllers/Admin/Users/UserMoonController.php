@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Options;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 class UserMoonController extends BaseController
 {
     use UserPlanetTrait;
@@ -141,18 +144,20 @@ class UserMoonController extends BaseController
         return redirect()->route('admin.users.moon.defenses', [$user->id, $moon]);
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function softDeleteMoon(User $user, int $moon): RedirectResponse
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(self::AUTH_MODULE);
 
-        $t = DB::getTablePrefix();
-        /** @phpstan-ignore-next-line */
+        /** @phpstan-ignore constant.notFound */
         $destroyTime = time() + (PLANETS_LIFE_TIME * 3600);
 
+        $prefix = DB::getTablePrefix();
+
         DB::statement(
-            "UPDATE `{$t}planets` AS m
-             JOIN `{$t}users` AS u ON u.`id` = m.`planet_user_id`
+            "UPDATE `{$prefix}planets` AS m
+             JOIN `{$prefix}users` AS u ON u.`id` = m.`planet_user_id`
              SET m.`planet_destroyed` = ?,
                  u.`current_planet` = u.`home_planet_id`
              WHERE m.`planet_id` = ? AND m.`planet_type` = '3'",
@@ -164,6 +169,7 @@ class UserMoonController extends BaseController
         return redirect()->route('admin.users.moons', $user->id);
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function hardDeleteMoon(User $user, int $moon): RedirectResponse
     {
         $this->administrationService->checkSession();
