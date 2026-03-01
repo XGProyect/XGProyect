@@ -74,7 +74,7 @@
                                             </div>
                                             <div>
                                                 <div class="font-weight-bold text-gray-800" style="font-size: 1.05rem;">
-                                                    "{{ $user->name }}"
+                                                    {{ $user->name }}
                                                 </div>
                                                 <div class="small text-muted mt-1">
                                                     <i class="fas fa-id-badge fa-xs mr-1"></i>
