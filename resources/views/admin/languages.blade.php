@@ -211,6 +211,11 @@
             </form>
             @else
             <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-file-alt fa-xs mr-2"></i>{{ __('admin/languages.le_file') }}
+                    </h6>
+                </div>
                 <div class="card-body text-center text-muted py-5">
                     <i class="fas fa-hand-point-left fa-2x mb-3 d-block"></i>
                     {{ __('admin/languages.le_file') }}
