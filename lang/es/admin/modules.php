@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'mdl_title' => 'Características del servidor',
     'mdl_sub_title' => 'Activa o desactiva características del servidor. Los módulos que estén desactivados no podrán ser usados ni siquiera por Administradores (GA).',

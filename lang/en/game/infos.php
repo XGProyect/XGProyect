@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'in_jump_gate_done' => 'The jump gate was used, the next jump can be made in: ',
     'in_jump_gate_error_data' => 'Error, data for the jump are not correct!',

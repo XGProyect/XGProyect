@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'em_imperium_title' => 'Empire View',
     'em_planet' => 'Planet',

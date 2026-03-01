@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'se_server_parameters' => 'Server settings',
     'se_sub_title' => 'From here you can configure all the core settings of your server, including universe speed, fleet options, economy rates and more.',

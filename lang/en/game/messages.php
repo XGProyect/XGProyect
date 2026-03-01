@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'mg_title' => 'Messages',
     'mg_show_title' => 'Show',

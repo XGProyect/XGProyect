@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     're_send_pwd_title' => 'Enviar contraseña de :game',
     're_label' => 'Dirección de e-mail',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'bn_title' => 'Suspensiones',
     'bn_sub_title' => 'Esta página proporciona información útil para prohibir usuarios en tu plataforma. Sigue las pautas cuidadosamente para garantizar que tu plataforma siga siendo segura para todos los usuarios.',

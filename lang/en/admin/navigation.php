@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'nv_search_for' => 'Search for...',
     'nv_alert_center' => 'Alerts Center',

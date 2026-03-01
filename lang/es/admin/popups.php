@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'ready_to_leave' => '¿Listo para partir?',
     'ready_to_leave_instructions' => 'Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.',

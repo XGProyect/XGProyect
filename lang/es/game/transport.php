@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tra_reaching' => 'Llegada a un planeta', // ok
     'tra_delivered_resources' => 'Tu flota de %s %s ha llegado al planeta %s %s y ha entregado su mercancía:<br>Metal: %s Cristal: %s Deuterio: %s.', // ok - added "de %s %s" so it makes sense. There's a bug on the original game

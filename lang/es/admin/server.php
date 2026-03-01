@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'se_server_parameters' => 'Ajustes del servidor',
     'se_sub_title' => 'Desde aquí puedes configurar todos los ajustes principales del servidor, incluyendo velocidades del universo, opciones de flotas, tasas de economía y más.',

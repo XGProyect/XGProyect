@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'bu_request_exists' => '¡Ya existe una solicitud a ese jugador!',
     'bu_cannot_request_yourself' => '¡No puedes solicitarte como amigo a ti mismo!',

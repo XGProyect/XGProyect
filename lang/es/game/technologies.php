@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'research' => 'Investigación',
     'research_espionage_technology' => 'Tecnología de espionaje',

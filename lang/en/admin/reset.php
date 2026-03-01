@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     're_reset_universe' => 'Reset universe',
     're_sub_title' => 'From here you can reset individual aspects of the universe or wipe everything entirely. This operation cannot be undone — make sure you have a backup first.',

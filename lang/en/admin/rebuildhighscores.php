@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'sb_title' => 'Rebuild Highscores',
     'sb_sub_title' => 'Here you will be able to rebuild the server highscores.',

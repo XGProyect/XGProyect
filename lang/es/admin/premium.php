@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'pr_title' => 'Ajustes de Premium',
     'pr_sub_title' => 'Todo lo que implique materia oscura puede ser administrado desde aquí. Desde oficiales hasta el mercader.',

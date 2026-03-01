@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     // traderOverview
     'tr_resource_market' => 'Resource Market',

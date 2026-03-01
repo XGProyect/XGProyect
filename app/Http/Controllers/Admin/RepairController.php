@@ -43,9 +43,9 @@ class RepairController extends BaseController
         $this->administrationService->authorization(__CLASS__);
 
         $validated = $request->validated();
-        $selected  = $validated['table'];
-        $optimize  = isset($validated['optimize']);
-        $repair    = isset($validated['repair']);
+        $selected = $validated['table'];
+        $optimize = isset($validated['optimize']);
+        $repair = isset($validated['repair']);
 
         $results = collect();
 

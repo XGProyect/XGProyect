@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'construction' => 'Construcción',
     'building_metal_mine' => 'Mina de metal',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'ch_title' => 'Changelog',
     'ch_new_item' => 'Add new entry',

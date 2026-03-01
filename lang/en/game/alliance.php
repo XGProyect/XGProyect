@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'al_description_message' => 'Alliance description message',
     'al_web_text' => 'Alliance web site',

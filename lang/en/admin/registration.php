@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'ur_title' => 'User registration settings',
     'ur_sub_title' => 'You can manage new player settings from here.',

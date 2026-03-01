@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'bn_title' => 'Banning',
     'bn_sub_title' => 'This page provides useful information for banning users from your platform. Follow the guidelines carefully to ensure that your platform remains safe and secure for all users.',

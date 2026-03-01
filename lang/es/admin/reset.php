@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     're_reset_universe' => 'Reiniciar Universo',
     're_sub_title' => 'Desde aquí puedes reiniciar aspectos individuales del universo o borrarlo por completo. Esta operación no puede deshacerse — asegúrate de tener un backup antes de continuar.',

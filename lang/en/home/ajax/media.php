@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'aj_media_wallpapers' => 'Wallpapers',
     'aj_media_pictures' => 'Pictures',

@@ -42,26 +42,26 @@ class ResetController extends BaseController
             return redirect()->route('admin.reset')->with('success', __('admin/reset.re_reset_excess'));
         }
 
-        isset($data['defenses'])   && $this->resetDefenses();
-        isset($data['ships'])      && $this->resetShips();
-        isset($data['h_d'])        && $this->resetShipyardQueues();
-        isset($data['edif_p'])     && $this->resetPlanetBuildings();
-        isset($data['edif_l'])     && $this->resetMoonBuildings();
-        isset($data['edif'])       && $this->resetBuildingsQueues();
-        isset($data['inves'])      && $this->resetResearch();
-        isset($data['inves_c'])    && $this->resetResearchQueues();
-        isset($data['ofis'])       && $this->resetOfficiers();
-        isset($data['dark'])       && $this->resetDarkMatter();
-        isset($data['resources'])  && $this->resetResources();
-        isset($data['notes'])      && $this->resetNotes();
-        isset($data['rw'])         && $this->resetReports();
-        isset($data['friends'])    && $this->resetFriends();
-        isset($data['alliances'])  && $this->resetAlliances();
-        isset($data['fleets'])     && $this->resetFleets();
-        isset($data['banneds'])    && $this->resetBanned();
-        isset($data['messages'])   && $this->resetMessages();
+        isset($data['defenses']) && $this->resetDefenses();
+        isset($data['ships']) && $this->resetShips();
+        isset($data['h_d']) && $this->resetShipyardQueues();
+        isset($data['edif_p']) && $this->resetPlanetBuildings();
+        isset($data['edif_l']) && $this->resetMoonBuildings();
+        isset($data['edif']) && $this->resetBuildingsQueues();
+        isset($data['inves']) && $this->resetResearch();
+        isset($data['inves_c']) && $this->resetResearchQueues();
+        isset($data['ofis']) && $this->resetOfficiers();
+        isset($data['dark']) && $this->resetDarkMatter();
+        isset($data['resources']) && $this->resetResources();
+        isset($data['notes']) && $this->resetNotes();
+        isset($data['rw']) && $this->resetReports();
+        isset($data['friends']) && $this->resetFriends();
+        isset($data['alliances']) && $this->resetAlliances();
+        isset($data['fleets']) && $this->resetFleets();
+        isset($data['banneds']) && $this->resetBanned();
+        isset($data['messages']) && $this->resetMessages();
         isset($data['statpoints']) && $this->resetStatistics();
-        isset($data['moons'])      && $this->resetMoons();
+        isset($data['moons']) && $this->resetMoons();
 
         return redirect()->route('admin.reset')->with('success', __('admin/reset.re_reset_excess'));
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tn_vacation_mode' => 'Modo vacaciones activo hasta el ',
     'tn_vacation_mode_active' => 'Modo vacaciones activo',

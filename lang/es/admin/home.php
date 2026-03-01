@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'hm_title' => 'Bienvenido a XG Proyect',
     'hm_sub_title' => 'Gracias por elegir XG Proyect como tu clon de OGame preferido. Esta pantalla te dará una visión general rápida de todas las estadísticas de su servidor. Los enlaces en el lado izquierdo de esta pantalla te permiten controlar cada aspecto de su servidor. Cada página tendrá instrucciones sobre cómo usar las herramientas.',

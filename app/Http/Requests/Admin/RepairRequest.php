@@ -19,10 +19,10 @@ class RepairRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'table'    => 'required|array|min:1',
-            'table.*'  => 'required|string',
+            'table' => 'required|array|min:1',
+            'table.*' => 'required|string',
             'optimize' => 'nullable',
-            'repair'   => 'nullable',
+            'repair' => 'nullable',
         ];
     }
 }
