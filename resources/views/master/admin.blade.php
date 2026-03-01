@@ -114,7 +114,7 @@
             $('.badge-counter').html('');
             $('.dropdown-list').hide();
 
-            $.getJSON('//updates.xgproyect.org/latest.php', function (data) {
+            $.getJSON('//updates.xgproyect.org/latest.json', function (data) {
                 $.each(data, function (index, element) {
                     if (compareversion('{{ config("version.files") }}', element)) {
                         $('.badge-counter').html('1');

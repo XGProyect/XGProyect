@@ -114,7 +114,7 @@ class HomeController extends BaseController
         try {
             if (function_exists('file_get_contents')) {
                 $fileData = @file_get_contents(
-                    'https://updates.xgproyect.org/latest.php',
+                    'https://updates.xgproyect.org/latest.json',
                     false,
                     stream_context_create(
                         ['https' =>
