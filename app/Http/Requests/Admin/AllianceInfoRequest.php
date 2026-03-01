@@ -62,10 +62,17 @@ class AllianceInfoRequest extends FormRequest
      */
     public function attributes(): array
     {
+        /** @var string $name */
+        $name = __('admin/alliances.al_alliance_information_name');
+        /** @var string $tag */
+        $tag = __('admin/alliances.al_alliance_information_tag');
+        /** @var string $owner */
+        $owner = __('admin/alliances.al_alliance_information_owner');
+
         return [
-            'alliance_name' => __('admin/alliances.al_alliance_information_name'),
-            'alliance_tag' => __('admin/alliances.al_alliance_information_tag'),
-            'alliance_owner' => __('admin/alliances.al_alliance_information_owner'),
+            'alliance_name' => $name,
+            'alliance_tag' => $tag,
+            'alliance_owner' => $owner,
         ];
     }
 

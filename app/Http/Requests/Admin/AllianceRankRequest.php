@@ -34,8 +34,11 @@ class AllianceRankRequest extends FormRequest
      */
     public function attributes(): array
     {
+        /** @var string $rankName */
+        $rankName = __('admin/alliances.al_rank_name');
+
         return [
-            'rank_name' => __('admin/alliances.al_rank_name'),
+            'rank_name' => $rankName,
         ];
     }
 

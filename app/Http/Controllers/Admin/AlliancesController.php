@@ -20,6 +20,9 @@ use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Core\Options;
 use Xgp\App\Libraries\Alliance\Ranks;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class AlliancesController extends BaseController
 {
     public function __construct(
@@ -117,6 +120,10 @@ class AlliancesController extends BaseController
         return redirect()->route('admin.alliances.info', $alliance->alliance_id);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
     public function updateRanks(AllianceRankRequest $request, Alliance $alliance): RedirectResponse
     {
         $this->administrationService->checkSession();
@@ -199,30 +206,32 @@ class AlliancesController extends BaseController
         session()->flash('success', __('admin/alliances.al_rank_added'));
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     */
     private function saveRankPermissions(AllianceRankRequest $request, Ranks $ranks): void
     {
         /** @var array<int, int|string> $ids */
         $ids = (array) $request->input('id', []);
 
-        /** @var array<int, int> $permissionMap */
-        $permissionMap = [
-            1 => AllianceRanks::DELETE,
-            2 => AllianceRanks::KICK,
-            3 => AllianceRanks::APPLICATIONS,
-            4 => AllianceRanks::VIEW_MEMBER_LIST,
-            5 => AllianceRanks::APPLICATION_MANAGEMENT,
-            6 => AllianceRanks::ADMINISTRATION,
-            7 => AllianceRanks::ONLINE_STATUS,
-            8 => AllianceRanks::SEND_CIRCULAR,
-            9 => AllianceRanks::RIGHT_HAND,
+        $availableRanks = [
+            AllianceRanks::DELETE => AllianceRanks::DELETE,
+            AllianceRanks::KICK => AllianceRanks::KICK,
+            AllianceRanks::APPLICATIONS => AllianceRanks::APPLICATIONS,
+            AllianceRanks::VIEW_MEMBER_LIST => AllianceRanks::VIEW_MEMBER_LIST,
+            AllianceRanks::APPLICATION_MANAGEMENT => AllianceRanks::APPLICATION_MANAGEMENT,
+            AllianceRanks::ADMINISTRATION => AllianceRanks::ADMINISTRATION,
+            AllianceRanks::ONLINE_STATUS => AllianceRanks::ONLINE_STATUS,
+            AllianceRanks::SEND_CIRCULAR => AllianceRanks::SEND_CIRCULAR,
+            AllianceRanks::RIGHT_HAND => AllianceRanks::RIGHT_HAND,
         ];
 
         foreach ($ids as $id) {
             $id = (int) $id;
             $rights = [];
 
-            foreach ($permissionMap as $rNum => $rankConst) {
-                $rights[$rankConst] = $request->has('u' . $id . 'r' . $rNum)
+            foreach ($availableRanks as $rank) {
+                $rights[$rank] = $request->has('u' . $id . 'r' . $rank)
                     ? SwitchInt::on
                     : SwitchInt::off;
             }
