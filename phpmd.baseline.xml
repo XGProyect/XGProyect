@@ -2,28 +2,6 @@
 <phpmd-baseline>
   <violation rule="PHPMD\Rule\UnusedFormalParameter" file="app/Console/Kernel.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Account/RecoverController.php"/>
-  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="app/Http/Controllers/Admin/AlliancesController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="app/Http/Controllers/Admin/AlliancesController.php"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/AlliancesController.php" method="__invoke"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/AlliancesController.php" method="__invoke"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/AlliancesController.php" method="__invoke"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/AlliancesController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="app/Http/Controllers/Admin/AlliancesController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/AlliancesController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/AlliancesController.php" method="saveData"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/AlliancesController.php" method="getDataRanks"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/AlliancesController.php" method="getDataRanks"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/AlliancesController.php"/>
-  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="app/Http/Controllers/Admin/AlliancesController.php"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/AlliancesController.php" method="saveInfo"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/AlliancesController.php" method="saveInfo"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/AlliancesController.php" method="saveInfo"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/AlliancesController.php" method="saveRanks"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/AlliancesController.php" method="saveRanks"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/AlliancesController.php" method="saveRanks"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/AlliancesController.php" method="saveMembers"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/AlliancesController.php" method="checkAllianceTag"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/AlliancesController.php" method="checkAllianceName"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="app/Http/Controllers/Admin/AnnouncementController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/AnnouncementController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/BanController.php"/>

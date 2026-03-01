@@ -32,13 +32,14 @@ class AlliancesController extends BaseController
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $search = trim($request->input('alliance', ''));
-        $type = trim($request->input('type', 'info'));
+        $search = trim($request->string('alliance')->toString());
+        $type = trim($request->string('type', 'info')->toString());
 
         $alliance = null;
 
         if ($search !== '') {
-            $alliance = Alliance::withCount('members')
+            $alliance = Alliance::query()
+                ->withCount('members')
                 ->with('owner:id,name')
                 ->where('alliance_name', $search)
                 ->orWhere('alliance_tag', $search)
@@ -56,24 +57,25 @@ class AlliancesController extends BaseController
         ]);
     }
 
-    public function showInfo(Request $request, Alliance $alliance): View
+    public function showInfo(Alliance $alliance): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
         $allianceData = $this->loadAllianceWithStats($alliance->alliance_id);
-        $users = User::select('id', 'name')->orderBy('name')->get();
+        $users = User::query()->select('id', 'name')->orderBy('name')->get();
+        $dateFormat = (string) (Options::getInstance()->get('date_format_extended') ?? 'Y-m-d H:i:s');
 
         return view('admin.alliances_information', [
             'alliance' => $allianceData,
             'users' => $users,
             'register_time' => $allianceData->alliance_register_time === 0
                 ? '-'
-                : date(Options::getInstance()->get('date_format_extended'), $allianceData->alliance_register_time),
+                : date($dateFormat, $allianceData->alliance_register_time),
         ]);
     }
 
-    public function showRanks(Request $request, Alliance $alliance): View
+    public function showRanks(Alliance $alliance): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
@@ -87,7 +89,7 @@ class AlliancesController extends BaseController
         ]);
     }
 
-    public function showMembers(Request $request, Alliance $alliance): View
+    public function showMembers(Alliance $alliance): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
@@ -123,37 +125,11 @@ class AlliancesController extends BaseController
         $ranks = new Ranks($alliance->alliance_ranks);
 
         if ($request->filled('create_rank')) {
-            $ranks->addNew((string) $request->input('rank_name'));
-            session()->flash('success', __('admin/alliances.al_rank_added'));
+            $this->createRank($request, $ranks);
         } elseif ($request->has('save_ranks')) {
-            /** @var array<int, int|string> $ids */
-            $ids = (array) $request->input('id', []);
-
-            foreach ($ids as $id) {
-                $id = (int) $id;
-                $ranks->editRankById($id, [
-                    AllianceRanks::DELETE => $request->has('u' . $id . 'r1') ? SwitchInt::on : SwitchInt::off,
-                    AllianceRanks::KICK => $request->has('u' . $id . 'r2') ? SwitchInt::on : SwitchInt::off,
-                    AllianceRanks::APPLICATIONS => $request->has('u' . $id . 'r3') ? SwitchInt::on : SwitchInt::off,
-                    AllianceRanks::VIEW_MEMBER_LIST => $request->has('u' . $id . 'r4') ? SwitchInt::on : SwitchInt::off,
-                    AllianceRanks::APPLICATION_MANAGEMENT => $request->has('u' . $id . 'r5') ? SwitchInt::on : SwitchInt::off,
-                    AllianceRanks::ADMINISTRATION => $request->has('u' . $id . 'r6') ? SwitchInt::on : SwitchInt::off,
-                    AllianceRanks::ONLINE_STATUS => $request->has('u' . $id . 'r7') ? SwitchInt::on : SwitchInt::off,
-                    AllianceRanks::SEND_CIRCULAR => $request->has('u' . $id . 'r8') ? SwitchInt::on : SwitchInt::off,
-                    AllianceRanks::RIGHT_HAND => $request->has('u' . $id . 'r9') ? SwitchInt::on : SwitchInt::off,
-                ]);
-            }
-
-            session()->flash('success', __('admin/alliances.al_rank_saved'));
+            $this->saveRankPermissions($request, $ranks);
         } elseif ($request->has('delete_ranks')) {
-            /** @var array<int, int|string> $toDelete */
-            $toDelete = (array) $request->input('delete_message', []);
-
-            foreach ($toDelete as $rankId) {
-                $ranks->deleteRankById((int) $rankId);
-            }
-
-            session()->flash('success', __('admin/alliances.al_rank_removed'));
+            $this->deleteRanks($request, $ranks);
         }
 
         $alliance->update(['alliance_ranks' => $ranks->getAllRanksAsJsonString()]);
@@ -178,20 +154,22 @@ class AlliancesController extends BaseController
             ->map(fn ($id) => (int) $id)
             ->all();
 
-        $memberCount = User::where('ally_id', $alliance->alliance_id)->count();
+        $memberCount = User::query()->where('ally_id', $alliance->alliance_id)->count();
 
         if ($memberCount - count($ids) < 1) {
             session()->flash('warning', __('admin/alliances.al_cant_delete_last_one'));
-        } else {
-            User::whereIn('id', $ids)->update([
-                'ally_id' => 0,
-                'ally_request' => 0,
-                'ally_request_text' => '',
-                'ally_rank_id' => 0,
-            ]);
 
-            session()->flash('success', __('admin/alliances.us_all_ok_message'));
+            return redirect()->route('admin.alliances.members', $alliance->alliance_id);
         }
+
+        User::query()->whereIn('id', $ids)->update([
+            'ally_id' => 0,
+            'ally_request' => 0,
+            'ally_request_text' => '',
+            'ally_rank_id' => 0,
+        ]);
+
+        session()->flash('success', __('admin/alliances.us_all_ok_message'));
 
         return redirect()->route('admin.alliances.members', $alliance->alliance_id);
     }
@@ -201,7 +179,7 @@ class AlliancesController extends BaseController
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        User::where('ally_id', $alliance->alliance_id)->update([
+        User::query()->where('ally_id', $alliance->alliance_id)->update([
             'ally_id' => 0,
             'ally_request' => 0,
             'ally_request_text' => '',
@@ -213,6 +191,58 @@ class AlliancesController extends BaseController
         session()->flash('success', __('admin/alliances.al_all_ok_message'));
 
         return redirect()->route('admin.alliances');
+    }
+
+    private function createRank(AllianceRankRequest $request, Ranks $ranks): void
+    {
+        $ranks->addNew($request->string('rank_name')->toString());
+        session()->flash('success', __('admin/alliances.al_rank_added'));
+    }
+
+    private function saveRankPermissions(AllianceRankRequest $request, Ranks $ranks): void
+    {
+        /** @var array<int, int|string> $ids */
+        $ids = (array) $request->input('id', []);
+
+        /** @var array<int, int> $permissionMap */
+        $permissionMap = [
+            1 => AllianceRanks::DELETE,
+            2 => AllianceRanks::KICK,
+            3 => AllianceRanks::APPLICATIONS,
+            4 => AllianceRanks::VIEW_MEMBER_LIST,
+            5 => AllianceRanks::APPLICATION_MANAGEMENT,
+            6 => AllianceRanks::ADMINISTRATION,
+            7 => AllianceRanks::ONLINE_STATUS,
+            8 => AllianceRanks::SEND_CIRCULAR,
+            9 => AllianceRanks::RIGHT_HAND,
+        ];
+
+        foreach ($ids as $id) {
+            $id = (int) $id;
+            $rights = [];
+
+            foreach ($permissionMap as $rNum => $rankConst) {
+                $rights[$rankConst] = $request->has('u' . $id . 'r' . $rNum)
+                    ? SwitchInt::on
+                    : SwitchInt::off;
+            }
+
+            $ranks->editRankById($id, $rights);
+        }
+
+        session()->flash('success', __('admin/alliances.al_rank_saved'));
+    }
+
+    private function deleteRanks(AllianceRankRequest $request, Ranks $ranks): void
+    {
+        /** @var array<int, int|string> $toDelete */
+        $toDelete = (array) $request->input('delete_message', []);
+
+        foreach ($toDelete as $rankId) {
+            $ranks->deleteRankById((int) $rankId);
+        }
+
+        session()->flash('success', __('admin/alliances.al_rank_removed'));
     }
 
     private function loadAllianceWithStats(int $id): \stdClass
@@ -262,7 +292,7 @@ class AlliancesController extends BaseController
      */
     private function buildMembersViewData(int $allianceId, Ranks $ranks): array
     {
-        $dateFormat = Options::getInstance()->get('date_format_extended');
+        $dateFormat = (string) (Options::getInstance()->get('date_format_extended') ?? 'Y-m-d H:i:s');
 
         return DB::table('users AS u')
             ->select('u.id', 'u.name', 'u.ally_request', 'u.ally_request_text', 'u.ally_register_time', 'u.ally_rank_id')

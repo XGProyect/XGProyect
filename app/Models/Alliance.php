@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -111,7 +112,12 @@ class Alliance extends Model
         return $this->hasMany(User::class, 'ally_id');
     }
 
-    public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    /**
+     * @return BelongsTo<User, self>
+     *
+     * @phpstan-return BelongsTo<User, Alliance>
+     */
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'alliance_owner', 'id');
     }

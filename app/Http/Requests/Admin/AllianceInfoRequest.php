@@ -19,6 +19,8 @@ class AllianceInfoRequest extends FormRequest
 
     /**
      * @return array<string, mixed>
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function rules(): array
     {
