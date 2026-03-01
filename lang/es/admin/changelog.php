@@ -25,7 +25,6 @@ return [
     'ch_save' => 'Guardar entrada',
     'ch_back' => 'Volver al listado',
     'ch_no_entries' => '¡Aún no hay entradas. ¡Agrega la primera!',
-    'ch_description_preview' => 'Descripción',
     'ch_description_placeholder' => 'Describe los cambios introducidos en esta versión...',
     'ch_entry_details' => 'Detalles de la entrada',
     'ch_action_add_done' => '¡Entrada guardada correctamente!',

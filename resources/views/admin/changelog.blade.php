@@ -64,6 +64,7 @@
                                             @foreach($item['translations'] as $translation)
                                                 <span class="badge badge-secondary px-2 py-1 mr-1" style="font-size:.78rem;">
                                                     <i class="fas fa-language fa-xs mr-1"></i>{{ $translation['changelog_language'] }}
+                                                    <span class="ml-1 text-white-50" style="font-size:.7rem; font-weight:400; letter-spacing:.04rem;">{{ strtoupper($translation['changelog_lang_code']) }}</span>
                                                 </span>
                                             @endforeach
                                         </td>

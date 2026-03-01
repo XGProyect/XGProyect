@@ -11,10 +11,7 @@
         @endif
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <div>
-                <h1 class="h3 mb-0 text-gray-800">{{ __('admin/changelog.ch_title') }}</h1>
-                <p class="mb-0 mt-1 text-gray-600 small">{{ str_replace('%s', $changelog_date, __('admin/changelog.ch_' . $action . '_action')) }}</p>
-            </div>
+            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/changelog.ch_title') }}</h1>
             <div class="d-flex" style="gap:.5rem;">
                 <a href="{{ route('admin.changelog') }}" class="btn btn-secondary btn-icon-split">
                     <span class="icon text-white-50"><i class="fas fa-chevron-left"></i></span>
@@ -26,6 +23,7 @@
                 </button>
             </div>
         </div>
+        <p class="mb-4 text-gray-600">{{ str_replace('%s', $changelog_date, __('admin/changelog.ch_' . $action . '_action')) }}</p>
 
         <div class="row">
             <div class="col-lg-8">
@@ -37,12 +35,12 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group mb-0">
-                            <textarea class="form-control" name="text" rows="14"
+                            <textarea class="form-control" id="changelogText" name="text" rows="14"
                                 onkeyup="javascript:cntChars('changelog', 5000);"
                                 placeholder="{{ __('admin/changelog.ch_description_placeholder') }}"
                                 required>{{ $changelog_description }}</textarea>
                             <small class="form-text text-muted mt-1">
-                                <span id="cntChars">0</span> / 5000 {{ __('admin/changelog.ch_characters') }}
+                                <span id="cntChars">{{ mb_strlen($changelog_description) }}</span> / 5000 {{ __('admin/changelog.ch_characters') }}
                             </small>
                         </div>
                     </div>

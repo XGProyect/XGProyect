@@ -26,7 +26,6 @@ class ChangelogService
             ->newQuery()
             ->with('language')
             ->orderByDesc('changelog_date')
-            ->orderByDesc('changelog_version')
             ->get();
 
         $groups = [];

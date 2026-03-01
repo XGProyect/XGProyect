@@ -25,7 +25,6 @@ return [
     'ch_save' => 'Save entry',
     'ch_back' => 'Back to list',
     'ch_no_entries' => 'No changelog entries yet. Add the first one!',
-    'ch_description_preview' => 'Description',
     'ch_description_placeholder' => 'Describe the changes introduced in this version...',
     'ch_entry_details' => 'Entry details',
     'ch_action_add_done' => 'Entry successfully added!',
