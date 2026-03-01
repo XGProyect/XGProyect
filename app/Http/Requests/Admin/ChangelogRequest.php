@@ -51,8 +51,12 @@ class ChangelogRequest extends FormRequest
         return parent::validated($key, $default);
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function attributes(): array
     {
+        /** @var array<string, string> */
         return [
             'changelog_date' => __('admin/changelog.ch_date'),
             'changelog_version' => __('admin/changelog.ch_version'),

@@ -2421,11 +2421,6 @@ parameters:
 			path: app/View/Components/Admin/Navigation.php
 
 		-
-			message: "#^Binary operation \"\\.\" between 'onClick\\=\"return…' and array\\|string\\|null results in an error\\.$#"
-			count: 1
-			path: app/View/Components/Admin/Sidebar.php
-
-		-
 			message: "#^Cannot access property \\$authlevel on Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null\\.$#"
 			count: 1
 			path: app/View/Components/Admin/Sidebar.php
