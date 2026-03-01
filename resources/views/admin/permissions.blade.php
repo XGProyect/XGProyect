@@ -36,15 +36,13 @@
                                 <table class="table table-hover mb-0">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th class="pl-4" style="width:40%;">{{ __('admin/permissions.pr_module') }}</th>
+                                            <th class="pl-4 align-middle" style="width:40%;">{{ __('admin/permissions.pr_module') }}</th>
                                             @foreach ($item['roles_list'] as $roleId => $role)
-                                            <th class="text-center" style="width:20%;">
+                                            <th class="text-center align-middle" style="width:20%;">
                                                 @if ($roleId === \Xgp\App\Core\Enumerators\UserRanksEnumerator::ADMIN)
-                                                    <span class="badge badge-secondary px-3 py-2">
-                                                        <i class="fas fa-lock fa-xs mr-1"></i>{{ $role['role_name'] }}
-                                                    </span>
+                                                    <i class="fas fa-lock fa-xs mr-1 text-muted"></i><span class="text-muted">{{ $role['role_name'] }}</span>
                                                 @else
-                                                    <span class="badge badge-primary px-3 py-2">{{ $role['role_name'] }}</span>
+                                                    {{ $role['role_name'] }}
                                                 @endif
                                             </th>
                                             @endforeach
