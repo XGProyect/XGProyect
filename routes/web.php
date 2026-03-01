@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Account\RecoverController;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\Ajax as AdminAjax;
 use App\Http\Controllers\Admin\Users as AdminUsers;
 use App\Http\Controllers\Home\Ajax\HomeController;
 use App\Http\Controllers\Home\Ajax\InfoController;
@@ -88,6 +89,8 @@ Route::prefix('admin')->group(function () {
             Route::any('/tasks', Admin\TasksController::class)->name('admin.tasks');
             Route::get('/update', [Admin\UpdateController::class, 'index'])->name('admin.update');
             Route::post('/update', [Admin\UpdateController::class, 'run'])->name('admin.update.run');
+            // Ajax
+            Route::get('/ajax/update/check', AdminAjax\UpdateCheckController::class)->name('admin.update.check');
             // Users — core (search, info, settings, delete)
             Route::get('/users', [AdminUsers\UsersController::class, 'index'])->name('admin.users');
             Route::get('/users/{user}', [AdminUsers\UsersController::class, 'showInfo'])->name('admin.users.info');
