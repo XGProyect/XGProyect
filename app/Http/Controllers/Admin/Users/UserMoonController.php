@@ -147,6 +147,7 @@ class UserMoonController extends BaseController
         $this->administrationService->authorization(self::AUTH_MODULE);
 
         $t = DB::getTablePrefix();
+        /** @phpstan-ignore-next-line */
         $destroyTime = time() + (PLANETS_LIFE_TIME * 3600);
 
         DB::statement(

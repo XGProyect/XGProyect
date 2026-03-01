@@ -24,7 +24,7 @@ class UserResearchRequest extends FormRequest
         // Each research_* field must be a non-negative integer
         $rules = [];
 
-        foreach ($this->all() as $key => $value) {
+        foreach (array_keys($this->all()) as $key) {
             if (str_starts_with($key, 'research_')) {
                 $rules[$key] = ['required', 'integer', 'min:0'];
             }

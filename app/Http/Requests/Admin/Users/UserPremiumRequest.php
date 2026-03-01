@@ -25,7 +25,7 @@ class UserPremiumRequest extends FormRequest
             'premium_dark_matter' => ['nullable', 'integer', 'min:0'],
         ];
 
-        foreach ($this->all() as $key => $value) {
+        foreach (array_keys($this->all()) as $key) {
             if (str_starts_with($key, 'premium_') && $key !== 'premium_dark_matter') {
                 $rules[$key] = ['nullable', 'integer', 'min:0', 'max:3'];
             }
