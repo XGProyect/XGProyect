@@ -135,7 +135,7 @@ return [
     'us_error_authlevel'                   => 'The user level can not be empty and must be between 0 and 3',
 
     // ── Settings page ─────────────────────────────────────────────────────────
-    'us_settings_title'                    => ':user — Settings',
+    'us_settings_title'                    => '":user" — Settings',
     'us_user_preference_planet_sort'       => 'Sort planets by',
     'us_user_preference_planet_sort_op1'   => 'Order of emergence',
     'us_user_preference_planet_sort_op2'   => 'Coordinates',
@@ -155,7 +155,7 @@ return [
     'us_user_on_vacation_until'            => 'On vacation until:',
 
     // ── Research page ─────────────────────────────────────────────────────────
-    'us_research_title'                    => ':user — Research',
+    'us_research_title'                    => '":user" — Research',
     'us_user_research_espionage_technology'           => 'Espionage Technology',
     'us_user_research_computer_technology'            => 'Computer Technology',
     'us_user_research_weapons_technology'             => 'Weapons Technology',
@@ -174,7 +174,7 @@ return [
     'us_user_research_graviton_technology'            => 'Graviton Technology',
 
     // ── Premium page ──────────────────────────────────────────────────────────
-    'us_premium_title'                     => ':user — Premium',
+    'us_premium_title'                     => '":user" — Premium',
     'us_officers'                          => 'Officers',
     'us_officer_keep'                      => 'Keep current',
     'us_officer_deactivate'                => 'Deactivate',
@@ -189,7 +189,7 @@ return [
     'us_user_premium_officier_technocrat'  => 'Technocrat',
 
     // ── Planets list ──────────────────────────────────────────────────────────
-    'us_planets_title'                     => ':user — Planets',
+    'us_planets_title'                     => '":user" — Planets',
     'us_no_planets'                        => 'This user has no planets.',
     'us_planet_name'                       => 'Name',
     'us_planet_coords'                     => 'Coordinates',
@@ -218,7 +218,7 @@ return [
     'us_create_planet_added'               => 'Planet added',
 
     // ── Moons list ────────────────────────────────────────────────────────────
-    'us_moons_title'                       => ':user — Moons',
+    'us_moons_title'                       => '":user" — Moons',
     'us_no_moons'                          => 'This user has no moons.',
     'us_moon_soft_delete_confirm'          => 'Schedule this moon for destruction?',
     'us_delete_moon_confirm'               => 'PERMANENTLY delete this moon and all its data? This cannot be undone.',
