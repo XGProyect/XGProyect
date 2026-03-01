@@ -7,6 +7,7 @@
     <form name="update_form" method="post" action="">
         @csrf
         @if ($continue)
+        <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/update.up_title') }}</h1>
 
@@ -15,7 +16,7 @@
                 <span class="text">{{ __('admin/update.up_go') }}</span>
             </button>
         </div>
-        <p class="mb-4">{!! $up_sub_title !!}</p>
+        <p class="mb-4 text-gray-600">{!! $up_sub_title !!}</p>
         @endif
 
         @if ($continue)

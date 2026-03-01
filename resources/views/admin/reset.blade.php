@@ -6,6 +6,7 @@
     <form name="frm_reset" action="" method="post">
         @csrf
 
+        <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/reset.re_reset_h1') }}</h1>
             <button type="submit" class="btn btn-danger btn-icon-split mt-3 mt-sm-0"
@@ -14,7 +15,7 @@
                 <span class="text">{{ __('admin/reset.re_reset_go') }}</span>
             </button>
         </div>
-        <p class="mb-4">{{ __('admin/reset.re_sub_title') }}</p>
+        <p class="mb-4 text-gray-600">{{ __('admin/reset.re_sub_title') }}</p>
 
         {{-- General card: full-width, multi-column --}}
         <div class="row">

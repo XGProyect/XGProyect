@@ -16,7 +16,7 @@
             </button>
         </form>
     </div>
-    <p class="mb-4">{{ __('admin/rebuildhighscores.sb_sub_title') }}</p>
+    <p class="mb-4 text-gray-600">{{ __('admin/rebuildhighscores.sb_sub_title') }}</p>
 
     @if(session('memory_p'))
     <div class="row">

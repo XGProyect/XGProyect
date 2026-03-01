@@ -8,7 +8,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/ban.bn_title') }}</h1>
     </div>
-    <p class="mb-4">{{ __('admin/ban.bn_sub_title') }}</p>
+    <p class="mb-4 text-gray-600">{{ __('admin/ban.bn_sub_title') }}</p>
 
     <div class="row">
 

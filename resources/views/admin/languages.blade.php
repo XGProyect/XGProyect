@@ -14,7 +14,7 @@
         </button>
         @endif
     </div>
-    <p class="mb-4">{{ __('admin/languages.le_notice') }}</p>
+    <p class="mb-4 text-gray-600">{{ __('admin/languages.le_notice') }}</p>
 
     <div class="row">
 

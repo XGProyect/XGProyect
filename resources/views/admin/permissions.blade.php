@@ -15,7 +15,7 @@
                 <span class="text">{{ __('admin/permissions.pr_save_all') }}</span>
             </button>
         </div>
-        <p class="mb-4">{{ __('admin/permissions.pr_sub_title') }}</p>
+        <p class="mb-4 text-gray-600">{{ __('admin/permissions.pr_sub_title') }}</p>
 
         @foreach ($sections_list as $item)
         <div class="row">

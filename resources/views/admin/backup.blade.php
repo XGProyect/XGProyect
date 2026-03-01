@@ -1,8 +1,8 @@
 @extends('master.admin')
 
 @section('content')
-<x-alert/>
 <div class="container-fluid">
+    <x-alert/>
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/backup.bku_title') }}</h1>
@@ -16,7 +16,7 @@
             </button>
         </form>
     </div>
-    <p class="mb-4">{{ __('admin/backup.bku_sub_title') }}</p>
+    <p class="mb-4 text-gray-600">{{ __('admin/backup.bku_sub_title') }}</p>
 
     <div class="row">
         <div class="col-lg-6">

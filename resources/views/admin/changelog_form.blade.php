@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
+    <x-alert/>
     <script src="{{ asset('assets/js/cntchar-min.js') }}" type="text/javascript"></script>
     <form action="{{ $action === 'edit' ? route('admin.changelog.update', $changelog_id) : route('admin.changelog.store') }}" method="POST" name="changelog">
         @csrf
@@ -12,7 +13,7 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ __('admin/changelog.ch_title') }}</h1>
         </div>
-        <p class="mb-4">{{ __('admin/changelog.ch_sub_title') }}</p>
+        <p class="mb-4 text-gray-600">{{ __('admin/changelog.ch_sub_title') }}</p>
 
         <div class="row">
             <div class="col-lg-12">

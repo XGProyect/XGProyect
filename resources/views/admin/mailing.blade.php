@@ -15,7 +15,7 @@
                 <span class="text">{{ __('admin/mailing.ma_save_changes') }}</span>
             </button>
         </div>
-        <p class="mb-4">{{ __('admin/mailing.ma_sub_title') }}</p>
+        <p class="mb-4 text-gray-600">{{ __('admin/mailing.ma_sub_title') }}</p>
 
         <div class="row">
             <div class="col-lg-6">
