@@ -6,8 +6,10 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/users.us_title') }}</h1>
-        <a href="{{ route('admin.users.create') }}" class="btn btn-sm btn-primary btn-icon-split">
-            <span class="icon text-white-50"><i class="fas fa-user-plus"></i></span>
+        <a href="{{ route('admin.users.create') }}" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-user-plus"></i>
+            </span>
             <span class="text">{{ __('admin/users.us_create_title') }}</span>
         </a>
     </div>
@@ -72,7 +74,7 @@
                                             </div>
                                             <div>
                                                 <div class="font-weight-bold text-gray-800" style="font-size: 1.05rem;">
-                                                    {{ $user->name }}
+                                                    "{{ $user->name }}"
                                                 </div>
                                                 <div class="small text-muted mt-1">
                                                     <i class="fas fa-id-badge fa-xs mr-1"></i>

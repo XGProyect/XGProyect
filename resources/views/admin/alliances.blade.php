@@ -7,8 +7,10 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/alliances.al_title') }}</h1>
-        <a href="{{ route('admin.alliances.create') }}" class="btn btn-sm btn-primary btn-icon-split">
-            <span class="icon text-white-50"><i class="fas fa-shield-alt"></i></span>
+        <a href="{{ route('admin.alliances.create') }}" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-shield-alt"></i>
+            </span>
             <span class="text">{{ __('admin/alliances.al_create_title') }}</span>
         </a>
     </div>
