@@ -17,7 +17,7 @@ class ChangelogService
     }
 
     /**
-     * @return array<int, array<string, int|string>>
+     * @return array<int, array<string, mixed>>
      */
     public function getEntries(): array
     {
@@ -29,15 +29,27 @@ class ChangelogService
             ->orderByDesc('changelog_version')
             ->get();
 
-        return $entries
-            ->map(fn (Changelog $entry) => [
+        $groups = [];
+
+        foreach ($entries as $entry) {
+            $key = $entry->changelog_date->toDateString() . '|' . $entry->changelog_version;
+
+            if (!isset($groups[$key])) {
+                $groups[$key] = [
+                    'changelog_date' => $entry->changelog_date->toDateString(),
+                    'changelog_version' => $entry->changelog_version,
+                    'translations' => [],
+                ];
+            }
+
+            $groups[$key]['translations'][] = [
                 'changelog_id' => $entry->changelog_id,
-                'changelog_date' => $entry->changelog_date->toDateString(),
-                'changelog_version' => $entry->changelog_version,
                 'changelog_language' => $entry->language->name,
-                'changelog_description' => $entry->changelog_description,
-            ])
-            ->all();
+                'changelog_lang_code' => strtolower($entry->language->code),
+            ];
+        }
+
+        return array_values($groups);
     }
 
     public function create(int $langId, string $version, string $date, string $description): void
@@ -72,12 +84,10 @@ class ChangelogService
      */
     public function getFormData(string $action, ?Changelog $entry = null): array
     {
-        $changelogDate = $entry?->changelog_date->toDateString() ?? now()->toDateString();
-
         return [
             'action' => $action,
             'changelog_id' => $entry?->changelog_id ?? 0,
-            'changelog_date' => $changelogDate,
+            'changelog_date' => $entry?->changelog_date->toDateString() ?? now()->toDateString(),
             'changelog_version' => $entry?->changelog_version ?? '',
             'languages' => $this->getLanguageOptions($entry?->changelog_lang_id ?? 0),
             'changelog_description' => $entry?->changelog_description ?? '',

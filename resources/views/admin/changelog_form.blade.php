@@ -76,12 +76,19 @@
                         </div>
                         <div class="form-group mb-0">
                             <label for="changelog_language" class="font-weight-bold small text-gray-700">{{ __('admin/changelog.ch_language') }}</label>
-                            <select class="form-control" id="changelog_language" name="changelog_language" required>
-                                <option value="">{{ __('admin/changelog.ch_pick_language') }}</option>
-                                @foreach ($languages as $item)
-                                <option value="{{ $item['id'] }}" {{ $item['selected'] }}>{{ $item['name'] }}</option>
-                                @endforeach
-                            </select>
+                            @if($action === 'edit')
+                                @php $selectedLang = collect($languages)->firstWhere('selected', 'selected'); @endphp
+                                <input type="hidden" name="changelog_language" value="{{ $selectedLang['id'] ?? '' }}">
+                                <input type="text" class="form-control bg-light" value="{{ $selectedLang['name'] ?? '' }}" disabled>
+                                <small class="form-text text-muted">{{ __('admin/changelog.ch_language_locked') }}</small>
+                            @else
+                                <select class="form-control" id="changelog_language" name="changelog_language" required>
+                                    <option value="">{{ __('admin/changelog.ch_pick_language') }}</option>
+                                    @foreach ($languages as $item)
+                                    <option value="{{ $item['id'] }}" {{ $item['selected'] }}>{{ $item['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            @endif
                         </div>
                     </div>
                 </div>

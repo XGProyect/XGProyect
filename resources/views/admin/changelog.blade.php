@@ -36,13 +36,13 @@
                 </a>
                 <div class="collapse show" id="collapseChangelog">
                     <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-hover mb-0">
+                        <div class="table-responsive" style="overflow: visible;">
+                            <table class="table table-hover mb-0" style="overflow: visible;">
                                 <thead class="thead-light">
                                     <tr>
                                         <th class="pl-4" style="width:20%;">{{ __('admin/changelog.ch_date') }}</th>
                                         <th style="width:20%;">{{ __('admin/changelog.ch_version') }}</th>
-                                        <th style="width:15%;">{{ __('admin/changelog.ch_language') }}</th>
+                                        <th>{{ __('admin/changelog.ch_translations') }}</th>
                                         <th class="text-center" style="width:12%;">{{ __('admin/changelog.ch_actions') }}</th>
                                     </tr>
                                 </thead>
@@ -60,24 +60,44 @@
                                                 v{{ $item['changelog_version'] }}
                                             </span>
                                         </td>
-                                        <td class="align-middle">
-                                            <span class="badge badge-secondary px-2 py-1">
-                                                <i class="fas fa-language fa-xs mr-1"></i>{{ $item['changelog_language'] }}
-                                            </span>
+                                        <td class="align-middle" style="line-height:2;">
+                                            @foreach($item['translations'] as $translation)
+                                                <span class="badge badge-secondary px-2 py-1 mr-1" style="font-size:.78rem;">
+                                                    <i class="fas fa-language fa-xs mr-1"></i>{{ $translation['changelog_language'] }}
+                                                </span>
+                                            @endforeach
                                         </td>
                                         <td class="text-center align-middle">
-                                            <a href="{{ route('admin.changelog.edit', $item['changelog_id']) }}"
-                                                class="btn btn-sm btn-outline-primary mr-1" title="{{ __('admin/changelog.ch_edit_this') }}">
-                                                <i class="fas fa-pencil-alt fa-xs"></i>
-                                            </a>
-                                            <form action="{{ route('admin.changelog.destroy', $item['changelog_id']) }}" method="POST" class="d-inline"
-                                                onsubmit="return confirm('{{ __('admin/changelog.ch_delete_confirm') }}')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="{{ __('admin/changelog.ch_delete_this') }}">
-                                                    <i class="fas fa-trash-alt fa-xs"></i>
+                                            <div class="dropdown no-arrow">
+                                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-cog fa-xs mr-1"></i>{{ __('admin/changelog.ch_actions') }}
                                                 </button>
-                                            </form>
+                                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+                                                    <div class="dropdown-header small text-uppercase">
+                                                        <i class="fas fa-pencil-alt fa-xs mr-1"></i>{{ __('admin/changelog.ch_edit_translation') }}
+                                                    </div>
+                                                    @foreach($item['translations'] as $translation)
+                                                        <a class="dropdown-item" href="{{ route('admin.changelog.edit', $translation['changelog_id']) }}">
+                                                            <i class="fas fa-language fa-xs mr-2 text-gray-400"></i>{{ $translation['changelog_language'] }}
+                                                        </a>
+                                                    @endforeach
+                                                    <div class="dropdown-divider"></div>
+                                                    <div class="dropdown-header small text-uppercase">
+                                                        <i class="fas fa-trash-alt fa-xs mr-1"></i>{{ __('admin/changelog.ch_delete_translation') }}
+                                                    </div>
+                                                    @foreach($item['translations'] as $translation)
+                                                        <form action="{{ route('admin.changelog.destroy', $translation['changelog_id']) }}" method="POST"
+                                                            onsubmit="return confirm('{{ __('admin/changelog.ch_delete_confirm') }}')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item text-danger">
+                                                                <i class="fas fa-language fa-xs mr-2 text-gray-400"></i>{{ $translation['changelog_language'] }}
+                                                            </button>
+                                                        </form>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
