@@ -12,116 +12,93 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
-                <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                    aria-expanded="true" aria-controls="collapseGeneral">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/users.us_search') }}</h6>
-                </a>
-                <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseGeneral" style="">
-                    <div class="card-body">
-                        <form class="form-search" action="" method="get">
-                            <input type="hidden" name="page" value="users">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" name="user"
-                                        class="form-control bg-light border-0 small search-query"
-                                        placeholder="{{ __('admin/users.us_username_placeholder') }}" value="{{ $user }}"
-                                        aria-label="{{ __('admin/users.us_username_placeholder') }}" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit" aria-label="{{ __('admin/users.us_search') }}">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                        <button class="btn btn-primary{{ $status_box }}" href="#">
-                                            <i class="icon-user icon-white"></i>
-                                            {{ $user_rank }}
-                                        </button>
-                                        <button class="btn btn-primary dropdown-toggle{{ $status_box }}"
-                                            data-toggle="dropdown" href="#">
-                                            <span class="caret"></span>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item"
-                                                    href="/admin/users?type={{ $type }}&user={{ $user }}&mode=edit">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                    {{ __('admin/users.us_edit') }}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item"
-                                                    href="/admin/users?user={{ $user }}&mode=delete"
-                                                    onclick="return confirm('{{ __('admin/users.us_delete_confirm') }}')">
-                                                    <i class="fas fa-trash-alt"></i> {{ __('admin/users.us_delete') }}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item"
-                                                    href="/admin/ban/form?ban_name={{ $name }}&banuser=1">
-                                                    <i class="fas fa-user-slash"></i>
-                                                    {{ __('admin/users.us_ban') }}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item"
-                                                    href="/admin/permissions">
-                                                    <i class="fas fa-user-tag"></i>
-                                                    {{ __('admin/users.us_change_permissions') }}
-                                                </a>
-                                            </li>
+                <div class="card-header py-3 d-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-search mr-1"></i>
+                        {{ __('admin/users.us_search') }}
+                    </h6>
+                    @if ($user !== null)
+                        <div class="dropdown no-arrow">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-cog fa-sm mr-1"></i>{{ __('admin/users.us_actions') }}
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+                                <a class="dropdown-item" href="{{ route('admin.users.info', $user->id) }}">
+                                    <i class="fas fa-pencil-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    {{ __('admin/users.us_edit') }}
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                                    onsubmit="return confirm('{{ __('admin/users.us_delete_confirm') }}')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="fas fa-trash-alt fa-sm fa-fw mr-2"></i>
+                                        {{ __('admin/users.us_delete') }}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+                <div class="card-body">
+                    {{-- Search form --}}
+                    <form action="{{ route('admin.users') }}" method="GET">
+                        <div class="input-group mb-3">
+                            <input type="text" name="user" class="form-control bg-light border-0"
+                                placeholder="{{ __('admin/users.us_username_placeholder') }}"
+                                value="{{ $search }}" autocomplete="off" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm mr-1"></i>{{ __('admin/users.us_search') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    @if ($user !== null)
+                        <div class="card border-left-primary shadow-sm mt-2">
+                            <div class="card-body py-3">
+                                <div class="row align-items-center">
+                                    <div class="col-12 col-md-5 mb-2 mb-md-0">
+                                        <div class="d-flex align-items-center">
+                                            <div class="mr-3 text-primary" style="font-size: 2rem; line-height:1;">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <div>
+                                                <div class="font-weight-bold text-gray-800" style="font-size: 1.05rem;">
+                                                    {{ $user->name }}
+                                                </div>
+                                                <div class="small text-muted mt-1">
+                                                    <i class="fas fa-id-badge fa-xs mr-1"></i>
+                                                    ID: {{ $user->id }}
+                                                </div>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mb-2 mb-md-0">
+                                        @php
+                                            $online = $user->onlinetime + 600 >= time();
+                                            $away   = !$online && $user->onlinetime + 900 >= time();
+                                        @endphp
+                                        <span class="badge badge-{{ $online ? 'success' : ($away ? 'warning' : 'secondary') }}">
+                                            {{ $online ? __('admin/users.us_online') : ($away ? __('admin/users.us_away') : __('admin/users.us_offline')) }}
+                                        </span>
+                                        <span class="badge badge-info ml-1">{{ __('admin/global.user_level')[$user->authlevel] ?? $user->authlevel }}</span>
+                                    </div>
+                                    <div class="col-12 col-md-3 text-md-right">
+                                        <a href="{{ route('admin.users.info', $user->id) }}" class="btn btn-primary btn-sm btn-icon-split">
+                                            <span class="icon text-white-50"><i class="fas fa-pencil-alt"></i></span>
+                                            <span class="text">{{ __('admin/users.us_edit') }}</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                        <div class="text-center">
-                            <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="/admin/users?type=info&user={{ $user }}">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-user"></i>
-                                </span>
-                                <span class="text">{{ __('admin/users.us_general_info') }}</span>
-                            </{{ $tag }}>
-                            <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="/admin/users?type=settings&user={{ $user }}">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-user-cog"></i>
-                                </span>
-                                <span class="text">{{ __('admin/users.us_settings') }}</span>
-                            </{{ $tag }}>
-                            <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="/admin/users?type=research&user={{ $user }}">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-flask"></i>
-                                </span>
-                                <span class="text">{{ __('admin/users.us_research') }}</span>
-                            </{{ $tag }}>
-                            <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="/admin/users?type=premium&user={{ $user }}">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-gem"></i>
-                                </span>
-                                <span class="text">{{ __('admin/users.us_premium') }}</span>
-                            </{{ $tag }}>
-                            <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="/admin/users?type=planets&user={{ $user }}">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-globe-americas"></i>
-                                </span>
-                                <span class="text">{{ __('admin/users.us_planets') }}</span>
-                            </{{ $tag }}>
-                            <{{ $tag }} class="btn btn-info btn-icon-split {{ $status }}"
-                                href="/admin/users?type=moons&user={{ $user }}">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-moon"></i>
-                                </span>
-                                <span class="text">{{ __('admin/users.us_moons') }}</span>
-                            </{{ $tag }}>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
-            {!! $content !!}
         </div>
     </div>
 </div>

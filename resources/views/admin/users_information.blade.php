@@ -1,111 +1,182 @@
-<div class="card shadow mb-4">
-    <!-- Card Header - Accordion -->
-    <a href="#collapseInformation" class="d-block card-header py-3" data-toggle="collapse" role="button"
-        aria-expanded="true" aria-controls="collapseInformation">
-        <h6 class="m-0 font-weight-bold text-primary">{{ $information }}</h6>
-    </a>
-    <!-- Card Content - Collapse -->
-    <div class="collapse show" id="collapseInformation" style="">
-        <div class="card-body">
-            <div class="table-responsive">
-                <form name="save_info" method="post" action="">
-                    @csrf
-                    <table class="table table-borderless" width="100%" cellspacing="0">
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_username') }}</td>
-                            <td><input type="text" class="form-control" name="username" value="{{ $name }}"></td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_password') }}</td>
-                            <td><input type="text" class="form-control" name="password" value="" minlength="8"></td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_email') }}</td>
-                            <td><input type="text" class="form-control" name="email" value="{{ $email }}"></td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_level') }}</td>
-                            <td>
-                                <select name="authlevel" class="form-control">
-                                    @foreach ($user_roles as $item)
-                                    <option value="{{ $item['role_id'] }}" {{ $item['role_sel'] }} @disabled($item['role_disabled'])>{{ $item['role_name'] }}</option>
+@extends('master.admin')
+
+@section('content')
+<div class="container-fluid">
+    <x-alert/>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/users.us_title') }}</h1>
+    </div>
+
+    @include('admin.partials.users_nav', ['active' => 'info'])
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-user mr-1"></i>
+                        {{ __('admin/users.us_user_information', ['user' => $user->name]) }}
+                    </h6>
+                    @if ($online_status === 'online')
+                        <span class="badge badge-success"><i class="fas fa-circle fa-xs mr-1"></i>{{ __('admin/users.us_online') }}</span>
+                    @elseif ($online_status === 'away')
+                        <span class="badge badge-warning"><i class="fas fa-circle fa-xs mr-1"></i>{{ __('admin/users.us_away') }}</span>
+                    @else
+                        <span class="badge badge-secondary"><i class="fas fa-circle fa-xs mr-1"></i>{{ __('admin/users.us_offline') }}</span>
+                    @endif
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('admin.users.info.update', $user->id) }}">
+                        @csrf
+
+                        {{-- Register time --}}
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">{{ __('admin/users.us_user_register_time') }}</label>
+                            <div class="col-md-8"><p class="form-control-plaintext">{{ $register_time }}</p></div>
+                        </div>
+
+                        {{-- Username --}}
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right" for="username">{{ __('admin/users.us_user_username') }}</label>
+                            <div class="col-md-8">
+                                <input type="text" id="username" name="username"
+                                    class="form-control @error('username') is-invalid @enderror"
+                                    value="{{ old('username', $user->name) }}">
+                                @error('username')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                        </div>
+
+                        {{-- Email --}}
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right" for="email">{{ __('admin/users.us_user_email') }}</label>
+                            <div class="col-md-8">
+                                <input type="email" id="email" name="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    value="{{ old('email', $user->email) }}">
+                                @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                        </div>
+
+                        {{-- Password --}}
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right" for="password">{{ __('admin/users.us_user_password') }}</label>
+                            <div class="col-md-8">
+                                <input type="password" id="password" name="password"
+                                    class="form-control @error('password') is-invalid @enderror"
+                                    autocomplete="new-password"
+                                    placeholder="{{ __('admin/users.us_password_placeholder') }}">
+                                @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                <small class="form-text text-muted">{{ __('admin/users.us_password_hint') }}</small>
+                            </div>
+                        </div>
+
+                        {{-- Role / Auth level --}}
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right" for="authlevel">{{ __('admin/users.us_user_authlevel') }}</label>
+                            <div class="col-md-8">
+                                <select id="authlevel" name="authlevel"
+                                    class="form-control @error('authlevel') is-invalid @enderror">
+                                    @foreach ($user_roles as $role)
+                                        <option value="{{ $role['role_id'] }}"
+                                            @selected($role['selected'])
+                                            @disabled($role['disabled'])>
+                                            {{ $role['role_name'] }}
+                                        </option>
                                     @endforeach
                                 </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_pp') }}</td>
-                            <td>
-                                <select name="id_planet" class="form-control">
-                                    {!! $main_planet !!}
+                                @error('authlevel')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                        </div>
+
+                        {{-- Alliance --}}
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right" for="ally_id">{{ __('admin/users.us_user_ally') }}</label>
+                            <div class="col-md-8">
+                                <select id="ally_id" name="ally_id" class="form-control">
+                                    <option value="0">— {{ __('admin/users.us_no_alliance') }} —</option>
+                                    @foreach ($alliances as $alliance)
+                                        <option value="{{ $alliance->alliance_id }}"
+                                            @selected(old('ally_id', $data->ally_id ?? 0) == $alliance->alliance_id)>
+                                            [{{ $alliance->alliance_tag }}] {{ $alliance->alliance_name }}
+                                        </option>
+                                    @endforeach
                                 </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_ap') }}</td>
-                            <td>
-                                <select name="current_planet" class="form-control">
-                                    {!! $current_planet !!}
+                            </div>
+                        </div>
+
+                        {{-- Home planet --}}
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right" for="home_planet_id">{{ __('admin/users.us_user_home_planet') }}</label>
+                            <div class="col-md-8">
+                                <select id="home_planet_id" name="home_planet_id" class="form-control">
+                                    @foreach ($planets as $planet)
+                                        <option value="{{ $planet->planet_id }}"
+                                            @selected(old('home_planet_id', $user->home_planet_id) == $planet->planet_id)>
+                                            {{ $planet->planet_name }} [{{ $planet->planet_galaxy }}:{{ $planet->planet_system }}:{{ $planet->planet_planet }}]
+                                        </option>
+                                    @endforeach
                                 </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_last_ip') }}</td>
-                            <td>{{ $lastip }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_reg_ip') }}</td>
-                            <td>{{ $ip_at_reg }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_browser') }}</td>
-                            <td>{{ $agent }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_actual_page') }}</td>
-                            <td>{{ $current_page }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_date_reg') }}</td>
-                            <td>{{ $register_time }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_conection') }}</td>
-                            <td>{!! $onlinetime !!}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_shortcuts') }}</td>
-                            <td>
-                                <select name="user_fleet_shortcuts" class="form-control">
-                                    {!! $fleet_shortcuts !!}
+                            </div>
+                        </div>
+
+                        {{-- Current planet --}}
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right" for="current_planet">{{ __('admin/users.us_user_current_planet') }}</label>
+                            <div class="col-md-8">
+                                <select id="current_planet" name="current_planet" class="form-control">
+                                    @foreach ($planets as $planet)
+                                        <option value="{{ $planet->planet_id }}"
+                                            @selected(old('current_planet', $user->current_planet) == $planet->planet_id)>
+                                            {{ $planet->planet_name }} [{{ $planet->planet_galaxy }}:{{ $planet->planet_system }}:{{ $planet->planet_planet }}]
+                                        </option>
+                                    @endforeach
                                 </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_alliance') }}</td>
-                            <td>
-                                <select name="ally_id" class="form-control">
-                                    <option value="0">-</option>
-                                    {!! $alliances !!}
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{ __('admin/users.us_user_information_banned') }}</td>
-                            <td>{!! $banned !!}</td>
-                        </tr>
-                    </table>
-                    <div class="text-center">
-                        <input type="hidden" name="send_data" value="1">
-                        <button type="submit" class="btn btn-primary btn-icon-split">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-save"></i>
-                            </span>
-                            <span class="text">{{ __('admin/users.us_send_data') }}</span>
-                        </button>
-                    </div>
-                </form>
+                            </div>
+                        </div>
+
+                        {{-- Ban status --}}
+                        @if ($ban)
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label text-md-right">{{ __('admin/users.us_user_ban') }}</label>
+                                <div class="col-md-8">
+                                    <div class="alert alert-warning mb-0 py-2">
+                                        <i class="fas fa-ban mr-1"></i>
+                                        {{ __('admin/users.us_user_banned_reason') }}: <strong>{{ $ban->ban_reason }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        {{-- Fleet shortcuts --}}
+                        @if (!empty($shortcuts))
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label text-md-right">{{ __('admin/users.us_user_shortcuts') }}</label>
+                                <div class="col-md-8">
+                                    <select class="form-control" size="4" disabled>
+                                        @foreach ($shortcuts as $label)
+                                            <option>{{ $label }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('admin.users') }}" class="btn btn-secondary btn-icon-split">
+                                <span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span>
+                                <span class="text">{{ __('admin/users.us_back') }}</span>
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-icon-split">
+                                <span class="icon text-white-50"><i class="fas fa-save"></i></span>
+                                <span class="text">{{ __('admin/users.us_send_data') }}</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@endsection

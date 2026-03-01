@@ -1,34 +1,56 @@
-<div class="card shadow mb-4">
-    <!-- Card Header - Accordion -->
-    <a href="#collapseResearch" class="d-block card-header py-3" data-toggle="collapse" role="button"
-        aria-expanded="true" aria-controls="collapseResearch">
-        <h6 class="m-0 font-weight-bold text-primary">{{ $research }}</h6>
-    </a>
-    <!-- Card Content - Collapse -->
-    <div class="collapse show" id="collapseResearch" style="">
-        <div class="card-body">
-            <div class="table-responsive">
-                <form name="save_info" method="post" action="">
-                    @csrf
-                    <table class="table table-borderless" width="100%" cellspacing="0">
-                        @foreach ($technologies_list as $item)
-                        <tr>
-                            <td>{{ $item['technology'] }}</td>
-                            <td><input type="number" class="form-control" name="{{ $item['field'] }}" value="{{ $item['level'] }}"></td>
-                        </tr>
-                        @endforeach
-                    </table>
-                    <div class="text-center">
-                        <input type="hidden" name="send_data" value="1">
-                        <button type="submit" class="btn btn-primary btn-icon-split">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-save"></i>
-                            </span>
-                            <span class="text">{{ __('admin/users.us_send_data') }}</span>
-                        </button>
-                    </div>
-                </form>
+@extends('master.admin')
+
+@section('content')
+<div class="container-fluid">
+    <x-alert/>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/users.us_title') }}</h1>
+    </div>
+
+    @include('admin.partials.users_nav', ['active' => 'research'])
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-flask mr-1"></i>
+                        {{ __('admin/users.us_research_title', ['user' => $user->name]) }}
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('admin.users.research.update', $user->id) }}">
+                        @csrf
+
+                        <div class="row">
+                            @foreach ($technologies as $tech)
+                                <div class="col-md-4 col-lg-3 mb-3">
+                                    <label class="small font-weight-bold text-gray-700" for="{{ $tech['field'] }}">
+                                        {{ $tech['label'] }}
+                                    </label>
+                                    <input type="number" id="{{ $tech['field'] }}" name="{{ $tech['field'] }}"
+                                        class="form-control form-control-sm"
+                                        min="0" value="{{ old($tech['field'], $tech['level']) }}">
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('admin.users') }}" class="btn btn-secondary btn-icon-split">
+                                <span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span>
+                                <span class="text">{{ __('admin/users.us_back') }}</span>
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-icon-split">
+                                <span class="icon text-white-50"><i class="fas fa-save"></i></span>
+                                <span class="text">{{ __('admin/users.us_send_data') }}</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
