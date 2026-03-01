@@ -67,7 +67,7 @@ class Sidebar extends Component
                     'backup' => [],
                     'announcement' => [],
                     'ban' => [],
-                    'rebuildhighscores' => ['onClick="return confirm(\'' . __('admin/menu.tools_manual_update_confirm') . '\');"'],
+                    'rebuildhighscores' => [],
                     'update' => [],
                 ],
             ],

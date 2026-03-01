@@ -76,6 +76,7 @@ Route::prefix('admin')->group(function () {
             Route::any('/planets', Admin\PlanetsController::class)->name('admin.planets');
             Route::any('/premium', Admin\PremiumController::class)->name('admin.premium');
             Route::get('/rebuildhighscores', [Admin\RebuildHighscoresController::class, 'index'])->name('admin.rebuildhighscores');
+            Route::post('/rebuildhighscores', [Admin\RebuildHighscoresController::class, 'run'])->name('admin.rebuildhighscores.run');
             Route::any('/registration', Admin\RegistrationController::class)->name('admin.registration');
             Route::get('/repair', [Admin\RepairController::class, 'index'])->name('admin.repair');
             Route::post('/repair', [Admin\RepairController::class, 'run'])->name('admin.repair.run');

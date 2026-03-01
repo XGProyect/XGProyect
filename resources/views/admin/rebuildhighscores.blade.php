@@ -6,15 +6,19 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin/rebuildhighscores.sb_title') }}</h1>
-        <button onclick="javascript:location.reload();" class="btn btn-primary btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-sync-alt"></i>
-            </span>
-            <span class="text">{{ __('admin/rebuildhighscores.sb_rebuild') }}</span>
-        </button>
+        <form method="POST" action="{{ route('admin.rebuildhighscores.run') }}">
+            @csrf
+            <button type="submit" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-sync-alt"></i>
+                </span>
+                <span class="text">{{ __('admin/rebuildhighscores.sb_rebuild') }}</span>
+            </button>
+        </form>
     </div>
     <p class="mb-4">{{ __('admin/rebuildhighscores.sb_sub_title') }}</p>
 
+    @if(session('memory_p'))
     <div class="row">
         <div class="col-lg-6">
             <div class="card shadow mb-4">
@@ -36,7 +40,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            {{ $memory_p }}
+                                            {{ session('memory_p') }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -46,7 +50,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            {{ $memory_i }}
+                                            {{ session('memory_i') }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -56,7 +60,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            {{ $memory_e }}
+                                            {{ session('memory_e') }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -69,5 +73,6 @@
         <div class="col-lg-6">
         </div>
     </div>
+    @endif
 </div>
 @endsection
