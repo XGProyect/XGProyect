@@ -60,6 +60,45 @@ class AlliancesController extends BaseController
         ]);
     }
 
+    public function create(): View
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
+
+        $usersWithoutAlliance = User::where('ally_id', 0)
+            ->where('ally_request', 0)
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.alliances_create', [
+            'users' => $usersWithoutAlliance,
+        ]);
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
+
+        $allianceName = trim($request->string('name')->toString());
+        $allianceTag = trim($request->string('tag')->toString());
+        $allianceFounder = $request->integer('founder');
+
+        $allianceExists = Alliance::where('alliance_name', $allianceName)
+            ->orWhere('alliance_tag', $allianceTag)
+            ->exists();
+
+        if (!$allianceExists && !empty($allianceFounder) && $allianceFounder > 0) {
+            $this->createAlliance($allianceName, $allianceTag, $allianceFounder);
+            session()->flash('success', __('admin/alliances.al_create_added'));
+        } else {
+            session()->flash('warning', __('admin/alliances.al_create_all_fields'));
+        }
+
+        return redirect()->route('admin.alliances.create');
+    }
+
     public function showInfo(Alliance $alliance): View
     {
         $this->administrationService->checkSession();
@@ -252,6 +291,33 @@ class AlliancesController extends BaseController
         }
 
         session()->flash('success', __('admin/alliances.al_rank_removed'));
+    }
+
+    private function createAlliance(string $allianceName, string $allianceTag, int $allianceFounder): void
+    {
+        try {
+            DB::transaction(function () use ($allianceName, $allianceTag, $allianceFounder) {
+                $time = time();
+                $rightsString = '[{"rank":"' . __('admin/alliances.al_create_founder_rank') . '","rights":{"1":1,"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1}},{"rank":"Newcomer","rights":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0}}]';
+
+                $allianceId = DB::table('alliance')->insertGetId([
+                    'alliance_name' => $allianceName,
+                    'alliance_tag' => $allianceTag,
+                    'alliance_owner' => $allianceFounder,
+                    'alliance_register_time' => $time,
+                    'alliance_ranks' => $rightsString,
+                ]);
+
+                DB::table('alliance_statistics')->insert(['alliance_statistic_alliance_id' => $allianceId]);
+
+                User::where('id', $allianceFounder)->update([
+                    'ally_id' => $allianceId,
+                    'ally_register_time' => $time,
+                ]);
+            });
+        } catch (\Exception $e) {
+            // transaction rolled back automatically
+        }
     }
 
     private function loadAllianceWithStats(int $id): \stdClass

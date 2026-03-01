@@ -15,6 +15,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Options;
+use Xgp\App\Libraries\PlanetLib;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
@@ -39,6 +40,72 @@ class UserPlanetController extends BaseController
             'user' => $user,
             'planets' => $this->getPlanetsWithMoons($user->id),
         ]);
+    }
+
+    public function createPlanet(User $user): View
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(self::AUTH_MODULE);
+
+        return view('admin.users_planet_create', [
+            'user' => $user,
+        ]);
+    }
+
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    public function storePlanet(Request $request, User $user): RedirectResponse
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(self::AUTH_MODULE);
+
+        $galaxy = $request->integer('galaxy');
+        $system = $request->integer('system');
+        $planet = $request->integer('planet');
+        $name = trim($request->string('name')->toString());
+        $fieldMax = $request->integer('planet_field_max');
+        $error = '';
+        $errors = 0;
+
+        $planetExists = DB::table('planets')
+            ->where('planet_galaxy', $galaxy)
+            ->where('planet_system', $system)
+            ->where('planet_planet', $planet)
+            ->exists();
+
+        if (!$planetExists) {
+            if ($galaxy < 1 || $system < 1 || $planet < 1 || !is_numeric($galaxy) || !is_numeric($system) || !is_numeric($planet)) {
+                $error .= __('admin/users.us_create_planet_unavailable_coords');
+                $errors++;
+            }
+
+            /** @phpstan-ignore constant.notFound */
+            if ($galaxy > MAX_GALAXY_IN_WORLD || $system > MAX_SYSTEM_IN_GALAXY || $planet > MAX_PLANET_IN_SYSTEM) {
+                $error .= __('admin/users.us_create_planet_wrong_coords');
+                $errors++;
+            }
+
+            if ($errors === 0) {
+                if ($fieldMax <= 0) {
+                    $fieldMax = 163;
+                }
+
+                if (strlen($name) <= 0) {
+                    $name = (string) __('admin/users.us_create_planet_default_name');
+                }
+
+                $this->createNewPlanet($galaxy, $system, $planet, $user->id, $fieldMax, $name);
+
+                session()->flash('success', __('admin/users.us_create_planet_added'));
+
+                return redirect()->route('admin.users.planets', $user->id);
+            }
+
+            session()->flash('warning', $error);
+        } else {
+            session()->flash('warning', __('admin/users.us_create_planet_unavailable_coords'));
+        }
+
+        return redirect()->route('admin.users.planet.create', $user->id);
     }
 
     public function showPlanet(User $user, int $planet): View
@@ -245,5 +312,27 @@ class UserPlanetController extends BaseController
     private function dateFormatExtended(): string
     {
         return (string) (Options::getInstance()->get('date_format_extended') ?? 'Y-m-d H:i:s');
+    }
+
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    private function createNewPlanet(int $galaxy, int $system, int $planet, int $userId, int $fieldMax, string $name): void
+    {
+        try {
+            DB::transaction(function () use ($galaxy, $system, $planet, $userId, $fieldMax, $name) {
+                (new PlanetLib())->setNewPlanet($galaxy, $system, $planet, $userId, '', false);
+
+                DB::table('planets')
+                    ->where('planet_galaxy', $galaxy)
+                    ->where('planet_system', $system)
+                    ->where('planet_planet', $planet)
+                    ->where('planet_type', 1)
+                    ->update([
+                        'planet_field_max' => $fieldMax,
+                        'planet_name' => $name,
+                    ]);
+            });
+        } catch (\Exception $e) {
+            // transaction rolled back automatically
+        }
     }
 }

@@ -21,7 +21,6 @@ return [
     'errors' => 'Errores del servidor',
     'fleets' => 'Flotas en vuelo',
     'messages' => 'Mensajes',
-    'maker' => 'Creador',
     'users' => 'Usuarios',
     'alliances' => 'Alianzas',
     'languages' => 'Idiomas',

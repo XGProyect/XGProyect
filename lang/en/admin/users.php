@@ -14,6 +14,25 @@ return [
     'us_user_deleted'                      => 'User successfully deleted!',
     'us_cannot_delete_admin'               => 'Cannot delete an administrator account.',
 
+    // ── Create user ───────────────────────────────────────────────────────────
+    'us_create_title'                      => 'Create User',
+    'us_create_name'                       => 'Username',
+    'us_create_pass'                       => 'User password',
+    'us_create_password_random'            => '(Random)',
+    'us_create_email'                      => 'User email',
+    'us_create_level'                      => 'User level',
+    'us_create_coords'                     => 'Coords',
+    'us_create_add_user'                   => 'Add user',
+    'us_create_only_numbers'               => 'Only numbers<br>',
+    'us_create_wrong_coords'               => 'Wrong coords!<br>',
+    'us_create_complete_all'               => 'All fields are required<br>',
+    'us_create_invalid_email'              => 'Invalid email<br>',
+    'us_create_existing_name'              => 'Username already exists<br>',
+    'us_create_existing_email'             => 'Email already exists<br>',
+    'us_create_existing_planet'            => 'Planet already exists<br>',
+    'us_create_invalid_password'           => 'Invalid password. It must contain more than 4 characters<br>',
+    'us_create_added'                      => 'User added with the password: %s',
+
     // ── Navigation tabs ───────────────────────────────────────────────────────
     'us_tab_info'                          => 'Info',
     'us_tab_settings'                      => 'Settings',
@@ -187,6 +206,17 @@ return [
     'us_planet_hard_deleted'               => 'Planet permanently deleted!',
     'us_cannot_delete_only_planet'         => 'Cannot delete the only planet of a user.',
 
+    // ── Create planet ─────────────────────────────────────────────────────────
+    'us_create_planet_title'               => 'Create Planet',
+    'us_create_planet_name'                => 'Planet name',
+    'us_create_planet_default_name'        => 'Colony',
+    'us_create_planet_available_fields'    => 'Available fields',
+    'us_create_planet_coords'              => 'Coords',
+    'us_create_planet_add'                 => 'Add Planet',
+    'us_create_planet_unavailable_coords'  => 'Invalid data or unavailable coords!',
+    'us_create_planet_wrong_coords'        => 'Wrong coords!',
+    'us_create_planet_added'               => 'Planet added',
+
     // ── Moons list ────────────────────────────────────────────────────────────
     'us_moons_title'                       => ':user — Moons',
     'us_no_moons'                          => 'This user has no moons.',
@@ -194,6 +224,21 @@ return [
     'us_delete_moon_confirm'               => 'PERMANENTLY delete this moon and all its data? This cannot be undone.',
     'us_moon_soft_deleted'                 => 'Moon marked for destruction successfully!',
     'us_moon_hard_deleted'                 => 'Moon permanently deleted!',
+
+    // ── Create moon ───────────────────────────────────────────────────────────
+    'us_create_moon_title'                 => 'Create Moon',
+    'us_create_moon_planet'                => 'Planet',
+    'us_create_moon_name'                  => 'Moon name',
+    'us_create_moon_default_name'          => 'Moon',
+    'us_create_moon_diameter'              => 'Diameter',
+    'us_create_moon_random'                => '(Random)',
+    'us_create_moon_temperature'           => 'Temperature',
+    'us_create_moon_available_fields'      => 'Available fields',
+    'us_create_moon_add'                   => 'Add Moon',
+    'us_create_moon_only_numbers'          => 'Only numbers',
+    'us_create_moon_added'                 => 'Moon added',
+    'us_create_moon_add_errors'            => 'Unable to create moon. <br><strong>Probable errors:</strong><br>-Moon already exists on that planet.<br>-You\'re traying to add a moon to another moon.<br>-The selected planet is destroyed.',
+    'us_create_moon_planet_doesnt_exist'   => 'The planet doesn\'t exists.',
 
     // ── Planet / Moon edit ────────────────────────────────────────────────────
     'us_planet_general'                    => 'General',

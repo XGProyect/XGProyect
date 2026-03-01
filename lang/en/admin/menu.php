@@ -21,7 +21,6 @@ return [
     'errors' => 'Server Errors',
     'fleets' => 'Fleet movements',
     'messages' => 'Messages',
-    'maker' => 'Creator',
     'users' => 'Users',
     'alliances' => 'Alliances',
     'languages' => 'Languages',

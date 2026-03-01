@@ -10,6 +10,17 @@ return [
     'al_edit' => 'Edit',
     'al_delete' => 'Delete',
     'al_delete_confirm' => 'Are you sure you want to delete this alliance?',
+
+    // ── Create alliance ───────────────────────────────────────────────────────
+    'al_create_title' => 'Create Alliance',
+    'al_create_name' => 'Alliance name',
+    'al_create_tag' => 'Alliance tag',
+    'al_create_founder' => 'Alliance founder',
+    'al_create_add' => 'Add Alliance',
+    'al_create_all_fields' => 'Unable to create an alliance. <br><strong>Probable errors:</strong><br>-Alliance name already exists.<br>-Alliance tag already exists.<br>-Founder not defined.',
+    'al_create_added' => 'Alliance added',
+    'al_create_founder_rank' => 'Leader',
+
     'al_general_info' => 'General information',
     'al_ranks' => 'Ranks',
     'al_members' => 'Members',

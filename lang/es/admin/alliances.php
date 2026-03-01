@@ -10,6 +10,17 @@ return [
     'al_edit' => 'Editar',
     'al_delete' => 'Borrar',
     'al_delete_confirm' => '¿Estás seguro que deseas eliminar esta alianza?',
+
+    // ── Create alliance ───────────────────────────────────────────────────────
+    'al_create_title' => 'Crear Alianza',
+    'al_create_name' => 'Nombre de la alianza',
+    'al_create_tag' => 'Etiqueta de la alianza',
+    'al_create_founder' => 'Fundador de la alianza',
+    'al_create_add' => 'Agregar Alianza',
+    'al_create_all_fields' => 'No se pudo crear una alianza. <br><strong>Posibles errores:</strong><br>-Ya existe ese nombre de alianza.<br>-Ya existe ese TAG para la alianza<br>-No has definido a un fundador',
+    'al_create_added' => 'Alianza agregada',
+    'al_create_founder_rank' => 'Líder',
+
     'al_general_info' => 'Información general',
     'al_ranks' => 'Rangos',
     'al_members' => 'Miembros',

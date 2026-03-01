@@ -31,7 +31,6 @@ abstract class AdminPagesEnumerator
     ];
 
     public const EDITION = [
-        'maker',
         'users',
         'alliances',
         'languages',

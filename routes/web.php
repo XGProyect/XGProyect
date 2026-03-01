@@ -42,6 +42,8 @@ Route::prefix('admin')->group(function () {
             Route::get('/announcement', [Admin\AnnouncementController::class, 'index'])->name('admin.announcement');
             Route::post('/announcement', [Admin\AnnouncementController::class, 'send'])->name('admin.announcement.send');
             Route::get('/alliances', [Admin\AlliancesController::class, 'index'])->name('admin.alliances');
+            Route::get('/alliances/create', [Admin\AlliancesController::class, 'create'])->name('admin.alliances.create');
+            Route::post('/alliances', [Admin\AlliancesController::class, 'store'])->name('admin.alliances.store');
             Route::get('/alliances/{alliance}', [Admin\AlliancesController::class, 'showInfo'])->name('admin.alliances.info');
             Route::post('/alliances/{alliance}', [Admin\AlliancesController::class, 'updateInfo'])->name('admin.alliances.info.update');
             Route::get('/alliances/{alliance}/ranks', [Admin\AlliancesController::class, 'showRanks'])->name('admin.alliances.ranks');
@@ -70,7 +72,6 @@ Route::prefix('admin')->group(function () {
             Route::get('/languages', [Admin\LanguagesController::class, 'index'])->name('admin.languages');
             Route::post('/languages', [Admin\LanguagesController::class, 'update'])->name('admin.languages.update');
             Route::any('/mailing', Admin\MailingController::class)->name('admin.mailing');
-            Route::any('/maker', Admin\MakerController::class)->name('admin.maker');
             Route::any('/messages', Admin\MessagesController::class)->name('admin.messages');
             Route::any('/modules', Admin\ModulesController::class)->name('admin.modules');
             Route::get('/permissions', [Admin\PermissionsController::class, 'index'])->name('admin.permissions');
@@ -91,8 +92,10 @@ Route::prefix('admin')->group(function () {
             Route::post('/update', [Admin\UpdateController::class, 'run'])->name('admin.update.run');
             // Ajax
             Route::get('/ajax/update/check', AdminAjax\UpdateCheckController::class)->name('admin.update.check');
-            // Users — core (search, info, settings, delete)
+            // Users — core (search, create, info, settings, delete)
             Route::get('/users', [AdminUsers\UsersController::class, 'index'])->name('admin.users');
+            Route::get('/users/create', [AdminUsers\UsersController::class, 'create'])->name('admin.users.create');
+            Route::post('/users', [AdminUsers\UsersController::class, 'store'])->name('admin.users.store');
             Route::get('/users/{user}', [AdminUsers\UsersController::class, 'showInfo'])->name('admin.users.info');
             Route::post('/users/{user}', [AdminUsers\UsersController::class, 'updateInfo'])->name('admin.users.info.update');
             Route::get('/users/{user}/settings', [AdminUsers\UsersController::class, 'showSettings'])->name('admin.users.settings');
@@ -105,6 +108,8 @@ Route::prefix('admin')->group(function () {
             Route::post('/users/{user}/premium', [AdminUsers\UserProgressController::class, 'updatePremium'])->name('admin.users.premium.update');
             // Users — planets
             Route::get('/users/{user}/planets', [AdminUsers\UserPlanetController::class, 'showPlanets'])->name('admin.users.planets');
+            Route::get('/users/{user}/planets/create', [AdminUsers\UserPlanetController::class, 'createPlanet'])->name('admin.users.planet.create');
+            Route::post('/users/{user}/planets', [AdminUsers\UserPlanetController::class, 'storePlanet'])->name('admin.users.planet.store');
             Route::get('/users/{user}/planets/{planet}', [AdminUsers\UserPlanetController::class, 'showPlanet'])->name('admin.users.planet.edit');
             Route::post('/users/{user}/planets/{planet}', [AdminUsers\UserPlanetController::class, 'updatePlanet'])->name('admin.users.planet.update');
             Route::get('/users/{user}/planets/{planet}/buildings', [AdminUsers\UserPlanetController::class, 'showPlanetBuildings'])->name('admin.users.planet.buildings');
@@ -117,6 +122,8 @@ Route::prefix('admin')->group(function () {
             Route::delete('/users/{user}/planets/{planet}', [AdminUsers\UserPlanetController::class, 'hardDeletePlanet'])->name('admin.users.planet.destroy');
             // Users — moons
             Route::get('/users/{user}/moons', [AdminUsers\UserMoonController::class, 'showMoons'])->name('admin.users.moons');
+            Route::get('/users/{user}/moons/create', [AdminUsers\UserMoonController::class, 'createMoon'])->name('admin.users.moon.create');
+            Route::post('/users/{user}/moons', [AdminUsers\UserMoonController::class, 'storeMoon'])->name('admin.users.moon.store');
             Route::get('/users/{user}/moons/{moon}', [AdminUsers\UserMoonController::class, 'showMoon'])->name('admin.users.moon.edit');
             Route::post('/users/{user}/moons/{moon}', [AdminUsers\UserMoonController::class, 'updateMoon'])->name('admin.users.moon.update');
             Route::get('/users/{user}/moons/{moon}/buildings', [AdminUsers\UserMoonController::class, 'showMoonBuildings'])->name('admin.users.moon.buildings');

@@ -12,11 +12,15 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
+                <div class="card-header py-3 d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-moon mr-1"></i>
                         {{ __('admin/users.us_moons_title', ['user' => $user->name]) }}
                     </h6>
+                    <a href="{{ route('admin.users.moon.create', $user->id) }}" class="btn btn-sm btn-primary btn-icon-split">
+                        <span class="icon text-white-50"><i class="fas fa-plus"></i></span>
+                        <span class="text">{{ __('admin/users.us_create_moon_add') }}</span>
+                    </a>
                 </div>
                 <div class="card-body p-0">
                     @if (count($moons) === 0)

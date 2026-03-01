@@ -14,6 +14,25 @@ return [
     'us_user_deleted'                      => '¡Usuario borrado correctamente!',
     'us_cannot_delete_admin'               => 'No se puede eliminar una cuenta de administrador.',
 
+    // ── Create user ───────────────────────────────────────────────────────────
+    'us_create_title'                      => 'Crear Usuario',
+    'us_create_name'                       => 'Nombre del usuario',
+    'us_create_pass'                       => 'Contraseña del usuario',
+    'us_create_password_random'            => '(Al azar)',
+    'us_create_email'                      => 'Email del usuario',
+    'us_create_level'                      => 'Nivel del usuario',
+    'us_create_coords'                     => 'Coordenadas',
+    'us_create_add_user'                   => 'Agregar Usuario',
+    'us_create_only_numbers'               => 'Sólo números<br>',
+    'us_create_wrong_coords'               => '¡Coordenadas erroneas!<br>',
+    'us_create_complete_all'               => 'Debes completar todos los campos<br>',
+    'us_create_invalid_email'              => 'El email ingresado no es válido<br>',
+    'us_create_existing_name'              => 'El nombre de usuario ingresado ya existe<br>',
+    'us_create_existing_email'             => 'El email ingresado ya existe<br>',
+    'us_create_existing_planet'            => 'El planeta ingresado ya existe<br>',
+    'us_create_invalid_password'           => 'La clave ingresada no es válida. Debe tener 4 caracteres como mínimo.<br>',
+    'us_create_added'                      => 'Usuario agregado con la clave: %s',
+
     // ── Navigation tabs ───────────────────────────────────────────────────────
     'us_tab_info'                          => 'Información',
     'us_tab_settings'                      => 'Ajustes',
@@ -187,6 +206,17 @@ return [
     'us_planet_hard_deleted'               => '¡Planeta eliminado permanentemente!',
     'us_cannot_delete_only_planet'         => 'No se puede eliminar el único planeta de un usuario.',
 
+    // ── Create planet ─────────────────────────────────────────────────────────
+    'us_create_planet_title'               => 'Crear Planeta',
+    'us_create_planet_name'                => 'Nombre del Planeta',
+    'us_create_planet_default_name'        => 'Colonia',
+    'us_create_planet_available_fields'    => 'Campos disponibles',
+    'us_create_planet_coords'              => 'Coordenadas',
+    'us_create_planet_add'                 => 'Agregar Planeta',
+    'us_create_planet_unavailable_coords'  => '¡Datos invalidos o coordenadas ya ocupadas!',
+    'us_create_planet_wrong_coords'        => '¡Coordenadas erroneas!',
+    'us_create_planet_added'               => 'Planeta agregado',
+
     // ── Moons list ────────────────────────────────────────────────────────────
     'us_moons_title'                       => ':user — Lunas',
     'us_no_moons'                          => 'Este usuario no tiene lunas.',
@@ -194,6 +224,21 @@ return [
     'us_delete_moon_confirm'               => '¿Eliminar PERMANENTEMENTE esta luna y todos sus datos? Esta acción no se puede deshacer.',
     'us_moon_soft_deleted'                 => '¡Luna marcada para destrucción correctamente!',
     'us_moon_hard_deleted'                 => '¡Luna eliminada permanentemente!',
+
+    // ── Create moon ───────────────────────────────────────────────────────────
+    'us_create_moon_title'                 => 'Crear Luna',
+    'us_create_moon_planet'                => 'Planeta',
+    'us_create_moon_name'                  => 'Nombre de la Luna',
+    'us_create_moon_default_name'          => 'Luna',
+    'us_create_moon_diameter'              => 'Diámetro',
+    'us_create_moon_random'                => '(Al azar)',
+    'us_create_moon_temperature'           => 'Temperatura',
+    'us_create_moon_available_fields'      => 'Campos disponibles',
+    'us_create_moon_add'                   => 'Agregar Luna',
+    'us_create_moon_only_numbers'          => 'Sólo números',
+    'us_create_moon_added'                 => 'Luna agregada',
+    'us_create_moon_add_errors'            => 'No se puede agregar una luna a esa posición. <br><strong>Posibles errores:</strong><br>-Ya existe una luna en ese planeta.<br>-Estas intento asignar una Luna a otra Luna<br>-El planeta se encuentra destruido.',
+    'us_create_moon_planet_doesnt_exist'   => 'El planeta no existe.',
 
     // ── Planet / Moon edit ────────────────────────────────────────────────────
     'us_planet_general'                    => 'General',

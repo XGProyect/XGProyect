@@ -15,6 +15,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Options;
+use Xgp\App\Libraries\PlanetLib;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
@@ -39,6 +40,112 @@ class UserMoonController extends BaseController
             'user' => $user,
             'moons' => $this->getMoons($user->id),
         ]);
+    }
+
+    public function createMoon(User $user): View
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(self::AUTH_MODULE);
+
+        $planets = DB::table('planets')
+            ->select('planet_id', 'planet_name', 'planet_galaxy', 'planet_system', 'planet_planet')
+            ->where('planet_user_id', $user->id)
+            ->where('planet_destroyed', 0)
+            ->where('planet_type', PlanetTypesEnumerator::PLANET)
+            ->orderBy('planet_galaxy')->orderBy('planet_system')->orderBy('planet_planet')
+            ->get();
+
+        return view('admin.users_moon_create', [
+            'user' => $user,
+            'planets' => $planets,
+        ]);
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
+    public function storeMoon(Request $request, User $user): RedirectResponse
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(self::AUTH_MODULE);
+
+        $planetId = $request->integer('planet');
+        $moonName = trim($request->string('name')->toString());
+        $diameter = $request->integer('planet_diameter');
+        $tempMin = $request->integer('planet_temp_min');
+        $tempMax = $request->integer('planet_temp_max');
+        $maxFields = $request->integer('planet_field_max');
+
+        $planet = DB::table('planets')
+            ->where('planet_id', $planetId)
+            ->where('planet_type', PlanetTypesEnumerator::PLANET)
+            ->first();
+
+        if (!$planet) {
+            session()->flash('error', __('admin/users.us_create_moon_planet_doesnt_exist'));
+
+            return redirect()->route('admin.users.moon.create', $user->id);
+        }
+
+        $existingMoon = DB::table('planets')
+            ->where('planet_galaxy', $planet->planet_galaxy)
+            ->where('planet_system', $planet->planet_system)
+            ->where('planet_planet', $planet->planet_planet)
+            ->where('planet_type', PlanetTypesEnumerator::MOON)
+            ->value('planet_id');
+
+        if ($existingMoon || $planet->planet_destroyed != 0) {
+            session()->flash('warning', __('admin/users.us_create_moon_add_errors'));
+
+            return redirect()->route('admin.users.moon.create', $user->id);
+        }
+
+        $size = 0;
+        $mintemp = 0;
+        $maxtemp = 0;
+        $errors = 0;
+
+        if (!$request->has('diameter_check')) {
+            if (is_numeric($diameter)) {
+                $size = $diameter;
+            } else {
+                $errors++;
+                session()->flash('warning', __('admin/users.us_create_moon_only_numbers'));
+            }
+        }
+
+        if (!$request->has('temp_check')) {
+            if (is_numeric($tempMax) && is_numeric($tempMin)) {
+                $mintemp = $tempMin;
+                $maxtemp = $tempMax;
+            } else {
+                $errors++;
+                session()->flash('warning', __('admin/users.us_create_moon_only_numbers'));
+            }
+        }
+
+        if ($errors === 0) {
+            (new PlanetLib())->setNewMoon(
+                (int) $planet->planet_galaxy,
+                (int) $planet->planet_system,
+                (int) $planet->planet_planet,
+                $user->id,
+                $moonName,
+                0,
+                $size,
+                $maxFields,
+                $mintemp,
+                $maxtemp
+            );
+
+            session()->flash('success', __('admin/users.us_create_moon_added'));
+
+            return redirect()->route('admin.users.moons', $user->id);
+        }
+
+        return redirect()->route('admin.users.moon.create', $user->id);
     }
 
     public function showMoon(User $user, int $moon): View

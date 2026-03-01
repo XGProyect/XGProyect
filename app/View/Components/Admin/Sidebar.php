@@ -53,7 +53,6 @@ class Sidebar extends Component
             'edition' => [
                 'icon' => 'fa-pen',
                 'items' => [
-                    'maker' => [],
                     'users' => [],
                     'alliances' => [],
                     'languages' => [],

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Core\Options;
 use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\PlanetLib;
 use Xgp\App\Libraries\Users as UsersLibrary;
 use Xgp\App\Libraries\Users\Shortcuts;
 
@@ -54,6 +55,96 @@ class UsersController extends BaseController
             'search' => $search,
             'user' => $user,
         ]);
+    }
+
+    public function create(): View
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
+
+        $userLevels = array_map(fn (int $rank) => [
+            'id' => $rank,
+            'name' => __('admin/global.user_level')[$rank],
+        ], [UserRanks::PLAYER, UserRanks::GO, UserRanks::SGO, UserRanks::ADMIN]);
+
+        return view('admin.users_create', [
+            'user_levels' => $userLevels,
+        ]);
+    }
+
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    public function store(Request $request): RedirectResponse
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
+
+        $name = trim($request->string('name')->toString());
+        $pass = trim($request->string('password')->toString());
+        $email = trim($request->string('email')->toString());
+        $galaxy = $request->integer('galaxy');
+        $system = $request->integer('system');
+        $planet = $request->integer('planet');
+        $auth = $request->integer('authlevel');
+        $error = '';
+        $errors = 0;
+
+        if (!is_numeric($galaxy) && !is_numeric($system) && !is_numeric($planet)) {
+            $error = __('admin/users.us_create_only_numbers');
+            $errors++;
+        } elseif (
+            $galaxy > MAX_GALAXY_IN_WORLD || $system > MAX_SYSTEM_IN_GALAXY ||
+            $planet > MAX_PLANET_IN_SYSTEM || $galaxy < 1 || $system < 1 || $planet < 1
+        ) {
+            $error = __('admin/users.us_create_wrong_coords');
+            $errors++;
+        }
+
+        if (!$name || !$email || !$galaxy || !$system || !$planet) {
+            $error .= __('admin/users.us_create_complete_all');
+            $errors++;
+        }
+
+        if (!Functions::validEmail(strip_tags($email))) {
+            $error .= __('admin/users.us_create_invalid_email');
+            $errors++;
+        }
+
+        if (User::where('name', $name)->exists()) {
+            $error .= __('admin/users.us_create_existing_name');
+            $errors++;
+        }
+
+        if (User::where('email', $email)->exists()) {
+            $error .= __('admin/users.us_create_existing_email');
+            $errors++;
+        }
+
+        $planetExists = DB::table('planets')
+            ->where('planet_galaxy', $galaxy)
+            ->where('planet_system', $system)
+            ->where('planet_planet', $planet)
+            ->exists();
+
+        if ($planetExists) {
+            $error .= __('admin/users.us_create_existing_planet');
+            $errors++;
+        }
+
+        if ($request->has('password_check')) {
+            $pass = Functions::generatePassword();
+        } elseif (strlen($pass) < 4) {
+            $error .= __('admin/users.us_create_invalid_password');
+            $errors++;
+        }
+
+        if ($errors === 0) {
+            $this->createNewUser($name, $email, $auth, $pass, $galaxy, $system, $planet);
+            session()->flash('success', strtr(__('admin/users.us_create_added'), ['%s' => $pass]));
+        } else {
+            session()->flash('warning', '<br>' . $error);
+        }
+
+        return redirect()->route('admin.users.create');
     }
 
     public function showInfo(User $user): View
@@ -344,5 +435,51 @@ class UsersController extends BaseController
     private function dateFormatExtended(): string
     {
         return (string) (Options::getInstance()->get('date_format_extended') ?? 'Y-m-d H:i:s');
+    }
+
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    private function createNewUser(string $name, string $email, int $auth, string $pass, int $galaxy, int $system, int $planet): void
+    {
+        try {
+            DB::transaction(function () use ($name, $email, $auth, $pass, $galaxy, $system, $planet) {
+                $time = time();
+
+                $user = User::create([
+                    'name' => $name,
+                    'email' => $email,
+                    'ip_at_reg' => request()->ip() ?? '',
+                    'home_planet_id' => 0,
+                    'current_planet' => 0,
+                    'register_time' => $time,
+                    'onlinetime' => $time,
+                    'authlevel' => $auth,
+                    'password' => $pass,
+                ]);
+
+                $lastUserId = $user->id;
+
+                DB::table('research')->insert(['research_user_id' => $lastUserId]);
+                DB::table('users_statistics')->insert(['user_statistic_user_id' => $lastUserId]);
+                DB::table('premium')->insert([
+                    'premium_user_id' => $lastUserId,
+                    'premium_dark_matter' => Options::getInstance()->get('registration_dark_matter'),
+                ]);
+                DB::table('preferences')->insert(['preference_user_id' => $lastUserId]);
+
+                (new PlanetLib())->setNewPlanet($galaxy, $system, $planet, $lastUserId, '', true);
+
+                $lastPlanetId = (int) DB::getPdo()->lastInsertId();
+
+                User::where('id', $lastUserId)->update([
+                    'home_planet_id' => $lastPlanetId,
+                    'current_planet' => $lastPlanetId,
+                    'galaxy' => $galaxy,
+                    'system' => $system,
+                    'planet' => $planet,
+                ]);
+            });
+        } catch (\Exception $e) {
+            // transaction rolled back automatically
+        }
     }
 }
