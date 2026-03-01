@@ -71,7 +71,7 @@
                                         {{ $b['label'] }}
                                     </label>
                                     <input type="number" id="{{ $b['field'] }}" name="{{ $b['field'] }}"
-                                        class="form-control form-control-sm"
+                                        class="form-control"
                                         min="0" value="{{ old($b['field'], $b['level']) }}">
                                 </div>
                             @endforeach

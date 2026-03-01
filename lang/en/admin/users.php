@@ -197,13 +197,12 @@ return [
     'us_user_defense_large_shield_dome' => 'Large Shield Dome',
     'us_user_defense_anti-ballistic_missile' => 'Anti-Ballistic Missiles',
     'us_user_defense_interplanetary_missile' => 'Interplanetary Missiles',
-
-    // New keys added during refactor
     'us_planet_soft_deleted'                => 'Planet marked for destruction successfully!',
     'us_planet_hard_deleted'                => 'Planet permanently deleted!',
     'us_moon_soft_deleted'                  => 'Moon marked for destruction successfully!',
     'us_moon_hard_deleted'                  => 'Moon permanently deleted!',
     'us_cannot_delete_admin'               => 'Cannot delete an administrator account.',
+    'us_cannot_delete_only_planet'         => 'Cannot delete the only planet of a user.',
     'us_back'                              => 'Back to search',
     'us_back_to_planets'                   => 'Back to planets',
     'us_back_to_moons'                     => 'Back to moons',

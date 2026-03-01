@@ -48,7 +48,7 @@
                                     {{ $officer['label'] }}
                                 </label>
                                 <div class="col-md-5">
-                                    <select id="{{ $officer['field'] }}" name="{{ $officer['field'] }}" class="form-control form-control-sm">
+                                    <select id="{{ $officer['field'] }}" name="{{ $officer['field'] }}" class="form-control">
                                         <option value="0">{{ __('admin/users.us_officer_keep') }}</option>
                                         <option value="1">{{ __('admin/users.us_officer_deactivate') }}</option>
                                         <option value="2">{{ __('admin/users.us_officer_activate_week') }}</option>

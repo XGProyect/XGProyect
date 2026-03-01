@@ -230,7 +230,7 @@
                                                 <i class="fas fa-{{ $meta['icon'] }} {{ $meta['color'] }} mr-1"></i>
                                                 {{ __('admin/users.us_user_main_' . str_replace('planet_', '', $pct_field)) }}
                                             </label>
-                                            <select id="{{ $pct_field }}" name="{{ $pct_field }}" class="form-control form-control-sm">
+                                            <select id="{{ $pct_field }}" name="{{ $pct_field }}" class="form-control">
                                                 @foreach ($percent_options as $val => $label)
                                                     <option value="{{ $val }}" @selected(old($pct_field, $planet[$pct_field] ?? 10) == $val)>{{ $label }}</option>
                                                 @endforeach

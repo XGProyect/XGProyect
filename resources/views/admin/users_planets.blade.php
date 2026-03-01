@@ -38,6 +38,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php $onlyOnePlanet = count($planets) === 1; @endphp
                                     @foreach ($planets as $planet)
                                         <tr class="{{ $planet->planet_destroyed > 0 ? 'table-warning' : '' }}">
                                             <td class="align-middle font-weight-bold">{{ $planet->planet_name }}</td>
@@ -98,7 +99,8 @@
                                                         onsubmit="return confirm('{{ __('admin/users.us_planet_soft_delete_confirm') }}')">
                                                         @csrf
                                                         <button type="submit" class="btn btn-sm btn-outline-warning" title="{{ __('admin/users.us_soft_delete') }}"
-                                                            style="border-radius:0; margin-left:-1px;">
+                                                            style="border-radius:0; margin-left:-1px;"
+                                                            @disabled($onlyOnePlanet)>
                                                             <i class="fas fa-fw fa-hourglass-end"></i>
                                                         </button>
                                                     </form>
@@ -107,7 +109,8 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-outline-danger" title="{{ __('admin/users.us_hard_delete') }}"
-                                                            style="border-radius:0 0.2rem 0.2rem 0; margin-left:-1px;">
+                                                            style="border-radius:0 0.2rem 0.2rem 0; margin-left:-1px;"
+                                                            @disabled($onlyOnePlanet)>
                                                             <i class="fas fa-fw fa-trash-alt"></i>
                                                         </button>
                                                     </form>

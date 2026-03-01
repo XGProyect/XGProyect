@@ -29,7 +29,7 @@
                                         {{ $tech['label'] }}
                                     </label>
                                     <input type="number" id="{{ $tech['field'] }}" name="{{ $tech['field'] }}"
-                                        class="form-control form-control-sm"
+                                        class="form-control"
                                         min="0" value="{{ old($tech['field'], $tech['level']) }}">
                                 </div>
                             @endforeach

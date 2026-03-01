@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Users;
 
 use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class UserResearchRequest extends FormRequest
+class UserPremiumRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -21,12 +21,13 @@ class UserResearchRequest extends FormRequest
      */
     public function rules(): array
     {
-        // Each research_* field must be a non-negative integer
-        $rules = [];
+        $rules = [
+            'premium_dark_matter' => ['nullable', 'integer', 'min:0'],
+        ];
 
         foreach ($this->all() as $key => $value) {
-            if (str_starts_with($key, 'research_')) {
-                $rules[$key] = ['required', 'integer', 'min:0'];
+            if (str_starts_with($key, 'premium_') && $key !== 'premium_dark_matter') {
+                $rules[$key] = ['nullable', 'integer', 'min:0', 'max:3'];
             }
         }
 
@@ -39,6 +40,6 @@ class UserResearchRequest extends FormRequest
         $user = $this->route('user');
 
         throw ValidationException::withMessages($validator->errors()->toArray())
-            ->redirectTo(route('admin.users.research', $user->id));
+            ->redirectTo(route('admin.users.premium', $user->id));
     }
 }

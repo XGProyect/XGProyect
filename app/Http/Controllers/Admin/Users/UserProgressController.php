@@ -1,0 +1,177 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Controllers\Admin\Users;
+
+use App\Http\Requests\Admin\Users\UserPremiumRequest;
+use App\Http\Requests\Admin\Users\UserResearchRequest;
+use App\Models\User;
+use App\Services\AdministrationService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Options;
+use Xgp\App\Libraries\StatisticsLibrary;
+
+class UserProgressController extends BaseController
+{
+    private const AUTH_MODULE = UsersController::class;
+
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+    ) {
+    }
+
+    public function showResearch(User $user): View
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(self::AUTH_MODULE);
+
+        $research = DB::table('research')->where('research_user_id', $user->id)->first();
+
+        return view('admin.users_research', [
+            'user' => $user,
+            'technologies' => $this->buildResearchList((array) ($research ?? [])),
+        ]);
+    }
+
+    public function updateResearch(UserResearchRequest $request, User $user): RedirectResponse
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(self::AUTH_MODULE);
+
+        $updates = collect($request->validated())
+            ->filter(fn ($v, $k) => str_starts_with((string) $k, 'research_'))
+            ->map(fn ($v) => (int) $v)
+            ->all();
+
+        if (!empty($updates)) {
+            DB::table('research')->where('research_user_id', $user->id)->update($updates);
+        }
+
+        (new StatisticsLibrary())->rebuildPoints($user->id, 0, 'research');
+
+        session()->flash('success', __('admin/users.us_all_ok_message'));
+
+        return redirect()->route('admin.users.research', $user->id);
+    }
+
+    public function showPremium(User $user): View
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(self::AUTH_MODULE);
+
+        $premium = DB::table('premium')->where('premium_user_id', $user->id)->first();
+        $dateFormat = $this->dateFormat();
+
+        return view('admin.users_premium', [
+            'user' => $user,
+            'dark_matter' => (int) ($premium->premium_dark_matter ?? 0),
+            'officers' => $this->buildPremiumList((array) ($premium ?? []), $dateFormat),
+        ]);
+    }
+
+    public function updatePremium(UserPremiumRequest $request, User $user): RedirectResponse
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(self::AUTH_MODULE);
+
+        $currentPremium = (array) (DB::table('premium')->where('premium_user_id', $user->id)->first() ?? []);
+        $updates = [];
+
+        if ($request->filled('premium_dark_matter')) {
+            $updates['premium_dark_matter'] = (int) $request->input('premium_dark_matter');
+        }
+
+        foreach ($request->all() as $key => $value) {
+            if (str_starts_with((string) $key, 'premium_') && $key !== 'premium_dark_matter') {
+                $updates[$key] = match ((int) $value) {
+                    1 => 0,
+                    2 => time() + (3600 * 24 * 7),
+                    3 => time() + (3600 * 24 * 30 * 3),
+                    default => $currentPremium[$key] ?? 0,
+                };
+            }
+        }
+
+        if (!empty($updates)) {
+            DB::table('premium')->where('premium_user_id', $user->id)->update($updates);
+        }
+
+        session()->flash('success', __('admin/users.us_all_ok_message'));
+
+        return redirect()->route('admin.users.premium', $user->id);
+    }
+
+    /**
+     * @param array<string, mixed> $row
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function buildResearchList(array $row): array
+    {
+        $list = [];
+        $skip = 3;
+
+        foreach ($row as $key => $value) {
+            if (!str_starts_with((string) $key, 'research_')) {
+                continue;
+            }
+            if ($skip-- > 0) {
+                continue;
+            }
+
+            $list[] = [
+                'field' => $key,
+                'label' => (string) __('admin/users.us_user_' . $key),
+                'level' => (int) $value,
+            ];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param array<string, mixed> $row
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function buildPremiumList(array $row, string $dateFormat): array
+    {
+        $list = [];
+
+        foreach ($row as $key => $value) {
+            if (!str_starts_with((string) $key, 'premium_') || in_array($key, ['premium_dark_matter', 'premium_user_id'], true)) {
+                continue;
+            }
+
+            $labelKey = 'admin/users.us_user_' . $key;
+            $label = __($labelKey);
+
+            if ($label === $labelKey) {
+                continue;
+            }
+
+            $expire = (int) $value;
+
+            $list[] = [
+                'field' => $key,
+                'label' => (string) $label,
+                'expire' => $expire,
+                'active' => $expire > 0 && $expire > time(),
+                'status_text' => ($expire === 0 || $expire < time())
+                    ? (string) __('admin/users.us_user_premium_inactive')
+                    : (string) __('admin/users.us_user_premium_active_until') . date($dateFormat, $expire),
+            ];
+        }
+
+        return $list;
+    }
+
+    private function dateFormat(): string
+    {
+        return (string) (Options::getInstance()->get('date_format') ?? 'Y-m-d');
+    }
+}

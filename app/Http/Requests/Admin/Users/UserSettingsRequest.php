@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Users;
 
 use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class UserPremiumRequest extends FormRequest
+class UserSettingsRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -21,17 +21,13 @@ class UserPremiumRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'premium_dark_matter' => ['nullable', 'integer', 'min:0'],
+        return [
+            'preference_planet_sort' => ['required', 'integer', 'min:0', 'max:4'],
+            'preference_planet_sort_sequence' => ['required', 'integer', 'min:0', 'max:1'],
+            'preference_spy_probes' => ['required', 'integer', 'min:0'],
+            'preference_vacations_status' => ['nullable', 'string'],
+            'preference_delete_mode' => ['nullable', 'string'],
         ];
-
-        foreach ($this->all() as $key => $value) {
-            if (str_starts_with($key, 'premium_') && $key !== 'premium_dark_matter') {
-                $rules[$key] = ['nullable', 'integer', 'min:0', 'max:3'];
-            }
-        }
-
-        return $rules;
     }
 
     protected function failedValidation(Validator $validator): void
@@ -40,6 +36,6 @@ class UserPremiumRequest extends FormRequest
         $user = $this->route('user');
 
         throw ValidationException::withMessages($validator->errors()->toArray())
-            ->redirectTo(route('admin.users.premium', $user->id));
+            ->redirectTo(route('admin.users.settings', $user->id));
     }
 }
