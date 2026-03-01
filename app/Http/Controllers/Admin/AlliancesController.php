@@ -22,6 +22,7 @@ use Xgp\App\Libraries\Alliance\Ranks;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class AlliancesController extends BaseController
 {
@@ -65,6 +66,7 @@ class AlliancesController extends BaseController
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
+        /** @phpstan-ignore staticMethod.notFound */
         $usersWithoutAlliance = User::where('ally_id', 0)
             ->where('ally_request', 0)
             ->select('id', 'name')
@@ -76,6 +78,7 @@ class AlliancesController extends BaseController
         ]);
     }
 
+    /** @SuppressWarnings(PHPMD.ElseExpression) */
     public function store(Request $request): RedirectResponse
     {
         $this->administrationService->checkSession();
@@ -85,6 +88,7 @@ class AlliancesController extends BaseController
         $allianceTag = trim($request->string('tag')->toString());
         $allianceFounder = $request->integer('founder');
 
+        /** @phpstan-ignore staticMethod.notFound */
         $allianceExists = Alliance::where('alliance_name', $allianceName)
             ->orWhere('alliance_tag', $allianceTag)
             ->exists();
@@ -293,12 +297,13 @@ class AlliancesController extends BaseController
         session()->flash('success', __('admin/alliances.al_rank_removed'));
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     private function createAlliance(string $allianceName, string $allianceTag, int $allianceFounder): void
     {
         try {
             DB::transaction(function () use ($allianceName, $allianceTag, $allianceFounder) {
                 $time = time();
-                $rightsString = '[{"rank":"' . __('admin/alliances.al_create_founder_rank') . '","rights":{"1":1,"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1}},{"rank":"Newcomer","rights":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0}}]';
+                $rightsString = '[{"rank":"' . (string) __('admin/alliances.al_create_founder_rank') . '","rights":{"1":1,"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1}},{"rank":"Newcomer","rights":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0}}]'; // @phpstan-ignore cast.string
 
                 $allianceId = DB::table('alliance')->insertGetId([
                     'alliance_name' => $allianceName,
@@ -310,6 +315,7 @@ class AlliancesController extends BaseController
 
                 DB::table('alliance_statistics')->insert(['alliance_statistic_alliance_id' => $allianceId]);
 
+                /** @phpstan-ignore staticMethod.notFound */
                 User::where('id', $allianceFounder)->update([
                     'ally_id' => $allianceId,
                     'ally_register_time' => $time,

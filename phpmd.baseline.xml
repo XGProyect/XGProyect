@@ -23,24 +23,6 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/LoginController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/LogoutController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/MailingController.php"/>
-  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="app/Http/Controllers/Admin/MakerController.php"/>
-  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="app/Http/Controllers/Admin/MakerController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/MakerController.php"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/MakerController.php" method="makeUser"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/MakerController.php" method="makeUser"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/MakerController.php" method="makeUser"/>
-  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="app/Http/Controllers/Admin/MakerController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/MakerController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/MakerController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/MakerController.php" method="makeAlliace"/>
-  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="app/Http/Controllers/Admin/MakerController.php"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/MakerController.php" method="makePlanet"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/MakerController.php" method="makePlanet"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/MakerController.php" method="makePlanet"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/MakerController.php" method="makeMoon"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/MakerController.php" method="makeMoon"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/MakerController.php" method="buildUsersCombo"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/MakerController.php" method="buildPlanetCombo"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/MessagesController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/MessagesController.php"/>
   <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/MessagesController.php" method="doSearch"/>

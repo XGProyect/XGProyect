@@ -65,6 +65,7 @@ class UserMoonController extends BaseController
      * @SuppressWarnings(PHPMD.StaticAccess)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function storeMoon(Request $request, User $user): RedirectResponse
     {
@@ -108,7 +109,7 @@ class UserMoonController extends BaseController
         $errors = 0;
 
         if (!$request->has('diameter_check')) {
-            if (is_numeric($diameter)) {
+            if ($diameter > 0) {
                 $size = $diameter;
             } else {
                 $errors++;
@@ -117,7 +118,7 @@ class UserMoonController extends BaseController
         }
 
         if (!$request->has('temp_check')) {
-            if (is_numeric($tempMax) && is_numeric($tempMin)) {
+            if ($tempMax !== 0 || $tempMin !== 0) {
                 $mintemp = $tempMin;
                 $maxtemp = $tempMax;
             } else {

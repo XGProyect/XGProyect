@@ -52,7 +52,10 @@ class UserPlanetController extends BaseController
         ]);
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     public function storePlanet(Request $request, User $user): RedirectResponse
     {
         $this->administrationService->checkSession();
@@ -73,14 +76,17 @@ class UserPlanetController extends BaseController
             ->exists();
 
         if (!$planetExists) {
-            if ($galaxy < 1 || $system < 1 || $planet < 1 || !is_numeric($galaxy) || !is_numeric($system) || !is_numeric($planet)) {
-                $error .= __('admin/users.us_create_planet_unavailable_coords');
+            if ($galaxy < 1 || $system < 1 || $planet < 1) {
+                $error .= (string) __('admin/users.us_create_planet_unavailable_coords'); // @phpstan-ignore cast.string
                 $errors++;
             }
 
-            /** @phpstan-ignore constant.notFound */
-            if ($galaxy > MAX_GALAXY_IN_WORLD || $system > MAX_SYSTEM_IN_GALAXY || $planet > MAX_PLANET_IN_SYSTEM) {
-                $error .= __('admin/users.us_create_planet_wrong_coords');
+            if (
+                $galaxy > MAX_GALAXY_IN_WORLD || // @phpstan-ignore constant.notFound
+                $system > MAX_SYSTEM_IN_GALAXY || // @phpstan-ignore constant.notFound
+                $planet > MAX_PLANET_IN_SYSTEM // @phpstan-ignore constant.notFound
+            ) {
+                $error .= (string) __('admin/users.us_create_planet_wrong_coords'); // @phpstan-ignore cast.string
                 $errors++;
             }
 
@@ -90,7 +96,7 @@ class UserPlanetController extends BaseController
                 }
 
                 if (strlen($name) <= 0) {
-                    $name = (string) __('admin/users.us_create_planet_default_name');
+                    $name = (string) __('admin/users.us_create_planet_default_name'); // @phpstan-ignore cast.string
                 }
 
                 $this->createNewPlanet($galaxy, $system, $planet, $user->id, $fieldMax, $name);

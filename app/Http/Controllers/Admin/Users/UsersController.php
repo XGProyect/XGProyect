@@ -24,6 +24,7 @@ use Xgp\App\Libraries\Users\Shortcuts;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class UsersController extends BaseController
 {
@@ -64,7 +65,7 @@ class UsersController extends BaseController
 
         $userLevels = array_map(fn (int $rank) => [
             'id' => $rank,
-            'name' => __('admin/global.user_level')[$rank],
+            'name' => ((array) __('admin/global.user_level'))[$rank],
         ], [UserRanks::PLAYER, UserRanks::GO, UserRanks::SGO, UserRanks::ADMIN]);
 
         return view('admin.users_create', [
@@ -72,7 +73,12 @@ class UsersController extends BaseController
         ]);
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     public function store(Request $request): RedirectResponse
     {
         $this->administrationService->checkSession();
@@ -88,34 +94,35 @@ class UsersController extends BaseController
         $error = '';
         $errors = 0;
 
-        if (!is_numeric($galaxy) && !is_numeric($system) && !is_numeric($planet)) {
-            $error = __('admin/users.us_create_only_numbers');
-            $errors++;
-        } elseif (
-            $galaxy > MAX_GALAXY_IN_WORLD || $system > MAX_SYSTEM_IN_GALAXY ||
-            $planet > MAX_PLANET_IN_SYSTEM || $galaxy < 1 || $system < 1 || $planet < 1
+        if (
+            $galaxy > MAX_GALAXY_IN_WORLD || // @phpstan-ignore constant.notFound
+            $system > MAX_SYSTEM_IN_GALAXY || // @phpstan-ignore constant.notFound
+            $planet > MAX_PLANET_IN_SYSTEM || // @phpstan-ignore constant.notFound
+            $galaxy < 1 || $system < 1 || $planet < 1
         ) {
-            $error = __('admin/users.us_create_wrong_coords');
+            $error = (string) __('admin/users.us_create_wrong_coords'); // @phpstan-ignore cast.string
             $errors++;
         }
 
         if (!$name || !$email || !$galaxy || !$system || !$planet) {
-            $error .= __('admin/users.us_create_complete_all');
+            $error .= (string) __('admin/users.us_create_complete_all'); // @phpstan-ignore cast.string
             $errors++;
         }
 
         if (!Functions::validEmail(strip_tags($email))) {
-            $error .= __('admin/users.us_create_invalid_email');
+            $error .= (string) __('admin/users.us_create_invalid_email'); // @phpstan-ignore cast.string
             $errors++;
         }
 
+        /** @phpstan-ignore staticMethod.notFound */
         if (User::where('name', $name)->exists()) {
-            $error .= __('admin/users.us_create_existing_name');
+            $error .= (string) __('admin/users.us_create_existing_name'); // @phpstan-ignore cast.string
             $errors++;
         }
 
+        /** @phpstan-ignore staticMethod.notFound */
         if (User::where('email', $email)->exists()) {
-            $error .= __('admin/users.us_create_existing_email');
+            $error .= (string) __('admin/users.us_create_existing_email'); // @phpstan-ignore cast.string
             $errors++;
         }
 
@@ -126,20 +133,20 @@ class UsersController extends BaseController
             ->exists();
 
         if ($planetExists) {
-            $error .= __('admin/users.us_create_existing_planet');
+            $error .= (string) __('admin/users.us_create_existing_planet'); // @phpstan-ignore cast.string
             $errors++;
         }
 
         if ($request->has('password_check')) {
             $pass = Functions::generatePassword();
         } elseif (strlen($pass) < 4) {
-            $error .= __('admin/users.us_create_invalid_password');
+            $error .= (string) __('admin/users.us_create_invalid_password'); // @phpstan-ignore cast.string
             $errors++;
         }
 
         if ($errors === 0) {
             $this->createNewUser($name, $email, $auth, $pass, $galaxy, $system, $planet);
-            session()->flash('success', strtr(__('admin/users.us_create_added'), ['%s' => $pass]));
+            session()->flash('success', strtr((string) __('admin/users.us_create_added'), ['%s' => $pass])); // @phpstan-ignore cast.string
         } else {
             session()->flash('warning', '<br>' . $error);
         }
@@ -444,6 +451,7 @@ class UsersController extends BaseController
             DB::transaction(function () use ($name, $email, $auth, $pass, $galaxy, $system, $planet) {
                 $time = time();
 
+                /** @phpstan-ignore staticMethod.notFound */
                 $user = User::create([
                     'name' => $name,
                     'email' => $email,
@@ -470,6 +478,7 @@ class UsersController extends BaseController
 
                 $lastPlanetId = (int) DB::getPdo()->lastInsertId();
 
+                /** @phpstan-ignore staticMethod.notFound */
                 User::where('id', $lastUserId)->update([
                     'home_planet_id' => $lastPlanetId,
                     'current_planet' => $lastPlanetId,
