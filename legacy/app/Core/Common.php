@@ -21,7 +21,6 @@ require_once XGP_ROOT . 'config' . DIRECTORY_SEPARATOR . 'constants.php';
 class Common
 {
     private const APPLICATIONS = [
-        'admin' => ['setSystemTimezone', 'setSecure'],
         'game' => ['setSystemTimezone', 'setSecure', 'setUpdates', 'isServerOpen', 'checkBanStatus'],
     ];
     private bool $is_installed = false;
