@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\RegistrationRequest;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class RegistrationController extends AdminSettingsController
 {
@@ -30,7 +30,7 @@ class RegistrationController extends AdminSettingsController
         return $this->view('admin.registration', $this->buildViewData());
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(RegistrationRequest $request): RedirectResponse
     {
         $this->authorize();
 
