@@ -40,10 +40,6 @@ class LoginController extends BaseController
                 $authUser->id,
                 $authUser->password
             );
-            $this->sessionService->setAdminData(
-                $authUser->id,
-                $authUser->password
-            );
 
             return redirect(
                 'admin/' . (!empty($request->get('redirect')) ? $request->get('redirect') : 'home')
