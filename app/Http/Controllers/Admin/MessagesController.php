@@ -139,6 +139,7 @@ class MessagesController extends BaseController
             'receiver' => $msg->receiverUser?->name ?? '-',
             'message_time' => Timing::formatExtendedDate((string) $msg->message_time),
             'message_type' => __('admin/messages.mg_types')[$msg->message_type] ?? '-',
+            'message_type_key' => $msg->message_type,
             'message_from' => $msg->message_from,
             'message_subject' => $msg->message_subject,
             'message_text' => nl2br($msg->message_text),

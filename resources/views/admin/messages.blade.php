@@ -116,9 +116,24 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($results as $item)
-                                            <tr class="cursor-pointer" data-toggle="collapse"
-                                                data-target="#msg-{{ $item['message_id'] }}"
-                                                aria-expanded="false" aria-controls="msg-{{ $item['message_id'] }}">
+                                            @php
+                                                $isPrivate = $item['message_type_key'] === 4;
+                                                $typeBadge = match($item['message_type_key']) {
+                                                    0 => 'badge-info',
+                                                    1 => 'badge-danger',
+                                                    2 => 'badge-warning',
+                                                    3 => 'badge-success',
+                                                    4 => 'badge-primary',
+                                                    default => 'badge-secondary',
+                                                };
+                                            @endphp
+                                            @if ($isPrivate)
+                                                <tr>
+                                            @else
+                                                <tr class="cursor-pointer" data-toggle="collapse"
+                                                    data-target="#msg-{{ $item['message_id'] }}"
+                                                    aria-expanded="false" aria-controls="msg-{{ $item['message_id'] }}">
+                                            @endif
                                                 <td class="pl-4 align-middle" onclick="event.stopPropagation()">
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input msg-check"
@@ -131,28 +146,26 @@
                                                 <td class="align-middle font-weight-bold">{{ $item['receiver'] }}</td>
                                                 <td class="align-middle"><small class="text-muted">{{ $item['message_time'] }}</small></td>
                                                 <td class="align-middle">
-                                                    @php
-                                                        $typeKey = collect($type_options)->firstWhere('name', $item['message_type'])['value'] ?? -1;
-                                                        $typeBadge = match($typeKey) {
-                                                            0 => 'badge-info',
-                                                            1 => 'badge-danger',
-                                                            2 => 'badge-warning',
-                                                            3 => 'badge-success',
-                                                            4 => 'badge-primary',
-                                                            default => 'badge-secondary',
-                                                        };
-                                                    @endphp
                                                     <span class="badge {{ $typeBadge }}">{{ $item['message_type'] }}</span>
                                                 </td>
                                                 <td class="align-middle text-muted small">{!! $item['message_from'] !!}</td>
-                                                <td class="align-middle font-weight-bold">{!! $item['message_subject'] !!}</td>
+                                                <td class="align-middle font-weight-bold">
+                                                    @if ($isPrivate)
+                                                        <i class="fas fa-lock fa-xs text-muted mr-1"></i>
+                                                        <span class="text-muted font-weight-normal font-italic small">{{ __('admin/messages.mg_private_content') }}</span>
+                                                    @else
+                                                        {!! $item['message_subject'] !!}
+                                                    @endif
+                                                </td>
                                                 <td class="align-middle" onclick="event.stopPropagation()">
                                                     <div class="d-flex" style="gap: 0.25rem;">
-                                                        <button type="button" class="btn btn-sm btn-primary"
-                                                            title="{{ __('admin/messages.mg_the_message') }}"
-                                                            data-toggle="collapse" data-target="#msg-{{ $item['message_id'] }}">
-                                                            <i class="fas fa-eye fa-sm"></i>
-                                                        </button>
+                                                        @if (!$isPrivate)
+                                                            <button type="button" class="btn btn-sm btn-primary"
+                                                                title="{{ __('admin/messages.mg_the_message') }}"
+                                                                onclick="event.stopPropagation(); $('#msg-{{ $item['message_id'] }}').collapse('toggle');">
+                                                                <i class="fas fa-eye fa-sm"></i>
+                                                            </button>
+                                                        @endif
                                                         <button type="button" class="btn btn-sm btn-danger"
                                                             title="{{ __('admin/messages.mg_delete_this') }}"
                                                             onclick="deleteMessage({{ $item['message_id'] }})">
@@ -161,23 +174,25 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td colspan="8" class="p-0 border-0">
-                                                    <div class="collapse" id="msg-{{ $item['message_id'] }}">
-                                                        <div class="card border-left-primary m-3">
-                                                            <div class="card-header py-2">
-                                                                <small class="font-weight-bold text-primary">
-                                                                    <i class="fas fa-envelope-open fa-xs mr-1"></i>
-                                                                    {{ __('admin/messages.mg_the_message') }}
-                                                                </small>
-                                                            </div>
-                                                            <div class="card-body py-3">
-                                                                {!! $item['message_text'] !!}
+                                            @if (!$isPrivate)
+                                                <tr>
+                                                    <td colspan="8" class="p-0 border-0">
+                                                        <div class="collapse" id="msg-{{ $item['message_id'] }}">
+                                                            <div class="card border-left-primary m-3">
+                                                                <div class="card-header py-2">
+                                                                    <small class="font-weight-bold text-primary">
+                                                                        <i class="fas fa-envelope-open fa-xs mr-1"></i>
+                                                                        {{ __('admin/messages.mg_the_message') }}
+                                                                    </small>
+                                                                </div>
+                                                                <div class="card-body py-3">
+                                                                    {!! $item['message_text'] !!}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>
