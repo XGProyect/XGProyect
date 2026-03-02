@@ -71,13 +71,13 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('admin.backup.download', $item['full_file_name']) }}"
-                                            class="btn btn-primary btn-circle btn-sm">
+                                            class="btn btn-sm btn-outline-primary">
                                             <i class="fas fa-file-download"></i>
                                         </a>
                                         <form method="POST" action="{{ route('admin.backup.destroy', $item['full_file_name']) }}" class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-circle btn-sm">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
