@@ -6,169 +6,144 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Messages;
 use App\Services\AdministrationService;
-use App\Services\SettingsService;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
-use Xgp\App\Core\Template;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class MessagesController extends BaseController
 {
-    private array $results = [];
-    private AdministrationService $administrationService;
-
-    public function __construct()
-    {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+    public function __construct(
+        private readonly AdministrationService $administrationService,
+    ) {
     }
 
-    public function __invoke(): void
+    public function index(Request $request): View
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->runAction();
+        $searchFields = ['message_sender', 'message_receiver', 'message_subject', 'message_date', 'message_type', 'message_text'];
+        $hasSearch = $request->hasAny($searchFields);
+        $results = [];
 
-        Template::legacyView(
-            'admin.messages',
-            array_merge(
-                $this->buildMessageTypeBlock(),
-                [
-                    'results' => $this->results,
-                    'show_search' => $this->results ? '' : 'show',
-                    'show_results' => $this->results ? 'show' : '',
-                ]
-            )
-        );
-    }
+        if ($hasSearch) {
+            $results = $this->search($request);
 
-    private function runAction(): void
-    {
-        $action = filter_input_array(INPUT_POST);
-        $single_delete = filter_input_array(INPUT_GET, [
-            'action' => FILTER_UNSAFE_RAW,
-            'messageId' => [
-                'filter' => FILTER_VALIDATE_INT,
-                'options' => ['min_range' => 0],
+            if (empty($results)) {
+                session()->flash('warning', __('admin/messages.mg_no_results'));
+            }
+        }
+
+        return view('admin.messages', [
+            'results' => $results,
+            'hasSearch' => $hasSearch,
+            'type_options' => $this->buildMessageTypeOptions(),
+            'search' => [
+                'message_sender' => $request->string('message_sender')->toString(),
+                'message_receiver' => $request->string('message_receiver')->toString(),
+                'message_subject' => $request->string('message_subject')->toString(),
+                'message_date' => $request->string('message_date')->toString(),
+                'message_type' => $request->string('message_type')->toString(),
+                'message_text' => $request->string('message_text')->toString(),
             ],
         ]);
-
-        if ($action) {
-            $filtered_action = array_filter(
-                $action,
-                function ($value) {
-                    return !is_null($value) && $value !== false && $value !== '';
-                }
-            );
-
-            if (isset($filtered_action['search'])) {
-                $this->doSearch($filtered_action);
-            }
-
-            if (isset($filtered_action['delete_messages'])) {
-                $this->deleteMessages($filtered_action['delete_messages']);
-            }
-        }
-
-        if (isset($single_delete['action']) == 'delete' &&
-            isset($single_delete['messageId'])) {
-            $this->deleteMessage($single_delete['messageId']);
-        }
     }
 
-    private function doSearch(array $to_search): void
+    public function destroy(Messages $message): RedirectResponse
     {
-        $query = DB::table('messages AS m')
-            ->select('m.*', 'u1.name AS sender', 'u2.name AS receiver')
-            ->leftJoin('users AS u1', 'u1.id', '=', 'm.message_sender')
-            ->leftJoin('users AS u2', 'u2.id', '=', 'm.message_receiver');
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
-        // search by username or user id
-        if (!empty($to_search['message_user'])) {
-            $username = $to_search['message_user'];
-            $query->where(function (Builder $q) use ($username) {
-                $q->whereIn('m.message_sender', function ($sub) use ($username) {
-                    $sub->select('id')->from('users')->where('name', $username);
-                })->orWhereIn('m.message_receiver', function ($sub) use ($username) {
-                    $sub->select('id')->from('users')->where('name', $username);
-                });
-            });
-        }
-
-        // search by subject
-        if (!empty($to_search['message_subject'])) {
-            $query->where('m.message_subject', 'LIKE', '%' . $to_search['message_subject'] . '%');
-        }
-
-        // search by date
-        if (!empty($to_search['message_date']) && strtotime($to_search['message_date'])) {
-            $startDate = strtotime($to_search['message_date'] . ' 00:00:00');
-            $endDate = strtotime($to_search['message_date'] . ' 23:59:59');
-            $query->whereBetween('m.message_time', [$startDate, $endDate]);
-        }
-
-        // search by message type
-        if (!empty($to_search['message_type']) && (int) $to_search['message_type'] > 0) {
-            $query->where('m.message_type', (int) $to_search['message_type']);
-        }
-
-        // search by message text
-        if (!empty($to_search['message_text'])) {
-            $query->where('m.message_text', 'LIKE', '%' . $to_search['message_text'] . '%');
-        }
-
-        $search_results = $query->get()->map(fn ($r) => (array) $r)->toArray();
-
-        if ($search_results) {
-            $results_list = [];
-
-            foreach ($search_results as $result) {
-                $results_list[] = array_merge(
-                    $result,
-                    [
-                        'message_time' => Timing::formatExtendedDate($result['message_time']),
-                        'message_type' => __('admin/messages.mg_types')[$result['message_type']],
-                        'message_text' => nl2br($result['message_text']),
-                    ]
-                );
-            }
-
-            $this->results = $results_list;
-        } else {
-            session()->flash('warning', __('admin/messages.mg_no_results'));
-        }
-    }
-
-    private function deleteMessage(int $message_id): void
-    {
-        Messages::whereIn('message_id', [$message_id])->delete();
+        $message->delete();
 
         session()->flash('success', __('admin/messages.mg_delete_ok'));
+
+        return redirect()->route('admin.messages');
     }
 
-    private function deleteMessages(array $messages): void
+    public function destroyBatch(Request $request): RedirectResponse
     {
-        $ids = [];
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
-        foreach ($messages as $message_id => $delete_status) {
-            if ($delete_status == 'on' && $message_id > 0 && is_numeric($message_id)) {
-                $ids[] = $message_id;
-            }
+        /** @var array<int|string, string> $selected */
+        $selected = (array) $request->input('delete_messages', []);
+
+        $ids = collect($selected)
+            ->filter(fn ($status, $id) => $status === 'on' && is_numeric($id) && (int) $id > 0)
+            ->keys()
+            ->map(fn ($id) => (int) $id)
+            ->all();
+
+        if (!empty($ids)) {
+            Messages::whereIn('message_id', $ids)->delete();
+            session()->flash('success', __('admin/messages.mg_delete_ok'));
         }
 
-        Messages::whereIn('message_id', $ids)->delete();
-
-        session()->flash('success', __('admin/messages.mg_delete_ok'));
+        return redirect()->route('admin.messages');
     }
 
-    private function buildMessageTypeBlock(): array
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function search(Request $request): array
     {
-        $options_list = [];
-        $message_types = [
+        $query = Messages::query()
+            ->with('senderUser:id,name', 'receiverUser:id,name');
+
+        $sender = trim($request->string('message_sender')->toString());
+        if ($sender !== '') {
+            $query->whereHas('senderUser', fn ($sub) => $sub->where('name', $sender));
+        }
+
+        $receiver = trim($request->string('message_receiver')->toString());
+        if ($receiver !== '') {
+            $query->whereHas('receiverUser', fn ($sub) => $sub->where('name', $receiver));
+        }
+
+        $subject = trim($request->string('message_subject')->toString());
+        if ($subject !== '') {
+            $query->where('message_subject', 'LIKE', '%' . $subject . '%');
+        }
+
+        $date = trim($request->string('message_date')->toString());
+        if ($date !== '' && strtotime($date)) {
+            $startDate = strtotime($date . ' 00:00:00');
+            $endDate = strtotime($date . ' 23:59:59');
+            $query->whereBetween('message_time', [$startDate, $endDate]);
+        }
+
+        $type = $request->string('message_type')->toString();
+        if ($type !== '' && (int) $type >= 0) {
+            $query->where('message_type', (int) $type);
+        }
+
+        $text = trim($request->string('message_text')->toString());
+        if ($text !== '') {
+            $query->where('message_text', 'LIKE', '%' . $text . '%');
+        }
+
+        return $query->limit(100)->get()->map(fn (Messages $msg) => [
+            'message_id' => $msg->message_id,
+            'sender' => $msg->senderUser?->name ?? '-',
+            'receiver' => $msg->receiverUser?->name ?? '-',
+            'message_time' => Timing::formatExtendedDate($msg->message_time),
+            'message_type' => __('admin/messages.mg_types')[$msg->message_type] ?? '-',
+            'message_from' => $msg->message_from,
+            'message_subject' => $msg->message_subject,
+            'message_text' => nl2br($msg->message_text),
+        ])->all();
+    }
+
+    /**
+     * @return array<int, array{value: int, name: string}>
+     */
+    private function buildMessageTypeOptions(): array
+    {
+        $types = [
             MessagesEnumerator::ESPIO,
             MessagesEnumerator::COMBAT,
             MessagesEnumerator::EXP,
@@ -177,15 +152,9 @@ class MessagesController extends BaseController
             MessagesEnumerator::GENERAL,
         ];
 
-        foreach ($message_types as $type) {
-            $options_list[] = [
-                'value' => $type,
-                'name' => __('admin/messages.mg_types')[$type],
-            ];
-        }
-
-        return [
-            'type_options' => $options_list,
-        ];
+        return array_map(fn (int $type) => [
+            'value' => $type,
+            'name' => __('admin/messages.mg_types')[$type],
+        ], $types);
     }
 }

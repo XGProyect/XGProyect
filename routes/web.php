@@ -72,7 +72,9 @@ Route::prefix('admin')->group(function () {
             Route::get('/languages', [Admin\LanguagesController::class, 'index'])->name('admin.languages');
             Route::post('/languages', [Admin\LanguagesController::class, 'update'])->name('admin.languages.update');
             Route::any('/mailing', Admin\MailingController::class)->name('admin.mailing');
-            Route::any('/messages', Admin\MessagesController::class)->name('admin.messages');
+            Route::get('/messages', [Admin\MessagesController::class, 'index'])->name('admin.messages');
+            Route::delete('/messages/{message}', [Admin\MessagesController::class, 'destroy'])->name('admin.messages.destroy');
+            Route::post('/messages/delete-batch', [Admin\MessagesController::class, 'destroyBatch'])->name('admin.messages.destroy-batch');
             Route::any('/modules', Admin\ModulesController::class)->name('admin.modules');
             Route::get('/permissions', [Admin\PermissionsController::class, 'index'])->name('admin.permissions');
             Route::post('/permissions', [Admin\PermissionsController::class, 'save'])->name('admin.permissions.save');

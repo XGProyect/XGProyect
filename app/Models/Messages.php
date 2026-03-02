@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
+ * @property int    $message_id
  * @property int    $message_sender
  * @property int    $message_receiver
  * @property int    $message_time
@@ -89,9 +91,13 @@ class Messages extends Model
      */
     public $timestamps = false;
 
-    // Scopes...
+    public function senderUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'message_sender');
+    }
 
-    // Functions ...
-
-    // Relations ...
+    public function receiverUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'message_receiver');
+    }
 }
