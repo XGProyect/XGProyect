@@ -39,6 +39,9 @@ class ServerController extends AdminSettingsController
         return $this->saved('admin.server', 'admin/server.se_all_ok_message');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function buildViewData(): array
     {
         return [

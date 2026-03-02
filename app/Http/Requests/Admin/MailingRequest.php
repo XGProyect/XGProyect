@@ -40,6 +40,7 @@ class MailingRequest extends FormRequest
      */
     public function toSettings(): array
     {
+        /** @var array<string, mixed> $validated */
         $validated = $this->validated();
         $settings = [];
 

@@ -40,6 +40,9 @@ class PlanetsController extends AdminSettingsController
         return $this->saved('admin.planets', 'admin/planets.np_all_ok_message');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function buildViewData(): array
     {
         return array_combine(

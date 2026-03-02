@@ -39,6 +39,9 @@ class StatisticsController extends AdminSettingsController
         return $this->saved('admin.statistics', 'admin/statistics.cs_all_ok_message');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function buildViewData(): array
     {
         $currentLevel = $this->settings->getInt('stat_admin_level');

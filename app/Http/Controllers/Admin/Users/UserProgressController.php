@@ -16,8 +16,6 @@ use Xgp\App\Libraries\StatisticsLibrary;
 
 class UserProgressController extends BaseController
 {
-    private const AUTH_MODULE = UsersController::class;
-
     public function __construct(private readonly SettingsService $settings)
     {
     }

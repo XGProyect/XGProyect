@@ -16,6 +16,9 @@ abstract class AdminSettingsController extends BaseController
     ) {
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     protected function view(string $view, array $data = []): View
     {
         return view($view, $data);

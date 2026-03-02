@@ -23,8 +23,6 @@ class UserMoonController extends BaseController
 {
     use UserPlanetTrait;
 
-    private const AUTH_MODULE = UsersController::class;
-
     public function __construct(private readonly SettingsService $settings)
     {
     }

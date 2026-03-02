@@ -30,6 +30,9 @@ class MailingController extends AdminSettingsController
         return $this->saved('admin.mailing', 'admin/mailing.ma_all_ok_message');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function buildViewData(): array
     {
         $protocol = $this->settings->getString('mailing_protocol');
@@ -53,8 +56,8 @@ class MailingController extends AdminSettingsController
     }
 
     /**
-     * @param  string[]       $items
-     * @param  callable|null  $labelFn  optional transform applied to each label
+     * @param  string[]  $items
+     * @param  string|null  $labelFn  optional callable name applied to each label
      *
      * @return array<int, array{value: string, label: string, selected: bool}>
      */

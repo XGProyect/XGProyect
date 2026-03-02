@@ -36,6 +36,9 @@ class RegistrationController extends AdminSettingsController
         return $this->saved('admin.registration', 'admin/registration.ur_all_ok_message');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function buildViewData(): array
     {
         return array_combine(
