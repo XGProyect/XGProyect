@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Users\UserInfoRequest;
 use App\Http\Requests\Admin\Users\UserSettingsRequest;
 use App\Models\Alliance;
 use App\Models\User;
+use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,7 +16,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use Xgp\App\Core\Options;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;
 use Xgp\App\Libraries\Users as UsersLibrary;
@@ -27,6 +27,10 @@ use Xgp\App\Libraries\Users\Shortcuts;
  */
 class UsersController extends BaseController
 {
+    public function __construct(private readonly SettingsService $settings)
+    {
+    }
+
     public function index(Request $request): View
     {
         $search = trim($request->string('user')->toString());
@@ -426,7 +430,7 @@ class UsersController extends BaseController
 
     private function dateFormatExtended(): string
     {
-        return (string) (Options::getInstance()->get('date_format_extended') ?? 'Y-m-d H:i:s');
+        return $this->settings->getString('date_format_extended') ?: 'Y-m-d H:i:s';
     }
 
     /** @SuppressWarnings(PHPMD.StaticAccess) */
@@ -455,7 +459,7 @@ class UsersController extends BaseController
                 DB::table('users_statistics')->insert(['user_statistic_user_id' => $lastUserId]);
                 DB::table('premium')->insert([
                     'premium_user_id' => $lastUserId,
-                    'premium_dark_matter' => Options::getInstance()->get('registration_dark_matter'),
+                    'premium_dark_matter' => $this->settings->getInt('registration_dark_matter'),
                 ]);
                 DB::table('preferences')->insert(['preference_user_id' => $lastUserId]);
 

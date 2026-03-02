@@ -7,16 +7,20 @@ namespace App\Http\Controllers\Admin\Users;
 use App\Http\Requests\Admin\Users\UserPremiumRequest;
 use App\Http\Requests\Admin\Users\UserResearchRequest;
 use App\Models\User;
+use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
-use Xgp\App\Core\Options;
 use Xgp\App\Libraries\StatisticsLibrary;
 
 class UserProgressController extends BaseController
 {
     private const AUTH_MODULE = UsersController::class;
+
+    public function __construct(private readonly SettingsService $settings)
+    {
+    }
 
     public function showResearch(User $user): View
     {
@@ -157,6 +161,6 @@ class UserProgressController extends BaseController
 
     private function dateFormat(): string
     {
-        return (string) (Options::getInstance()->get('date_format') ?? 'Y-m-d');
+        return $this->settings->getString('date_format') ?: 'Y-m-d';
     }
 }

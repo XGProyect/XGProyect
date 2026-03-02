@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\FormatLib as Format;
@@ -13,6 +13,10 @@ use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class TasksController extends BaseController
 {
+    public function __construct(private readonly SettingsService $settings)
+    {
+    }
+
     public function __invoke(): void
     {
         Template::legacyView(
@@ -39,7 +43,7 @@ class TasksController extends BaseController
         $last_run = '-';
 
         if ($this->isTaskScheduled($task)) {
-            $task_time = (int) Options::getInstance()->get($task);
+            $task_time = (int) $this->settings->getString($task);
             $next_run = Timing::formatExtendedDate($task_time);
             $last_run = Format::prettyTimeAgo(date('Y-m-d H:i:s', (int) $task_time)) . ' ago';
         }
@@ -54,7 +58,7 @@ class TasksController extends BaseController
 
     private function isTaskScheduled(string $task): bool
     {
-        return !($task == 'last_backup' && Options::getInstance()->get('auto_backup') == 0);
+        return $task !== 'last_backup' || $this->settings->getBool('auto_backup');
     }
 
     private function getStatLastUpdateActions(): string

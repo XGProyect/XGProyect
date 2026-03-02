@@ -5,18 +5,22 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\UpdateRequest;
+use App\Services\SettingsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Xgp\App\Core\Options;
 
 class UpdateController extends BaseController
 {
+    public function __construct(private readonly SettingsService $settings)
+    {
+    }
+
     public function index(): View
     {
         $systemVersion = config('version.files');
-        $dbVersion = Options::getInstance()->get('version');
+        $dbVersion = $this->settings->getString('version');
         $subTitle = sprintf(__('admin/update.up_sub_title'), $dbVersion, $systemVersion);
 
         if ($systemVersion === $dbVersion) {
@@ -37,7 +41,7 @@ class UpdateController extends BaseController
     public function run(UpdateRequest $request): View | RedirectResponse
     {
         $systemVersion = config('version.files');
-        $dbVersion = Options::getInstance()->get('version');
+        $dbVersion = $this->settings->getString('version');
         $subTitle = sprintf(__('admin/update.up_sub_title'), $dbVersion, $systemVersion);
 
         if (!$this->checkVersion()) {

@@ -6,15 +6,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Http\Requests\Admin\ResetRequest;
+use App\Services\SettingsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Xgp\App\Core\Options;
 use Xgp\App\Libraries\PlanetLib;
 
 class ResetController extends BaseController
 {
+    public function __construct(private readonly SettingsService $settings)
+    {
+    }
+
     public function index(): View
     {
         return view('admin.reset');
@@ -334,7 +338,7 @@ class ResetController extends BaseController
 
                     DB::table('premium')->insert([
                         'premium_user_id' => $user->id,
-                        'premium_dark_matter' => Options::getInstance()->get('registration_dark_matter'),
+                        'premium_dark_matter' => $this->settings->getInt('registration_dark_matter'),
                     ]);
 
                     DB::table('preferences')->insert(['preference_user_id' => $user->id]);

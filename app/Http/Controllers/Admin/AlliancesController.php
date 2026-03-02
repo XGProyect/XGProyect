@@ -10,11 +10,11 @@ use App\Http\Requests\Admin\AllianceRankRequest;
 use App\Models\Alliance;
 use App\Models\User;
 use App\Services\Admin\AlliancesService;
+use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Options;
 use Xgp\App\Libraries\Alliance\Ranks;
 
 /**
@@ -25,6 +25,7 @@ class AlliancesController extends BaseController
 {
     public function __construct(
         private readonly AlliancesService $alliancesService,
+        private readonly SettingsService $settings,
     ) {
     }
 
@@ -95,7 +96,7 @@ class AlliancesController extends BaseController
     {
         $allianceData = $this->alliancesService->loadAllianceWithStats($alliance->alliance_id);
         $users = User::query()->select('id', 'name')->orderBy('name')->get();
-        $dateFormat = (string) (Options::getInstance()->get('date_format_extended') ?? 'Y-m-d H:i:s');
+        $dateFormat = $this->settings->getString('date_format_extended') ?: 'Y-m-d H:i:s';
 
         return view('admin.alliances_information', [
             'alliance' => $allianceData,

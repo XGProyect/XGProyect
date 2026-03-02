@@ -6,10 +6,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\AnnouncementRequest;
 use App\Mail\Announcement;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Mail\SentMessage;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -17,7 +19,6 @@ use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Users;
 
 class AnnouncementController extends BaseController
 {
@@ -43,14 +44,15 @@ class AnnouncementController extends BaseController
 
     private function sendMessages(AnnouncementRequest $request, Collection $players): void
     {
-        $user = Users::getInstance()->getUserData();
+        /** @var User $user */
+        $user = Auth::user();
 
         $pickedColor = (string) $request->input('color-picker', '');
         $color = $this->isValidColor($pickedColor)
             ? $pickedColor
-            : $this->getMessageColor()[$user['authlevel']];
+            : $this->getMessageColor()[$user->authlevel];
 
-        $level = __('admin/global.user_level')[$user['authlevel']];
+        $level = __('admin/global.user_level')[$user->authlevel];
         $time = time();
 
         $from = Format::customColor($level, $color);
@@ -60,7 +62,7 @@ class AnnouncementController extends BaseController
         foreach ($players as $player) {
             Functions::sendMessage(
                 (int) $player->id,
-                (int) $user['id'],
+                (int) $user->id,
                 $time,
                 MessagesEnumerator::GENERAL,
                 $from,

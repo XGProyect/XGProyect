@@ -82,7 +82,8 @@ class BanController extends BaseController
     {
         $days = (int) $request->input('days', 0);
         $hours = (int) $request->input('hour', 0);
-        $adminUser = Users::getInstance()->getUserData();
+        /** @var User $adminUser */
+        $adminUser = Auth::user();
 
         $banEndTime = Carbon::now()->addDays($days)->addHours($hours);
 
@@ -99,7 +100,7 @@ class BanController extends BaseController
 
         $this->upsertBan(
             $targetUser->id,
-            (int) $adminUser['id'],
+            (int) $adminUser->id,
             (string) $request->input('text', ''),
             $banEndTime,
             $request->filled('vacat'),

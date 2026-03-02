@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JsonException;
 use stdClass;
-use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib as Format;
 
 class HomeController extends BaseController
 {
+    public function __construct(private readonly SettingsService $settings)
+    {
+    }
+
     public function __invoke(): void
     {
         /** @var \App\Models\User $authUser */
@@ -67,7 +71,7 @@ class HomeController extends BaseController
                 $alert[] = __('admin/home.hm_install_file_detected');
             }
 
-            if (Options::getInstance()->get('version') != config('version.files')) {
+            if ($this->settings->getString('version') != config('version.files')) {
                 $alert[] = __('admin/home.hm_update_required');
             }
         }
@@ -111,7 +115,7 @@ class HomeController extends BaseController
                 );
 
                 if ($fileData) {
-                    $systemVersion = Options::getInstance()->get('version');
+                    $systemVersion = $this->settings->getString('version');
                     $lastestVersion = @json_decode(
                         $fileData,
                         false,

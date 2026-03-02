@@ -7,13 +7,13 @@ namespace App\Http\Controllers\Admin\Users;
 use App\Http\Requests\Admin\Users\UserPlanetRequest;
 use App\Http\Traits\Admin\Users\UserPlanetTrait;
 use App\Models\User;
+use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
-use Xgp\App\Core\Options;
 use Xgp\App\Libraries\PlanetLib;
 
 /**
@@ -24,6 +24,10 @@ class UserMoonController extends BaseController
     use UserPlanetTrait;
 
     private const AUTH_MODULE = UsersController::class;
+
+    public function __construct(private readonly SettingsService $settings)
+    {
+    }
 
     public function showMoons(User $user): View
     {
@@ -252,6 +256,6 @@ class UserMoonController extends BaseController
 
     private function dateFormatExtended(): string
     {
-        return (string) (Options::getInstance()->get('date_format_extended') ?? 'Y-m-d H:i:s');
+        return $this->settings->getString('date_format_extended') ?: 'Y-m-d H:i:s';
     }
 }

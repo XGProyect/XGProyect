@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\SettingsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
-use Xgp\App\Core\Options;
 use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\StatisticsLibrary as Statistics;
 
 class RebuildHighscoresController extends BaseController
 {
+    public function __construct(private readonly SettingsService $settings)
+    {
+    }
+
     public function index(): View
     {
         return view('admin.rebuildhighscores');
@@ -24,7 +28,7 @@ class RebuildHighscoresController extends BaseController
 
         session()->flash('success', strtr(__('admin/rebuildhighscores.sb_stats_update'), ['%t' => $result['totaltime']]));
 
-        Options::getInstance()->write('stat_last_update', $result['stats_time']);
+        $this->settings->write('stat_last_update', $result['stats_time']);
 
         return redirect()->route('admin.rebuildhighscores')->with([
             'memory_p' => strtr('%i / %m', [
