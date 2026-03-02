@@ -6,71 +6,53 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 
 class RegistrationController extends BaseController
 {
-    public const REGISTRATION_SETTINGS = [
-        'reg_enable' => FILTER_UNSAFE_RAW,
-        'reg_welcome_message' => FILTER_UNSAFE_RAW,
-        'reg_welcome_email' => FILTER_UNSAFE_RAW,
+    private const BOOL_SETTINGS = [
+        'reg_enable',
+        'reg_welcome_message',
+        'reg_welcome_email',
     ];
+
     private AdministrationService $administrationService;
 
-    public function __construct()
+    public function __construct(private readonly SettingsService $settings)
     {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+        $this->administrationService = new AdministrationService($settings);
     }
 
-    public function __invoke(): void
+    public function index(): void
     {
         $this->administrationService->checkSession();
         $this->administrationService->authorization(__CLASS__);
 
-        $this->runAction();
-
-        Template::legacyView(
-            'admin.registration',
-            $this->getNewUserRegistrationSettings()
-        );
+        Template::legacyView('admin.registration', $this->buildViewData());
     }
 
-    private function runAction(): void
+    public function update(Request $request): RedirectResponse
     {
-        $data = filter_input_array(INPUT_POST, self::REGISTRATION_SETTINGS, true);
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
 
-        if ($data) {
-            foreach ($data as $option => $value) {
-                Options::getInstance()->write($option, ($value == 'on' ? 1 : 0));
-            }
-
-            session()->flash('success', __('admin/registration.ur_all_ok_message'));
-        }
-    }
-
-    private function getNewUserRegistrationSettings(): array
-    {
-        return $this->setChecked(
-            array_filter(
-                Options::getInstance()->get(),
-                function ($key) {
-                    return array_key_exists($key, self::REGISTRATION_SETTINGS);
-                },
-                ARRAY_FILTER_USE_KEY
-            )
-        );
-    }
-
-    private function setChecked(array $settings): array
-    {
-        foreach ($settings as $key => $value) {
-            $settings[$key] = $value == 1 ? 'checked="checked"' : '';
+        foreach (self::BOOL_SETTINGS as $key) {
+            $this->settings->write($key, $request->boolean($key) ? 1 : 0);
         }
 
-        return $settings;
+        return redirect()->route('admin.registration')
+            ->with('success', __('admin/registration.ur_all_ok_message'));
+    }
+
+    private function buildViewData(): array
+    {
+        return [
+            'reg_enable'          => $this->settings->getBool('reg_enable'),
+            'reg_welcome_message' => $this->settings->getBool('reg_welcome_message'),
+            'reg_welcome_email'   => $this->settings->getBool('reg_welcome_email'),
+        ];
     }
 }
