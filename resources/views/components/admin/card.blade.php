@@ -32,10 +32,10 @@
             @endif
         </h6>
         @isset($action)
-            {{ $action }}
+            {!! $action !!}
         @endisset
     </div>
     <div class="{{ $flush ? 'card-body p-0' : 'card-body' }}">
-        {{ $slot }}
+        {!! $slot !!}
     </div>
 </div>

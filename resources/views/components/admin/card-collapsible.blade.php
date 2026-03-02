@@ -2,17 +2,17 @@
     Admin collapsible card component (Bootstrap accordion pattern).
 
     Usage:
-        <x-admin-card-collapsible id="collapseStats" title="Statistics" :open="true">
+        <x-admin.card-collapsible id="collapseStats" title="Statistics" :open="true">
             <p>Content goes here</p>
-        </x-admin-card-collapsible>
+        </x-admin.card-collapsible>
 
     Props:
-        id      (string)  – unique id for the collapse target (no #)
-        title   (string)  – card header label
-        icon    (string|null) – FontAwesome class shown before the chevron
-        badge   (int|string|null) – optional count badge shown next to the title
-        open    (bool)    – whether the panel starts expanded (default true)
-        flush   (bool)    – removes card-body padding (p-0) for full-bleed tables
+        id      (string)           - unique id for the collapse target (no #)
+        title   (string)           - card header label
+        icon    (string|null)      - FontAwesome class shown before the chevron
+        badge   (int|string|null)  - optional count badge shown next to the title
+        open    (bool)             - whether the panel starts expanded (default true)
+        flush   (bool)             - removes card-body padding (p-0) for full-bleed tables
 --}}
 @props([
     'id',
@@ -39,7 +39,7 @@
     </a>
     <div class="collapse {{ $open ? 'show' : '' }}" id="{{ $id }}">
         <div class="{{ $flush ? 'card-body p-0' : 'card-body' }}">
-            {{ $slot }}
+            {!! $slot !!}
         </div>
     </div>
 </div>
