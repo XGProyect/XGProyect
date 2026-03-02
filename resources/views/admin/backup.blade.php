@@ -24,7 +24,7 @@
                     <div class="table-responsive">
                         <form name="frm_backup" method="POST" action="{{ route('admin.backup.save') }}">
                             @csrf
-                            <table class="table table-borderless" width="100%" cellspacing="0">
+                            <table class="table table-borderless">
                                 <tbody>
                                     <tr>
                                         <td>
@@ -57,7 +57,7 @@
         <div class="col-lg-6">
             <x-admin.card-collapsible id="collapseList" title="{{ __('admin/backup.bku_list') }}">
                         <div class="table-responsive">
-                            <table class="table table-borderless" width="100%" cellspacing="0">
+                            <table class="table table-borderless">
                                 @foreach ($backup_list as $item)
                                 <tr>
                                     <td>

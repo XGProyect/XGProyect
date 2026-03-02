@@ -39,7 +39,7 @@
                 <x-admin.card-collapsible id="collapseGeneral" title="{{ __('admin/repair.db_general') }}" :flush="true">
                             <div class="table-responsive">
                             @if($results === null)
-                                <table class="table table-bordered table-hover" id="repairTable" cellspacing="0">
+                                <table class="table table-bordered table-hover" id="repairTable">
                                     <thead class="thead-light">
                                         <tr>
                                             <th>{{ __('admin/repair.db_table_name') }}</th>
@@ -74,7 +74,7 @@
                                     </tbody>
                                 </table>
                             @else
-                                <table class="table table-bordered table-hover" id="repairTable" cellspacing="0">
+                                <table class="table table-bordered table-hover" id="repairTable">
                                     <thead class="thead-light">
                                         <tr>
                                             <th>{{ __('admin/repair.db_table_name') }}</th>

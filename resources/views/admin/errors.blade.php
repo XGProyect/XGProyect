@@ -28,7 +28,7 @@
         <div class="col-lg-12">
             <x-admin.card-collapsible id="collapseErrors" title="{{ __('admin/errors.er_error_list') }}">
                         <div class="table-responsive">
-                            <table class="table table-borderless" width="100%" cellspacing="0">
+                            <table class="table table-borderless">
                                 <tbody>
                                 @foreach ($errorsList as $item)
                                     <tr>

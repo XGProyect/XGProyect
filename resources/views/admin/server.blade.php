@@ -24,7 +24,7 @@
             <div class="col-lg-6">
                 <x-admin.card-collapsible id="collapseServerParameters" title="{{ __('admin/server.se_server_parameters') }}">
                             <div class="table-responsive">
-                                <table class="table table-borderless" width="100%" cellspacing="0">
+                                <table class="table table-borderless">
                                     <tbody>
                                         <tr>
                                             <td>
@@ -201,7 +201,7 @@
             <div class="col-lg-6">
                 <x-admin.card-collapsible id="collapseOtherParameters" title="{{ __('admin/server.se_several_parameters') }}">
                             <div class="table-responsive">
-                                <table class="table table-borderless" width="100%" cellspacing="0">
+                                <table class="table table-borderless">
                                     <tbody>
                                         <tr>
                                             <td>
@@ -252,7 +252,7 @@
 
                 <x-admin.card-collapsible id="collapseNoobProtection" title="{{ __('admin/server.se_noob_protect') }}">
                             <div class="table-responsive">
-                                <table class="table table-borderless" width="100%" cellspacing="0">
+                                <table class="table table-borderless">
                                     <tbody>
                                         <tr>
                                             <td>{{ __('admin/server.se_noob_protect_active') }}</td>

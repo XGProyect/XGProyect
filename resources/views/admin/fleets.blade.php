@@ -11,7 +11,7 @@
         <div class="col-lg-12">
             <x-admin.card-collapsible id="collapseFleets" title="{{ __('admin/fleets.ff_general') }}" :flush="true">
                         <div class="table-responsive">
-                            <table class="table table-borderless" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-borderless" id="dataTable">
                                 <thead>
                                     <tr>
                                         <th>{{ __('admin/fleets.ff_mission') }}</th>

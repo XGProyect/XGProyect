@@ -12,7 +12,7 @@
         <div class="col-lg-6">
             <x-admin.card-collapsible id="collapseGeneral" title="{{ __('admin/tasks.ta_general') }}">
                         <div class="table-responsive">
-                            <table class="table table-borderless" width="100%" cellspacing="0">
+                            <table class="table table-borderless">
                                 <thead>
                                     <tr>
                                         <th>{{ __('admin/tasks.ta_task') }}</th>

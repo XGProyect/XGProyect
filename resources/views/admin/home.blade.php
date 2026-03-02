@@ -24,7 +24,7 @@
 
     <x-admin.card-collapsible id="collapseStatistics" title="{{ __('admin/home.hm_server_statistics') }}">
         <div class="table-responsive">
-            <table class="table table-bordered" width="100%" cellspacing="0">
+            <table class="table table-bordered">
                 <tbody>
                     <tr>
                         <td>{{ __('admin/home.hm_number_users') }}:</td>
