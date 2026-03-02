@@ -74,7 +74,7 @@ class TasksController extends BaseController
     private function getStatLastUpdateActions(): string
     {
         return UrlHelper::setUrl(
-            'admin/rebuildhighscores',
+            '/admin/rebuildhighscores',
             '<i class="fas fa-play" data-toggle="popover" data-placement="top"
             data-trigger="hover" data-content="' . __('admin/tasks.ta_buildstats_title') . '"></i>',
             __('admin/tasks.ta_buildstats_title')
