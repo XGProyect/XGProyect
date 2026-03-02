@@ -3,26 +3,22 @@
 @section('content')
 <div class="container-fluid">
     <x-alert/>
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/users.us_title') }}</h1>
-        <a href="{{ route('admin.users.create') }}" class="btn btn-primary btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-user-plus"></i>
-            </span>
-            <span class="text">{{ __('admin/users.us_create_title') }}</span>
-        </a>
-    </div>
-    <p class="mb-4 text-gray-600">{{ __('admin/users.us_sub_title') }}</p>
+    <x-admin.page-header
+        title="{{ __('admin/users.us_title') }}"
+        subtitle="{{ __('admin/users.us_sub_title') }}"
+    >
+        <x-slot name="action">
+            <a href="{{ route('admin.users.create') }}" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50"><i class="fas fa-user-plus"></i></span>
+                <span class="text">{{ __('admin/users.us_create_title') }}</span>
+            </a>
+        </x-slot>
+    </x-admin.page-header>
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-search mr-1"></i>
-                        {{ __('admin/users.us_search') }}
-                    </h6>
+            <x-admin.card title="{{ __('admin/users.us_search') }}" icon="fas fa-search">
+                <x-slot name="action">
                     @if ($user !== null)
                         <div class="dropdown no-arrow">
                             <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
@@ -47,8 +43,7 @@
                             </div>
                         </div>
                     @endif
-                </div>
-                <div class="card-body">
+                </x-slot>
                     {{-- Search form --}}
                     <form action="{{ route('admin.users') }}" method="GET">
                         <div class="input-group mb-3">
@@ -103,8 +98,7 @@
                             </div>
                         </div>
                     @endif
-                </div>
-            </div>
+                </x-admin.card>
         </div>
     </div>
 </div>

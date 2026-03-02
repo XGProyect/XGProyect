@@ -4,23 +4,17 @@
 <div class="container-fluid">
     <x-alert/>
 
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/ban.bn_title') }}</h1>
-    </div>
-    <p class="mb-4 text-gray-600">{{ __('admin/ban.bn_sub_title') }}</p>
+    <x-admin.page-header
+        title="{{ __('admin/ban.bn_title') }}"
+        subtitle="{{ __('admin/ban.bn_sub_title') }}"
+    />
 
     <div class="row">
 
         {{-- ===== Ban a User ===== --}}
         <div class="col-lg-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-user-slash mr-1"></i>
-                        {{ __('admin/ban.bn_users_list') }}
-                        <span class="badge badge-secondary ml-1">{{ $users->count() }}</span>
-                    </h6>
+            <x-admin.card title="{{ __('admin/ban.bn_users_list') }}" icon="fas fa-user-slash" :badge="$users->count()">
+                <x-slot name="action">
                     <div class="sort-group">
                         <button type="button" class="btn btn-sm btn-outline-secondary sort-btn active"
                             data-select="users-select" data-by="name" data-dir="asc">
@@ -31,8 +25,8 @@
                             <i class="fas fa-sort-numeric-down mr-1"></i>{{ __('admin/ban.bn_sort_by_id') }}
                         </button>
                     </div>
-                </div>
-                <div class="card-body">
+                </x-slot>
+
                     <form action="{{ route('admin.ban.form') }}" method="GET" id="form-ban-user">
                         <div class="input-group mb-3">
                             <input type="text" id="filter-users" class="form-control form-control-sm"
@@ -58,19 +52,13 @@
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
+            </x-admin.card>
         </div>
 
         {{-- ===== Lift a Ban ===== --}}
         <div class="col-lg-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">
-                        <i class="fas fa-user-check mr-1"></i>
-                        {{ __('admin/ban.bn_banned_list') }}
-                        <span class="badge badge-secondary ml-1">{{ $banned_users->count() }}</span>
-                    </h6>
+            <x-admin.card title="{{ __('admin/ban.bn_banned_list') }}" icon="fas fa-user-check" :badge="$banned_users->count()">
+                <x-slot name="action">
                     <div class="sort-group">
                         <button type="button" class="btn btn-sm btn-outline-secondary sort-btn active"
                             data-select="banned-select" data-by="name" data-dir="asc">
@@ -81,8 +69,8 @@
                             <i class="fas fa-sort-numeric-down mr-1"></i>{{ __('admin/ban.bn_sort_by_id') }}
                         </button>
                     </div>
-                </div>
-                <div class="card-body">
+                </x-slot>
+
                     @if ($banned_users->isEmpty())
                         <p class="text-center text-muted my-3">{{ __('admin/ban.bn_no_banned_users') }}</p>
                     @else
@@ -116,8 +104,7 @@
                             </div>
                         </form>
                     @endif
-                </div>
-            </div>
+            </x-admin.card>
         </div>
 
     </div>

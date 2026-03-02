@@ -5,17 +5,19 @@
     <x-alert/>
     <form name="frm_modules" method="POST" action="/admin/modules">
         @csrf
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/modules.mdl_title') }}</h1>
-            <button type="submit" name="save" class="btn btn-primary btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-save"></i>
-                </span>
-                <span class="text">{{ __('admin/modules.mdl_save') }}</span>
-            </button>
-        </div>
-        <p class="mb-4 text-gray-600">{{ __('admin/modules.mdl_sub_title') }}</p>
+        <x-admin.page-header
+            title="{{ __('admin/modules.mdl_title') }}"
+            subtitle="{{ __('admin/modules.mdl_sub_title') }}"
+        >
+            <x-slot name="action">
+                <button type="submit" name="save" class="btn btn-primary btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-save"></i>
+                    </span>
+                    <span class="text">{{ __('admin/modules.mdl_save') }}</span>
+                </button>
+            </x-slot>
+        </x-admin.page-header>
 
         <div class="row">
             <div class="col-lg-12">

@@ -3,9 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <x-alert/>
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/users.us_title') }}</h1>
-    </div>
+    <x-admin.page-header title="{{ __('admin/users.us_title') }}" />
 
     @include('admin.partials.users_nav', ['active' => 'planets'])
 
@@ -40,20 +38,15 @@
                 </a>
             </div>
 
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-globe mr-1"></i>
-                        {{ $planet['planet_name'] }}
-                        <span class="text-muted font-weight-normal small ml-2">
-                            [{{ $planet['planet_galaxy'] }}:{{ $planet['planet_system'] }}:{{ $planet['planet_planet'] }}]
-                        </span>
-                    </h6>
-                    @if ($planet['is_destroyed'])
-                        <span class="badge badge-warning"><i class="fas fa-skull-crossbones mr-1"></i>{{ __('admin/users.us_planet_scheduled_destroy') }}</span>
-                    @endif
-                </div>
-                <div class="card-body">
+            <x-admin.card
+                    title="{{ $planet['planet_name'] }} <span class='text-muted font-weight-normal small ml-2'>[{{ $planet['planet_galaxy'] }}:{{ $planet['planet_system'] }}:{{ $planet['planet_planet'] }}]</span>"
+                    icon="fas fa-globe"
+                >
+                    <x-slot name="action">
+                        @if ($planet['is_destroyed'])
+                            <span class="badge badge-warning"><i class="fas fa-skull-crossbones mr-1"></i>{{ __('admin/users.us_planet_scheduled_destroy') }}</span>
+                        @endif
+                    </x-slot>
                     <form method="POST" action="{{ route('admin.users.planet.update', [$user->id, $planet['planet_id']]) }}">
                         @csrf
 
@@ -287,8 +280,7 @@
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
+                </x-admin.card>
         </div>
     </div>
 </div>

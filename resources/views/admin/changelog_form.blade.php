@@ -10,30 +10,24 @@
             @method('PUT')
         @endif
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/changelog.ch_title') }}</h1>
-            <div class="d-flex" style="gap:.5rem;">
-                <a href="{{ route('admin.changelog') }}" class="btn btn-secondary btn-icon-split">
-                    <span class="icon text-white-50"><i class="fas fa-chevron-left"></i></span>
-                    <span class="text">{{ __('admin/changelog.ch_back') }}</span>
-                </a>
-                <button type="submit" class="btn btn-primary btn-icon-split">
-                    <span class="icon text-white-50"><i class="fas fa-save"></i></span>
-                    <span class="text">{{ __('admin/changelog.ch_save') }}</span>
-                </button>
-            </div>
-        </div>
-        <p class="mb-4 text-gray-600">{{ str_replace('%s', $changelog_date, __('admin/changelog.ch_' . $action . '_action')) }}</p>
+        <x-admin.page-header title="{{ __('admin/changelog.ch_title') }}" subtitle="{{ str_replace('%s', $changelog_date, __('admin/changelog.ch_' . $action . '_action')) }}">
+            <x-slot name="action">
+                <div class="d-flex" style="gap:.5rem;">
+                    <a href="{{ route('admin.changelog') }}" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50"><i class="fas fa-chevron-left"></i></span>
+                        <span class="text">{{ __('admin/changelog.ch_back') }}</span>
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-icon-split">
+                        <span class="icon text-white-50"><i class="fas fa-save"></i></span>
+                        <span class="text">{{ __('admin/changelog.ch_save') }}</span>
+                    </button>
+                </div>
+            </x-slot>
+        </x-admin.page-header>
 
         <div class="row">
             <div class="col-lg-8">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                            <i class="fas fa-align-left fa-xs mr-2"></i>{{ __('admin/changelog.ch_the_description') }}
-                        </h6>
-                    </div>
-                    <div class="card-body">
+                <x-admin.card title="{{ __('admin/changelog.ch_the_description') }}" icon="fas fa-align-left fa-xs">
                         <div class="form-group mb-0">
                             <textarea class="form-control" id="changelogText" name="text" rows="14"
                                 onkeyup="javascript:cntChars('changelog', 5000);"
@@ -43,18 +37,11 @@
                                 <span id="cntChars">{{ mb_strlen($changelog_description) }}</span> / 5000 {{ __('admin/changelog.ch_characters') }}
                             </small>
                         </div>
-                    </div>
-                </div>
+                    </x-admin.card>
             </div>
 
             <div class="col-lg-4">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                            <i class="fas fa-info-circle fa-xs mr-2"></i>{{ __('admin/changelog.ch_entry_details') }}
-                        </h6>
-                    </div>
-                    <div class="card-body">
+                <x-admin.card title="{{ __('admin/changelog.ch_entry_details') }}" icon="fas fa-info-circle fa-xs">
                         <div class="form-group">
                             <label for="changelog_date" class="font-weight-bold small text-gray-700">{{ __('admin/changelog.ch_date') }}</label>
                             <input class="form-control" type="date" id="changelog_date" name="changelog_date"
@@ -88,8 +75,7 @@
                                 </select>
                             @endif
                         </div>
-                    </div>
-                </div>
+                    </x-admin.card>
             </div>
         </div>
     </form>

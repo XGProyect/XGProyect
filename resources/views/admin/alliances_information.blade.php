@@ -5,23 +5,17 @@
     <x-alert/>
 
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/alliances.al_title') }}</h1>
-    </div>
+    <x-admin.page-header title="{{ __('admin/alliances.al_title') }}" />
 
     @include('admin.partials.alliances_nav', ['active' => 'info'])
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-info-circle mr-1"></i>
-                        {{ __('admin/alliances.al_alliance_information', ['alliance' => $alliance->alliance_name]) }}
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <form name="save_info" method="POST" action="{{ route('admin.alliances.info.update', $alliance->alliance_id) }}">
+            <x-admin.card
+                title="{{ __('admin/alliances.al_alliance_information', ['alliance' => $alliance->alliance_name]) }}"
+                icon="fas fa-info-circle"
+            >
+                <form name="save_info" method="POST" action="{{ route('admin.alliances.info.update', $alliance->alliance_id) }}">
                         @csrf
 
                         {{-- Register time (read-only) --}}
@@ -171,8 +165,7 @@
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
+            </x-admin.card>
         </div>
     </div>
 </div>

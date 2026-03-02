@@ -5,25 +5,24 @@
     <x-alert/>
 
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/alliances.al_title') }}</h1>
-        <a href="{{ route('admin.alliances.create') }}" class="btn btn-primary btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-shield-alt"></i>
-            </span>
-            <span class="text">{{ __('admin/alliances.al_create_title') }}</span>
-        </a>
-    </div>
-    <p class="mb-4 text-gray-600">{{ __('admin/alliances.al_sub_title') }}</p>
+    <x-admin.page-header
+        title="{{ __('admin/alliances.al_title') }}"
+        subtitle="{{ __('admin/alliances.al_sub_title') }}"
+    >
+        <x-slot name="action">
+            <a href="{{ route('admin.alliances.create') }}" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-shield-alt"></i>
+                </span>
+                <span class="text">{{ __('admin/alliances.al_create_title') }}</span>
+            </a>
+        </x-slot>
+    </x-admin.page-header>
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-search mr-1"></i>
-                        {{ __('admin/alliances.al_search') }}
-                    </h6>
+            <x-admin.card title="{{ __('admin/alliances.al_search') }}" icon="fas fa-search">
+                <x-slot name="action">
                     @if ($alliance !== null)
                         <div class="dropdown no-arrow">
                             <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
@@ -48,8 +47,7 @@
                             </div>
                         </div>
                     @endif
-                </div>
-                <div class="card-body">
+                </x-slot>
                     {{-- Search form --}}
                     <form action="{{ route('admin.alliances') }}" method="GET">
                         <div class="input-group mb-3">
@@ -115,8 +113,7 @@
                             </div>
                         </div>
                     @endif
-                </div>
-            </div>
+            </x-admin.card>
         </div>
     </div>
 </div>

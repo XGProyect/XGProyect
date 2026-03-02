@@ -3,22 +3,13 @@
 @section('content')
 <div class="container-fluid">
     <x-alert/>
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/fleets.ff_title') }}</h1>
-    </div>
-    <p class="mb-4 text-gray-600">{{ __('admin/fleets.ff_sub_title') }}</p>
+    <x-admin.page-header
+        title="{{ __('admin/fleets.ff_title') }}"
+        subtitle="{{ __('admin/fleets.ff_sub_title') }}"
+    />
     <div class="row">
         <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
-                <a href="#collapseErrors" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                    aria-expanded="true" aria-controls="collapseErrors">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/fleets.ff_general') }}</h6>
-                </a>
-                <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseErrors" style="">
-                    <div class="card-body">
+            <x-admin.card-collapsible id="collapseFleets" title="{{ __('admin/fleets.ff_general') }}" :flush="true">
                         <div class="table-responsive">
                             <table class="table table-borderless" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
@@ -87,9 +78,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </x-admin.card-collapsible>
         </div>
     </div>
 </div>

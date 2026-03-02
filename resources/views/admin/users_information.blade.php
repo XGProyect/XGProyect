@@ -3,20 +3,17 @@
 @section('content')
 <div class="container-fluid">
     <x-alert/>
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/users.us_title') }}</h1>
-    </div>
+    <x-admin.page-header title="{{ __('admin/users.us_title') }}" />
 
     @include('admin.partials.users_nav', ['active' => 'info'])
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-user mr-1"></i>
-                        {{ __('admin/users.us_user_information', ['user' => $user->name]) }}
-                    </h6>
+            <x-admin.card
+                title="{{ __('admin/users.us_user_information', ['user' => $user->name]) }}"
+                icon="fas fa-user"
+            >
+                <x-slot name="action">
                     @if ($online_status === 'online')
                         <span class="badge badge-success"><i class="fas fa-circle fa-xs mr-1"></i>{{ __('admin/users.us_online') }}</span>
                     @elseif ($online_status === 'away')
@@ -24,9 +21,8 @@
                     @else
                         <span class="badge badge-secondary"><i class="fas fa-circle fa-xs mr-1"></i>{{ __('admin/users.us_offline') }}</span>
                     @endif
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('admin.users.info.update', $user->id) }}">
+                </x-slot>
+                <form method="POST" action="{{ route('admin.users.info.update', $user->id) }}">
                         @csrf
 
                         {{-- Register time --}}
@@ -174,8 +170,7 @@
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
+            </x-admin.card>
         </div>
     </div>
 </div>

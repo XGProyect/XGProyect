@@ -6,16 +6,18 @@
     <form name="frm_reset" action="" method="post">
         @csrf
 
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/reset.re_reset_h1') }}</h1>
-            <button type="submit" class="btn btn-danger btn-icon-split mt-3 mt-sm-0"
-                onclick="return confirm('{{ __('admin/reset.re_reset_universe_confirmation') }}');">
-                <span class="icon text-white-50"><i class="fas fa-undo-alt"></i></span>
-                <span class="text">{{ __('admin/reset.re_reset_go') }}</span>
-            </button>
-        </div>
-        <p class="mb-4 text-gray-600">{{ __('admin/reset.re_sub_title') }}</p>
+        <x-admin.page-header
+            title="{{ __('admin/reset.re_reset_h1') }}"
+            subtitle="{{ __('admin/reset.re_sub_title') }}"
+        >
+            <x-slot name="action">
+                <button type="submit" class="btn btn-danger btn-icon-split mt-3 mt-sm-0"
+                    onclick="return confirm('{{ __('admin/reset.re_reset_universe_confirmation') }}');">
+                    <span class="icon text-white-50"><i class="fas fa-undo-alt"></i></span>
+                    <span class="text">{{ __('admin/reset.re_reset_go') }}</span>
+                </button>
+            </x-slot>
+        </x-admin.page-header>
 
         {{-- General card: full-width, multi-column --}}
         <div class="row">

@@ -3,23 +3,17 @@
 @section('content')
 <div class="container-fluid">
     <x-alert/>
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/users.us_title') }}</h1>
-    </div>
+    <x-admin.page-header title="{{ __('admin/users.us_title') }}" />
 
     @include('admin.partials.users_nav', ['active' => 'premium'])
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-star mr-1"></i>
-                        {{ __('admin/users.us_premium_title', ['user' => $user->name]) }}
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('admin.users.premium.update', $user->id) }}">
+            <x-admin.card
+                title="{{ __('admin/users.us_premium_title', ['user' => $user->name]) }}"
+                icon="fas fa-star"
+            >
+                <form method="POST" action="{{ route('admin.users.premium.update', $user->id) }}">
                         @csrf
 
                         {{-- Dark matter --}}
@@ -78,8 +72,7 @@
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
+            </x-admin.card>
         </div>
     </div>
 </div>

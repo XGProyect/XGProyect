@@ -3,17 +3,17 @@
 @section('content')
 <div class="container-fluid">
     <x-alert/>
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/changelog.ch_title') }}</h1>
-        <a href="{{ route('admin.changelog.create') }}" class="btn btn-primary btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-plus"></i>
-            </span>
-            <span class="text">{{ __('admin/changelog.ch_new_item') }}</span>
-        </a>
-    </div>
-    <p class="mb-4 text-gray-600">{{ __('admin/changelog.ch_sub_title') }}</p>
+    <x-admin.page-header
+        title="{{ __('admin/changelog.ch_title') }}"
+        subtitle="{{ __('admin/changelog.ch_sub_title') }}"
+    >
+        <x-slot name="action">
+            <a href="{{ route('admin.changelog.create') }}" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50"><i class="fas fa-plus"></i></span>
+                <span class="text">{{ __('admin/changelog.ch_new_item') }}</span>
+            </a>
+        </x-slot>
+    </x-admin.page-header>
 
     @if(empty($changelog))
         <div class="card shadow">
@@ -25,17 +25,12 @@
     @else
     <div class="row">
         <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <a href="#collapseChangelog" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                    aria-expanded="true" aria-controls="collapseChangelog">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-chevron-down fa-xs mr-2"></i>
-                        {{ __('admin/changelog.ch_general') }}
-                        <span class="badge badge-primary ml-2">{{ count($changelog) }}</span>
-                    </h6>
-                </a>
-                <div class="collapse show" id="collapseChangelog">
-                    <div class="card-body p-0">
+            <x-admin.card-collapsible
+                id="collapseChangelog"
+                title="{{ __('admin/changelog.ch_general') }}"
+                badge="{{ count($changelog) }}"
+                :flush="true"
+            >
                         <div class="table-responsive" style="overflow: visible;">
                             <table class="table table-hover mb-0" style="overflow: visible;">
                                 <thead class="thead-light">
@@ -105,9 +100,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </x-admin.card-collapsible>
         </div>
     </div>
     @endif

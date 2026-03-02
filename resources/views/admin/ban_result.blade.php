@@ -4,26 +4,17 @@
 <div class="container-fluid">
     <x-alert/>
 
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/ban.bn_title') }}</h1>
-    </div>
-    <p class="mb-4 text-gray-600">{{ __('admin/ban.bn_sub_title') }}</p>
+    <x-admin.page-header
+        title="{{ __('admin/ban.bn_title') }}"
+        subtitle="{{ __('admin/ban.bn_sub_title') }}"
+    />
 
     <div class="row">
         <div class="col-lg-8 col-xl-6">
-            <div class="card shadow mb-4">
-
-                <!-- Card Header -->
-                <div class="card-header py-3 d-flex align-items-center">
-                    <i class="fas fa-user-slash text-danger mr-2"></i>
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        {{ __('admin/ban.bn_username') }}: {{ $target_user->name }}
-                        <span class="text-muted small ml-2">(ID: {{ $target_user->id }})</span>
-                    </h6>
-                </div>
-
-                <div class="card-body">
+            <x-admin.card
+                    title="{{ __('admin/ban.bn_username') }}: {{ $target_user->name }} <span class='text-muted small ml-2'>(ID: {{ $target_user->id }})</span>"
+                    icon="fas fa-user-slash text-danger"
+                >
                     <form action="{{ route('admin.ban.form.post') }}" method="POST">
                         @csrf
                         <input type="hidden" name="ban_name" value="{{ $target_user->name }}">
@@ -152,9 +143,7 @@
                             <input type="hidden" name="unban_name" value="{{ $target_user->name }}">
                         </form>
                     @endif
-                </div>
-
-            </div>
+                </x-admin.card>
         </div>
     </div>
 </div>

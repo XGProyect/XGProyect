@@ -4,17 +4,19 @@
 <div class="container-fluid">
     <x-alert/>
 
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/languages.le_edit') }}</h1>
+    <x-admin.page-header
+        title="{{ __('admin/languages.le_edit') }}"
+        subtitle="{{ __('admin/languages.le_notice') }}"
+    >
         @if ($currentFile)
-        <button type="submit" form="translationsForm" class="btn btn-primary btn-icon-split mt-3 mt-sm-0">
-            <span class="icon text-white-50"><i class="fas fa-save"></i></span>
-            <span class="text">{{ __('admin/languages.le_save_changes') }}</span>
-        </button>
+        <x-slot name="action">
+            <button type="submit" form="translationsForm" class="btn btn-primary btn-icon-split mt-3 mt-sm-0">
+                <span class="icon text-white-50"><i class="fas fa-save"></i></span>
+                <span class="text">{{ __('admin/languages.le_save_changes') }}</span>
+            </button>
+        </x-slot>
         @endif
-    </div>
-    <p class="mb-4 text-gray-600">{{ __('admin/languages.le_notice') }}</p>
+    </x-admin.page-header>
 
     <div class="row">
 

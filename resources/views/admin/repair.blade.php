@@ -5,42 +5,38 @@
     <x-alert/>
     <form action="" method="POST">
         @csrf
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/repair.db_opt_db') }}</h1>
-            @if($results === null)
-                <div class="d-flex flex-wrap align-items-center mt-3 mt-sm-0" style="gap: .75rem;">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" name="optimize" id="optimize" checked>
-                        <label class="custom-control-label" for="optimize">{{ __('admin/repair.db_optimize') }}</label>
+        <x-admin.page-header
+            title="{{ __('admin/repair.db_opt_db') }}"
+            subtitle="{{ __('admin/repair.db_sub_title') }}"
+        >
+            <x-slot name="action">
+                @if($results === null)
+                    <div class="d-flex flex-wrap align-items-center mt-3 mt-sm-0" style="gap: .75rem;">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" name="optimize" id="optimize" checked>
+                            <label class="custom-control-label" for="optimize">{{ __('admin/repair.db_optimize') }}</label>
+                        </div>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" name="repair" id="repair" checked>
+                            <label class="custom-control-label" for="repair">{{ __('admin/repair.db_repair') }}</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-icon-split">
+                            <span class="icon text-white-50"><i class="fas fa-clipboard-check"></i></span>
+                            <span class="text">{{ __('admin/repair.db_check') }}</span>
+                        </button>
                     </div>
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" name="repair" id="repair" checked>
-                        <label class="custom-control-label" for="repair">{{ __('admin/repair.db_repair') }}</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-icon-split">
-                        <span class="icon text-white-50"><i class="fas fa-clipboard-check"></i></span>
-                        <span class="text">{{ __('admin/repair.db_check') }}</span>
-                    </button>
-                </div>
-            @else
-                <a href="/admin/repair" class="btn btn-secondary btn-icon-split">
-                    <span class="icon text-white-50"><i class="fas fa-redo"></i></span>
-                    <span class="text">{{ __('admin/repair.db_opt_db') }}</span>
-                </a>
-            @endif
-        </div>
-        <p class="mb-4 text-gray-600">{{ __('admin/repair.db_sub_title') }}</p>
+                @else
+                    <a href="/admin/repair" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50"><i class="fas fa-redo"></i></span>
+                        <span class="text">{{ __('admin/repair.db_opt_db') }}</span>
+                    </a>
+                @endif
+            </x-slot>
+        </x-admin.page-header>
 
         <div class="row">
             <div class="col-12">
-                <div class="card shadow mb-4">
-                    <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="collapseGeneral">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/repair.db_general') }}</h6>
-                    </a>
-                    <div class="collapse show" id="collapseGeneral">
-                        <div class="card-body">
+                <x-admin.card-collapsible id="collapseGeneral" title="{{ __('admin/repair.db_general') }}" :flush="true">
                             <div class="table-responsive">
                             @if($results === null)
                                 <table class="table table-bordered table-hover" id="repairTable" cellspacing="0">
@@ -98,9 +94,7 @@
                                 </table>
                             @endif
                             </div>
-                        </div>
-                    </div>
-                </div>
+                    </x-admin.card-collapsible>
             </div>
         </div>
     </form>

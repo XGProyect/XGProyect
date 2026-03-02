@@ -7,23 +7,21 @@
 
     <form action="{{ route('admin.announcement.send') }}" method="POST" name="announcement">
         @csrf
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{{ __('admin/announcement.an_title') }}</h1>
-            <button type="submit" class="btn btn-primary btn-icon-split">
-                <span class="icon text-white-50"><i class="fas fa-envelope"></i></span>
-                <span class="text">{{ __('admin/announcement.an_send_message') }}</span>
-            </button>
-        </div>
-        <p class="mb-4 text-gray-600">{!! __('admin/announcement.an_sub_title') !!}</p>
+        <x-admin.page-header
+            title="{{ __('admin/announcement.an_title') }}"
+            subtitle="{!! __('admin/announcement.an_sub_title') !!}"
+        >
+            <x-slot name="action">
+                <button type="submit" class="btn btn-primary btn-icon-split">
+                    <span class="icon text-white-50"><i class="fas fa-envelope"></i></span>
+                    <span class="text">{{ __('admin/announcement.an_send_message') }}</span>
+                </button>
+            </x-slot>
+        </x-admin.page-header>
 
         <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-10">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/announcement.an_general') }}</h6>
-                    </div>
-                    <div class="card-body">
+                <x-admin.card title="{{ __('admin/announcement.an_general') }}">
 
                         {{-- Subject --}}
                         <div class="form-group">
@@ -79,8 +77,7 @@
                             <span id="cntChars">0</span> / 5000 {{ __('admin/announcement.an_characters') }}
                         </small>
 
-                    </div>
-                </div>
+                </x-admin.card>
             </div>
         </div>
     </form>

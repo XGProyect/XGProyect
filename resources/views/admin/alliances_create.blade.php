@@ -3,22 +3,15 @@
 @section('content')
 <div class="container-fluid">
     <x-alert/>
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/alliances.al_title') }}</h1>
-    </div>
-    <p class="mb-4 text-gray-600">{{ __('admin/alliances.al_sub_title') }}</p>
+    <x-admin.page-header
+        title="{{ __('admin/alliances.al_title') }}"
+        subtitle="{{ __('admin/alliances.al_sub_title') }}"
+    />
 
     <div class="row">
         <div class="col-lg-8 mx-auto">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-shield-alt mr-1"></i>
-                        {{ __('admin/alliances.al_create_title') }}
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('admin.alliances.store') }}" method="POST">
+            <x-admin.card title="{{ __('admin/alliances.al_create_title') }}" icon="fas fa-shield-alt">
+                <form action="{{ route('admin.alliances.store') }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -54,8 +47,7 @@
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
+            </x-admin.card>
         </div>
     </div>
 </div>

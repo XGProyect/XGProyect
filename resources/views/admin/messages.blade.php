@@ -4,29 +4,23 @@
 <div class="container-fluid">
     <x-alert/>
 
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/messages.mg_title') }}</h1>
-    </div>
-    <p class="mb-4 text-gray-600">{{ __('admin/messages.mg_sub_title') }}</p>
+    <x-admin.page-header
+        title="{{ __('admin/messages.mg_title') }}"
+        subtitle="{{ __('admin/messages.mg_sub_title') }}"
+    />
 
     <div class="row">
         <div class="col-lg-12">
 
             {{-- Filter card --}}
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-search mr-1"></i>
-                        {{ __('admin/messages.mg_filter_by') }}
-                    </h6>
+            <x-admin.card title="{{ __('admin/messages.mg_filter_by') }}" icon="fas fa-search">
+                <x-slot name="action">
                     @if ($hasSearch)
                         <a href="{{ route('admin.messages') }}" class="btn btn-sm btn-outline-secondary">
                             <i class="fas fa-times fa-xs mr-1"></i>{{ __('admin/messages.mg_filter_clear') }}
                         </a>
                     @endif
-                </div>
-                <div class="card-body">
+                </x-slot>
                     <form action="{{ route('admin.messages') }}" method="GET">
                         <div class="form-row">
                             <div class="col-md-3 mb-3">
@@ -72,30 +66,28 @@
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
+            </x-admin.card>
 
             {{-- Results card --}}
             @if ($hasSearch && !empty($results))
                 <form id="batchDeleteForm" action="{{ route('admin.messages.destroy-batch') }}" method="POST"
                     onsubmit="return confirm('{{ __('admin/messages.mg_delete_confirm') }}')">
                     @csrf
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">
-                                <i class="fas fa-envelope mr-1"></i>
-                                {{ __('admin/messages.mg_search_results') }}
-                                <span class="badge badge-primary ml-1">{{ count($results) }}</span>
-                            </h6>
+                    <x-admin.card
+                        title="{{ __('admin/messages.mg_search_results') }}"
+                        icon="fas fa-envelope"
+                        :badge="count($results)"
+                        :flush="true"
+                    >
+                        <x-slot name="action">
                             <button type="submit" class="btn btn-danger btn-sm btn-icon-split">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-trash-alt"></i>
                                 </span>
                                 <span class="text">{{ __('admin/messages.mg_delete_selected') }}</span>
                             </button>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
+                        </x-slot>
+                        <div class="table-responsive">
                                 <table class="table table-hover table-bordered mb-0">
                                     <thead class="thead-light">
                                         <tr>
@@ -209,8 +201,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                    </div>
+                        </x-admin.card>
                 </form>
 
                 {{-- Hidden form for single message delete (avoids nested forms) --}}

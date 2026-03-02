@@ -3,72 +3,44 @@
 @section('content')
 <div class="container-fluid">
     <x-alert/>
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('admin/rebuildhighscores.sb_title') }}</h1>
-        <form method="POST" action="{{ route('admin.rebuildhighscores.run') }}">
-            @csrf
-            <button type="submit" class="btn btn-primary btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-sync-alt"></i>
-                </span>
-                <span class="text">{{ __('admin/rebuildhighscores.sb_rebuild') }}</span>
-            </button>
-        </form>
-    </div>
-    <p class="mb-4 text-gray-600">{{ __('admin/rebuildhighscores.sb_sub_title') }}</p>
+    <x-admin.page-header
+        title="{{ __('admin/rebuildhighscores.sb_title') }}"
+        subtitle="{{ __('admin/rebuildhighscores.sb_sub_title') }}"
+    >
+        <x-slot name="action">
+            <form method="POST" action="{{ route('admin.rebuildhighscores.run') }}">
+                @csrf
+                <button type="submit" class="btn btn-primary btn-icon-split">
+                    <span class="icon text-white-50"><i class="fas fa-sync-alt"></i></span>
+                    <span class="text">{{ __('admin/rebuildhighscores.sb_rebuild') }}</span>
+                </button>
+            </form>
+        </x-slot>
+    </x-admin.page-header>
 
     @if(session('memory_p'))
     <div class="row">
         <div class="col-lg-6">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
-                <a href="#collapseGeneral" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                    aria-expanded="true" aria-controls="collapseGeneral">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ __('admin/rebuildhighscores.sb_stats_updated') }}</h6>
-                </a>
-                <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseGeneral" style="">
-                    <div class="card-body">
+            <x-admin.card-collapsible id="collapseGeneral" title="{{ __('admin/rebuildhighscores.sb_stats_updated') }}">
                         <div class="table-responsive">
                             <table class="table table-borderless" width="100%" cellspacing="0">
                                 <tbody>
                                     <tr>
-                                        <td>
-                                            <span>
-                                                {{ __('admin/rebuildhighscores.sb_top_memory') }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{ session('memory_p') }}
-                                        </td>
+                                        <td><span>{{ __('admin/rebuildhighscores.sb_top_memory') }}</span></td>
+                                        <td>{{ session('memory_p') }}</td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <span>
-                                                {{ __('admin/rebuildhighscores.sb_start_memory') }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{ session('memory_i') }}
-                                        </td>
+                                        <td><span>{{ __('admin/rebuildhighscores.sb_start_memory') }}</span></td>
+                                        <td>{{ session('memory_i') }}</td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <span>
-                                                {{ __('admin/rebuildhighscores.sb_final_memory') }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{ session('memory_e') }}
-                                        </td>
+                                        <td><span>{{ __('admin/rebuildhighscores.sb_final_memory') }}</span></td>
+                                        <td>{{ session('memory_e') }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-            </div>
+            </x-admin.card-collapsible>
         </div>
         <div class="col-lg-6">
         </div>
