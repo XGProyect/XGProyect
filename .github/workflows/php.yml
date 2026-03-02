@@ -6,54 +6,81 @@ on:
   pull_request:
 
 jobs:
-  test:
-    name: Run Unit Testing
-    runs-on: ubuntu-20.04
+  phpunit:
+    name: PHPUnit Tests
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.1'
-        extensions: gd, mysqli, opcache, zip
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: gd, mysqli, opcache, zip
+          coverage: none
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
+      - name: Validate composer.json and composer.lock
+        run: composer validate
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
 
-    - name: Run phpunit
-      run: composer phpunit
-  lint:
-    name: Run Lint
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v3
+      - name: Run PHPUnit
+        run: composer phpunit
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.1'
-        extensions: gd, mysqli, opcache, zip
-
-    - name: Validate composer.json and composer.lock
-      run: composer validate
-
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
-
-    - name: Run phplint
-      uses: overtrue/phplint@4.1.0
-      with:
-        path: app/
-        options: --exclude=*.log --exclude=vendor
   php-cs-fixer:
-    name: Run PHP CS Fixer
-    runs-on: ubuntu-20.04
+    name: PHP CS Fixer
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: docker://oskarstark/php-cs-fixer-ga:3.4.0.1
-      with:
-        args: --diff --dry-run app/
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: gd, mysqli, opcache, zip
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHP CS Fixer
+        run: vendor/bin/php-cs-fixer fix --diff --dry-run --verbose
+
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: gd, mysqli, opcache, zip
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHPStan
+        run: composer phpstan
+
+  phpmd:
+    name: PHPMD
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: gd, mysqli, opcache, zip
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHPMD
+        run: vendor/bin/phpmd app/,legacy/ github phpmd.xml --baseline-file phpmd.baseline.xml
