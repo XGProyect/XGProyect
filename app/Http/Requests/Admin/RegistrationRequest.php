@@ -21,9 +21,9 @@ class RegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'reg_enable' => ['nullable', 'boolean'],
-            'reg_welcome_message' => ['nullable', 'boolean'],
-            'reg_welcome_email' => ['nullable', 'boolean'],
+            'reg_enable' => ['nullable'],
+            'reg_welcome_message' => ['nullable'],
+            'reg_welcome_email' => ['nullable'],
         ];
     }
 

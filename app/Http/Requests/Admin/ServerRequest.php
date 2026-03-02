@@ -35,7 +35,7 @@ class ServerRequest extends FormRequest
             'resource_multiplier' => ['nullable', 'integer', 'min:1', 'max:100'],
 
             // Server Access
-            'game_enable' => ['nullable', 'boolean'],
+            'game_enable' => ['nullable'],
             'close_reason' => ['nullable', 'string'],
 
             // Date & Time
@@ -44,12 +44,12 @@ class ServerRequest extends FormRequest
             'date_format_extended' => ['nullable', 'string', 'max:30'],
 
             // Combat Rules
-            'adm_attack' => ['nullable', 'boolean'],
+            'adm_attack' => ['nullable'],
             'fleet_cdr' => ['nullable', 'integer', 'min:0', 'max:100'],
             'defs_cdr' => ['nullable', 'integer', 'min:0', 'max:100'],
 
             // Noob Protection
-            'noobprotection' => ['nullable', 'boolean'],
+            'noobprotection' => ['nullable'],
             'noobprotectiontime' => ['nullable', 'integer', 'min:0'],
             'noobprotectionmulti' => ['nullable', 'integer', 'min:0', 'max:99'],
         ];

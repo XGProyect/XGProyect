@@ -33,8 +33,8 @@ class MailingRequest extends FormRequest
 
     /**
      * Returns a flat map of setting key => value ready to persist.
-     * Handles the two fields that use has() instead of filled()
-     * (empty string is a valid value for both pass and crypto).
+     * String fields (host, user, pass, crypto) use has() so that submitting
+     * an empty value clears the stored setting instead of skipping it.
      *
      * @return array<string, mixed>
      */
@@ -46,11 +46,11 @@ class MailingRequest extends FormRequest
         if (isset($validated['mailing_protocol'])) {
             $settings['mailing_protocol'] = $validated['mailing_protocol'];
         }
-        if (isset($validated['mailing_smtp_host'])) {
-            $settings['mailing_smtp_host'] = $validated['mailing_smtp_host'];
+        if ($this->has('mailing_smtp_host')) {
+            $settings['mailing_smtp_host'] = (string) $this->input('mailing_smtp_host');
         }
-        if (isset($validated['mailing_smtp_user'])) {
-            $settings['mailing_smtp_user'] = $validated['mailing_smtp_user'];
+        if ($this->has('mailing_smtp_user')) {
+            $settings['mailing_smtp_user'] = (string) $this->input('mailing_smtp_user');
         }
         if ($this->has('mailing_smtp_pass')) {
             $settings['mailing_smtp_pass'] = (string) $this->input('mailing_smtp_pass');
