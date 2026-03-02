@@ -52,6 +52,7 @@ return [
     'al_rank_name' => 'Rank name',
     'al_save_ranks' => 'Save rank',
     'al_delete_ranks' => 'Delete rank(s)',
+    'al_rank_protected' => 'Protected',
     'al_create_ranks' => 'Create rank',
     'al_ranks_leyend' => 'Rights Description',
     'al_rank_delete_alliance' => 'Disband alliance',

@@ -44,18 +44,28 @@ $permissions = [
                         @forelse ($ranks as $rank)
                             <input type="hidden" name="id[]" value="{{ $rank['i'] }}">
                             <div class="card border mb-3">
-                                <div class="card-header py-2 d-flex align-items-center justify-content-between bg-light">
-                                    <span class="font-weight-bold text-gray-700">
-                                        <i class="fas fa-shield-alt fa-sm mr-1 text-gray-400"></i>
-                                        {{ $rank['name'] }}
-                                    </span>
-                                    <div class="custom-control custom-checkbox mb-0 d-flex align-items-center">
-                                        <input type="checkbox" class="custom-control-input check-item"
-                                            id="del_{{ $rank['i'] }}"
-                                            name="delete_message[{{ $rank['i'] }}]" value="on">
-                                        <label class="custom-control-label text-danger small" for="del_{{ $rank['i'] }}">
-                                            {{ __('admin/alliances.al_delete_ranks') }}
-                                        </label>
+                                <div class="card-header py-2 bg-light">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between" style="gap: 0.5rem;">
+                                        <div class="d-flex align-items-center" style="min-width: 0; flex: 1 1 200px; max-width: 300px;">
+                                            <i class="fas fa-shield-alt fa-sm mr-2 text-gray-400 flex-shrink-0"></i>
+                                            <input type="text" name="rank_name_{{ $rank['i'] }}"
+                                                value="{{ $rank['name'] }}"
+                                                class="form-control form-control-sm bg-white border-0 font-weight-bold text-gray-700">
+                                        </div>
+                                        @if ($rank['i'] >= 2)
+                                            <div class="custom-control custom-checkbox flex-shrink-0 mb-0">
+                                                <input type="checkbox" class="custom-control-input check-item"
+                                                    id="del_{{ $rank['i'] }}"
+                                                    name="delete_message[]" value="{{ $rank['i'] }}">
+                                                <label class="custom-control-label text-danger" for="del_{{ $rank['i'] }}">
+                                                    {{ __('admin/alliances.al_delete_ranks') }}
+                                                </label>
+                                            </div>
+                                        @else
+                                            <span class="badge badge-secondary flex-shrink-0">
+                                                <i class="fas fa-lock fa-xs mr-1"></i>{{ __('admin/alliances.al_rank_protected') }}
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-body py-3">
@@ -84,13 +94,13 @@ $permissions = [
                             </p>
                         @endforelse
 
-                        <div class="d-flex justify-content-between mt-3">
+                        <div class="d-flex flex-wrap justify-content-between mt-3" style="gap: 0.5rem;">
                             <a href="{{ route('admin.alliances') }}" class="btn btn-secondary btn-icon-split">
                                 <span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span>
                                 <span class="text">{{ __('admin/alliances.al_back') }}</span>
                             </a>
-                            <div>
-                                <button type="submit" name="save_ranks" class="btn btn-primary btn-icon-split mr-2">
+                            <div class="d-flex flex-wrap" style="gap: 0.5rem;">
+                                <button type="submit" name="save_ranks" class="btn btn-primary btn-icon-split">
                                     <span class="icon text-white-50"><i class="fas fa-save"></i></span>
                                     <span class="text">{{ __('admin/alliances.al_save_ranks') }}</span>
                                 </button>

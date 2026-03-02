@@ -50,6 +50,7 @@ Route::prefix('admin')->group(function () {
             Route::post('/alliances/{alliance}/ranks', [Admin\AlliancesController::class, 'updateRanks'])->name('admin.alliances.ranks.update');
             Route::get('/alliances/{alliance}/members', [Admin\AlliancesController::class, 'showMembers'])->name('admin.alliances.members');
             Route::post('/alliances/{alliance}/members', [Admin\AlliancesController::class, 'removeMembers'])->name('admin.alliances.members.remove');
+            Route::put('/alliances/{alliance}/members', [Admin\AlliancesController::class, 'updateMemberRanks'])->name('admin.alliances.members.update-ranks');
             Route::delete('/alliances/{alliance}', [Admin\AlliancesController::class, 'destroy'])->name('admin.alliances.destroy');
             Route::get('/backup', [Admin\BackupController::class, 'index'])->name('admin.backup');
             Route::post('/backup/settings', [Admin\BackupController::class, 'save'])->name('admin.backup.save');

@@ -52,6 +52,7 @@ return [
     'al_rank_name' => 'Nombre del rango',
     'al_save_ranks' => 'Guardar rango',
     'al_delete_ranks' => 'Borrar rango(s)',
+    'al_rank_protected' => 'Protegido',
     'al_create_ranks' => 'Crear rango',
     'al_ranks_leyend' => 'Leyenda',
     'al_rank_delete_alliance' => 'Disolver la alianza',

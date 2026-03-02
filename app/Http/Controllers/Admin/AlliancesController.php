@@ -142,10 +142,12 @@ class AlliancesController extends BaseController
 
         $ranks = new Ranks($alliance->alliance_ranks);
         $members = $this->buildMembersViewData($alliance->alliance_id, $ranks);
+        $rankOptions = $this->buildRankOptions($ranks->getAllRanksAsArray());
 
         return view('admin.alliances_members', [
             'alliance' => $alliance,
             'members' => $members,
+            'rank_options' => $rankOptions,
         ]);
     }
 
@@ -224,6 +226,26 @@ class AlliancesController extends BaseController
         return redirect()->route('admin.alliances.members', $alliance->alliance_id);
     }
 
+    public function updateMemberRanks(Request $request, Alliance $alliance): RedirectResponse
+    {
+        $this->administrationService->checkSession();
+        $this->administrationService->authorization(__CLASS__);
+
+        /** @var array<int|string, int|string> $memberRanks */
+        $memberRanks = (array) $request->input('member_rank', []);
+
+        foreach ($memberRanks as $userId => $rankId) {
+            User::query()
+                ->where('id', (int) $userId)
+                ->where('ally_id', $alliance->alliance_id)
+                ->update(['ally_rank_id' => (int) $rankId]);
+        }
+
+        session()->flash('success', __('admin/alliances.al_all_ok_message'));
+
+        return redirect()->route('admin.alliances.members', $alliance->alliance_id);
+    }
+
     public function destroy(Alliance $alliance): RedirectResponse
     {
         $this->administrationService->checkSession();
@@ -280,6 +302,12 @@ class AlliancesController extends BaseController
             }
 
             $ranks->editRankById($id, $rights);
+
+            $nameKey = 'rank_name_' . $id;
+            $rankName = trim($request->string($nameKey)->toString());
+            if ($rankName !== '') {
+                $ranks->editRankNameById($id, $rankName);
+            }
         }
 
         session()->flash('success', __('admin/alliances.al_rank_saved'));
@@ -290,8 +318,12 @@ class AlliancesController extends BaseController
         /** @var array<int, int|string> $toDelete */
         $toDelete = (array) $request->input('delete_message', []);
 
-        foreach ($toDelete as $rankId) {
-            $ranks->deleteRankById((int) $rankId);
+        $ids = array_map('intval', $toDelete);
+        $ids = array_filter($ids, fn (int $id) => $id >= 2);
+        rsort($ids);
+
+        foreach ($ids as $rankId) {
+            $ranks->deleteRankById($rankId);
         }
 
         session()->flash('success', __('admin/alliances.al_rank_removed'));
@@ -389,8 +421,26 @@ class AlliancesController extends BaseController
                     'request_text' => $row->ally_request_text ?: '-',
                     'register_time' => date($dateFormat, (int) $row->ally_register_time),
                     'rank' => $rankData['rank'] ?? __('admin/alliances.al_rank_not_defined'),
+                    'rank_id' => (int) $row->ally_rank_id,
                 ];
             })
             ->all();
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $rawRanks
+     *
+     * @return array<int, array{id: int, name: string}>
+     */
+    private function buildRankOptions(array $rawRanks): array
+    {
+        $result = [];
+        foreach ($rawRanks as $index => $rank) {
+            /** @var string $name */
+            $name = $rank['rank'];
+            $result[] = ['id' => $index, 'name' => $name];
+        }
+
+        return $result;
     }
 }

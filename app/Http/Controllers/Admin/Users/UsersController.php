@@ -199,14 +199,29 @@ class UsersController extends BaseController
             return redirect()->route('admin.users.info', $user->id);
         }
 
+        $newAllyId = $validated['ally_id'];
+        $allyChanged = (int) $user->ally_id !== $newAllyId;
+
         $updateData = [
             'name' => $validated['username'],
             'email' => $validated['email'],
             'authlevel' => $newLevel,
             'home_planet_id' => $validated['home_planet_id'],
             'current_planet' => $validated['current_planet'],
-            'ally_id' => $validated['ally_id'],
+            'ally_id' => $newAllyId,
         ];
+
+        if ($allyChanged && $newAllyId > 0) {
+            $updateData['ally_rank_id'] = 1;
+            $updateData['ally_register_time'] = time();
+        }
+
+        if ($allyChanged && $newAllyId === 0) {
+            $updateData['ally_rank_id'] = 0;
+            $updateData['ally_request'] = 0;
+            $updateData['ally_request_text'] = '';
+            $updateData['ally_register_time'] = 0;
+        }
 
         if (!empty($validated['password'])) {
             /** @SuppressWarnings(PHPMD.StaticAccess) */
