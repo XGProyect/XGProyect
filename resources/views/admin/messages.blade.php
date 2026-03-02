@@ -13,13 +13,18 @@
     <div class="row">
         <div class="col-lg-12">
 
-            {{-- Search card --}}
+            {{-- Filter card --}}
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
+                <div class="card-header py-3 d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-search mr-1"></i>
                         {{ __('admin/messages.mg_filter_by') }}
                     </h6>
+                    @if ($hasSearch)
+                        <a href="{{ route('admin.messages') }}" class="btn btn-sm btn-outline-secondary">
+                            <i class="fas fa-times fa-xs mr-1"></i>{{ __('admin/messages.mg_filter_clear') }}
+                        </a>
+                    @endif
                 </div>
                 <div class="card-body">
                     <form action="{{ route('admin.messages') }}" method="GET">
@@ -91,7 +96,7 @@
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-hover table-striped mb-0">
+                                <table class="table table-hover table-bordered mb-0">
                                     <thead class="thead-light">
                                         <tr>
                                             <th class="pl-4" style="width: 40px;">
@@ -106,7 +111,7 @@
                                             <th>{{ __('admin/messages.mg_type') }}</th>
                                             <th>{{ __('admin/messages.mg_from') }}</th>
                                             <th>{{ __('admin/messages.mg_subject') }}</th>
-                                            <th style="width: 100px;">{{ __('admin/messages.mg_actions') }}</th>
+                                            <th style="width: 90px;">{{ __('admin/messages.mg_actions') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -114,7 +119,7 @@
                                             <tr class="cursor-pointer" data-toggle="collapse"
                                                 data-target="#msg-{{ $item['message_id'] }}"
                                                 aria-expanded="false" aria-controls="msg-{{ $item['message_id'] }}">
-                                                <td class="pl-4" onclick="event.stopPropagation()">
+                                                <td class="pl-4 align-middle" onclick="event.stopPropagation()">
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input msg-check"
                                                             id="msg_{{ $item['message_id'] }}"
@@ -122,13 +127,26 @@
                                                         <label class="custom-control-label" for="msg_{{ $item['message_id'] }}"></label>
                                                     </div>
                                                 </td>
-                                                <td>{{ $item['sender'] }}</td>
-                                                <td>{{ $item['receiver'] }}</td>
-                                                <td><small class="text-muted">{{ $item['message_time'] }}</small></td>
-                                                <td><span class="badge badge-info">{{ $item['message_type'] }}</span></td>
-                                                <td>{!! $item['message_from'] !!}</td>
-                                                <td class="font-weight-bold">{!! $item['message_subject'] !!}</td>
-                                                <td onclick="event.stopPropagation()">
+                                                <td class="align-middle font-weight-bold">{{ $item['sender'] }}</td>
+                                                <td class="align-middle font-weight-bold">{{ $item['receiver'] }}</td>
+                                                <td class="align-middle"><small class="text-muted">{{ $item['message_time'] }}</small></td>
+                                                <td class="align-middle">
+                                                    @php
+                                                        $typeKey = collect($type_options)->firstWhere('name', $item['message_type'])['value'] ?? -1;
+                                                        $typeBadge = match($typeKey) {
+                                                            0 => 'badge-info',
+                                                            1 => 'badge-danger',
+                                                            2 => 'badge-warning',
+                                                            3 => 'badge-success',
+                                                            4 => 'badge-primary',
+                                                            default => 'badge-secondary',
+                                                        };
+                                                    @endphp
+                                                    <span class="badge {{ $typeBadge }}">{{ $item['message_type'] }}</span>
+                                                </td>
+                                                <td class="align-middle text-muted small">{!! $item['message_from'] !!}</td>
+                                                <td class="align-middle font-weight-bold">{!! $item['message_subject'] !!}</td>
+                                                <td class="align-middle" onclick="event.stopPropagation()">
                                                     <div class="d-flex" style="gap: 0.25rem;">
                                                         <button type="button" class="btn btn-sm btn-primary"
                                                             title="{{ __('admin/messages.mg_the_message') }}"
@@ -149,10 +167,11 @@
                                                         <div class="card border-left-primary m-3">
                                                             <div class="card-header py-2">
                                                                 <small class="font-weight-bold text-primary">
+                                                                    <i class="fas fa-envelope-open fa-xs mr-1"></i>
                                                                     {{ __('admin/messages.mg_the_message') }}
                                                                 </small>
                                                             </div>
-                                                            <div class="card-body">
+                                                            <div class="card-body py-3">
                                                                 {!! $item['message_text'] !!}
                                                             </div>
                                                         </div>
