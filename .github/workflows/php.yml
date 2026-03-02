@@ -7,7 +7,7 @@ on:
 
 jobs:
   phpunit:
-    name: PHPUnit Tests
+    name: PHPUnit
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
