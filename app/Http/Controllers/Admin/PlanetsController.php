@@ -31,9 +31,9 @@ class PlanetsController extends AdminSettingsController
 
     public function update(PlanetsRequest $request): RedirectResponse
     {
-        foreach ($request->validated() as $field => $value) {
-            if ($value !== null) {
-                $this->settings->write($field, (int) $value);
+        foreach (self::INT_SETTINGS as $field) {
+            if ($request->has($field)) {
+                $this->settings->write($field, $request->integer($field));
             }
         }
 

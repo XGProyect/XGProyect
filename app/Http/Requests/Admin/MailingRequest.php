@@ -40,30 +40,28 @@ class MailingRequest extends FormRequest
      */
     public function toSettings(): array
     {
-        /** @var array<string, mixed> $validated */
-        $validated = $this->validated();
         $settings = [];
 
-        if (isset($validated['mailing_protocol'])) {
-            $settings['mailing_protocol'] = $validated['mailing_protocol'];
+        if ($this->has('mailing_protocol')) {
+            $settings['mailing_protocol'] = $this->string('mailing_protocol')->toString();
         }
         if ($this->has('mailing_smtp_host')) {
-            $settings['mailing_smtp_host'] = (string) $this->input('mailing_smtp_host');
+            $settings['mailing_smtp_host'] = $this->string('mailing_smtp_host')->toString();
         }
         if ($this->has('mailing_smtp_user')) {
-            $settings['mailing_smtp_user'] = (string) $this->input('mailing_smtp_user');
+            $settings['mailing_smtp_user'] = $this->string('mailing_smtp_user')->toString();
         }
         if ($this->has('mailing_smtp_pass')) {
-            $settings['mailing_smtp_pass'] = (string) $this->input('mailing_smtp_pass');
+            $settings['mailing_smtp_pass'] = $this->string('mailing_smtp_pass')->toString();
         }
-        if (isset($validated['mailing_smtp_port'])) {
-            $settings['mailing_smtp_port'] = $validated['mailing_smtp_port'];
+        if ($this->has('mailing_smtp_port')) {
+            $settings['mailing_smtp_port'] = $this->integer('mailing_smtp_port');
         }
-        if (isset($validated['mailing_smtp_timeout'])) {
-            $settings['mailing_smtp_timeout'] = $validated['mailing_smtp_timeout'];
+        if ($this->has('mailing_smtp_timeout')) {
+            $settings['mailing_smtp_timeout'] = $this->integer('mailing_smtp_timeout');
         }
         if ($this->has('mailing_smtp_crypto')) {
-            $settings['mailing_smtp_crypto'] = (string) $this->input('mailing_smtp_crypto', '');
+            $settings['mailing_smtp_crypto'] = $this->string('mailing_smtp_crypto')->toString();
         }
 
         return $settings;

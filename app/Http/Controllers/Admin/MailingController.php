@@ -65,7 +65,7 @@ class MailingController extends AdminSettingsController
     {
         return array_map(fn ($item) => [
             'value' => $item,
-            'label' => $labelFn ? $labelFn($item) : $item,
+            'label' => ($labelFn !== null && function_exists($labelFn)) ? $labelFn($item) : $item,
             'selected' => $item === $current,
         ], $items);
     }

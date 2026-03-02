@@ -60,71 +60,69 @@ class ServerRequest extends FormRequest
      */
     public function toSettings(): array
     {
-        /** @var array<string, mixed> $validated */
-        $validated = $this->validated();
         $settings = [];
 
         // Identity
-        if (isset($validated['game_name'])) {
-            $settings['game_name'] = $validated['game_name'];
+        if ($this->has('game_name')) {
+            $settings['game_name'] = $this->string('game_name')->toString();
         }
-        if (isset($validated['game_logo'])) {
-            $settings['game_logo'] = $validated['game_logo'];
+        if ($this->has('game_logo')) {
+            $settings['game_logo'] = $this->string('game_logo')->toString();
         }
-        if (isset($validated['language'])) {
-            $settings['lang'] = $validated['language'];
+        if ($this->has('language')) {
+            $settings['lang'] = $this->string('language')->toString();
         }
-        if (isset($validated['admin_email'])) {
-            $settings['admin_email'] = $validated['admin_email'];
+        if ($this->has('admin_email')) {
+            $settings['admin_email'] = $this->string('admin_email')->toString();
         }
-        if (isset($validated['forum_url'])) {
-            $settings['forum_url'] = UrlHelper::prepUrl($validated['forum_url']);
+        if ($this->has('forum_url')) {
+            $settings['forum_url'] = UrlHelper::prepUrl($this->string('forum_url')->toString());
         }
 
         // Speed & Economy — stored as raw value × 2500
-        if (isset($validated['game_speed'])) {
-            $settings['game_speed'] = 2500 * $validated['game_speed'];
+        if ($this->has('game_speed')) {
+            $settings['game_speed'] = 2500 * $this->integer('game_speed');
         }
-        if (isset($validated['fleet_speed'])) {
-            $settings['fleet_speed'] = 2500 * $validated['fleet_speed'];
+        if ($this->has('fleet_speed')) {
+            $settings['fleet_speed'] = 2500 * $this->integer('fleet_speed');
         }
-        if (isset($validated['resource_multiplier'])) {
-            $settings['resource_multiplier'] = $validated['resource_multiplier'];
+        if ($this->has('resource_multiplier')) {
+            $settings['resource_multiplier'] = $this->integer('resource_multiplier');
         }
 
         // Server Access — booleans written as 0/1; close_reason always written when present
         $settings['game_enable'] = $this->boolean('game_enable') ? 1 : 0;
         if ($this->has('close_reason')) {
-            $settings['close_reason'] = addslashes((string) $validated['close_reason']);
+            $settings['close_reason'] = addslashes($this->string('close_reason')->toString());
         }
 
         // Date & Time
-        if (isset($validated['date_time_zone'])) {
-            $settings['date_time_zone'] = $validated['date_time_zone'];
+        if ($this->has('date_time_zone')) {
+            $settings['date_time_zone'] = $this->string('date_time_zone')->toString();
         }
-        if (isset($validated['date_format'])) {
-            $settings['date_format'] = $validated['date_format'];
+        if ($this->has('date_format')) {
+            $settings['date_format'] = $this->string('date_format')->toString();
         }
-        if (isset($validated['date_format_extended'])) {
-            $settings['date_format_extended'] = $validated['date_format_extended'];
+        if ($this->has('date_format_extended')) {
+            $settings['date_format_extended'] = $this->string('date_format_extended')->toString();
         }
 
         // Combat Rules
         $settings['adm_attack'] = $this->boolean('adm_attack') ? 1 : 0;
-        if (isset($validated['fleet_cdr'])) {
-            $settings['fleet_cdr'] = $validated['fleet_cdr'];
+        if ($this->has('fleet_cdr')) {
+            $settings['fleet_cdr'] = $this->integer('fleet_cdr');
         }
-        if (isset($validated['defs_cdr'])) {
-            $settings['defs_cdr'] = $validated['defs_cdr'];
+        if ($this->has('defs_cdr')) {
+            $settings['defs_cdr'] = $this->integer('defs_cdr');
         }
 
         // Noob Protection
         $settings['noobprotection'] = $this->boolean('noobprotection') ? 1 : 0;
-        if (isset($validated['noobprotectiontime'])) {
-            $settings['noobprotectiontime'] = $validated['noobprotectiontime'];
+        if ($this->has('noobprotectiontime')) {
+            $settings['noobprotectiontime'] = $this->integer('noobprotectiontime');
         }
-        if (isset($validated['noobprotectionmulti'])) {
-            $settings['noobprotectionmulti'] = $validated['noobprotectionmulti'];
+        if ($this->has('noobprotectionmulti')) {
+            $settings['noobprotectionmulti'] = $this->integer('noobprotectionmulti');
         }
 
         return $settings;

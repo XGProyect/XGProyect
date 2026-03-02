@@ -23,7 +23,10 @@ class PremiumController extends AdminSettingsController
 
     public function update(PremiumRequest $request): RedirectResponse
     {
-        foreach ($request->validated() as $field => $value) {
+        /** @var array<string, mixed> $validated */
+        $validated = $request->validated();
+
+        foreach ($validated as $field => $value) {
             if ($value !== null) {
                 $this->settings->write($field, $value);
             }

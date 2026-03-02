@@ -56,11 +56,6 @@ parameters:
 			path: app/Http/Controllers/Admin/AnnouncementController.php
 
 		-
-			message: "#^Offset mixed does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/AnnouncementController.php
-
-		-
 			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/AnnouncementController.php
@@ -301,99 +296,14 @@ parameters:
 			path: app/Http/Controllers/Admin/HomeController.php
 
 		-
-			message: "#^Parameter \\#1 \\$version1 of function version_compare expects string, string\\|null given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/HomeController.php
-
-		-
 			message: "#^Parameter \\#2 \\$array of function join expects array\\<string\\>, array\\<int, array\\|string\\|null\\> given\\.$#"
 			count: 2
 			path: app/Http/Controllers/Admin/HomeController.php
 
 		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MailingController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MailingController\\:\\:buildCryptoDropdown\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MailingController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MailingController\\:\\:buildProtocolsDropdown\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MailingController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MailingController\\:\\:getMailingSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MailingController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, string\\|null given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MailingController.php
-
-		-
-			message: "#^Result of && is always true\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MailingController.php
-
-		-
 			message: "#^Call to an undefined static method App\\\\Models\\\\Messages\\:\\:whereIn\\(\\)\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ModulesController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ModulesController\\:\\:buildModulesList\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ModulesController.php
-
-		-
-			message: "#^Offset int does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ModulesController.php
-
-		-
-			message: "#^Parameter \\#2 \\$string of function explode expects string, string\\|null given\\.$#"
-			count: 2
-			path: app/Http/Controllers/Admin/ModulesController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PlanetsController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\PlanetsController\\:\\:getNewPlanetSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PlanetsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, string\\|null given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PlanetsController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PremiumController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\PremiumController\\:\\:getPremiumSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PremiumController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, string\\|null given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/PremiumController.php
 
 		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RebuildHighscoresController\\:\\:index\\(\\) should return Illuminate\\\\View\\\\View but returns Illuminate\\\\Contracts\\\\View\\\\View\\.$#"
@@ -404,31 +314,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$str of function strtr expects string, array\\|string\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/RebuildHighscoresController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/RegistrationController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RegistrationController\\:\\:getNewUserRegistrationSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/RegistrationController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RegistrationController\\:\\:setChecked\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/RegistrationController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\RegistrationController\\:\\:setChecked\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/RegistrationController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, string\\|null given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/RegistrationController.php
 
 		-
 			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
@@ -581,136 +466,6 @@ parameters:
 			path: app/Http/Controllers/Admin/ResetController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\ServerController\\:\\:formatOffset\\(\\) has parameter \\$offset with no type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'adm_attack' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'admin_email' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'close_reason' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'date_format' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'date_format_extended' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'defs_cdr' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'fleet_cdr' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'fleet_speed' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'forum_url' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'game_enable' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'game_logo' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'game_name' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'game_speed' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'lang' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'noobprotection' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'noobprotectionmulti' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'noobprotectiontime' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Offset 'resource_multiplier' does not exist on string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\ServerController\\:\\:\\$gameConfig has no type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/ServerController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/StatisticsController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\StatisticsController\\:\\:getStatisticsSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/StatisticsController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\StatisticsController\\:\\:userLevels\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/StatisticsController.php
-
-		-
-			message: "#^Offset 0\\|1\\|2\\|3 does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/StatisticsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, string\\|null given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/StatisticsController.php
-
-		-
-			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\StatisticsController\\:\\:\\$user_level has no type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/StatisticsController.php
-
-		-
 			message: "#^Binary operation \"\\.\" between '\\<i class\\=\"fas fa…' and array\\|string\\|null results in an error\\.$#"
 			count: 2
 			path: app/Http/Controllers/Admin/TasksController.php
@@ -762,11 +517,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:startUpdate\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/UpdateController.php
-
-		-
-			message: "#^Parameter \\#1 \\$dbVersion of method App\\\\Http\\\\Controllers\\\\Admin\\\\UpdateController\\:\\:startUpdate\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/UpdateController.php
 
@@ -1791,11 +1541,6 @@ parameters:
 			path: app/Services/Admin/PermissionsService.php
 
 		-
-			message: "#^Cannot access property \\$authlevel on Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null\\.$#"
-			count: 1
-			path: app/Services/AdministrationService.php
-
-		-
 			message: "#^Call to an undefined static method App\\\\Models\\\\Planets\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: app/Services/PlanetService.php
@@ -1874,11 +1619,6 @@ parameters:
 			message: "#^Property App\\\\Services\\\\SettingsService\\:\\:\\$settings type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Services/SettingsService.php
-
-		-
-			message: "#^Call to an undefined static method App\\\\Models\\\\User\\:\\:find\\(\\)\\.$#"
-			count: 1
-			path: app/View/Components/Admin/Navigation.php
 
 		-
 			message: "#^Parameter \\#1 \\$time of static method Xgp\\\\App\\\\Libraries\\\\TimingLibrary\\:\\:formatShortDate\\(\\) expects string, int\\<1, max\\> given\\.$#"
@@ -11607,7 +11347,7 @@ parameters:
 
 		-
 			message: "#^Constant USERS not found\\.$#"
-			count: 10
+			count: 9
 			path: legacy/app/Models/Libraries/UsersLibrary.php
 
 		-

@@ -52,7 +52,7 @@ class AnnouncementController extends BaseController
             ? $pickedColor
             : $this->getMessageColor()[$user->authlevel];
 
-        $level = __('admin/global.user_level')[$user->authlevel];
+        $level = (string) ((array) __('admin/global.user_level'))[$user->authlevel];
         $time = time();
 
         $from = Format::customColor($level, $color);

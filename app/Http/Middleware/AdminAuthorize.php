@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use App\Services\SettingsService;
 use Closure;
 use Illuminate\Http\Request;
@@ -22,7 +23,11 @@ class AdminAuthorize
     {
         $action = $request->route()->getAction();
 
-        $controllerClass = $action['controller'] ?? '';
+        if (!is_array($action)) {
+            abort(403);
+        }
+
+        $controllerClass = (string) ($action['controller'] ?? '');
 
         // Strip method suffix (e.g. "App\...\HomeController@index" → "HomeController")
         $classOnly = explode('@', $controllerClass)[0];
@@ -39,7 +44,10 @@ class AdminAuthorize
 
             $permissions = new Permissions($this->settingsService->getString('admin_permissions'));
 
-            if ($permissions->isAccessAllowed($module, (int) Auth::user()->authlevel)) {
+            /** @var User $authUser */
+            $authUser = Auth::user();
+
+            if ($permissions->isAccessAllowed($module, (int) $authUser->authlevel)) {
                 return $next($request);
             }
         }

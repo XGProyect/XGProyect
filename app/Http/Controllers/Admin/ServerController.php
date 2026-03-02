@@ -33,7 +33,7 @@ class ServerController extends AdminSettingsController
 
         // Side effect: sync app locale when language changes
         if ($request->filled('language')) {
-            Functions::setLanguage($request->input('language'));
+            Functions::setLanguage($request->string('language')->toString());
         }
 
         return $this->saved('admin.server', 'admin/server.se_all_ok_message');
