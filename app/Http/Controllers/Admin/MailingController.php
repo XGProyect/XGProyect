@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\MailingRequest;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class MailingController extends AdminSettingsController
 {
@@ -24,36 +24,12 @@ class MailingController extends AdminSettingsController
         return $this->view('admin.mailing', $this->buildViewData());
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(MailingRequest $request): RedirectResponse
     {
         $this->authorize();
 
-        if ($request->filled('mailing_protocol')) {
-            $this->settings->write('mailing_protocol', $request->input('mailing_protocol'));
-        }
-
-        if ($request->filled('mailing_smtp_host')) {
-            $this->settings->write('mailing_smtp_host', $request->input('mailing_smtp_host'));
-        }
-
-        if ($request->filled('mailing_smtp_user')) {
-            $this->settings->write('mailing_smtp_user', $request->input('mailing_smtp_user'));
-        }
-
-        if ($request->has('mailing_smtp_pass')) {
-            $this->settings->write('mailing_smtp_pass', $request->input('mailing_smtp_pass'));
-        }
-
-        if ($request->filled('mailing_smtp_port') && is_numeric($request->input('mailing_smtp_port'))) {
-            $this->settings->write('mailing_smtp_port', (int) $request->input('mailing_smtp_port'));
-        }
-
-        if ($request->filled('mailing_smtp_timeout') && is_numeric($request->input('mailing_smtp_timeout'))) {
-            $this->settings->write('mailing_smtp_timeout', (int) $request->input('mailing_smtp_timeout'));
-        }
-
-        if ($request->has('mailing_smtp_crypto')) {
-            $this->settings->write('mailing_smtp_crypto', $request->input('mailing_smtp_crypto', ''));
+        foreach ($request->toSettings() as $key => $value) {
+            $this->settings->write($key, $value);
         }
 
         return $this->saved('admin.mailing', 'admin/mailing.ma_all_ok_message');
@@ -62,18 +38,18 @@ class MailingController extends AdminSettingsController
     private function buildViewData(): array
     {
         $protocol = $this->settings->getString('mailing_protocol');
-        $crypto   = $this->settings->getString('mailing_smtp_crypto');
+        $crypto = $this->settings->getString('mailing_smtp_crypto');
 
         return [
-            'mailing_protocol'     => $protocol,
-            'mailing_smtp_host'    => $this->settings->getString('mailing_smtp_host'),
-            'mailing_smtp_user'    => $this->settings->getString('mailing_smtp_user'),
-            'mailing_smtp_pass'    => $this->settings->getString('mailing_smtp_pass'),
-            'mailing_smtp_port'    => $this->settings->getInt('mailing_smtp_port'),
+            'mailing_protocol' => $protocol,
+            'mailing_smtp_host' => $this->settings->getString('mailing_smtp_host'),
+            'mailing_smtp_user' => $this->settings->getString('mailing_smtp_user'),
+            'mailing_smtp_pass' => $this->settings->getString('mailing_smtp_pass'),
+            'mailing_smtp_port' => $this->settings->getInt('mailing_smtp_port'),
             'mailing_smtp_timeout' => $this->settings->getInt('mailing_smtp_timeout'),
-            'mailing_smtp_crypto'  => $crypto,
-            'protocol_options'     => $this->buildSelectOptions(['mail', 'sendmail', 'smtp'], $protocol, 'strtoupper'),
-            'smtp_crypto_options'  => [
+            'mailing_smtp_crypto' => $crypto,
+            'protocol_options' => $this->buildSelectOptions(['mail', 'sendmail', 'smtp'], $protocol, 'strtoupper'),
+            'smtp_crypto_options' => [
                 ['value' => '',    'label' => 'None', 'selected' => $crypto === ''],
                 ['value' => 'tls', 'label' => 'TLS',  'selected' => $crypto === 'tls'],
                 ['value' => 'ssl', 'label' => 'SSL',  'selected' => $crypto === 'ssl'],
@@ -84,13 +60,14 @@ class MailingController extends AdminSettingsController
     /**
      * @param  string[]       $items
      * @param  callable|null  $labelFn  optional transform applied to each label
+     *
      * @return array<int, array{value: string, label: string, selected: bool}>
      */
     private function buildSelectOptions(array $items, string $current, ?string $labelFn = null): array
     {
         return array_map(fn ($item) => [
-            'value'    => $item,
-            'label'    => $labelFn ? $labelFn($item) : $item,
+            'value' => $item,
+            'label' => $labelFn ? $labelFn($item) : $item,
             'selected' => $item === $current,
         ], $items);
     }
