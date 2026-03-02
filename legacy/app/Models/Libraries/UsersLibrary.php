@@ -116,9 +116,8 @@ class UsersLibrary extends Model
 
     public function setUserDataByUserId(): array
     {
-        if (!defined('IN_ADMIN')) {
-            return $this->db->queryFetch(
-                'SELECT
+        return $this->db->queryFetch(
+            'SELECT
                     u.*,
                     pre.*,
                     pr.*,
@@ -139,16 +138,7 @@ class UsersLibrary extends Model
                 LEFT JOIN `' . ALLIANCE . "` AS a ON a.alliance_id = u.ally_id
                 WHERE (u.`id` = '" . session('user_id') . "')
                 LIMIT 1;"
-            ) ?? [];
-        }
-
-        return $this->db->queryFetch(
-            'SELECT
-                u.*
-            FROM `' . USERS . "` AS u
-            WHERE (u.`id` = '" . session('user_id') . "')
-            LIMIT 1;"
-        );
+        ) ?? [];
     }
 
     public function updateUserActivityData(string $request_uri, string $remote_addr, string $agent, int $userId): void

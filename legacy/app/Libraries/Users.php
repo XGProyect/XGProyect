@@ -27,19 +27,17 @@ class Users
             // Get user data and check it
             $this->setUserData();
 
-            if (!defined('IN_ADMIN')) {
-                // Set the changed planet
-                $this->setPlanet();
+            // Set the changed planet
+            $this->setPlanet();
 
-                // Get planet data and check it
-                $this->setPlanetData();
+            // Get planet data and check it
+            $this->setPlanetData();
 
-                // Update resources, ships, defenses & technologies
-                UpdatesLibrary::updatePlanetResources($this->userData, $this->planetData, time());
+            // Update resources, ships, defenses & technologies
+            UpdatesLibrary::updatePlanetResources($this->userData, $this->planetData, time());
 
-                // Update buildings queue
-                UpdatesLibrary::updateBuildingsQueue($this->planetData, $this->userData);
-            }
+            // Update buildings queue
+            UpdatesLibrary::updateBuildingsQueue($this->planetData, $this->userData);
         }
     }
 
