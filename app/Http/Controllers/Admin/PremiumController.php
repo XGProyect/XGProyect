@@ -6,32 +6,36 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Template;
 
-class PremiumController extends BaseController
+class PremiumController extends AdminSettingsController
 {
-    private AdministrationService $administrationService;
+    private const FLOAT_SETTINGS = [
+        'merchant_price',
+        'merchant_base_min_exchange_rate',
+        'merchant_base_max_exchange_rate',
+        'merchant_metal_multiplier',
+        'merchant_crystal_multiplier',
+        'merchant_deuterium_multiplier',
+    ];
 
-    public function __construct(private readonly SettingsService $settings)
+    public function __construct(AdministrationService $administrationService, SettingsService $settings)
     {
-        $this->administrationService = new AdministrationService($settings);
+        parent::__construct($administrationService, $settings);
     }
 
-    public function index(): void
+    public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
-        Template::legacyView('admin.premium', $this->buildViewData());
+        return $this->view('admin.premium', $this->buildViewData());
     }
 
     public function update(Request $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
         if ($request->filled('premium_url')) {
             $url = filter_var($request->input('premium_url'), FILTER_VALIDATE_URL);
@@ -41,16 +45,7 @@ class PremiumController extends BaseController
             }
         }
 
-        $floatFields = [
-            'merchant_price',
-            'merchant_base_min_exchange_rate',
-            'merchant_base_max_exchange_rate',
-            'merchant_metal_multiplier',
-            'merchant_crystal_multiplier',
-            'merchant_deuterium_multiplier',
-        ];
-
-        foreach ($floatFields as $field) {
+        foreach (self::FLOAT_SETTINGS as $field) {
             if ($request->filled($field) && is_numeric($request->input($field))) {
                 $value = (float) $request->input($field);
 
@@ -68,21 +63,20 @@ class PremiumController extends BaseController
             }
         }
 
-        return redirect()->route('admin.premium')
-            ->with('success', __('admin/premium.pr_all_ok_message'));
+        return $this->saved('admin.premium', 'admin/premium.pr_all_ok_message');
     }
 
     private function buildViewData(): array
     {
         return [
-            'premium_url'                      => $this->settings->getString('premium_url'),
-            'registration_dark_matter'         => $this->settings->getInt('registration_dark_matter'),
-            'merchant_price'                   => $this->settings->getFloat('merchant_price'),
-            'merchant_base_min_exchange_rate'  => $this->settings->getFloat('merchant_base_min_exchange_rate'),
-            'merchant_base_max_exchange_rate'  => $this->settings->getFloat('merchant_base_max_exchange_rate'),
-            'merchant_metal_multiplier'        => $this->settings->getFloat('merchant_metal_multiplier'),
-            'merchant_crystal_multiplier'      => $this->settings->getFloat('merchant_crystal_multiplier'),
-            'merchant_deuterium_multiplier'    => $this->settings->getFloat('merchant_deuterium_multiplier'),
+            'premium_url'                     => $this->settings->getString('premium_url'),
+            'registration_dark_matter'        => $this->settings->getInt('registration_dark_matter'),
+            'merchant_price'                  => $this->settings->getFloat('merchant_price'),
+            'merchant_base_min_exchange_rate' => $this->settings->getFloat('merchant_base_min_exchange_rate'),
+            'merchant_base_max_exchange_rate' => $this->settings->getFloat('merchant_base_max_exchange_rate'),
+            'merchant_metal_multiplier'       => $this->settings->getFloat('merchant_metal_multiplier'),
+            'merchant_crystal_multiplier'     => $this->settings->getFloat('merchant_crystal_multiplier'),
+            'merchant_deuterium_multiplier'   => $this->settings->getFloat('merchant_deuterium_multiplier'),
         ];
     }
 }

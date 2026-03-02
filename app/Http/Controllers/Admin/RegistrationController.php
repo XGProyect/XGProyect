@@ -6,12 +6,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Template;
 
-class RegistrationController extends BaseController
+class RegistrationController extends AdminSettingsController
 {
     private const BOOL_SETTINGS = [
         'reg_enable',
@@ -19,40 +18,34 @@ class RegistrationController extends BaseController
         'reg_welcome_email',
     ];
 
-    private AdministrationService $administrationService;
-
-    public function __construct(private readonly SettingsService $settings)
+    public function __construct(AdministrationService $administrationService, SettingsService $settings)
     {
-        $this->administrationService = new AdministrationService($settings);
+        parent::__construct($administrationService, $settings);
     }
 
-    public function index(): void
+    public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
-        Template::legacyView('admin.registration', $this->buildViewData());
+        return $this->view('admin.registration', $this->buildViewData());
     }
 
     public function update(Request $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
         foreach (self::BOOL_SETTINGS as $key) {
             $this->settings->write($key, $request->boolean($key) ? 1 : 0);
         }
 
-        return redirect()->route('admin.registration')
-            ->with('success', __('admin/registration.ur_all_ok_message'));
+        return $this->saved('admin.registration', 'admin/registration.ur_all_ok_message');
     }
 
     private function buildViewData(): array
     {
-        return [
-            'reg_enable'          => $this->settings->getBool('reg_enable'),
-            'reg_welcome_message' => $this->settings->getBool('reg_welcome_message'),
-            'reg_welcome_email'   => $this->settings->getBool('reg_welcome_email'),
-        ];
+        return array_combine(
+            self::BOOL_SETTINGS,
+            array_map(fn ($key) => $this->settings->getBool($key), self::BOOL_SETTINGS),
+        );
     }
 }

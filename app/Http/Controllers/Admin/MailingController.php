@@ -6,32 +6,27 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Template;
 
-class MailingController extends BaseController
+class MailingController extends AdminSettingsController
 {
-    private AdministrationService $administrationService;
-
-    public function __construct(private readonly SettingsService $settings)
+    public function __construct(AdministrationService $administrationService, SettingsService $settings)
     {
-        $this->administrationService = new AdministrationService($settings);
+        parent::__construct($administrationService, $settings);
     }
 
-    public function index(): void
+    public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
-        Template::legacyView('admin.mailing', $this->buildViewData());
+        return $this->view('admin.mailing', $this->buildViewData());
     }
 
     public function update(Request $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
         if ($request->filled('mailing_protocol')) {
             $this->settings->write('mailing_protocol', $request->input('mailing_protocol'));
@@ -45,7 +40,6 @@ class MailingController extends BaseController
             $this->settings->write('mailing_smtp_user', $request->input('mailing_smtp_user'));
         }
 
-        // Allow empty password (don't skip blank on purpose — use has() not filled())
         if ($request->has('mailing_smtp_pass')) {
             $this->settings->write('mailing_smtp_pass', $request->input('mailing_smtp_pass'));
         }
@@ -58,49 +52,46 @@ class MailingController extends BaseController
             $this->settings->write('mailing_smtp_timeout', (int) $request->input('mailing_smtp_timeout'));
         }
 
-        // Allow empty (None) encryption
         if ($request->has('mailing_smtp_crypto')) {
             $this->settings->write('mailing_smtp_crypto', $request->input('mailing_smtp_crypto', ''));
         }
 
-        return redirect()->route('admin.mailing')
-            ->with('success', __('admin/mailing.ma_all_ok_message'));
+        return $this->saved('admin.mailing', 'admin/mailing.ma_all_ok_message');
     }
 
     private function buildViewData(): array
     {
+        $protocol = $this->settings->getString('mailing_protocol');
+        $crypto   = $this->settings->getString('mailing_smtp_crypto');
+
         return [
-            'mailing_protocol'    => $this->settings->getString('mailing_protocol'),
-            'mailing_smtp_host'   => $this->settings->getString('mailing_smtp_host'),
-            'mailing_smtp_user'   => $this->settings->getString('mailing_smtp_user'),
-            'mailing_smtp_pass'   => $this->settings->getString('mailing_smtp_pass'),
-            'mailing_smtp_port'   => $this->settings->getInt('mailing_smtp_port'),
+            'mailing_protocol'     => $protocol,
+            'mailing_smtp_host'    => $this->settings->getString('mailing_smtp_host'),
+            'mailing_smtp_user'    => $this->settings->getString('mailing_smtp_user'),
+            'mailing_smtp_pass'    => $this->settings->getString('mailing_smtp_pass'),
+            'mailing_smtp_port'    => $this->settings->getInt('mailing_smtp_port'),
             'mailing_smtp_timeout' => $this->settings->getInt('mailing_smtp_timeout'),
-            'mailing_smtp_crypto' => $this->settings->getString('mailing_smtp_crypto'),
-            'protocol_options'    => $this->buildProtocolOptions(),
-            'smtp_crypto_options' => $this->buildCryptoOptions(),
+            'mailing_smtp_crypto'  => $crypto,
+            'protocol_options'     => $this->buildSelectOptions(['mail', 'sendmail', 'smtp'], $protocol, 'strtoupper'),
+            'smtp_crypto_options'  => [
+                ['value' => '',    'label' => 'None', 'selected' => $crypto === ''],
+                ['value' => 'tls', 'label' => 'TLS',  'selected' => $crypto === 'tls'],
+                ['value' => 'ssl', 'label' => 'SSL',  'selected' => $crypto === 'ssl'],
+            ],
         ];
     }
 
-    private function buildProtocolOptions(): array
+    /**
+     * @param  string[]       $items
+     * @param  callable|null  $labelFn  optional transform applied to each label
+     * @return array<int, array{value: string, label: string, selected: bool}>
+     */
+    private function buildSelectOptions(array $items, string $current, ?string $labelFn = null): array
     {
-        $current = $this->settings->getString('mailing_protocol');
-
-        return array_map(fn ($option) => [
-            'value'    => $option,
-            'label'    => strtoupper($option),
-            'selected' => $option === $current,
-        ], ['mail', 'sendmail', 'smtp']);
-    }
-
-    private function buildCryptoOptions(): array
-    {
-        $current = $this->settings->getString('mailing_smtp_crypto');
-
-        return [
-            ['value' => '',    'label' => 'None', 'selected' => $current === ''],
-            ['value' => 'tls', 'label' => 'TLS',  'selected' => $current === 'tls'],
-            ['value' => 'ssl', 'label' => 'SSL',  'selected' => $current === 'ssl'],
-        ];
+        return array_map(fn ($item) => [
+            'value'    => $item,
+            'label'    => $labelFn ? $labelFn($item) : $item,
+            'selected' => $item === $current,
+        ], $items);
     }
 }

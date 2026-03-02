@@ -4,38 +4,35 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\Admin\ServerSettingsService;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
-use DateTime;
-use DateTimeZone;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Functions;
 
-class ServerController extends BaseController
+class ServerController extends AdminSettingsController
 {
-    private AdministrationService $administrationService;
-
-    public function __construct(private readonly SettingsService $settings)
-    {
-        $this->administrationService = new AdministrationService($settings);
+    public function __construct(
+        AdministrationService $administrationService,
+        SettingsService $settings,
+        private readonly ServerSettingsService $serverSettings,
+    ) {
+        parent::__construct($administrationService, $settings);
     }
 
-    public function index(): void
+    public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
-        Template::legacyView('admin.server', $this->buildViewData());
+        return $this->view('admin.server', $this->buildViewData());
     }
 
     public function update(Request $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
         // Identity
         if ($request->filled('game_name')) {
@@ -115,8 +112,7 @@ class ServerController extends BaseController
             $this->settings->write('noobprotectionmulti', (int) $request->input('noobprotectionmulti'));
         }
 
-        return redirect()->route('admin.server')
-            ->with('success', __('admin/server.se_all_ok_message'));
+        return $this->saved('admin.server', 'admin/server.se_all_ok_message');
     }
 
     private function buildViewData(): array
@@ -136,86 +132,17 @@ class ServerController extends BaseController
             'game_enable'          => $this->settings->getBool('game_enable'),
             'close_reason'         => stripslashes($this->settings->getString('close_reason')),
             // Date & Time
-            'timezone_options'     => $this->buildTimezoneOptions(),
+            'timezone_options'     => $this->serverSettings->timezoneOptions(),
             'date_format'          => $this->settings->getString('date_format'),
             'date_format_extended' => $this->settings->getString('date_format_extended'),
             // Combat rules
             'adm_attack'           => $this->settings->getBool('adm_attack'),
-            'fleet_cdr_options'    => $this->buildPercentageOptions($this->settings->getInt('fleet_cdr')),
-            'defs_cdr_options'     => $this->buildPercentageOptions($this->settings->getInt('defs_cdr')),
+            'fleet_cdr_options'    => $this->serverSettings->percentageOptions($this->settings->getInt('fleet_cdr')),
+            'defs_cdr_options'     => $this->serverSettings->percentageOptions($this->settings->getInt('defs_cdr')),
             // Noob protection
             'noobprotection'       => $this->settings->getBool('noobprotection'),
             'noobprotectiontime'   => $this->settings->getInt('noobprotectiontime'),
             'noobprotectionmulti'  => $this->settings->getInt('noobprotectionmulti'),
         ];
-    }
-
-    private function buildTimezoneOptions(): array
-    {
-        $utc = new DateTimeZone('UTC');
-        $dt = new DateTime('now', $utc);
-        $current = $this->settings->getString('date_time_zone');
-        $grouped = [];
-
-        foreach (DateTimeZone::listIdentifiers() as $tz) {
-            $tzObj = new DateTimeZone($tz);
-            $transitions = $tzObj->getTransitions($dt->getTimestamp(), $dt->getTimestamp());
-
-            foreach ($transitions as $data) {
-                $grouped[$data['offset']][] = $tz;
-            }
-        }
-
-        ksort($grouped);
-
-        $options = [];
-
-        foreach ($grouped as $offset => $zones) {
-            $label = 'GMT' . $this->formatOffset($offset);
-            $entries = [];
-
-            foreach ($zones as $zone) {
-                $entries[] = [
-                    'value'    => $zone,
-                    'label'    => $zone,
-                    'selected' => $current === $zone,
-                ];
-            }
-
-            $options[] = ['group' => $label, 'zones' => $entries];
-        }
-
-        return $options;
-    }
-
-    private function formatOffset(int $offset): string
-    {
-        $hours     = $offset / 3600;
-        $remainder = $offset % 3600;
-        $sign      = $hours >= 0 ? '+' : '-';
-        $hour      = (int) abs($hours);
-        $minutes   = (int) abs($remainder / 60);
-
-        if ($hour === 0 && $minutes === 0) {
-            $sign = ' ';
-        }
-
-        return $sign . str_pad((string) $hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad((string) $minutes, 2, '0');
-    }
-
-    private function buildPercentageOptions(int $current): array
-    {
-        $options = [];
-
-        for ($i = 0; $i <= 10; $i++) {
-            $value     = $i * 10;
-            $options[] = [
-                'value'    => $value,
-                'label'    => $value . '%',
-                'selected' => $value === $current,
-            ];
-        }
-
-        return $options;
     }
 }

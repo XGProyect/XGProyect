@@ -6,33 +6,28 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use Xgp\App\Core\Template;
 
-class StatisticsController extends BaseController
+class StatisticsController extends AdminSettingsController
 {
-    private AdministrationService $administrationService;
-
-    public function __construct(private readonly SettingsService $settings)
+    public function __construct(AdministrationService $administrationService, SettingsService $settings)
     {
-        $this->administrationService = new AdministrationService($settings);
+        parent::__construct($administrationService, $settings);
     }
 
-    public function index(): void
+    public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
-        Template::legacyView('admin.statistics', $this->buildViewData());
+        return $this->view('admin.statistics', $this->buildViewData());
     }
 
     public function update(Request $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
         if ($request->filled('stat_points') && is_numeric($request->input('stat_points'))) {
             $value = (int) $request->input('stat_points');
@@ -58,31 +53,24 @@ class StatisticsController extends BaseController
             }
         }
 
-        return redirect()->route('admin.statistics')
-            ->with('success', __('admin/statistics.cs_all_ok_message'));
+        return $this->saved('admin.statistics', 'admin/statistics.cs_all_ok_message');
     }
 
     private function buildViewData(): array
     {
         $currentLevel = $this->settings->getInt('stat_admin_level');
+        $levelNames   = (array) __('admin/global.user_level');
+        $ranks        = [UserRanks::PLAYER, UserRanks::GO, UserRanks::SGO, UserRanks::ADMIN];
 
         return [
             'stat_points'      => $this->settings->getInt('stat_points'),
             'stat_update_time' => $this->settings->getInt('stat_update_time'),
             'stat_admin_level' => $currentLevel,
-            'user_levels'      => $this->buildUserLevels($currentLevel),
+            'user_levels'      => array_map(fn ($rank) => [
+                'id'       => $rank,
+                'name'     => $levelNames[$rank] ?? $rank,
+                'selected' => $currentLevel === $rank,
+            ], $ranks),
         ];
-    }
-
-    private function buildUserLevels(int $currentLevel): array
-    {
-        $ranks      = [UserRanks::PLAYER, UserRanks::GO, UserRanks::SGO, UserRanks::ADMIN];
-        $levelNames = (array) __('admin/global.user_level');
-
-        return array_map(fn ($rank) => [
-            'id'       => $rank,
-            'name'     => $levelNames[$rank] ?? $rank,
-            'selected' => $currentLevel === $rank,
-        ], $ranks);
     }
 }

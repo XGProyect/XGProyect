@@ -6,42 +6,37 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Template;
 
-class PlanetsController extends BaseController
+class PlanetsController extends AdminSettingsController
 {
-    private AdministrationService $administrationService;
+    private const INT_SETTINGS = [
+        'initial_fields',
+        'metal_basic_income',
+        'crystal_basic_income',
+        'deuterium_basic_income',
+        'energy_basic_income',
+    ];
 
-    public function __construct(private readonly SettingsService $settings)
+    public function __construct(AdministrationService $administrationService, SettingsService $settings)
     {
-        $this->administrationService = new AdministrationService($settings);
+        parent::__construct($administrationService, $settings);
     }
 
-    public function index(): void
+    public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
-        Template::legacyView('admin.planets', $this->buildViewData());
+        return $this->view('admin.planets', $this->buildViewData());
     }
 
     public function update(Request $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
-        $intFields = [
-            'initial_fields',
-            'metal_basic_income',
-            'crystal_basic_income',
-            'deuterium_basic_income',
-            'energy_basic_income',
-        ];
-
-        foreach ($intFields as $field) {
+        foreach (self::INT_SETTINGS as $field) {
             if ($request->filled($field) && is_numeric($request->input($field))) {
                 $value = (int) $request->input($field);
 
@@ -51,18 +46,14 @@ class PlanetsController extends BaseController
             }
         }
 
-        return redirect()->route('admin.planets')
-            ->with('success', __('admin/planets.np_all_ok_message'));
+        return $this->saved('admin.planets', 'admin/planets.np_all_ok_message');
     }
 
     private function buildViewData(): array
     {
-        return [
-            'initial_fields'          => $this->settings->getInt('initial_fields'),
-            'metal_basic_income'      => $this->settings->getInt('metal_basic_income'),
-            'crystal_basic_income'    => $this->settings->getInt('crystal_basic_income'),
-            'deuterium_basic_income'  => $this->settings->getInt('deuterium_basic_income'),
-            'energy_basic_income'     => $this->settings->getInt('energy_basic_income'),
-        ];
+        return array_combine(
+            self::INT_SETTINGS,
+            array_map(fn ($key) => $this->settings->getInt($key), self::INT_SETTINGS),
+        );
     }
 }
