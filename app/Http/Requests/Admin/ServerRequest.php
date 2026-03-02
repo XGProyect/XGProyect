@@ -60,9 +60,25 @@ class ServerRequest extends FormRequest
      */
     public function toSettings(): array
     {
+        return array_merge(
+            $this->identitySettings(),
+            $this->economySettings(),
+            $this->accessSettings(),
+            $this->dateSettings(),
+            $this->combatSettings(),
+            $this->noobSettings(),
+        );
+    }
+
+    /**
+     * @return array<string, mixed>
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
+    private function identitySettings(): array
+    {
         $settings = [];
 
-        // Identity
         if ($this->has('game_name')) {
             $settings['game_name'] = $this->string('game_name')->toString();
         }
@@ -79,7 +95,14 @@ class ServerRequest extends FormRequest
             $settings['forum_url'] = UrlHelper::prepUrl($this->string('forum_url')->toString());
         }
 
-        // Speed & Economy — stored as raw value × 2500
+        return $settings;
+    }
+
+    /** @return array<string, mixed> */
+    private function economySettings(): array
+    {
+        $settings = [];
+
         if ($this->has('game_speed')) {
             $settings['game_speed'] = 2500 * $this->integer('game_speed');
         }
@@ -90,13 +113,28 @@ class ServerRequest extends FormRequest
             $settings['resource_multiplier'] = $this->integer('resource_multiplier');
         }
 
-        // Server Access — booleans written as 0/1; close_reason always written when present
-        $settings['game_enable'] = $this->boolean('game_enable') ? 1 : 0;
+        return $settings;
+    }
+
+    /** @return array<string, mixed> */
+    private function accessSettings(): array
+    {
+        $settings = [
+            'game_enable' => $this->boolean('game_enable') ? 1 : 0,
+        ];
+
         if ($this->has('close_reason')) {
             $settings['close_reason'] = addslashes($this->string('close_reason')->toString());
         }
 
-        // Date & Time
+        return $settings;
+    }
+
+    /** @return array<string, mixed> */
+    private function dateSettings(): array
+    {
+        $settings = [];
+
         if ($this->has('date_time_zone')) {
             $settings['date_time_zone'] = $this->string('date_time_zone')->toString();
         }
@@ -107,8 +145,16 @@ class ServerRequest extends FormRequest
             $settings['date_format_extended'] = $this->string('date_format_extended')->toString();
         }
 
-        // Combat Rules
-        $settings['adm_attack'] = $this->boolean('adm_attack') ? 1 : 0;
+        return $settings;
+    }
+
+    /** @return array<string, mixed> */
+    private function combatSettings(): array
+    {
+        $settings = [
+            'adm_attack' => $this->boolean('adm_attack') ? 1 : 0,
+        ];
+
         if ($this->has('fleet_cdr')) {
             $settings['fleet_cdr'] = $this->integer('fleet_cdr');
         }
@@ -116,8 +162,16 @@ class ServerRequest extends FormRequest
             $settings['defs_cdr'] = $this->integer('defs_cdr');
         }
 
-        // Noob Protection
-        $settings['noobprotection'] = $this->boolean('noobprotection') ? 1 : 0;
+        return $settings;
+    }
+
+    /** @return array<string, mixed> */
+    private function noobSettings(): array
+    {
+        $settings = [
+            'noobprotection' => $this->boolean('noobprotection') ? 1 : 0,
+        ];
+
         if ($this->has('noobprotectiontime')) {
             $settings['noobprotectiontime'] = $this->integer('noobprotectiontime');
         }

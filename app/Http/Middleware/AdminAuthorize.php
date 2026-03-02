@@ -7,16 +7,18 @@ namespace App\Http\Middleware;
 use App\Models\User;
 use App\Services\SettingsService;
 use Closure;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Xgp\App\Libraries\Adm\Permissions;
 
 class AdminAuthorize
 {
     private const ALWAYS_ALLOWED = ['home'];
 
-    public function __construct(private readonly SettingsService $settingsService)
-    {
+    public function __construct(
+        private readonly SettingsService $settingsService,
+        private readonly Guard $auth,
+    ) {
     }
 
     public function handle(Request $request, Closure $next): mixed
@@ -45,7 +47,7 @@ class AdminAuthorize
             $permissions = new Permissions($this->settingsService->getString('admin_permissions'));
 
             /** @var User $authUser */
-            $authUser = Auth::user();
+            $authUser = $this->auth->user();
 
             if ($permissions->isAccessAllowed($module, (int) $authUser->authlevel)) {
                 return $next($request);
