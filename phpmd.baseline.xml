@@ -4,7 +4,6 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Account/RecoverController.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="app/Http/Controllers/Admin/AnnouncementController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/AnnouncementController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/BanController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/BanController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ErrorsController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/ErrorsController.php"/>
@@ -22,31 +21,13 @@
   <violation rule="PHPMD\Rule\CleanCode\ErrorControlOperator" file="app/Http/Controllers/Admin/HomeController.php" method="checkUpdates"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/LoginController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/LogoutController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/MailingController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ModulesController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/ModulesController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="app/Http/Controllers/Admin/ModulesController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/PlanetsController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/PremiumController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/RebuildHighscoresController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/RegistrationController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/RepairController.php"/>
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/ResetController.php" method="reset"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ResetController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/ResetController.php" method="resetBuildingsByType"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/ResetController.php"/>
-  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="app/Http/Controllers/Admin/ServerController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ServerController.php"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="app/Http/Controllers/Admin/ServerController.php" method="runAction"/>
-  <violation rule="PHPMD\Rule\Design\LongMethod" file="app/Http/Controllers/Admin/ServerController.php" method="runAction"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="app/Http/Controllers/Admin/ServerController.php" method="runAction"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="app/Http/Controllers/Admin/ServerController.php" method="runAction"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/Http/Controllers/Admin/ServerController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/ServerController.php"/>
-  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="app/Http/Controllers/Admin/ServerController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="app/Http/Controllers/Admin/StatisticsController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/StatisticsController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/StatisticsController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/TasksController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/TasksController.php"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/TasksController.php" method="getStatLastUpdateActions"/>
@@ -71,7 +52,6 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Providers/BroadcastServiceProvider.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Providers/RouteServiceProvider.php"/>
   <violation rule="PHPMD\Rule\UnusedLocalVariable" file="app/Services/Admin/PermissionsService.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Services/AdministrationService.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Services/SessionService.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Services/SettingsService.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/View/Components/Admin/Navigation.php"/>
