@@ -61,7 +61,8 @@
                         @else
                         <div class="table-responsive">
                             <table class="table table-borderless">
-                                @foreach ($backup_list as $item)                                <tr>
+                                @foreach ($backup_list as $item)
+                                <tr>
                                     <td>
                                         {{ $item['file_name'] }}
                                     </td>
