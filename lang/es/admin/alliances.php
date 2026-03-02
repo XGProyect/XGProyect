@@ -73,6 +73,7 @@ return [
     'al_alliance_pending_request' => 'Solicitud pendiente',
     'al_request_yes' => 'Si',
     'al_request_no' => 'No',
+    'al_request_pending' => 'Pendiente',
     'al_alliance_request_text' => 'Texto de solicitud',
     'al_inscription_date' => 'Fecha de inscripción',
     'al_alliance_member_rank' => 'Rango',
