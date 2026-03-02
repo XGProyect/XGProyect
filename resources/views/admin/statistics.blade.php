@@ -22,9 +22,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <x-admin.card-collapsible id="collapseGeneral" title="{{ __('admin/statistics.cs_general') }}">
-                            <div class="table-responsive">
-                                <table class="table table-borderless">
-                                    <tbody>
+                            <x-admin.settings-table>
                                         <tr>
                                             <td>
                                                 <span>
@@ -62,9 +60,7 @@
                                                 </select>
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </x-admin.settings-table>
                     </x-admin.card-collapsible>
             </div>
         </div>

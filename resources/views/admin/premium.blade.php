@@ -22,9 +22,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <x-admin.card-collapsible id="collapseGeneral" title="{{ __('admin/premium.pr_general') }}">
-                            <div class="table-responsive">
-                                <table class="table table-borderless">
-                                    <tbody>
+                            <x-admin.settings-table>
                                         <tr>
                                             <td>
                                                 <span>
@@ -47,16 +45,12 @@
                                                     value="{{ $registration_dark_matter }}">
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </x-admin.settings-table>
                     </x-admin.card-collapsible>
             </div>
             <div class="col-lg-6">
                 <x-admin.card-collapsible id="collapseOtherParameters" title="{{ __('admin/premium.pr_trader') }}">
-                            <div class="table-responsive">
-                                <table class="table table-borderless">
-                                    <tbody>
+                            <x-admin.settings-table>
                                         <tr>
                                             <td>
                                                 <span>
@@ -142,9 +136,7 @@
                                                     value="{{ $merchant_deuterium_multiplier }}">
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </x-admin.settings-table>
                     </x-admin.card-collapsible>
             </div>
         </div>

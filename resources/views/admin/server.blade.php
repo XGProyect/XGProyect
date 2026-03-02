@@ -23,9 +23,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <x-admin.card-collapsible id="collapseServerParameters" title="{{ __('admin/server.se_server_parameters') }}">
-                            <div class="table-responsive">
-                                <table class="table table-borderless">
-                                    <tbody>
+                            <x-admin.settings-table>
                                         <tr>
                                             <td>
                                                 <span>
@@ -185,8 +183,7 @@
                                                     value="{{ $date_format_extended }}">
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
+                                    </x-admin.settings-table>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary btn-icon-split">
                                         <span class="icon text-white-50">
@@ -195,14 +192,11 @@
                                         <span class="text">{{ __('admin/server.se_save_parameters') }}</span>
                                     </button>
                                 </div>
-                            </div>
                     </x-admin.card-collapsible>
             </div>
             <div class="col-lg-6">
                 <x-admin.card-collapsible id="collapseOtherParameters" title="{{ __('admin/server.se_several_parameters') }}">
-                            <div class="table-responsive">
-                                <table class="table table-borderless">
-                                    <tbody>
+                            <x-admin.settings-table>
                                         <tr>
                                             <td>
                                                 <span>
@@ -245,15 +239,11 @@
                                                 </select>
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </x-admin.settings-table>
                     </x-admin.card-collapsible>
 
                 <x-admin.card-collapsible id="collapseNoobProtection" title="{{ __('admin/server.se_noob_protect') }}">
-                            <div class="table-responsive">
-                                <table class="table table-borderless">
-                                    <tbody>
+                            <x-admin.settings-table>
                                         <tr>
                                             <td>{{ __('admin/server.se_noob_protect_active') }}</td>
                                             <td>
@@ -289,9 +279,7 @@
                                                     max="99" class="form-control">
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </x-admin.settings-table>
                     </x-admin.card-collapsible>
             </div>
         </div>
