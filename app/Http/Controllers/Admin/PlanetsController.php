@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\PlanetsRequest;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class PlanetsController extends AdminSettingsController
 {
@@ -32,17 +32,13 @@ class PlanetsController extends AdminSettingsController
         return $this->view('admin.planets', $this->buildViewData());
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(PlanetsRequest $request): RedirectResponse
     {
         $this->authorize();
 
-        foreach (self::INT_SETTINGS as $field) {
-            if ($request->filled($field) && is_numeric($request->input($field))) {
-                $value = (int) $request->input($field);
-
-                if ($value >= 0) {
-                    $this->settings->write($field, $value);
-                }
+        foreach ($request->validated() as $field => $value) {
+            if ($value !== null) {
+                $this->settings->write($field, (int) $value);
             }
         }
 
