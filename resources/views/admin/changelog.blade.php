@@ -17,9 +17,8 @@
 
     @if(empty($changelog))
         <div class="card shadow">
-            <div class="card-body text-center py-5 text-muted">
-                <i class="fas fa-scroll fa-3x mb-3 d-block text-gray-300"></i>
-                {{ __('admin/changelog.ch_no_entries') }}
+            <div class="card-body">
+                <x-admin.empty-state icon="fas fa-scroll" message="{{ __('admin/changelog.ch_no_entries') }}" size="lg" />
             </div>
         </div>
     @else

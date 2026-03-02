@@ -21,10 +21,7 @@
                         </a>
                     </x-slot>
                     @if (count($planets) === 0)
-                        <div class="p-4 text-center text-muted">
-                            <i class="fas fa-globe fa-3x mb-3 d-block"></i>
-                            {{ __('admin/users.us_no_planets') }}
-                        </div>
+                        <x-admin.empty-state icon="fas fa-globe" message="{{ __('admin/users.us_no_planets') }}" />
                     @else
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover mb-0">

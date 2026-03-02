@@ -56,10 +56,12 @@
         </div>
         <div class="col-lg-6">
             <x-admin.card-collapsible id="collapseList" title="{{ __('admin/backup.bku_list') }}">
+                        @if ($backup_list->isEmpty())
+                            <x-admin.empty-state icon="fas fa-database" message="{{ __('admin/backup.bku_no_backups') }}" size="sm" />
+                        @else
                         <div class="table-responsive">
                             <table class="table table-borderless">
-                                @foreach ($backup_list as $item)
-                                <tr>
+                                @foreach ($backup_list as $item)                                <tr>
                                     <td>
                                         {{ $item['file_name'] }}
                                     </td>
@@ -83,6 +85,7 @@
                                 @endforeach
                             </table>
                         </div>
+                        @endif
             </x-admin.card-collapsible>
         </div>
     </div>

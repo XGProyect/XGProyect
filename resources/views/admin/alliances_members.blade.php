@@ -20,9 +20,7 @@
                     @php $isLastMember = count($members) === 1; @endphp
 
                     @if (empty($members))
-                        <p class="text-center text-muted py-4">
-                            <i class="fas fa-info-circle mr-1"></i>{{ __('admin/alliances.al_no_members') }}
-                        </p>
+                        <x-admin.empty-state icon="fas fa-users" message="{{ __('admin/alliances.al_no_members') }}" size="sm" />
                     @else
                         <div class="table-responsive">
                             <table class="table table-hover mb-0">

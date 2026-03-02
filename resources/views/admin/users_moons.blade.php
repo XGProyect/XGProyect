@@ -21,10 +21,7 @@
                         </a>
                     </x-slot>
                     @if (count($moons) === 0)
-                        <div class="p-4 text-center text-muted">
-                            <i class="fas fa-moon fa-3x mb-3 d-block"></i>
-                            {{ __('admin/users.us_no_moons') }}
-                        </div>
+                        <x-admin.empty-state icon="fas fa-moon" message="{{ __('admin/users.us_no_moons') }}" />
                     @else
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover mb-0">

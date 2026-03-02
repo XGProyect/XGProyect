@@ -14,4 +14,5 @@ return [
     'bku_settings_saved' => 'Configuración de resguardo guardada correctamente.',
     'bku_created' => 'Resguardo creado correctamente.',
     'bku_deleted' => 'Resguardo eliminado correctamente.',
+    'bku_no_backups' => 'No hay resguardos disponibles todavía. Usa el botón de arriba para crear uno.',
 ];

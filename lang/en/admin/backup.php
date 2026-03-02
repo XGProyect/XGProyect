@@ -14,4 +14,5 @@ return [
     'bku_settings_saved' => 'Backup settings saved successfully.',
     'bku_created' => 'Backup created successfully.',
     'bku_deleted' => 'Backup deleted successfully.',
+    'bku_no_backups' => 'No backups available yet. Use the button above to create one.',
 ];

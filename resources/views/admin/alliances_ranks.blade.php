@@ -83,9 +83,7 @@ $permissions = [
                                 </div>
                             </div>
                         @empty
-                            <p class="text-center text-muted py-3">
-                                <i class="fas fa-info-circle mr-1"></i>{{ __('admin/alliances.al_no_ranks') }}
-                            </p>
+                            <x-admin.empty-state icon="fas fa-sitemap" message="{{ __('admin/alliances.al_no_ranks') }}" size="sm" />
                         @endforelse
 
                         <div class="d-flex flex-wrap justify-content-between mt-3" style="gap: 0.5rem;">

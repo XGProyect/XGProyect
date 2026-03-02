@@ -72,7 +72,7 @@
                 </x-slot>
 
                     @if ($banned_users->isEmpty())
-                        <p class="text-center text-muted my-3">{{ __('admin/ban.bn_no_banned_users') }}</p>
+                        <x-admin.empty-state icon="fas fa-user-check" message="{{ __('admin/ban.bn_no_banned_users') }}" size="sm" />
                     @else
                         <form action="{{ route('admin.ban.unban') }}" method="POST" id="form-unban-user">
                             @csrf
