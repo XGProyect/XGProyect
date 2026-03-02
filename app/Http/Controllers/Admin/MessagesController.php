@@ -7,12 +7,16 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Messages;
 use App\Services\AdministrationService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 
+/**
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 class MessagesController extends BaseController
 {
     public function __construct(
@@ -126,11 +130,14 @@ class MessagesController extends BaseController
             $query->where('message_text', 'LIKE', '%' . $text . '%');
         }
 
-        return $query->limit(100)->get()->map(fn (Messages $msg) => [
+        /** @var Collection<int, Messages> $results */
+        $results = $query->limit(100)->get();
+
+        return $results->map(fn (Messages $msg) => [
             'message_id' => $msg->message_id,
             'sender' => $msg->senderUser?->name ?? '-',
             'receiver' => $msg->receiverUser?->name ?? '-',
-            'message_time' => Timing::formatExtendedDate($msg->message_time),
+            'message_time' => Timing::formatExtendedDate((string) $msg->message_time),
             'message_type' => __('admin/messages.mg_types')[$msg->message_type] ?? '-',
             'message_from' => $msg->message_from,
             'message_subject' => $msg->message_subject,

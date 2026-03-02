@@ -342,71 +342,11 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method App\\\\Models\\\\Messages\\:\\:whereIn\\(\\)\\.$#"
-			count: 2
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Cannot access offset 'message_text' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Cannot access offset 'message_time' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Cannot access offset 'message_type' on mixed\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:buildMessageTypeBlock\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:deleteMessages\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:doSearch\\(\\) has parameter \\$to_search with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/MessagesController.php
 
 		-
 			message: "#^Offset 0\\|1\\|2\\|3\\|4\\|5 does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Offset mixed does not exist on array\\|string\\|null\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Parameter \\#1 \\$message_id of method App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:deleteMessage\\(\\) expects int, int\\<0, max\\>\\|false given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function nl2br expects string, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Parameter \\#1 \\$time of static method Xgp\\\\App\\\\Libraries\\\\TimingLibrary\\:\\:formatExtendedDate\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Admin/MessagesController.php
-
-		-
-			message: "#^Property App\\\\Http\\\\Controllers\\\\Admin\\\\MessagesController\\:\\:\\$results type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Controllers/Admin/MessagesController.php
 

@@ -91,11 +91,17 @@ class Messages extends Model
      */
     public $timestamps = false;
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function senderUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'message_sender');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function receiverUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'message_receiver');
