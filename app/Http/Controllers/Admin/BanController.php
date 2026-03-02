@@ -68,12 +68,14 @@ class BanController extends BaseController
         $username = $request->input('unban_name');
         $user = User::where('name', $username)->first();
 
-        if ($user) {
-            Ban::where('user_id', $user->id)->delete();
-            session()->flash('success', __('admin/ban.bn_lift_ban_success', ['user' => $username]));
-        } else {
+        if (!$user) {
             session()->flash('danger', __('admin/ban.bn_user_not_found'));
+
+            return redirect()->route('admin.ban');
         }
+
+        Ban::where('user_id', $user->id)->delete();
+        session()->flash('success', __('admin/ban.bn_lift_ban_success', ['user' => $username]));
 
         return redirect()->route('admin.ban');
     }
