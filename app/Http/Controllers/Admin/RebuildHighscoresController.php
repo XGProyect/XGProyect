@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\AdministrationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
@@ -14,24 +13,13 @@ use Xgp\App\Libraries\StatisticsLibrary as Statistics;
 
 class RebuildHighscoresController extends BaseController
 {
-    public function __construct(
-        private readonly AdministrationService $administrationService,
-    ) {
-    }
-
     public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         return view('admin.rebuildhighscores');
     }
 
     public function run(): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $result = (new Statistics())->makeStats();
 
         session()->flash('success', strtr(__('admin/rebuildhighscores.sb_stats_update'), ['%t' => $result['totaltime']]));

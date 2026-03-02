@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Admin\Users;
 use App\Http\Requests\Admin\Users\UserPlanetRequest;
 use App\Http\Traits\Admin\Users\UserPlanetTrait;
 use App\Models\User;
-use App\Services\AdministrationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,16 +25,8 @@ class UserPlanetController extends BaseController
 
     private const AUTH_MODULE = UsersController::class;
 
-    public function __construct(
-        private readonly AdministrationService $administrationService,
-    ) {
-    }
-
     public function showPlanets(User $user): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         return view('admin.users_planets', [
             'user' => $user,
             'planets' => $this->getPlanetsWithMoons($user->id),
@@ -44,9 +35,6 @@ class UserPlanetController extends BaseController
 
     public function createPlanet(User $user): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         return view('admin.users_planet_create', [
             'user' => $user,
         ]);
@@ -58,9 +46,6 @@ class UserPlanetController extends BaseController
      */
     public function storePlanet(Request $request, User $user): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $galaxy = $request->integer('galaxy');
         $system = $request->integer('system');
         $planet = $request->integer('planet');
@@ -116,9 +101,6 @@ class UserPlanetController extends BaseController
 
     public function showPlanet(User $user, int $planet): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $planetData = $this->getPlanetData($planet, PlanetTypesEnumerator::PLANET);
         if (!$planetData) {
             abort(404);
@@ -136,9 +118,6 @@ class UserPlanetController extends BaseController
 
     public function updatePlanet(UserPlanetRequest $request, User $user, int $planet): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $this->savePlanetData($request, $planet);
         session()->flash('success', __('admin/users.us_all_ok_message'));
 
@@ -147,9 +126,6 @@ class UserPlanetController extends BaseController
 
     public function showPlanetBuildings(User $user, int $planet): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         return view('admin.users_planet_buildings', [
             'user' => $user,
             'planet_id' => $planet,
@@ -160,9 +136,6 @@ class UserPlanetController extends BaseController
 
     public function updatePlanetBuildings(Request $request, User $user, int $planet): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $this->saveBuildingsData($request, $planet, PlanetTypesEnumerator::PLANET);
         session()->flash('success', __('admin/users.us_all_ok_message'));
 
@@ -171,9 +144,6 @@ class UserPlanetController extends BaseController
 
     public function showPlanetShips(User $user, int $planet): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         return view('admin.users_planet_ships', [
             'user' => $user,
             'planet_id' => $planet,
@@ -184,9 +154,6 @@ class UserPlanetController extends BaseController
 
     public function updatePlanetShips(Request $request, User $user, int $planet): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $this->saveShipsData($request, $planet);
         session()->flash('success', __('admin/users.us_all_ok_message'));
 
@@ -195,9 +162,6 @@ class UserPlanetController extends BaseController
 
     public function showPlanetDefenses(User $user, int $planet): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         return view('admin.users_planet_defenses', [
             'user' => $user,
             'planet_id' => $planet,
@@ -208,9 +172,6 @@ class UserPlanetController extends BaseController
 
     public function updatePlanetDefenses(Request $request, User $user, int $planet): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $this->saveDefensesData($request, $planet);
         session()->flash('success', __('admin/users.us_all_ok_message'));
 
@@ -220,9 +181,6 @@ class UserPlanetController extends BaseController
     /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function softDeletePlanet(User $user, int $planet): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         // Rule: cannot schedule the only remaining planet for destruction
         if ($this->countUserPlanets($user->id) <= 1) {
             session()->flash('danger', __('admin/users.us_cannot_delete_only_planet'));
@@ -265,9 +223,6 @@ class UserPlanetController extends BaseController
     /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function hardDeletePlanet(User $user, int $planet): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         // Rule: cannot delete the only remaining planet
         if ($this->countUserPlanets($user->id) <= 1) {
             session()->flash('danger', __('admin/users.us_cannot_delete_only_planet'));

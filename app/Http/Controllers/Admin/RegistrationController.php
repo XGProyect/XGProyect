@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\RegistrationRequest;
-use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -18,22 +17,18 @@ class RegistrationController extends AdminSettingsController
         'reg_welcome_email',
     ];
 
-    public function __construct(AdministrationService $administrationService, SettingsService $settings)
+    public function __construct(SettingsService $settings)
     {
-        parent::__construct($administrationService, $settings);
+        parent::__construct($settings);
     }
 
     public function index(): View
     {
-        $this->authorize();
-
         return $this->view('admin.registration', $this->buildViewData());
     }
 
     public function update(RegistrationRequest $request): RedirectResponse
     {
-        $this->authorize();
-
         foreach (self::BOOL_SETTINGS as $key) {
             $this->settings->write($key, $request->boolean($key) ? 1 : 0);
         }

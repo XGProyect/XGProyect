@@ -8,7 +8,6 @@ use App\Http\Requests\Admin\Users\UserInfoRequest;
 use App\Http\Requests\Admin\Users\UserSettingsRequest;
 use App\Models\Alliance;
 use App\Models\User;
-use App\Services\AdministrationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,16 +27,8 @@ use Xgp\App\Libraries\Users\Shortcuts;
  */
 class UsersController extends BaseController
 {
-    public function __construct(
-        private readonly AdministrationService $administrationService,
-    ) {
-    }
-
     public function index(Request $request): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $search = trim($request->string('user')->toString());
         $user = null;
 
@@ -60,9 +51,6 @@ class UsersController extends BaseController
 
     public function create(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $userLevels = array_map(fn (int $rank) => [
             'id' => $rank,
             'name' => ((array) __('admin/global.user_level'))[$rank],
@@ -81,9 +69,6 @@ class UsersController extends BaseController
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $name = trim($request->string('name')->toString());
         $pass = trim($request->string('password')->toString());
         $email = trim($request->string('email')->toString());
@@ -156,9 +141,6 @@ class UsersController extends BaseController
 
     public function showInfo(User $user): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $data = $this->loadFullUserData($user->id);
         $dateFormat = $this->dateFormatExtended();
 
@@ -182,9 +164,6 @@ class UsersController extends BaseController
     /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function updateInfo(UserInfoRequest $request, User $user): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         /** @var array{username: string, email: string, authlevel: int, home_planet_id: int, current_planet: int, ally_id: int, password?: string} $validated */
         $validated = $request->validated();
 
@@ -241,9 +220,6 @@ class UsersController extends BaseController
 
     public function showSettings(User $user): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $prefs = DB::table('preferences')->where('preference_user_id', $user->id)->first();
         $dateFormat = $this->dateFormatExtended();
 
@@ -261,9 +237,6 @@ class UsersController extends BaseController
     /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function updateSettings(UserSettingsRequest $request, User $user): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $vacationOn = $request->input('preference_vacations_status') === 'on';
         $deleteOn = $request->input('preference_delete_mode') === 'on';
         /** @SuppressWarnings(PHPMD.StaticAccess) */
@@ -307,9 +280,6 @@ class UsersController extends BaseController
 
     public function destroy(User $user): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         if ((int) $user->authlevel === UserRanks::ADMIN) {
             session()->flash('danger', __('admin/users.us_cannot_delete_admin'));
             return redirect()->route('admin.users');

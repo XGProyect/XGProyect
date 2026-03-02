@@ -5,29 +5,24 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\MailingRequest;
-use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class MailingController extends AdminSettingsController
 {
-    public function __construct(AdministrationService $administrationService, SettingsService $settings)
+    public function __construct(SettingsService $settings)
     {
-        parent::__construct($administrationService, $settings);
+        parent::__construct($settings);
     }
 
     public function index(): View
     {
-        $this->authorize();
-
         return $this->view('admin.mailing', $this->buildViewData());
     }
 
     public function update(MailingRequest $request): RedirectResponse
     {
-        $this->authorize();
-
         foreach ($request->toSettings() as $key => $value) {
             $this->settings->write($key, $value);
         }

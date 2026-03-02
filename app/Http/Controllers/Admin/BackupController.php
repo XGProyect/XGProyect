@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\BackupRequest;
 use App\Services\Admin\BackupService;
-use App\Services\AdministrationService;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Filesystem\FilesystemAdapter;
@@ -17,7 +16,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class BackupController extends BaseController
 {
     public function __construct(
-        private readonly AdministrationService $administrationService,
         private readonly BackupService $backupService,
         private readonly FilesystemFactory $storage,
     ) {
@@ -25,9 +23,6 @@ class BackupController extends BaseController
 
     public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         return view('admin.backup', [
             'auto_backup' => $this->backupService->isAutoBackupEnabled(),
             'backup_list' => $this->backupService->getBackupList(),
@@ -36,9 +31,6 @@ class BackupController extends BaseController
 
     public function save(BackupRequest $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $this->backupService->saveSettings($request->has('auto_backup'));
 
         session()->flash('success', __('admin/backup.bku_settings_saved'));
@@ -48,9 +40,6 @@ class BackupController extends BaseController
 
     public function create(): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $this->backupService->createBackup();
 
         session()->flash('success', __('admin/backup.bku_created'));
@@ -60,9 +49,6 @@ class BackupController extends BaseController
 
     public function download(string $file): StreamedResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         abort_unless($this->backupService->isValidFileName($file), 404);
 
         $path = $this->backupService->filePath($file);
@@ -76,9 +62,6 @@ class BackupController extends BaseController
 
     public function destroy(string $file): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         abort_unless($this->backupService->isValidFileName($file), 404);
 
         $this->backupService->deleteBackup($file);

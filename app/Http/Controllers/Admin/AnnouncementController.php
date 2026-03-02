@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\AnnouncementRequest;
 use App\Mail\Announcement;
-use App\Services\AdministrationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Mail\SentMessage;
 use Illuminate\Routing\Controller as BaseController;
@@ -22,24 +21,13 @@ use Xgp\App\Libraries\Users;
 
 class AnnouncementController extends BaseController
 {
-    public function __construct(
-        private readonly AdministrationService $administrationService,
-    ) {
-    }
-
     public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         return view('admin.announcement');
     }
 
     public function send(AnnouncementRequest $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $players = DB::table('users')->get(['id', 'name', 'email']);
 
         if ($request->filled('message')) {

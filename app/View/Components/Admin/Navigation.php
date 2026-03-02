@@ -7,6 +7,7 @@ namespace App\View\Components\Admin;
 use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 use Xgp\App\Libraries\TimingLibrary;
 
@@ -25,10 +26,13 @@ class Navigation extends Component
      */
     public function render(): View | Closure | string
     {
+        /** @var User $user */
+        $user = Auth::user();
+
         return view(
             'components.admin.navigation',
             [
-                'username' => User::find(session('user_id'))->name,
+                'username' => $user->name,
                 'currentDate' => TimingLibrary::formatShortDate(time()),
             ]
         );

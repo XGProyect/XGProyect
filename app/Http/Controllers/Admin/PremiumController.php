@@ -5,29 +5,24 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\PremiumRequest;
-use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class PremiumController extends AdminSettingsController
 {
-    public function __construct(AdministrationService $administrationService, SettingsService $settings)
+    public function __construct(SettingsService $settings)
     {
-        parent::__construct($administrationService, $settings);
+        parent::__construct($settings);
     }
 
     public function index(): View
     {
-        $this->authorize();
-
         return $this->view('admin.premium', $this->buildViewData());
     }
 
     public function update(PremiumRequest $request): RedirectResponse
     {
-        $this->authorize();
-
         foreach ($request->validated() as $field => $value) {
             if ($value !== null) {
                 $this->settings->write($field, $value);

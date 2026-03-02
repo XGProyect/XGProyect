@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\LanguagesRequest;
 use App\Services\Admin\LanguagesService;
-use App\Services\AdministrationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,16 +14,12 @@ use Illuminate\Routing\Controller as BaseController;
 class LanguagesController extends BaseController
 {
     public function __construct(
-        private readonly AdministrationService $administrationService,
         private readonly LanguagesService $languagesService,
     ) {
     }
 
     public function index(Request $request): View | RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $currentFile = $request->string('file')->toString();
         $translations = [];
 
@@ -47,9 +42,6 @@ class LanguagesController extends BaseController
 
     public function update(LanguagesRequest $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         /** @var array{file: string, translations: list<array{key: string, value: string}>} $data */
         $data = $request->validated();
 

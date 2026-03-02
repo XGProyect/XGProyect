@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Http\Requests\Admin\ResetRequest;
-use App\Services\AdministrationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
@@ -16,24 +15,13 @@ use Xgp\App\Libraries\PlanetLib;
 
 class ResetController extends BaseController
 {
-    public function __construct(
-        private readonly AdministrationService $administrationService,
-    ) {
-    }
-
     public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         return view('admin.reset');
     }
 
     public function reset(ResetRequest $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $data = $request->validated();
 
         if (isset($data['resetall'])) {

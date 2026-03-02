@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Admin\Users;
 use App\Http\Requests\Admin\Users\UserPremiumRequest;
 use App\Http\Requests\Admin\Users\UserResearchRequest;
 use App\Models\User;
-use App\Services\AdministrationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
@@ -19,16 +18,8 @@ class UserProgressController extends BaseController
 {
     private const AUTH_MODULE = UsersController::class;
 
-    public function __construct(
-        private readonly AdministrationService $administrationService,
-    ) {
-    }
-
     public function showResearch(User $user): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $research = DB::table('research')->where('research_user_id', $user->id)->first();
 
         return view('admin.users_research', [
@@ -39,9 +30,6 @@ class UserProgressController extends BaseController
 
     public function updateResearch(UserResearchRequest $request, User $user): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         /** @var array<string, mixed> $validated */
         $validated = $request->validated();
 
@@ -63,9 +51,6 @@ class UserProgressController extends BaseController
 
     public function showPremium(User $user): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $premium = DB::table('premium')->where('premium_user_id', $user->id)->first();
         $dateFormat = $this->dateFormat();
 
@@ -78,9 +63,6 @@ class UserProgressController extends BaseController
 
     public function updatePremium(UserPremiumRequest $request, User $user): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $currentPremium = (array) (DB::table('premium')->where('premium_user_id', $user->id)->first() ?? []);
         $updates = [];
 

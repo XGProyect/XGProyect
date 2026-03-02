@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\ServerRequest;
 use App\Services\Admin\ServerSettingsService;
-use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -15,24 +14,19 @@ use Xgp\App\Libraries\Functions;
 class ServerController extends AdminSettingsController
 {
     public function __construct(
-        AdministrationService $administrationService,
         SettingsService $settings,
         private readonly ServerSettingsService $serverSettings,
     ) {
-        parent::__construct($administrationService, $settings);
+        parent::__construct($settings);
     }
 
     public function index(): View
     {
-        $this->authorize();
-
         return $this->view('admin.server', $this->buildViewData());
     }
 
     public function update(ServerRequest $request): RedirectResponse
     {
-        $this->authorize();
-
         foreach ($request->toSettings() as $key => $value) {
             $this->settings->write($key, $value);
         }

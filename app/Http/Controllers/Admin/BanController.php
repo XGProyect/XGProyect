@@ -7,28 +7,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\BanRequest;
 use App\Models\Ban;
 use App\Models\User;
-use App\Services\AdministrationService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Xgp\App\Libraries\Users;
 
 class BanController extends BaseController
 {
-    public function __construct(
-        private readonly AdministrationService $administrationService,
-    ) {
-    }
-
     public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
-        $adminUser = Users::getInstance()->getUserData();
+        /** @var User $adminUser */
+        $adminUser = Auth::user();
 
         $usersQuery = User::query()
             ->select('users.id', 'users.name')
@@ -36,8 +28,8 @@ class BanController extends BaseController
             ->whereNull('bans.user_id')
             ->orderBy('users.name');
 
-        if ((int) $adminUser['authlevel'] !== 3) {
-            $usersQuery->where('users.authlevel', '<', $adminUser['authlevel']);
+        if ((int) $adminUser->authlevel !== 3) {
+            $usersQuery->where('users.authlevel', '<', $adminUser->authlevel);
         }
 
         $bannedUsers = Ban::query()
@@ -54,9 +46,6 @@ class BanController extends BaseController
 
     public function ban(BanRequest $request): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         /** @var User $targetUser */
         $targetUser = User::where('name', $request->input('ban_name'))->firstOrFail();
 
@@ -68,9 +57,6 @@ class BanController extends BaseController
 
     public function storeBan(BanRequest $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         /** @var User $targetUser */
         $targetUser = User::where('name', $request->input('ban_name'))->firstOrFail();
 
@@ -79,9 +65,6 @@ class BanController extends BaseController
 
     public function unban(Request $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $username = $request->input('unban_name');
         $user = User::where('name', $username)->first();
 

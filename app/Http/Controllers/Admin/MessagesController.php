@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\MessagesSearchRequest;
 use App\Models\Messages;
 use App\Services\Admin\MessagesService;
-use App\Services\AdministrationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
@@ -15,16 +14,12 @@ use Illuminate\Routing\Controller as BaseController;
 class MessagesController extends BaseController
 {
     public function __construct(
-        private readonly AdministrationService $administrationService,
         private readonly MessagesService $messagesService,
     ) {
     }
 
     public function index(MessagesSearchRequest $request): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $hasSearch = $request->hasFilters();
         $results = [];
 
@@ -46,9 +41,6 @@ class MessagesController extends BaseController
 
     public function destroy(Messages $message): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $message->delete();
 
         session()->flash('success', __('admin/messages.mg_delete_ok'));
@@ -58,9 +50,6 @@ class MessagesController extends BaseController
 
     public function destroyBatch(MessagesSearchRequest $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         /** @var array<int|string, string> $selected */
         $selected = (array) $request->input('delete_messages', []);
 

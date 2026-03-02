@@ -4,42 +4,27 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\AdministrationService;
-use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JsonException;
 use stdClass;
 use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FormatLib as Format;
-use Xgp\App\Libraries\Users;
 
 class HomeController extends BaseController
 {
-    /** @var array<string, mixed> $user */
-    private array $user;
-    private AdministrationService $administrationService;
-
-    public function __construct()
-    {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
-    }
-
     public function __invoke(): void
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
-        $this->user = Users::getInstance()->getUserData();
+        /** @var \App\Models\User $authUser */
+        $authUser = Auth::user();
         $userStats = $this->getUsersStats();
 
         Template::legacyView(
             'admin.home',
             array_merge(
-                $this->buildAlertsBlock(),
+                $this->buildAlertsBlock($authUser),
                 [
                     'numberUsers' => Format::prettyNumber((int) $userStats->number_users),
                     'numberAlliances' => Format::prettyNumber((int) $userStats->number_alliances),
@@ -61,11 +46,11 @@ class HomeController extends BaseController
     /**
      * @return array<string, mixed>
      */
-    private function buildAlertsBlock(): array
+    private function buildAlertsBlock(\App\Models\User $authUser): array
     {
         $alert = [];
 
-        if ($this->user['authlevel'] >= 3) {
+        if ($authUser->authlevel >= 3) {
             if ((bool) (@fileperms(CONFIGS_PATH . 'xgp-db-config.php') & 0x0002)) {
                 $alert[] = __('admin/home.hm_config_file_writable');
             }

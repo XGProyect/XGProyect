@@ -10,7 +10,6 @@ use App\Http\Requests\Admin\AllianceRankRequest;
 use App\Models\Alliance;
 use App\Models\User;
 use App\Services\Admin\AlliancesService;
-use App\Services\AdministrationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,16 +24,12 @@ use Xgp\App\Libraries\Alliance\Ranks;
 class AlliancesController extends BaseController
 {
     public function __construct(
-        private readonly AdministrationService $administrationService,
         private readonly AlliancesService $alliancesService,
     ) {
     }
 
     public function index(Request $request): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $search = trim($request->string('alliance')->toString());
         $type = trim($request->string('type', 'info')->toString());
 
@@ -62,9 +57,6 @@ class AlliancesController extends BaseController
 
     public function create(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         /** @phpstan-ignore staticMethod.notFound */
         $usersWithoutAlliance = User::where('ally_id', 0)
             ->where('ally_request', 0)
@@ -80,9 +72,6 @@ class AlliancesController extends BaseController
     /** @SuppressWarnings(PHPMD.ElseExpression) */
     public function store(Request $request): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $allianceName = trim($request->string('name')->toString());
         $allianceTag = trim($request->string('tag')->toString());
         $allianceFounder = $request->integer('founder');
@@ -104,9 +93,6 @@ class AlliancesController extends BaseController
 
     public function showInfo(Alliance $alliance): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $allianceData = $this->alliancesService->loadAllianceWithStats($alliance->alliance_id);
         $users = User::query()->select('id', 'name')->orderBy('name')->get();
         $dateFormat = (string) (Options::getInstance()->get('date_format_extended') ?? 'Y-m-d H:i:s');
@@ -122,9 +108,6 @@ class AlliancesController extends BaseController
 
     public function showRanks(Alliance $alliance): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $ranks = new Ranks($alliance->alliance_ranks);
         $ranksArray = $this->alliancesService->buildRanksViewData($ranks->getAllRanksAsArray());
 
@@ -136,9 +119,6 @@ class AlliancesController extends BaseController
 
     public function showMembers(Alliance $alliance): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $ranks = new Ranks($alliance->alliance_ranks);
         $members = $this->alliancesService->buildMembersViewData($alliance->alliance_id, $ranks);
         $rankOptions = $this->alliancesService->buildRankOptions($ranks->getAllRanksAsArray());
@@ -152,9 +132,6 @@ class AlliancesController extends BaseController
 
     public function updateInfo(AllianceInfoRequest $request, Alliance $alliance): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         /** @var array<string, mixed> $validated */
         $validated = $request->validated();
         $alliance->update($validated);
@@ -170,9 +147,6 @@ class AlliancesController extends BaseController
      */
     public function updateRanks(AllianceRankRequest $request, Alliance $alliance): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $ranks = new Ranks($alliance->alliance_ranks);
 
         if ($request->filled('create_rank')) {
@@ -193,9 +167,6 @@ class AlliancesController extends BaseController
      */
     public function removeMembers(AllianceMembersRequest $request, Alliance $alliance): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         /** @var array<int|string, string> $deletions */
         $deletions = (array) $request->input('delete_message', []);
 
@@ -227,9 +198,6 @@ class AlliancesController extends BaseController
 
     public function updateMemberRanks(Request $request, Alliance $alliance): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         /** @var array<int|string, int|string> $memberRanks */
         $memberRanks = (array) $request->input('member_rank', []);
 
@@ -247,9 +215,6 @@ class AlliancesController extends BaseController
 
     public function destroy(Alliance $alliance): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         User::query()->where('ally_id', $alliance->alliance_id)->update([
             'ally_id' => 0,
             'ally_request' => 0,

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\RepairRequest;
-use App\Services\AdministrationService;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -14,16 +13,8 @@ use Xgp\App\Libraries\FormatLib;
 
 class RepairController extends BaseController
 {
-    public function __construct(
-        private readonly AdministrationService $administrationService,
-    ) {
-    }
-
     public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $tables = $this->getAllTables()->map(fn (array $row) => [
             'name' => $row['TABLE_NAME'],
             'data' => FormatLib::prettyBytes((int) $row['DATA_LENGTH']),
@@ -39,9 +30,6 @@ class RepairController extends BaseController
 
     public function run(RepairRequest $request): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $validated = $request->validated();
         $selected = $validated['table'];
         $optimize = isset($validated['optimize']);

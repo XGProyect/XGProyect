@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Admin\Users;
 use App\Http\Requests\Admin\Users\UserPlanetRequest;
 use App\Http\Traits\Admin\Users\UserPlanetTrait;
 use App\Models\User;
-use App\Services\AdministrationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,16 +25,8 @@ class UserMoonController extends BaseController
 
     private const AUTH_MODULE = UsersController::class;
 
-    public function __construct(
-        private readonly AdministrationService $administrationService,
-    ) {
-    }
-
     public function showMoons(User $user): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         return view('admin.users_moons', [
             'user' => $user,
             'moons' => $this->getMoons($user->id),
@@ -44,9 +35,6 @@ class UserMoonController extends BaseController
 
     public function createMoon(User $user): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $planets = DB::table('planets')
             ->select('planet_id', 'planet_name', 'planet_galaxy', 'planet_system', 'planet_planet')
             ->where('planet_user_id', $user->id)
@@ -69,9 +57,6 @@ class UserMoonController extends BaseController
      */
     public function storeMoon(Request $request, User $user): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $planetId = $request->integer('planet');
         $moonName = trim($request->string('name')->toString());
         $diameter = $request->integer('planet_diameter');
@@ -151,9 +136,6 @@ class UserMoonController extends BaseController
 
     public function showMoon(User $user, int $moon): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $moonData = $this->getPlanetData($moon, PlanetTypesEnumerator::MOON);
         if (!$moonData) {
             abort(404);
@@ -171,9 +153,6 @@ class UserMoonController extends BaseController
 
     public function updateMoon(UserPlanetRequest $request, User $user, int $moon): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $this->savePlanetData($request, $moon);
         session()->flash('success', __('admin/users.us_all_ok_message'));
 
@@ -182,9 +161,6 @@ class UserMoonController extends BaseController
 
     public function showMoonBuildings(User $user, int $moon): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         return view('admin.users_planet_buildings', [
             'user' => $user,
             'planet_id' => $moon,
@@ -195,9 +171,6 @@ class UserMoonController extends BaseController
 
     public function updateMoonBuildings(Request $request, User $user, int $moon): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $this->saveBuildingsData($request, $moon, PlanetTypesEnumerator::MOON);
         session()->flash('success', __('admin/users.us_all_ok_message'));
 
@@ -206,9 +179,6 @@ class UserMoonController extends BaseController
 
     public function showMoonShips(User $user, int $moon): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         return view('admin.users_planet_ships', [
             'user' => $user,
             'planet_id' => $moon,
@@ -219,9 +189,6 @@ class UserMoonController extends BaseController
 
     public function updateMoonShips(Request $request, User $user, int $moon): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $this->saveShipsData($request, $moon);
         session()->flash('success', __('admin/users.us_all_ok_message'));
 
@@ -230,9 +197,6 @@ class UserMoonController extends BaseController
 
     public function showMoonDefenses(User $user, int $moon): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         return view('admin.users_planet_defenses', [
             'user' => $user,
             'planet_id' => $moon,
@@ -243,9 +207,6 @@ class UserMoonController extends BaseController
 
     public function updateMoonDefenses(Request $request, User $user, int $moon): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $this->saveDefensesData($request, $moon);
         session()->flash('success', __('admin/users.us_all_ok_message'));
 
@@ -255,9 +216,6 @@ class UserMoonController extends BaseController
     /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function softDeleteMoon(User $user, int $moon): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         /** @phpstan-ignore constant.notFound */
         $destroyTime = time() + (PLANETS_LIFE_TIME * 3600);
 
@@ -280,9 +238,6 @@ class UserMoonController extends BaseController
     /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function hardDeleteMoon(User $user, int $moon): RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(self::AUTH_MODULE);
-
         $this->hardDeletePlanetRow($moon, PlanetTypesEnumerator::MOON);
 
         DB::table('users')

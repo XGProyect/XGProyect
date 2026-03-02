@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\StatisticsRequest;
-use App\Services\AdministrationService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -13,22 +12,18 @@ use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 
 class StatisticsController extends AdminSettingsController
 {
-    public function __construct(AdministrationService $administrationService, SettingsService $settings)
+    public function __construct(SettingsService $settings)
     {
-        parent::__construct($administrationService, $settings);
+        parent::__construct($settings);
     }
 
     public function index(): View
     {
-        $this->authorize();
-
         return $this->view('admin.statistics', $this->buildViewData());
     }
 
     public function update(StatisticsRequest $request): RedirectResponse
     {
-        $this->authorize();
-
         if ($request->filled('stat_points')) {
             $this->settings->write('stat_points', $request->integer('stat_points'));
         }

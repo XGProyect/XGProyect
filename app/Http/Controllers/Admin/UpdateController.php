@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\UpdateRequest;
-use App\Services\AdministrationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
@@ -14,16 +13,8 @@ use Xgp\App\Core\Options;
 
 class UpdateController extends BaseController
 {
-    public function __construct(
-        private readonly AdministrationService $administrationService,
-    ) {
-    }
-
     public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $systemVersion = config('version.files');
         $dbVersion = Options::getInstance()->get('version');
         $subTitle = sprintf(__('admin/update.up_sub_title'), $dbVersion, $systemVersion);
@@ -45,9 +36,6 @@ class UpdateController extends BaseController
 
     public function run(UpdateRequest $request): View | RedirectResponse
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
-
         $systemVersion = config('version.files');
         $dbVersion = Options::getInstance()->get('version');
         $subTitle = sprintf(__('admin/update.up_sub_title'), $dbVersion, $systemVersion);
