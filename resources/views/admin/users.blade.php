@@ -32,7 +32,7 @@
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
-                                    onsubmit="return confirm('{{ __('admin/users.us_delete_confirm') }}')">
+                                    data-confirm="{{ __('admin/users.us_delete_confirm') }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="dropdown-item text-danger">

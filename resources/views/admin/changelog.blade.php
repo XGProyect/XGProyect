@@ -83,7 +83,7 @@
                                                     </div>
                                                     @foreach($item['translations'] as $translation)
                                                         <form action="{{ route('admin.changelog.destroy', $translation['changelog_id']) }}" method="POST"
-                                                            onsubmit="return confirm('{{ __('admin/changelog.ch_delete_confirm') }}')">
+                                                            data-confirm="{{ __('admin/changelog.ch_delete_confirm') }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="dropdown-item text-danger">

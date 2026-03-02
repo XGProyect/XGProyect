@@ -36,7 +36,7 @@
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <form action="{{ route('admin.alliances.destroy', $alliance->alliance_id) }}" method="POST"
-                                    onsubmit="return confirm('{{ __('admin/alliances.al_delete_confirm') }}')">
+                                    data-confirm="{{ __('admin/alliances.al_delete_confirm') }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="dropdown-item text-danger">

@@ -79,7 +79,7 @@
                                                         <i class="fas fa-fw fa-shield-alt"></i>
                                                     </a>
                                                     <form method="POST" action="{{ route('admin.users.moon.soft-delete', [$user->id, $moon->planet_id]) }}"
-                                                        onsubmit="return confirm('{{ __('admin/users.us_moon_soft_delete_confirm') }}')">
+                                                        data-confirm="{{ __('admin/users.us_moon_soft_delete_confirm') }}">
                                                         @csrf
                                                         <button type="submit" class="btn btn-sm btn-outline-warning" title="{{ __('admin/users.us_soft_delete') }}"
                                                             style="border-radius:0; margin-left:-1px;">
@@ -87,7 +87,7 @@
                                                         </button>
                                                     </form>
                                                     <form method="POST" action="{{ route('admin.users.moon.destroy', [$user->id, $moon->planet_id]) }}"
-                                                        onsubmit="return confirm('{{ __('admin/users.us_delete_moon_confirm') }}')">
+                                                        data-confirm="{{ __('admin/users.us_delete_moon_confirm') }}">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-outline-danger" title="{{ __('admin/users.us_hard_delete') }}"

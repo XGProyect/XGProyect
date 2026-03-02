@@ -71,7 +71,7 @@
             {{-- Results card --}}
             @if ($hasSearch && !empty($results))
                 <form id="batchDeleteForm" action="{{ route('admin.messages.destroy-batch') }}" method="POST"
-                    onsubmit="return confirm('{{ __('admin/messages.mg_delete_confirm') }}')">
+                    data-confirm="{{ __('admin/messages.mg_delete_confirm') }}">
                     @csrf
                     <x-admin.card
                         title="{{ __('admin/messages.mg_search_results') }}"
@@ -172,7 +172,8 @@
                                                         @endif
                                                         <button type="button" class="btn btn-sm btn-danger"
                                                             title="{{ __('admin/messages.mg_delete_this') }}"
-                                                            onclick="deleteMessage({{ $item['message_id'] }})">
+                                                            data-confirm="{{ __('admin/messages.mg_delete_confirm') }}"
+                                                            onclick="deleteMessage({{ $item['message_id'] }}, this)">
                                                             <i class="fas fa-trash-alt fa-sm"></i>
                                                         </button>
                                                     </div>
@@ -222,8 +223,8 @@
         }.bind(this));
     });
 
-    function deleteMessage(id) {
-        if (confirm('{{ __('admin/messages.mg_delete_confirm') }}')) {
+    function deleteMessage(id, el) {
+        if (confirm(el.dataset.confirm)) {
             var form = document.getElementById('singleDeleteForm');
             form.action = '{{ url('/admin/messages') }}/' + id;
             form.submit();

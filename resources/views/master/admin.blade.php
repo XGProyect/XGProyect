@@ -97,6 +97,18 @@
                 $('[name=text]').css('color', $(this).val());
             });
 
+            // confirm dialogs via data-confirm attribute
+            $(document).on('submit', 'form[data-confirm]', function (e) {
+                if (!confirm($(this).data('confirm'))) {
+                    e.preventDefault();
+                }
+            });
+            $(document).on('click', '[data-confirm]:not(form)', function (e) {
+                if (!confirm($(this).data('confirm'))) {
+                    e.preventDefault();
+                }
+            });
+
             // popovers
             $('[data-toggle="popover"]').popover({
                 trigger: 'hover'
