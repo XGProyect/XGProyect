@@ -16,4 +16,6 @@ return [
     'gn_info_title' => '',
     'ge_yes' => 'YES',
     'ge_no' => 'NO',
+    'gn_enabled' => 'Enabled',
+    'gn_disabled' => 'Disabled',
 ];

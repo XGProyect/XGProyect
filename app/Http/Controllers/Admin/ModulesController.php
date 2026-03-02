@@ -4,74 +4,35 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\ModulesRequest;
 use App\Services\AdministrationService;
 use App\Services\SettingsService;
-use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Options;
-use Xgp\App\Core\Template;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
-class ModulesController extends BaseController
+class ModulesController extends AdminSettingsController
 {
-    private AdministrationService $administrationService;
-
-    public function __construct()
+    public function __construct(AdministrationService $administrationService, SettingsService $settings)
     {
-        $this->administrationService = new AdministrationService(
-            new SettingsService()
-        );
+        parent::__construct($administrationService, $settings);
     }
 
-    public function __invoke(): void
+    public function index(): View
     {
-        $this->administrationService->checkSession();
-        $this->administrationService->authorization(__CLASS__);
+        $this->authorize();
 
-        $this->runAction();
-
-        Template::legacyView(
-            'admin.modules',
-            [
-                'modules' => $this->buildModulesList(),
-            ]
-        );
+        return $this->view('admin.modules', [
+            'modules' => explode(';', $this->settings->getString('modules')),
+            'module_names' => (array) __('admin/modules.mdl_modules'),
+        ]);
     }
 
-    private function runAction(): void
+    public function update(ModulesRequest $request): RedirectResponse
     {
-        $modules = request()->all();
+        $this->authorize();
 
-        if (count($modules) > 1) {
-            $modules_count = count(explode(';', Options::getInstance()->get('modules')));
+        $this->settings->write('modules', implode(';', $request->toValues()));
 
-            for ($i = 0; $i < $modules_count; $i++) {
-                $modules_set[] = (isset($modules["status{$i}"]) ? 1 : 0);
-            }
-
-            Options::getInstance()->write('modules', join(';', $modules_set));
-
-            session()->flash('success', __('admin/modules.mdl_all_ok_message'));
-        }
-    }
-
-    private function buildModulesList(): array
-    {
-        $modules_list = [];
-
-        $modules = explode(';', Options::getInstance()->get('modules'));
-
-        if ($modules) {
-            foreach ($modules as $module => $status) {
-                if ($status != null) {
-                    $modules_list[] = [
-                        'module' => $module,
-                        'module_name' => __('admin/modules.mdl_modules')[$module],
-                        'module_value' => ($status == 1) ? 'checked' : '',
-                        'color' => ($status == 1) ? 'success' : 'danger',
-                    ];
-                }
-            }
-        }
-
-        return $modules_list;
+        return $this->saved('admin.modules', 'admin/modules.mdl_all_ok_message');
     }
 }

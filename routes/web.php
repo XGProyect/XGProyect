@@ -77,7 +77,8 @@ Route::prefix('admin')->group(function () {
             Route::get('/messages', [Admin\MessagesController::class, 'index'])->name('admin.messages');
             Route::delete('/messages/{message}', [Admin\MessagesController::class, 'destroy'])->name('admin.messages.destroy');
             Route::post('/messages/delete-batch', [Admin\MessagesController::class, 'destroyBatch'])->name('admin.messages.destroy-batch');
-            Route::any('/modules', Admin\ModulesController::class)->name('admin.modules');
+            Route::get('/modules', [Admin\ModulesController::class, 'index'])->name('admin.modules');
+            Route::post('/modules', [Admin\ModulesController::class, 'update'])->name('admin.modules.update');
             Route::get('/permissions', [Admin\PermissionsController::class, 'index'])->name('admin.permissions');
             Route::post('/permissions', [Admin\PermissionsController::class, 'save'])->name('admin.permissions.save');
             Route::get('/planets', [Admin\PlanetsController::class, 'index'])->name('admin.planets');

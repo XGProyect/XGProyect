@@ -15,4 +15,6 @@ return [
     'gn_success_title' => '¡Ok!',
     'ge_yes' => 'SI',
     'ge_no' => 'NO',
+    'gn_enabled' => 'Activado',
+    'gn_disabled' => 'Desactivado',
 ];
