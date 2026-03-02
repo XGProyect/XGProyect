@@ -7,7 +7,7 @@
         @csrf
         <x-admin.page-header
             :title="__('admin/server.se_server_parameters')"
-            sub:title="__('admin/server.se_sub_title')"
+            :subtitle="__('admin/server.se_sub_title')"
         >
             <x-slot name="action">
                 <button type="submit" class="btn btn-primary btn-icon-split">
