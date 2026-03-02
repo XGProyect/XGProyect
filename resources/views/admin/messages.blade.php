@@ -111,6 +111,7 @@
                                             <th>{{ __('admin/messages.mg_type') }}</th>
                                             <th>{{ __('admin/messages.mg_from') }}</th>
                                             <th>{{ __('admin/messages.mg_subject') }}</th>
+                                            <th>{{ __('admin/messages.mg_read') }}</th>
                                             <th style="width: 90px;">{{ __('admin/messages.mg_actions') }}</th>
                                         </tr>
                                     </thead>
@@ -157,6 +158,17 @@
                                                         {!! $item['message_subject'] !!}
                                                     @endif
                                                 </td>
+                                                <td class="align-middle">
+                                                    @if ($item['message_read'])
+                                                        <span class="badge badge-success">
+                                                            <i class="fas fa-envelope-open fa-xs mr-1"></i>{{ __('admin/messages.mg_read_yes') }}
+                                                        </span>
+                                                    @else
+                                                        <span class="badge badge-secondary">
+                                                            <i class="fas fa-envelope fa-xs mr-1"></i>{{ __('admin/messages.mg_read_no') }}
+                                                        </span>
+                                                    @endif
+                                                </td>
                                                 <td class="align-middle" onclick="event.stopPropagation()">
                                                     <div class="d-flex" style="gap: 0.25rem;">
                                                         @if (!$isPrivate)
@@ -176,7 +188,7 @@
                                             </tr>
                                             @if (!$isPrivate)
                                                 <tr>
-                                                    <td colspan="8" class="p-0 border-0">
+                                                    <td colspan="9" class="p-0 border-0">
                                                         <div class="collapse" id="msg-{{ $item['message_id'] }}">
                                                             <div class="card border-left-primary m-3">
                                                                 <div class="card-header py-2">
