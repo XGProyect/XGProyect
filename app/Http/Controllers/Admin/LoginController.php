@@ -15,7 +15,7 @@ use Xgp\App\Core\Enumerators\UserRanksEnumerator;
 
 class LoginController extends BaseController
 {
-    public function __construct(private SessionService $sessionService)
+    public function __construct(private readonly SessionService $sessionService)
     {
     }
 
@@ -36,6 +36,8 @@ class LoginController extends BaseController
 
             $request->session()->regenerate();
 
+            // only to log the user into the game
+            // mostly legacy support
             $this->sessionService->setLoginData(
                 $authUser->id,
                 $authUser->password
