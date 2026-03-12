@@ -92,5 +92,4 @@ class TasksServiceTest extends TestCase
         $this->assertInstanceOf(TaskData::class, $task);
         $this->assertNotSame('-', $task->nextRun);
     }
-
 }
