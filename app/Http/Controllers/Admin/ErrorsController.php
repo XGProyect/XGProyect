@@ -7,6 +7,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ErrorsController extends BaseController
@@ -32,67 +34,48 @@ class ErrorsController extends BaseController
         $path = $this->logFilePath();
 
         if ($path !== null) {
-            unlink($path);
+            File::delete($path);
         }
 
         return redirect()->route('admin.errors');
     }
 
     /**
-     * @return array{errorsList: list<array{error_message: string, errors: list<string>, count: int}>, totalErrors: int}
+     * @return array{errorsList: array<array{error_message: string, errors: list<string>, count: int}>, totalErrors: int}
      */
     private function parseErrorLog(): array
     {
         $path = $this->logFilePath();
-        $grouped = [];
-        $totalErrors = 0;
 
-        if ($path !== null) {
-            $contents = file_get_contents($path);
-
-            if ($contents !== false) {
-                // Split only on lines that start with a timestamp "[YYYY-MM-DD HH:MM:SS]"
-                // Using a specific pattern avoids splitting on "[stacktrace]" lines
-                $entries = preg_split('/\n(?=\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\])/', trim($contents));
-
-                foreach ($entries ?: [] as $entry) {
-                    $lines = array_values(array_filter(explode(PHP_EOL, $entry)));
-
-                    if (empty($lines)) {
-                        continue;
-                    }
-
-                    $header = array_shift($lines);
-
-                    // Strip the timestamp prefix
-                    $message = (string) preg_replace('/^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] /', '', $header);
-
-                    // Drop the standalone "[stacktrace]" separator line Laravel adds
-                    $lines = array_values(array_filter($lines, fn (string $l) => trim($l) !== '[stacktrace]'));
-                    $key = md5($message);
-
-                    if (!isset($grouped[$key])) {
-                        $grouped[$key] = [
-                            'error_message' => $message,
-                            'errors' => $lines,
-                            'count' => 0,
-                        ];
-                    } else {
-                        // Keep the most recent stack trace
-                        $grouped[$key]['errors'] = $lines;
-                    }
-
-                    $grouped[$key]['count']++;
-                    $totalErrors++;
-                }
-            }
+        if ($path === null) {
+            return ['errorsList' => [], 'totalErrors' => 0];
         }
 
-        usort($grouped, fn (array $a, array $b) => $b['count'] <=> $a['count']);
+        /** @var Collection<string, array{error_message: string, errors: list<string>, count: int}> $grouped */
+        $grouped = collect(preg_split('/\n(?=\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\])/', trim(File::get($path))) ?: [])
+            ->filter()
+            ->map(function (string $entry): array {
+                $lines = array_values(array_filter(explode(PHP_EOL, $entry)));
+                $message = (string) preg_replace('/^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] /', '', array_shift($lines) ?? '');
+                $trace = collect($lines)
+                    ->reject(fn (string $l) => trim($l) === '[stacktrace]')
+                    ->values()
+                    ->all();
+
+                return ['message' => $message, 'trace' => $trace];
+            })
+            ->groupBy(fn (array $e) => md5((string) $e['message']))
+            ->map(fn (Collection $group): array => [
+                'error_message' => (string) ($group->last()['message'] ?? ''),
+                'errors' => (array) ($group->last()['trace'] ?? []),
+                'count' => $group->count(),
+            ])
+            ->sortByDesc('count')
+            ->values();
 
         return [
-            'errorsList' => $grouped,
-            'totalErrors' => $totalErrors,
+            'errorsList' => $grouped->all(),
+            'totalErrors' => (int) $grouped->sum('count'),
         ];
     }
 
@@ -100,6 +83,6 @@ class ErrorsController extends BaseController
     {
         $path = storage_path('logs/xgproyect.log');
 
-        return file_exists($path) ? $path : null;
+        return File::exists($path) ? $path : null;
     }
 }
