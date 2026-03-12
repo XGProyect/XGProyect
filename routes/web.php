@@ -40,6 +40,7 @@ Route::prefix('admin')->group(function () {
         ->group(function () {
             Route::get('/announcement', [Admin\AnnouncementController::class, 'index'])->name('admin.announcement');
             Route::post('/announcement', [Admin\AnnouncementController::class, 'send'])->name('admin.announcement.send');
+            Route::get('/search', Admin\SearchController::class)->name('admin.search');
             Route::get('/alliances', [Admin\AlliancesController::class, 'index'])->name('admin.alliances');
             Route::get('/alliances/create', [Admin\AlliancesController::class, 'create'])->name('admin.alliances.create');
             Route::post('/alliances', [Admin\AlliancesController::class, 'store'])->name('admin.alliances.store');

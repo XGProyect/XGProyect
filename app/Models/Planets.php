@@ -184,7 +184,7 @@ class Planets extends Model
     // Relations ...
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'planet_user_id');
     }
 
     public function buildings(): HasOne
