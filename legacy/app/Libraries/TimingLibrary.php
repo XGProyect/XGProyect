@@ -26,20 +26,13 @@ abstract class TimingLibrary
         return FormatLib::customColor($status, $color);
     }
 
-    /**
-     * Format time based on system default extended date config
-     *
-     * @param string $time Time
-     *
-     * @return string
-     */
-    public static function formatExtendedDate($time)
+    public static function formatExtendedDate(string | int $time): string
     {
         if (!is_numeric($time)) {
             $time = strtotime($time);
         }
 
-        return date(Options::getInstance()->get('date_format_extended'), (int)$time);
+        return date(Options::getInstance()->get('date_format_extended'), (int) $time);
     }
 
     /**

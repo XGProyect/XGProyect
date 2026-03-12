@@ -17,11 +17,6 @@
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="app/Http/Controllers/Admin/ResetController.php" method="resetBuildingsByType"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/ResetController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ServerController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/TasksController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/TasksController.php"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/TasksController.php" method="getStatLastUpdateActions"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/TasksController.php" method="getLastBackupActions"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="app/Http/Controllers/Admin/TasksController.php" method="getLastCleanupActions"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/UpdateController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Home/LoginController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Home/RegisterController.php"/>

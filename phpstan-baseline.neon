@@ -151,24 +151,6 @@ parameters:
 			path: app/Http/Controllers/Admin/RepairController.php
 
 		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\TasksController\:\:buildUpdatesBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/TasksController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\TasksController\:\:getTaskData\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/TasksController.php
-
-		-
-			message: '#^Parameter \#1 \$time of static method Xgp\\App\\Libraries\\TimingLibrary\:\:formatExtendedDate\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/Admin/TasksController.php
-
-		-
 			message: '#^Empty array passed to foreach\.$#'
 			identifier: foreach.emptyArray
 			count: 1
@@ -1957,18 +1939,6 @@ parameters:
 			path: app/View/Components/Game/Topnav.php
 
 		-
-			message: '#^Parameter \#1 \$time of static method Xgp\\App\\Libraries\\TimingLibrary\:\:formatExtendedDate\(\) expects string, int\<1, max\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/View/Components/Game/Topnav.php
-
-		-
-			message: '#^Parameter \#1 \$time of static method Xgp\\App\\Libraries\\TimingLibrary\:\:formatExtendedDate\(\) expects string, int\<604801, max\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/View/Components/Game/Topnav.php
-
-		-
 			message: '#^Parameter \#1 \$user of method App\\View\\Components\\Game\\Topnav\:\:buildNotices\(\) expects App\\Models\\User, App\\Models\\User\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\User\>\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -2029,7 +1999,7 @@ parameters:
 			path: legacy/app/Core/Common.php
 
 		-
-			message: '#^Parameter \#1 \$time of static method Xgp\\App\\Libraries\\TimingLibrary\:\:formatExtendedDate\(\) expects string, App\\Models\\Date given\.$#'
+			message: '#^Parameter \#1 \$time of static method Xgp\\App\\Libraries\\TimingLibrary\:\:formatExtendedDate\(\) expects int\|string, App\\Models\\Date given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Core/Common.php
@@ -2836,12 +2806,6 @@ parameters:
 			message: '#^Parameter \#1 \$tag of method Xgp\\App\\Http\\Controllers\\Game\\AllianceController\:\:allianceTagExists\(\) expects string, string\|false given\.$#'
 			identifier: argument.type
 			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$time of static method Xgp\\App\\Libraries\\TimingLibrary\:\:formatExtendedDate\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 3
 			path: legacy/app/Http/Controllers/Game/AllianceController.php
 
 		-
@@ -4975,12 +4939,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/OverviewController.php
 
 		-
-			message: '#^Parameter \#1 \$time of static method Xgp\\App\\Libraries\\TimingLibrary\:\:formatExtendedDate\(\) expects string, int\<1, max\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/OverviewController.php
-
-		-
 			message: '#^Parameter \#2 \$Status of static method Xgp\\App\\Libraries\\FleetsLib\:\:flyingFleetsTable\(\) expects string, int given\.$#'
 			identifier: argument.type
 			count: 8
@@ -5234,12 +5192,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \$string of static method Xgp\\App\\Libraries\\FormatLib\:\:colorRed\(\) expects string, array\<string\>\|string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/PreferencesController.php
-
-		-
-			message: '#^Parameter \#1 \$time of static method Xgp\\App\\Libraries\\TimingLibrary\:\:formatExtendedDate\(\) expects string, int\<604801, max\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/PreferencesController.php
