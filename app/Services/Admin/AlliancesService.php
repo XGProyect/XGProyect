@@ -22,7 +22,7 @@ class AlliancesService
         try {
             DB::transaction(function () use ($allianceName, $allianceTag, $allianceFounder): void {
                 $time = time();
-                $rightsString = '[{"rank":"' . (string) __('admin/alliances.al_create_founder_rank') . '","rights":{"1":1,"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1}},{"rank":"Newcomer","rights":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0}}]'; // @phpstan-ignore cast.string
+                $rightsString = '[{"rank":"' . (string) __('admin/alliances.al_create_founder_rank') . '","rights":{"1":1,"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1}},{"rank":"Newcomer","rights":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0}}]';
 
                 $allianceId = DB::table('alliance')->insertGetId([
                     'alliance_name' => $allianceName,
@@ -34,7 +34,6 @@ class AlliancesService
 
                 DB::table('alliance_statistics')->insert(['alliance_statistic_alliance_id' => $allianceId]);
 
-                /** @phpstan-ignore staticMethod.notFound */
                 User::where('id', $allianceFounder)->update([
                     'ally_id' => $allianceId,
                     'ally_register_time' => $time,

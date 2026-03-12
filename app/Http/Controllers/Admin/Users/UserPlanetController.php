@@ -64,16 +64,16 @@ class UserPlanetController extends BaseController
 
         if (!$planetExists) {
             if ($galaxy < 1 || $system < 1 || $planet < 1) {
-                $error .= (string) __('admin/users.us_create_planet_unavailable_coords'); // @phpstan-ignore cast.string
+                $error .= (string) __('admin/users.us_create_planet_unavailable_coords');
                 $errors++;
             }
 
             if (
-                $galaxy > MAX_GALAXY_IN_WORLD || // @phpstan-ignore constant.notFound
-                $system > MAX_SYSTEM_IN_GALAXY || // @phpstan-ignore constant.notFound
-                $planet > MAX_PLANET_IN_SYSTEM // @phpstan-ignore constant.notFound
+                $galaxy > MAX_GALAXY_IN_WORLD ||
+                $system > MAX_SYSTEM_IN_GALAXY ||
+                $planet > MAX_PLANET_IN_SYSTEM
             ) {
-                $error .= (string) __('admin/users.us_create_planet_wrong_coords'); // @phpstan-ignore cast.string
+                $error .= (string) __('admin/users.us_create_planet_wrong_coords');
                 $errors++;
             }
 
@@ -83,7 +83,7 @@ class UserPlanetController extends BaseController
                 }
 
                 if (strlen($name) <= 0) {
-                    $name = (string) __('admin/users.us_create_planet_default_name'); // @phpstan-ignore cast.string
+                    $name = (string) __('admin/users.us_create_planet_default_name');
                 }
 
                 $this->createNewPlanet($galaxy, $system, $planet, $user->id, $fieldMax, $name);
@@ -189,7 +189,6 @@ class UserPlanetController extends BaseController
             return redirect()->route('admin.users.planets', $user->id);
         }
 
-        /** @phpstan-ignore constant.notFound */
         $destroyTime = time() + (PLANETS_LIFE_TIME * 3600);
 
         // If this is the user's home planet, reassign home + current to the next available planet first
@@ -262,7 +261,7 @@ class UserPlanetController extends BaseController
             ->value('m.planet_id');
 
         if ($moonId) {
-            $this->hardDeletePlanetRow((int) $moonId, PlanetTypesEnumerator::MOON); // @phpstan-ignore cast.int
+            $this->hardDeletePlanetRow(intval($moonId), PlanetTypesEnumerator::MOON); // @phpstan-ignore argument.type
         }
 
         $this->hardDeletePlanetRow($planet, PlanetTypesEnumerator::PLANET);

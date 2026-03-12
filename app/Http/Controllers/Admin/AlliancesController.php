@@ -58,7 +58,6 @@ class AlliancesController extends BaseController
 
     public function create(): View
     {
-        /** @phpstan-ignore staticMethod.notFound */
         $usersWithoutAlliance = User::where('ally_id', 0)
             ->where('ally_request', 0)
             ->select('id', 'name')
@@ -77,7 +76,6 @@ class AlliancesController extends BaseController
         $allianceTag = trim($request->string('tag')->toString());
         $allianceFounder = $request->integer('founder');
 
-        /** @phpstan-ignore staticMethod.notFound */
         $allianceExists = Alliance::where('alliance_name', $allianceName)
             ->orWhere('alliance_tag', $allianceTag)
             ->exists();

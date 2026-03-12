@@ -37,14 +37,14 @@ class HomeController extends AdminSettingsController
 
         return $this->view('admin.home', [
             ...$this->buildAlertsBlock($authUser),
-            'numberUsers' => Format::prettyNumber(User::count()), // @phpstan-ignore staticMethod.notFound
-            'numberAlliances' => Format::prettyNumber(Alliance::count()), // @phpstan-ignore staticMethod.notFound
-            'numberPlanets' => Format::prettyNumber(Planets::where('planet_type', 1)->count()), // @phpstan-ignore staticMethod.notFound
-            'numberMoons' => Format::prettyNumber(Planets::where('planet_type', 3)->count()), // @phpstan-ignore staticMethod.notFound
-            'numberFleets' => Format::prettyNumber(Fleets::count()), // @phpstan-ignore staticMethod.notFound
-            'numberReports' => Format::prettyNumber(Reports::count()), // @phpstan-ignore staticMethod.notFound
-            'averageUserPoints' => Format::shortlyNumber((int) UsersStatistics::avg('user_statistic_total_points')), // @phpstan-ignore staticMethod.notFound
-            'averageAlliancePoints' => Format::shortlyNumber((int) AllianceStatistics::avg('alliance_statistic_total_points')), // @phpstan-ignore staticMethod.notFound
+            'numberUsers' => Format::prettyNumber(User::count()),
+            'numberAlliances' => Format::prettyNumber(Alliance::count()),
+            'numberPlanets' => Format::prettyNumber(Planets::where('planet_type', 1)->count()),
+            'numberMoons' => Format::prettyNumber(Planets::where('planet_type', 3)->count()),
+            'numberFleets' => Format::prettyNumber(Fleets::count()),
+            'numberReports' => Format::prettyNumber(Reports::count()),
+            'averageUserPoints' => Format::shortlyNumber((int) UsersStatistics::avg('user_statistic_total_points')),
+            'averageAlliancePoints' => Format::shortlyNumber((int) AllianceStatistics::avg('alliance_statistic_total_points')),
             'databaseSize' => $this->getDbSize(),
             'databaseServer' => $this->getDbVersion(),
             'phpVersion' => PHP_VERSION,
@@ -93,29 +93,29 @@ class HomeController extends AdminSettingsController
         $file = config_path('xgp-db-config.php');
 
         return file_exists($file) && (fileperms($file) & 0x0002) !== 0
-            ? (string) __('admin/home.hm_config_file_writable') // @phpstan-ignore cast.string
+            ? (string) __('admin/home.hm_config_file_writable')
             : null;
     }
 
     private function serverErrorsAlert(): ?string
     {
-        return $this->getServerErrors() ? (string) __('admin/home.hm_errors') : null; // @phpstan-ignore cast.string
+        return $this->getServerErrors() ? (string) __('admin/home.hm_errors') : null;
     }
 
     private function outdatedVersionAlert(): ?string
     {
-        return $this->checkUpdates() ? (string) __('admin/home.hm_old_version') : null; // @phpstan-ignore cast.string
+        return $this->checkUpdates() ? (string) __('admin/home.hm_old_version') : null;
     }
 
     private function installFileAlert(): ?string
     {
-        return $this->installDirExists() ? (string) __('admin/home.hm_install_file_detected') : null; // @phpstan-ignore cast.string
+        return $this->installDirExists() ? (string) __('admin/home.hm_install_file_detected') : null;
     }
 
     private function pendingUpdateAlert(): ?string
     {
         return $this->settings->getString('version') !== config('version.files')
-            ? (string) __('admin/home.hm_update_required') // @phpstan-ignore cast.string
+            ? (string) __('admin/home.hm_update_required')
             : null;
     }
 
@@ -155,8 +155,7 @@ class HomeController extends AdminSettingsController
     private function getDbSize(): string
     {
         return Format::prettyBytes(
-            // @phpstan-ignore-next-line cast.int
-            (int) DB::scalar(
+            (int) DB::scalar( // @phpstan-ignore cast.int
                 'SELECT SUM(data_length + index_length) FROM information_schema.TABLES WHERE table_schema = ?',
                 [DB::getDatabaseName()]
             )

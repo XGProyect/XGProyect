@@ -37,7 +37,7 @@ class UserProgressController extends BaseController
 
         $updates = collect($validated)
             ->filter(fn (mixed $v, string $k): bool => str_starts_with($k, 'research_'))
-            ->map(fn (mixed $v): int => (int) $v) // @phpstan-ignore cast.int
+            ->map(fn (mixed $v): int => intval($v)) // @phpstan-ignore argument.type
             ->all();
 
         if (!empty($updates)) {
@@ -112,8 +112,8 @@ class UserProgressController extends BaseController
 
             $list[] = [
                 'field' => $key,
-                'label' => (string) __('admin/users.us_user_' . $key), // @phpstan-ignore cast.string
-                'level' => (int) $value, // @phpstan-ignore cast.int
+                'label' => (string) __('admin/users.us_user_' . $key),
+                'level' => intval($value), // @phpstan-ignore argument.type
             ];
         }
 
@@ -141,16 +141,16 @@ class UserProgressController extends BaseController
                 continue;
             }
 
-            $expire = (int) $value; // @phpstan-ignore cast.int
+            $expire = intval($value); // @phpstan-ignore argument.type
 
             $list[] = [
                 'field' => $key,
-                'label' => (string) $label, // @phpstan-ignore cast.string
+                'label' => (string) $label,
                 'expire' => $expire,
                 'active' => $expire > 0 && $expire > time(),
                 'status_text' => ($expire === 0 || $expire < time())
-                    ? (string) __('admin/users.us_user_premium_inactive') // @phpstan-ignore cast.string
-                    : (string) __('admin/users.us_user_premium_active_until') . date($dateFormat, $expire), // @phpstan-ignore cast.string
+                    ? (string) __('admin/users.us_user_premium_inactive')
+                    : (string) __('admin/users.us_user_premium_active_until') . date($dateFormat, $expire),
             ];
         }
 

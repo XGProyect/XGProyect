@@ -56,11 +56,11 @@ class UserInfoRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'username' => (string) __('admin/users.us_user_information_username'), // @phpstan-ignore cast.string
-            'email' => (string) __('admin/users.us_user_information_email'), // @phpstan-ignore cast.string
-            'authlevel' => (string) __('admin/users.us_user_information_level'), // @phpstan-ignore cast.string
-            'home_planet_id' => (string) __('admin/users.us_user_information_pp'), // @phpstan-ignore cast.string
-            'current_planet' => (string) __('admin/users.us_user_information_ap'), // @phpstan-ignore cast.string
+            'username' => (string) __('admin/users.us_user_information_username'),
+            'email' => (string) __('admin/users.us_user_information_email'),
+            'authlevel' => (string) __('admin/users.us_user_information_level'),
+            'home_planet_id' => (string) __('admin/users.us_user_information_pp'),
+            'current_planet' => (string) __('admin/users.us_user_information_ap'),
         ];
     }
 

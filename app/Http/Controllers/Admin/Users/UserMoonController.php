@@ -218,7 +218,6 @@ class UserMoonController extends BaseController
     /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function softDeleteMoon(User $user, int $moon): RedirectResponse
     {
-        /** @phpstan-ignore constant.notFound */
         $destroyTime = time() + (PLANETS_LIFE_TIME * 3600);
 
         $prefix = DB::getTablePrefix();

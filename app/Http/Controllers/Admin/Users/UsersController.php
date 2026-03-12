@@ -84,34 +84,32 @@ class UsersController extends BaseController
         $errors = 0;
 
         if (
-            $galaxy > MAX_GALAXY_IN_WORLD || // @phpstan-ignore constant.notFound
-            $system > MAX_SYSTEM_IN_GALAXY || // @phpstan-ignore constant.notFound
-            $planet > MAX_PLANET_IN_SYSTEM || // @phpstan-ignore constant.notFound
+            $galaxy > MAX_GALAXY_IN_WORLD ||
+            $system > MAX_SYSTEM_IN_GALAXY ||
+            $planet > MAX_PLANET_IN_SYSTEM ||
             $galaxy < 1 || $system < 1 || $planet < 1
         ) {
-            $error = (string) __('admin/users.us_create_wrong_coords'); // @phpstan-ignore cast.string
+            $error = (string) __('admin/users.us_create_wrong_coords');
             $errors++;
         }
 
         if (!$name || !$email || !$galaxy || !$system || !$planet) {
-            $error .= (string) __('admin/users.us_create_complete_all'); // @phpstan-ignore cast.string
+            $error .= (string) __('admin/users.us_create_complete_all');
             $errors++;
         }
 
         if (!Functions::validEmail(strip_tags($email))) {
-            $error .= (string) __('admin/users.us_create_invalid_email'); // @phpstan-ignore cast.string
+            $error .= (string) __('admin/users.us_create_invalid_email');
             $errors++;
         }
 
-        /** @phpstan-ignore staticMethod.notFound */
         if (User::where('name', $name)->exists()) {
-            $error .= (string) __('admin/users.us_create_existing_name'); // @phpstan-ignore cast.string
+            $error .= (string) __('admin/users.us_create_existing_name');
             $errors++;
         }
 
-        /** @phpstan-ignore staticMethod.notFound */
         if (User::where('email', $email)->exists()) {
-            $error .= (string) __('admin/users.us_create_existing_email'); // @phpstan-ignore cast.string
+            $error .= (string) __('admin/users.us_create_existing_email');
             $errors++;
         }
 
@@ -122,20 +120,20 @@ class UsersController extends BaseController
             ->exists();
 
         if ($planetExists) {
-            $error .= (string) __('admin/users.us_create_existing_planet'); // @phpstan-ignore cast.string
+            $error .= (string) __('admin/users.us_create_existing_planet');
             $errors++;
         }
 
         if ($request->has('password_check')) {
             $pass = Functions::generatePassword();
         } elseif (strlen($pass) < 4) {
-            $error .= (string) __('admin/users.us_create_invalid_password'); // @phpstan-ignore cast.string
+            $error .= (string) __('admin/users.us_create_invalid_password');
             $errors++;
         }
 
         if ($errors === 0) {
             $this->createNewUser($name, $email, $auth, $pass, $galaxy, $system, $planet);
-            session()->flash('success', strtr((string) __('admin/users.us_create_added'), ['%s' => $pass])); // @phpstan-ignore cast.string
+            session()->flash('success', strtr((string) __('admin/users.us_create_added'), ['%s' => $pass]));
         } else {
             session()->flash('warning', '<br>' . $error);
         }
@@ -374,9 +372,9 @@ class UsersController extends BaseController
 
             foreach ($shortcuts->getAllAsArray() as $value) {
                 $type = match ((int) ($value['pt'] ?? 0)) {
-                    1 => (string) __('admin/users.us_planet_shortcut'), // @phpstan-ignore cast.string
-                    2 => (string) __('admin/users.us_debris_shortcut'), // @phpstan-ignore cast.string
-                    3 => (string) __('admin/users.us_moon_shortcut'), // @phpstan-ignore cast.string
+                    1 => (string) __('admin/users.us_planet_shortcut'),
+                    2 => (string) __('admin/users.us_debris_shortcut'),
+                    3 => (string) __('admin/users.us_moon_shortcut'),
                     default => '',
                 };
 
@@ -396,11 +394,11 @@ class UsersController extends BaseController
     private function planetSortOptions(): array
     {
         return [
-            0 => (string) __('admin/users.us_user_preference_planet_sort_op1'), // @phpstan-ignore cast.string
-            1 => (string) __('admin/users.us_user_preference_planet_sort_op2'), // @phpstan-ignore cast.string
-            2 => (string) __('admin/users.us_user_preference_planet_sort_op3'), // @phpstan-ignore cast.string
-            3 => (string) __('admin/users.us_user_preference_planet_sort_op4'), // @phpstan-ignore cast.string
-            4 => (string) __('admin/users.us_user_preference_planet_sort_op5'), // @phpstan-ignore cast.string
+            0 => (string) __('admin/users.us_user_preference_planet_sort_op1'),
+            1 => (string) __('admin/users.us_user_preference_planet_sort_op2'),
+            2 => (string) __('admin/users.us_user_preference_planet_sort_op3'),
+            3 => (string) __('admin/users.us_user_preference_planet_sort_op4'),
+            4 => (string) __('admin/users.us_user_preference_planet_sort_op5'),
         ];
     }
 
@@ -410,8 +408,8 @@ class UsersController extends BaseController
     private function planetSortSequenceOptions(): array
     {
         return [
-            0 => (string) __('admin/users.us_user_preference_planet_sort_sequence_op1'), // @phpstan-ignore cast.string
-            1 => (string) __('admin/users.us_user_preference_planet_sort_sequence_op2'), // @phpstan-ignore cast.string
+            0 => (string) __('admin/users.us_user_preference_planet_sort_sequence_op1'),
+            1 => (string) __('admin/users.us_user_preference_planet_sort_sequence_op2'),
         ];
     }
 
@@ -440,7 +438,6 @@ class UsersController extends BaseController
             DB::transaction(function () use ($name, $email, $auth, $pass, $galaxy, $system, $planet) {
                 $time = time();
 
-                /** @phpstan-ignore staticMethod.notFound */
                 $user = User::create([
                     'name' => $name,
                     'email' => $email,
@@ -467,7 +464,6 @@ class UsersController extends BaseController
 
                 $lastPlanetId = (int) DB::getPdo()->lastInsertId();
 
-                /** @phpstan-ignore staticMethod.notFound */
                 User::where('id', $lastUserId)->update([
                     'home_planet_id' => $lastPlanetId,
                     'current_planet' => $lastPlanetId,
