@@ -25,15 +25,14 @@ class Objects
 
     public function __construct()
     {
-        // require this damn file
-        require CORE_PATH . 'ObjectsCollection.php';
+        $collection = new ObjectsCollection();
 
-        $this->objects = $resource; // @phpstan-ignore-line
-        $this->relations = $requeriments; // @phpstan-ignore-line
-        $this->price = $pricelist; // @phpstan-ignore-line
-        $this->combatSpecs = $CombatCaps; // @phpstan-ignore-line
-        $this->production = $ProdGrid; // @phpstan-ignore-line
-        $this->objectsList = $reslist; // @phpstan-ignore-line
+        $this->objects = $collection->resources();
+        $this->relations = $collection->requirements();
+        $this->price = $collection->priceList();
+        $this->combatSpecs = $collection->combatSpecs();
+        $this->production = $collection->productionGrid();
+        $this->objectsList = $collection->objectsList();
     }
 
     public function getObjects(?int $objectId = null)
