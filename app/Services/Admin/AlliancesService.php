@@ -137,7 +137,7 @@ class AlliancesService
     }
 
     /**
-     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @SuppressWarnings("PHPMD.NPathComplexity")
      */
     public function saveRankPermissions(AllianceRankRequest $request, Ranks $ranks): void
     {

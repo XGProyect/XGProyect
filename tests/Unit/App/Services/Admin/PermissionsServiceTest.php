@@ -46,7 +46,9 @@ class PermissionsServiceTest extends TestCase
         $service->updatePermissions(['backup' => [UserRanks::GO => 'on']]);
 
         $this->assertNotNull($written);
+        $this->assertIsString($written);
         $decoded = json_decode($written, true);
+        $this->assertIsArray($decoded);
         $this->assertSame(1, $decoded['backup'][UserRanks::GO]);
     }
 
@@ -69,7 +71,9 @@ class PermissionsServiceTest extends TestCase
         $service->updatePermissions(['backup' => []]);
 
         $this->assertNotNull($written);
+        $this->assertIsString($written);
         $decoded = json_decode($written, true);
+        $this->assertIsArray($decoded);
         $this->assertSame(0, $decoded['backup'][UserRanks::GO]);
     }
 
@@ -90,7 +94,9 @@ class PermissionsServiceTest extends TestCase
         $service->updatePermissions(['backup' => [UserRanks::ADMIN => 'on']]);
 
         $this->assertNotNull($written);
+        $this->assertIsString($written);
         $decoded = json_decode($written, true);
+        $this->assertIsArray($decoded);
 
         // ADMIN key should not be set — the role is not editable
         $this->assertArrayNotHasKey(UserRanks::ADMIN, $decoded['backup'] ?? []);

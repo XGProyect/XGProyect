@@ -61,6 +61,7 @@ class LanguagesServiceTest extends TestCase
         $result = $service->loadTranslations($path);
 
         $this->assertNotEmpty($result);
+        $this->assertIsArray($result);
 
         foreach ($result as $pair) {
             $this->assertNotEmpty($pair['key']);
@@ -109,11 +110,14 @@ class LanguagesServiceTest extends TestCase
 
         $original = $service->loadTranslations($source);
         $this->assertNotNull($original);
+        $this->assertIsArray($original);
         $this->assertNotEmpty($original);
 
         // Save and re-load — keys must be preserved in order
         $service->saveTranslations($source, $original);
         $reloaded = $service->loadTranslations($source);
+        $this->assertNotNull($reloaded);
+        $this->assertIsArray($reloaded);
 
         $this->assertSame(
             array_column($original, 'key'),

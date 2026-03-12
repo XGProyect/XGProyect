@@ -33,9 +33,12 @@ class RepairRequest extends FormRequest
      */
     private function getValidTableNames(): array
     {
-        return collect(DB::select(
+        /** @var array<int, string> $names */
+        $names = collect(DB::select(
             'SELECT TABLE_NAME FROM information_schema.TABLES WHERE table_schema = ?',
             [config('DB_DATABASE')]
         ))->pluck('TABLE_NAME')->all();
+
+        return $names;
     }
 }

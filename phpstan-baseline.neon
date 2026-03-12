@@ -7,36 +7,6 @@ parameters:
 			path: app/Http/Controllers/Admin/AdminSettingsController.php
 
 		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.CouplingBetweenObjects\)\)\: Unexpected token "\.CouplingBetweenObjects\)", expected ''\)'' at offset 30 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/AlliancesController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.CyclomaticComplexity\)\)\: Unexpected token "\.CyclomaticComplexity\)", expected ''\)'' at offset 82 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/AlliancesController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.ElseExpression\)\)\: Unexpected token "\.ElseExpression\)", expected ''\)'' at offset 27 on line 1$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/AlliancesController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.NPathComplexity\)\)\: Unexpected token "\.NPathComplexity\)", expected ''\)'' at offset 34 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/AlliancesController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.TooManyPublicMethods\)\)\: Unexpected token "\.TooManyPublicMethods\)", expected ''\)'' at offset 81 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/AlliancesController.php
-
-		-
 			message: '#^Cannot access property \$email on mixed\.$#'
 			identifier: property.nonObject
 			count: 1
@@ -187,82 +157,10 @@ parameters:
 			path: app/Http/Controllers/Admin/UpdateController.php
 
 		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.CyclomaticComplexity\)\)\: Unexpected token "\.CyclomaticComplexity\)", expected ''\)'' at offset 127 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserMoonController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.ElseExpression\)\)\: Unexpected token "\.ElseExpression\)", expected ''\)'' at offset 180 on line 5$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserMoonController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.NPathComplexity\)\)\: Unexpected token "\.NPathComplexity\)", expected ''\)'' at offset 79 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserMoonController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 27 on line 1$#'
-			identifier: phpDoc.parseError
-			count: 7
-			path: app/Http/Controllers/Admin/Users/UserMoonController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 34 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserMoonController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 75 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserMoonController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.TooManyPublicMethods\)\)\: Unexpected token "\.TooManyPublicMethods\)", expected ''\)'' at offset 30 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserMoonController.php
-
-		-
 			message: '#^Strict comparison using \!\=\= between non\-empty\-array\<non\-falsy\-string, int\|string\> and array\{\} will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: app/Http/Controllers/Admin/Users/UserMoonController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.ElseExpression\)\)\: Unexpected token "\.ElseExpression\)", expected ''\)'' at offset 79 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserPlanetController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 27 on line 1$#'
-			identifier: phpDoc.parseError
-			count: 8
-			path: app/Http/Controllers/Admin/Users/UserPlanetController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 34 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserPlanetController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 75 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserPlanetController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.TooManyPublicMethods\)\)\: Unexpected token "\.TooManyPublicMethods\)", expected ''\)'' at offset 30 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserPlanetController.php
 
 		-
 			message: '#^Strict comparison using \!\=\= between non\-empty\-array\<non\-falsy\-string, int\|string\> and array\{\} will always evaluate to true\.$#'
@@ -275,54 +173,6 @@ parameters:
 			identifier: function.alreadyNarrowedType
 			count: 2
 			path: app/Http/Controllers/Admin/Users/UserProgressController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.CouplingBetweenObjects\)\)\: Unexpected token "\.CouplingBetweenObjects\)", expected ''\)'' at offset 30 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UsersController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.CyclomaticComplexity\)\)\: Unexpected token "\.CyclomaticComplexity\)", expected ''\)'' at offset 127 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UsersController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.ElseExpression\)\)\: Unexpected token "\.ElseExpression\)", expected ''\)'' at offset 180 on line 5$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UsersController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.ExcessiveClassComplexity\)\)\: Unexpected token "\.ExcessiveClassComplexity\)", expected ''\)'' at offset 81 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UsersController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.NPathComplexity\)\)\: Unexpected token "\.NPathComplexity\)", expected ''\)'' at offset 79 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UsersController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 139 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UsersController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 27 on line 1$#'
-			identifier: phpDoc.parseError
-			count: 6
-			path: app/Http/Controllers/Admin/Users/UsersController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 34 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UsersController.php
 
 		-
 			message: '#^Comparison operation "\<\=" between App\\Models\\Date and int\<1, max\> results in an error\.$#'
@@ -523,28 +373,10 @@ parameters:
 			path: app/Http/Middleware/Locale.php
 
 		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 77 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Requests/Admin/AllianceInfoRequest.php
-
-		-
 			message: '#^Method App\\Http\\Requests\\Admin\\LoginRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: app/Http/Requests/Admin/LoginRequest.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 77 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Requests/Admin/ServerRequest.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 77 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Requests/Admin/Users/UserInfoRequest.php
 
 		-
 			message: '#^Method App\\Http\\Requests\\Install\\AdminRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
@@ -1675,18 +1507,6 @@ parameters:
 			path: app/Models/UsersStatistics.php
 
 		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.NPathComplexity\)\)\: Unexpected token "\.NPathComplexity\)", expected ''\)'' at offset 34 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Services/Admin/AlliancesService.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 30 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Services/Admin/AlliancesService.php
-
-		-
 			message: '#^Parameter \#1 \$array \(list\<array\{i\: int, name\: mixed, delete\: bool, kick\: bool, applications\: bool, memberlist\: bool, app_management\: bool, administration\: bool, \.\.\.\}\>\) of array_values is already a list, call has no effect\.$#'
 			identifier: arrayValues.list
 			count: 1
@@ -1723,12 +1543,6 @@ parameters:
 			path: app/Services/Admin/LanguagesService.php
 
 		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 30 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Services/Admin/MessagesService.php
-
-		-
 			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 2
@@ -1739,12 +1553,6 @@ parameters:
 			identifier: assign.propertyType
 			count: 1
 			path: app/Services/Admin/PermissionsService.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 161 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Services/Admin/ServerSettingsService.php
 
 		-
 			message: '#^Method App\\Services\\PlanetService\:\:calculateNewPlanetPosition\(\) return type has no value type specified in iterable type array\.$#'
