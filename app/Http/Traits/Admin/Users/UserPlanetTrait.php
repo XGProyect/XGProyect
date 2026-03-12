@@ -125,10 +125,7 @@ trait UserPlanetTrait
         }
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     */
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     private function saveBuildingsData(Request $request, int $planetId, int $type): void
     {
         $updates = [];
@@ -146,15 +143,14 @@ trait UserPlanetTrait
             DB::table('buildings')->where('building_planet_id', $planetId)->update($updates);
         }
 
-        $mondbasis = $request->integer('building_mondbasis', 0);
+        $planetUpdate = ['planet_field_current' => $totalFields];
 
-        /** @phpstan-ignore constant.notFound */
-        $fieldsPerLevel = FIELDS_BY_MOONBASIS_LEVEL;
+        if ($type === PlanetTypesEnumerator::MOON) {
+            /** @phpstan-ignore constant.notFound */
+            $planetUpdate['planet_field_max'] = 1 + $request->integer('building_mondbasis', 0) * FIELDS_BY_MOONBASIS_LEVEL;
+        }
 
-        DB::table('planets')->where('planet_id', $planetId)->update([
-            'planet_field_current' => $totalFields,
-            'planet_field_max' => DB::raw('IF(`planet_type` = 3, 1 + ' . $mondbasis . ' * ' . $fieldsPerLevel . ', `planet_field_max`)'),
-        ]);
+        DB::table('planets')->where('planet_id', $planetId)->update($planetUpdate);
 
         $userId = (int) DB::table('planets')->where('planet_id', $planetId)->value('planet_user_id'); // @phpstan-ignore cast.int
         (new StatisticsLibrary())->rebuildPoints($userId, $planetId, 'buildings');
