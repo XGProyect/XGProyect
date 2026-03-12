@@ -23,7 +23,7 @@ class AdminAuthorize
 
     public function handle(Request $request, Closure $next): mixed
     {
-        $action = $request->route()->getAction();
+        $action = $request->route()?->getAction();
 
         if (!is_array($action)) {
             abort(403);
