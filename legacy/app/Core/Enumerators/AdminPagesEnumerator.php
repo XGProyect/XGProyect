@@ -16,6 +16,7 @@ abstract class AdminPagesEnumerator
 
     public const CONFIGURATION = [
         'server',
+        'mailing',
         'modules',
         'planets',
         'registration',
