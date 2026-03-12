@@ -68,7 +68,7 @@ Route::prefix('admin')->group(function () {
             Route::delete('/changelog/{changelog}', [Admin\ChangelogController::class, 'destroy'])->name('admin.changelog.destroy');
             Route::any('/errors', Admin\ErrorsController::class)->name('admin.errors');
             Route::any('/fleets', Admin\FleetsController::class)->name('admin.fleets');
-            Route::any('/home', Admin\HomeController::class)->name('admin.home');
+            Route::get('/home', [Admin\HomeController::class, 'index'])->name('admin.home');
             Route::get('/languages', [Admin\LanguagesController::class, 'index'])->name('admin.languages');
             Route::post('/languages', [Admin\LanguagesController::class, 'update'])->name('admin.languages.update');
             Route::get('/mailing', [Admin\MailingController::class, 'index'])->name('admin.mailing');

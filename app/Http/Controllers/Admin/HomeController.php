@@ -4,221 +4,162 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Alliance;
+use App\Models\AllianceStatistics;
+use App\Models\Fleets;
+use App\Models\Planets;
+use App\Models\Reports;
+use App\Models\User;
+use App\Models\UsersStatistics;
 use App\Services\SettingsService;
-use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use JsonException;
-use stdClass;
-use Xgp\App\Core\Template;
+use Illuminate\Support\Facades\Http;
+use Throwable;
+use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Libraries\FormatLib as Format;
 
-class HomeController extends BaseController
+/**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ */
+class HomeController extends AdminSettingsController
 {
-    public function __construct(private readonly SettingsService $settings)
+    public function __construct(SettingsService $settings)
     {
+        parent::__construct($settings);
     }
 
-    public function __invoke(): void
+    public function index(): View
     {
-        /** @var \App\Models\User $authUser */
+        /** @var User $authUser */
         $authUser = Auth::user();
-        $userStats = $this->getUsersStats();
 
-        Template::legacyView(
-            'admin.home',
-            array_merge(
-                $this->buildAlertsBlock($authUser),
-                [
-                    'numberUsers' => Format::prettyNumber((int) $userStats->number_users),
-                    'numberAlliances' => Format::prettyNumber((int) $userStats->number_alliances),
-                    'numberPlanets' => Format::prettyNumber((int) $userStats->number_planets),
-                    'numberMoons' => Format::prettyNumber((int) $userStats->number_moons),
-                    'numberFleets' => Format::prettyNumber((int) $userStats->number_fleets),
-                    'numberReports' => Format::prettyNumber((int) $userStats->number_reports),
-                    'averageUserPoints' => Format::shortlyNumber((int) $userStats->average_user_points),
-                    'averageAlliancePoints' => Format::shortlyNumber((int) $userStats->average_alliance_points),
-                    'databaseSize' => $this->getDbSize(),
-                    'databaseServer' => $this->getDbVersion(),
-                    'phpVersion' => PHP_VERSION,
-                    'serverVersion' => config('version.files'),
-                ]
-            )
-        );
+        return $this->view('admin.home', [
+            ...$this->buildAlertsBlock($authUser),
+            'numberUsers' => Format::prettyNumber(User::count()), // @phpstan-ignore staticMethod.notFound
+            'numberAlliances' => Format::prettyNumber(Alliance::count()), // @phpstan-ignore staticMethod.notFound
+            'numberPlanets' => Format::prettyNumber(Planets::where('planet_type', 1)->count()), // @phpstan-ignore staticMethod.notFound
+            'numberMoons' => Format::prettyNumber(Planets::where('planet_type', 3)->count()), // @phpstan-ignore staticMethod.notFound
+            'numberFleets' => Format::prettyNumber(Fleets::count()), // @phpstan-ignore staticMethod.notFound
+            'numberReports' => Format::prettyNumber(Reports::count()), // @phpstan-ignore staticMethod.notFound
+            'averageUserPoints' => Format::shortlyNumber((int) UsersStatistics::avg('user_statistic_total_points')), // @phpstan-ignore staticMethod.notFound
+            'averageAlliancePoints' => Format::shortlyNumber((int) AllianceStatistics::avg('alliance_statistic_total_points')), // @phpstan-ignore staticMethod.notFound
+            'databaseSize' => $this->getDbSize(),
+            'databaseServer' => $this->getDbVersion(),
+            'phpVersion' => PHP_VERSION,
+            'serverVersion' => config('version.files'),
+        ]);
     }
 
     /**
      * @return array<string, mixed>
      */
-    private function buildAlertsBlock(\App\Models\User $authUser): array
+    private function buildAlertsBlock(User $authUser): array
     {
-        $alert = [];
+        $alerts = $authUser->authlevel >= UserRanks::ADMIN
+            ? array_filter([
+                $this->configFileWritableAlert(),
+                $this->serverErrorsAlert(),
+                $this->outdatedVersionAlert(),
+                $this->installFileAlert(),
+                $this->pendingUpdateAlert(),
+            ])
+            : [];
 
-        if ($authUser->authlevel >= 3) {
-            if ((bool) (@fileperms(CONFIGS_PATH . 'xgp-db-config.php') & 0x0002)) {
-                $alert[] = __('admin/home.hm_config_file_writable');
-            }
+        $count = count($alerts);
 
-            if ($this->getServerErrors()) {
-                $alert[] = __('admin/home.hm_errors');
-            }
+        return match (true) {
+            $count > 1 => [
+                'errorMessage' => implode('<br>', $alerts),
+                'secondStyle' => 'alert-danger',
+                'errorType' => __('admin/home.hm_error'),
+            ],
+            $count === 1 => [
+                'errorMessage' => implode('<br>', $alerts),
+                'secondStyle' => 'alert-warning',
+                'errorType' => __('admin/home.hm_warning'),
+            ],
+            default => [
+                'errorMessage' => __('admin/home.hm_all_ok'),
+                'secondStyle' => 'alert-success',
+                'errorType' => __('admin/home.hm_ok'),
+            ],
+        };
+    }
 
-            if ($this->checkUpdates()) {
-                $alert[] = __('admin/home.hm_old_version');
-            }
+    private function configFileWritableAlert(): ?string
+    {
+        $file = config_path('xgp-db-config.php');
 
-            if ($this->installDirExists()) {
-                $alert[] = __('admin/home.hm_install_file_detected');
-            }
+        return file_exists($file) && (fileperms($file) & 0x0002) !== 0
+            ? (string) __('admin/home.hm_config_file_writable') // @phpstan-ignore cast.string
+            : null;
+    }
 
-            if ($this->settings->getString('version') != config('version.files')) {
-                $alert[] = __('admin/home.hm_update_required');
-            }
-        }
+    private function serverErrorsAlert(): ?string
+    {
+        return $this->getServerErrors() ? (string) __('admin/home.hm_errors') : null; // @phpstan-ignore cast.string
+    }
 
-        $alerts_count = count($alert);
-        $messages = $secondStyle = $errorType = null;
+    private function outdatedVersionAlert(): ?string
+    {
+        return $this->checkUpdates() ? (string) __('admin/home.hm_old_version') : null; // @phpstan-ignore cast.string
+    }
 
-        if ($alerts_count > 1) {
-            $messages = join('<br>', $alert);
-            $secondStyle = 'alert-danger';
-            $errorType = __('admin/home.hm_error');
-        }
+    private function installFileAlert(): ?string
+    {
+        return $this->installDirExists() ? (string) __('admin/home.hm_install_file_detected') : null; // @phpstan-ignore cast.string
+    }
 
-        if ($alerts_count == 1) {
-            $messages = join('<br>', $alert);
-            $secondStyle = 'alert-warning';
-            $errorType = __('admin/home.hm_warning');
-        }
-
-        return [
-            'errorMessage' => $messages ?? __('admin/home.hm_all_ok'),
-            'secondStyle' => $secondStyle ?? 'alert-success',
-            'errorType' => $errorType ?? __('admin/home.hm_ok'),
-        ];
+    private function pendingUpdateAlert(): ?string
+    {
+        return $this->settings->getString('version') !== config('version.files')
+            ? (string) __('admin/home.hm_update_required') // @phpstan-ignore cast.string
+            : null;
     }
 
     private function checkUpdates(): bool
     {
         try {
-            if (function_exists('file_get_contents')) {
-                $fileData = @file_get_contents(
-                    'https://updates.xgproyect.org/latest.json',
-                    false,
-                    stream_context_create(
-                        ['https' =>
-                            [
-                                'timeout' => 1, // one second
-                            ],
-                        ]
-                    )
-                );
+            $response = Http::timeout(1)->get('https://updates.xgproyect.org/latest.json');
 
-                if ($fileData) {
-                    $systemVersion = $this->settings->getString('version');
-                    $lastestVersion = @json_decode(
-                        $fileData,
-                        false,
-                        512,
-                        JSON_THROW_ON_ERROR
-                    )->version;
+            if ($response->successful()) {
+                $latestVersion = $response->json('version');
 
-                    return version_compare($systemVersion, $lastestVersion, '<');
-                }
+                return is_string($latestVersion) &&
+                    version_compare($this->settings->getString('version'), $latestVersion, '<');
             }
 
             return false;
-        } catch (JsonException $e) {
+        } catch (Throwable) {
             return false;
         }
     }
 
     private function getServerErrors(): bool
     {
-        return (count(glob(storage_path('logs') . '/xgproyect.log')) > 0);
-    }
-
-    private function getUsersStats(): stdClass
-    {
-        return DB::selectOne(
-            'SELECT
-                (
-                    SELECT
-                        COUNT(u.`id`) AS `total_users`
-                    FROM
-                        `' . config('DB_PREFIX') . 'users` u
-                ) AS `number_users`,
-                (
-                    SELECT
-                        COUNT(a.`alliance_id`) AS `total_alliances`
-                    FROM
-                        `' . config('DB_PREFIX') . 'alliance` a
-                ) AS `number_alliances`,
-                (
-                    SELECT
-                        COUNT(p.`planet_id`) AS `total_planets`
-                    FROM
-                        `' . config('DB_PREFIX') . 'planets` p
-                    WHERE
-                        p.`planet_type` = "1"
-                ) AS `number_planets`,
-                (
-                    SELECT
-                        COUNT(m.`planet_id`) AS `total_moons`
-                    FROM
-                        `' . config('DB_PREFIX') . 'planets` m
-                    WHERE
-                        m.`planet_type` = "3"
-                ) AS `number_moons`,
-                (
-                    SELECT
-                        COUNT(f.`fleet_id`) AS `total_fleets`
-                    FROM
-                        `' . config('DB_PREFIX') . 'fleets` f
-                ) AS `number_fleets`,
-                (
-                    SELECT
-                        COUNT(r.`report_rid`) AS `total_reports`
-                    FROM
-                        `' . config('DB_PREFIX') . 'reports` r
-                ) AS `number_reports`,
-                (
-                    SELECT
-                        FLOOR(AVG(s.`user_statistic_total_points`)) AS `average_user_total_points`
-                    FROM
-                        `' . config('DB_PREFIX') . 'users_statistics` s
-                ) AS `average_user_points`,
-                (
-                    SELECT
-                        FLOOR(AVG(s.`alliance_statistic_total_points`)) AS `average_alliance_total_points`
-                    FROM
-                        `' . config('DB_PREFIX') . 'alliance_statistics` s
-                ) AS `average_alliance_points`'
-        );
+        return file_exists(storage_path('logs/xgproyect.log'));
     }
 
     private function installDirExists(): bool
     {
-        return (file_exists(PUBLIC_PATH . 'install.php'));
+        return file_exists(public_path('install.php'));
     }
 
     private function getDbVersion(): string
     {
-        return DB::selectOne('SHOW VARIABLES LIKE "version"')->Value;
+        return (string) DB::scalar('SELECT @@version'); // @phpstan-ignore cast.string
     }
 
     private function getDbSize(): string
     {
         return Format::prettyBytes(
-            (int) DB::selectOne(
-                "SELECT
-                    SUM(data_length + index_length) AS 'db_size'
-                FROM information_schema.TABLES
-                WHERE table_schema = :table_schema;",
-                [
-                    'table_schema' => config('DB_DATABASE')
-                ]
-            )->db_size
+            // @phpstan-ignore-next-line cast.int
+            (int) DB::scalar(
+                'SELECT SUM(data_length + index_length) FROM information_schema.TABLES WHERE table_schema = ?',
+                [DB::getDatabaseName()]
+            )
         );
     }
 }

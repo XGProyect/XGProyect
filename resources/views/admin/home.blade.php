@@ -3,26 +3,15 @@
 @section('content')
 <div class="container-fluid">
 
-    @if ($secondStyle && $errorType && $errorMessage)
-    <div class="row">
-        <div class="col">
-            <div class="alert {{ $secondStyle }} alert-dismissible fade show">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <strong>{{ $errorType }}</strong> {!! $errorMessage !!}
-            </div>
-        </div>
-    </div>
-    @endif
+    <x-admin.status-alert :message="$errorMessage" :style="$secondStyle" :type="$errorType"/>
 
     <!-- Page Heading -->
     <x-admin.page-header
-        title="{{ __('admin/home.hm_title') }}"
-        subtitle="{{ __('admin/home.hm_sub_title') }}"
+        :title="__('admin/home.hm_title')"
+        :subtitle="__('admin/home.hm_sub_title')"
     />
 
-    <x-admin.card-collapsible id="collapseStatistics" title="{{ __('admin/home.hm_server_statistics') }}">
+    <x-admin.card-collapsible id="collapseStatistics" :title="__('admin/home.hm_server_statistics')" icon="fas fa-server">
         <div class="table-responsive">
             <table class="table table-bordered">
                 <tbody>
@@ -67,34 +56,27 @@
         </div>
     </x-admin.card-collapsible>
 
-    <x-admin.card-collapsible id="collapseCredits" title="{{ __('admin/home.hm_credits') }}">
+    <x-admin.card-collapsible id="collapseCredits" :title="__('admin/home.hm_credits')" icon="fas fa-heart">
         <div class="text-center">
-                <p>
-                    <strong>{{ __('admin/home.hm_proyect_leader') }}</strong>
-                    <br>
-                    <a href="https://github.com/LucasKovacs" target="_blank">lucky</a>
-                    <br>
-                    <a href="https://github.com/BeReal86" target="_blank">BeReal</a>
-                    <br><br>
-                    <strong>{{ __('admin/home.hm_principal_contributors') }}</strong>
-                    <br>
-                    <a href="https://github.com/FGServers" target="_blank">JonaMix</a>
-                    <br><br>
-                    <strong>{{ __('admin/home.hm_extensions') }}</strong>
-                    <br>
-                    <a href="https://laravel.com/" target="_blank">Laravel | Core</a>
-                    <br>
-                    <a href="https://github.com/jstar88/opbe" target="_blank">jstar - OPBE</a>
-                    <br>
-                    <a href="https://startbootstrap.com/themes/sb-admin-2/" target="_blank">Start Bootstrap | SB Admin 2</a>
-                    <br><br>
-                    <strong>{{ __('admin/home.hm_thanks_to') }}</strong>
-                    <br>
-                    adri93, Alberto14, angelus_ira, Anghelito, Arali, Borboco, Calzon, cyberghoser1, cyberrichy,
-                    duhow, edering, Gmir17, Green, jtsamper, Kloud, LordPretender, Loucouss, medel, MSW,
-                    Neko, Neurus, Nickolay, Pada, pele87, PowerMaster, privatethedawn, quaua, Razican, Tarta, Think,
-                    thyphoon, tomtom, Tonique, Trojan, Saint, shoghicp, slaver7, war4head, zebulonbof, zorro2666
-                </p>
+            <p>
+                <strong>{{ __('admin/home.hm_proyect_leader') }}</strong><br>
+                <a href="https://github.com/LucasKovacs" target="_blank">lucky</a><br>
+                <a href="https://github.com/BeReal86" target="_blank">BeReal</a>
+                <br><br>
+                <strong>{{ __('admin/home.hm_principal_contributors') }}</strong><br>
+                <a href="https://github.com/FGServers" target="_blank">JonaMix</a>
+                <br><br>
+                <strong>{{ __('admin/home.hm_extensions') }}</strong><br>
+                <a href="https://laravel.com/" target="_blank">Laravel | Core</a><br>
+                <a href="https://github.com/jstar88/opbe" target="_blank">jstar - OPBE</a><br>
+                <a href="https://startbootstrap.com/themes/sb-admin-2/" target="_blank">Start Bootstrap | SB Admin 2</a>
+                <br><br>
+                <strong>{{ __('admin/home.hm_thanks_to') }}</strong><br>
+                adri93, Alberto14, angelus_ira, Anghelito, Arali, Borboco, Calzon, cyberghoser1, cyberrichy,
+                duhow, edering, Gmir17, Green, jtsamper, Kloud, LordPretender, Loucouss, medel, MSW,
+                Neko, Neurus, Nickolay, Pada, pele87, PowerMaster, privatethedawn, quaua, Razican, Tarta, Think,
+                thyphoon, tomtom, Tonique, Trojan, Saint, shoghicp, slaver7, war4head, zebulonbof, zorro2666
+            </p>
         </div>
     </x-admin.card-collapsible>
 </div>
