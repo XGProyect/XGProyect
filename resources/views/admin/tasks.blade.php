@@ -24,19 +24,21 @@
                                 <tbody>
                                     @foreach ($tasks_list as $item)
                                     <tr>
-                                        <td>
-                                            <span>
-                                                {{ $item['name'] }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{ $item['next_run'] }}
-                                        </td>
-                                        <td>
-                                            {{ $item['last_run'] }}
-                                        </td>
-                                        <td>
-                                            {!! $item['actions'] !!}
+                                        <td class="align-middle">{{ $item['name'] }}</td>
+                                        <td class="align-middle">{{ $item['next_run'] }}</td>
+                                        <td class="align-middle">{{ $item['last_run'] }}</td>
+                                        <td class="align-middle">
+                                            @foreach ($item['actions'] as $action)
+                                                <a href="{{ route($action['route']) }}"
+                                                   title="{{ $action['title'] }}"
+                                                   data-toggle="popover"
+                                                   data-placement="top"
+                                                   data-trigger="hover"
+                                                   data-content="{{ $action['title'] }}"
+                                                   class="btn btn-sm btn-outline-primary">
+                                                    <i class="{{ $action['icon'] }}"></i>
+                                                </a>
+                                            @endforeach
                                         </td>
                                     </tr>
                                     @endforeach

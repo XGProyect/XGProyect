@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Services\SettingsService;
+use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Template;
-use Xgp\App\Helpers\UrlHelper;
-use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class TasksController extends BaseController
@@ -17,42 +16,36 @@ class TasksController extends BaseController
     {
     }
 
-    public function __invoke(): void
+    public function __invoke(): View
     {
-        Template::legacyView(
-            'admin.tasks',
-            $this->buildUpdatesBlock()
-        );
+        return view('admin.tasks', $this->buildUpdatesBlock());
     }
 
     private function buildUpdatesBlock(): array
     {
-        $update_tasks = ['stat_last_update', 'last_backup', 'last_cleanup'];
-        $update_blocks = [];
+        $tasks = ['stat_last_update', 'last_backup', 'last_cleanup'];
 
-        foreach ($update_tasks as $task) {
-            $update_blocks[] = $this->getTaskData($task);
-        }
-
-        return ['tasks_list' => $update_blocks];
+        return [
+            'tasks_list' => array_map(fn (string $task) => $this->getTaskData($task), $tasks),
+        ];
     }
 
     private function getTaskData(string $task): array
     {
-        $next_run = '-';
-        $last_run = '-';
+        $nextRun = '-';
+        $lastRun = '-';
 
         if ($this->isTaskScheduled($task)) {
-            $task_time = (int) $this->settings->getString($task);
-            $next_run = Timing::formatExtendedDate($task_time);
-            $last_run = Format::prettyTimeAgo(date('Y-m-d H:i:s', (int) $task_time)) . ' ago';
+            $timestamp = (int) $this->settings->getString($task);
+            $nextRun = Timing::formatExtendedDate($timestamp);
+            $lastRun = Carbon::createFromTimestamp($timestamp)->diffForHumans();
         }
 
         return [
             'name' => __('admin/tasks.ta_' . $task),
-            'next_run' => $next_run,
-            'last_run' => $last_run,
-            'actions' => $this->{'get' . ucwords(strtr($task, ['_' => ''])) . 'Actions'}(),
+            'next_run' => $nextRun,
+            'last_run' => $lastRun,
+            'actions' => $this->getTaskActions($task),
         ];
     }
 
@@ -61,28 +54,27 @@ class TasksController extends BaseController
         return $task !== 'last_backup' || $this->settings->getBool('auto_backup');
     }
 
-    private function getStatLastUpdateActions(): string
+    /**
+     * @return array<int, array{route: string, icon: string, title: string}>
+     */
+    private function getTaskActions(string $task): array
     {
-        return UrlHelper::setUrl(
-            '/admin/rebuildhighscores',
-            '<i class="fas fa-play" data-toggle="popover" data-placement="top"
-            data-trigger="hover" data-content="' . __('admin/tasks.ta_buildstats_title') . '"></i>',
-            __('admin/tasks.ta_buildstats_title')
-        );
-    }
-
-    private function getLastBackupActions(): string
-    {
-        return UrlHelper::setUrl(
-            '/admin/backup',
-            '<i class="fas fa-cogs" data-toggle="popover" data-placement="top"
-            data-trigger="hover" data-content="' . __('admin/tasks.ta_backup_title') . '"></i>',
-            __('admin/tasks.ta_backup_title')
-        );
-    }
-
-    private function getLastCleanupActions(): string
-    {
-        return '';
+        return match ($task) {
+            'stat_last_update' => [
+                [
+                    'route' => 'admin.rebuildhighscores',
+                    'icon' => 'fas fa-play',
+                    'title' => __('admin/tasks.ta_buildstats_title'),
+                ],
+            ],
+            'last_backup' => [
+                [
+                    'route' => 'admin.backup',
+                    'icon' => 'fas fa-cogs',
+                    'title' => __('admin/tasks.ta_backup_title'),
+                ],
+            ],
+            default => [],
+        };
     }
 }
