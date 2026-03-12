@@ -19,7 +19,7 @@ Live Server: https://www.xgproyect.net/
 
 ## Requirements
 
-PHP 8.3 or greater
+PHP 8.4 or greater
 MySQL 5.7 or greater
 
 ## How to get XG Proyect?
@@ -42,7 +42,7 @@ composer create-project xgproyect/xgproyect
 By default if you did not change any setting, to connect to the game go to `http://localhost`, to check the email client go to `http://localhost:8025` and to connect to the DB by default we use `mysql` on port `3306` and user/password `root`. Also, you can check your `.env` file for the initial configutations, or if you want to make any change.
 
 ## How to run XG Proyect?
-Easiest way to do it, is using Docker, through sail. See this <a href="https://laravel.com/docs/10.x/sail">Laravel Sail guide</a> to install it.
+Easiest way to do it, is using Docker, through sail. See this <a href="https://laravel.com/docs/12.x/sail">Laravel Sail guide</a> to install it.
 
 ```
 sail up

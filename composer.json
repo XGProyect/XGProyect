@@ -20,15 +20,15 @@
     ],
     "license": "GPL-3.0-only",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
-        "spatie/laravel-backup": "^9.4"
+        "spatie/laravel-backup": "^10.0"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.8",
+        "barryvdh/laravel-debugbar": "^4.1",
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^3.16",
         "larastan/larastan": "^3.9",
