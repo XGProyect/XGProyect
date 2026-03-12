@@ -6,8 +6,8 @@ namespace Xgp\App\Libraries;
 
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use App\Services\SettingsService;
 use Xgp\App\Core\Objects;
-use Xgp\App\Core\Options;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib as Developments;
 use Xgp\App\Libraries\FormatLib as Format;
@@ -35,7 +35,8 @@ class UpdatesLibrary
 
     private function cleanUp(): void
     {
-        $lastCleanup = Options::getInstance()->get('last_cleanup');
+        $settings = app(SettingsService::class);
+        $lastCleanup = $settings->getInt('last_cleanup');
         $cleanupInterval = 6; // 6 HOURS
 
         if ((time() >= ($lastCleanup + (3600 * $cleanupInterval)))) {
@@ -63,22 +64,23 @@ class UpdatesLibrary
             $this->updatesModel->deleteDestroyedPlanets($delPlanets);
             $this->updatesModel->deleteExpiredAcs();
 
-            Options::getInstance()->write('last_cleanup', time());
+            $settings->write('last_cleanup', time());
         }
     }
 
     private function createBackup(): void
     {
         // LAST UPDATE AND UPDATE INTERVAL, EX: 15 MINUTES
-        $auto_backup = Options::getInstance()->get('auto_backup');
-        $last_backup = Options::getInstance()->get('last_backup');
+        $settings = app(SettingsService::class);
+        $auto_backup = $settings->getInt('auto_backup');
+        $last_backup = $settings->getInt('last_backup');
         $update_interval = 6; // 6 HOURS
 
         // CHECK TIME
         if ((time() >= ($last_backup + (3600 * $update_interval))) && ($auto_backup == 1)) {
             $this->updatesModel->generateBackUp(); // MAKE BACKUP
 
-            Options::getInstance()->write('last_backup', time());
+            $settings->write('last_backup', time());
         }
     }
 
@@ -126,13 +128,14 @@ class UpdatesLibrary
     private function updateStatistics()
     {
         // LAST UPDATE AND UPDATE INTERVAL, EX: 15 MINUTES
-        $stat_last_update = Options::getInstance()->get('stat_last_update');
-        $update_interval = Options::getInstance()->get('stat_update_time');
+        $settings = app(SettingsService::class);
+        $stat_last_update = $settings->getInt('stat_last_update');
+        $update_interval = $settings->getInt('stat_update_time');
 
         if ((time() >= ($stat_last_update + (60 * $update_interval)))) {
             $result = new StatisticsLibrary();
 
-            Options::getInstance()->write('stat_last_update', $result->makeStats()['stats_time']);
+            $settings->write('stat_last_update', $result->makeStats()['stats_time']);
         }
     }
 
@@ -411,10 +414,11 @@ class UpdatesLibrary
         $resource = Objects::getInstance()->getObjects();
         $ProdGrid = Objects::getInstance()->getProduction();
 
-        $game_resource_multiplier = Options::getInstance()->get('resource_multiplier');
-        $game_metal_basic_income = Options::getInstance()->get('metal_basic_income');
-        $game_crystal_basic_income = Options::getInstance()->get('crystal_basic_income');
-        $game_deuterium_basic_income = Options::getInstance()->get('deuterium_basic_income');
+        $settings = app(SettingsService::class);
+        $game_resource_multiplier = $settings->getInt('resource_multiplier');
+        $game_metal_basic_income = $settings->getInt('metal_basic_income');
+        $game_crystal_basic_income = $settings->getInt('crystal_basic_income');
+        $game_deuterium_basic_income = $settings->getInt('deuterium_basic_income');
 
         if ($current_user['preference_vacation_mode'] > 0) {
             $game_metal_basic_income = 0;

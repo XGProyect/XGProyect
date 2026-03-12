@@ -10,8 +10,8 @@ use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Services\SettingsService;
 use Illuminate\Support\Facades\URL;
-use Xgp\App\Core\Options;
 
 class Recover extends Mailable
 {
@@ -35,8 +35,8 @@ class Recover extends Mailable
         return new Envelope(
             subject: __('emails/recover.re_mail_title'),
             from: new Address(
-                Options::getInstance()->get('admin_email'),
-                Options::getInstance()->get('game_name')
+                app(SettingsService::class)->getString('admin_email'),
+                app(SettingsService::class)->getString('game_name')
             ),
         );
     }
@@ -49,7 +49,7 @@ class Recover extends Mailable
         return new Content(
             markdown: 'emails.account.recover',
             with: [
-                'gameName' => Options::getInstance()->get('game_name'),
+                'gameName' => app(SettingsService::class)->getString('game_name'),
                 'gameUrl' => URL::to('/'),
             ],
         );

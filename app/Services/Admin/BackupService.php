@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Services\Admin;
 
+use App\Services\SettingsService;
 use Illuminate\Contracts\Console\Kernel as ArtisanKernel;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
 use Illuminate\Support\Collection;
 use Spatie\Backup\BackupDestination\Backup;
 use Spatie\Backup\BackupDestination\BackupDestination;
 use Spatie\Backup\Tasks\Backup\BackupJob;
-use Xgp\App\Core\Options;
 
 class BackupService
 {
@@ -22,6 +22,7 @@ class BackupService
     public function __construct(
         private readonly ArtisanKernel $artisan,
         private readonly FilesystemFactory $storage,
+        private readonly SettingsService $settings,
         private readonly string $backupName = '',
         private readonly string $dateFormat = '',
     ) {
@@ -29,12 +30,12 @@ class BackupService
 
     public function isAutoBackupEnabled(): bool
     {
-        return Options::getInstance()->get('auto_backup') == 1;
+        return $this->settings->getBool('auto_backup');
     }
 
     public function saveSettings(bool $autoBackup): void
     {
-        Options::getInstance()->write('auto_backup', $autoBackup ? 1 : 0);
+        $this->settings->write('auto_backup', $autoBackup ? 1 : 0);
     }
 
     /**
@@ -108,9 +109,9 @@ class BackupService
             return $this->dateFormat;
         }
 
-        $format = Options::getInstance()->get('date_format_extended');
+        $format = $this->settings->getString('date_format_extended');
 
-        return is_string($format) ? $format : BackupJob::FILENAME_FORMAT;
+        return $format !== '' ? $format : BackupJob::FILENAME_FORMAT;
     }
 
     private function prettyBytes(int | float $bytes, int $precision = 2): string

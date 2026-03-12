@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Game;
 
+use App\Services\SettingsService;
 use Xgp\App\Core\Model;
-use Xgp\App\Core\Options;
 
 /**
  * @deprecated v4.0.0 use laravel instead
@@ -55,7 +55,7 @@ class Statistics extends Model
             FROM `' . USERS_STATISTICS . '` as s
             INNER JOIN `' . USERS . '` as u ON u.`id` = s.`user_statistic_user_id`
             LEFT JOIN `' . ALLIANCE . '` AS a ON a.`alliance_id` = u.`ally_id`
-            WHERE `authlevel` <= ' . Options::getInstance()->get('stat_admin_level') . '
+            WHERE `authlevel` <= ' . app(SettingsService::class)->getInt('stat_admin_level') . '
             ORDER BY `user_statistic_' . $order . '` DESC, `user_statistic_total_rank` ASC
             LIMIT ' . $start . ',100;'
         );

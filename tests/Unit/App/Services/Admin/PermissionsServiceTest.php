@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Unit\App\Services\Admin;
 
 use App\Services\Admin\PermissionsService;
+use App\Services\SettingsService;
 use RuntimeException;
 use Tests\TestCase;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use Xgp\App\Core\Options;
 
 /**
  * @SuppressWarnings("PHPMD.UnusedFormalParameter")
@@ -33,17 +33,17 @@ class PermissionsServiceTest extends TestCase
 
     public function testUpdatePermissionsGrantsAccessForCheckedModule(): void
     {
-        $options = $this->createMock(Options::class);
-        $options->method('get')->willReturn('{}');
+        $settings = $this->createMock(SettingsService::class);
+        $settings->method('getString')->willReturn('{}');
 
         // Capture what gets written back
         $written = null;
-        $options->method('write')->willReturnCallback(function (string $_key, mixed $value) use (&$written) {
+        $settings->method('write')->willReturnCallback(function (string $_key, mixed $value) use (&$written) {
             $written = $value;
             return true;
         });
 
-        $service = new PermissionsService($options);
+        $service = new PermissionsService($settings);
 
         // Simulate form input: 'backup' module, GO role checked
         $service->updatePermissions(['backup' => [UserRanks::GO => 'on']]);
@@ -60,16 +60,16 @@ class PermissionsServiceTest extends TestCase
     {
         $initialPermissions = json_encode(['backup' => [UserRanks::GO => 1]]);
 
-        $options = $this->createMock(Options::class);
-        $options->method('get')->willReturn($initialPermissions);
+        $settings = $this->createMock(SettingsService::class);
+        $settings->method('getString')->willReturn($initialPermissions);
 
         $written = null;
-        $options->method('write')->willReturnCallback(function (string $_key, mixed $value) use (&$written) {
+        $settings->method('write')->willReturnCallback(function (string $_key, mixed $value) use (&$written) {
             $written = $value;
             return true;
         });
 
-        $service = new PermissionsService($options);
+        $service = new PermissionsService($settings);
 
         // Simulate form input: 'backup' module, GO role NOT checked (absent from input)
         $service->updatePermissions(['backup' => []]);
@@ -84,16 +84,16 @@ class PermissionsServiceTest extends TestCase
 
     public function testUpdatePermissionsCannotModifyAdminRole(): void
     {
-        $options = $this->createMock(Options::class);
-        $options->method('get')->willReturn('{}');
+        $settings = $this->createMock(SettingsService::class);
+        $settings->method('getString')->willReturn('{}');
 
         $written = null;
-        $options->method('write')->willReturnCallback(function (string $_key, mixed $value) use (&$written) {
+        $settings->method('write')->willReturnCallback(function (string $_key, mixed $value) use (&$written) {
             $written = $value;
             return true;
         });
 
-        $service = new PermissionsService($options);
+        $service = new PermissionsService($settings);
 
         // Attempt to explicitly grant ADMIN role via form — should be silently ignored
         $service->updatePermissions(['backup' => [UserRanks::ADMIN => 'on']]);
@@ -110,9 +110,9 @@ class PermissionsServiceTest extends TestCase
 
     private function buildService(string $permissionsJson): PermissionsService
     {
-        $options = $this->createMock(Options::class);
-        $options->method('get')->willReturn($permissionsJson);
+        $settings = $this->createMock(SettingsService::class);
+        $settings->method('getString')->willReturn($permissionsJson);
 
-        return new PermissionsService($options);
+        return new PermissionsService($settings);
     }
 }

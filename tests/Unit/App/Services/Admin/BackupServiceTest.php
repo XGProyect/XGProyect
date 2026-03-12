@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\App\Services\Admin;
 
 use App\Services\Admin\BackupService;
+use App\Services\SettingsService;
 use Illuminate\Contracts\Console\Kernel as ArtisanKernel;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -23,6 +24,7 @@ class BackupServiceTest extends TestCase
     private BackupService $service;
     private ArtisanKernel & MockObject $artisan;
     private FilesystemFactory & MockObject $storageFactory;
+    private SettingsService & MockObject $settings;
     private Filesystem & MockObject $disk;
 
     protected function setUp(): void
@@ -32,10 +34,11 @@ class BackupServiceTest extends TestCase
         $this->artisan = $this->createMock(ArtisanKernel::class);
         $this->disk = $this->createMock(Filesystem::class);
         $this->storageFactory = $this->createMock(FilesystemFactory::class);
+        $this->settings = $this->createMock(SettingsService::class);
 
         $this->storageFactory->method('disk')->willReturn($this->disk);
 
-        $this->service = new BackupService($this->artisan, $this->storageFactory, 'test-app', 'Y-m-d H:i:s');
+        $this->service = new BackupService($this->artisan, $this->storageFactory, $this->settings, 'test-app', 'Y-m-d H:i:s');
     }
 
     // -------------------------------------------------------------------------

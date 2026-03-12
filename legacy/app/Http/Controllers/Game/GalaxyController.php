@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use Illuminate\Routing\Controller as BaseController;
+use App\Services\SettingsService;
 use Xgp\App\Core\Objects;
-use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
@@ -343,7 +343,7 @@ class GalaxyController extends BaseController
             Functions::message($error, 'game.php?page=galaxy&mode=0&galaxy=' . $galaxy . '&system=' . $system, 3);
         }
 
-        $flight_time = round(((30 + (60 * $tempvar1)) * 2500) / Options::getInstance()->get('fleet_speed'));
+        $flight_time = round(((30 + (60 * $tempvar1)) * 2500) / app(SettingsService::class)->getInt('fleet_speed'));
 
         $DefenseLabel = [
             0 => __('game/galaxy.gl_all_defenses'),
@@ -554,7 +554,7 @@ class GalaxyController extends BaseController
             die('613 ');
         }
 
-        if (Options::getInstance()->get('adm_attack') == 1 && $target_user['authlevel'] > 0) {
+        if (app(SettingsService::class)->getInt('adm_attack') == 1 && $target_user['authlevel'] > 0) {
             die('601 ');
         }
 

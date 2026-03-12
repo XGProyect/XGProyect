@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
+use App\Services\SettingsService;
 use Xgp\App\Core\Objects;
-use Xgp\App\Core\Options;
 use Xgp\App\Models\Libraries\StatisticsLibrary as StatisticsLib;
 
 class StatisticsLibrary
@@ -45,7 +45,7 @@ class StatisticsLibrary
         $element = Objects::getInstance()->getPrice($element);
         $resources_total = $element['metal'] + $element['crystal'] + $element['deuterium'];
         $level_mult = pow($element['factor'], $current_level);
-        $points = ($resources_total * $level_mult) / Options::getInstance()->get('stat_points');
+        $points = ($resources_total * $level_mult) / app(SettingsService::class)->getInt('stat_points');
 
         return $points;
     }

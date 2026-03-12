@@ -10,8 +10,8 @@ use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Services\SettingsService;
 use Illuminate\Support\Facades\URL;
-use Xgp\App\Core\Options;
 
 class Welcome extends Mailable
 {
@@ -36,8 +36,8 @@ class Welcome extends Mailable
         return new Envelope(
             subject: __('emails/welcome.we_mail_register_at'),
             from: new Address(
-                Options::getInstance()->get('admin_email'),
-                Options::getInstance()->get('game_name')
+                app(SettingsService::class)->getString('admin_email'),
+                app(SettingsService::class)->getString('game_name')
             ),
         );
     }
@@ -50,7 +50,7 @@ class Welcome extends Mailable
         return new Content(
             markdown: 'emails.account.welcome',
             with: [
-                'gameName' => Options::getInstance()->get('game_name'),
+                'gameName' => app(SettingsService::class)->getString('game_name'),
                 'gameUrl' => URL::to('/'),
             ],
         );

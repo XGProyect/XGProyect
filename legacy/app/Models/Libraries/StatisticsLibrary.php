@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Libraries;
 
+use App\Services\SettingsService;
 use Xgp\App\Core\Model;
-use Xgp\App\Core\Options;
 
 /**
  * @deprecated v4.0.0 use laravel instead
@@ -82,7 +82,7 @@ class StatisticsLibrary extends Model
                 ) AS total_points
             FROM ' . USERS_STATISTICS . ' us
             INNER JOIN ' . USERS . ' AS u
-                ON us.`user_statistic_user_id` = u.`id` AND u.`authlevel` <= ' . Options::getInstance()->get('stat_admin_level') . '
+                ON us.`user_statistic_user_id` = u.`id` AND u.`authlevel` <= ' . app(SettingsService::class)->getInt('stat_admin_level') . '
             ORDER BY us.`user_statistic_user_id` ASC;'
         );
     }
@@ -108,7 +108,7 @@ class StatisticsLibrary extends Model
             SUM(us.user_statistic_total_points) AS total_points
             FROM ' . ALLIANCE . ' AS a
             INNER JOIN ' . USERS . ' AS u
-                ON a.`alliance_id` = u.`ally_id` AND u.`authlevel` <= ' . Options::getInstance()->get('stat_admin_level') . '
+                ON a.`alliance_id` = u.`ally_id` AND u.`authlevel` <= ' . app(SettingsService::class)->getInt('stat_admin_level') . '
                 INNER JOIN ' . USERS_STATISTICS . ' AS us ON us.`user_statistic_user_id` = u.`id`
                 INNER JOIN ' . ALLIANCE_STATISTICS . ' AS ass ON ass.`alliance_statistic_alliance_id` = a.`alliance_id`
             GROUP BY alliance_id'

@@ -6,8 +6,8 @@ namespace Xgp\App\Libraries;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
+use App\Services\SettingsService;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
-use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Libraries\Messenger\MessagesFormat;
@@ -44,7 +44,7 @@ abstract class Functions
 
     public static function fleetSpeedFactor(): string
     {
-        return Options::getInstance()->get('fleet_speed') / 2500;
+        return app(SettingsService::class)->getInt('fleet_speed') / 2500;
     }
 
     public static function message(string $mes, ?string $dest = null, string $time = '3', bool $topnav = true, bool $menu = true, $center = true): void
@@ -81,7 +81,7 @@ abstract class Functions
 
     public static function isModuleAccesible(int $module = 0): int
     {
-        $modules = Options::getInstance()->get('modules');
+        $modules = app(SettingsService::class)->getString('modules');
         $modules = explode(';', $modules);
 
         return (int) $modules[$module];
@@ -164,7 +164,7 @@ abstract class Functions
             if (session()->has('locale')) {
                 $locale = session('locale');
             } else {
-                $locale = Options::getInstance()->get('lang');
+                $locale = app(SettingsService::class)->getString('lang');
             }
         }
 

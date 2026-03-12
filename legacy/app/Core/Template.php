@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xgp\App\Core;
 
 use App\Exceptions\LegacyView;
+use App\Services\SettingsService;
 use Illuminate\Support\Facades\View;
 
 class Template
@@ -14,7 +15,7 @@ class Template
      */
     public static function legacyView($view = null, $data = [], $mergeData = []): void
     {
-        View::share('gameTitle', Options::getInstance()->get('game_name'));
+        View::share('gameTitle', app(SettingsService::class)->getString('game_name'));
 
         throw new LegacyView(
             view($view, $data, $mergeData)
@@ -29,7 +30,7 @@ class Template
             return;
         }
 
-        View::share('gameTitle', Options::getInstance()->get('game_name'));
+        View::share('gameTitle', app(SettingsService::class)->getString('game_name'));
 
         return View::make($template, $data)->render();
     }

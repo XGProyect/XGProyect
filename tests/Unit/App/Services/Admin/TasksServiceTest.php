@@ -9,9 +9,7 @@ use App\Enums\Admin\AdminTask;
 use App\Services\Admin\TasksService;
 use App\Services\SettingsService;
 use PHPUnit\Framework\MockObject\MockObject;
-use ReflectionClass;
 use Tests\TestCase;
-use Xgp\App\Core\Options;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
@@ -25,21 +23,9 @@ class TasksServiceTest extends TestCase
     {
         parent::setUp();
 
-        // Pre-load the legacy Options singleton so TimingLibrary doesn't hit the DB
-        $this->bootOptionsWithoutDb(['date_format_extended' => 'Y-m-d H:i:s']);
-
         $this->settings = $this->createMock(SettingsService::class);
+        $this->app->instance(SettingsService::class, $this->settings);
         $this->service = new TasksService($this->settings);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        // Reset the Options singleton so other tests are not affected
-        $ref = new ReflectionClass(Options::class);
-        $prop = $ref->getProperty('instance');
-        $prop->setValue(null, null);
     }
 
     public function testGetTasksReturnsOneEntryPerAdminTaskCase(): void
@@ -107,24 +93,4 @@ class TasksServiceTest extends TestCase
         $this->assertNotSame('-', $task->nextRun);
     }
 
-    /**
-     * Pre-load the Options singleton with given values, bypassing the DB.
-     *
-     * @param array<string, string> $values
-     */
-    private function bootOptionsWithoutDb(array $values): void
-    {
-        $ref = new ReflectionClass(Options::class);
-
-        $stub = $ref->newInstanceWithoutConstructor();
-
-        $optionsProp = $ref->getProperty('options');
-        $optionsProp->setValue($stub, $values);
-
-        $initializedProp = $ref->getProperty('initialized');
-        $initializedProp->setValue($stub, true);
-
-        $instanceProp = $ref->getProperty('instance');
-        $instanceProp->setValue(null, $stub);
-    }
 }

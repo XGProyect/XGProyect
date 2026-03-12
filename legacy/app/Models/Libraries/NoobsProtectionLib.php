@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Libraries;
 
+use App\Services\SettingsService;
 use Xgp\App\Core\Model;
-use Xgp\App\Core\Options;
 
 /**
  * @deprecated v4.0.0 use laravel instead
@@ -14,7 +14,7 @@ class NoobsProtectionLib extends Model
 {
     public function readAllConfigs(): array
     {
-        return Options::getInstance()->get();
+        return app(SettingsService::class)->all();
     }
 
     public function returnBothPartiesPoints(int $current_user_id, int $other_user_id): array

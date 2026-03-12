@@ -7,8 +7,8 @@ namespace Xgp\App\Http\Controllers\Game;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
+use App\Services\SettingsService;
 use Xgp\App\Core\Objects;
-use Xgp\App\Core\Options;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Helpers\UrlHelper;
@@ -440,7 +440,7 @@ class InfosController extends BaseController
         $current_built_lvl = $this->planet[$this->_resource[$this->_element_id]];
         $BuildLevel = ($current_built_lvl > 0) ? $current_built_lvl : 1;
         $BuildEnergy = $this->user['research_energy_technology'];
-        $game_resource_multiplier = Options::getInstance()->get('resource_multiplier');
+        $game_resource_multiplier = app(SettingsService::class)->getInt('resource_multiplier');
 
         // BOOST
         $geologe_boost = 1 + (1 * (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_geologist']) ? GEOLOGUE : 0));

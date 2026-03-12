@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Libraries;
 
+use App\Services\SettingsService;
 use Xgp\App\Core\Model;
-use Xgp\App\Core\Options;
 
 /**
  * @deprecated v4.0.0 use laravel instead
@@ -212,7 +212,7 @@ class UsersLibrary extends Model
     {
         $this->db->query(
             'INSERT INTO `' . PREMIUM . "` (`premium_user_id`, `premium_dark_matter`)
-            VALUES('" . $userId . "', '" . Options::getInstance()->get('registration_dark_matter') . "');"
+            VALUES('" . $userId . "', '" . app(SettingsService::class)->getInt('registration_dark_matter') . "');"
         );
     }
 

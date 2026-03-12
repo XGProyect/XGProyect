@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
+use App\Services\SettingsService;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
-use Xgp\App\Core\Options;
 
 abstract class Formulas
 {
@@ -53,7 +53,7 @@ abstract class Formulas
 
         if ($main) {
             $diameter = '12800';
-            $fields = Options::getInstance()->get('initial_fields');
+            $fields = app(SettingsService::class)->getInt('initial_fields');
         }
 
         $return['planet_diameter'] = $diameter;
@@ -247,7 +247,7 @@ abstract class Formulas
 
     public static function getResearchTime(float $metal_cost, float $cystal_cost, int $total_lab_level, int $expedition_level): float
     {
-        $universe_speed = (int) Options::getInstance()->get('game_speed') / 2500;
+        $universe_speed = app(SettingsService::class)->getInt('game_speed') / 2500;
 
         return ($metal_cost + $cystal_cost) / ($universe_speed * 1000 * (1 + $total_lab_level) * (1 + $expedition_level)) * 3600;
     }
@@ -261,7 +261,7 @@ abstract class Formulas
         $reduction = max(4 - ($level + 1) / 2, 1);
         $robotics = 1 + $first_boost;
         $nanite = pow(2, $second_boost);
-        $universe_speed = (int) Options::getInstance()->get('game_speed') / 2500;
+        $universe_speed = app(SettingsService::class)->getInt('game_speed') / 2500;
         $without_reduction = [
             Buildings::BUILDING_NANO_FACTORY,
             Buildings::BUILDING_MONDBASIS,

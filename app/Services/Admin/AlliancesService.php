@@ -6,17 +6,17 @@ namespace App\Services\Admin;
 
 use App\Http\Requests\Admin\AllianceRankRequest;
 use App\Models\User;
+use App\Services\SettingsService;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
-use Xgp\App\Core\Options;
 use Xgp\App\Libraries\Alliance\Ranks;
 
-/**
- * @SuppressWarnings("PHPMD.StaticAccess")
- */
 class AlliancesService
 {
+    public function __construct(private readonly SettingsService $settings)
+    {
+    }
     public function createAlliance(string $allianceName, string $allianceTag, int $allianceFounder): void
     {
         try {
@@ -91,7 +91,7 @@ class AlliancesService
      */
     public function buildMembersViewData(int $allianceId, Ranks $ranks): array
     {
-        $dateFormat = (string) (Options::getInstance()->get('date_format_extended') ?? 'Y-m-d H:i:s');
+        $dateFormat = $this->settings->getString('date_format_extended') ?: 'Y-m-d H:i:s';
 
         return DB::table('users AS u')
             ->select('u.id', 'u.name', 'u.ally_request', 'u.ally_request_text', 'u.ally_register_time', 'u.ally_rank_id')

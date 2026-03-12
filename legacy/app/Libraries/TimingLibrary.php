@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
-use Xgp\App\Core\Options;
+use App\Services\SettingsService;
 
 abstract class TimingLibrary
 {
@@ -32,7 +32,7 @@ abstract class TimingLibrary
             $time = strtotime($time);
         }
 
-        return date(Options::getInstance()->get('date_format_extended'), (int) $time);
+        return date(app(SettingsService::class)->getString('date_format_extended'), (int) $time);
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class TimingLibrary
             $time = strtotime($time);
         }
 
-        return date(Options::getInstance()->get('date_format'), $time);
+        return date(app(SettingsService::class)->getString('date_format'), $time);
     }
 
     /**

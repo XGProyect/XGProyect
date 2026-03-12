@@ -8,8 +8,8 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
+use App\Services\SettingsService;
 use Xgp\App\Core\Objects;
-use Xgp\App\Core\Options;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
@@ -222,7 +222,7 @@ class Fleet4Controller extends BaseController
             return true;
         }
 
-        if (Options::getInstance()->get('adm_attack') != 0 &&
+        if (app(SettingsService::class)->getInt('adm_attack') != 0 &&
             $this->_target_data['authlevel'] >= 1 &&
             $this->user['authlevel'] == 0) {
             $this->showMessage(

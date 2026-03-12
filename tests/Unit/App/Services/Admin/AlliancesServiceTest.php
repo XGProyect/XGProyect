@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\App\Services\Admin;
 
 use App\Services\Admin\AlliancesService;
+use App\Services\SettingsService;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
@@ -12,11 +14,13 @@ use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 class AlliancesServiceTest extends TestCase
 {
     private AlliancesService $service;
+    private SettingsService & MockObject $settings;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new AlliancesService();
+        $this->settings = $this->createMock(SettingsService::class);
+        $this->service = new AlliancesService($this->settings);
     }
 
     public function testBuildRanksViewDataMapsIndexToI(): void

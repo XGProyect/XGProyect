@@ -8,7 +8,7 @@ use JsonException;
 use RuntimeException;
 use Xgp\App\Core\Enumerators\AdminPagesEnumerator as AdminPages;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use Xgp\App\Core\Options;
+use App\Services\SettingsService;
 
 class PermissionsService
 {
@@ -17,11 +17,11 @@ class PermissionsService
      */
     private array $permissions = [];
 
-    public function __construct(private readonly Options $options)
+    public function __construct(private readonly SettingsService $settings)
     {
         try {
             $this->permissions = json_decode(
-                $this->options->get('admin_permissions') ?? '{}',
+                $this->settings->getString('admin_permissions') ?: '{}',
                 true,
                 512,
                 JSON_THROW_ON_ERROR
@@ -102,7 +102,7 @@ class PermissionsService
     private function savePermissions(): void
     {
         try {
-            $this->options->write(
+            $this->settings->write(
                 'admin_permissions',
                 json_encode($this->permissions, JSON_THROW_ON_ERROR)
             );

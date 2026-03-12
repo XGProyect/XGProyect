@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xgp\App\Core;
 
 use App\Models\User;
+use App\Services\SettingsService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
@@ -67,7 +68,7 @@ class Common
 
     private function setSystemTimezone(): void
     {
-        date_default_timezone_set(Options::getInstance()->get('date_time_zone'));
+        date_default_timezone_set(app(SettingsService::class)->getString('date_time_zone'));
     }
 
     private function setSecure(): void
@@ -83,8 +84,9 @@ class Common
 
     private function setUpdates(): void
     {
-        define('SHIP_DEBRIS_FACTOR', Options::getInstance()->get('fleet_cdr') / 100);
-        define('DEFENSE_DEBRIS_FACTOR', Options::getInstance()->get('defs_cdr') / 100);
+        $settings = app(SettingsService::class);
+        define('SHIP_DEBRIS_FACTOR', $settings->getInt('fleet_cdr') / 100);
+        define('DEFENSE_DEBRIS_FACTOR', $settings->getInt('defs_cdr') / 100);
 
         // Several updates
         new UpdatesLibrary();
@@ -92,12 +94,13 @@ class Common
 
     private function isServerOpen(): void
     {
-        if (Options::getInstance()->get('game_enable') == SwitchInt::off) {
+        $settings = app(SettingsService::class);
+        if ($settings->getInt('game_enable') == SwitchInt::off) {
             /** @var User $user */
             $user = Auth::getUser();
 
             if ($user->authlevel < UserRanks::ADMIN) {
-                Functions::popupMessage(Options::getInstance()->get('close_reason'));
+                Functions::popupMessage($settings->getString('close_reason'));
             }
         }
     }
