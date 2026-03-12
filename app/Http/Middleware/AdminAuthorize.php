@@ -13,7 +13,7 @@ use Xgp\App\Libraries\Adm\Permissions;
 
 class AdminAuthorize
 {
-    private const ALWAYS_ALLOWED = ['home'];
+    private const ALWAYS_ALLOWED = ['home', 'search'];
 
     public function __construct(
         private readonly SettingsService $settingsService,
