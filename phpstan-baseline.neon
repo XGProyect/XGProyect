@@ -109,24 +109,6 @@ parameters:
 			path: app/Http/Controllers/Admin/BanController.php
 
 		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\ErrorsController\:\:getListOfLogFiles\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/ErrorsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\ErrorsController\:\:getListOfLogFiles\(\) should return array but returns list\<string\>\|false\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Http/Controllers/Admin/ErrorsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\ErrorsController\:\:processErrorsLogs\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/ErrorsController.php
-
-		-
 			message: '#^Binary operation "\." between ''admin/'' and mixed results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1

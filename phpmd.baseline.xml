@@ -6,9 +6,6 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/AnnouncementController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/BanController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ErrorsController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="app/Http/Controllers/Admin/ErrorsController.php"/>
-  <violation rule="PHPMD\Rule\Design\ExitExpression" file="app/Http/Controllers/Admin/ErrorsController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="app/Http/Controllers/Admin/ErrorsController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/FleetsController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/HomeController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/LoginController.php"/>
