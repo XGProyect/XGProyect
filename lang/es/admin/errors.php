@@ -9,4 +9,5 @@ return [
     'er_delete_all' => 'Eliminar todos',
     'er_error_list' => 'Lista de errores',
     'er_errors' => '{0} No hay problemas|{1} :count problema|[2,*] :count problemas',
+    'er_occurrences' => '{1} :count vez|[2,*] :count veces',
 ];

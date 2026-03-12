@@ -66,7 +66,9 @@ Route::prefix('admin')->group(function () {
             Route::get('/changelog/{changelog}/edit', [Admin\ChangelogController::class, 'edit'])->name('admin.changelog.edit');
             Route::put('/changelog/{changelog}', [Admin\ChangelogController::class, 'update'])->name('admin.changelog.update');
             Route::delete('/changelog/{changelog}', [Admin\ChangelogController::class, 'destroy'])->name('admin.changelog.destroy');
-            Route::any('/errors', Admin\ErrorsController::class)->name('admin.errors');
+            Route::get('/errors', [Admin\ErrorsController::class, 'index'])->name('admin.errors');
+            Route::get('/errors/export', [Admin\ErrorsController::class, 'export'])->name('admin.errors.export');
+            Route::post('/errors/delete', [Admin\ErrorsController::class, 'deleteAll'])->name('admin.errors.delete');
             Route::get('/fleets', [Admin\FleetsController::class, 'index'])->name('admin.fleets');
             Route::post('/fleets/{fleet}/restart', [Admin\FleetsController::class, 'restart'])->name('admin.fleets.restart');
             Route::post('/fleets/{fleet}/end', [Admin\FleetsController::class, 'end'])->name('admin.fleets.end');

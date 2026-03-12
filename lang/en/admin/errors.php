@@ -9,4 +9,5 @@ return [
     'er_delete_all' => 'Delete all',
     'er_error_list' => 'Errors list',
     'er_errors' => '{0} No errors|{1} :count error|[2,*] :count errors',
+    'er_occurrences' => '{1} :count occurrence|[2,*] :count occurrences',
 ];

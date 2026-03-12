@@ -4,87 +4,102 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Template;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ErrorsController extends BaseController
 {
-    public function __invoke(): void
+    public function index(): View
     {
-        $this->runAction();
-
-        Template::legacyView(
-            'admin.errors',
-            $this->processErrorsLogs()
-        );
+        return view('admin.errors', $this->parseErrorLog());
     }
 
-    private function runAction(): void
+    public function export(): BinaryFileResponse | RedirectResponse
     {
-        $delete_all = filter_input(INPUT_GET, 'deleteall', FILTER_DEFAULT);
-        $export_all = filter_input(INPUT_GET, 'exportall', FILTER_DEFAULT);
+        $path = $this->logFilePath();
 
-        if ($delete_all == 'yes') {
-            $files = $this->getListOfLogFiles();
-
-            if ($files != '') {
-                foreach ($files as $file_name) {
-                    unlink($file_name);
-                }
-            }
+        if ($path === null) {
+            return redirect()->route('admin.errors');
         }
 
-        if ($export_all == 'yes') {
-            $files = $this->getListOfLogFiles();
-
-            if (!empty($files)) {
-                header('Content-type: text/plain');
-                header('Content-disposition: attachment; filename=xgproyect.log');
-                readfile($files[0]);
-                exit();
-            }
-        }
+        return response()->download($path, 'xgproyect.log', ['Content-Type' => 'text/plain']);
     }
 
-    private function processErrorsLogs(): array
+    public function deleteAll(): RedirectResponse
     {
-        // list of log files
-        $files = $this->getListOfLogFiles();
-        $errorsList = [];
+        $path = $this->logFilePath();
+
+        if ($path !== null) {
+            unlink($path);
+        }
+
+        return redirect()->route('admin.errors');
+    }
+
+    /**
+     * @return array{errorsList: list<array{error_message: string, errors: list<string>, count: int}>, totalErrors: int}
+     */
+    private function parseErrorLog(): array
+    {
+        $path = $this->logFilePath();
+        $grouped = [];
         $totalErrors = 0;
 
-        if (!empty($files)) {
-            $contents = file_get_contents($files[0]);
+        if ($path !== null) {
+            $contents = file_get_contents($path);
 
-            if ($contents) {
-                foreach (explode('"} ', $contents) as $singleError) {
-                    $currentErrors = array_filter(explode(PHP_EOL, $singleError));
+            if ($contents !== false) {
+                // Split only on lines that start with a timestamp "[YYYY-MM-DD HH:MM:SS]"
+                // Using a specific pattern avoids splitting on "[stacktrace]" lines
+                $entries = preg_split('/\n(?=\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\])/', trim($contents));
 
-                    if (empty($currentErrors)) {
+                foreach ($entries ?: [] as $entry) {
+                    $lines = array_values(array_filter(explode(PHP_EOL, $entry)));
+
+                    if (empty($lines)) {
                         continue;
                     }
 
-                    $errors['error_message'] = reset($currentErrors);
+                    $header = array_shift($lines);
 
-                    unset($currentErrors[key($currentErrors)]);
+                    // Strip the timestamp prefix
+                    $message = (string) preg_replace('/^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] /', '', $header);
 
-                    $errors['errors'] = $currentErrors;
+                    // Drop the standalone "[stacktrace]" separator line Laravel adds
+                    $lines = array_values(array_filter($lines, fn (string $l) => trim($l) !== '[stacktrace]'));
+                    $key = md5($message);
 
-                    $errorsList[] = $errors;
+                    if (!isset($grouped[$key])) {
+                        $grouped[$key] = [
+                            'error_message' => $message,
+                            'errors' => $lines,
+                            'count' => 0,
+                        ];
+                    } else {
+                        // Keep the most recent stack trace
+                        $grouped[$key]['errors'] = $lines;
+                    }
 
+                    $grouped[$key]['count']++;
                     $totalErrors++;
                 }
             }
         }
 
+        usort($grouped, fn (array $a, array $b) => $b['count'] <=> $a['count']);
+
         return [
-            'errorsList' => $errorsList,
+            'errorsList' => $grouped,
             'totalErrors' => $totalErrors,
         ];
     }
 
-    private function getListOfLogFiles(): array
+    private function logFilePath(): ?string
     {
-        return glob(storage_path('logs') . '/xgproyect.log');
+        $path = storage_path('logs/xgproyect.log');
+
+        return file_exists($path) ? $path : null;
     }
 }
