@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Users\UserInfoRequest;
 use App\Http\Requests\Admin\Users\UserSettingsRequest;
 use App\Models\Alliance;
 use App\Models\User;
+use App\Services\Admin\UsersManagementService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -17,9 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\PlanetLib;
 use Xgp\App\Libraries\Users as UsersLibrary;
-use Xgp\App\Libraries\Users\Shortcuts;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -27,8 +26,10 @@ use Xgp\App\Libraries\Users\Shortcuts;
  */
 class UsersController extends BaseController
 {
-    public function __construct(private readonly SettingsService $settings)
-    {
+    public function __construct(
+        private readonly UsersManagementService $usersManagement,
+        private readonly SettingsService $settings,
+    ) {
     }
 
     public function index(Request $request): View
@@ -132,7 +133,7 @@ class UsersController extends BaseController
         }
 
         if ($errors === 0) {
-            $this->createNewUser($name, $email, $auth, $pass, $galaxy, $system, $planet);
+            $this->usersManagement->createUser($name, $email, $auth, $pass, $galaxy, $system, $planet);
             session()->flash('success', strtr((string) __('admin/users.us_create_added'), ['%s' => $pass]));
         } else {
             session()->flash('warning', '<br>' . $error);
@@ -143,7 +144,7 @@ class UsersController extends BaseController
 
     public function showInfo(User $user): View
     {
-        $data = $this->loadFullUserData($user->id);
+        $data = $this->usersManagement->loadFullUserData($user->id);
         $dateFormat = $this->dateFormatExtended();
 
         $registerTime = (int) ($data->register_time ?? 0);
@@ -152,14 +153,14 @@ class UsersController extends BaseController
         return view('admin.users_information', [
             'user' => $user,
             'data' => $data,
-            'planets' => $this->getUserPlanets($user->id),
+            'planets' => $this->usersManagement->getPlanets($user->id),
             'alliances' => Alliance::query()->select('alliance_id', 'alliance_name', 'alliance_tag')->orderBy('alliance_name')->get(),
             'all_users' => User::query()->select('id', 'name')->orderBy('name')->get(),
             'register_time' => ($registerTime === 0) ? '-' : date($dateFormat, $registerTime),
             'online_status' => $this->onlineStatus($onlineTime),
             'user_roles' => $this->buildUserRolesList($user),
-            'ban' => $this->loadBan($user->id),
-            'shortcuts' => $this->parseShortcuts((string) ($data->fleet_shortcuts ?? '')),
+            'ban' => $this->usersManagement->loadBan($user->id),
+            'shortcuts' => $this->usersManagement->parseShortcuts((string) ($data->fleet_shortcuts ?? '')),
         ]);
     }
 
@@ -295,41 +296,6 @@ class UsersController extends BaseController
 
     // ── Private helpers ───────────────────────────────────────────────────────
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
-    private function loadFullUserData(int $userId): object
-    {
-        $prefix = DB::getTablePrefix();
-
-        $result = DB::table('users AS u')
-            ->selectRaw("{$prefix}u.*, {$prefix}pr.*")
-            ->join('preferences AS pr', 'pr.preference_user_id', '=', 'u.id')
-            ->where('u.id', $userId)
-            ->first();
-
-        if ($result === null) {
-            abort(404);
-        }
-
-        return $result;
-    }
-
-    private function loadBan(int $userId): ?object
-    {
-        return DB::table('bans')->where('user_id', $userId)->first();
-    }
-
-    /**
-     * @return array<int, object>
-     */
-    private function getUserPlanets(int $userId): array
-    {
-        return DB::table('planets')
-            ->select('planet_id', 'planet_name', 'planet_galaxy', 'planet_system', 'planet_planet')
-            ->where('planet_user_id', $userId)
-            ->orderBy('planet_galaxy')->orderBy('planet_system')->orderBy('planet_planet')
-            ->get()->all();
-    }
-
     /**
      * @return array<int, array{role_id: int, selected: bool, role_name: string, disabled: bool}>
      *
@@ -355,37 +321,6 @@ class UsersController extends BaseController
             ],
             [UserRanks::PLAYER, UserRanks::GO, UserRanks::SGO, UserRanks::ADMIN]
         );
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    private function parseShortcuts(string $raw): array
-    {
-        if (empty($raw)) {
-            return [];
-        }
-
-        try {
-            $shortcuts = new Shortcuts($raw);
-            $result = [];
-
-            foreach ($shortcuts->getAllAsArray() as $value) {
-                $type = match ((int) ($value['pt'] ?? 0)) {
-                    1 => (string) __('admin/users.us_planet_shortcut'),
-                    2 => (string) __('admin/users.us_debris_shortcut'),
-                    3 => (string) __('admin/users.us_moon_shortcut'),
-                    default => '',
-                };
-
-                $key = $value['g'] . ';' . $value['s'] . ';' . $value['p'] . ';' . $value['pt'];
-                $result[$key] = $value['name'] . ' [' . $value['g'] . ':' . $value['s'] . ':' . $value['p'] . '] ' . $type;
-            }
-
-            return $result;
-        } catch (\Throwable) {
-            return [];
-        }
     }
 
     /**
@@ -425,51 +360,5 @@ class UsersController extends BaseController
     private function dateFormatExtended(): string
     {
         return $this->settings->getString('date_format_extended') ?: 'Y-m-d H:i:s';
-    }
-
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
-    private function createNewUser(string $name, string $email, int $auth, string $pass, int $galaxy, int $system, int $planet): void
-    {
-        try {
-            DB::transaction(function () use ($name, $email, $auth, $pass, $galaxy, $system, $planet) {
-                $time = time();
-
-                $user = User::create([
-                    'name' => $name,
-                    'email' => $email,
-                    'ip_at_reg' => request()->ip() ?? '',
-                    'home_planet_id' => 0,
-                    'current_planet' => 0,
-                    'register_time' => $time,
-                    'onlinetime' => $time,
-                    'authlevel' => $auth,
-                    'password' => $pass,
-                ]);
-
-                $lastUserId = $user->id;
-
-                DB::table('research')->insert(['research_user_id' => $lastUserId]);
-                DB::table('users_statistics')->insert(['user_statistic_user_id' => $lastUserId]);
-                DB::table('premium')->insert([
-                    'premium_user_id' => $lastUserId,
-                    'premium_dark_matter' => $this->settings->getInt('registration_dark_matter'),
-                ]);
-                DB::table('preferences')->insert(['preference_user_id' => $lastUserId]);
-
-                (new PlanetLib())->setNewPlanet($galaxy, $system, $planet, $lastUserId, '', true);
-
-                $lastPlanetId = (int) DB::getPdo()->lastInsertId();
-
-                User::where('id', $lastUserId)->update([
-                    'home_planet_id' => $lastPlanetId,
-                    'current_planet' => $lastPlanetId,
-                    'galaxy' => $galaxy,
-                    'system' => $system,
-                    'planet' => $planet,
-                ]);
-            });
-        } catch (\Exception $e) {
-            // transaction rolled back automatically
-        }
     }
 }
