@@ -11,22 +11,19 @@ use App\Models\Planets;
 use App\Models\Reports;
 use App\Models\User;
 use App\Models\UsersStatistics;
+use App\Services\Admin\HomeService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
-use Throwable;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Libraries\FormatLib as Format;
 
-/**
- * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
- */
 class HomeController extends AdminSettingsController
 {
-    public function __construct(SettingsService $settings)
-    {
+    public function __construct(
+        SettingsService $settings,
+        private readonly HomeService $homeService,
+    ) {
         parent::__construct($settings);
     }
 
@@ -45,8 +42,8 @@ class HomeController extends AdminSettingsController
             'numberReports' => Format::prettyNumber(Reports::count()),
             'averageUserPoints' => Format::shortlyNumber((int) UsersStatistics::avg('user_statistic_total_points')),
             'averageAlliancePoints' => Format::shortlyNumber((int) AllianceStatistics::avg('alliance_statistic_total_points')),
-            'databaseSize' => $this->getDbSize(),
-            'databaseServer' => $this->getDbVersion(),
+            'databaseSize' => $this->homeService->getDbSize(),
+            'databaseServer' => $this->homeService->getDbVersion(),
             'phpVersion' => PHP_VERSION,
             'serverVersion' => config('version.files'),
         ]);
@@ -59,11 +56,11 @@ class HomeController extends AdminSettingsController
     {
         $alerts = $authUser->authlevel >= UserRanks::ADMIN
             ? array_filter([
-                $this->configFileWritableAlert(),
-                $this->serverErrorsAlert(),
-                $this->outdatedVersionAlert(),
-                $this->installFileAlert(),
-                $this->pendingUpdateAlert(),
+                $this->homeService->isConfigFileWorldWritable() ? (string) __('admin/home.hm_config_file_writable') : null,
+                $this->homeService->hasServerErrors() ? (string) __('admin/home.hm_errors') : null,
+                $this->homeService->isVersionOutdated() ? (string) __('admin/home.hm_old_version') : null,
+                $this->homeService->isInstallFilePresent() ? (string) __('admin/home.hm_install_file_detected') : null,
+                $this->homeService->hasPendingUpdate() ? (string) __('admin/home.hm_update_required') : null,
             ])
             : [];
 
@@ -86,79 +83,5 @@ class HomeController extends AdminSettingsController
                 'errorType' => __('admin/home.hm_ok'),
             ],
         };
-    }
-
-    private function configFileWritableAlert(): ?string
-    {
-        $file = config_path('xgp-db-config.php');
-
-        return file_exists($file) && (fileperms($file) & 0x0002) !== 0
-            ? (string) __('admin/home.hm_config_file_writable')
-            : null;
-    }
-
-    private function serverErrorsAlert(): ?string
-    {
-        return $this->getServerErrors() ? (string) __('admin/home.hm_errors') : null;
-    }
-
-    private function outdatedVersionAlert(): ?string
-    {
-        return $this->checkUpdates() ? (string) __('admin/home.hm_old_version') : null;
-    }
-
-    private function installFileAlert(): ?string
-    {
-        return $this->installDirExists() ? (string) __('admin/home.hm_install_file_detected') : null;
-    }
-
-    private function pendingUpdateAlert(): ?string
-    {
-        return $this->settings->getString('version') !== config('version.files')
-            ? (string) __('admin/home.hm_update_required')
-            : null;
-    }
-
-    private function checkUpdates(): bool
-    {
-        try {
-            $response = Http::timeout(1)->get('https://updates.xgproyect.org/latest.json');
-
-            if ($response->successful()) {
-                $latestVersion = $response->json('version');
-
-                return is_string($latestVersion) &&
-                    version_compare($this->settings->getString('version'), $latestVersion, '<');
-            }
-
-            return false;
-        } catch (Throwable) {
-            return false;
-        }
-    }
-
-    private function getServerErrors(): bool
-    {
-        return file_exists(storage_path('logs/xgproyect.log'));
-    }
-
-    private function installDirExists(): bool
-    {
-        return file_exists(public_path('install.php'));
-    }
-
-    private function getDbVersion(): string
-    {
-        return (string) DB::scalar('SELECT @@version'); // @phpstan-ignore cast.string
-    }
-
-    private function getDbSize(): string
-    {
-        return Format::prettyBytes(
-            (int) DB::scalar( // @phpstan-ignore cast.int
-                'SELECT SUM(data_length + index_length) FROM information_schema.TABLES WHERE table_schema = ?',
-                [DB::getDatabaseName()]
-            )
-        );
     }
 }
