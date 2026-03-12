@@ -415,15 +415,11 @@ class UsersController extends BaseController
 
     private function onlineStatus(int $time): string
     {
-        if ($time + 600 >= time()) {
-            return 'online';
-        }
-
-        if ($time + 900 >= time()) {
-            return 'away';
-        }
-
-        return 'offline';
+        return match (true) {
+            $time + 600 >= time() => 'online',
+            $time + 900 >= time() => 'away',
+            default => 'offline',
+        };
     }
 
     private function dateFormatExtended(): string
