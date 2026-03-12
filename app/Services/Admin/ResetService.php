@@ -9,6 +9,10 @@ use App\Services\SettingsService;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Libraries\PlanetLib;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
+ */
 class ResetService
 {
     public function __construct(private readonly SettingsService $settings)
@@ -226,7 +230,6 @@ class ResetService
         DB::table('planets')->where('planet_type', 3)->delete();
     }
 
-    /** @SuppressWarnings("PHPMD.StaticAccess") */
     public function resetAll(): void
     {
         // FK checks must live outside the transaction — SET is a session variable,
@@ -323,11 +326,11 @@ class ResetService
         }
     }
 
-    private function resetBuildingsByType(int $planet_type): void
+    private function resetBuildingsByType(int $planetType): void
     {
         DB::table('buildings')
             ->join('planets', 'buildings.building_planet_id', '=', 'planets.planet_id')
-            ->where('planets.planet_type', $planet_type)
+            ->where('planets.planet_type', $planetType)
             ->update([
                 'buildings.building_metal_mine' => 0,
                 'buildings.building_crystal_mine' => 0,

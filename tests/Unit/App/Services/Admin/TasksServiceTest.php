@@ -13,6 +13,9 @@ use ReflectionClass;
 use Tests\TestCase;
 use Xgp\App\Core\Options;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class TasksServiceTest extends TestCase
 {
     private TasksService $service;
@@ -65,12 +68,11 @@ class TasksServiceTest extends TestCase
 
         $this->settings->method('getString')->willReturn('0');
 
-        /** @var TaskData $lastBackup */
         $lastBackup = $this->service->getTasks()->first(
             fn (TaskData $t) => $t->name === AdminTask::LastBackup->label()
         );
 
-        $this->assertNotNull($lastBackup);
+        $this->assertInstanceOf(TaskData::class, $lastBackup);
         $this->assertSame('-', $lastBackup->nextRun);
         $this->assertSame('-', $lastBackup->lastRun);
     }
@@ -83,12 +85,11 @@ class TasksServiceTest extends TestCase
 
         $this->settings->method('getString')->willReturn((string) time());
 
-        /** @var TaskData $lastBackup */
         $lastBackup = $this->service->getTasks()->first(
             fn (TaskData $t) => $t->name === AdminTask::LastBackup->label()
         );
 
-        $this->assertNotNull($lastBackup);
+        $this->assertInstanceOf(TaskData::class, $lastBackup);
         $this->assertNotSame('-', $lastBackup->nextRun);
         $this->assertNotSame('-', $lastBackup->lastRun);
     }
@@ -98,12 +99,11 @@ class TasksServiceTest extends TestCase
         $this->settings->method('getBool')->willReturn(false);
         $this->settings->method('getString')->willReturn((string) time());
 
-        /** @var TaskData $task */
         $task = $this->service->getTasks()->first(
             fn (TaskData $t) => $t->name === AdminTask::StatLastUpdate->label()
         );
 
-        $this->assertNotNull($task);
+        $this->assertInstanceOf(TaskData::class, $task);
         $this->assertNotSame('-', $task->nextRun);
     }
 

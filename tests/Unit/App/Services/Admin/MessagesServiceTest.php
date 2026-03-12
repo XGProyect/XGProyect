@@ -31,8 +31,8 @@ class MessagesServiceTest extends TestCase
         foreach ($this->service->buildTypeOptions() as $option) {
             $this->assertArrayHasKey('value', $option);
             $this->assertArrayHasKey('name', $option);
-            $this->assertIsInt($option['value']);
-            $this->assertIsString($option['name']);
+            $this->assertGreaterThanOrEqual(0, $option['value']);
+            $this->assertNotEmpty($option['name']);
         }
     }
 
@@ -61,8 +61,8 @@ class MessagesServiceTest extends TestCase
 
         foreach ($knownTypes as $type) {
             $name = $this->service->typeName($type);
-            $this->assertIsString($name);
             $this->assertNotEmpty($name);
+            $this->assertNotSame('-', $name);
         }
     }
 

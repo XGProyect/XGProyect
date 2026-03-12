@@ -7,8 +7,12 @@ namespace Tests\Unit\App\Http\Middleware;
 use App\Http\Middleware\AdminAuthenticate;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use ReflectionMethod;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class AdminAuthenticateTest extends TestCase
 {
     public function testRedirectToReturnsNullForJsonRequests(): void
@@ -24,7 +28,7 @@ class AdminAuthenticateTest extends TestCase
         // AdminAuthenticate extends Laravel's Authenticate which needs the auth
         // factory.  We bypass the constructor with reflection to focus on the
         // single method we care about.
-        return (new \ReflectionClass(AdminAuthenticate::class))
+        return (new ReflectionClass(AdminAuthenticate::class))
             ->newInstanceWithoutConstructor();
     }
 
@@ -32,6 +36,8 @@ class AdminAuthenticateTest extends TestCase
     {
         $method = new ReflectionMethod(AdminAuthenticate::class, 'redirectTo');
 
-        return $method->invoke($middleware, $request);
+        $result = $method->invoke($middleware, $request);
+
+        return is_string($result) ? $result : null;
     }
 }

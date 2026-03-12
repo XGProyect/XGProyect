@@ -10,6 +10,9 @@ use Tests\TestCase;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Core\Options;
 
+/**
+ * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+ */
 class PermissionsServiceTest extends TestCase
 {
     public function testConstructorSucceedsWithEmptyPermissionsJson(): void
@@ -35,7 +38,7 @@ class PermissionsServiceTest extends TestCase
 
         // Capture what gets written back
         $written = null;
-        $options->method('write')->willReturnCallback(function (string $key, mixed $value) use (&$written) {
+        $options->method('write')->willReturnCallback(function (string $_key, mixed $value) use (&$written) {
             $written = $value;
             return true;
         });
@@ -47,8 +50,9 @@ class PermissionsServiceTest extends TestCase
 
         $this->assertNotNull($written);
         $this->assertIsString($written);
+
+        /** @var array<string, array<int, int>> $decoded */
         $decoded = json_decode($written, true);
-        $this->assertIsArray($decoded);
         $this->assertSame(1, $decoded['backup'][UserRanks::GO]);
     }
 
@@ -60,7 +64,7 @@ class PermissionsServiceTest extends TestCase
         $options->method('get')->willReturn($initialPermissions);
 
         $written = null;
-        $options->method('write')->willReturnCallback(function (string $key, mixed $value) use (&$written) {
+        $options->method('write')->willReturnCallback(function (string $_key, mixed $value) use (&$written) {
             $written = $value;
             return true;
         });
@@ -72,8 +76,9 @@ class PermissionsServiceTest extends TestCase
 
         $this->assertNotNull($written);
         $this->assertIsString($written);
+
+        /** @var array<string, array<int, int>> $decoded */
         $decoded = json_decode($written, true);
-        $this->assertIsArray($decoded);
         $this->assertSame(0, $decoded['backup'][UserRanks::GO]);
     }
 
@@ -83,7 +88,7 @@ class PermissionsServiceTest extends TestCase
         $options->method('get')->willReturn('{}');
 
         $written = null;
-        $options->method('write')->willReturnCallback(function (string $key, mixed $value) use (&$written) {
+        $options->method('write')->willReturnCallback(function (string $_key, mixed $value) use (&$written) {
             $written = $value;
             return true;
         });
@@ -95,8 +100,9 @@ class PermissionsServiceTest extends TestCase
 
         $this->assertNotNull($written);
         $this->assertIsString($written);
+
+        /** @var array<string, array<int, int>> $decoded */
         $decoded = json_decode($written, true);
-        $this->assertIsArray($decoded);
 
         // ADMIN key should not be set — the role is not editable
         $this->assertArrayNotHasKey(UserRanks::ADMIN, $decoded['backup'] ?? []);

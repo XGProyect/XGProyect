@@ -10,6 +10,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
+ */
 class ServerSettingsServiceTest extends TestCase
 {
     private ServerSettingsService $service;
@@ -49,7 +52,7 @@ class ServerSettingsServiceTest extends TestCase
     {
         $options = $this->service->percentageOptions(50);
 
-        $selected = array_values(array_filter($options, fn ($o) => $o['selected']));
+        $selected = array_values(array_filter($options, fn ($opt) => $opt['selected']));
 
         $this->assertCount(1, $selected);
         $this->assertSame(50, $selected[0]['value']);
@@ -70,7 +73,7 @@ class ServerSettingsServiceTest extends TestCase
     #[DataProvider('nonOptionValueProvider')]
     public function testPercentageOptionsNoEntrySelectedForNonOptionValue(int $current): void
     {
-        $selected = array_filter($this->service->percentageOptions($current), fn ($o) => $o['selected']);
+        $selected = array_filter($this->service->percentageOptions($current), fn ($opt) => $opt['selected']);
 
         $this->assertEmpty($selected);
     }
@@ -119,10 +122,10 @@ class ServerSettingsServiceTest extends TestCase
         $this->settings->method('getString')->willReturn('Europe/London');
 
         $allZones = array_merge(
-            ...array_map(fn ($g) => $g['zones'], $this->service->timezoneOptions())
+            ...array_map(fn ($group) => $group['zones'], $this->service->timezoneOptions())
         );
 
-        $selected = array_values(array_filter($allZones, fn ($z) => $z['selected']));
+        $selected = array_values(array_filter($allZones, fn ($zone) => $zone['selected']));
 
         $this->assertNotEmpty($selected);
         $this->assertSame('Europe/London', $selected[0]['value']);

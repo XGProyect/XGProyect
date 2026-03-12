@@ -23,8 +23,6 @@ class LanguagesServiceTest extends TestCase
         foreach ($result as $pair) {
             $this->assertArrayHasKey('key', $pair);
             $this->assertArrayHasKey('value', $pair);
-            $this->assertIsString($pair['key']);
-            $this->assertIsString($pair['value']);
         }
     }
 
@@ -37,7 +35,7 @@ class LanguagesServiceTest extends TestCase
         $this->assertIsArray($result);
 
         $keys = array_column($result, 'key');
-        $nestedKeys = array_filter($keys, fn (string $k) => str_contains($k, '.'));
+        $nestedKeys = array_filter($keys, fn (string $key) => str_contains($key, '.'));
 
         $this->assertNotEmpty($nestedKeys, 'Expected at least one dot-notation key from a nested array');
     }
@@ -75,17 +73,10 @@ class LanguagesServiceTest extends TestCase
 
     public function testGetGroupedFilesHasExpectedNestedStructure(): void
     {
-        foreach ((new LanguagesService(new Filesystem()))->getGroupedFiles() as $group => $files) {
-            $this->assertIsString($group);
-
+        foreach ((new LanguagesService(new Filesystem()))->getGroupedFiles() as $files) {
             foreach ($files as $filename => $locales) {
                 $this->assertStringEndsWith('.php', $filename);
                 $this->assertNotEmpty($locales);
-
-                foreach ($locales as $locale => $relativePath) {
-                    $this->assertIsString($locale);
-                    $this->assertIsString($relativePath);
-                }
             }
         }
     }
@@ -110,14 +101,12 @@ class LanguagesServiceTest extends TestCase
 
         $original = $service->loadTranslations($source);
         $this->assertNotNull($original);
-        $this->assertIsArray($original);
         $this->assertNotEmpty($original);
 
         // Save and re-load — keys must be preserved in order
         $service->saveTranslations($source, $original);
         $reloaded = $service->loadTranslations($source);
         $this->assertNotNull($reloaded);
-        $this->assertIsArray($reloaded);
 
         $this->assertSame(
             array_column($original, 'key'),

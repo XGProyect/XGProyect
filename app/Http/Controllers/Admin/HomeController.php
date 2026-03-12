@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Auth;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Libraries\FormatLib as Format;
 
+/**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ */
 class HomeController extends AdminSettingsController
 {
     public function __construct(

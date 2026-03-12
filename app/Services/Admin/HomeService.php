@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Http;
 use Throwable;
 use Xgp\App\Libraries\FormatLib as Format;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class HomeService
 {
     public function __construct(private readonly SettingsService $settings)

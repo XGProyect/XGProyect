@@ -12061,12 +12061,6 @@ parameters:
 			path: tests/Unit/App/Services/Admin/BackupServiceTest.php
 
 		-
-			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
-			identifier: method.alreadyNarrowedType
-			count: 1
-			path: tests/Unit/ExampleTest.php
-
-		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
 			count: 2

@@ -8,6 +8,9 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class RepairRequest extends FormRequest
 {
     public function authorize(): bool

@@ -10,6 +10,7 @@ use Xgp\App\Libraries\Buildings\QueueElements;
 
 /**
  * @covers Queue
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
 class QueueTest extends TestCase
 {

@@ -7,6 +7,9 @@ namespace Tests\Unit\App\Services\Formulas;
 use App\Services\Formulas\Expedition;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
+ */
 class ExpeditionTest extends TestCase
 {
     public function testGetMaxExpeditionPoints(): void
