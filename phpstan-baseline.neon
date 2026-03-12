@@ -127,162 +127,6 @@ parameters:
 			path: app/Http/Controllers/Admin/ErrorsController.php
 
 		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildActionsBlock\(\) has parameter \$fleet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildActionsBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildAmountBlock\(\) has parameter \$fleet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildAmountBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildArrivalBlock\(\) has parameter \$fleet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildArrivalBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildBeginningBlock\(\) has parameter \$fleet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildBeginningBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildDepartureBlock\(\) has parameter \$fleet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildDepartureBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildFleetMovementsBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildMissionBlock\(\) has parameter \$fleet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildMissionBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildObjectiveBlock\(\) has parameter \$fleet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildObjectiveBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildReturnBlock\(\) has parameter \$fleet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildReturnBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Parameter \#1 \$fleet of method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildActionsBlock\(\) expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Parameter \#1 \$fleet of method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildAmountBlock\(\) expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Parameter \#1 \$fleet of method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildArrivalBlock\(\) expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Parameter \#1 \$fleet of method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildBeginningBlock\(\) expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Parameter \#1 \$fleet of method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildDepartureBlock\(\) expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Parameter \#1 \$fleet of method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildMissionBlock\(\) expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Parameter \#1 \$fleet of method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildObjectiveBlock\(\) expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Parameter \#1 \$fleet of method App\\Http\\Controllers\\Admin\\FleetsController\:\:buildReturnBlock\(\) expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
-			message: '#^Parameter \#1 \$string of function ucfirst expects string, string\|false\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/Admin/FleetsController.php
-
-		-
 			message: '#^Binary operation "\." between ''admin/'' and mixed results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1
@@ -2219,6 +2063,12 @@ parameters:
 			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: legacy/app/Core/Common.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#4 \$pass \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: legacy/app/Core/Database.php
 
 		-
 			message: '#^Left side of or is always false\.$#'
@@ -5014,12 +4864,6 @@ parameters:
 			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\MovementController\:\:buildMovements\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: legacy/app/Http/Controllers/Game/MovementController.php
-
-		-
-			message: '#^Parameter \#1 \$fleet_mess of static method Xgp\\App\\Libraries\\FleetsLib\:\:isFleetReturning\(\) expects array, int given\.$#'
-			identifier: argument.type
-			count: 2
 			path: legacy/app/Http/Controllers/Game/MovementController.php
 
 		-
@@ -9115,18 +8959,6 @@ parameters:
 			path: legacy/app/Libraries/DevelopmentsLib.php
 
 		-
-			message: '#^Comparison operation "\=\=" between array and 1 results in an error\.$#'
-			identifier: equal.invalid
-			count: 1
-			path: legacy/app/Libraries/FleetsLib.php
-
-		-
-			message: '#^Loose comparison using \=\= between array and 1 will always evaluate to false\.$#'
-			identifier: equal.alwaysFalse
-			count: 1
-			path: legacy/app/Libraries/FleetsLib.php
-
-		-
 			message: '#^Method Xgp\\App\\Libraries\\FleetsLib\:\:enemyLink\(\) has parameter \$fleetRow with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -9218,12 +9050,6 @@ parameters:
 
 		-
 			message: '#^Method Xgp\\App\\Libraries\\FleetsLib\:\:hasResources\(\) has parameter \$fleet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Libraries/FleetsLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Libraries\\FleetsLib\:\:isFleetReturning\(\) has parameter \$fleet_mess with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Libraries/FleetsLib.php
