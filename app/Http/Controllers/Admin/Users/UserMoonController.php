@@ -17,7 +17,7 @@ use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Libraries\PlanetLib;
 
 /**
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
 class UserMoonController extends BaseController
 {
@@ -52,10 +52,10 @@ class UserMoonController extends BaseController
     }
 
     /**
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.ElseExpression)
+     * @SuppressWarnings("PHPMD.StaticAccess")
+     * @SuppressWarnings("PHPMD.NPathComplexity")
+     * @SuppressWarnings("PHPMD.CyclomaticComplexity")
+     * @SuppressWarnings("PHPMD.ElseExpression")
      */
     public function storeMoon(Request $request, User $user): RedirectResponse
     {
@@ -215,7 +215,7 @@ class UserMoonController extends BaseController
         return redirect()->route('admin.users.moon.defenses', [$user->id, $moon]);
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     public function softDeleteMoon(User $user, int $moon): RedirectResponse
     {
         $destroyTime = time() + (PLANETS_LIFE_TIME * 3600);
@@ -236,7 +236,7 @@ class UserMoonController extends BaseController
         return redirect()->route('admin.users.moons', $user->id);
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     public function hardDeleteMoon(User $user, int $moon): RedirectResponse
     {
         $this->hardDeletePlanetRow($moon, PlanetTypesEnumerator::MOON);

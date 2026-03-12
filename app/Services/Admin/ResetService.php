@@ -226,7 +226,7 @@ class ResetService
         DB::table('planets')->where('planet_type', 3)->delete();
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     public function resetAll(): void
     {
         // FK checks must live outside the transaction — SET is a session variable,

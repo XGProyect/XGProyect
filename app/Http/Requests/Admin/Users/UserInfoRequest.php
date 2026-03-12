@@ -20,7 +20,7 @@ class UserInfoRequest extends FormRequest
     /**
      * @return array<string, mixed>
      *
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function rules(): array
     {

@@ -17,7 +17,7 @@ use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Libraries\PlanetLib;
 
 /**
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
 class UserPlanetController extends BaseController
 {
@@ -43,8 +43,8 @@ class UserPlanetController extends BaseController
     }
 
     /**
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     * @SuppressWarnings(PHPMD.ElseExpression)
+     * @SuppressWarnings("PHPMD.StaticAccess")
+     * @SuppressWarnings("PHPMD.ElseExpression")
      */
     public function storePlanet(Request $request, User $user): RedirectResponse
     {
@@ -180,7 +180,7 @@ class UserPlanetController extends BaseController
         return redirect()->route('admin.users.planet.defenses', [$user->id, $planet]);
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     public function softDeletePlanet(User $user, int $planet): RedirectResponse
     {
         // Rule: cannot schedule the only remaining planet for destruction
@@ -221,7 +221,7 @@ class UserPlanetController extends BaseController
         return redirect()->route('admin.users.planets', $user->id);
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     public function hardDeletePlanet(User $user, int $planet): RedirectResponse
     {
         // Rule: cannot delete the only remaining planet
@@ -276,7 +276,7 @@ class UserPlanetController extends BaseController
         return $this->settings->getString('date_format_extended') ?: 'Y-m-d H:i:s';
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function createNewPlanet(int $galaxy, int $system, int $planet, int $userId, int $fieldMax, string $name): void
     {
         try {

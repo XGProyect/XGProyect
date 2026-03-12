@@ -18,8 +18,8 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Libraries\Alliance\Ranks;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
 class AlliancesController extends BaseController
 {
@@ -69,7 +69,7 @@ class AlliancesController extends BaseController
         ]);
     }
 
-    /** @SuppressWarnings(PHPMD.ElseExpression) */
+    /** @SuppressWarnings("PHPMD.ElseExpression") */
     public function store(Request $request): RedirectResponse
     {
         $allianceName = trim($request->string('name')->toString());
@@ -141,8 +141,8 @@ class AlliancesController extends BaseController
     }
 
     /**
-     * @SuppressWarnings(PHPMD.NPathComplexity)
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings("PHPMD.NPathComplexity")
+     * @SuppressWarnings("PHPMD.CyclomaticComplexity")
      */
     public function updateRanks(AllianceRankRequest $request, Alliance $alliance): RedirectResponse
     {

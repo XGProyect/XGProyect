@@ -73,7 +73,7 @@ class ServerRequest extends FormRequest
     /**
      * @return array<string, mixed>
      *
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings("PHPMD.StaticAccess")
      */
     private function identitySettings(): array
     {

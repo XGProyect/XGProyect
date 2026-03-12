@@ -21,8 +21,8 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users as UsersLibrary;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  */
 class UsersController extends BaseController
 {
@@ -67,10 +67,10 @@ class UsersController extends BaseController
     }
 
     /**
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.ElseExpression)
+     * @SuppressWarnings("PHPMD.StaticAccess")
+     * @SuppressWarnings("PHPMD.NPathComplexity")
+     * @SuppressWarnings("PHPMD.CyclomaticComplexity")
+     * @SuppressWarnings("PHPMD.ElseExpression")
      */
     public function store(Request $request): RedirectResponse
     {
@@ -164,7 +164,7 @@ class UsersController extends BaseController
         ]);
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     public function updateInfo(UserInfoRequest $request, User $user): RedirectResponse
     {
         /** @var array{username: string, email: string, authlevel: int, home_planet_id: int, current_planet: int, ally_id: int, password?: string} $validated */
@@ -206,7 +206,7 @@ class UsersController extends BaseController
         }
 
         if (!empty($validated['password'])) {
-            /** @SuppressWarnings(PHPMD.StaticAccess) */
+            /** @SuppressWarnings("PHPMD.StaticAccess") */
             $updateData['password'] = Functions::hash($validated['password']);
         }
 
@@ -237,12 +237,11 @@ class UsersController extends BaseController
         ]);
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     public function updateSettings(UserSettingsRequest $request, User $user): RedirectResponse
     {
         $vacationOn = $request->input('preference_vacations_status') === 'on';
         $deleteOn = $request->input('preference_delete_mode') === 'on';
-        /** @SuppressWarnings(PHPMD.StaticAccess) */
         $vacationTime = Functions::getDefaultVacationTime();
         $currentPrefs = DB::table('preferences')->where('preference_user_id', $user->id)->first();
         $wasOnVacation = $currentPrefs && $currentPrefs->preference_vacation_mode > 0;
@@ -299,7 +298,7 @@ class UsersController extends BaseController
     /**
      * @return array<int, array{role_id: int, selected: bool, role_name: string, disabled: bool}>
      *
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings("PHPMD.StaticAccess")
      */
     private function buildUserRolesList(User $user): array
     {

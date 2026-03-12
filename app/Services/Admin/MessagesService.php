@@ -11,7 +11,7 @@ use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Libraries\TimingLibrary as Timing;
 
 /**
- * @SuppressWarnings(PHPMD.StaticAccess)
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class MessagesService
 {

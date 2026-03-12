@@ -24,7 +24,7 @@ trait UserPlanetTrait
     /**
      * @return array<int, object>
      *
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings("PHPMD.StaticAccess")
      */
     private function getPlanetsWithMoons(int $userId): array
     {
@@ -62,7 +62,7 @@ trait UserPlanetTrait
             ->get()->all();
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function getPlanetData(int $planetId, int $type): ?object
     {
         $prefix = DB::getTablePrefix();
@@ -97,7 +97,7 @@ trait UserPlanetTrait
 
     // ── Persistence ───────────────────────────────────────────────────────────
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function savePlanetData(Request $request, int $planetId): void
     {
         $stringFields = ['planet_name', 'planet_image'];
@@ -130,15 +130,15 @@ trait UserPlanetTrait
         }
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function saveBuildingsData(Request $request, int $planetId, int $type): void
     {
         $updates = [];
         $totalFields = 0;
 
         foreach ($request->all() as $field => $value) {
-            if (is_string($field) && str_starts_with($field, 'building_')
-                && $field !== 'building_id' && $field !== 'building_planet_id') {
+            if (is_string($field) && str_starts_with($field, 'building_') &&
+                $field !== 'building_id' && $field !== 'building_planet_id') {
                 $level = (int) $value; // @phpstan-ignore cast.int
                 $updates[$field] = $level;
                 $totalFields += $level;
@@ -162,14 +162,14 @@ trait UserPlanetTrait
         (new StatisticsLibrary())->rebuildPoints($userId, $planetId, 'buildings');
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function saveShipsData(Request $request, int $planetId): void
     {
         $updates = [];
 
         foreach ($request->all() as $field => $value) {
-            if (is_string($field) && str_starts_with($field, 'ship_')
-                && $field !== 'ship_id' && $field !== 'ship_planet_id') {
+            if (is_string($field) && str_starts_with($field, 'ship_') &&
+                $field !== 'ship_id' && $field !== 'ship_planet_id') {
                 $updates[$field] = (int) $value; // @phpstan-ignore cast.int
             }
         }
@@ -182,14 +182,14 @@ trait UserPlanetTrait
         (new StatisticsLibrary())->rebuildPoints($userId, $planetId, 'ships');
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function saveDefensesData(Request $request, int $planetId): void
     {
         $updates = [];
 
         foreach ($request->all() as $field => $value) {
-            if (is_string($field) && str_starts_with($field, 'defense_')
-                && $field !== 'defense_id' && $field !== 'defense_planet_id') {
+            if (is_string($field) && str_starts_with($field, 'defense_') &&
+                $field !== 'defense_id' && $field !== 'defense_planet_id') {
                 $updates[$field] = (int) $value; // @phpstan-ignore cast.int
             }
         }
@@ -202,7 +202,7 @@ trait UserPlanetTrait
         (new StatisticsLibrary())->rebuildPoints($userId, $planetId, 'defenses');
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function hardDeletePlanetRow(int $planetId, int $type): void
     {
         $prefix = DB::getTablePrefix();

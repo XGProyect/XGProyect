@@ -17,7 +17,7 @@ class ServerSettingsService
     /**
      * @return array<int, array{group: string, zones: array<int, array{value: string, label: string, selected: bool}>}>
      *
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function timezoneOptions(): array
     {

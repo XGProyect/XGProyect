@@ -13,7 +13,7 @@ use Xgp\App\Core\Options;
 use Xgp\App\Libraries\Alliance\Ranks;
 
 /**
- * @SuppressWarnings(PHPMD.StaticAccess)
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class AlliancesService
 {

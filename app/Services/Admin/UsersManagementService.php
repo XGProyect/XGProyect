@@ -22,7 +22,7 @@ class UsersManagementService
      * Create a new game user together with all required companion rows
      * (research, statistics, premium, preferences) and an initial planet.
      *
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function createUser(
         string $name,
@@ -80,7 +80,7 @@ class UsersManagementService
      * Load the merged users+preferences row for a given user id.
      * Aborts with 404 if the user does not exist.
      *
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function loadFullUserData(int $userId): object
     {
