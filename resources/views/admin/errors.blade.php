@@ -34,22 +34,24 @@
             <x-admin.card-collapsible id="collapseErrors" :title="__('admin/errors.er_error_list')" :badge="$totalErrors">
                 @forelse ($errorsList as $index => $item)
                     <div class="px-3 py-3 border-bottom {{ $loop->last ? 'border-bottom-0' : '' }}">
-                        <div class="d-flex align-items-baseline">
-                            <i class="fas fa-exclamation-circle text-danger mr-3 flex-shrink-0"></i>
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-exclamation-circle text-danger mr-3 mt-1 flex-shrink-0"></i>
                             <div class="flex-grow-1">
-                                <code class="text-danger text-break" style="font-size: .85rem;">{{ $item['error_message'] }}</code>
                                 @if ($item['count'] > 1)
-                                    <span class="badge badge-danger ml-2">
-                                        {{ trans_choice('admin/errors.er_occurrences', $item['count'], ['count' => $item['count']]) }}
-                                    </span>
+                                    <div class="mb-1">
+                                        <span class="badge badge-danger">
+                                            {{ trans_choice('admin/errors.er_occurrences', $item['count'], ['count' => $item['count']]) }}
+                                        </span>
+                                    </div>
                                 @endif
+                                <code class="text-dark text-break" style="font-size: .85rem;">{{ $item['error_message'] }}</code>
                             </div>
                             @if (!empty($item['errors']))
-                                <a class="ml-3 flex-shrink-0 text-muted small"
+                                <a class="ml-3 flex-shrink-0 btn btn-sm btn-outline-secondary"
                                     data-toggle="collapse"
                                     href="#trace-{{ $index }}"
                                     aria-expanded="false">
-                                    <i class="fas fa-code fa-xs mr-1"></i>trace
+                                    <i class="fas fa-code fa-xs mr-1"></i>Trace
                                 </a>
                             @endif
                         </div>
