@@ -29,6 +29,9 @@ class SearchService
             ->values();
     }
 
+    /**
+     * @return Collection<int, array{label: string, type: string, detail: string, url: string}>
+     */
     private function searchUsers(string $query): Collection
     {
         return User::query()
@@ -45,6 +48,9 @@ class SearchService
             ]);
     }
 
+    /**
+     * @return Collection<int, array{label: string, type: string, detail: string, url: string}>
+     */
     private function searchAlliances(string $query): Collection
     {
         return Alliance::query()
@@ -61,6 +67,9 @@ class SearchService
             ]);
     }
 
+    /**
+     * @return Collection<int, array{label: string, type: string, detail: string, url: string}>
+     */
     private function searchPlanets(string $query, int $type): Collection
     {
         return Planets::query()
@@ -75,7 +84,7 @@ class SearchService
                 'label' => $planet->planet_name,
                 'type' => $type === PlanetTypes::MOON ? 'Moon' : 'Planet',
                 'detail' => $planet->planet_galaxy . ':' . $planet->planet_system . ':' . $planet->planet_planet
-                    . ' (' . $planet->user->name . ')',
+                    . ' (' . $planet->user?->name . ')',
                 'url' => $type === PlanetTypes::MOON
                     ? route('admin.users.moons', $planet->planet_user_id)
                     : route('admin.users.planet.edit', [$planet->planet_user_id, $planet->planet_id]),
