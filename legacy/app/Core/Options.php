@@ -27,7 +27,7 @@ class Options
         return self::$instance;
     }
 
-    public function get(?string $option = null): ?string
+    public function get(?string $option = null): array | string | null
     {
         if (empty($option)) {
             return $this->options;

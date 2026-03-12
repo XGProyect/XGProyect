@@ -161,11 +161,11 @@ class Users
         $restore = isset($_GET['re']) ? (int) $_GET['re'] : '';
 
         if (is_numeric($select) && $restore == 0 && $select != 0) {
-            $owned = $this->usersModel->getUserPlanetByIdAndUserId($select, $this->userData['id']);
+            $owned = $this->usersModel->getUserPlanetByIdAndUserId($select, (int) $this->userData['id']);
 
             if ($owned) {
                 $this->userData['current_planet'] = $select;
-                $this->usersModel->changeUserPlanetByUserId($select, $this->userData['id']);
+                $this->usersModel->changeUserPlanetByUserId($select, (int) $this->userData['id']);
             }
         }
     }

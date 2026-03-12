@@ -34,9 +34,9 @@ class ChatController extends BaseController
             [
                 'id' => $this->_receiver_data['id'],
                 'to' => $this->_receiver_data['name'] . ' ' . FormatLib::prettyCoords(
-                    $this->_receiver_data['planet_galaxy'],
-                    $this->_receiver_data['planet_system'],
-                    $this->_receiver_data['planet_planet']
+                    (int) $this->_receiver_data['planet_galaxy'],
+                    (int) $this->_receiver_data['planet_system'],
+                    (int) $this->_receiver_data['planet_planet']
                 ),
                 'subject' => ((!isset($this->_message_data['subject'])) ? __('game/chat.pm_no_subject') : $this->_message_data['subject']),
                 'text' => ((!isset($this->_message_data['text'])) ? '' : $this->_message_data['text']),
@@ -91,9 +91,9 @@ class ChatController extends BaseController
                     0,
                     4,
                     $this->user['name'] . ' ' . FormatLib::prettyCoords(
-                        $this->user['galaxy'],
-                        $this->user['system'],
-                        $this->user['planet']
+                        (int) $this->user['galaxy'],
+                        (int) $this->user['system'],
+                        (int) $this->user['planet']
                     ),
                     $message_sent['subject'],
                     $message_sent['text']

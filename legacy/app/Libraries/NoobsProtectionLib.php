@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
+use App\Services\SettingsService;
 use Xgp\App\Models\Libraries\NoobsProtectionLib as NoobsProtectionLibModel;
 
 class NoobsProtectionLib
@@ -24,12 +25,13 @@ class NoobsProtectionLib
 
     public function setAllSettings(): void
     {
-        $configs = $this->noobsprotectionlibModel->readAllConfigs();
+        /** @var SettingsService $settings */
+        $settings = app(SettingsService::class);
 
-        $this->protection = (bool) $configs['noobprotection'];
-        $this->protectiontime = (int) $configs['noobprotectiontime'];
-        $this->protectionmulti = (int) $configs['noobprotectionmulti'];
-        $this->allowed_level = (int) $configs['stat_admin_level'];
+        $this->protection = $settings->getBool('noobprotection');
+        $this->protectiontime = $settings->getInt('noobprotectiontime');
+        $this->protectionmulti = $settings->getInt('noobprotectionmulti');
+        $this->allowed_level = $settings->getInt('stat_admin_level');
     }
 
     public function isWeak(int $current_points, int $other_points): bool
