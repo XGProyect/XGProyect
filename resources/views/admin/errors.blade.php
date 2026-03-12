@@ -34,7 +34,7 @@
             <x-admin.card-collapsible id="collapseErrors" :title="__('admin/errors.er_error_list')" :badge="$totalErrors">
                 @forelse ($errorsList as $index => $item)
                     <div class="px-3 py-3 border-bottom {{ $loop->last ? 'border-bottom-0' : '' }}">
-                        <div class="d-flex align-items-baseline mb-2">
+                        <div class="d-flex align-items-baseline">
                             <i class="fas fa-exclamation-circle text-danger mr-3 flex-shrink-0"></i>
                             <div class="flex-grow-1">
                                 <code class="text-danger text-break" style="font-size: .85rem;">{{ $item['error_message'] }}</code>
@@ -44,10 +44,20 @@
                                     </span>
                                 @endif
                             </div>
+                            @if (!empty($item['errors']))
+                                <a class="ml-3 flex-shrink-0 text-muted small"
+                                    data-toggle="collapse"
+                                    href="#trace-{{ $index }}"
+                                    aria-expanded="false">
+                                    <i class="fas fa-code fa-xs mr-1"></i>trace
+                                </a>
+                            @endif
                         </div>
                         @if (!empty($item['errors']))
-                            <pre class="ml-4 mb-0 p-3 rounded text-white" style="background: #2d2d2d; font-size: .78rem; white-space: pre-wrap; word-break: break-all;">@foreach ($item['errors'] as $error){{ $error }}
+                            <div class="collapse" id="trace-{{ $index }}">
+                                <pre class="ml-4 mt-2 mb-0 p-3 rounded text-white" style="background: #2d2d2d; font-size: .78rem; white-space: pre-wrap; word-break: break-all;">@foreach ($item['errors'] as $error){{ $error }}
 @endforeach</pre>
+                            </div>
                         @endif
                     </div>
                 @empty
