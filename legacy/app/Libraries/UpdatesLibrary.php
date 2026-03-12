@@ -15,6 +15,9 @@ use Xgp\App\Libraries\OfficiersLib as Officiers;
 use Xgp\App\Libraries\ProductionLib as Production;
 use Xgp\App\Models\Libraries\UpdatesLibrary as UpdatesLibraryModel;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class UpdatesLibrary
 {
     private UpdatesLibraryModel $updatesModel;

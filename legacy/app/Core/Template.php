@@ -8,6 +8,9 @@ use App\Exceptions\LegacyView;
 use App\Services\SettingsService;
 use Illuminate\Support\Facades\View;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class Template
 {
     /**

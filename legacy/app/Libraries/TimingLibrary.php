@@ -6,6 +6,9 @@ namespace Xgp\App\Libraries;
 
 use App\Services\SettingsService;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 abstract class TimingLibrary
 {
     public static function setOnlineStatus(int $onlineTime): string

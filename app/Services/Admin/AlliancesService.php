@@ -12,11 +12,15 @@ use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Libraries\Alliance\Ranks;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class AlliancesService
 {
     public function __construct(private readonly SettingsService $settings)
     {
     }
+
     public function createAlliance(string $allianceName, string $allianceTag, int $allianceFounder): void
     {
         try {

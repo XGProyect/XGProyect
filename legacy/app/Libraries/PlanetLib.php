@@ -9,6 +9,9 @@ use App\Services\SettingsService;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Models\Libraries\PlanetLib as PlanetLibModel;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class PlanetLib
 {
     private PlanetLibModel $planetslibModel;

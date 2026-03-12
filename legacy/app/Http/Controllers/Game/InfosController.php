@@ -22,6 +22,9 @@ use Xgp\App\Libraries\ProductionLib;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Infos;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class InfosController extends BaseController
 {
     public const MODULE_ID = 24;

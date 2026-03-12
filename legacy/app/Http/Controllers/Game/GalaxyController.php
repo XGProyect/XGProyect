@@ -18,6 +18,9 @@ use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Fleet;
 use Xgp\App\Models\Game\Galaxy;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class GalaxyController extends BaseController
 {
     public const MODULE_ID = 11;

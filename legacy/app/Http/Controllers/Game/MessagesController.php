@@ -16,6 +16,9 @@ use Xgp\App\Libraries\OfficiersLib;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Messages;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class MessagesController extends BaseController
 {
     public const MODULE_ID = 18;

@@ -409,24 +409,6 @@ parameters:
 			path: app/Http/Requests/RegisterRequest.php
 
 		-
-			message: '#^Parameter \#1 \$address of class Illuminate\\Mail\\Mailables\\Address constructor expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Mail/Announcement.php
-
-		-
-			message: '#^Parameter \#1 \$address of class Illuminate\\Mail\\Mailables\\Address constructor expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Mail/Recover.php
-
-		-
-			message: '#^Parameter \#1 \$address of class Illuminate\\Mail\\Mailables\\Address constructor expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Mail/Welcome.php
-
-		-
 			message: '#^PHPDoc type array of property App\\Models\\Acs\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
 			identifier: property.phpDocType
 			count: 1
@@ -1753,31 +1735,13 @@ parameters:
 			path: app/View/Components/Install/Sidebar.php
 
 		-
-			message: '#^Binary operation "/" between string\|null and 100 results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 2
-			path: legacy/app/Core/Common.php
-
-		-
 			message: '#^Comparison operation "\>" between App\\Models\\Date and int\<1, max\> results in an error\.$#'
 			identifier: greater.invalid
 			count: 1
 			path: legacy/app/Core/Common.php
 
 		-
-			message: '#^Parameter \#1 \$mes of static method Xgp\\App\\Libraries\\Functions\:\:popupMessage\(\) expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Core/Common.php
-
-		-
 			message: '#^Parameter \#1 \$time of static method Xgp\\App\\Libraries\\TimingLibrary\:\:formatExtendedDate\(\) expects int\|string, App\\Models\\Date given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Core/Common.php
-
-		-
-			message: '#^Parameter \#1 \$timezoneId of function date_default_timezone_set expects string, string\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Core/Common.php
@@ -3607,12 +3571,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
 
 		-
-			message: '#^Parameter \#2 \$speed_factor of static method Xgp\\App\\Libraries\\FleetsLib\:\:fleetConsumption\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
 			message: '#^Parameter \#3 \$mission_duration of static method Xgp\\App\\Libraries\\FleetsLib\:\:fleetConsumption\(\) expects int, float given\.$#'
 			identifier: argument.type
 			count: 1
@@ -3632,12 +3590,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#4 \$pt of method Xgp\\App\\Models\\Game\\Fleet\:\:getPlanetOwnerByCoords\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
-			message: '#^Parameter \#4 \$speedFactor of static method Xgp\\App\\Libraries\\FleetsLib\:\:missionDuration\(\) expects int, string given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
@@ -3781,12 +3733,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet4Controller.php
 
 		-
-			message: '#^Parameter \#4 \$speedFactor of static method Xgp\\App\\Libraries\\FleetsLib\:\:missionDuration\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet4Controller.php
-
-		-
 			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\Fleet4Controller\:\:\$_clean_input_data type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -3893,18 +3839,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Http/Controllers/Game/FleetshortcutsController.php
-
-		-
-			message: '#^Binary operation "\*" between float and string results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Http/Controllers/Game/GalaxyController.php
-
-		-
-			message: '#^Binary operation "/" between \(float\|int\<75000, max\>\) and string\|null results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
 			message: '#^Call to an undefined method object\:\:buildRow\(\)\.$#'
@@ -4016,12 +3950,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#4 \$planet_type of method Xgp\\App\\Models\\Game\\Galaxy\:\:getTargetUserDataByCoords\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/GalaxyController.php
-
-		-
-			message: '#^Parameter \#4 \$speedFactor of static method Xgp\\App\\Libraries\\FleetsLib\:\:missionDuration\(\) expects int, string given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
@@ -4291,12 +4219,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/InfosController.php
 
 		-
-			message: '#^Parameter \#3 \$mult of static method Xgp\\App\\Libraries\\ProductionLib\:\:productionAmount\(\) expects int, string\|null given\.$#'
-			identifier: argument.type
-			count: 6
-			path: legacy/app/Http/Controllers/Game/InfosController.php
-
-		-
 			message: '#^Parameter \#3 \$time of static method Xgp\\App\\Libraries\\Functions\:\:message\(\) expects string, int given\.$#'
 			identifier: argument.type
 			count: 1
@@ -4478,12 +4400,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \$str of function strtr expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/MessagesController.php
-
-		-
-			message: '#^Parameter \#1 \$str of function strtr expects string, string\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/MessagesController.php
@@ -5035,18 +4951,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/ResearchController.php
 
 		-
-			message: '#^Binary operation "\+" between float and 0\|string\|null results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 3
-			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
-
-		-
-			message: '#^Binary operation "\+" between int\<0, max\> and string\|null results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
-
-		-
 			message: '#^Binary operation "/" between mixed and 10 results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1
@@ -5164,12 +5068,6 @@ parameters:
 			message: '#^Parameter \#2 \$boost of static method Xgp\\App\\Libraries\\ProductionLib\:\:productionAmount\(\) expects int, float\|int given\.$#'
 			identifier: argument.type
 			count: 4
-			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
-
-		-
-			message: '#^Parameter \#3 \$mult of static method Xgp\\App\\Libraries\\ProductionLib\:\:productionAmount\(\) expects int, string\|null given\.$#'
-			identifier: argument.type
-			count: 6
 			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
 
 		-
@@ -8851,12 +8749,6 @@ parameters:
 			path: legacy/app/Libraries/Formulas.php
 
 		-
-			message: '#^Binary operation "/" between string\|null and 2500 results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Libraries/Functions.php
-
-		-
 			message: '#^Method Xgp\\App\\Libraries\\Functions\:\:getLanguagesList\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -8882,12 +8774,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \$locale of static method Illuminate\\Support\\Facades\\App\:\:setLocale\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/Functions.php
-
-		-
-			message: '#^Parameter \#2 \$string of function explode expects string, string\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Libraries/Functions.php
@@ -10369,12 +10255,6 @@ parameters:
 			path: legacy/app/Libraries/StatisticsLibrary.php
 
 		-
-			message: '#^Binary operation "/" between \(float\|int\) and string\|null results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Libraries/StatisticsLibrary.php
-
-		-
 			message: '#^Method Xgp\\App\\Libraries\\StatisticsLibrary\:\:makeStats\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -10405,22 +10285,10 @@ parameters:
 			path: legacy/app/Libraries/TimingLibrary.php
 
 		-
-			message: '#^Parameter \#1 \$format of function date expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: legacy/app/Libraries/TimingLibrary.php
-
-		-
 			message: '#^Parameter \#2 \$timestamp of function date expects int\|null, int\|string\|false given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Libraries/TimingLibrary.php
-
-		-
-			message: '#^Binary operation "\*" between 60 and string\|null results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
 			message: '#^Binary operation "\*" between int\<1, max\> and float\|string results in an error\.$#'
@@ -10432,18 +10300,6 @@ parameters:
 			message: '#^Binary operation "\*" between int\<1, max\> and string results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1
-			path: legacy/app/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Binary operation "\+" between int and 0\|string\|null results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 3
-			path: legacy/app/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Binary operation "\+" between string\|null and 21600 results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 2
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
@@ -10474,12 +10330,6 @@ parameters:
 			message: '#^Binary operation "\-\=" between string and float\|string results in an error\.$#'
 			identifier: assignOp.invalid
 			count: 1
-			path: legacy/app/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Binary operation "/" between 0\|string\|null and 3600 results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 3
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
@@ -10576,12 +10426,6 @@ parameters:
 			message: '#^Parameter \#3 \$element of static method Xgp\\App\\Libraries\\DevelopmentsLib\:\:isDevelopmentPayable\(\) expects int, string given\.$#'
 			identifier: argument.type
 			count: 1
-			path: legacy/app/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Parameter \#3 \$mult of static method Xgp\\App\\Libraries\\ProductionLib\:\:productionAmount\(\) expects int, string\|null given\.$#'
-			identifier: argument.type
-			count: 6
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
@@ -11739,12 +11583,6 @@ parameters:
 		-
 			message: '#^Method Xgp\\App\\Models\\Libraries\\NoobsProtectionLib\:\:readAllConfigs\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/NoobsProtectionLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\NoobsProtectionLib\:\:readAllConfigs\(\) should return array but returns string\|null\.$#'
-			identifier: return.type
 			count: 1
 			path: legacy/app/Models/Libraries/NoobsProtectionLib.php
 

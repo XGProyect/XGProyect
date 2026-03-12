@@ -8,6 +8,9 @@ use App\Services\SettingsService;
 use Xgp\App\Core\Objects;
 use Xgp\App\Models\Libraries\StatisticsLibrary as StatisticsLib;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class StatisticsLibrary
 {
     private StatisticsLib $statisticsLibraryModel;
@@ -47,7 +50,7 @@ class StatisticsLibrary
         $level_mult = pow($element['factor'], $current_level);
         $points = ($resources_total * $level_mult) / app(SettingsService::class)->getInt('stat_points');
 
-        return $points;
+        return (int) $points;
     }
 
     /**

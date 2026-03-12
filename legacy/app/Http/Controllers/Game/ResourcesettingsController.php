@@ -17,6 +17,9 @@ use Xgp\App\Libraries\ProductionLib;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Resources;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class ResourcesettingsController extends BaseController
 {
     public const MODULE_ID = 4;

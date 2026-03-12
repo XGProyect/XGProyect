@@ -15,6 +15,9 @@ use Xgp\App\Libraries\OfficiersLib;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Officier;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class PremiumController extends BaseController
 {
     public const MODULE_ID = 15;

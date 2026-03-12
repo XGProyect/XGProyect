@@ -20,6 +20,9 @@ use Xgp\App\Libraries\Research\Researches;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Fleet;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class Fleet4Controller extends BaseController
 {
     public const MODULE_ID = 8;

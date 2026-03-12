@@ -7,6 +7,9 @@ namespace Xgp\App\Libraries;
 use App\Services\SettingsService;
 use Xgp\App\Models\Libraries\NoobsProtectionLib as NoobsProtectionLibModel;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class NoobsProtectionLib
 {
     private NoobsProtectionLibModel $noobsprotectionlibModel;

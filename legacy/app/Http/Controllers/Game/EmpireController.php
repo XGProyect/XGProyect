@@ -16,6 +16,9 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Empire;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class EmpireController extends BaseController
 {
     public const MODULE_ID = 2;

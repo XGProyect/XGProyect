@@ -12,6 +12,9 @@ use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Libraries\Alliance\Ranks;
 use Xgp\App\Models\Libraries\UsersLibrary;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class Users
 {
     private array $userData = [];

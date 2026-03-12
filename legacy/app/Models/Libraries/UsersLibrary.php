@@ -9,6 +9,8 @@ use Xgp\App\Core\Model;
 
 /**
  * @deprecated v4.0.0 use laravel instead
+ *
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class UsersLibrary extends Model
 {

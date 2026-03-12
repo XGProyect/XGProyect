@@ -19,6 +19,9 @@ use Xgp\App\Libraries\UpdatesLibrary;
 // require some stuff
 require_once XGP_ROOT . 'config' . DIRECTORY_SEPARATOR . 'constants.php';
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class Common
 {
     private const APPLICATIONS = [

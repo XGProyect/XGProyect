@@ -7,6 +7,9 @@ namespace Xgp\App\Libraries;
 use App\Services\SettingsService;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 abstract class Formulas
 {
     public static function phalanxRange(int $phalanxLevel): int

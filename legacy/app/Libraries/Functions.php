@@ -14,6 +14,9 @@ use Xgp\App\Libraries\Messenger\MessagesFormat;
 use Xgp\App\Libraries\Messenger\MessagesOptions;
 use Xgp\App\Libraries\Messenger\Messenger;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 abstract class Functions
 {
     public static function chronoApplet(string $type, string $ref, int $value, bool $init): string
@@ -42,9 +45,9 @@ abstract class Functions
         )) ? false : true;
     }
 
-    public static function fleetSpeedFactor(): string
+    public static function fleetSpeedFactor(): int
     {
-        return app(SettingsService::class)->getInt('fleet_speed') / 2500;
+        return (int) (app(SettingsService::class)->getInt('fleet_speed') / 2500);
     }
 
     public static function message(string $mes, ?string $dest = null, string $time = '3', bool $topnav = true, bool $menu = true, $center = true): void
