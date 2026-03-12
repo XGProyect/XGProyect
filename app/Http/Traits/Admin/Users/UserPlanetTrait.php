@@ -101,7 +101,12 @@ trait UserPlanetTrait
     private function savePlanetData(Request $request, int $planetId): void
     {
         $stringFields = ['planet_name', 'planet_image'];
-        $skipFields = ['planet_b_building_id', 'planet_b_tech_id', 'planet_b_hangar_id'];
+        $skipFields = [
+            // Build-queue state — managed by the game engine
+            'planet_b_building_id', 'planet_b_tech_id', 'planet_b_hangar_id',
+            // Primary / foreign keys — must never be reassigned from a form
+            'planet_id', 'planet_user_id', 'planet_type',
+        ];
         $updates = [];
 
         // Explicitly handle the destroyed toggle — defaults to 0 (cancel) if not submitted
@@ -132,7 +137,8 @@ trait UserPlanetTrait
         $totalFields = 0;
 
         foreach ($request->all() as $field => $value) {
-            if (is_string($field) && str_starts_with($field, 'building_')) {
+            if (is_string($field) && str_starts_with($field, 'building_')
+                && $field !== 'building_id' && $field !== 'building_planet_id') {
                 $level = (int) $value; // @phpstan-ignore cast.int
                 $updates[$field] = $level;
                 $totalFields += $level;
@@ -162,7 +168,8 @@ trait UserPlanetTrait
         $updates = [];
 
         foreach ($request->all() as $field => $value) {
-            if (is_string($field) && str_starts_with($field, 'ship_')) {
+            if (is_string($field) && str_starts_with($field, 'ship_')
+                && $field !== 'ship_id' && $field !== 'ship_planet_id') {
                 $updates[$field] = (int) $value; // @phpstan-ignore cast.int
             }
         }
@@ -181,7 +188,8 @@ trait UserPlanetTrait
         $updates = [];
 
         foreach ($request->all() as $field => $value) {
-            if (is_string($field) && str_starts_with($field, 'defense_')) {
+            if (is_string($field) && str_starts_with($field, 'defense_')
+                && $field !== 'defense_id' && $field !== 'defense_planet_id') {
                 $updates[$field] = (int) $value; // @phpstan-ignore cast.int
             }
         }
