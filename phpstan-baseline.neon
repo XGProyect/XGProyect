@@ -1279,12 +1279,6 @@ parameters:
 			path: app/Models/Planets.php
 
 		-
-			message: '#^Method App\\Models\\Planets\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: app/Models/Planets.php
-
-		-
 			message: '#^PHPDoc type array of property App\\Models\\Planets\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
 			identifier: property.phpDocType
 			count: 1

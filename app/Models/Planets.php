@@ -182,6 +182,7 @@ class Planets extends Model
     // Functions ...
 
     // Relations ...
+    /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'planet_user_id');
