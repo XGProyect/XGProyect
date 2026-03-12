@@ -67,7 +67,11 @@ Route::prefix('admin')->group(function () {
             Route::put('/changelog/{changelog}', [Admin\ChangelogController::class, 'update'])->name('admin.changelog.update');
             Route::delete('/changelog/{changelog}', [Admin\ChangelogController::class, 'destroy'])->name('admin.changelog.destroy');
             Route::any('/errors', Admin\ErrorsController::class)->name('admin.errors');
-            Route::any('/fleets', Admin\FleetsController::class)->name('admin.fleets');
+            Route::get('/fleets', [Admin\FleetsController::class, 'index'])->name('admin.fleets');
+            Route::post('/fleets/{fleet}/restart', [Admin\FleetsController::class, 'restart'])->name('admin.fleets.restart');
+            Route::post('/fleets/{fleet}/end', [Admin\FleetsController::class, 'end'])->name('admin.fleets.end');
+            Route::post('/fleets/{fleet}/return', [Admin\FleetsController::class, 'returnFleet'])->name('admin.fleets.return');
+            Route::delete('/fleets/{fleet}', [Admin\FleetsController::class, 'destroy'])->name('admin.fleets.destroy');
             Route::get('/home', [Admin\HomeController::class, 'index'])->name('admin.home');
             Route::get('/languages', [Admin\LanguagesController::class, 'index'])->name('admin.languages');
             Route::post('/languages', [Admin\LanguagesController::class, 'update'])->name('admin.languages.update');

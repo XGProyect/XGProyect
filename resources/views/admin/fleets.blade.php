@@ -3,82 +3,108 @@
 @section('content')
 <div class="container-fluid">
     <x-alert/>
+
     <x-admin.page-header
-        title="{{ __('admin/fleets.ff_title') }}"
-        subtitle="{{ __('admin/fleets.ff_sub_title') }}"
+        :title="__('admin/fleets.ff_title')"
+        :subtitle="__('admin/fleets.ff_sub_title')"
     />
+
     <div class="row">
         <div class="col-lg-12">
-            <x-admin.card-collapsible id="collapseFleets" title="{{ __('admin/fleets.ff_general') }}" :flush="true">
-                        <div class="table-responsive">
-                            <table class="table table-borderless" id="dataTable">
-                                <thead>
-                                    <tr>
-                                        <th>{{ __('admin/fleets.ff_mission') }}</th>
-                                        <th>{{ __('admin/fleets.ff_ammount') }}</th>
-                                        <th>{{ __('admin/fleets.ff_metal') }}</th>
-                                        <th>{{ __('admin/fleets.ff_crystal') }}</th>
-                                        <th>{{ __('admin/fleets.ff_deuterium') }}</th>
-                                        <th>{{ __('admin/fleets.ff_beginning') }}</th>
-                                        <th>{{ __('admin/fleets.ff_departure') }}</th>
-                                        <th>{{ __('admin/fleets.ff_objective') }}</th>
-                                        <th>{{ __('admin/fleets.ff_arrival') }}</th>
-                                        <th>{{ __('admin/fleets.ff_return') }}</th>
-                                        <th>{{ __('admin/fleets.ff_actions') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($fleetMovements as $item)
-                                    <tr>
-                                        <td>{{ $item['mission'] }}</td>
-                                        <td>
-                                            <span>
-                                                {{ $item['amount'] }}
-                                                <i class="fas fa-question-circle" data-toggle="popover"
-                                                    data-trigger="hover" data-content="{{ $item['amount_content'] }}"
-                                                    data-html="true"></i>
-                                            </span>
-                                        </td>
-                                        <td>{{ $item['metal'] }}</td>
-                                        <td>{{ $item['crystal'] }}</td>
-                                        <td>{{ $item['deuterium'] }}</td>
-                                        <td>{!! $item['beginning'] !!}</td>
-                                        <td>{{ $item['departure'] }}</td>
-                                        <td>{!! $item['objective'] !!}</td>
-                                        <td>{{ $item['arrival'] }}</td>
-                                        <td>{{ $item['return'] }}</td>
-                                        <th>
-                                            <a href="/admin/fleets?action=restart&fleetId={{ $item['fleet_id'] }}"
-                                                class="btn btn-sm btn-outline-primary">
-                                                <i class="fas fa-fast-backward" title="{{ __('admin/fleets.ff_restart_action_title') }}"
+            <x-admin.card-collapsible id="collapseFleets" :title="__('admin/fleets.ff_general')" :flush="true">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>{{ __('admin/fleets.ff_mission') }}</th>
+                                <th>{{ __('admin/fleets.ff_ammount') }}</th>
+                                <th>{{ __('admin/fleets.ff_resources') }}</th>
+                                <th>{{ __('admin/fleets.ff_beginning') }}</th>
+                                <th>{{ __('admin/fleets.ff_departure') }}</th>
+                                <th>{{ __('admin/fleets.ff_objective') }}</th>
+                                <th>{{ __('admin/fleets.ff_arrival') }}</th>
+                                <th>{{ __('admin/fleets.ff_return') }}</th>
+                                <th style="width: 140px;">{{ __('admin/fleets.ff_actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($fleetMovements as $item)
+                                <tr>
+                                    <td class="align-middle font-weight-bold">{{ $item['mission'] }}</td>
+                                    <td class="align-middle">
+                                        <span>
+                                            {{ $item['amount'] }}
+                                            <i class="fas fa-question-circle text-muted ml-1" data-toggle="popover"
+                                                data-trigger="hover"
+                                                data-content="{{ $item['amount_content'] }}"
+                                                data-html="true"></i>
+                                        </span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <span>
+                                            {{ __('admin/fleets.ff_resources') }}
+                                            <i class="fas fa-question-circle text-muted ml-1" data-toggle="popover"
+                                                data-trigger="hover"
+                                                data-content="{{ $item['resources_content'] }}"
+                                                data-html="true"></i>
+                                        </span>
+                                    </td>
+                                    <td class="align-middle">{!! $item['beginning'] !!}</td>
+                                    <td class="align-middle"><small class="text-muted">{{ $item['departure'] }}</small></td>
+                                    <td class="align-middle">{!! $item['objective'] !!}</td>
+                                    <td class="align-middle"><small class="text-muted">{{ $item['arrival'] }}</small></td>
+                                    <td class="align-middle"><small class="text-muted">{{ $item['return'] }}</small></td>
+                                    <td class="align-middle text-nowrap">
+                                        <div class="d-flex" style="gap: 0.25rem;">
+                                            <form method="POST" action="{{ route('admin.fleets.restart', $item['fleet_id']) }}">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-outline-primary"
+                                                    title="{{ __('admin/fleets.ff_restart_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"
-                                                    data-content="{{ __('admin/fleets.ff_restart_action_description') }}" data-html="true"></i>
-                                            </a>
-                                            <a href="/admin/fleets?action=end&fleetId={{ $item['fleet_id'] }}"
-                                                class="btn btn-sm btn-outline-success">
-                                                <i class="fas fa-fast-forward" title="{{ __('admin/fleets.ff_end_action_title') }}"
+                                                    data-content="{{ __('admin/fleets.ff_restart_action_description') }}"
+                                                    data-html="true">
+                                                    <i class="fas fa-fast-backward fa-sm"></i>
+                                                </button>
+                                            </form>
+                                            <form method="POST" action="{{ route('admin.fleets.end', $item['fleet_id']) }}">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-outline-success"
+                                                    title="{{ __('admin/fleets.ff_end_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"
-                                                    data-content="{{ __('admin/fleets.ff_end_action_description') }}" data-html="true"></i>
-                                            </a>
-                                            <a href="/admin/fleets?action=return&fleetId={{ $item['fleet_id'] }}"
-                                                class="btn btn-sm btn-outline-warning">
-                                                <i class="fas fa-undo-alt" title="{{ __('admin/fleets.ff_return_action_title') }}"
+                                                    data-content="{{ __('admin/fleets.ff_end_action_description') }}"
+                                                    data-html="true">
+                                                    <i class="fas fa-fast-forward fa-sm"></i>
+                                                </button>
+                                            </form>
+                                            <form method="POST" action="{{ route('admin.fleets.return', $item['fleet_id']) }}">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-outline-warning"
+                                                    title="{{ __('admin/fleets.ff_return_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"
-                                                    data-content="{{ __('admin/fleets.ff_return_action_description') }}" data-html="true"></i>
-                                            </a>
-                                            <a href="/admin/fleets?action=delete&fleetId={{ $item['fleet_id'] }}"
-                                                class="btn btn-sm btn-outline-danger">
-                                                <i class="fas fa-trash-alt" title="{{ __('admin/fleets.ff_delete_action_title') }}"
+                                                    data-content="{{ __('admin/fleets.ff_return_action_description') }}"
+                                                    data-html="true">
+                                                    <i class="fas fa-undo-alt fa-sm"></i>
+                                                </button>
+                                            </form>
+                                            <form method="POST" action="{{ route('admin.fleets.destroy', $item['fleet_id']) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                    title="{{ __('admin/fleets.ff_delete_action_title') }}"
                                                     data-toggle="popover" data-trigger="hover"
-                                                    data-content="{{ __('admin/fleets.ff_delete_action_description') }}" data-html="true"></i>
-                                            </a>
-                                        </th>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </x-admin.card-collapsible>
+                                                    data-content="{{ __('admin/fleets.ff_delete_action_description') }}"
+                                                    data-html="true">
+                                                    <i class="fas fa-trash-alt fa-sm"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </x-admin.card-collapsible>
         </div>
     </div>
 </div>
