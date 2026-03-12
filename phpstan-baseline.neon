@@ -223,19 +223,7 @@ parameters:
 			path: app/Http/Controllers/Admin/Users/UserMoonController.php
 
 		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 88 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserMoonController.php
-
-		-
 			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.TooManyPublicMethods\)\)\: Unexpected token "\.TooManyPublicMethods\)", expected ''\)'' at offset 30 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserMoonController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.UnusedFormalParameter\)\)\: Unexpected token "\.UnusedFormalParameter\)", expected ''\)'' at offset 34 on line 2$#'
 			identifier: phpDoc.parseError
 			count: 1
 			path: app/Http/Controllers/Admin/Users/UserMoonController.php
@@ -271,19 +259,7 @@ parameters:
 			path: app/Http/Controllers/Admin/Users/UserPlanetController.php
 
 		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.StaticAccess\)\)\: Unexpected token "\.StaticAccess\)", expected ''\)'' at offset 88 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserPlanetController.php
-
-		-
 			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.TooManyPublicMethods\)\)\: Unexpected token "\.TooManyPublicMethods\)", expected ''\)'' at offset 30 on line 2$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: app/Http/Controllers/Admin/Users/UserPlanetController.php
-
-		-
-			message: '#^PHPDoc tag @SuppressWarnings has invalid value \(\(PHPMD\.UnusedFormalParameter\)\)\: Unexpected token "\.UnusedFormalParameter\)", expected ''\)'' at offset 34 on line 2$#'
 			identifier: phpDoc.parseError
 			count: 1
 			path: app/Http/Controllers/Admin/Users/UserPlanetController.php
@@ -521,12 +497,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: app/Http/Controllers/Install/Steps/TablesController.php
-
-		-
-			message: '#^Cannot call method getAction\(\) on Illuminate\\Routing\\Route\|null\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: app/Http/Middleware/AdminAuthorize.php
 
 		-
 			message: '#^Cannot cast mixed to string\.$#'
