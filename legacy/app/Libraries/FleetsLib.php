@@ -448,14 +448,7 @@ class FleetsLib
         );
     }
 
-    /**
-     * isFleetReturning
-     *
-     * @param array $fleet_mess Fleet mess
-     *
-     * @return boolean
-     */
-    public static function isFleetReturning($fleet_mess)
+    public static function isFleetReturning(string | int $fleet_mess): bool
     {
         return ($fleet_mess == 1);
     }
