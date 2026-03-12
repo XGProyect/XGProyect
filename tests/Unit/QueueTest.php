@@ -9,15 +9,10 @@ use Xgp\App\Libraries\Buildings\Queue;
 use Xgp\App\Libraries\Buildings\QueueElements;
 
 /**
- * @covers Queue
- *
  * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
 class QueueTest extends TestCase
 {
-    /**
-     * @covers App\Libraries\Buildings\Queue::addElementToQueue
-     */
     public function testAddOneElementToQueue(): void
     {
         $object = new Queue();
@@ -38,9 +33,6 @@ class QueueTest extends TestCase
         );
     }
 
-    /**
-     * @covers App\Libraries\Buildings\Queue::addElementToQueue
-     */
     public function testAddManyElementToQueue(): void
     {
         $object = new Queue();
@@ -86,9 +78,6 @@ class QueueTest extends TestCase
         );
     }
 
-    /**
-     * @covers App\Libraries\Buildings\Queue::removeElementFromQueue
-     */
     public function testRemoveElementFromQueueWithOneElement(): void
     {
         // add one element
@@ -111,9 +100,6 @@ class QueueTest extends TestCase
         );
     }
 
-    /**
-     * @covers App\Libraries\Buildings\Queue::removeElementFromQueue
-     */
     public function testRemoveLastElementFromQueueWithTwoElement(): void
     {
         $object = new Queue();
@@ -147,9 +133,6 @@ class QueueTest extends TestCase
         );
     }
 
-    /**
-     * @covers App\Libraries\Buildings\Queue::removeElementFromQueue
-     */
     public function testRemoveFirstElementFromQueueWithTwoElement(): void
     {
         $object = new Queue();
@@ -183,9 +166,6 @@ class QueueTest extends TestCase
         );
     }
 
-    /**
-     * @covers App\Libraries\Buildings\Queue::removeElementFromQueue
-     */
     public function testRemoveMiddleElementFromQueueWithThreeElement(): void
     {
         $object = new Queue();
@@ -229,9 +209,6 @@ class QueueTest extends TestCase
         );
     }
 
-    /**
-     * @covers App\Libraries\Buildings\Queue::removeElementFromQueue
-     */
     public function testRemoveElementFromQueueInvalidParameters(): void
     {
         $object = new Queue();
@@ -275,9 +252,6 @@ class QueueTest extends TestCase
         );
     }
 
-    /**
-     * @covers App\Libraries\Buildings\Queue::getElementFromQueueAsArray
-     */
     public function testGetElementFromQueueAsArray(): void
     {
         $object = new Queue();
@@ -325,9 +299,6 @@ class QueueTest extends TestCase
         );
     }
 
-    /**
-     * @covers App\Libraries\Buildings\Queue::returnQueueAsString
-     */
     public function testReturnQueueAsString(): void
     {
         $object = new Queue();
@@ -354,9 +325,6 @@ class QueueTest extends TestCase
         );
     }
 
-    /**
-     * @covers App\Libraries\Buildings\Queue::returnQueueAsArray
-     */
     public function testReturnQueueAsArray(): void
     {
         $object = new Queue();
@@ -392,9 +360,6 @@ class QueueTest extends TestCase
         );
     }
 
-    /**
-     * @covers App\Libraries\Buildings\Queue::countQueueElements
-     */
     public function testCountQueueElements(): void
     {
         $object = new Queue();
