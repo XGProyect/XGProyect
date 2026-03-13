@@ -25,6 +25,8 @@ class Ship extends GameObject
         private int $consumption,
         private int $consumption2,
         private int $capacity,
+        private DriveSpec $drive,
+        private ?ProductionFormula $production = null,
     ) {
         parent::__construct($id, $name, $price, $requirements);
     }
@@ -70,5 +72,20 @@ class Ship extends GameObject
     public function getCapacity(): int
     {
         return $this->capacity;
+    }
+
+    public function getDrive(): DriveSpec
+    {
+        return $this->drive;
+    }
+
+    public function getProduction(): ?ProductionFormula
+    {
+        return $this->production;
+    }
+
+    public function hasProduction(): bool
+    {
+        return $this->production !== null;
     }
 }

@@ -6,7 +6,7 @@ namespace App\Core\GameObjects;
 
 use Illuminate\Support\Collection;
 
-abstract class GameObject
+abstract class GameObject implements GameObjectInterface
 {
     /**
      * @param Collection<int, int> $requirements

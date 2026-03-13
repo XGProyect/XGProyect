@@ -139,6 +139,10 @@ class Objects
                 continue;
             }
 
+            if (!$obj instanceof GameObject) {
+                continue;
+            }
+
             $this->price[$id] = $obj->getPrice()->toArray();
 
             if ($obj instanceof Ship) {
@@ -175,65 +179,68 @@ class Objects
 
     private function buildObjectsList(): void
     {
+        $resourceIds = $this->registry->resourceBuildings()->keys()->toArray();
+        $facilityIds = $this->registry->facilityBuildings()->keys()->toArray();
+        $moonIds = $this->registry->moonBuildings()->keys()->toArray();
+        $defenseIds = $this->registry->defenses()
+            ->filter(fn (Defense $d) => $d->getId() < 500)
+            ->keys()->toArray();
+        $missileIds = $this->registry->defenses()
+            ->filter(fn (Defense $d) => $d->getId() >= 500)
+            ->keys()->toArray();
+        $allBuildingIds = $this->registry->buildings()->keys()->toArray();
+        $techIds = $this->registry->research()->keys()->toArray();
+        $fleetIds = $this->registry->ships()->keys()->toArray();
+        $allDefenseIds = $this->registry->defenses()->keys()->toArray();
+        $officierIds = $this->registry->officers()->keys()->toArray();
+        $prodIds = $this->registry->producers()->keys()->toArray();
+
         $this->objectsList = [
-            'resources' => [1, 2, 3, 4, 12, 22, 23, 24],
-            'facilities' => [14, 15, 21, 31, 33, 34, 41, 42, 43, 44],
-            'defenses' => [401, 402, 403, 404, 405, 406, 407, 408],
-            'missiles' => [502, 503],
-            'build' => [1, 2, 3, 4, 12, 14, 15, 21, 22, 23, 24, 31, 33, 34, 41, 42, 43, 44],
-            'tech' => [106, 108, 109, 110, 111, 113, 114, 115, 117, 118, 120, 121, 122, 123, 124, 199],
-            'fleet' => [202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215],
-            'defense' => [401, 402, 403, 404, 405, 406, 407, 408, 502, 503],
-            'officier' => [601, 602, 603, 604, 605],
-            'prod' => [1, 2, 3, 4, 12, 212],
+            'resources' => $resourceIds,
+            'facilities' => array_merge($facilityIds, $moonIds),
+            'defenses' => $defenseIds,
+            'missiles' => $missileIds,
+            'build' => $allBuildingIds,
+            'tech' => $techIds,
+            'fleet' => $fleetIds,
+            'defense' => $allDefenseIds,
+            'officier' => $officierIds,
+            'prod' => $prodIds,
         ];
     }
 
     private function buildProduction(): void
     {
-        $this->production = [
-            1 => ['metal' => 40, 'crystal' => 10, 'deuterium' => 0, 'energy' => 0, 'factor' => 3 / 2,
+        foreach ($this->registry->producers() as $id => $obj) {
+            $production = null;
+
+            if ($obj instanceof Building) {
+                $production = $obj->getProduction();
+            } elseif ($obj instanceof Ship) {
+                $production = $obj->getProduction();
+            }
+
+            if ($production === null) {
+                continue;
+            }
+
+            $this->production[$id] = [
+                'metal' => $production->getBaseMetal(),
+                'crystal' => $production->getBaseCrystal(),
+                'deuterium' => $production->getBaseDeuterium(),
+                'energy' => 0,
+                'factor' => $production->getFactor(),
                 'formule' => [
-                    'metal' => 'return (30 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);',
-                    'crystal' => 'return "0";',
-                    'deuterium' => 'return "0";',
-                    'energy' => 'return - (10 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);'],
-            ],
-            2 => ['metal' => 30, 'crystal' => 15, 'deuterium' => 0, 'energy' => 0, 'factor' => 1.6,
-                'formule' => [
-                    'metal' => 'return "0";',
-                    'crystal' => 'return (20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);',
-                    'deuterium' => 'return "0";',
-                    'energy' => 'return - (10 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);'],
-            ],
-            3 => ['metal' => 150, 'crystal' => 50, 'deuterium' => 0, 'energy' => 0, 'factor' => 3 / 2,
-                'formule' => [
-                    'metal' => 'return "0";',
-                    'crystal' => 'return "0";',
-                    'deuterium' => 'return ((10 * $BuildLevel * pow((1.1), $BuildLevel)) * (1.44 - 0.004 * $BuildTemp))  * (0.1 * $BuildLevelFactor);',
-                    'energy' => 'return - floor(20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);'],
-            ],
-            4 => ['metal' => 50, 'crystal' => 20, 'deuterium' => 0, 'energy' => 0, 'factor' => 3 / 2,
-                'formule' => [
-                    'metal' => 'return "0";',
-                    'crystal' => 'return "0";',
-                    'deuterium' => 'return "0";',
-                    'energy' => 'return (20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);'],
-            ],
-            12 => ['metal' => 500, 'crystal' => 200, 'deuterium' => 100, 'energy' => 0, 'factor' => 1.8,
-                'formule' => [
-                    'metal' => 'return "0";',
-                    'crystal' => 'return "0";',
-                    'deuterium' => 'return - (10 * $BuildLevel * pow(1.1,$BuildLevel) * (0.1 * $BuildLevelFactor));',
-                    'energy' => 'return (30 * $BuildLevel * pow((1.05 + $BuildEnergy * 0.01), $BuildLevel)) * (0.1 * $BuildLevelFactor);'],
-            ],
-            212 => ['metal' => 0, 'crystal' => 2000, 'deuterium' => 500, 'energy' => 0, 'factor' => 0.5,
-                'formule' => [
-                    'metal' => 'return "0";',
-                    'crystal' => 'return "0";',
-                    'deuterium' => 'return "0";',
-                    'energy' => 'return ((($BuildTemp + 140) / 6) * (0.1 * $BuildLevelFactor) * $BuildLevel);'],
-            ],
-        ];
+                    'metal' => fn (int | float | string $BuildLevel, int | float | string $BuildLevelFactor, int | float | string $BuildTemp = 0, int | float | string $BuildEnergy = 0): float
+                        => $production->calculateMetal((int) $BuildLevel, (float) $BuildLevelFactor),
+                    'crystal' => fn (int | float | string $BuildLevel, int | float | string $BuildLevelFactor, int | float | string $BuildTemp = 0, int | float | string $BuildEnergy = 0): float
+                        => $production->calculateCrystal((int) $BuildLevel, (float) $BuildLevelFactor),
+                    'deuterium' => fn (int | float | string $BuildLevel, int | float | string $BuildLevelFactor, int | float | string $BuildTemp = 0, int | float | string $BuildEnergy = 0): float
+                        => $production->calculateDeuterium((int) $BuildLevel, (float) $BuildLevelFactor, (float) $BuildTemp),
+                    'energy' => fn (int | float | string $BuildLevel, int | float | string $BuildLevelFactor, int | float | string $BuildTemp = 0, int | float | string $BuildEnergy = 0): float
+                        => $production->calculateEnergy((int) $BuildLevel, (float) $BuildLevelFactor, (float) $BuildTemp, (int) $BuildEnergy),
+                ],
+            ];
+        }
     }
 }

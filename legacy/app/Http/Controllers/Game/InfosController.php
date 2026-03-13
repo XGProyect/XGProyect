@@ -450,10 +450,10 @@ class InfosController extends BaseController
         $engineer_boost = 1 + (1 * (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_engineer']) ? ENGINEER_ENERGY : 0));
 
         // PRODUCTION FORMULAS
-        $metal_prod = eval($this->_prod_grid[$this->_element_id]['formule']['metal']);
-        $crystal_prod = eval($this->_prod_grid[$this->_element_id]['formule']['crystal']);
-        $deuterium_prod = eval($this->_prod_grid[$this->_element_id]['formule']['deuterium']);
-        $energy_prod = eval($this->_prod_grid[$this->_element_id]['formule']['energy']);
+        $metal_prod = ($this->_prod_grid[$this->_element_id]['formule']['metal'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+        $crystal_prod = ($this->_prod_grid[$this->_element_id]['formule']['crystal'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+        $deuterium_prod = ($this->_prod_grid[$this->_element_id]['formule']['deuterium'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+        $energy_prod = ($this->_prod_grid[$this->_element_id]['formule']['energy'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
 
         // PRODUCTION
         $Prod[1] = ProductionLib::productionAmount($metal_prod, $geologe_boost, $game_resource_multiplier);
@@ -484,10 +484,10 @@ class InfosController extends BaseController
 
         for ($BuildLevel = $BuildStartLvl; $BuildLevel < $BuildStartLvl + 15; $BuildLevel++) {
             // PRODUCTION FORMULAS
-            $metal_prod = eval($this->_prod_grid[$this->_element_id]['formule']['metal']);
-            $crystal_prod = eval($this->_prod_grid[$this->_element_id]['formule']['crystal']);
-            $deuterium_prod = eval($this->_prod_grid[$this->_element_id]['formule']['deuterium']);
-            $energy_prod = eval($this->_prod_grid[$this->_element_id]['formule']['energy']);
+            $metal_prod = ($this->_prod_grid[$this->_element_id]['formule']['metal'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+            $crystal_prod = ($this->_prod_grid[$this->_element_id]['formule']['crystal'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+            $deuterium_prod = ($this->_prod_grid[$this->_element_id]['formule']['deuterium'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+            $energy_prod = ($this->_prod_grid[$this->_element_id]['formule']['energy'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
 
             // PRODUCTION
             $Prod[1] = ProductionLib::productionAmount($metal_prod, $geologe_boost, $game_resource_multiplier);

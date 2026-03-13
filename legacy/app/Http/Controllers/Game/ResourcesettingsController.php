@@ -109,10 +109,10 @@ class ResourcesettingsController extends BaseController
                 $engineer_boost = 1 + (1 * (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_engineer']) ? ENGINEER_ENERGY : 0));
 
                 // PRODUCTION FORMULAS
-                $metal_prod = eval($this->prodGrid[$ProdID]['formule']['metal']);
-                $crystal_prod = eval($this->prodGrid[$ProdID]['formule']['crystal']);
-                $deuterium_prod = eval($this->prodGrid[$ProdID]['formule']['deuterium']);
-                $energy_prod = eval($this->prodGrid[$ProdID]['formule']['energy']);
+                $metal_prod = ($this->prodGrid[$ProdID]['formule']['metal'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+                $crystal_prod = ($this->prodGrid[$ProdID]['formule']['crystal'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+                $deuterium_prod = ($this->prodGrid[$ProdID]['formule']['deuterium'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+                $energy_prod = ($this->prodGrid[$ProdID]['formule']['energy'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
 
                 // PRODUCTION
                 $resourcesTotal['metal'] += ProductionLib::productionAmount($metal_prod, $geologe_boost, $game_resource_multiplier);
