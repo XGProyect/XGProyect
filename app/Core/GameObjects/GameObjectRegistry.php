@@ -2,11 +2,228 @@
 
 declare(strict_types=1);
 
-namespace Xgp\App\Core;
+namespace App\Core\GameObjects;
 
-class ObjectsCollection
+use Illuminate\Support\Collection;
+
+class GameObjectRegistry
 {
-    public function resources(): array
+    /** @var Collection<int, GameObject|Officer> */
+    private Collection $objects;
+
+    public function __construct()
+    {
+        $this->objects = new Collection();
+
+        $this->registerBuildings();
+        $this->registerResearch();
+        $this->registerShips();
+        $this->registerDefenses();
+        $this->registerOfficers();
+    }
+
+    public function get(int $id): GameObject|Officer
+    {
+        return $this->objects[$id];
+    }
+
+    public function has(int $id): bool
+    {
+        return $this->objects->has($id);
+    }
+
+    /**
+     * @return Collection<int, GameObject|Officer>
+     */
+    public function all(): Collection
+    {
+        return $this->objects;
+    }
+
+    /**
+     * @return Collection<int, Ship>
+     */
+    public function ships(): Collection
+    {
+        return $this->objects->filter(fn($obj) => $obj instanceof Ship);
+    }
+
+    /**
+     * @return Collection<int, Building>
+     */
+    public function buildings(): Collection
+    {
+        return $this->objects->filter(fn($obj) => $obj instanceof Building);
+    }
+
+    /**
+     * @return Collection<int, Research>
+     */
+    public function research(): Collection
+    {
+        return $this->objects->filter(fn($obj) => $obj instanceof Research);
+    }
+
+    /**
+     * @return Collection<int, Defense>
+     */
+    public function defenses(): Collection
+    {
+        return $this->objects->filter(fn($obj) => $obj instanceof Defense);
+    }
+
+    /**
+     * @return Collection<int, Officer>
+     */
+    public function officers(): Collection
+    {
+        return $this->objects->filter(fn($obj) => $obj instanceof Officer);
+    }
+
+    private function registerBuildings(): void
+    {
+        $names = $this->names();
+        $requirements = $this->requirements();
+        $prices = $this->prices();
+
+        $buildingIds = [1, 2, 3, 4, 12, 14, 15, 21, 22, 23, 24, 31, 33, 34, 41, 42, 43, 44];
+
+        foreach ($buildingIds as $id) {
+            $p = $prices[$id];
+
+            $this->objects[$id] = new Building(
+                id: $id,
+                name: $names[$id],
+                price: new Price(
+                    metal: $p['metal'],
+                    crystal: $p['crystal'],
+                    deuterium: $p['deuterium'],
+                    energy: $p['energy'] ?? 0,
+                    energyMax: $p['energy_max'] ?? 0,
+                    factor: (float) $p['factor'],
+                ),
+                requirements: new Collection($requirements[$id] ?? []),
+            );
+        }
+    }
+
+    private function registerResearch(): void
+    {
+        $names = $this->names();
+        $requirements = $this->requirements();
+        $prices = $this->prices();
+
+        $researchIds = [106, 108, 109, 110, 111, 113, 114, 115, 117, 118, 120, 121, 122, 123, 124, 199];
+
+        foreach ($researchIds as $id) {
+            $p = $prices[$id];
+
+            $this->objects[$id] = new Research(
+                id: $id,
+                name: $names[$id],
+                price: new Price(
+                    metal: $p['metal'],
+                    crystal: $p['crystal'],
+                    deuterium: $p['deuterium'],
+                    energy: $p['energy'] ?? 0,
+                    energyMax: $p['energy_max'] ?? 0,
+                    factor: (float) $p['factor'],
+                ),
+                requirements: new Collection($requirements[$id] ?? []),
+            );
+        }
+    }
+
+    private function registerShips(): void
+    {
+        $names = $this->names();
+        $requirements = $this->requirements();
+        $prices = $this->prices();
+        $combat = $this->combatSpecs();
+
+        $shipIds = [202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215];
+
+        foreach ($shipIds as $id) {
+            $p = $prices[$id];
+            $c = $combat[$id];
+
+            $this->objects[$id] = new Ship(
+                id: $id,
+                name: $names[$id],
+                price: new Price(
+                    metal: $p['metal'],
+                    crystal: $p['crystal'],
+                    deuterium: $p['deuterium'],
+                    factor: (float) $p['factor'],
+                ),
+                requirements: new Collection($requirements[$id] ?? []),
+                shield: $c['shield'],
+                attack: $c['attack'],
+                rapidFire: new Collection($c['sd']),
+                speed: $p['speed'],
+                speed2: $p['speed2'],
+                consumption: $p['consumption'],
+                consumption2: $p['consumption2'],
+                capacity: $p['capacity'],
+            );
+        }
+    }
+
+    private function registerDefenses(): void
+    {
+        $names = $this->names();
+        $requirements = $this->requirements();
+        $prices = $this->prices();
+        $combat = $this->combatSpecs();
+
+        $defenseIds = [401, 402, 403, 404, 405, 406, 407, 408, 502, 503];
+
+        foreach ($defenseIds as $id) {
+            $p = $prices[$id];
+            $c = $combat[$id];
+
+            $this->objects[$id] = new Defense(
+                id: $id,
+                name: $names[$id],
+                price: new Price(
+                    metal: $p['metal'],
+                    crystal: $p['crystal'],
+                    deuterium: $p['deuterium'],
+                    factor: (float) $p['factor'],
+                ),
+                requirements: new Collection($requirements[$id] ?? []),
+                shield: $c['shield'],
+                attack: $c['attack'],
+                rapidFire: new Collection($c['sd'] ?? []),
+            );
+        }
+    }
+
+    private function registerOfficers(): void
+    {
+        $names = $this->names();
+        $prices = $this->prices();
+
+        $officerIds = [601, 602, 603, 604, 605];
+
+        foreach ($officerIds as $id) {
+            $p = $prices[$id];
+
+            $this->objects[$id] = new Officer(
+                id: $id,
+                name: $names[$id],
+                darkmatterWeek: $p['darkmatter_week'],
+                darkmatterMonth: $p['darkmatter_month'],
+                imgBig: $p['img_big'],
+                imgSmall: $p['img_small'],
+            );
+        }
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function names(): array
     {
         return [
             1 => 'building_metal_mine',
@@ -75,7 +292,10 @@ class ObjectsCollection
         ];
     }
 
-    public function requirements(): array
+    /**
+     * @return array<int, array<int, int>>
+     */
+    private function requirements(): array
     {
         return [
             12 => [3 => 5, 113 => 3],
@@ -128,7 +348,10 @@ class ObjectsCollection
         ];
     }
 
-    public function priceList(): array
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function prices(): array
     {
         return [
             1 => ['metal' => 60, 'crystal' => 15, 'deuterium' => 0, 'energy' => 0, 'factor' => 1.5],
@@ -197,7 +420,10 @@ class ObjectsCollection
         ];
     }
 
-    public function combatSpecs(): array
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function combatSpecs(): array
     {
         return [
             202 => ['shield' => 10, 'attack' => 5, 'sd' => [202 => 0, 203 => 0, 204 => 0, 205 => 0, 206 => 0, 207 => 0, 208 => 0, 209 => 0, 210 => 5, 211 => 0, 212 => 5, 213 => 0, 214 => 0, 215 => 0, 401 => 0, 402 => 0, 403 => 0, 404 => 0, 405 => 0, 406 => 0, 407 => 0, 408 => 0]],
@@ -224,72 +450,6 @@ class ObjectsCollection
             408 => ['shield' => 10000, 'attack' => 1, 'sd' => [202 => 0, 203 => 0, 204 => 0, 205 => 0, 206 => 0, 207 => 0, 208 => 0, 209 => 0, 210 => 0, 211 => 0, 212 => 0, 213 => 0, 214 => 0, 215 => 0]],
             502 => ['shield' => 1, 'attack' => 1],
             503 => ['shield' => 1, 'attack' => 12000],
-        ];
-    }
-
-    public function productionGrid(): array
-    {
-        return [
-            1 => ['metal' => 40, 'crystal' => 10, 'deuterium' => 0, 'energy' => 0, 'factor' => 3 / 2,
-                'formule' => [
-                    'metal' => 'return (30 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);',
-                    'crystal' => 'return "0";',
-                    'deuterium' => 'return "0";',
-                    'energy' => 'return - (10 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);'],
-            ],
-            2 => ['metal' => 30, 'crystal' => 15, 'deuterium' => 0, 'energy' => 0, 'factor' => 1.6,
-                'formule' => [
-                    'metal' => 'return "0";',
-                    'crystal' => 'return (20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);',
-                    'deuterium' => 'return "0";',
-                    'energy' => 'return - (10 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);'],
-            ],
-            3 => ['metal' => 150, 'crystal' => 50, 'deuterium' => 0, 'energy' => 0, 'factor' => 3 / 2,
-                'formule' => [
-                    'metal' => 'return "0";',
-                    'crystal' => 'return "0";',
-                    'deuterium' => 'return ((10 * $BuildLevel * pow((1.1), $BuildLevel)) * (1.44 - 0.004 * $BuildTemp))  * (0.1 * $BuildLevelFactor);',
-                    'energy' => 'return - floor(20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);'],
-            ],
-            4 => ['metal' => 50, 'crystal' => 20, 'deuterium' => 0, 'energy' => 0, 'factor' => 3 / 2,
-                'formule' => [
-                    'metal' => 'return "0";',
-                    'crystal' => 'return "0";',
-                    'deuterium' => 'return "0";',
-                    'energy' => 'return (20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);'],
-            ],
-            12 => ['metal' => 500, 'crystal' => 200, 'deuterium' => 100, 'energy' => 0, 'factor' => 1.8,
-                'formule' => [
-                    'metal' => 'return "0";',
-                    'crystal' => 'return "0";',
-                    'deuterium' => 'return - (10 * $BuildLevel * pow(1.1,$BuildLevel) * (0.1 * $BuildLevelFactor));',
-                    'energy' => 'return (30 * $BuildLevel * pow((1.05 + $BuildEnergy * 0.01), $BuildLevel)) * (0.1 * $BuildLevelFactor);'],
-            ],
-            212 => ['metal' => 0, 'crystal' => 2000, 'deuterium' => 500, 'energy' => 0, 'factor' => 0.5,
-                'formule' => [
-                    'metal' => 'return "0";',
-                    'crystal' => 'return "0";',
-                    'deuterium' => 'return "0";',
-                    'energy' => 'return ((($BuildTemp + 140) / 6) * (0.1 * $BuildLevelFactor) * $BuildLevel);'],
-            ],
-        ];
-    }
-
-    public function objectsList(): array
-    {
-        return [
-            // new ogame
-            'resources' => [1, 2, 3, 4, 12, 22, 23, 24],
-            'facilities' => [14, 15, 21, 31, 33, 34, 41, 42, 43, 44],
-            'defenses' => [401, 402, 403, 404, 405, 406, 407, 408],
-            'missiles' => [502, 503],
-            // old ogame
-            'build' => [1, 2, 3, 4, 12, 14, 15, 21, 22, 23, 24, 31, 33, 34, 41, 42, 43, 44],
-            'tech' => [106, 108, 109, 110, 111, 113, 114, 115, 117, 118, 120, 121, 122, 123, 124, 199],
-            'fleet' => [202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215],
-            'defense' => [401, 402, 403, 404, 405, 406, 407, 408, 502, 503],
-            'officier' => [601, 602, 603, 604, 605],
-            'prod' => [1, 2, 3, 4, 12, 212],
         ];
     }
 }
