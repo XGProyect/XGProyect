@@ -7,7 +7,12 @@ namespace App\Core\GameObjects;
 use App\Enums\Game\BuildingCategory;
 use App\Enums\Game\DriveType;
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
 
+/**
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ */
 class GameObjectRegistry
 {
     /** @var Collection<int, GameObjectInterface> */
@@ -30,7 +35,7 @@ class GameObjectRegistry
         $object = $this->objects->get($id);
 
         if ($object === null) {
-            throw new \InvalidArgumentException("Game object with ID {$id} not found.");
+            throw new InvalidArgumentException("Game object with ID {$id} not found.");
         }
 
         return $object;
@@ -132,6 +137,9 @@ class GameObjectRegistry
         );
     }
 
+    /**
+     * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
+     */
     private function registerBuildings(): void
     {
         $this->objects[1] = new Building(
@@ -349,6 +357,9 @@ class GameObjectRegistry
         );
     }
 
+    /**
+     * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
+     */
     private function registerResearch(): void
     {
         $this->objects[106] = new Research(
@@ -464,6 +475,10 @@ class GameObjectRegistry
         );
     }
 
+    /**
+     * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+     */
     private function registerShips(): void
     {
         $this->objects[202] = new Ship(
@@ -719,6 +734,9 @@ class GameObjectRegistry
         );
     }
 
+    /**
+     * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
+     */
     private function registerDefenses(): void
     {
         $this->objects[401] = new Defense(

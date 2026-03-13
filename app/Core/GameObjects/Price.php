@@ -60,9 +60,11 @@ class Price
 
         if ($this->energyMax > 0) {
             $arr['energy_max'] = $this->energyMax;
-        } else {
-            $arr['energy'] = $this->energy;
+
+            return $arr;
         }
+
+        $arr['energy'] = $this->energy;
 
         return $arr;
     }

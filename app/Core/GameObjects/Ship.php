@@ -11,6 +11,8 @@ class Ship extends GameObject
     /**
      * @param Collection<int, int> $requirements
      * @param Collection<int, int> $rapidFire
+     *
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     public function __construct(
         int $id,

@@ -6,11 +6,11 @@ return [
     'se_server_parameters' => 'Ajustes del servidor',
     'se_sub_title' => 'Desde aquí puedes configurar todos los ajustes principales del servidor, incluyendo velocidades del universo, opciones de flotas, tasas de economía y más.',
     // Encabezados de sección
-    'se_section_identity'  => 'Identidad',
-    'se_section_speed'     => 'Velocidad y Economía',
-    'se_section_access'    => 'Acceso al servidor',
-    'se_section_datetime'  => 'Fecha y Hora',
-    'se_section_combat'    => 'Reglas de combate',
+    'se_section_identity' => 'Identidad',
+    'se_section_speed' => 'Velocidad y Economía',
+    'se_section_access' => 'Acceso al servidor',
+    'se_section_datetime' => 'Fecha y Hora',
+    'se_section_combat' => 'Reglas de combate',
     // Identidad
     'se_name' => 'Nombre',
     'se_logo' => 'Logo',

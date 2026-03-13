@@ -6,11 +6,11 @@ return [
     'se_server_parameters' => 'Server settings',
     'se_sub_title' => 'From here you can configure all the core settings of your server, including universe speed, fleet options, economy rates and more.',
     // Section headings
-    'se_section_identity'  => 'Identity',
-    'se_section_speed'     => 'Speed & Economy',
-    'se_section_access'    => 'Server Access',
-    'se_section_datetime'  => 'Date & Time',
-    'se_section_combat'    => 'Combat Rules',
+    'se_section_identity' => 'Identity',
+    'se_section_speed' => 'Speed & Economy',
+    'se_section_access' => 'Server Access',
+    'se_section_datetime' => 'Date & Time',
+    'se_section_combat' => 'Combat Rules',
     // Identity
     'se_name' => 'Name',
     'se_logo' => 'Logo',

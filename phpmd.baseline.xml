@@ -78,9 +78,6 @@
   <violation rule="PHPMD\Rule\Naming\ConstantNamingConventions" file="legacy/app/Core/Enumerators/ShipsEnumerator.php"/>
   <violation rule="PHPMD\Rule\Naming\ConstantNamingConventions" file="legacy/app/Core/Enumerators/SwitchIntEnumerator.php"/>
   <violation rule="PHPMD\Rule\Design\NumberOfChildren" file="legacy/app/Core/Model.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Core/Objects.php"/>
-  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Core/Objects.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Core/Objects.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Core/Objects.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Core/Template.php"/>
   <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Core/Template.php"/>
@@ -281,8 +278,6 @@
   <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/InfosController.php" method="showProductionTable"/>
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/InfosController.php" method="showProductionTable"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="showProductionTable"/>
-  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
-  <violation rule="PHPMD\Rule\Design\EvalExpression" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="ShowRapidFireTo"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="ShowRapidFireFrom"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="planet_link"/>
@@ -355,7 +350,6 @@
   <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php"/>
-  <violation rule="PHPMD\Rule\Design\EvalExpression" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="build_options"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/ResourcesettingsController.php" method="build_options"/>
@@ -794,9 +788,7 @@
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/UpdatesLibrary.php" method="updatePlanetResources"/>
   <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Libraries/UpdatesLibrary.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/UpdatesLibrary.php" method="updatePlanetResources"/>
-  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="legacy/app/Libraries/UpdatesLibrary.php"/>
   <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Libraries/UpdatesLibrary.php"/>
-  <violation rule="PHPMD\Rule\Design\EvalExpression" file="legacy/app/Libraries/UpdatesLibrary.php"/>
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Libraries/UpdatesLibrary.php" method="updateHangarQueue"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/UpdatesLibrary.php" method="updateHangarQueue"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/Users.php"/>
