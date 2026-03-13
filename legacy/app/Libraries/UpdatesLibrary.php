@@ -467,10 +467,10 @@ class UpdatesLibrary
             ) ? ENGINEER_ENERGY : 0));
 
             // PRODUCTION FORMULAS
-            $metal_prod = ($ProdGrid[$ProdID]['formule']['metal'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
-            $crystal_prod = ($ProdGrid[$ProdID]['formule']['crystal'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
-            $deuterium_prod = ($ProdGrid[$ProdID]['formule']['deuterium'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
-            $energy_prod = ($ProdGrid[$ProdID]['formule']['energy'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+            $metal_prod = ($formula['formule']['metal'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+            $crystal_prod = ($formula['formule']['crystal'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+            $deuterium_prod = ($formula['formule']['deuterium'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
+            $energy_prod = ($formula['formule']['energy'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
 
             // PLASMA BOOST
             $metalBoost = Formulas::getPlasmaTechnologyBonus((int) $current_user['research_plasma_technology'], 'metal');
