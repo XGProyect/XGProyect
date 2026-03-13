@@ -233,7 +233,7 @@ class DevelopmentsLib
     public static function currentBuilding($call_program, $element_id = 0)
     {
         $parse['call_program'] = $call_program;
-        $parse['current_page'] = ($element_id != 0) ? DevelopmentsLib::setBuildingPage($element_id) : $call_program;
+        $parse['current_page'] = ($element_id != 0) ? DevelopmentsLib::setBuildingPage((int) $element_id) : $call_program;
 
         return Template::render(
             'buildings.build_list_script',

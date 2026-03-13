@@ -231,14 +231,14 @@ class Objects
                 'energy' => 0,
                 'factor' => $production->getFactor(),
                 'formule' => [
-                    'metal' => fn (int | float | string $BuildLevel, int | float | string $BuildLevelFactor, int | float | string $BuildTemp = 0, int | float | string $BuildEnergy = 0): float
-                        => $production->calculateMetal((int) $BuildLevel, (float) $BuildLevelFactor),
-                    'crystal' => fn (int | float | string $BuildLevel, int | float | string $BuildLevelFactor, int | float | string $BuildTemp = 0, int | float | string $BuildEnergy = 0): float
-                        => $production->calculateCrystal((int) $BuildLevel, (float) $BuildLevelFactor),
-                    'deuterium' => fn (int | float | string $BuildLevel, int | float | string $BuildLevelFactor, int | float | string $BuildTemp = 0, int | float | string $BuildEnergy = 0): float
-                        => $production->calculateDeuterium((int) $BuildLevel, (float) $BuildLevelFactor, (float) $BuildTemp),
-                    'energy' => fn (int | float | string $BuildLevel, int | float | string $BuildLevelFactor, int | float | string $BuildTemp = 0, int | float | string $BuildEnergy = 0): float
-                        => $production->calculateEnergy((int) $BuildLevel, (float) $BuildLevelFactor, (float) $BuildTemp, (int) $BuildEnergy),
+                    'metal' => fn (int | float | string $buildLevel, int | float | string $buildLevelFactor, int | float | string $buildTemp = 0, int | float | string $buildEnergy = 0): float
+                        => $production->calculateMetal((int) $buildLevel, (float) $buildLevelFactor),
+                    'crystal' => fn (int | float | string $buildLevel, int | float | string $buildLevelFactor, int | float | string $buildTemp = 0, int | float | string $buildEnergy = 0): float
+                        => $production->calculateCrystal((int) $buildLevel, (float) $buildLevelFactor),
+                    'deuterium' => fn (int | float | string $buildLevel, int | float | string $buildLevelFactor, int | float | string $buildTemp = 0, int | float | string $buildEnergy = 0): float
+                        => $production->calculateDeuterium((int) $buildLevel, (float) $buildLevelFactor, (float) $buildTemp),
+                    'energy' => fn (int | float | string $buildLevel, int | float | string $buildLevelFactor, int | float | string $buildTemp = 0, int | float | string $buildEnergy = 0): float
+                        => $production->calculateEnergy((int) $buildLevel, (float) $buildLevelFactor, (float) $buildTemp, (int) $buildEnergy),
                 ],
             ];
         }

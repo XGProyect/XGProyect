@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
+use App\Services\SettingsService;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
-use App\Services\SettingsService;
 use Xgp\App\Core\Objects;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib as Developments;
@@ -248,8 +248,8 @@ class UpdatesLibrary
 
                 while ($loop) {
                     $list_id_array = explode(',', $queue_array[0]);
-                    $element = $list_id_array[0];
-                    $level = $list_id_array[1];
+                    $element = (int) $list_id_array[0];
+                    $level = (int) $list_id_array[1];
                     $build_time = $list_id_array[2];
                     $build_end_time = $list_id_array[3];
                     $build_mode = $list_id_array[4];
@@ -560,7 +560,7 @@ class UpdatesLibrary
             $production_level = 100;
         } else {
             $production_level = floor(
-                ($current_planet['planet_energy_max'] / $current_planet['planet_energy_used']) * 100
+                ((float) $current_planet['planet_energy_max'] / (float) $current_planet['planet_energy_used']) * 100
             );
         }
 
@@ -732,7 +732,7 @@ class UpdatesLibrary
                     $AllTime = $BuildTime * $Count;
 
                     if ($current_planet['planet_b_hangar'] >= $BuildTime) {
-                        $Done = min($Count, floor($current_planet['planet_b_hangar'] / $BuildTime));
+                        $Done = min($Count, floor((float) $current_planet['planet_b_hangar'] / $BuildTime));
 
                         if ($Count > $Done) {
                             $current_planet['planet_b_hangar'] -= $BuildTime * $Done;

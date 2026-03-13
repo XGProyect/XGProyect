@@ -423,7 +423,7 @@ class BuildingsController extends BaseController
             }
 
             if ($building != false) {
-                $Needed = Developments::developmentPrice($this->user, $this->planet, $building, true, $ForDestroy);
+                $Needed = Developments::developmentPrice($this->user, $this->planet, (int) $building, true, $ForDestroy);
                 $this->planet['planet_metal'] += $Needed['metal'];
                 $this->planet['planet_crystal'] += $Needed['crystal'];
                 $this->planet['planet_deuterium'] += $Needed['deuterium'];
@@ -623,8 +623,8 @@ class BuildingsController extends BaseController
             $PlanetID = $this->planet['planet_id'];
             for ($QueueID = 0; $QueueID < $ActualCount; $QueueID++) {
                 $BuildArray = explode(',', $QueueArray[$QueueID]);
-                $BuildEndTime = floor($BuildArray[3]);
-                $CurrentTime = floor(time());
+                $BuildEndTime = (int) $BuildArray[3];
+                $CurrentTime = time();
 
                 if ($BuildMode == 'destroy') {
                     $to_destroy++;

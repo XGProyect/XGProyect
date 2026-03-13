@@ -45,7 +45,7 @@ class StatisticsLibrary
                 break;
         }
 
-        $element = Objects::getInstance()->getPrice($element);
+        $element = Objects::getInstance()->getPrice((int) $element);
         $resources_total = $element['metal'] + $element['crystal'] + $element['deuterium'];
         $level_mult = pow($element['factor'], $current_level);
         $points = ($resources_total * $level_mult) / app(SettingsService::class)->getInt('stat_points');

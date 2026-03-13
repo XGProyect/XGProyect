@@ -80,8 +80,8 @@ class OverviewController extends BaseController
             if ($user_planet['planet_b_building'] != 0) {
                 $queue = explode(';', $user_planet['planet_b_building_id']); // GET ALL
                 $current_building = explode(',', $queue[0]); // GET ONLY THE FIRST ELEMENT
-                $building = $current_building[0]; // THE BUILDING
-                $level = $current_building[1]; // THE LEVEL
+                $building = (int) $current_building[0]; // THE BUILDING
+                $level = (int) $current_building[1]; // THE LEVEL
                 $time_to_end = $current_building[3] - time(); // THE TIME
 
                 // THE BUILDING BLOCK
