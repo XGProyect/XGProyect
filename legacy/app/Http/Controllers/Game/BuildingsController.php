@@ -642,34 +642,32 @@ class BuildingsController extends BaseController
                         $Sprice[$building] = $BuildLevel;
                     }
 
-                    if ($ListID > 0) {
-                        $ListIDRow .= '<tr>';
-                        if ($BuildMode == 'build') {
-                            $ListIDRow .= '	<td class="l" colspan="2">' . $ListID . '.: ' . $ElementTitle . ' ' . $BuildLevel . '</td>';
-                        } else {
-                            $ListIDRow .= '	<td class="l" colspan="2">' . $ListID . '.: ' . $ElementTitle . ' ' . $BuildLevel . ' ' . __('game/buildings.bd_dismantle') . '</td>';
-                        }
-                        $ListIDRow .= '	<td class="k">';
-
-                        if ($ListID == 1) {
-                            $ListIDRow .= '		<div id="blc" class="z">' . $BuildTime . '<br>';
-                            $ListIDRow .= '		<a href="game.php?page=' . $this->page . '&listid=' . $ListID . '&amp;cmd=cancel&amp;planet=' . $PlanetID . '">' . __('game/buildings.bd_interrupt') . '</a></div>';
-                            $ListIDRow .= '		<script language="JavaScript">';
-                            $ListIDRow .= '			pp = "' . $BuildTime . "\";\n";
-                            $ListIDRow .= '			pk = "' . $ListID . "\";\n";
-                            $ListIDRow .= "			pm = \"cancel\";\n";
-                            $ListIDRow .= '			pl = "' . $PlanetID . "\";\n";
-                            $ListIDRow .= "			t();\n";
-                            $ListIDRow .= '		</script>';
-                            $ListIDRow .= '		<strong color="lime"><br><font color="lime">' . Timing::formatExtendedDate($BuildEndTime) . '</font></strong>';
-                        } else {
-                            $ListIDRow .= '		<font color="red">';
-                            $ListIDRow .= '		<a href="game.php?page=' . $this->page . '&listid=' . $ListID . '&amp;cmd=remove&amp;planet=' . $PlanetID . '">' . __('game/buildings.bd_cancel') . '</a></font>';
-                        }
-
-                        $ListIDRow .= '	</td>';
-                        $ListIDRow .= '</tr>';
+                    $ListIDRow .= '<tr>';
+                    if ($BuildMode == 'build') {
+                        $ListIDRow .= '	<td class="l" colspan="2">' . $ListID . '.: ' . $ElementTitle . ' ' . $BuildLevel . '</td>';
+                    } else {
+                        $ListIDRow .= '	<td class="l" colspan="2">' . $ListID . '.: ' . $ElementTitle . ' ' . $BuildLevel . ' ' . __('game/buildings.bd_dismantle') . '</td>';
                     }
+                    $ListIDRow .= '	<td class="k">';
+
+                    if ($ListID == 1) {
+                        $ListIDRow .= '		<div id="blc" class="z">' . $BuildTime . '<br>';
+                        $ListIDRow .= '		<a href="game.php?page=' . $this->page . '&listid=' . $ListID . '&amp;cmd=cancel&amp;planet=' . $PlanetID . '">' . __('game/buildings.bd_interrupt') . '</a></div>';
+                        $ListIDRow .= '		<script language="JavaScript">';
+                        $ListIDRow .= '			pp = "' . $BuildTime . "\";\n";
+                        $ListIDRow .= '			pk = "' . $ListID . "\";\n";
+                        $ListIDRow .= "			pm = \"cancel\";\n";
+                        $ListIDRow .= '			pl = "' . $PlanetID . "\";\n";
+                        $ListIDRow .= "			t();\n";
+                        $ListIDRow .= '		</script>';
+                        $ListIDRow .= '		<strong color="lime"><br><font color="lime">' . Timing::formatExtendedDate($BuildEndTime) . '</font></strong>';
+                    } else {
+                        $ListIDRow .= '		<font color="red">';
+                        $ListIDRow .= '		<a href="game.php?page=' . $this->page . '&listid=' . $ListID . '&amp;cmd=remove&amp;planet=' . $PlanetID . '">' . __('game/buildings.bd_cancel') . '</a></font>';
+                    }
+
+                    $ListIDRow .= '	</td>';
+                    $ListIDRow .= '</tr>';
                 }
             }
         }

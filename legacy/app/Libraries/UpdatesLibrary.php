@@ -17,6 +17,7 @@ use Xgp\App\Models\Libraries\UpdatesLibrary as UpdatesLibraryModel;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
+ * @SuppressWarnings("PHPMD.UnusedLocalVariable")
  */
 class UpdatesLibrary
 {

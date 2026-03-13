@@ -2899,19 +2899,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/BuildingsController.php
 
 		-
-			message: '#^Parameter \#1 \$num of function floor expects float\|int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
 			message: '#^Parameter \#2 \$array of function join expects array, array\<int, string\>\|string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Parameter \#3 \$element of static method Xgp\\App\\Libraries\\DevelopmentsLib\:\:developmentPrice\(\) expects int, string given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuildingsController.php
@@ -2943,12 +2931,6 @@ parameters:
 		-
 			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:\$user type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuildingsController.php
 
@@ -4585,21 +4567,9 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/OverviewController.php
 
 		-
-			message: '#^Parameter \#1 \$objectId of method Xgp\\App\\Core\\Objects\:\:getObjects\(\) expects int\|null, string given\.$#'
-			identifier: argument.type
-			count: 2
-			path: legacy/app/Http/Controllers/Game/OverviewController.php
-
-		-
 			message: '#^Parameter \#2 \$Status of static method Xgp\\App\\Libraries\\FleetsLib\:\:flyingFleetsTable\(\) expects string, int given\.$#'
 			identifier: argument.type
 			count: 8
-			path: legacy/app/Http/Controllers/Game/OverviewController.php
-
-		-
-			message: '#^Parameter \#2 \$element_id of static method Xgp\\App\\Libraries\\DevelopmentsLib\:\:currentBuilding\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
 			path: legacy/app/Http/Controllers/Game/OverviewController.php
 
 		-
@@ -10267,12 +10237,6 @@ parameters:
 			path: legacy/app/Libraries/StatisticsLibrary.php
 
 		-
-			message: '#^Parameter \#1 \$objectId of method Xgp\\App\\Core\\Objects\:\:getPrice\(\) expects int\|null, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/StatisticsLibrary.php
-
-		-
 			message: '#^Property Xgp\\App\\Libraries\\StatisticsLibrary\:\:\$time has no type specified\.$#'
 			identifier: missingType.property
 			count: 1
@@ -10420,12 +10384,6 @@ parameters:
 			message: '#^Parameter \#2 \$boost of static method Xgp\\App\\Libraries\\ProductionLib\:\:productionAmount\(\) expects int, float\|int given\.$#'
 			identifier: argument.type
 			count: 4
-			path: legacy/app/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Parameter \#3 \$element of static method Xgp\\App\\Libraries\\DevelopmentsLib\:\:isDevelopmentPayable\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-

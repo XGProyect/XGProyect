@@ -159,7 +159,6 @@
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="addToQueue"/>
   <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="legacy/app/Http/Controllers/Game/BuildingsController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="addToQueue"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="showQueue"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/BuildingsController.php" method="showQueue"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Http/Controllers/Game/ChangelogController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/ChatController.php"/>
