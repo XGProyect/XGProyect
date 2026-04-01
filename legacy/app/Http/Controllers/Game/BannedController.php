@@ -5,17 +5,21 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Models\Banned;
+use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class BannedController extends BaseController
 {
     public const MODULE_ID = 22;
 
     private int $bannedCount = 0;
+
+    public function __construct(private TimingService $timingService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -42,8 +46,8 @@ class BannedController extends BaseController
                 $bannedList[] = [
                     'player' => $b['banned_who'],
                     'reason' => $b['banned_theme'],
-                    'since' => Timing::formatExtendedDate($b['banned_time']),
-                    'until' => Timing::formatExtendedDate($b['banned_longer']),
+                    'since' => $this->timingService->formatExtendedDate($b['banned_time']),
+                    'until' => $this->timingService->formatExtendedDate($b['banned_longer']),
                     'by' => UrlHelper::setUrl(
                         'mailto:' . $b['banned_email'],
                         $b['banned_author'],

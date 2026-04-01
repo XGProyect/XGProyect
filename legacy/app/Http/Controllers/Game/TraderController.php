@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\ResourceMarket;
 use Xgp\App\Libraries\Users;
@@ -23,6 +23,10 @@ class TraderController extends BaseController
     private ?ResourceMarket $trader;
     private string $error = '';
     private Trader $traderModel;
+
+    public function __construct(private FormatService $formatService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -67,7 +71,8 @@ class TraderController extends BaseController
                     key($refill)
                 )
             ) {
-                $this->refillResource(...explode('-', key($refill)));
+                $parts = explode('-', key($refill));
+                $this->refillResource($parts[0], (int) $parts[1]);
             }
         }
     }
@@ -154,8 +159,8 @@ class TraderController extends BaseController
             $list_of_resources[] = [
                 'resource' => $resource,
                 'resource_name' => __('game/global' . $resource),
-                'current_resource' => Format::shortlyNumber($this->planet['planet_' . $resource]),
-                'max_resource' => Format::shortlyNumber($this->planet['planet_' . $resource . '_max']),
+                'current_resource' => $this->formatService->shortlyNumber($this->planet['planet_' . $resource]),
+                'max_resource' => $this->formatService->shortlyNumber($this->planet['planet_' . $resource . '_max']),
                 'refill_options' => $this->setRefillOptions($resource),
             ];
         }
@@ -181,11 +186,11 @@ class TraderController extends BaseController
                 !$this->trader->{'is' . ucfirst($resource) . 'StorageFillable'}($percentage) ||
                 $dm_price == 0
             ) {
-                $price = Format::colorRed('-');
+                $price = $this->formatService->colorRed('-');
                 $button = '';
             } else {
-                $price = Format::customColor(
-                    Format::prettyNumber((int) $dm_price),
+                $price = $this->formatService->customColor(
+                    $this->formatService->prettyNumber((int) $dm_price),
                     '#2cbef2'
                 ) . ' ' . __('game/global.dark_matter_short');
                 $button = '<input type="submit" name="' . $resource . '-' . $percentage . '" value="' . __('game/trader.tr_refill_button') . '">';

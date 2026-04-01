@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\Game;
 
 use App\Models\Planets;
+use App\Services\SettingsService;
 
 class PlanetService
 {

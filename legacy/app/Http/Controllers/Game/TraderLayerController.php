@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 
@@ -15,6 +15,10 @@ class TraderLayerController extends BaseController
     public const MODULE_ID = 5;
 
     private array $planet = [];
+
+    public function __construct(private FormatService $formatService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -247,11 +251,11 @@ class TraderLayerController extends BaseController
             $list_of_resources[] = [
                 'resource' => $resource,
                 'resource_name' => __('game/global' . $resource),
-                'current_resource' => Format::shortlyNumber($this->planet['planet_' . $resource]),
-                'max_resource' => Format::shortlyNumber($this->planet['planet_' . $resource . '_max']),
-                'dark_matter_price_10' => Format::prettyNumber($price),
-                'dark_matter_price_50' => Format::prettyNumber($price * 5),
-                'dark_matter_price_100' => Format::prettyNumber($price * 10),
+                'current_resource' => $this->formatService->shortlyNumber((float) $this->planet['planet_' . $resource]),
+                'max_resource' => $this->formatService->shortlyNumber((float) $this->planet['planet_' . $resource . '_max']),
+                'dark_matter_price_10' => $this->formatService->prettyNumber($price),
+                'dark_matter_price_50' => $this->formatService->prettyNumber($price * 5),
+                'dark_matter_price_100' => $this->formatService->prettyNumber($price * 10),
             ];
         }
 

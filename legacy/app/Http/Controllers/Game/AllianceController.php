@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
+use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
@@ -12,9 +14,7 @@ use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Alliance\Alliances;
 use Xgp\App\Libraries\BBCodeLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Alliance;
 
@@ -30,6 +30,12 @@ class AllianceController extends BaseController
     private ?BBCodeLib $bbcode = null;
     private ?Alliances $alliance = null;
     private Alliance $allianceModel;
+
+    public function __construct(
+        private FormatService $formatService,
+        private TimingService $timingService,
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -343,12 +349,12 @@ class AllianceController extends BaseController
                 'id' => $member['id'],
                 'write_message' => __('game/global.write_message'),
                 'ally_range' => $this->getUserRank((int)$member['id'], (int)$member['ally_rank_id']),
-                'points' => FormatLib::prettyNumber((int) $member['user_statistic_total_points']),
+                'points' => $this->formatService->prettyNumber((int) $member['user_statistic_total_points']),
                 'galaxy' => $member['galaxy'],
                 'system' => $member['system'],
-                'coords' => FormatLib::prettyCoords((int)$member['galaxy'], (int)$member['system'], (int)$member['planet']),
-                'ally_register_time' => Timing::formatExtendedDate((int)$member['ally_register_time']),
-                'online_time' => $this->alliance->hasAccess(AllianceRanks::ONLINE_STATUS) ? Timing::setOnlineStatus((int)$member['onlinetime']) : '-',
+                'coords' => $this->formatService->prettyCoords((int)$member['galaxy'], (int)$member['system'], (int)$member['planet']),
+                'ally_register_time' => $this->timingService->formatExtendedDate((int)$member['ally_register_time']),
+                'online_time' => $this->alliance->hasAccess(AllianceRanks::ONLINE_STATUS) ? $this->timingService->getOnlineStatus((int) $member['onlinetime'], time()) : '-',
             ];
         }
 
@@ -656,12 +662,12 @@ class AllianceController extends BaseController
                 'id' => $member['id'],
                 'write_message' => __('game/global.write_message'),
                 'ally_range' => $this->buildAdminMembersRankBlock((int) $member['id'], (int) $member['ally_rank_id'], $rank),
-                'points' => FormatLib::prettyNumber((int) $member['user_statistic_total_points']),
+                'points' => $this->formatService->prettyNumber((int) $member['user_statistic_total_points']),
                 'galaxy' => $member['galaxy'],
                 'system' => $member['system'],
-                'coords' => FormatLib::prettyCoords($member['galaxy'], $member['system'], $member['planet']),
-                'ally_register_time' => Timing::formatExtendedDate((int)$member['ally_register_time']),
-                'online_time' => Timing::formatDaysTime($member['onlinetime']),
+                'coords' => $this->formatService->prettyCoords((int)$member['galaxy'], (int)$member['system'], (int)$member['planet']),
+                'ally_register_time' => $this->timingService->formatExtendedDate((int)$member['ally_register_time']),
+                'online_time' => $this->timingService->formatDaysElapsed((int) $member['onlinetime'], time()),
                 'actions' => $this->buildAdminMembersActionBlock((int) $member['id'], (int) $member['name'], $rank),
             ];
         }
@@ -759,7 +765,7 @@ class AllianceController extends BaseController
                 $requestsList[$request['id']] = [
                     'id' => $request['id'],
                     'username' => $request['name'],
-                    'time' => Timing::formatExtendedDate((int)$request['ally_register_time']),
+                    'time' => $this->timingService->formatExtendedDate((int)$request['ally_register_time']),
                     'ally_request_text' => nl2br($request['ally_request_text']),
                 ];
             }

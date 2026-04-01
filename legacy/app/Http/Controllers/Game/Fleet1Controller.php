@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\Game\Formulas\FleetsService;
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
-use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\Fleets;
 use Xgp\App\Libraries\Premium\Premium;
@@ -30,6 +31,13 @@ class Fleet1Controller extends BaseController
     private int $_ship_count = 0;
     private Fleet $fleetModel;
     private Objects $objects;
+
+    public function __construct(
+        private FormatService $formatService,
+        private FleetsService $fleetsService,
+        private OfficerService $officerService
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -66,12 +74,12 @@ class Fleet1Controller extends BaseController
     {
         $page = [
             'fleets' => $this->_fleets->getFleetsCount(),
-            'max_fleets' => FleetsLib::getMaxFleets(
+            'max_fleets' => $this->fleetsService->getMaxFleets(
                 $this->_research->getCurrentResearch()->getResearchComputerTechnology(),
-                $this->_premium->getCurrentPremium()->getPremiumOfficierAdmiral()
+                $this->officerService->isOfficerActive($this->_premium->getCurrentPremium()->getPremiumOfficierAdmiral(), time())
             ),
             'expeditions' => $this->_fleets->getExpeditionsCount(),
-            'max_expeditions' => FleetsLib::getMaxExpeditions(
+            'max_expeditions' => $this->fleetsService->getMaxExpeditions(
                 $this->_research->getCurrentResearch()->getResearchAstrophysics()
             ),
             'no_slot' => $this->buildNoSlotBlock(),
@@ -122,9 +130,9 @@ class Fleet1Controller extends BaseController
                         'ships_input' => $this->buildShipsInput($ship_id) ?? '-',
                         'ship_id' => $ship_id,
                         'max_ships' => $ship_amount,
-                        'consumption' => FleetsLib::shipConsumption($ship_id, $this->user),
-                        'speed' => FleetsLib::getShipSpeed($ship_id, $this->user),
-                        'capacity' => FleetsLib::getMaxStorage(
+                        'consumption' => $this->fleetsService->shipConsumption($ship_id, (int) $this->user['research_combustion_drive'], (int) $this->user['research_impulse_drive'], (int) $this->user['research_hyperspace_drive']),
+                        'speed' => $this->fleetsService->getShipSpeed($ship_id, (int) $this->user['research_combustion_drive'], (int) $this->user['research_impulse_drive'], (int) $this->user['research_hyperspace_drive']),
+                        'capacity' => $this->fleetsService->getMaxStorage(
                             $price[$ship_id]['capacity'],
                             $this->_research->getCurrentResearch()->getResearchHyperspaceTechnology()
                         ),
@@ -138,7 +146,7 @@ class Fleet1Controller extends BaseController
 
     private function buildShipName(string $ship_name, int $ship_id): string
     {
-        $title = __('game/fleet.fl_speed_title') . FleetsLib::getShipSpeed($ship_id, $this->user);
+        $title = __('game/fleet.fl_speed_title') . $this->fleetsService->getShipSpeed($ship_id, (int) $this->user['research_combustion_drive'], (int) $this->user['research_impulse_drive'], (int) $this->user['research_hyperspace_drive']);
 
         return UrlHelper::setUrl('', __('game/ships.' . $ship_name), $title);
     }
@@ -152,7 +160,7 @@ class Fleet1Controller extends BaseController
      */
     private function buildShipAmount($ship_amount)
     {
-        return FormatLib::prettyNumber((int) $ship_amount);
+        return $this->formatService->prettyNumber((int) $ship_amount);
     }
 
     /**
@@ -238,9 +246,9 @@ class Fleet1Controller extends BaseController
      */
     private function checkAvailableSlot()
     {
-        return (FleetsLib::getMaxFleets(
+        return ($this->fleetsService->getMaxFleets(
             $this->_research->getCurrentResearch()->getResearchComputerTechnology(),
-            $this->_premium->getCurrentPremium()->getPremiumOfficierAdmiral()
+            $this->officerService->isOfficerActive($this->_premium->getCurrentPremium()->getPremiumOfficierAdmiral(), time())
         ) > $this->_fleets->getFleetsCount());
     }
 

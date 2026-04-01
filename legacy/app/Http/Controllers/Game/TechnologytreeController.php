@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 
@@ -19,6 +19,10 @@ class TechnologytreeController extends BaseController
     private array $planet = [];
     private $_resource;
     private $_requirements;
+
+    public function __construct(private FormatService $formatService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -91,8 +95,8 @@ class TechnologytreeController extends BaseController
                 $displayLevel = $currentResourceLevel . '/' . $requiredLevel;
             }
 
-            $requirementsList[] = FormatLib::{'color' . $color}(
-                FormatLib::formatLevel(
+            $requirementsList[] = $this->formatService->{'color' . $color}(
+                $this->formatService->formatLevel(
                     $this->setRequirementText($this->_resource[$requirement]),
                     (int) $displayLevel
                 )

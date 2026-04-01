@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\App\Services\Admin;
 
 use App\Services\Admin\MessagesService;
+use App\Services\TimingService;
 use Tests\TestCase;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 
@@ -15,7 +16,8 @@ class MessagesServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new MessagesService();
+        $timingService = $this->createMock(TimingService::class);
+        $this->service = new MessagesService($timingService);
     }
 
     public function testBuildTypeOptionsReturnsOneEntryPerKnownType(): void

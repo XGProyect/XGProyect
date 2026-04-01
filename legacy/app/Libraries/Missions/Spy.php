@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Missions;
 
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
 use Xgp\App\Core\Enumerators\MissionsEnumerator;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\OfficiersLib;
 
 class Spy extends Missions
 {
-    public function __construct()
-    {
+    public function __construct(
+        private FormatService $formatService,
+        private OfficerService $officerService
+    ) {
         parent::__construct();
     }
 
@@ -42,8 +44,8 @@ class Spy extends Missions
                 ],
             ]);
 
-            $CurrentSpyLvl = OfficiersLib::getMaxEspionage((int) $current_data['research_espionage_technology'], (int) $current_data['premium_officier_technocrat']);
-            $TargetSpyLvl = OfficiersLib::getMaxEspionage((int) $target_data['research_espionage_technology'], (int) $target_data['premium_officier_technocrat']);
+            $CurrentSpyLvl = $this->officerService->getMaxEspionage((int) $current_data['research_espionage_technology'], $this->officerService->isOfficerActive((int) $current_data['premium_officier_technocrat'], time()));
+            $TargetSpyLvl = $this->officerService->getMaxEspionage((int) $target_data['research_espionage_technology'], $this->officerService->isOfficerActive((int) $target_data['premium_officier_technocrat'], time()));
             $fleet = FleetsLib::getFleetShipsArray($fleet_row['fleet_array']);
 
             foreach ($fleet as $id => $amount) {
@@ -87,7 +89,7 @@ class Spy extends Missions
                             $fleet_row['fleet_start_time'],
                             0,
                             __('game/missions.mi_fleet_command'),
-                            sprintf(__('game/spy.spy_result_destroyed_title'), FormatLib::prettyCoords($fleet_row['fleet_end_galaxy'], $fleet_row['fleet_end_system'], $fleet_row['fleet_end_planet'])),
+                            sprintf(__('game/spy.spy_result_destroyed_title'), $this->formatService->prettyCoords((int) $fleet_row['fleet_end_galaxy'], (int) $fleet_row['fleet_end_system'], (int) $fleet_row['fleet_end_planet'])),
                             __('game/spy.spy_result_destroyed'),
                             true
                         );
@@ -149,7 +151,7 @@ class Spy extends Missions
                         $fleet_row['fleet_start_time'],
                         0,
                         __('game/missions.mi_fleet_command'),
-                        sprintf(__('game/spy.spy_report_title'), $target_data['planet_name'], FormatLib::prettyCoords($target_data['planet_galaxy'], $target_data['planet_system'], $target_data['planet_planet'])),
+                        sprintf(__('game/spy.spy_report_title'), $target_data['planet_name'], $this->formatService->prettyCoords((int) $target_data['planet_galaxy'], (int) $target_data['planet_system'], (int) $target_data['planet_planet'])),
                         $SpyMessage,
                         true
                     );
@@ -190,11 +192,11 @@ class Spy extends Missions
                 $String .= $report_title;
                 $String .= '</td>';
                 $String .= '</tr><tr>';
-                $String .= '<td width=220>' . __('game/global.metal') . '</td><td width=220 align=right>' . FormatLib::prettyNumber((int) $target_data['planet_metal']) . '</td><td>&nbsp;</td>';
-                $String .= '<td width=220>' . __('game/global.crystal') . '</td></td><td width=220 align=right>' . FormatLib::prettyNumber((int) $target_data['planet_crystal']) . '</td>';
+                $String .= '<td width=220>' . __('game/global.metal') . '</td><td width=220 align=right>' . $this->formatService->prettyNumber((int) $target_data['planet_metal']) . '</td><td>&nbsp;</td>';
+                $String .= '<td width=220>' . __('game/global.crystal') . '</td></td><td width=220 align=right>' . $this->formatService->prettyNumber((int) $target_data['planet_crystal']) . '</td>';
                 $String .= '</tr><tr>';
-                $String .= '<td width=220>' . __('game/global.deuterium') . '</td><td width=220 align=right>' . FormatLib::prettyNumber((int) $target_data['planet_deuterium']) . '</td><td>&nbsp;</td>';
-                $String .= '<td width=220>' . __('game/global.energy') . '</td><td width=220 align=right>' . FormatLib::prettyNumber((int) $target_data['planet_energy_max']) . '</td>';
+                $String .= '<td width=220>' . __('game/global.deuterium') . '</td><td width=220 align=right>' . $this->formatService->prettyNumber((int) $target_data['planet_deuterium']) . '</td><td>&nbsp;</td>';
+                $String .= '<td width=220>' . __('game/global.energy') . '</td><td width=220 align=right>' . $this->formatService->prettyNumber((int) $target_data['planet_energy_max']) . '</td>';
                 $String .= '</tr>';
 
                 $LookAtLoop = false;
@@ -236,7 +238,7 @@ class Spy extends Missions
                             $String .= '<tr>';
                         }
 
-                        $String .= '<td align=left>' . __('game/constructions.' . $this->resource[$Item]) . '</td><td align=right>' . FormatLib::prettyNumber((int) $target_data[$this->resource[$Item]]) . '</td>';
+                        $String .= '<td align=left>' . __('game/constructions.' . $this->resource[$Item]) . '</td><td align=right>' . $this->formatService->prettyNumber((int) $target_data[$this->resource[$Item]]) . '</td>';
 
                         if ($row < 2 - 1) {
                             $String .= '<td>&nbsp;</td>';
@@ -285,17 +287,17 @@ class Spy extends Missions
                 __('game/spy.spy_activity_title'),
                 [
                     $target['planet_name'],
-                    FormatLib::prettyCoords($target['planet_galaxy'], $target['planet_system'], $target['planet_planet']),
+                    $this->formatService->prettyCoords((int) $target['planet_galaxy'], (int) $target['planet_system'], (int) $target['planet_planet']),
                 ]
             ),
             StringsHelper::parseReplacements(
                 __('game/spy.spy_activity_enemy_seen'),
                 [
                     $user['planet_name'],
-                    FormatLib::prettyCoords($user['planet_galaxy'], $user['planet_system'], $user['planet_planet']),
+                    $this->formatService->prettyCoords((int) $user['planet_galaxy'], (int) $user['planet_system'], (int) $user['planet_planet']),
                     $user['name'],
                     $target['planet_name'],
-                    FormatLib::prettyCoords($target['planet_galaxy'], $target['planet_system'], $target['planet_planet']),
+                    $this->formatService->prettyCoords((int) $target['planet_galaxy'], (int) $target['planet_system'], (int) $target['planet_planet']),
                     $chances,
                 ]
             ),

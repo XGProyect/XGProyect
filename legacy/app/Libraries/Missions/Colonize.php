@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Missions;
 
+use App\Services\Game\Formulas\FleetsService;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;
@@ -30,7 +31,7 @@ class Colonize extends Missions
 
             // some required values
             $target_coords = sprintf(__('game/missions.mi_planet_coordinates'), $fleet_row['fleet_end_galaxy'], $fleet_row['fleet_end_system'], $fleet_row['fleet_end_planet']);
-            $max_colonies = FleetsLib::getMaxColonies($colonization_check['astro_level']);
+            $max_colonies = app(FleetsService::class)->getMaxColonies((int) $colonization_check['astro_level']);
             $planet_count = $colonization_check['planet_count'] - 1; // the total amount of planets minus 1 (because the main planet is not considered)
 
             // different types of messages

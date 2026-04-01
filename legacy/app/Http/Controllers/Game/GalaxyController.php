@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\Game\Formulas\FleetsService;
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
 use Illuminate\Routing\Controller as BaseController;
 use App\Services\SettingsService;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\GalaxyLib;
@@ -38,6 +40,13 @@ class GalaxyController extends BaseController
     private $_galaxyLib;
     private Galaxy $galaxyModel;
     private Fleet $fleetModel;
+
+    public function __construct(
+        private FormatService $formatService,
+        private FleetsService $fleetsService,
+        private OfficerService $officerService
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -75,9 +84,9 @@ class GalaxyController extends BaseController
     private function buildPage(): void
     {
         // fleets
-        $max_fleets = FleetsLib::getMaxFleets(
+        $max_fleets = $this->fleetsService->getMaxFleets(
             (int) $this->user['research_computer_technology'],
-            (int) $this->user['premium_officier_admiral']
+            $this->officerService->isOfficerActive((int) $this->user['premium_officier_admiral'], time())
         );
         $current_fleets = $this->galaxyModel->countAmountFleetsByUserId((int) $this->user['id']);
 
@@ -109,14 +118,14 @@ class GalaxyController extends BaseController
         $parse['currentmip'] = $this->planet['defense_interplanetary_missile'];
         $parse['maxfleetcount'] = $current_fleets;
         $parse['fleetmax'] = $max_fleets;
-        $parse['recyclers'] = FormatLib::prettyNumber((int) $this->planet['ship_recycler']);
-        $parse['spyprobes'] = FormatLib::prettyNumber((int) $CurrentSP);
+        $parse['recyclers'] = $this->formatService->prettyNumber((int) $this->planet['ship_recycler']);
+        $parse['spyprobes'] = $this->formatService->prettyNumber((int) $CurrentSP);
         $parse['missile_count'] = sprintf(__('game/galaxy.gl_missil_to_launch'), $this->planet['defense_interplanetary_missile']);
         $parse['current'] = isset($_GET['current']) ? $_GET['current'] : null;
         $parse['current_galaxy'] = $this->planet['planet_galaxy'];
         $parse['current_system'] = $this->planet['planet_system'];
         $parse['current_planet'] = $this->planet['planet_planet'];
-        $parse['coords'] = FormatLib::prettyCoords($this->_galaxy, $this->_system, (int) $planet);
+        $parse['coords'] = $this->formatService->prettyCoords((int)$this->_galaxy, (int)$this->_system, (int) $planet);
         $parse['planet_type'] = $this->planet['planet_type'];
         $parse['mip'] = ($mode == 2) ? Template::render(
             'galaxy/galaxy_missile_selector',
@@ -277,7 +286,7 @@ class GalaxyController extends BaseController
 
         $current_missiles = $this->planet['defense_interplanetary_missile'];
         $tempvar1 = abs($system - $this->planet['planet_system']);
-        $tempvar2 = Formulas::missileRange($this->user['research_impulse_drive']);
+        $tempvar2 = Formulas::missileRange((int) $this->user['research_impulse_drive']);
 
         $target_user = $this->galaxyModel->getTargetUserDataByCoords($galaxy, $system, $planet);
 
@@ -490,7 +499,7 @@ class GalaxyController extends BaseController
         $TargetPoints = $user_points['target_points'];
         $TargetVacat = $target_user['preference_vacation_mode'];
 
-        if ((FleetsLib::getMaxFleets($this->user[$this->_resource[108]], $this->user['premium_officier_admiral'])) <= $current_fleets) {
+        if (($this->fleetsService->getMaxFleets((int) $this->user[$this->_resource[108]], $this->officerService->isOfficerActive((int) $this->user['premium_officier_admiral'], time()))) <= $current_fleets) {
             die('612 ');
         }
 
@@ -524,10 +533,10 @@ class GalaxyController extends BaseController
             die('601 ');
         }
 
-        $Distance = FleetsLib::targetDistance($this->planet['planet_galaxy'], $_POST['galaxy'], $this->planet['planet_system'], $_POST['system'], $this->planet['planet_planet'], $_POST['planet']);
-        $speedall = FleetsLib::fleetMaxSpeed($FleetArray, $this->user);
+        $Distance = $this->fleetsService->targetDistance((int) $this->planet['planet_galaxy'], (int) $_POST['galaxy'], (int) $this->planet['planet_system'], (int) $_POST['system'], (int) $this->planet['planet_planet'], (int) $_POST['planet']);
+        $speedall = $this->fleetsService->fleetMaxSpeed($FleetArray, (int) $this->user['research_combustion_drive'], (int) $this->user['research_impulse_drive'], (int) $this->user['research_hyperspace_drive']);
         $SpeedAllMin = min($speedall);
-        $Duration = FleetsLib::missionDuration(10, $SpeedAllMin, $Distance, Functions::fleetSpeedFactor());
+        $Duration = $this->fleetsService->missionDuration(10, (int) $SpeedAllMin, $Distance, Functions::fleetSpeedFactor());
 
         $fleet['fly_time'] = $Duration;
         $fleet['start_time'] = $Duration + time();

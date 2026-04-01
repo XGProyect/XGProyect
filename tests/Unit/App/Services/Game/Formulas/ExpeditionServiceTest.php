@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\App\Services\Formulas;
+namespace Tests\Unit\App\Services\Game\Formulas;
 
-use App\Services\Formulas\Expedition;
+use App\Services\Game\Formulas\ExpeditionService;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
-class ExpeditionTest extends TestCase
+class ExpeditionServiceTest extends TestCase
 {
     public function testGetMaxExpeditionPoints(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
 
         $this->assertEquals(2500, $expedition->getMaxExpeditionPoints(50000));
         $this->assertEquals(6000, $expedition->getMaxExpeditionPoints(500000));
@@ -28,7 +28,7 @@ class ExpeditionTest extends TestCase
 
     public function testGetMaxShipsExpeditionPoints(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
 
         $this->assertEquals(250000, $expedition->getMaxShipsExpeditionPoints(50000));
         $this->assertEquals(600000, $expedition->getMaxShipsExpeditionPoints(500000));
@@ -44,7 +44,7 @@ class ExpeditionTest extends TestCase
     {
         $exampleIntegrity = 800;
 
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
         $result = $expedition->calculateExpeditionPoints($exampleIntegrity);
 
         $expectedResult = 4; // Expected result for $structuralIntegrity = 800
@@ -54,7 +54,7 @@ class ExpeditionTest extends TestCase
 
     public function testGetExpeditionResult(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
         $result = $expedition->getExpeditionResult();
 
         $validResults = [
@@ -66,7 +66,7 @@ class ExpeditionTest extends TestCase
 
     public function testCalculateDarkMatterSourceSize(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
         $result = $expedition->calculateDarkMatterSourceSize();
 
         $validResults = ['small', 'medium', 'large'];
@@ -76,7 +76,7 @@ class ExpeditionTest extends TestCase
 
     public function testGetDarkMatterSourceSize(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
 
         $resultSmall = $expedition->getDarkMatterSourceSize('small');
         $this->assertGreaterThanOrEqual(300, $resultSmall);
@@ -93,7 +93,7 @@ class ExpeditionTest extends TestCase
 
     public function testCalculateResourceTypeObtained(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
         $result = $expedition->calculateResourceTypeObtained();
 
         $validResults = ['metal', 'crystal', 'deuterium'];
@@ -103,7 +103,7 @@ class ExpeditionTest extends TestCase
 
     public function testCalculateResourceSourceSize(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
         $result = $expedition->calculateResourceSourceSize();
 
         $validResults = ['normal', 'large', 'xl'];
@@ -113,7 +113,7 @@ class ExpeditionTest extends TestCase
 
     public function testGetResourceSourceSizeMultChances(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
 
         $resultNormal = $expedition->getResourceSourceSizeMultChances('normal');
         $this->assertGreaterThanOrEqual(10, $resultNormal);
@@ -130,7 +130,7 @@ class ExpeditionTest extends TestCase
 
     public function testGetResourceFoundAmount(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
 
         // Test case 1: metal resource type
         $result = $expedition->getResourceFoundAmount(2, 100, 'metal');
@@ -147,7 +147,7 @@ class ExpeditionTest extends TestCase
 
     public function testCalculateShipFoundAmount(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
 
         $result = $expedition->calculateShipFoundAmount(3, 150);
         $this->assertEquals(225, $result);
@@ -155,7 +155,7 @@ class ExpeditionTest extends TestCase
 
     public function testGetPossibleShips(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
 
         $result = $expedition->getPossibleShips();
 
@@ -177,7 +177,7 @@ class ExpeditionTest extends TestCase
 
     public function testGetShipsObtainableChances(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
 
         $result = $expedition->getShipsObtainableChances();
 
@@ -199,7 +199,7 @@ class ExpeditionTest extends TestCase
 
     public function testGetFleetDeplay(): void
     {
-        $expedition = new Expedition();
+        $expedition = new ExpeditionService();
 
         $result = $expedition->getFleetDeplay();
         $this->assertContains($result, [2, 3, 5]); // Assert that the result is one of the allowed values

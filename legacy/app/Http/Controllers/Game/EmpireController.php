@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
 use Exception;
 use Illuminate\Routing\Controller as BaseController;
 use App\Services\SettingsService;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
-use Xgp\App\Libraries\DevelopmentsLib;
-use Xgp\App\Libraries\FormatLib;
+use App\Services\Game\Formulas\DevelopmentsService;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Empire;
@@ -26,6 +26,12 @@ class EmpireController extends BaseController
     private array $user = [];
     private Empire $empireModel;
     private Objects $objects;
+
+    public function __construct(
+        private FormatService $formatService,
+        private DevelopmentsService $developmentsService
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -110,7 +116,7 @@ class EmpireController extends BaseController
     private function setCoords(array $planet): array
     {
         return [
-            'planetCoords' => FormatLib::prettyCoords((int) $planet['planet_galaxy'], (int) $planet['planet_system'], (int) $planet['planet_planet']),
+            'planetCoords' => $this->formatService->prettyCoords((int) $planet['planet_galaxy'], (int) $planet['planet_system'], (int) $planet['planet_planet']),
             'planetGalaxy' => $planet['planet_galaxy'],
             'planetSystem' => $planet['planet_system'],
         ];
@@ -128,19 +134,19 @@ class EmpireController extends BaseController
     {
         if ($resource == 'energy') {
             return [
-                'usedEnergy' => (FormatLib::prettyNumber(
+                'usedEnergy' => ($this->formatService->prettyNumber(
                     ((int)($planet['planet_energy_max'] + $planet['planet_energy_used']))
                 )),
-                'maxEnergy' => FormatLib::prettyNumber((int)$planet['planet_energy_max']),
+                'maxEnergy' => $this->formatService->prettyNumber((int)$planet['planet_energy_max']),
             ];
         }
 
         return [
             'planetId' => $planet['planet_id'],
             'planetType' => $planet['planet_type'],
-            'planetCurrentAmount' => FormatLib::prettyNumber((int) $planet['planet_' . $resource]),
+            'planetCurrentAmount' => $this->formatService->prettyNumber((int) $planet['planet_' . $resource]),
             'planetProduction' => (
-                FormatLib::prettyNumber(
+                $this->formatService->prettyNumber(
                     ((int)($planet['planet_' . $resource . '_perhour'] + app(SettingsService::class)->getInt($resource . '_basic_income')))
                 )
             ),
@@ -152,7 +158,7 @@ class EmpireController extends BaseController
         switch ($element) {
             case 'resources':
             case 'facilities':
-                $page = DevelopmentsLib::setBuildingPage($elementId);
+                $page = $this->developmentsService->setBuildingPage($elementId);
                 break;
             case 'tech':
                 $page = 'research';

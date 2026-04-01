@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Models\Buildings;
+use App\Services\Game\Formulas\DevelopmentsService;
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Enumerators\BuildingsEnumerator;
+use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Research;
+use Xgp\App\Models\Game\Research as ResearchModel;
 
 class ResearchController extends BaseController
 {
@@ -25,8 +29,15 @@ class ResearchController extends BaseController
     private $_reslist;
     private $_is_working;
     private $_lab_level;
-    private Research $researchModel;
+    private ResearchModel $researchModel;
     private Users $userLibrary;
+
+    public function __construct(
+        private FormatService $formatService,
+        private DevelopmentsService $developmentsService,
+        private OfficerService $officerService
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -34,7 +45,7 @@ class ResearchController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->researchModel = new Research();
+        $this->researchModel = new ResearchModel();
         $this->_resource = Objects::getInstance()->getObjects();
         $this->_reslist = Objects::getInstance()->getObjectsList();
         $this->userLibrary = new Users();
@@ -55,32 +66,50 @@ class ResearchController extends BaseController
 
         $this->doCommand();
 
+        $levels = [];
+        foreach ($this->_resource as $id => $column) {
+            $levels[$id] = (int) ($this->planet[$column] ?? $this->user[$column] ?? 0);
+        }
+
+        $intergalLabLevel = (int) ($this->user[$this->_resource[Research::research_intergalactic_research_network]] ?? 0);
+        $labLevel = $intergalLabLevel >= 1 ? $this->_lab_level : (int) $this->planet[$this->_resource[BuildingsEnumerator::BUILDING_LABORATORY]];
+        $astrophysicsLevel = (int) ($this->user[$this->_resource[Research::research_astrophysics]] ?? 0);
+        $technocrateActive = $this->officerService->isOfficerActive((int) $this->user['premium_officier_technocrat'], time());
+
         foreach ($this->_reslist['tech'] as $tech) {
-            if (DevelopmentsLib::isDevelopmentAllowed($this->user, $this->planet, $tech)) {
+            if ($this->developmentsService->isDevelopmentAllowed($tech, $levels)) {
                 $RowParse['tech_id'] = $tech;
                 $building_level = (int) $this->user[$this->_resource[$tech]];
                 $RowParse['tech_level'] = DevelopmentsLib::setLevelFormat($building_level, $tech, $this->user);
                 $RowParse['tech_name'] = __('game/technologies.' . $this->_resource[$tech]);
                 $RowParse['tech_descr'] = __('game/research.descriptions')[$this->_resource[$tech]];
                 $RowParse['tech_price'] = DevelopmentsLib::formatedDevelopmentPrice($this->user, $this->planet, $tech);
-                $SearchTime = DevelopmentsLib::developmentTime($this->user, $this->planet, $tech, false, $this->_lab_level);
+                $SearchTime = $this->developmentsService->developmentTime(
+                    $tech,
+                    (int) $this->user[$this->_resource[$tech]],
+                    0,
+                    0,
+                    $labLevel,
+                    $astrophysicsLevel,
+                    $technocrateActive
+                );
                 $RowParse['search_time'] = DevelopmentsLib::formatedDevelopmentTime($SearchTime, __('game/research.re_time'));
 
                 if (!$this->_is_working['is_working']) {
-                    if (DevelopmentsLib::isDevelopmentPayable($this->user, $this->planet, $tech) && !$this->userLibrary->isOnVacations($this->user)) {
+                    if ($this->developmentsService->isDevelopmentPayable($this->planet, $tech, (int) $this->user[$this->_resource[$tech]]) && !$this->userLibrary->isOnVacations($this->user)) {
                         if (!$this->isLaboratoryInQueue()) {
-                            $action_link = FormatLib::colorRed(__('game/research.re_research'));
+                            $action_link = $this->formatService->colorRed(__('game/research.re_research'));
                         } else {
-                            $action_link = UrlHelper::setUrl('game.php?page=research&cmd=search&tech=' . $tech, FormatLib::colorGreen(__('game/research.re_research')));
+                            $action_link = UrlHelper::setUrl('game.php?page=research&cmd=search&tech=' . $tech, $this->formatService->colorGreen(__('game/research.re_research')));
                         }
                     } else {
-                        $action_link = FormatLib::colorRed(__('game/research.re_research'));
+                        $action_link = $this->formatService->colorRed(__('game/research.re_research'));
                     }
                 } else {
                     if ($this->_is_working['working_on']['planet_b_tech_id'] == $tech) {
                         if ($this->_is_working['working_on']['planet_id'] != $this->planet['planet_id']) {
                             $bloc['tech_time'] = $this->_is_working['working_on']['planet_b_tech'] - time();
-                            $bloc['tech_name'] = __('game/research.re_from') . $this->_is_working['working_on']['planet_name'] . '<br> ' . FormatLib::prettyCoords($this->_is_working['working_on']['planet_galaxy'], $this->_is_working['working_on']['planet_system'], $this->_is_working['working_on']['planet_planet']);
+                            $bloc['tech_name'] = __('game/research.re_from') . $this->_is_working['working_on']['planet_name'] . '<br> ' . $this->formatService->prettyCoords((int)$this->_is_working['working_on']['planet_galaxy'], (int)$this->_is_working['working_on']['planet_system'], (int)$this->_is_working['working_on']['planet_planet']);
                             $bloc['tech_home'] = $this->_is_working['working_on']['planet_id'];
                             $bloc['tech_id'] = $this->_is_working['working_on']['planet_b_tech_id'];
                         } else {
@@ -133,7 +162,10 @@ class ResearchController extends BaseController
                     case 'cancel':
                         if (!empty($this->_is_working['working_on'])) {
                             if ($this->_is_working['working_on']['planet_b_tech_id'] == $technology) {
-                                $costs = DevelopmentsLib::developmentPrice($this->user, $working_planet, $technology);
+                                $costs = $this->developmentsService->developmentPrice(
+                                    $technology,
+                                    (int) $this->user[$this->_resource[$technology]]
+                                );
                                 $working_planet['planet_metal'] += $costs['metal'];
                                 $working_planet['planet_crystal'] += $costs['crystal'];
                                 $working_planet['planet_deuterium'] += $costs['deuterium'];
@@ -149,23 +181,37 @@ class ResearchController extends BaseController
 
                         // start a research
                     case 'search':
-                        if (DevelopmentsLib::isDevelopmentAllowed($this->user, $working_planet, $technology) && DevelopmentsLib::isDevelopmentPayable($this->user, $working_planet, $technology) && !$this->userLibrary->isOnVacations($this->user)) {
-                            $costs = DevelopmentsLib::developmentPrice(
-                                $this->user,
-                                $working_planet,
-                                $technology
+                        $searchLevels = [];
+                        foreach ($this->_resource as $id => $column) {
+                            $searchLevels[$id] = (int) ($working_planet[$column] ?? $this->user[$column] ?? 0);
+                        }
+
+                        $intergalLevel = (int) ($this->user[$this->_resource[Research::research_intergalactic_research_network]] ?? 0);
+                        $searchLabLevel = $intergalLevel >= 1 ? $this->_lab_level : (int) ($working_planet[$this->_resource[BuildingsEnumerator::BUILDING_LABORATORY]] ?? 0);
+                        $searchAstroLevel = (int) ($this->user[$this->_resource[Research::research_astrophysics]] ?? 0);
+                        $searchTechnoActive = $this->officerService->isOfficerActive((int) $this->user['premium_officier_technocrat'], time());
+
+                        if ($this->developmentsService->isDevelopmentAllowed($technology, $searchLevels)
+                            && $this->developmentsService->isDevelopmentPayable($working_planet, $technology, (int) $this->user[$this->_resource[$technology]])
+                            && !$this->userLibrary->isOnVacations($this->user)
+                        ) {
+                            $costs = $this->developmentsService->developmentPrice(
+                                $technology,
+                                (int) $this->user[$this->_resource[$technology]]
                             );
 
                             $working_planet['planet_metal'] -= $costs['metal'];
                             $working_planet['planet_crystal'] -= $costs['crystal'];
                             $working_planet['planet_deuterium'] -= $costs['deuterium'];
                             $working_planet['planet_b_tech_id'] = $technology;
-                            $working_planet['planet_b_tech'] = time() + DevelopmentsLib::developmentTime(
-                                $this->user,
-                                $working_planet,
+                            $working_planet['planet_b_tech'] = time() + $this->developmentsService->developmentTime(
                                 $technology,
-                                false,
-                                $this->_lab_level
+                                (int) $this->user[$this->_resource[$technology]],
+                                0,
+                                0,
+                                $searchLabLevel,
+                                $searchAstroLevel,
+                                $searchTechnoActive
                             );
 
                             $this->user['research_current_research'] = $working_planet['planet_id'];

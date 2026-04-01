@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
+use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PreferencesEnumerator as PrefEnum;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\Preferences as Pref;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Preferences;
 
@@ -24,6 +24,12 @@ class PreferencesController extends BaseController
     private string $error = '';
     private bool $post = false;
     private Preferences $preferencesModel;
+
+    public function __construct(
+        private FormatService $formatService,
+        private TimingService $timingService,
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -183,8 +189,8 @@ class PreferencesController extends BaseController
         if ($this->preferences->isVacationModeOn()) {
             return [
                 'hide_no_vacation' => '',
-                'pr_vacation_mode_active' => Format::strongText(
-                    Format::colorRed(__('game/preferences.pr_vacation_mode_active'))
+                'pr_vacation_mode_active' => $this->formatService->strongText(
+                    $this->formatService->colorRed(__('game/preferences.pr_vacation_mode_active'))
                 ),
                 'hide_vacation_invalid' => 'style="display: none"',
                 'disabled' => ($this->preferences->isVacationModeRemovalAllowed() ? '' : 'style="display: none"'),
@@ -194,8 +200,8 @@ class PreferencesController extends BaseController
         if ($this->preferencesModel->isEmpireActive((int) $this->user['id'])) {
             return [
                 'hide_no_vacation' => '',
-                'pr_vacation_mode_active' => Format::strongText(
-                    Format::colorRed(__('game/preferences.pr_empire_active') . __('game/preferences.pr_empire_active_fleet'))
+                'pr_vacation_mode_active' => $this->formatService->strongText(
+                    $this->formatService->colorRed(__('game/preferences.pr_empire_active') . __('game/preferences.pr_empire_active_fleet'))
                 ),
                 'hide_vacation_invalid' => '',
                 'disabled' => 'style="display: none"',
@@ -214,10 +220,10 @@ class PreferencesController extends BaseController
     {
         if ($this->preferences->getCurrentPreference()->getPreferenceDeleteMode() > 0) {
             return [
-                'pr_delete_account' => Format::colorRed(strtr(
+                'pr_delete_account' => $this->formatService->colorRed(strtr(
                     __('game/preferences.pr_delete_mode_active'),
                     [
-                        '%s' => Timing::formatExtendedDate(
+                        '%s' => $this->timingService->formatExtendedDate(
                             $this->preferences->getCurrentPreference()->getPreferenceDeleteMode() + ONE_WEEK
                         ),
                     ]

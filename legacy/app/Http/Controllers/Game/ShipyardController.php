@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\Game\Formulas\DevelopmentsService;
+use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
+use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\DevelopmentsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
@@ -51,6 +53,12 @@ class ShipyardController extends BaseController
     private Shipyard $shipyardModel;
     private Objects $objects;
     private Users $userLibrary;
+
+    public function __construct(
+        private FormatService $formatService,
+        private DevelopmentsService $developmentsService
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -136,7 +144,7 @@ class ShipyardController extends BaseController
     private function showShipyardUpgradeMessage(): string
     {
         if ($this->building_in_progress) {
-            return FormatLib::colorRed(__('game/shipyard.sy_building_shipyard'));
+            return $this->formatService->colorRed(__('game/shipyard.sy_building_shipyard'));
         }
 
         return '';
@@ -202,10 +210,14 @@ class ShipyardController extends BaseController
 
     private function getItemTime(int $itemId): int
     {
-        return DevelopmentsLib::developmentTime(
-            $this->user,
-            $this->planet,
-            $itemId
+        return $this->developmentsService->developmentTime(
+            $itemId,
+            0,
+            (int) $this->planet[$this->objects->getObjects(Buildings::BUILDING_HANGAR)],
+            (int) $this->planet[$this->objects->getObjects(Buildings::BUILDING_NANO_FACTORY)],
+            0,
+            0,
+            false
         );
     }
 
@@ -217,7 +229,7 @@ class ShipyardController extends BaseController
             return '';
         }
 
-        return ' (' . __('game/shipyard.sy_available') . FormatLib::prettyNumber($amount) . ')';
+        return ' (' . __('game/shipyard.sy_available') . $this->formatService->prettyNumber($amount) . ')';
     }
 
     private function getItemInsertBlock(int $itemId): string
@@ -225,7 +237,7 @@ class ShipyardController extends BaseController
         if (!$this->building_in_progress && !$this->userLibrary->isOnVacations($this->user)
         ) {
             if ($this->isShieldDomeAvailable($itemId)) {
-                return FormatLib::colorRed(__('game/shipyard.sy_protection_shield_only_one'));
+                return $this->formatService->colorRed(__('game/shipyard.sy_protection_shield_only_one'));
             } else {
                 $box_data = [];
                 $box_data['item_id'] = $itemId;
@@ -243,7 +255,7 @@ class ShipyardController extends BaseController
 
     private function getItemAmount(int $itemId): int
     {
-        return $this->planet[$this->objects->getObjects()[$itemId]];
+        return (int) $this->planet[$this->objects->getObjects()[$itemId]];
     }
 
     private function getBuildItemsButton(): string
@@ -271,13 +283,13 @@ class ShipyardController extends BaseController
                     $item_values = explode(',', $item_data);
 
                     // $item_values[0] = item ID
-                    $item_time = $this->getItemTime($item_values[0]);
+                    $item_time = $this->getItemTime((int) $item_values[0]);
 
-                    $type = strpos($this->objects->getObjects($item_values[0]), 'ship') !== false ? 'ships' : 'defenses';
+                    $type = strpos($this->objects->getObjects((int) $item_values[0]), 'ship') !== false ? 'ships' : 'defenses';
 
                     $item_time_per_type .= $item_time . ',';
                     $item_name_per_type .= '\'' . html_entity_decode(
-                        __('game/' . $type . '.' . $this->objects->getObjects($item_values[0])),
+                        __('game/' . $type . '.' . $this->objects->getObjects((int) $item_values[0])),
                         ENT_COMPAT,
                         'utf-8'
                     ) . '\',';
@@ -293,7 +305,7 @@ class ShipyardController extends BaseController
             $block['c'] = $item_time_per_type;
             $block['b_hangar_id_plus'] = $this->planet['planet_b_hangar'];
             $block['current_page'] = $this->page;
-            $block['pretty_time_b_hangar'] = FormatLib::prettyTime($queue_time - $this->planet['planet_b_hangar']);
+            $block['pretty_time_b_hangar'] = $this->formatService->prettyTime($queue_time - $this->planet['planet_b_hangar']);
 
             return Template::render('shipyard/shipyard_script', $block);
         }
@@ -303,13 +315,18 @@ class ShipyardController extends BaseController
 
     private function setAllowedStructures(): void
     {
+        $resource = $this->objects->getObjects();
+        $levels = [];
+        foreach ($resource as $id => $column) {
+            $levels[$id] = (int) ($this->planet[$column] ?? $this->user[$column] ?? 0);
+        }
+
         $this->allowedStructures = array_filter(
             $this->allowedStructures,
-            function ($value) {
-                return DevelopmentsLib::isDevelopmentAllowed(
-                    $this->user,
-                    $this->planet,
-                    $value
+            function ($value) use ($levels) {
+                return $this->developmentsService->isDevelopmentAllowed(
+                    $value,
+                    $levels
                 );
             }
         );

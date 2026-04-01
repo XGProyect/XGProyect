@@ -68,7 +68,7 @@ class Users
         $userData = $this->usersModel->getAllyIdByUserId($userId);
 
         if ($userData['ally_id'] != 0) {
-            $alliance = $this->usersModel->getAllianceDataByAllianceId($userData['ally_id']);
+            $alliance = $this->usersModel->getAllianceDataByAllianceId((int) $userData['ally_id']);
 
             if ($alliance['ally_members'] > 1 && (isset($alliance['alliance_ranks']) && !is_null($alliance['alliance_ranks']))) {
                 $ranks = new Ranks($alliance['alliance_ranks']);
@@ -84,12 +84,12 @@ class Users
 
                 // check and update
                 if (is_numeric($userRank)) {
-                    $this->usersModel->updateAllianceOwner($alliance['alliance_id'], $userRank);
+                    $this->usersModel->updateAllianceOwner((int) $alliance['alliance_id'], $userRank);
                 } else {
-                    $this->usersModel->deleteAllianceById($alliance['alliance_id']);
+                    $this->usersModel->deleteAllianceById((int) $alliance['alliance_id']);
                 }
             } else {
-                $this->usersModel->deleteAllianceById($alliance['alliance_id']);
+                $this->usersModel->deleteAllianceById((int) $alliance['alliance_id']);
             }
         }
 
@@ -125,7 +125,7 @@ class Users
             $_SERVER['REQUEST_URI'],
             $_SERVER['REMOTE_ADDR'],
             $_SERVER['HTTP_USER_AGENT'],
-            session('user_id')
+            (int) session('user_id')
         );
 
         // pass the data

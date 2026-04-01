@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Libraries\Users\Shortcuts;
@@ -22,6 +22,10 @@ class FleetshortcutsController extends BaseController
     private ?Shortcuts $_shortcuts = null;
     private array $_clean_data = [];
     private ShortcutsModel $shortcutsModel;
+
+    public function __construct(private FormatService $formatService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -110,10 +114,10 @@ class FleetshortcutsController extends BaseController
                     'row_start' => $set_row ? '<tr height="20">' : '',
                     'shortcut_id' => $shortcut_id++,
                     'shortcut_name' => $shortcut['name'],
-                    'shortcut_coords' => FormatLib::formatCoords(
-                        $shortcut['g'],
-                        $shortcut['s'],
-                        $shortcut['p'],
+                    'shortcut_coords' => $this->formatService->formatCoords(
+                        (int)$shortcut['g'],
+                        (int)$shortcut['s'],
+                        (int)$shortcut['p'],
                     ),
                     'shortcut_type' => __('game/global.planet_type_short')[$shortcut['pt']],
                     'row_end' => !$set_row ? '</tr>' : '',

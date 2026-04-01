@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Models\Game\Changelog;
 
 class ChangelogController extends BaseController
@@ -15,6 +15,10 @@ class ChangelogController extends BaseController
     public const MODULE_ID = 0;
 
     private Changelog $changelogModel;
+
+    public function __construct(private TimingService $timingService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -29,7 +33,7 @@ class ChangelogController extends BaseController
             $changes[] = [
                 'version_number' => $entry['changelog_version'],
                 'description' => nl2br(
-                    Timing::formatShortDate($entry['changelog_date']) . '<br>' . $entry['changelog_description']
+                    $this->timingService->formatShortDate($entry['changelog_date']) . '<br>' . $entry['changelog_description']
                 ),
             ];
         }

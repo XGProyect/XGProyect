@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
+use App\Services\TimingService;
 use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 
 class FleetsLib
 {
@@ -131,7 +133,7 @@ class FleetsLib
 
     public static function getMaxFleets(int $computerTech, int $amiralLevel): int
     {
-        return OfficiersLib::getMaxComputer($computerTech, $amiralLevel);
+        return app(OfficerService::class)->getMaxComputer($computerTech, app(OfficerService::class)->isOfficerActive($amiralLevel, time()));
     }
 
     public static function getMaxExpeditions(int $astrophysicsTech): int
@@ -146,7 +148,7 @@ class FleetsLib
 
     public static function startLink(array $fleetRow, string $fleetType): string
     {
-        $coords = FormatLib::prettyCoords(
+        $coords = app(FormatService::class)->prettyCoords(
             (int) $fleetRow['fleet_start_galaxy'],
             (int) $fleetRow['fleet_start_system'],
             (int) $fleetRow['fleet_start_planet']
@@ -160,7 +162,7 @@ class FleetsLib
 
     public static function targetLink(array $fleetRow, string $fleetType): string
     {
-        $coords = FormatLib::prettyCoords(
+        $coords = app(FormatService::class)->prettyCoords(
             (int) $fleetRow['fleet_end_galaxy'],
             (int) $fleetRow['fleet_end_system'],
             (int) $fleetRow['fleet_end_planet']
@@ -177,9 +179,9 @@ class FleetsLib
         $total_resources = $fleetRow['fleet_resource_metal'] + $fleetRow['fleet_resource_crystal'] + $fleetRow['fleet_resource_deuterium'];
 
         if ($total_resources != 0) {
-            $popup['fleet_resource_metal'] = FormatLib::prettyNumber((int) $fleetRow['fleet_resource_metal']);
-            $popup['fleet_resource_crystal'] = FormatLib::prettyNumber((int) $fleetRow['fleet_resource_crystal']);
-            $popup['fleet_resource_deuterium'] = FormatLib::prettyNumber((int) $fleetRow['fleet_resource_deuterium']);
+            $popup['fleet_resource_metal'] = app(FormatService::class)->prettyNumber((int) $fleetRow['fleet_resource_metal']);
+            $popup['fleet_resource_crystal'] = app(FormatService::class)->prettyNumber((int) $fleetRow['fleet_resource_crystal']);
+            $popup['fleet_resource_deuterium'] = app(FormatService::class)->prettyNumber((int) $fleetRow['fleet_resource_deuterium']);
 
             $resources_popup = Template::jsReady(
                 Template::render(
@@ -209,9 +211,9 @@ class FleetsLib
         $pop_up = "<a href='#' onmouseover=\"return overlib('";
         $pop_up .= '<table width=200>';
 
-        $espionage_tech = OfficiersLib::getMaxEspionage(
+        $espionage_tech = app(OfficerService::class)->getMaxEspionage(
             (int) $current_user['research_espionage_technology'],
-            (int) $current_user['premium_officier_technocrat']
+            app(OfficerService::class)->isOfficerActive((int) $current_user['premium_officier_technocrat'], time())
         );
 
         if ($espionage_tech < 2 && $fleetRow['fleet_owner'] != $current_user['id']) {
@@ -233,7 +235,7 @@ class FleetsLib
                     $pop_up .= '<tr><td width=50% align=left><font color=white>' .
                     __('game/ships.' . $objects[$ship]) .
                     ':</font></td><td width=50% align=right><font color=white>' .
-                    FormatLib::prettyNumber((int) $amount) . '</font></td></tr>';
+                    app(FormatService::class)->prettyNumber((int) $amount) . '</font></td></tr>';
                 } elseif ($fleetRow['fleet_owner'] != $current_user['id']) {
                     if ($espionage_tech >= 4 && $espionage_tech < 8) {
                         $pop_up .= '<tr><td width=50% align=left><font color=white>' .
@@ -243,7 +245,7 @@ class FleetsLib
                         $pop_up .= '<tr><td width=50% align=left><font color=white>' .
                         __('game/ships.' . $objects[$ship]) .
                         ':<font></td><td width=50% align=right><font color=white>' .
-                        FormatLib::prettyNumber((int) $amount) . '</font></td></tr>';
+                        app(FormatService::class)->prettyNumber((int) $amount) . '</font></td></tr>';
                     }
                 }
             }
@@ -440,7 +442,7 @@ class FleetsLib
         $bloc['fleet_order'] = $Label . $Record;
         $bloc['fleet_descr'] = $EventString;
         $bloc['fleet_javas'] = Functions::chronoApplet($Label, $Record, $Rest, false);
-        $bloc['fleet_time'] = Timing::formatExtendedDate($Time);
+        $bloc['fleet_time'] = app(TimingService::class)->formatExtendedDate($Time);
 
         return Template::render(
             'overview.fleets',

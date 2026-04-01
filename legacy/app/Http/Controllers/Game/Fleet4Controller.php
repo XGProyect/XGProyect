@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\Game\Formulas\FleetsService;
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
@@ -11,7 +14,6 @@ use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
 use App\Services\SettingsService;
 use Xgp\App\Core\Objects;
 use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\Fleets;
 use Xgp\App\Libraries\NoobsProtectionLib;
@@ -65,6 +67,13 @@ class Fleet4Controller extends BaseController
     private Fleet $fleetModel;
     private Users $userLibrary;
     private Objects $objects;
+
+    public function __construct(
+        private FormatService $formatService,
+        private FleetsService $fleetsService,
+        private OfficerService $officerService
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -313,7 +322,7 @@ class Fleet4Controller extends BaseController
 
                 $total_ships += $amount;
 
-                $this->_fleet_storage += FleetsLib::getMaxStorage(
+                $this->_fleet_storage += $this->fleetsService->getMaxStorage(
                     $price[$ship_id]['capacity'],
                     $this->_research->getCurrentResearch()->getResearchHyperspaceTechnology()
                 ) * $amount;
@@ -365,7 +374,7 @@ class Fleet4Controller extends BaseController
             !$this->_own_planet
         ) {
             $this->showMessage(
-                FormatLib::colorRed(__('game/fleet.fl_deploy_only_your_planets'))
+                $this->formatService->colorRed(__('game/fleet.fl_deploy_only_your_planets'))
             );
         }
 
@@ -377,7 +386,7 @@ class Fleet4Controller extends BaseController
 
             if ($this->_target_data['ally_id'] != $this->user['ally_id'] && !$is_buddy) {
                 $this->showMessage(
-                    FormatLib::colorRed(__('game/fleet.fl_stay_not_on_enemy'))
+                    $this->formatService->colorRed(__('game/fleet.fl_stay_not_on_enemy'))
                 );
             }
         }
@@ -389,7 +398,7 @@ class Fleet4Controller extends BaseController
 
             if ($this->_occupied_planet) {
                 $this->showMessage(
-                    FormatLib::colorRed(__('game/fleet.fl_planet_populed'))
+                    $this->formatService->colorRed(__('game/fleet.fl_planet_populed'))
                 );
             }
         }
@@ -417,19 +426,19 @@ class Fleet4Controller extends BaseController
             !$this->_occupied_planet
         ) {
             $expeditions = $this->_fleets->getExpeditionsCount();
-            $max_expeditions = FleetsLib::getMaxExpeditions(
+            $max_expeditions = $this->fleetsService->getMaxExpeditions(
                 $this->_research->getCurrentResearch()->getResearchAstrophysics()
             );
 
             if ($max_expeditions <= 0) {
                 $this->showMessage(
-                    FormatLib::colorRed(__('game/fleet.fl_expedition_tech_required'))
+                    $this->formatService->colorRed(__('game/fleet.fl_expedition_tech_required'))
                 );
             }
 
             if ($max_expeditions <= $expeditions) {
                 $this->showMessage(
-                    FormatLib::colorRed(__('game/fleet.fl_expedition_fleets_limit'))
+                    $this->formatService->colorRed(__('game/fleet.fl_expedition_fleets_limit'))
                 );
             }
         } else {
@@ -484,14 +493,14 @@ class Fleet4Controller extends BaseController
             if ($noob->isWeak(intval($user_points), intval($target_points)) &&
                 in_array($this->_clean_input_data['mission'], $disallow_weak)) {
                 $this->showMessage(
-                    FormatLib::customColor(__('game/fleet.fl_week_player'), 'lime')
+                    $this->formatService->customColor(__('game/fleet.fl_week_player'), 'lime')
                 );
             }
 
             if ($noob->isStrong(intval($user_points), intval($target_points)) &&
                 in_array($this->_clean_input_data['mission'], $disallow_strong)) {
                 $this->showMessage(
-                    FormatLib::colorRed(__('game/fleet.fl_strong_player'))
+                    $this->formatService->colorRed(__('game/fleet.fl_strong_player'))
                 );
             }
         }
@@ -508,9 +517,9 @@ class Fleet4Controller extends BaseController
     {
         $fleets = $this->_fleets->getFleetsCount();
 
-        $max_fleets = FleetsLib::getMaxFleets(
+        $max_fleets = $this->fleetsService->getMaxFleets(
             $this->_research->getCurrentResearch()->getResearchComputerTechnology(),
-            $this->_premium->getCurrentPremium()->getPremiumOfficierAdmiral()
+            $this->officerService->isOfficerActive($this->_premium->getCurrentPremium()->getPremiumOfficierAdmiral(), time())
         );
 
         if ($max_fleets <= $fleets) {
@@ -536,7 +545,7 @@ class Fleet4Controller extends BaseController
         if ($metal + $crystal + $deuterium < 1 &&
             $this->_clean_input_data['mission'] == Missions::TRANSPORT) {
             $this->showMessage(
-                FormatLib::customColor(__('game/fleet.fl_empty_transport'), 'lime')
+                $this->formatService->customColor(__('game/fleet.fl_empty_transport'), 'lime')
             );
         }
 
@@ -584,13 +593,13 @@ class Fleet4Controller extends BaseController
 
         if (!$stock_valid) {
             $this->showMessage(
-                FormatLib::colorRed(__('game/fleet.fl_no_enought_deuterium') . FormatLib::prettyNumber((int) $consumption))
+                $this->formatService->colorRed(__('game/fleet.fl_no_enought_deuterium') . $this->formatService->prettyNumber((int) $consumption))
             );
         }
 
         if ($storage_needed > $this->_fleet_storage) {
             $this->showMessage(
-                FormatLib::colorRed(__('game/fleet.fl_no_enought_cargo_capacity') . FormatLib::prettyNumber($storage_needed - $this->_fleet_storage))
+                $this->formatService->colorRed(__('game/fleet.fl_no_enought_cargo_capacity') . $this->formatService->prettyNumber($storage_needed - $this->_fleet_storage))
             );
         }
 
@@ -612,7 +621,7 @@ class Fleet4Controller extends BaseController
     {
         $fleet_data = $this->getFleetData();
 
-        $duration = floor(FleetsLib::missionDuration(
+        $duration = floor($this->fleetsService->missionDuration(
             $fleet_data['speed'],
             $fleet_data['fleet_speed'],
             $fleet_data['distance'],

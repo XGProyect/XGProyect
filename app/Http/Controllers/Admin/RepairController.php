@@ -5,21 +5,25 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\RepairRequest;
+use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Xgp\App\Libraries\FormatLib;
 
 class RepairController extends BaseController
 {
+    public function __construct(private FormatService $formatService)
+    {
+    }
+
     public function index(): View
     {
         $tables = $this->getAllTables()->map(fn (array $row) => [
             'name' => $row['TABLE_NAME'],
-            'data' => FormatLib::prettyBytes((int) $row['DATA_LENGTH']),
-            'index' => FormatLib::prettyBytes((int) $row['INDEX_LENGTH']),
-            'overhead' => FormatLib::prettyBytes((int) $row['DATA_FREE']),
+            'data' => $this->formatService->prettyBytes((int) $row['DATA_LENGTH']),
+            'index' => $this->formatService->prettyBytes((int) $row['INDEX_LENGTH']),
+            'overhead' => $this->formatService->prettyBytes((int) $row['DATA_FREE']),
         ]);
 
         return view('admin.repair', [

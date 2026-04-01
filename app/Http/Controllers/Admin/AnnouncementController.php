@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\AnnouncementRequest;
 use App\Mail\Announcement;
 use App\Models\User;
+use App\Services\FormatService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Mail\SentMessage;
 use Illuminate\Routing\Controller as BaseController;
@@ -17,11 +18,15 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use Xgp\App\Libraries\FormatLib as Format;
 use Xgp\App\Libraries\Functions;
 
 class AnnouncementController extends BaseController
 {
+    public function __construct(
+        private readonly FormatService $formatService,
+    ) {
+    }
+
     public function index(): View
     {
         return view('admin.announcement');
@@ -55,9 +60,9 @@ class AnnouncementController extends BaseController
         $level = (string) ((array) __('admin/global.user_level'))[$user->authlevel];
         $time = time();
 
-        $from = Format::customColor($level, $color);
-        $subject = Format::customColor($request->input('subject') ?? __('admin/announcement.an_none'), $color);
-        $message = Format::customColor((string) $request->input('text'), $color);
+        $from = $this->formatService->customColor($level, $color);
+        $subject = $this->formatService->customColor($request->input('subject') ?? __('admin/announcement.an_none'), $color);
+        $message = $this->formatService->customColor((string) $request->input('text'), $color);
 
         foreach ($players as $player) {
             Functions::sendMessage(
@@ -67,7 +72,7 @@ class AnnouncementController extends BaseController
                 MessagesEnumerator::GENERAL,
                 $from,
                 $subject,
-                strtr($message, ['%player%' => Format::strongText($player->name)]),
+                strtr($message, ['%player%' => $this->formatService->strongText($player->name)]),
                 true
             );
         }
@@ -82,7 +87,7 @@ class AnnouncementController extends BaseController
         foreach ($players as $index => $player) {
             $result = Mail::to($player->email, $player->name)->send(new Announcement(
                 (string) $request->input('subject'),
-                strtr((string) $request->input('text'), ['%player%' => Format::strongText($player->name)])
+                strtr((string) $request->input('text'), ['%player%' => $this->formatService->strongText($player->name)])
             ));
 
             $results[] = $player->name . ': ' . ($result instanceof SentMessage

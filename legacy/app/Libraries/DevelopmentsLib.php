@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
 use Xgp\App\Core\Objects;
@@ -114,12 +116,12 @@ class DevelopmentsLib
                 }
 
                 if ($cost > $current_planet['planet_' . $res_type]) {
-                    $text .= '<b style="color:red;"> <t title="-' . FormatLib::prettyNumber(
+                    $text .= '<b style="color:red;"> <t title="-' . app(FormatService::class)->prettyNumber(
                         $cost - $current_planet['planet_' . $res_type]
                     ) . '">';
-                    $text .= '<span class="noresources">' . FormatLib::prettyNumber((int) $cost) . '</span></t></b> ';
+                    $text .= '<span class="noresources">' . app(FormatService::class)->prettyNumber((int) $cost) . '</span></t></b> ';
                 } else {
-                    $text .= '<b style="color:lime;">' . FormatLib::prettyNumber((int) $cost) . '</b> ';
+                    $text .= '<b style="color:lime;">' . app(FormatService::class)->prettyNumber((int) $cost) . '</b> ';
                 }
             }
         }
@@ -158,7 +160,7 @@ class DevelopmentsLib
             }
 
             $time = Formulas::getResearchTime($cost_metal, $cost_crystal, $lablevel, (int) $current_user[$resource[Research::research_astrophysics]]);
-            $time = floor($time * (1 - ((OfficiersLib::isOfficierActive((int) $current_user['premium_officier_technocrat'])) ? TECHNOCRATE_SPEED : 0)));
+            $time = floor($time * (1 - ((app(OfficerService::class)->isOfficerActive((int) $current_user['premium_officier_technocrat'], time())) ? TECHNOCRATE_SPEED : 0)));
         }
 
         if (in_array($element, $reslist['defense']) or in_array($element, $reslist['fleet'])) {
@@ -186,7 +188,7 @@ class DevelopmentsLib
 
     public static function formatedDevelopmentTime(int $time, string $prefix): string
     {
-        return '<br>' . $prefix . FormatLib::prettyTime($time);
+        return '<br>' . $prefix . app(FormatService::class)->prettyTime($time);
     }
 
     /**
@@ -252,16 +254,16 @@ class DevelopmentsLib
 
         switch ($element) {
             case 106:
-                if (OfficiersLib::isOfficierActive((int) $current_user['premium_officier_technocrat'])) {
-                    $return_level .= FormatLib::strongText(
-                        FormatLib::colorGreen(' +' . TECHNOCRATE_SPY . __('game/research.re_spy'))
+                if (app(OfficerService::class)->isOfficerActive((int) $current_user['premium_officier_technocrat'], time())) {
+                    $return_level .= app(FormatService::class)->strongText(
+                        app(FormatService::class)->colorGreen(' +' . TECHNOCRATE_SPY . __('game/research.re_spy'))
                     );
                 }
                 break;
             case 108:
-                if (OfficiersLib::isOfficierActive((int) $current_user['premium_officier_admiral'])) {
-                    $return_level .= FormatLib::strongText(
-                        FormatLib::colorGreen(' +' . AMIRAL . __('game/research.re_commander'))
+                if (app(OfficerService::class)->isOfficerActive((int) $current_user['premium_officier_admiral'], time())) {
+                    $return_level .= app(FormatService::class)->strongText(
+                        app(FormatService::class)->colorGreen(' +' . AMIRAL . __('game/research.re_commander'))
                     );
                 }
                 break;

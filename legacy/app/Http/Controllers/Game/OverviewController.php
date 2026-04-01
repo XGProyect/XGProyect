@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\Game\Formulas\DevelopmentsService;
+use App\Services\FormatService;
+use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Objects;
@@ -11,10 +14,8 @@ use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib;
 use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\NoobsProtectionLib;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\UpdatesLibrary;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Overview;
@@ -28,6 +29,13 @@ class OverviewController extends BaseController
     private Overview $overviewModel;
     private NoobsProtectionLib $noob;
     private Objects $objects;
+
+    public function __construct(
+        private FormatService $formatService,
+        private DevelopmentsService $developmentsService,
+        private TimingService $timingService,
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -45,15 +53,15 @@ class OverviewController extends BaseController
                 [
                     'planetName' => $this->planet['planet_name'],
                     'username' => $this->user['name'],
-                    'dateTime' => Timing::formatExtendedDate(time()),
+                    'dateTime' => $this->timingService->formatExtendedDate(time()),
                     'newMessage' => $this->getMessages(),
                     'fleetList' => $this->getFleetMovements(),
                     'planetImage' => $this->planet['planet_image'],
                     'building' => $this->getCurrentWork($this->planet),
                     'otherPlanets' => $this->getPlanets(),
-                    'planetDiameter' => FormatLib::prettyNumber((int) $this->planet['planet_diameter']),
+                    'planetDiameter' => $this->formatService->prettyNumber((int) $this->planet['planet_diameter']),
                     'planetCurrentFields' => $this->planet['planet_field_current'],
-                    'planetMaxFields' => DevelopmentsLib::maxFields($this->planet),
+                    'planetMaxFields' => $this->developmentsService->maxFields((int) $this->planet['planet_field_max'], (int) $this->planet[$this->objects->getObjects(33)]),
                     'planetMinTemp' => $this->planet['planet_temp_min'],
                     'planetMaxTemp' => $this->planet['planet_temp_max'],
                     'galaxyGalaxy' => $this->planet['planet_galaxy'],
@@ -88,7 +96,7 @@ class OverviewController extends BaseController
                 if ($is_current_planet) {
                     $building_block = DevelopmentsLib::currentBuilding('overview', $building);
                     $building_block .= __('game/constructions.' . $this->objects->getObjects($building)) . ' (' . $level . ')';
-                    $building_block .= '<br><div id="blc" class="z">' . FormatLib::prettyTime($time_to_end) . '</div>';
+                    $building_block .= '<br><div id="blc" class="z">' . $this->formatService->prettyTime($time_to_end) . '</div>';
                     $building_block .= "\n<script language=\"JavaScript\">";
                     $building_block .= "\n	pp = \"" . $time_to_end . "\";\n";
                     $building_block .= "\n	pk = \"" . 1 . "\";\n";
@@ -98,7 +106,7 @@ class OverviewController extends BaseController
                     $building_block .= "\n</script>\n";
                 } else {
                     $building_block = '' . __('game/constructions.' . $this->objects->getObjects($building)) . ' (' . $level . ')';
-                    $building_block .= '<br><font color="#7f7f7f">(' . FormatLib::prettyTime($time_to_end) . ')</font>';
+                    $building_block .= '<br><font color="#7f7f7f">(' . $this->formatService->prettyTime($time_to_end) . ')</font>';
                 }
             }
         }
@@ -118,7 +126,7 @@ class OverviewController extends BaseController
             }
 
             if ($this->user['new_message'] > 1) {
-                $link_text = str_replace('%m', FormatLib::prettyNumber((int) $this->user['new_message']), __('game/overview.ov_have_new_messages'));
+                $link_text = str_replace('%m', $this->formatService->prettyNumber((int) $this->user['new_message']), __('game/overview.ov_have_new_messages'));
                 $new_message .= '<th role="cell" colspan="4">' . UrlHelper::setUrl('game.php?page=messages', $link_text, $link_text) . '</th>';
             }
 
@@ -342,7 +350,7 @@ class OverviewController extends BaseController
 
         if ($this->noob->isRankVisible((int) $this->user['authlevel'])) {
             $userRank = __('game/overview.ov_place', [
-                'points' => FormatLib::prettyNumber((int) $this->user['user_statistic_total_points']),
+                'points' => $this->formatService->prettyNumber((int) $this->user['user_statistic_total_points']),
                 'url' => UrlHelper::setUrl('game.php?page=statistics&range=' . $totalRank, $totalRank, $totalRank),
                 'total' => $this->planet['stats_users'],
             ]);

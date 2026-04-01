@@ -57,7 +57,7 @@ class MissionControlLib
             $mission_name = $name . 'Mission';
             $class_name = 'Xgp\App\Libraries\Missions\\' . $name;
 
-            $mission = new $class_name();
+            $mission = app($class_name);
             $mission->$mission_name($fleet);
         }
     }

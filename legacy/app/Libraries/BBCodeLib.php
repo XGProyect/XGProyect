@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
+use App\Services\FormatService;
 use Xgp\App\Helpers\UrlHelper;
 
 class BBCodeLib
@@ -155,6 +156,6 @@ class BBCodeLib
 
     private function setCoordinates($galaxy, $system, $planet)
     {
-        return FormatLib::prettyCoords($galaxy, $system, $planet);
+        return app(FormatService::class)->prettyCoords((int)$galaxy, (int)$system, (int)$planet);
     }
 }

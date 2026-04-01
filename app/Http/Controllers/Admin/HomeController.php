@@ -12,11 +12,11 @@ use App\Models\Reports;
 use App\Models\User;
 use App\Models\UsersStatistics;
 use App\Services\Admin\HomeService;
+use App\Services\FormatService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use Xgp\App\Libraries\FormatLib as Format;
 
 /**
  * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
@@ -26,6 +26,7 @@ class HomeController extends AdminSettingsController
     public function __construct(
         SettingsService $settings,
         private readonly HomeService $homeService,
+        private readonly FormatService $formatService,
     ) {
         parent::__construct($settings);
     }
@@ -37,14 +38,14 @@ class HomeController extends AdminSettingsController
 
         return $this->view('admin.home', [
             ...$this->buildAlertsBlock($authUser),
-            'numberUsers' => Format::prettyNumber(User::count()),
-            'numberAlliances' => Format::prettyNumber(Alliance::count()),
-            'numberPlanets' => Format::prettyNumber(Planets::where('planet_type', 1)->count()),
-            'numberMoons' => Format::prettyNumber(Planets::where('planet_type', 3)->count()),
-            'numberFleets' => Format::prettyNumber(Fleets::count()),
-            'numberReports' => Format::prettyNumber(Reports::count()),
-            'averageUserPoints' => Format::shortlyNumber((int) UsersStatistics::avg('user_statistic_total_points')),
-            'averageAlliancePoints' => Format::shortlyNumber((int) AllianceStatistics::avg('alliance_statistic_total_points')),
+            'numberUsers' => $this->formatService->prettyNumber(User::count()),
+            'numberAlliances' => $this->formatService->prettyNumber(Alliance::count()),
+            'numberPlanets' => $this->formatService->prettyNumber(Planets::where('planet_type', 1)->count()),
+            'numberMoons' => $this->formatService->prettyNumber(Planets::where('planet_type', 3)->count()),
+            'numberFleets' => $this->formatService->prettyNumber(Fleets::count()),
+            'numberReports' => $this->formatService->prettyNumber(Reports::count()),
+            'averageUserPoints' => $this->formatService->shortlyNumber((int) UsersStatistics::avg('user_statistic_total_points')),
+            'averageAlliancePoints' => $this->formatService->shortlyNumber((int) AllianceStatistics::avg('alliance_statistic_total_points')),
             'databaseSize' => $this->homeService->getDbSize(),
             'databaseServer' => $this->homeService->getDbVersion(),
             'phpVersion' => PHP_VERSION,

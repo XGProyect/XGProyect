@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
+use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Entity\NotesEntity;
 use Xgp\App\Core\Enumerators\ImportanceEnumerator as Importance;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Libraries\Users\Notes as Note;
 use Xgp\App\Models\Game\Notes;
@@ -23,6 +23,12 @@ class NoticesController extends BaseController
     private array $user = [];
     private ?Note $notes = null;
     private Notes $notesModel;
+
+    public function __construct(
+        private FormatService $formatService,
+        private TimingService $timingService,
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -100,8 +106,8 @@ class NoticesController extends BaseController
                 if ($note instanceof NotesEntity) {
                     $list_of_notes[] = [
                         'note_id' => $note->getNoteId(),
-                        'note_time' => Timing::formatExtendedDate($note->getNoteTime()),
-                        'note_color' => FormatLib::getImportanceColor($note->getNotePriority()),
+                        'note_time' => $this->timingService->formatExtendedDate($note->getNoteTime()),
+                        'note_color' => $this->formatService->getImportanceColor($note->getNotePriority()),
                         'note_title' => $note->getNoteTitle(),
                     ];
                 }

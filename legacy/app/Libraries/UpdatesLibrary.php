@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace Xgp\App\Libraries;
 
 use App\Services\SettingsService;
+use App\Services\Game\Formulas\DevelopmentsService;
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
+use App\Services\Game\Formulas\ProductionService;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
+use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
 use Xgp\App\Core\Objects;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib as Developments;
-use Xgp\App\Libraries\FormatLib as Format;
-use Xgp\App\Libraries\OfficiersLib as Officiers;
-use Xgp\App\Libraries\ProductionLib as Production;
 use Xgp\App\Models\Libraries\UpdatesLibrary as UpdatesLibraryModel;
 
 /**
@@ -23,7 +25,7 @@ class UpdatesLibrary
 {
     private UpdatesLibraryModel $updatesModel;
 
-    public function __construct()
+    public function __construct(private ProductionService $productionService)
     {
         // load Model
         $this->updatesModel = new UpdatesLibraryModel();
@@ -237,6 +239,7 @@ class UpdatesLibrary
     {
         $db = new UpdatesLibraryModel();
         $resource = Objects::getInstance()->getObjects();
+        $devService = app(DevelopmentsService::class);
 
         if ($current_planet['planet_b_building'] == 0) {
             $current_queue = $current_planet['planet_b_building_id'];
@@ -258,12 +261,15 @@ class UpdatesLibrary
 
                     $for_destroy = ($build_mode == 'destroy') ? true : false;
 
-                    $is_payable = Developments::isDevelopmentPayable(
-                        $current_user,
+                    $ionTechLevel = $for_destroy ? (int) ($current_user[$resource[Research::research_ionic_technology]] ?? 0) : 0;
+
+                    $is_payable = $devService->isDevelopmentPayable(
                         $current_planet,
                         $element,
+                        (int) ($current_planet[$resource[$element]] ?? 0),
                         true,
-                        $for_destroy
+                        $for_destroy,
+                        $ionTechLevel
                     );
 
                     if ($for_destroy) {
@@ -274,7 +280,13 @@ class UpdatesLibrary
                     }
 
                     if ($is_payable) {
-                        $price = Developments::developmentPrice($current_user, $current_planet, (int) $element, true, $for_destroy);
+                        $price = $devService->developmentPrice(
+                            $element,
+                            (int) ($current_planet[$resource[$element]] ?? 0),
+                            true,
+                            $for_destroy,
+                            $ionTechLevel
+                        );
                         $recalculated_queue = [];
 
                         $current_planet['planet_metal'] -= $price['metal'];
@@ -287,13 +299,21 @@ class UpdatesLibrary
                         foreach ($queue_array as $queue_item => $data) {
                             $element_data = explode(',', $data);
                             $previous_time = $element_data[2];
-                            $element_data[2] = Developments::developmentTime($current_user, $current_planet, (int) $element_data[0]);
+                            $element_data[2] = $devService->developmentTime(
+                                (int) $element_data[0],
+                                (int) ($current_planet[$resource[(int) $element_data[0]]] ?? 0),
+                                (int) $current_planet[$resource[Buildings::BUILDING_ROBOT_FACTORY]],
+                                (int) $current_planet[$resource[Buildings::BUILDING_NANO_FACTORY]],
+                                0,
+                                0,
+                                false
+                            );
                             if ($for_destroy) {
-                                $element_data[2] = DevelopmentsLib::tearDownTime(
-                                    $element_data[0],
-                                    $current_planet[$resource[Buildings::BUILDING_ROBOT_FACTORY]],
-                                    $current_planet[$resource[Buildings::BUILDING_NANO_FACTORY]],
-                                    $current_planet[$resource[$element_data[0]]]
+                                $element_data[2] = $devService->tearDownTime(
+                                    (int) $element_data[0],
+                                    (int) ($current_planet[$resource[(int) $element_data[0]]] ?? 0),
+                                    (int) $current_planet[$resource[Buildings::BUILDING_ROBOT_FACTORY]],
+                                    (int) $current_planet[$resource[Buildings::BUILDING_NANO_FACTORY]]
                                 );
                             }
 
@@ -354,10 +374,10 @@ class UpdatesLibrary
                                 $level,
                                 UrlHelper::setUrl(
                                     'game.php?page=galaxy&mode=3&galaxy=' . $current_planet['planet_galaxy'] . '&system=' . $current_planet['planet_system'],
-                                    $current_planet['planet_name'] . ' ' . Format::prettyCoords(
-                                        $current_planet['planet_galaxy'],
-                                        $current_planet['planet_system'],
-                                        $current_planet['planet_planet']
+                                    $current_planet['planet_name'] . ' ' . app(FormatService::class)->prettyCoords(
+                                        (int) $current_planet['planet_galaxy'],
+                                        (int) $current_planet['planet_system'],
+                                        (int) $current_planet['planet_planet']
                                     )
                                 ),
                                 join(', ', $insufficient)
@@ -419,6 +439,8 @@ class UpdatesLibrary
         $ProdGrid = Objects::getInstance()->getProduction();
 
         $settings = app(SettingsService::class);
+        $productionService = app(ProductionService::class); // Get service from container
+        $officerService = app(OfficerService::class);
         $game_resource_multiplier = $settings->getInt('resource_multiplier');
         $game_metal_basic_income = $settings->getInt('metal_basic_income');
         $game_crystal_basic_income = $settings->getInt('crystal_basic_income');
@@ -430,9 +452,9 @@ class UpdatesLibrary
             $game_deuterium_basic_income = 0;
         }
 
-        $current_planet['planet_metal_max'] = Production::maxStorable($current_planet[$resource[22]]);
-        $current_planet['planet_crystal_max'] = Production::maxStorable($current_planet[$resource[23]]);
-        $current_planet['planet_deuterium_max'] = Production::maxStorable($current_planet[$resource[24]]);
+        $current_planet['planet_metal_max'] = $productionService->maxStorable((int) $current_planet[$resource[22]]);
+        $current_planet['planet_crystal_max'] = $productionService->maxStorable((int) $current_planet[$resource[23]]);
+        $current_planet['planet_deuterium_max'] = $productionService->maxStorable((int) $current_planet[$resource[24]]);
 
         $MaxMetalStorage = $current_planet['planet_metal_max'];
         $MaxCristalStorage = $current_planet['planet_crystal_max'];
@@ -443,9 +465,9 @@ class UpdatesLibrary
         $sub_query = '';
         $parse['production_level'] = 100;
 
-        $post_percent = Production::maxProduction(
-            $current_planet['planet_energy_max'],
-            $current_planet['planet_energy_used']
+        $post_percent = $productionService->maxProductionPercentage(
+            (int) $current_planet['planet_energy_max'],
+            (int) $current_planet['planet_energy_used']
         );
 
         $Caps['planet_metal_perhour'] = 0;
@@ -460,11 +482,13 @@ class UpdatesLibrary
             $BuildEnergy = $current_user['research_energy_technology'];
 
             // BOOST
-            $geologe_boost = 1 + (1 * (Officiers::isOfficierActive(
-                (int) $current_user['premium_officier_geologist']
+            $geologe_boost = 1 + (1 * ($officerService->isOfficerActive(
+                (int) $current_user['premium_officier_geologist'],
+                time()
             ) ? GEOLOGUE : 0));
-            $engineer_boost = 1 + (1 * (Officiers::isOfficierActive(
-                (int) $current_user['premium_officier_engineer']
+            $engineer_boost = 1 + (1 * ($officerService->isOfficerActive(
+                (int) $current_user['premium_officier_engineer'],
+                time()
             ) ? ENGINEER_ENERGY : 0));
 
             // PRODUCTION FORMULAS
@@ -479,34 +503,34 @@ class UpdatesLibrary
             $deuteriumBoost = Formulas::getPlasmaTechnologyBonus((int) $current_user['research_plasma_technology'], 'deuterium');
 
             // PRODUCTION BOOST WITH OFFICERS
-            $Caps['planet_metal_perhour'] += Production::currentProduction(
-                Production::productionAmount($metal_prod, $geologe_boost, $game_resource_multiplier),
+            $Caps['planet_metal_perhour'] += $productionService->currentProduction(
+                $productionService->productionAmount($metal_prod, $geologe_boost, $game_resource_multiplier),
                 $post_percent
             );
 
-            $Caps['planet_crystal_perhour'] += Production::currentProduction(
-                Production::productionAmount($crystal_prod, $geologe_boost, $game_resource_multiplier),
+            $Caps['planet_crystal_perhour'] += $productionService->currentProduction(
+                $productionService->productionAmount($crystal_prod, $geologe_boost, $game_resource_multiplier),
                 $post_percent
             );
 
-            $Caps['planet_deuterium_perhour'] += Production::currentProduction(
-                Production::productionAmount($deuterium_prod, $geologe_boost, $game_resource_multiplier),
+            $Caps['planet_deuterium_perhour'] += $productionService->currentProduction(
+                $productionService->productionAmount($deuterium_prod, $geologe_boost, $game_resource_multiplier),
                 $post_percent
             );
 
             // PRODUCTION BOOST WITH PLASMA
-            $Caps['planet_metal_perhour'] += Production::currentProduction(
-                Production::productionAmount($metal_prod, $metalBoost, $game_resource_multiplier),
+            $Caps['planet_metal_perhour'] += $productionService->currentProduction(
+                $productionService->productionAmount($metal_prod, $metalBoost, $game_resource_multiplier),
                 $post_percent
             );
 
-            $Caps['planet_crystal_perhour'] += Production::currentProduction(
-                Production::productionAmount($crystal_prod, $crystalBoost, $game_resource_multiplier),
+            $Caps['planet_crystal_perhour'] += $productionService->currentProduction(
+                $productionService->productionAmount($crystal_prod, $crystalBoost, $game_resource_multiplier),
                 $post_percent
             );
 
-            $Caps['planet_deuterium_perhour'] += Production::currentProduction(
-                Production::productionAmount($deuterium_prod, $deuteriumBoost, $game_resource_multiplier),
+            $Caps['planet_deuterium_perhour'] += $productionService->currentProduction(
+                $productionService->productionAmount($deuterium_prod, $deuteriumBoost, $game_resource_multiplier),
                 $post_percent
             );
 
@@ -515,14 +539,14 @@ class UpdatesLibrary
                     continue;
                 }
 
-                $Caps['planet_energy_max'] += Production::productionAmount(
+                $Caps['planet_energy_max'] += $productionService->productionAmount(
                     $energy_prod,
                     $engineer_boost,
                     0,
                     true
                 );
             } else {
-                $Caps['planet_energy_used'] += Production::productionAmount(
+                $Caps['planet_energy_used'] += $productionService->productionAmount(
                     $energy_prod,
                     1,
                     0,

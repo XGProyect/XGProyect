@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Messages;
@@ -19,6 +19,10 @@ class ChatController extends BaseController
     private array $_receiver_data = [];
     private array $_message_data = [];
     private Messages $messagesModel;
+
+    public function __construct(private FormatService $formatService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -33,7 +37,7 @@ class ChatController extends BaseController
             'chat.view',
             [
                 'id' => $this->_receiver_data['id'],
-                'to' => $this->_receiver_data['name'] . ' ' . FormatLib::prettyCoords(
+                'to' => $this->_receiver_data['name'] . ' ' . $this->formatService->prettyCoords(
                     (int) $this->_receiver_data['planet_galaxy'],
                     (int) $this->_receiver_data['planet_system'],
                     (int) $this->_receiver_data['planet_planet']
@@ -90,7 +94,7 @@ class ChatController extends BaseController
                     $this->user['id'],
                     0,
                     4,
-                    $this->user['name'] . ' ' . FormatLib::prettyCoords(
+                    $this->user['name'] . ' ' . $this->formatService->prettyCoords(
                         (int) $this->user['galaxy'],
                         (int) $this->user['system'],
                         (int) $this->user['planet']

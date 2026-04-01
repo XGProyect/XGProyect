@@ -8,17 +8,17 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
 use App\Services\SettingsService;
+use App\Services\Game\Formulas\FleetsService;
+use App\Services\FormatService;
+use App\Services\Game\Formulas\DevelopmentsService;
+use App\Services\Game\Formulas\OfficerService;
+use App\Services\Game\Formulas\ProductionService;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Helpers\UrlHelper;
-use Xgp\App\Libraries\DevelopmentsLib;
-use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\OfficiersLib;
-use Xgp\App\Libraries\ProductionLib;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Infos;
 
@@ -37,6 +37,15 @@ class InfosController extends BaseController
     private $_combat_caps;
     private $_prod_grid;
     private Infos $infosModel;
+
+    public function __construct(
+        private ProductionService $productionService,
+        private FormatService $formatService,
+        private OfficerService $officerService,
+        private DevelopmentsService $developmentsService,
+        private FleetsService $fleetsService
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -124,21 +133,21 @@ class InfosController extends BaseController
             $parse['element_typ'] = __('game/ships.ships');
             $parse['rf_info_to'] = $this->ShowRapidFireTo();
             $parse['rf_info_fr'] = $this->ShowRapidFireFrom();
-            $parse['hull_pt'] = FormatLib::prettyNumber($this->_pricelist[$this->_element_id]['metal'] + $this->_pricelist[$this->_element_id]['crystal']);
-            $parse['shield_pt'] = FormatLib::prettyNumber((int) $this->_combat_caps[$this->_element_id]['shield']);
-            $parse['attack_pt'] = FormatLib::prettyNumber((int) $this->_combat_caps[$this->_element_id]['attack']);
-            $parse['capacity_pt'] = FormatLib::prettyNumber((int) $this->_pricelist[$this->_element_id]['capacity']);
-            $parse['base_speed'] = FormatLib::prettyNumber((int) $this->_pricelist[$this->_element_id]['speed']);
-            $parse['base_conso'] = FormatLib::prettyNumber((int) $this->_pricelist[$this->_element_id]['consumption']);
+            $parse['hull_pt'] = $this->formatService->prettyNumber($this->_pricelist[$this->_element_id]['metal'] + $this->_pricelist[$this->_element_id]['crystal']);
+            $parse['shield_pt'] = $this->formatService->prettyNumber((int) $this->_combat_caps[$this->_element_id]['shield']);
+            $parse['attack_pt'] = $this->formatService->prettyNumber((int) $this->_combat_caps[$this->_element_id]['attack']);
+            $parse['capacity_pt'] = $this->formatService->prettyNumber((int) $this->_pricelist[$this->_element_id]['capacity']);
+            $parse['base_speed'] = $this->formatService->prettyNumber((int) $this->_pricelist[$this->_element_id]['speed']);
+            $parse['base_conso'] = $this->formatService->prettyNumber((int) $this->_pricelist[$this->_element_id]['consumption']);
 
             $parse['upd_speed'] = '';
             $parse['upd_conso'] = '';
 
             if ($this->_element_id == 202) {
-                $parse['upd_speed'] = '<font color="yellow">(' . FormatLib::prettyNumber((int) $this->_pricelist[$this->_element_id]['speed2']) . ')</font>';
-                $parse['upd_conso'] = '<font color="yellow">(' . FormatLib::prettyNumber((int) $this->_pricelist[$this->_element_id]['consumption2']) . ')</font>';
+                $parse['upd_speed'] = '<font color="yellow">(' . $this->formatService->prettyNumber((int) $this->_pricelist[$this->_element_id]['speed2']) . ')</font>';
+                $parse['upd_conso'] = '<font color="yellow">(' . $this->formatService->prettyNumber((int) $this->_pricelist[$this->_element_id]['consumption2']) . ')</font>';
             } elseif ($this->_element_id == 211) {
-                $parse['upd_speed'] = '<font color="yellow">(' . FormatLib::prettyNumber((int) $this->_pricelist[$this->_element_id]['speed2']) . ')</font>';
+                $parse['upd_speed'] = '<font color="yellow">(' . $this->formatService->prettyNumber((int) $this->_pricelist[$this->_element_id]['speed2']) . ')</font>';
             }
         } elseif ($this->_element_id >= 401 && $this->_element_id <= 550) {
             $PageTPL = 'infos/info_buildings_defense';
@@ -151,9 +160,9 @@ class InfosController extends BaseController
                 $parse['rf_info_fr'] = $this->ShowRapidFireFrom();
             }
 
-            $parse['hull_pt'] = FormatLib::prettyNumber($this->_pricelist[$this->_element_id]['metal'] + $this->_pricelist[$this->_element_id]['crystal']);
-            $parse['shield_pt'] = FormatLib::prettyNumber((int) $this->_combat_caps[$this->_element_id]['shield']);
-            $parse['attack_pt'] = FormatLib::prettyNumber((int) $this->_combat_caps[$this->_element_id]['attack']);
+            $parse['hull_pt'] = $this->formatService->prettyNumber($this->_pricelist[$this->_element_id]['metal'] + $this->_pricelist[$this->_element_id]['crystal']);
+            $parse['shield_pt'] = $this->formatService->prettyNumber((int) $this->_combat_caps[$this->_element_id]['shield']);
+            $parse['attack_pt'] = $this->formatService->prettyNumber((int) $this->_combat_caps[$this->_element_id]['attack']);
         }
 
         if ($TableHeadTPL != '') {
@@ -216,14 +225,14 @@ class InfosController extends BaseController
         $BuildStartLvl = max(1, $current_built_lvl - 2);
         $Table = '';
         $ProdFirst = 0;
-        $ActualProd = ProductionLib::maxStorable($current_built_lvl);
+        $ActualProd = $this->productionService->maxStorable((int) $current_built_lvl);
 
         for ($BuildLevel = $BuildStartLvl; $BuildLevel < $BuildStartLvl + 15; ++$BuildLevel) {
-            $Prod = ProductionLib::maxStorable($BuildLevel);
+            $Prod = $this->productionService->maxStorable($BuildLevel);
 
             $bloc['build_lvl'] = ($current_built_lvl == $BuildLevel) ? '<font color="#ff0000">' . $BuildLevel . '</font>' : $BuildLevel;
-            $bloc['build_prod'] = FormatLib::prettyNumber((int) $Prod);
-            $bloc['build_prod_diff'] = FormatLib::colorNumber(FormatLib::prettyNumber(($Prod - $ActualProd)));
+            $bloc['build_prod'] = $this->formatService->prettyNumber((int) $Prod);
+            $bloc['build_prod_diff'] = $this->formatService->colorNumber($Prod - $ActualProd, $this->formatService->prettyNumber($Prod - $ActualProd));
 
             if ($ProdFirst == 0) {
                 $ProdFirst = floor($Prod);
@@ -248,8 +257,8 @@ class InfosController extends BaseController
 
         for ($BuildLevel = $BuildStartLvl; $BuildLevel < $BuildStartLvl + 15; ++$BuildLevel) {
             $bloc['tech_lvl'] = ($current_built_lvl == $BuildLevel) ? '<font color="#ff0000">' . $BuildLevel . '</font>' : $BuildLevel;
-            $bloc['tech_colonies'] = FormatLib::prettyNumber((int) FleetsLib::getMaxColonies($BuildLevel));
-            $bloc['tech_expeditions'] = FormatLib::prettyNumber((int) FleetsLib::getMaxExpeditions($BuildLevel));
+            $bloc['tech_colonies'] = $this->formatService->prettyNumber((int) $this->fleetsService->getMaxColonies((int) $BuildLevel));
+            $bloc['tech_expeditions'] = $this->formatService->prettyNumber((int) $this->fleetsService->getMaxExpeditions((int) $BuildLevel));
 
             $Table .= Template::render($template, $bloc);
         }
@@ -271,7 +280,7 @@ class InfosController extends BaseController
             $NextJumpTime = $LastJumpTime + $WaitBetweenJmp;
             if ($NextJumpTime >= time()) {
                 $RestWait = $NextJumpTime - time();
-                $RestString = ' ' . FormatLib::prettyTime($RestWait);
+                $RestString = ' ' . $this->formatService->prettyTime($RestWait);
             } else {
                 $RestWait = 0;
                 $RestString = '';
@@ -377,7 +386,7 @@ class InfosController extends BaseController
                     $bloc['idx'] = $CurrIdx;
                     $bloc['fleet_id'] = $Ship;
                     $bloc['fleet_name'] = __('game/ships.' . $this->_resource[$Ship]);
-                    $bloc['fleet_max'] = FormatLib::prettyNumber((int) $this->planet[$this->_resource[$Ship]]);
+                    $bloc['fleet_max'] = $this->formatService->prettyNumber((int) $this->planet[$this->_resource[$Ship]]);
                     $bloc['gate_ship_dispo'] = __('game/infos.in_jump_gate_available');
                     $Result .= Template::render($RowsTPL, $bloc);
                     $CurrIdx++;
@@ -446,8 +455,8 @@ class InfosController extends BaseController
         $game_resource_multiplier = app(SettingsService::class)->getInt('resource_multiplier');
 
         // BOOST
-        $geologe_boost = 1 + (1 * (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_geologist']) ? GEOLOGUE : 0));
-        $engineer_boost = 1 + (1 * (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_engineer']) ? ENGINEER_ENERGY : 0));
+        $geologe_boost = 1 + (1 * ($this->officerService->isOfficerActive((int) $this->user['premium_officier_geologist'], time()) ? GEOLOGUE : 0));
+        $engineer_boost = 1 + (1 * ($this->officerService->isOfficerActive((int) $this->user['premium_officier_engineer'], time()) ? ENGINEER_ENERGY : 0));
 
         // PRODUCTION FORMULAS
         $metal_prod = ($this->_prod_grid[$this->_element_id]['formule']['metal'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
@@ -456,15 +465,15 @@ class InfosController extends BaseController
         $energy_prod = ($this->_prod_grid[$this->_element_id]['formule']['energy'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
 
         // PRODUCTION
-        $Prod[1] = ProductionLib::productionAmount($metal_prod, $geologe_boost, $game_resource_multiplier);
-        $Prod[2] = ProductionLib::productionAmount($crystal_prod, $geologe_boost, $game_resource_multiplier);
-        $Prod[3] = ProductionLib::productionAmount($deuterium_prod, $geologe_boost, $game_resource_multiplier);
+        $Prod[1] = $this->productionService->productionAmount($metal_prod, $geologe_boost, $game_resource_multiplier);
+        $Prod[2] = $this->productionService->productionAmount($crystal_prod, $geologe_boost, $game_resource_multiplier);
+        $Prod[3] = $this->productionService->productionAmount($deuterium_prod, $geologe_boost, $game_resource_multiplier);
 
         if ($this->_element_id >= 4) {
-            $Prod[4] = ProductionLib::productionAmount($energy_prod, $engineer_boost, 0, true);
+            $Prod[4] = $this->productionService->productionAmount($energy_prod, $engineer_boost, 0, true);
             $ActualProd = floor($Prod[4]);
         } else {
-            $Prod[4] = ProductionLib::productionAmount($energy_prod, 1, 0, true);
+            $Prod[4] = $this->productionService->productionAmount($energy_prod, 1, 0, true);
             $ActualProd = floor($Prod[$this->_element_id]);
         }
 
@@ -490,23 +499,23 @@ class InfosController extends BaseController
             $energy_prod = ($this->_prod_grid[$this->_element_id]['formule']['energy'])($BuildLevel, $BuildLevelFactor, $BuildTemp, $BuildEnergy);
 
             // PRODUCTION
-            $Prod[1] = ProductionLib::productionAmount($metal_prod, $geologe_boost, $game_resource_multiplier);
-            $Prod[2] = ProductionLib::productionAmount($crystal_prod, $geologe_boost, $game_resource_multiplier);
-            $Prod[3] = ProductionLib::productionAmount($deuterium_prod, $geologe_boost, $game_resource_multiplier);
+            $Prod[1] = $this->productionService->productionAmount($metal_prod, $geologe_boost, $game_resource_multiplier);
+            $Prod[2] = $this->productionService->productionAmount($crystal_prod, $geologe_boost, $game_resource_multiplier);
+            $Prod[3] = $this->productionService->productionAmount($deuterium_prod, $geologe_boost, $game_resource_multiplier);
 
             if ($this->_element_id >= 4) {
-                $Prod[4] = ProductionLib::productionAmount($energy_prod, $engineer_boost, 0, true);
+                $Prod[4] = $this->productionService->productionAmount($energy_prod, $engineer_boost, 0, true);
             } else {
-                $Prod[4] = ProductionLib::productionAmount($energy_prod, 1, 0, true);
+                $Prod[4] = $this->productionService->productionAmount($energy_prod, 1, 0, true);
             }
 
-            $bloc['build_lvl'] = ($current_built_lvl == $BuildLevel) ? FormatLib::colorRed($BuildLevel) : $BuildLevel;
+            $bloc['build_lvl'] = ($current_built_lvl == $BuildLevel) ? $this->formatService->colorRed($BuildLevel) : $BuildLevel;
 
             if ($ProdFirst > 0) {
                 if ($this->_element_id != 12) {
-                    $level_diff = FormatLib::prettyNumber(floor($Prod[$this->_element_id] - $ProdFirst));
+                    $level_diff = $this->formatService->prettyNumber(floor($Prod[$this->_element_id] - $ProdFirst));
                 } else {
-                    $level_diff = FormatLib::prettyNumber(floor($Prod[4] - $ProdFirst));
+                    $level_diff = $this->formatService->prettyNumber(floor($Prod[4] - $ProdFirst));
                 }
             } else {
                 $level_diff = 0;
@@ -531,11 +540,11 @@ class InfosController extends BaseController
                     }
                 }
 
-                $bloc['build_prod'] = FormatLib::prettyNumber(floor($Prod[$this->_element_id]));
-                $bloc['build_prod_diff'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $prod_diff));
-                $bloc['build_level_diff'] = FormatLib::colorGreen($level_diff);
-                $bloc['build_need'] = FormatLib::colorNumber(FormatLib::prettyNumber(floor($Prod[4])));
-                $bloc['build_need_diff'] = FormatLib::colorNumber(FormatLib::prettyNumber(floor($Prod[4] - $ActualNeed)));
+                $bloc['build_prod'] = $this->formatService->prettyNumber(floor($Prod[$this->_element_id]));
+                $bloc['build_prod_diff'] = $this->formatService->colorNumber($prod_diff, $this->formatService->prettyNumber((int) $prod_diff));
+                $bloc['build_level_diff'] = $this->formatService->colorGreen($level_diff);
+                $bloc['build_need'] = $this->formatService->colorNumber(floor($Prod[4]), $this->formatService->prettyNumber(floor($Prod[4])));
+                $bloc['build_need_diff'] = $this->formatService->colorNumber(floor($Prod[4] - $ActualNeed), $this->formatService->prettyNumber(floor($Prod[4] - $ActualNeed)));
             } else {
                 $prod_diff = floor($Prod[4] - $ActualProd);
                 $need_diff = floor($Prod[3] - $ActualNeed);
@@ -545,11 +554,11 @@ class InfosController extends BaseController
                     $need_diff = $Prod[3];
                 }
 
-                $bloc['build_prod'] = FormatLib::prettyNumber(floor($Prod[4]));
-                $bloc['build_prod_diff'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $prod_diff));
-                $bloc['build_level_diff'] = FormatLib::colorGreen($level_diff);
-                $bloc['build_need'] = FormatLib::colorNumber(FormatLib::prettyNumber(floor($Prod[3])));
-                $bloc['build_need_diff'] = FormatLib::colorNumber(FormatLib::prettyNumber((int) $need_diff));
+                $bloc['build_prod'] = $this->formatService->prettyNumber(floor($Prod[4]));
+                $bloc['build_prod_diff'] = $this->formatService->colorNumber($prod_diff, $this->formatService->prettyNumber((int) $prod_diff));
+                $bloc['build_level_diff'] = $this->formatService->colorGreen($level_diff);
+                $bloc['build_need'] = $this->formatService->colorNumber(floor($Prod[3]), $this->formatService->prettyNumber(floor($Prod[3])));
+                $bloc['build_need_diff'] = $this->formatService->colorNumber($need_diff, $this->formatService->prettyNumber((int) $need_diff));
             }
 
             if ($this->_element_id != 12) {
@@ -613,26 +622,32 @@ class InfosController extends BaseController
             // calculate bonus
             $tech_bonus = '';
             $ion_tech_percentage = Formulas::getIonTechnologyBonus(
-                $this->user[$this->_resource[Research::research_ionic_technology]]
+                (int) $this->user[$this->_resource[Research::research_ionic_technology]]
             ) * 100;
 
             if ($ion_tech_percentage > 0) {
                 $tech_bonus = StringsHelper::parseReplacements(
                     __('game/infos.in_ion_tech_bonus'),
-                    [FormatLib::colorGreen('-' . $ion_tech_percentage . '%')]
+                    [$this->formatService->colorGreen('-' . $ion_tech_percentage . '%')]
                 );
             }
 
             // resources and time
-            $tear_down_resources = DevelopmentsLib::developmentPrice($this->user, $this->planet, $this->_element_id, true, true);
-            $tear_down_time = DevelopmentsLib::tearDownTime(
+            $tear_down_resources = $this->developmentsService->developmentPrice(
                 $this->_element_id,
-                $this->planet[$this->_resource[Buildings::BUILDING_ROBOT_FACTORY]],
-                $this->planet[$this->_resource[Buildings::BUILDING_NANO_FACTORY]],
-                $this->planet[$this->_resource[$this->_element_id]]
+                (int) $this->planet[$this->_resource[$this->_element_id]],
+                true,
+                true,
+                (int) $this->user[$this->_resource[Research::research_ionic_technology]]
+            );
+            $tear_down_time = $this->developmentsService->tearDownTime(
+                $this->_element_id,
+                (int) $this->planet[$this->_resource[$this->_element_id]],
+                (int) $this->planet[$this->_resource[Buildings::BUILDING_ROBOT_FACTORY]],
+                (int) $this->planet[$this->_resource[Buildings::BUILDING_NANO_FACTORY]]
             );
 
-            $tear_down_url = 'game.php?page=' . DevelopmentsLib::setBuildingPage($this->_element_id) . '&cmd=destroy&building=' . $this->_element_id;
+            $tear_down_url = 'game.php?page=' . $this->developmentsService->setBuildingPage($this->_element_id) . '&cmd=destroy&building=' . $this->_element_id;
 
             $page .= Template::render(
                 'infos/info_buildings_destroy',
@@ -645,10 +660,10 @@ class InfosController extends BaseController
                         )
                     ),
                     'ion_tech_bonus' => $tech_bonus,
-                    'nfo_metal' => FormatLib::prettyNumber((int) $tear_down_resources['metal']),
-                    'nfo_crystal' => FormatLib::prettyNumber((int) $tear_down_resources['crystal']),
-                    'nfo_deuterium' => FormatLib::prettyNumber((int) $tear_down_resources['deuterium']),
-                    'destroytime' => FormatLib::prettyTime($tear_down_time),
+                    'nfo_metal' => $this->formatService->prettyNumber((int) $tear_down_resources['metal']),
+                    'nfo_crystal' => $this->formatService->prettyNumber((int) $tear_down_resources['crystal']),
+                    'nfo_deuterium' => $this->formatService->prettyNumber((int) $tear_down_resources['deuterium']),
+                    'destroytime' => $this->formatService->prettyTime($tear_down_time),
                 ]
             );
         }

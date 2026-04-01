@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\OfficiersEnumerator as OE;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\OfficiersLib;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Officier;
 
@@ -25,6 +25,12 @@ class PremiumController extends BaseController
     private array $user = [];
     private Officier $officierModel;
     private Objects $objects;
+
+    public function __construct(
+        private FormatService $formatService,
+        private OfficerService $officerService
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -68,7 +74,7 @@ class PremiumController extends BaseController
                 $price = $this->getOfficierPrice($data['offi'], $time);
                 $officier = $this->objects->getObjects($data['offi']);
 
-                if (OfficiersLib::isOfficierActive($this->user[$officier])) {
+                if ($this->officerService->isOfficerActive((int) $this->user[$officier], time())) {
                     $time_to_add = $this->user[$officier] + $set_time;
                 } else {
                     $time_to_add = time() + $set_time;
@@ -107,8 +113,8 @@ class PremiumController extends BaseController
         $item_to_parse['name'] = __('game/officier.officiers')[$item_id]['name'];
         $item_to_parse['description'] = __('game/officier.officiers')[$item_id]['description'];
         $item_to_parse['benefits'] = __('game/officier.officiers')[$item_id]['benefits'];
-        $item_to_parse['month_price'] = FormatLib::prettyNumber($this->getOfficierPrice($item_id, 'darkmatter_month'));
-        $item_to_parse['week_price'] = FormatLib::prettyNumber($this->getOfficierPrice($item_id, 'darkmatter_week'));
+        $item_to_parse['month_price'] = $this->formatService->prettyNumber($this->getOfficierPrice($item_id, 'darkmatter_month'));
+        $item_to_parse['week_price'] = $this->formatService->prettyNumber($this->getOfficierPrice($item_id, 'darkmatter_week'));
         $item_to_parse['img_big'] = $this->getOfficierImage($item_id, 'img_big');
         $item_to_parse['img_small'] = $this->getOfficierImage($item_id, 'img_small');
         $item_to_parse['link_month'] = 'game.php?page=premium&offi=' . $item_id . '&time=month';
@@ -119,16 +125,17 @@ class PremiumController extends BaseController
 
     private function setOfficierStatusWithFormat(int $item_id): string
     {
-        if (OfficiersLib::isOfficierActive((int) $this->user[$this->objects->getObjects($item_id)])) {
-            return FormatLib::customColor(
-                OfficiersLib::getOfficierTimeLeft(
-                    $this->user[$this->objects->getObjects($item_id)],
+        if ($this->officerService->isOfficerActive((int) $this->user[$this->objects->getObjects($item_id)], time())) {
+            return $this->formatService->customColor(
+                (string) $this->officerService->getDaysLeft(
+                    (int) $this->user[$this->objects->getObjects($item_id)],
+                    time()
                 ),
                 'lime'
             );
         }
 
-        return FormatLib::colorRed(__('game/officier.of_inactive'));
+        return $this->formatService->colorRed(__('game/officier.of_inactive'));
     }
 
     private function isOfficierAccesible(int $officier, string $time): bool

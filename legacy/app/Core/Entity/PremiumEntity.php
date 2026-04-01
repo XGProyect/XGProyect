@@ -28,7 +28,7 @@ class PremiumEntity extends Entity
 
     public function getPremiumOfficierCommander(): int
     {
-        return $this->data['premium_officier_commander'];
+        return (int) $this->data['premium_officier_commander'];
     }
 
     public function getPremiumOfficierAdmiral(): int

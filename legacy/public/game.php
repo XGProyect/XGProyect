@@ -35,7 +35,7 @@ if (file_exists($file_name)) {
 
     $class_name = 'Xgp\App\Http\Controllers\Game\\' . ucfirst($page) . 'Controller';
 
-    (new $class_name())->__invoke();
+    app($class_name)->__invoke();
 }
 
 // any other case

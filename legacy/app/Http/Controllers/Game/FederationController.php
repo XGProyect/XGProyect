@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\AcsFleets;
 use Xgp\App\Libraries\Game\Fleets;
@@ -27,6 +27,10 @@ class FederationController extends BaseController
     private string $_message = '';
     private Fleet $fleetModel;
     private Buddies $buddiesModel;
+
+    public function __construct(private FormatService $formatService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -56,11 +60,11 @@ class FederationController extends BaseController
         $data = filter_input_array(INPUT_POST);
 
         if (isset($data['add']) && isset($data['friends_list'])) {
-            $this->addAcsMember($data['friends_list']);
+            $this->addAcsMember((int) $data['friends_list']);
         }
 
         if (isset($data['remove']) && isset($data['members_list'])) {
-            $this->removeAcsMember($data['members_list']);
+            $this->removeAcsMember((int) $data['members_list']);
         }
 
         if (isset($data['search']) && isset($data['addtogroup'])) {
@@ -171,12 +175,12 @@ class FederationController extends BaseController
             if ($userId > 0 && $userId != $this->user['id']) {
                 $this->addAcsMember($userId);
 
-                $this->_message = FormatLib::customColor(
+                $this->_message = $this->formatService->customColor(
                     __('game/fleet.fl_player') . ' ' . $username . ' ' . __('game/fleet.fl_add_to_attack'),
                     'lime'
                 );
             } else {
-                $this->_message = FormatLib::colorRed(
+                $this->_message = $this->formatService->colorRed(
                     __('game/fleet.fl_player') . ' ' . $username . ' ' . __('game/fleet.fl_dont_exist')
                 );
             }

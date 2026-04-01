@@ -7,9 +7,9 @@ namespace App\Services\Admin;
 use App\Data\Admin\TaskData;
 use App\Enums\Admin\AdminTask;
 use App\Services\SettingsService;
+use App\Services\TimingService;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
@@ -18,6 +18,7 @@ class TasksService
 {
     public function __construct(
         private readonly SettingsService $settings,
+        private readonly TimingService $timingService,
     ) {
     }
 
@@ -37,7 +38,7 @@ class TasksService
 
         if ($this->isScheduled($task)) {
             $timestamp = (int) $this->settings->getString($task->value);
-            $nextRun = Timing::formatExtendedDate($timestamp);
+            $nextRun = $this->timingService->formatExtendedDate($timestamp);
             $lastRun = Carbon::createFromTimestamp($timestamp)->diffForHumans();
         }
 

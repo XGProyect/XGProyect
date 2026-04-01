@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'db_sub_title' => 'Here you can repair, optimize and check the integrity of all your database tables.',
     'db_general' => 'General',

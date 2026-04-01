@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\Game\Formulas\FleetsService;
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\OfficiersLib;
 use Xgp\App\Libraries\Premium\Premium;
 use Xgp\App\Libraries\Research\Researches;
 use Xgp\App\Libraries\Users;
@@ -34,6 +34,13 @@ class Fleet2Controller extends BaseController
     ];
     private Fleet $fleetModel;
     private Objects $objects;
+
+    public function __construct(
+        private FormatService $formatService,
+        private OfficerService $officerService,
+        private FleetsService $fleetsService
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -112,13 +119,13 @@ class Fleet2Controller extends BaseController
                     $this->_fleet_data['fleet_array'][$ship_id] = $amount_to_set;
                     $this->_fleet_data['fleet_list'] .= $ship_id . ',' . strval($amount_to_set) . ';';
                     $this->_fleet_data['amount'] += $amount_to_set;
-                    $this->_fleet_data['speed_all'][$ship_id] = FleetsLib::getShipSpeed($ship_id, $this->user);
+                    $this->_fleet_data['speed_all'][$ship_id] = $this->fleetsService->getShipSpeed($ship_id, (int) $this->user['research_combustion_drive'], (int) $this->user['research_impulse_drive'], (int) $this->user['research_hyperspace_drive']);
 
                     $list_of_ships[] = [
                         'ship_id' => $ship_id,
-                        'consumption' => FleetsLib::shipConsumption($ship_id, $this->user),
-                        'speed' => FleetsLib::getShipSpeed($ship_id, $this->user),
-                        'capacity' => FleetsLib::getMaxStorage(
+                        'consumption' => $this->fleetsService->shipConsumption($ship_id, (int) $this->user['research_combustion_drive'], (int) $this->user['research_impulse_drive'], (int) $this->user['research_hyperspace_drive']),
+                        'speed' => $this->fleetsService->getShipSpeed($ship_id, (int) $this->user['research_combustion_drive'], (int) $this->user['research_impulse_drive'], (int) $this->user['research_hyperspace_drive']),
+                        'capacity' => $this->fleetsService->getMaxStorage(
                             $price[$ship_id]['capacity'],
                             $this->_research->getCurrentResearch()->getResearchHyperspaceTechnology()
                         ),
@@ -163,7 +170,7 @@ class Fleet2Controller extends BaseController
 
     private function buildShortcutsBlock(): string
     {
-        if (!OfficiersLib::isOfficierActive($this->_premium->getCurrentPremium()->getPremiumOfficierCommander())) {
+        if (!$this->officerService->isOfficerActive((int) $this->_premium->getCurrentPremium()->getPremiumOfficierCommander(), time())) {
             return '';
         }
 
@@ -178,10 +185,10 @@ class Fleet2Controller extends BaseController
 
             foreach ($shortcuts_list as $shortcut) {
                 if ($shortcut != '') {
-                    $description = $shortcut['name'] . ' ' . FormatLib::prettyCoords(
-                        $shortcut['g'],
-                        $shortcut['s'],
-                        $shortcut['p']
+                    $description = $shortcut['name'] . ' ' . $this->formatService->prettyCoords(
+                        (int)$shortcut['g'],
+                        (int)$shortcut['s'],
+                        (int)$shortcut['p']
                     ) . ' ' . __('game/global.planet_type_short')[$shortcut['pt']];
 
                     $list_of_shortcuts[] = [
@@ -229,10 +236,10 @@ class Fleet2Controller extends BaseController
                 $list_of_planets[] = [
                     'value' => $planet['planet_galaxy'] . ';' . $planet['planet_system'] . ';' . $planet['planet_planet'] . ';' . $planet['planet_type'],
                     'selected' => '',
-                    'title' => $planet['planet_name'] . ' ' . FormatLib::prettyCoords(
-                        $planet['planet_galaxy'],
-                        $planet['planet_system'],
-                        $planet['planet_planet']
+                    'title' => $planet['planet_name'] . ' ' . $this->formatService->prettyCoords(
+                        (int)$planet['planet_galaxy'],
+                        (int)$planet['planet_system'],
+                        (int)$planet['planet_planet']
                     ) . ($planet['planet_type'] == PlanetTypes::MOON ? ' (' . __('game/global.moon') . ')' : ''),
                 ];
             }

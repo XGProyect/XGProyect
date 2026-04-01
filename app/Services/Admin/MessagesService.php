@@ -6,9 +6,9 @@ namespace App\Services\Admin;
 
 use App\Http\Requests\Admin\MessagesSearchRequest;
 use App\Models\Messages;
+use App\Services\TimingService;
 use Illuminate\Database\Eloquent\Collection;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
@@ -30,6 +30,7 @@ class MessagesService
      * @param class-string<Messages> $messageModel
      */
     public function __construct(
+        private readonly TimingService $timingService,
         private readonly string $messageModel = Messages::class,
     ) {
     }
@@ -104,7 +105,7 @@ class MessagesService
             'message_id' => $msg->message_id,
             'sender' => $msg->senderUser?->name ?? '-',
             'receiver' => $msg->receiverUser?->name ?? '-',
-            'message_time' => Timing::formatExtendedDate((string) $msg->message_time),
+            'message_time' => $this->timingService->formatExtendedDate((string) $msg->message_time),
             'message_type' => $this->typeName($msg->message_type),
             'message_type_key' => $msg->message_type,
             'message_from' => $msg->message_from,

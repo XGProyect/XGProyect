@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Game;
 
+use App\Services\Game\Formulas\ProductionService;
 use Xgp\App\Core\Entity\BuildingsEntity;
 use Xgp\App\Core\Entity\PlanetEntity;
 use Xgp\App\Core\Entity\PremiumEntity;
 use Xgp\App\Core\Entity\UserEntity;
-use Xgp\App\Libraries\ProductionLib as Production;
 
 class ResourceMarket
 {
@@ -17,7 +17,7 @@ class ResourceMarket
     private PlanetEntity $planet;
     private BuildingsEntity $buildings;
 
-    public function __construct(array $user, array $planet)
+    public function __construct(array $user, array $planet, private ProductionService $productionService)
     {
         $this->setUpUser($user);
         $this->setUpPremium($user);
@@ -36,7 +36,7 @@ class ResourceMarket
     public function calculateBasePriceToRefill(int $max_storage, int $base_dm): float
     {
         // (max_storage_capacity * 0.10) * base_dark_maatter / (max_initial_storage * 0.10)
-        return ($max_storage * 0.10) * $base_dm / (Production::maxStorable(0) * 0.10);
+        return ($max_storage * 0.10) * $base_dm / ($this->productionService->maxStorable(0) * 0.10);
     }
 
     /**
@@ -87,7 +87,7 @@ class ResourceMarket
 
     public function calculateRefillStoragePrice(string $resource, int $percentage, float $current_resources = 0): float
     {
-        $max_storage = Production::maxStorable($this->buildings->{'getBuilding' . ucfirst($resource) . 'Store'}());
+        $max_storage = $this->productionService->maxStorable($this->buildings->{'getBuilding' . ucfirst($resource) . 'Store'}());
         $base_price = $this->calculateBasePriceToRefill($max_storage, BASIC_RESOURCE_MARKET_DM[$resource]);
 
         return floor((($max_storage - $current_resources) * $percentage / $max_storage) * $base_price / 10);
@@ -95,22 +95,22 @@ class ResourceMarket
 
     public function isMetalStorageFull(): bool
     {
-        return (Production::maxStorable($this->buildings->getBuildingMetalStore()) <= $this->planet->getPlanetAmountOfMetal());
+        return ($this->productionService->maxStorable($this->buildings->getBuildingMetalStore()) <= $this->planet->getPlanetAmountOfMetal());
     }
 
     public function isCrystalStorageFull(): bool
     {
-        return (Production::maxStorable($this->buildings->getBuildingCrystalStore()) <= $this->planet->getPlanetAmountOfCrystal());
+        return ($this->productionService->maxStorable($this->buildings->getBuildingCrystalStore()) <= $this->planet->getPlanetAmountOfCrystal());
     }
 
     public function isDeuteriumStorageFull(): bool
     {
-        return (Production::maxStorable($this->buildings->getBuildingDeuteriumStore()) <= $this->planet->getPlanetAmountOfDeuterium());
+        return ($this->productionService->maxStorable($this->buildings->getBuildingDeuteriumStore()) <= $this->planet->getPlanetAmountOfDeuterium());
     }
 
     public function getProjectedResouces(string $resource, int $percentage): float
     {
-        $amount_to_fill = Production::maxStorable(
+        $amount_to_fill = $this->productionService->maxStorable(
             $this->buildings->{'getBuilding' . ucfirst($resource) . 'Store'}()
         ) * $percentage / 100;
 
@@ -147,7 +147,7 @@ class ResourceMarket
             return false;
         }
 
-        return (Production::maxStorable($this->buildings->{'getBuilding' . ucfirst($resource) . 'Store'}()) >= $this->getProjectedResouces($resource, $percentage));
+        return ($this->productionService->maxStorable($this->buildings->{'getBuilding' . ucfirst($resource) . 'Store'}()) >= $this->getProjectedResouces($resource, $percentage));
     }
 
     private function setUpUser(array $user): void

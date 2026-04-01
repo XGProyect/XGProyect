@@ -5,21 +5,23 @@ declare(strict_types=1);
 namespace App\View\Components\Game;
 
 use App\Models\User;
+use App\Services\FormatService;
 use App\Services\SettingsService;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator;
 use Xgp\App\Helpers\UrlHelper;
-use Xgp\App\Libraries\FormatLib;
 
 class Leftmenu extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(private SettingsService $settingsService)
-    {
+    public function __construct(
+        private SettingsService $settingsService,
+        private FormatService $formatService
+    ) {
     }
 
     /**
@@ -76,7 +78,7 @@ class Leftmenu extends Component
             $menu[$page[5]][] = [
                 'link' => UrlHelper::setUrl(
                     ($page[4] ? '' : ($page[0] . (!empty($page[2]) ? $page[2] : ''))),
-                    FormatLib::spanStyleElement(__('game/menu.' . $page[1]), 'color: ' . $page[3] . ';'),
+                    $this->formatService->spanStyleElement(__('game/menu.' . $page[1]), 'color: ' . $page[3] . ';'),
                     __('game/menu.' . $page[1]),
                     ($page[4] ? 'onClick="f(\'' . $page[0] . '\', \'' . __('game/menu.' . $page[1]) . '\')"' : '')
                 ),

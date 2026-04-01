@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Buildings;
 
-use Xgp\App\Libraries\DevelopmentsLib;
-use Xgp\App\Libraries\OfficiersLib;
+use App\Services\Game\Formulas\DevelopmentsService;
+use App\Services\Game\Formulas\OfficerService;
+use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 
 class Building
 {
@@ -16,13 +17,15 @@ class Building
     private $building = 0;
     private $buildLevel = 0;
     private $buildTime = 0;
+    private OfficerService $officerService;
 
-    public function __construct($planet, $user, $objects)
+    public function __construct($planet, $user, $objects, ?OfficerService $officerService = null)
     {
         $this->queue = new Queue($planet['planet_b_building_id']);
         $this->planet = $planet;
         $this->user = $user;
         $this->objects = $objects;
+        $this->officerService = $officerService ?? app(OfficerService::class);
     }
 
     public function addBuilding($building_id): void
@@ -68,7 +71,7 @@ class Building
     {
         $queue_size = 1;
 
-        if (OfficiersLib::isOfficierActive((int) $this->user['premium_officier_commander'])) {
+        if ($this->officerService->isOfficerActive((int) $this->user['premium_officier_commander'], time())) {
             $queue_size = MAX_BUILDING_QUEUE_SIZE;
         }
 
@@ -135,10 +138,14 @@ class Building
     {
         $difference = ($buildMode == 'teardown') ? 2 : 1;
 
-        $this->buildTime = DevelopmentsLib::developmentTime(
-            $this->user,
-            $this->planet,
-            $this->building
+        $this->buildTime = app(DevelopmentsService::class)->developmentTime(
+            (int) $this->building,
+            (int) $this->planet[$this->objects->getObjects($this->building)],
+            (int) $this->planet[$this->objects->getObjects(Buildings::BUILDING_ROBOT_FACTORY)],
+            (int) $this->planet[$this->objects->getObjects(Buildings::BUILDING_NANO_FACTORY)],
+            0,
+            0,
+            false
         ) / $difference;
 
         return $this->buildTime;

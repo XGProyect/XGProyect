@@ -6,6 +6,7 @@ namespace Xgp\App\Core;
 
 use App\Models\User;
 use App\Services\SettingsService;
+use App\Services\TimingService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
@@ -13,7 +14,6 @@ use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\SecurePageLib;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\UpdatesLibrary;
 
 // require some stuff
@@ -91,8 +91,8 @@ class Common
         define('SHIP_DEBRIS_FACTOR', $settings->getInt('fleet_cdr') / 100);
         define('DEFENSE_DEBRIS_FACTOR', $settings->getInt('defs_cdr') / 100);
 
-        // Several updates
-        new UpdatesLibrary();
+        // Several updates - use DI container to resolve dependencies
+        app(UpdatesLibrary::class);
     }
 
     private function isServerOpen(): void
@@ -117,7 +117,7 @@ class Common
             Functions::popupMessage(
                 StringsHelper::parseReplacements(
                     __('game/global.bg_banned'),
-                    [Timing::formatExtendedDate($user->ban->until)]
+                    [app(TimingService::class)->formatExtendedDate($user->ban->until)]
                 )
             );
         }

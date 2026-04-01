@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Requests\RegisterRequest;
 use App\Mail\Welcome;
-use App\Services\PlanetService;
+use App\Services\Game\PlanetService;
 use App\Services\SessionService;
 use App\Services\SettingsService;
 use Illuminate\Http\RedirectResponse;

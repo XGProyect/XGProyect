@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Formulas;
+namespace App\Services\Game\Formulas;
 
-class Expedition
+class ExpeditionService
 {
     /**
      * Also applies for resources

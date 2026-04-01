@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\Game\Formulas\FleetsService;
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
+use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Entity\FleetEntity;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
@@ -11,12 +15,10 @@ use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\Fleets;
 use Xgp\App\Libraries\Premium\Premium;
 use Xgp\App\Libraries\Research\Researches;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Fleet;
 
@@ -30,6 +32,14 @@ class MovementController extends BaseController
     private ?Researches $research = null;
     private ?Premium $premium = null;
     private Fleet $fleetModel;
+
+    public function __construct(
+        private FormatService $formatService,
+        private FleetsService $fleetsService,
+        private OfficerService $officerService,
+        private TimingService $timingService,
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -74,12 +84,12 @@ class MovementController extends BaseController
     {
         $page = [
             'fleets' => $this->fleets->getFleetsCount(),
-            'max_fleets' => FleetsLib::getMaxFleets(
+            'max_fleets' => $this->fleetsService->getMaxFleets(
                 $this->research->getCurrentResearch()->getResearchComputerTechnology(),
-                $this->premium->getCurrentPremium()->getPremiumOfficierAdmiral()
+                $this->officerService->isOfficerActive($this->premium->getCurrentPremium()->getPremiumOfficierAdmiral(), time())
             ),
             'expeditions' => $this->fleets->getExpeditionsCount(),
-            'max_expeditions' => FleetsLib::getMaxExpeditions(
+            'max_expeditions' => $this->fleetsService->getMaxExpeditions(
                 $this->research->getCurrentResearch()->getResearchAstrophysics()
             ),
             'list_of_movements' => $this->buildMovements(),
@@ -119,21 +129,21 @@ class MovementController extends BaseController
                     'fleet_mission' => __('game/missions.type_mission')[$fleet->getFleetMission()],
                     'title' => $this->buildTitleBlock($fleet->getFleetMess()),
                     'tooltip' => $this->buildToolTipBlock($fleet->getFleetMess()),
-                    'fleet_amount' => FormatLib::prettyNumber((int) $fleet->getFleetAmount()),
+                    'fleet_amount' => $this->formatService->prettyNumber((int) $fleet->getFleetAmount()),
                     'fleet' => $this->buildShipsBlock($fleet->getFleetArray()),
-                    'fleet_start' => FormatLib::prettyCoords(
-                        $fleet->getFleetStartGalaxy(),
-                        $fleet->getFleetStartSystem(),
-                        $fleet->getFleetStartPlanet()
+                    'fleet_start' => $this->formatService->prettyCoords(
+                        (int) $fleet->getFleetStartGalaxy(),
+                        (int) $fleet->getFleetStartSystem(),
+                        (int) $fleet->getFleetStartPlanet()
                     ),
-                    'fleet_start_time' => Timing::formatExtendedDate($fleet->getFleetCreation()),
-                    'fleet_end' => FormatLib::prettyCoords(
-                        $fleet->getFleetEndGalaxy(),
-                        $fleet->getFleetEndSystem(),
-                        $fleet->getFleetEndPlanet()
+                    'fleet_start_time' => $this->timingService->formatExtendedDate($fleet->getFleetCreation()),
+                    'fleet_end' => $this->formatService->prettyCoords(
+                        (int) $fleet->getFleetEndGalaxy(),
+                        (int) $fleet->getFleetEndSystem(),
+                        (int) $fleet->getFleetEndPlanet()
                     ),
-                    'fleet_end_time' => Timing::formatExtendedDate($fleet->getFleetStartTime()),
-                    'fleet_arrival' => Timing::formatExtendedDate($fleet->getFleetEndTime()),
+                    'fleet_end_time' => $this->timingService->formatExtendedDate($fleet->getFleetStartTime()),
+                    'fleet_arrival' => $this->timingService->formatExtendedDate($fleet->getFleetEndTime()),
                     'fleet_actions' => $this->buildActionsBlock($fleet),
                 ];
             }
@@ -144,7 +154,7 @@ class MovementController extends BaseController
 
     private function buildTitleBlock(int $fleet_mess): string
     {
-        if (FleetsLib::isFleetReturning($fleet_mess)) {
+        if ($this->fleetsService->isFleetReturning($fleet_mess)) {
             return __('game/fleet.fl_r');
         }
 
@@ -153,7 +163,7 @@ class MovementController extends BaseController
 
     private function buildToolTipBlock(int $fleet_mess): string
     {
-        if (FleetsLib::isFleetReturning($fleet_mess)) {
+        if ($this->fleetsService->isFleetReturning($fleet_mess)) {
             return __('game/fleet.fl_returning');
         }
 

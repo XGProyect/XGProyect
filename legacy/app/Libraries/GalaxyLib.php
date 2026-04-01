@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
+use App\Services\Game\Formulas\FleetsService;
+use App\Services\FormatService;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
@@ -29,6 +31,7 @@ class GalaxyLib
     private $pricelist;
     private $noob;
     private bool $no_popup = false;
+    private FormatService $formatService;
 
     public function __construct(array $user = [], array $planet = [], int $galaxy = 0, int $system = 0)
     {
@@ -40,6 +43,7 @@ class GalaxyLib
         $this->resource = Objects::getInstance()->getObjects();
         $this->pricelist = Objects::getInstance()->getPrice();
         $this->noob = new NoobsProtectionLib();
+        $this->formatService = app(FormatService::class);
     }
 
     //#####################################
@@ -185,7 +189,7 @@ class GalaxyLib
                 if ($this->row_data['planet_last_update'] > (time() - 10 * 60) && $this->row_data['id'] != $this->current_user['id']) {
                     $planetname .= '(*)';
                 } else {
-                    $planetname .= ' (' . FormatLib::prettyTimeHour(
+                    $planetname .= ' (' . $this->formatService->prettyTimeHour(
                         time() - $this->row_data['planet_last_update']
                     ) . ')';
                 }
@@ -244,7 +248,7 @@ class GalaxyLib
         $parse['system'] = $this->system;
         $parse['planet'] = $this->planet;
         $parse['image'] = strtr(DPATH, ['\\' => '/']) . 'planets/small/s_mond.jpg';
-        $parse['planet_diameter'] = FormatLib::prettyNumber((int) $this->row_data['planet_diameter']);
+        $parse['planet_diameter'] = $this->formatService->prettyNumber((int) $this->row_data['planet_diameter']);
         $parse['links'] = '';
 
         // LOOP THRU ACTIONS
@@ -274,9 +278,9 @@ class GalaxyLib
     private function debrisBlock(): string | array
     {
         if ($this->row_data['metal'] + $this->row_data['crystal'] >= DEBRIS_MIN_VISIBLE_SIZE) {
-            $recyclers_storage = FleetsLib::getMaxStorage(
-                $this->pricelist[Ships::ship_recycler]['capacity'],
-                $this->current_user['research_hyperspace_technology']
+            $recyclers_storage = app(FleetsService::class)->getMaxStorage(
+                (int) $this->pricelist[Ships::ship_recycler]['capacity'],
+                (int) $this->current_user['research_hyperspace_technology']
             );
 
             $recyclers_sended = 0;
@@ -296,8 +300,8 @@ class GalaxyLib
             $parse['image'] = strtr(DPATH, ['\\' => '/']) . 'planets/debris.jpg';
             $parse['planettype'] = self::PLANET_TYPE;
             $parse['recsended'] = $recyclers_sended;
-            $parse['planet_debris_metal'] = FormatLib::prettyNumber((int) $this->row_data['metal']);
-            $parse['planet_debris_crystal'] = FormatLib::prettyNumber((int) $this->row_data['crystal']);
+            $parse['planet_debris_metal'] = $this->formatService->prettyNumber((int) $this->row_data['metal']);
+            $parse['planet_debris_crystal'] = $this->formatService->prettyNumber((int) $this->row_data['crystal']);
 
             return $parse;
         }
@@ -379,10 +383,10 @@ class GalaxyLib
         $user_status = [];
         foreach ($statuses as $status => $details) {
             if (empty($username)) {
-                $username = FormatLib::spanClassElement($this->row_data['name'], $details['class']);
+                $username = $this->formatService->spanClassElement($this->row_data['name'], $details['class']);
             }
 
-            $user_status[] = FormatLib::spanClassElement($details['shortcut'], $details['class']);
+            $user_status[] = $this->formatService->spanClassElement($details['shortcut'], $details['class']);
         }
 
         if (count($user_status) > 0) {

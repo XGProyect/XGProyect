@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Missions;
 
+use App\Services\Game\Formulas\FleetsService;
+use App\Services\FormatService;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\BattleEngine\Core\Battle;
@@ -18,7 +20,6 @@ use Xgp\App\Libraries\BattleEngine\Utils\DebugManager;
 use Xgp\App\Libraries\BattleEngine\Utils\LangManager;
 use Xgp\App\Libraries\Combatreport\Report;
 use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\UpdatesLibrary;
@@ -49,7 +50,7 @@ class Destroy extends Missions
         'ds_chance' => 0,
     ];
 
-    public function __construct()
+    public function __construct(private FormatService $formatService)
     {
         parent::__construct();
     }
@@ -224,9 +225,9 @@ class Destroy extends Missions
                 FleetsLib::targetLink($fleet_row, ''),
                 $fleet_row['planet_start_name'],
                 FleetsLib::startLink($fleet_row, ''),
-                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_metal']),
-                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_crystal']),
-                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_deuterium'])
+                $this->formatService->prettyNumber((int) $fleet_row['fleet_resource_metal']),
+                $this->formatService->prettyNumber((int) $fleet_row['fleet_resource_crystal']),
+                $this->formatService->prettyNumber((int) $fleet_row['fleet_resource_deuterium'])
             );
 
             Functions::sendMessage(
@@ -546,9 +547,9 @@ class Destroy extends Missions
         foreach ($players->getIterator() as $idPlayer => $player) {
             foreach ($player->getIterator() as $idFleet => $fleet) {
                 foreach ($fleet->getIterator() as $idShipType => $shipType) {
-                    $capacity += $shipType->getCount() * FleetsLib::getMaxStorage(
-                        $this->pricelist[$idShipType]['capacity'],
-                        $this->hyperspace_technology[$idPlayer]
+                    $capacity += $shipType->getCount() * app(FleetsService::class)->getMaxStorage(
+                        (int) $this->pricelist[$idShipType]['capacity'],
+                        (int) $this->hyperspace_technology[$idPlayer]
                     );
                 }
             }
@@ -791,7 +792,7 @@ class Destroy extends Missions
     {
         $style = 'style="color:' . $color . ';"';
         $js = "OnClick=\'f(\"game.php?page=combatreport&report=" . $rid . "\", \"\");\'";
-        $content = __('game/destroy.des_report_title') . ' ' . FormatLib::prettyCoords($g, $s, $p);
+        $content = __('game/destroy.des_report_title') . ' ' . $this->formatService->prettyCoords((int)$g, (int)$s, (int)$p);
 
         return UrlHelper::setUrl(
             '',
@@ -806,13 +807,13 @@ class Destroy extends Missions
         $destruction_info = sprintf(
             __('game/destroy.des_report_start'),
             $fleet_row['planet_start_name'],
-            FormatLib::prettyCoords(
+            $this->formatService->prettyCoords(
                 (int) $fleet_row['fleet_start_galaxy'],
                 (int) $fleet_row['fleet_start_system'],
                 (int) $fleet_row['fleet_start_planet']
             ),
             $fleet_row['planet_end_name'],
-            FormatLib::prettyCoords(
+            $this->formatService->prettyCoords(
                 (int) $fleet_row['fleet_end_galaxy'],
                 (int) $fleet_row['fleet_end_system'],
                 (int) $fleet_row['fleet_end_planet']

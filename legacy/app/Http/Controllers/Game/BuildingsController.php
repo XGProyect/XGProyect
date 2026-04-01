@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\Game\Formulas\DevelopmentsService;
+use App\Services\FormatService;
+use App\Services\Game\Formulas\OfficerService;
+use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator;
+use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Buildings\Building;
 use Xgp\App\Libraries\DevelopmentsLib as Developments;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\OfficiersLib;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\UpdatesLibrary;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Buildings;
@@ -33,6 +35,14 @@ class BuildingsController extends BaseController
     private Buildings $buildingsModel;
     private Users $userLibrary;
     private Objects $objects;
+
+    public function __construct(
+        private FormatService $formatService,
+        private OfficerService $officerService,
+        private DevelopmentsService $developmentsService,
+        private TimingService $timingService,
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -70,7 +80,7 @@ class BuildingsController extends BaseController
 
         $this->setAllowedBuildings();
 
-        $this->_commander_active = OfficiersLib::isOfficierActive((int) $this->user['premium_officier_commander']);
+        $this->_commander_active = $this->officerService->isOfficerActive((int) $this->user['premium_officier_commander'], time());
     }
 
     private function runAction(): void
@@ -204,11 +214,16 @@ class BuildingsController extends BaseController
 
     private function getBuildingTime(int $building_id): int
     {
-        return Developments::developmentTime(
-            $this->user,
-            $this->planet,
+        $resource = $this->objects->getObjects();
+
+        return $this->developmentsService->developmentTime(
             $building_id,
-            $this->getBuildingLevel($building_id)
+            $this->getBuildingLevel($building_id),
+            (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_ROBOT_FACTORY]],
+            (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_NANO_FACTORY]],
+            0,
+            0,
+            false
         );
     }
 
@@ -217,9 +232,9 @@ class BuildingsController extends BaseController
         $build_url = 'game.php?page=' . $this->page . '&cmd=insert&building=' . $building_id;
 
         // validations
-        $is_development_payable = Developments::isDevelopmentPayable($this->user, $this->planet, $building_id, true, false);
+        $is_development_payable = $this->developmentsService->isDevelopmentPayable($this->planet, $building_id, $this->getBuildingLevel($building_id), true, false);
         $is_on_vacations = $this->userLibrary->isOnVacations($this->user);
-        $have_fields = Developments::areFieldsAvailable($this->planet);
+        $have_fields = $this->developmentsService->areFieldsAvailable((int) $this->planet['planet_field_current'], (int) $this->planet['planet_field_max'], (int) $this->planet[$this->objects->getObjects()[33]]);
         $is_queue_full = $this->_building->isQueueFull();
         $queue_element = $this->_building->getCountElementsOnQueue();
 
@@ -327,7 +342,7 @@ class BuildingsController extends BaseController
         $text = __('game/buildings.' . $listOfButtons[$buttonCode]['lang']);
         $methodName = 'color' . $color;
 
-        return FormatLib::$methodName($text);
+        return $this->formatService->$methodName($text);
     }
 
     /**
@@ -341,11 +356,11 @@ class BuildingsController extends BaseController
     {
         $working_buildings = [14, 15, 21];
 
-        if ($building_id == 31 && Developments::isLabWorking($this->user)) {
+        if ($building_id == 31 && $this->developmentsService->isLabWorking((int) $this->user['research_current_research'])) {
             return true;
         }
 
-        if (in_array($building_id, $working_buildings) && Developments::isShipyardWorking($this->planet)) {
+        if (in_array($building_id, $working_buildings) && $this->developmentsService->isShipyardWorking((int) $this->planet['planet_b_hangar'])) {
             return true;
         }
 
@@ -354,13 +369,18 @@ class BuildingsController extends BaseController
 
     private function setAllowedBuildings(): void
     {
+        $resource = $this->objects->getObjects();
+        $levels = [];
+        foreach ($resource as $id => $column) {
+            $levels[$id] = (int) ($this->planet[$column] ?? $this->user[$column] ?? 0);
+        }
+
         $this->allowedBuildings = array_filter(
             $this->allowedBuildings[$this->planet['planet_type']],
-            function ($value) {
-                return Developments::isDevelopmentAllowed(
-                    $this->user,
-                    $this->planet,
-                    $value
+            function ($value) use ($levels) {
+                return $this->developmentsService->isDevelopmentAllowed(
+                    $value,
+                    $levels
                 );
             }
         );
@@ -380,6 +400,7 @@ class BuildingsController extends BaseController
      */
     private function cancelCurrent()
     {
+        $resource = $this->objects->getObjects();
         $CurrentQueue = $this->planet['planet_b_building_id'];
 
         if ($CurrentQueue != 0) {
@@ -401,7 +422,15 @@ class BuildingsController extends BaseController
                         $ListIDArray[1] -= 1;
                     }
 
-                    $current_build_time = Developments::developmentTime($this->user, $this->planet, (int) $ListIDArray[0]);
+                    $current_build_time = $this->developmentsService->developmentTime(
+                        (int) $ListIDArray[0],
+                        (int) ($this->planet[$resource[(int) $ListIDArray[0]]] ?? 0),
+                        (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_ROBOT_FACTORY]],
+                        (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_NANO_FACTORY]],
+                        0,
+                        0,
+                        false
+                    );
                     $BuildEndTime += $current_build_time;
                     $ListIDArray[2] = $current_build_time;
                     $ListIDArray[3] = $BuildEndTime;
@@ -423,7 +452,13 @@ class BuildingsController extends BaseController
             }
 
             if ($building != false) {
-                $Needed = Developments::developmentPrice($this->user, $this->planet, (int) $building, true, $ForDestroy);
+                $Needed = $this->developmentsService->developmentPrice(
+                    (int) $building,
+                    (int) ($this->planet[$resource[(int) $building]] ?? 0),
+                    true,
+                    $ForDestroy,
+                    $ForDestroy ? (int) ($this->user[$resource[Research::research_ionic_technology]] ?? 0) : 0
+                );
                 $this->planet['planet_metal'] += $Needed['metal'];
                 $this->planet['planet_crystal'] += $Needed['crystal'];
                 $this->planet['planet_deuterium'] += $Needed['deuterium'];
@@ -492,7 +527,7 @@ class BuildingsController extends BaseController
         $resource = $this->objects->getObjects();
         $CurrentQueue = $this->planet['planet_b_building_id'];
         $queue = $this->showQueue();
-        $max_fields = Developments::maxFields($this->planet);
+        $max_fields = $this->developmentsService->maxFields((int) $this->planet['planet_field_max'], (int) $this->planet[$resource[33]]);
         $QueueArray = [];
 
         if ($AddMode) {
@@ -523,9 +558,21 @@ class BuildingsController extends BaseController
 
         $continue = false;
 
-        if ($QueueID != false && Developments::isDevelopmentAllowed($this->user, $this->planet, $building)) {
+        $levels = [];
+        foreach ($resource as $id => $column) {
+            $levels[$id] = (int) ($this->planet[$column] ?? $this->user[$column] ?? 0);
+        }
+
+        if ($QueueID != false && $this->developmentsService->isDevelopmentAllowed($building, $levels)) {
             if ($QueueID <= 1) {
-                if (Developments::isDevelopmentPayable($this->user, $this->planet, $building, true, !$AddMode) && !$this->userLibrary->isOnVacations($this->user)) {
+                if ($this->developmentsService->isDevelopmentPayable(
+                    $this->planet,
+                    $building,
+                    (int) $this->planet[$resource[$building]],
+                    true,
+                    !$AddMode,
+                    !$AddMode ? (int) ($this->user[$resource[Research::research_ionic_technology]] ?? 0) : 0
+                ) && !$this->userLibrary->isOnVacations($this->user)) {
                     $continue = true;
                 }
             } else {
@@ -550,16 +597,24 @@ class BuildingsController extends BaseController
                     if ($AddMode == true) {
                         $BuildLevel = $ActualLevel + 1 + $InArray;
                         $this->planet[$resource[$building]] += $InArray;
-                        $BuildTime = Developments::developmentTime($this->user, $this->planet, $building);
+                        $BuildTime = $this->developmentsService->developmentTime(
+                            $building,
+                            (int) $this->planet[$resource[$building]],
+                            (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_ROBOT_FACTORY]],
+                            (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_NANO_FACTORY]],
+                            0,
+                            0,
+                            false
+                        );
                         $this->planet[$resource[$building]] -= $InArray;
                     } else {
                         $BuildLevel = $ActualLevel - 1 - $InArray;
                         $this->planet[$resource[$building]] -= $InArray;
-                        $BuildTime = Developments::tearDownTime(
+                        $BuildTime = $this->developmentsService->tearDownTime(
                             $building,
-                            $this->planet[$resource[BuildingsEnumerator::BUILDING_ROBOT_FACTORY]],
-                            $this->planet[$resource[BuildingsEnumerator::BUILDING_NANO_FACTORY]],
-                            $this->planet[$resource[$building]]
+                            (int) $this->planet[$resource[$building]],
+                            (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_ROBOT_FACTORY]],
+                            (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_NANO_FACTORY]]
                         );
 
                         $this->planet[$resource[$building]] += $InArray;
@@ -568,14 +623,22 @@ class BuildingsController extends BaseController
                     $ActualLevel = $this->planet[$resource[$building]];
                     if ($AddMode == true) {
                         $BuildLevel = $ActualLevel + 1;
-                        $BuildTime = Developments::developmentTime($this->user, $this->planet, $building);
+                        $BuildTime = $this->developmentsService->developmentTime(
+                            $building,
+                            (int) $this->planet[$resource[$building]],
+                            (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_ROBOT_FACTORY]],
+                            (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_NANO_FACTORY]],
+                            0,
+                            0,
+                            false
+                        );
                     } else {
                         $BuildLevel = $ActualLevel - 1;
-                        $BuildTime = Developments::tearDownTime(
+                        $BuildTime = $this->developmentsService->tearDownTime(
                             $building,
-                            $this->planet[$resource[BuildingsEnumerator::BUILDING_ROBOT_FACTORY]],
-                            $this->planet[$resource[BuildingsEnumerator::BUILDING_NANO_FACTORY]],
-                            $this->planet[$resource[$building]]
+                            (int) $this->planet[$resource[$building]],
+                            (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_ROBOT_FACTORY]],
+                            (int) $this->planet[$resource[BuildingsEnumerator::BUILDING_NANO_FACTORY]]
                         );
                     }
                 }
@@ -660,7 +723,7 @@ class BuildingsController extends BaseController
                         $ListIDRow .= '			pl = "' . $PlanetID . "\";\n";
                         $ListIDRow .= "			t();\n";
                         $ListIDRow .= '		</script>';
-                        $ListIDRow .= '		<strong color="lime"><br><font color="lime">' . Timing::formatExtendedDate($BuildEndTime) . '</font></strong>';
+                        $ListIDRow .= '		<strong color="lime"><br><font color="lime">' . $this->timingService->formatExtendedDate($BuildEndTime) . '</font></strong>';
                     } else {
                         $ListIDRow .= '		<font color="red">';
                         $ListIDRow .= '		<a href="game.php?page=' . $this->page . '&listid=' . $ListID . '&amp;cmd=remove&amp;planet=' . $PlanetID . '">' . __('game/buildings.bd_cancel') . '</a></font>';

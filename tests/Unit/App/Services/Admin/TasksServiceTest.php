@@ -8,6 +8,7 @@ use App\Data\Admin\TaskData;
 use App\Enums\Admin\AdminTask;
 use App\Services\Admin\TasksService;
 use App\Services\SettingsService;
+use App\Services\TimingService;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 
@@ -18,14 +19,17 @@ class TasksServiceTest extends TestCase
 {
     private TasksService $service;
     private SettingsService & MockObject $settings;
+    private TimingService & MockObject $timingService;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->settings = $this->createMock(SettingsService::class);
+        $this->timingService = $this->createMock(TimingService::class);
+        $this->timingService->method('formatExtendedDate')->willReturn('2025-01-01 00:00:00');
         $this->app->instance(SettingsService::class, $this->settings);
-        $this->service = new TasksService($this->settings);
+        $this->service = new TasksService($this->settings, $this->timingService);
     }
 
     public function testGetTasksReturnsOneEntryPerAdminTaskCase(): void

@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace App\Services\Admin;
 
+use App\Services\FormatService;
 use App\Services\SettingsService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Throwable;
-use Xgp\App\Libraries\FormatLib as Format;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class HomeService
 {
-    public function __construct(private readonly SettingsService $settings)
-    {
+    public function __construct(
+        private readonly SettingsService $settings,
+        private readonly FormatService $formatService,
+    ) {
     }
 
     public function hasServerErrors(): bool
@@ -66,7 +68,7 @@ class HomeService
 
     public function getDbSize(): string
     {
-        return Format::prettyBytes(
+        return $this->formatService->prettyBytes(
             (int) DB::scalar( // @phpstan-ignore cast.int
                 'SELECT SUM(data_length + index_length) FROM information_schema.TABLES WHERE table_schema = ?',
                 [DB::getDatabaseName()]

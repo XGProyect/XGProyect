@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\NoobsProtectionLib;
 use Xgp\App\Models\Game\Search;
@@ -33,6 +33,10 @@ class SearchController extends BaseController
     ];
     private array $results = [];
     private Search $searchModel;
+
+    public function __construct(private FormatService $formatService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -116,7 +120,7 @@ class SearchController extends BaseController
                 $resultsList[] = array_merge(
                     $results,
                     [
-                        'planet_position' => FormatLib::prettyCoords((int) $results['planet_galaxy'], (int) $results['planet_system'], (int) $results['planet_planet']),
+                        'planet_position' => $this->formatService->prettyCoords((int) $results['planet_galaxy'], (int) $results['planet_system'], (int) $results['planet_planet']),
                         'user_rank' => $this->setPosition((int) $results['user_rank'], (int) $results['authlevel']),
                         'user_actions' => $this->getPlayersActions((int) $results['id']),
                     ]
@@ -127,7 +131,7 @@ class SearchController extends BaseController
                 $resultsList[] = array_merge(
                     $results,
                     [
-                        'alliance_points' => FormatLib::prettyNumber((int) $results['alliance_points']),
+                        'alliance_points' => $this->formatService->prettyNumber((int) $results['alliance_points']),
                         'alliance_actions' => $this->getAllianceApplicationAction((int) $results['alliance_id'], (int) $results['alliance_requests']),
                     ]
                 );
@@ -137,7 +141,7 @@ class SearchController extends BaseController
                 $resultsList[] = array_merge(
                     $results,
                     [
-                        'planet_position' => FormatLib::prettyCoords((int) $results['planet_galaxy'], (int) $results['planet_system'], (int) $results['planet_planet']),
+                        'planet_position' => $this->formatService->prettyCoords((int) $results['planet_galaxy'], (int) $results['planet_system'], (int) $results['planet_planet']),
                         'user_rank' => $this->setPosition((int) $results['user_rank'], (int) $results['authlevel']),
                         'user_actions' => $this->getPlayersActions((int) $results['id']),
                     ]
@@ -153,7 +157,7 @@ class SearchController extends BaseController
         if ($this->noob->isRankVisible($userLevel)) {
             return UrlHelper::setUrl(
                 'game.php?page=statistics&start=' . $userRank,
-                FormatLib::prettyNumber((int) $userRank)
+                $this->formatService->prettyNumber((int) $userRank)
             );
         } else {
             return '-';

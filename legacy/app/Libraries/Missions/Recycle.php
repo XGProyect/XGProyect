@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Missions;
 
+use App\Services\Game\Formulas\FleetsService;
+use App\Services\FormatService;
 use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 
 class Recycle extends Missions
@@ -27,7 +28,7 @@ class Recycle extends Missions
      */
     private $recyclers_capacity = 0;
 
-    public function __construct()
+    public function __construct(private FormatService $formatService)
     {
         parent::__construct();
     }
@@ -59,13 +60,13 @@ class Recycle extends Missions
 
             $message = sprintf(
                 __('game/recycle.rec_result'),
-                FormatLib::prettyNumber((int) $fleet_row['fleet_amount']),
-                FormatLib::prettyNumber((int) $this->recyclers_capacity),
+                $this->formatService->prettyNumber((int) $fleet_row['fleet_amount']),
+                $this->formatService->prettyNumber((int) $this->recyclers_capacity),
                 FleetsLib::targetLink($fleet_row, ''),
-                FormatLib::prettyNumber((int) $this->planet_debris['metal']),
-                FormatLib::prettyNumber((int) $this->planet_debris['crystal']),
-                FormatLib::prettyNumber((int) $recycled_resources['metal']),
-                FormatLib::prettyNumber((int) $recycled_resources['crystal'])
+                $this->formatService->prettyNumber((int) $this->planet_debris['metal']),
+                $this->formatService->prettyNumber((int) $this->planet_debris['crystal']),
+                $this->formatService->prettyNumber((int) $recycled_resources['metal']),
+                $this->formatService->prettyNumber((int) $recycled_resources['crystal'])
             );
 
             $this->recycleMessage(
@@ -81,9 +82,9 @@ class Recycle extends Missions
                 FleetsLib::targetLink($fleet_row, ''),
                 $fleet_row['planet_start_name'],
                 FleetsLib::startLink($fleet_row, ''),
-                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_metal']),
-                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_crystal']),
-                FormatLib::prettyNumber((int) $fleet_row['fleet_resource_deuterium']),
+                $this->formatService->prettyNumber((int) $fleet_row['fleet_resource_metal']),
+                $this->formatService->prettyNumber((int) $fleet_row['fleet_resource_crystal']),
+                $this->formatService->prettyNumber((int) $fleet_row['fleet_resource_deuterium']),
             );
 
             $this->recycleMessage(
@@ -122,9 +123,9 @@ class Recycle extends Missions
 
         // CALCULATE STORAGE FOR EACH KIND OF SHIP
         foreach ($ships as $id => $amount) {
-            $ship_storage = FleetsLib::getMaxStorage(
-                $this->pricelist[$id]['capacity'],
-                $fleet_row['research_hyperspace_technology']
+            $ship_storage = app(FleetsService::class)->getMaxStorage(
+                (int) $this->pricelist[$id]['capacity'],
+                (int) $fleet_row['research_hyperspace_technology']
             );
 
             if ($id == 209) {

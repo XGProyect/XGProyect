@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
 use App\Models\Planets;
 use App\Models\User;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Renameplanet;
@@ -21,6 +21,10 @@ class PlanetlayerController extends BaseController
     private array $user = [];
     private array $planet = [];
     private Renameplanet $renameplanetModel;
+
+    public function __construct(private FormatService $formatService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -59,7 +63,7 @@ class PlanetlayerController extends BaseController
                 'withColonies' => $hasColonies,
                 'isMoon' => $isMoon,
                 'defaultName' => $defaultName,
-                'planetCoords' => FormatLib::formatCoords($this->planet['planet_galaxy'], $this->planet['planet_system'], $this->planet['planet_planet']),
+                'planetCoords' => $this->formatService->formatCoords((int)$this->planet['planet_galaxy'], (int)$this->planet['planet_system'], (int)$this->planet['planet_planet']),
                 'planetName' => $this->planet['planet_name'],
             ]
         );

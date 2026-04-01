@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Missions;
 
+use App\Services\FormatService;
 use Xgp\App\Core\Objects;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 
 class Missile extends Missions
 {
-    public function __construct()
+    public function __construct(private FormatService $formatService)
     {
         parent::__construct();
     }
@@ -103,23 +103,23 @@ class Missile extends Missions
             $search = ['%1%', '%2%', '%3%'];
             $replace = [
                 $fleet_row['fleet_amount'],
-                $attacker_data['planet_name'] . ' ' . FormatLib::prettyCoords(
-                    $fleet_row['fleet_start_galaxy'],
-                    $fleet_row['fleet_start_system'],
-                    $fleet_row['fleet_start_planet']
+                $attacker_data['planet_name'] . ' ' . $this->formatService->prettyCoords(
+                    (int) $fleet_row['fleet_start_galaxy'],
+                    (int) $fleet_row['fleet_start_system'],
+                    (int) $fleet_row['fleet_start_planet']
                 ),
-                $target_data['planet_name'] . ' ' . FormatLib::prettyCoords(
-                    $fleet_row['fleet_end_galaxy'],
-                    $fleet_row['fleet_end_system'],
-                    $fleet_row['fleet_end_planet']
+                $target_data['planet_name'] . ' ' . $this->formatService->prettyCoords(
+                    (int) $fleet_row['fleet_end_galaxy'],
+                    (int) $fleet_row['fleet_end_system'],
+                    (int) $fleet_row['fleet_end_planet']
                 ),
             ];
 
             if (isset($result) && count($result) > 0) {
                 foreach (Objects::getInstance()->getObjectsList('defense') as $defense_id) {
-                    $message .= FormatLib::prettyNumber((int) $target_data[$this->resource[$defense_id]]) . ' ' . __('game/defenses.' . $this->resource[$defense_id]);
+                    $message .= $this->formatService->prettyNumber((int) $target_data[$this->resource[$defense_id]]) . ' ' . __('game/defenses.' . $this->resource[$defense_id]);
                     if (isset($result[$defense_id])) {
-                        $message .= ' (-' . FormatLib::prettyNumber((int) $result[$defense_id]) . ')';
+                        $message .= ' (-' . $this->formatService->prettyNumber((int) $result[$defense_id]) . ')';
                     }
                     $message .= '<br>';
                 }

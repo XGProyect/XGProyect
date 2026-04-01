@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Xgp\App\Libraries\Missions;
 
 use App\Models\UsersStatistics;
-use App\Services\Formulas\Expedition as FmlExpedition;
+use App\Services\FormatService;
+use App\Services\Game\Formulas\ExpeditionService;
+use App\Services\Game\Formulas\FleetsService;
 use Xgp\App\Core\Objects;
 use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 
 class Expedition extends Missions
@@ -17,8 +18,10 @@ class Expedition extends Missions
     private int $shipExpeditionPoints = 0;
     private int $fleetCapacity = 0;
 
-    public function __construct(private FmlExpedition $fmlExpedition)
-    {
+    public function __construct(
+        private ExpeditionService $expeditionService,
+        private FormatService $formatService
+    ) {
         parent::__construct();
     }
 
@@ -28,7 +31,7 @@ class Expedition extends Missions
         if (parent::canStartMission($fleet)) {
             $this->setExpeditionPoints($fleet);
 
-            switch ($this->fmlExpedition->getExpeditionResult()) {
+            switch ($this->expeditionService->getExpeditionResult()) {
                 case 'darkMatter':
                     $this->resultDarkMatter($fleet);
                     break;
@@ -71,9 +74,9 @@ class Expedition extends Missions
                 $message = sprintf(
                     __('game/missions.mi_fleet_back_without_resources'),
                     $fleet['planet_end_name'],
-                    FormatLib::prettyCoords($fleet['fleet_end_galaxy'], $fleet['fleet_end_system'], $fleet['fleet_end_planet']),
+                    $this->formatService->prettyCoords((int)$fleet['fleet_end_galaxy'], (int)$fleet['fleet_end_system'], (int)$fleet['fleet_end_planet']),
                     $fleet['planet_start_name'],
-                    FormatLib::prettyCoords($fleet['fleet_start_galaxy'], $fleet['fleet_start_system'], $fleet['fleet_start_planet']),
+                    $this->formatService->prettyCoords((int)$fleet['fleet_start_galaxy'], (int)$fleet['fleet_start_system'], (int)$fleet['fleet_start_planet']),
                 );
 
                 $this->expeditionMessage(
@@ -90,12 +93,12 @@ class Expedition extends Missions
                 $message = sprintf(
                     __('game/missions.mi_fleet_back_with_resources'),
                     $fleet['planet_end_name'],
-                    FormatLib::prettyCoords($fleet['fleet_end_galaxy'], $fleet['fleet_end_system'], $fleet['fleet_end_planet']),
+                    $this->formatService->prettyCoords((int) $fleet['fleet_end_galaxy'], (int) $fleet['fleet_end_system'], (int) $fleet['fleet_end_planet']),
                     $fleet['planet_start_name'],
-                    FormatLib::prettyCoords($fleet['fleet_start_galaxy'], $fleet['fleet_start_system'], $fleet['fleet_start_planet']),
-                    FormatLib::prettyNumber((int) $fleet['fleet_resource_metal']),
-                    FormatLib::prettyNumber((int) $fleet['fleet_resource_crystal']),
-                    FormatLib::prettyNumber((int) $fleet['fleet_resource_deuterium'])
+                    $this->formatService->prettyCoords((int) $fleet['fleet_start_galaxy'], (int) $fleet['fleet_start_system'], (int) $fleet['fleet_start_planet']),
+                    $this->formatService->prettyNumber((int) $fleet['fleet_resource_metal']),
+                    $this->formatService->prettyNumber((int) $fleet['fleet_resource_crystal']),
+                    $this->formatService->prettyNumber((int) $fleet['fleet_resource_deuterium'])
                 );
 
                 $this->expeditionMessage(
@@ -121,24 +124,24 @@ class Expedition extends Missions
         $expeditionPoints = 0;
 
         foreach (FleetsLib::getFleetShipsArray($fleet['fleet_array']) as $id => $count) {
-            if (in_array($id, $this->fmlExpedition->getPossibleShips())) {
-                $expeditionPoints += $this->fmlExpedition->calculateExpeditionPoints(
+            if (in_array($id, $this->expeditionService->getPossibleShips())) {
+                $expeditionPoints += $this->expeditionService->calculateExpeditionPoints(
                     ($priceList[$id]['metal'] + $priceList[$id]['crystal'])
                 ) * $count;
             }
 
-            $this->fleetCapacity += FleetsLib::getMaxStorage(
-                $priceList[$id]['capacity'],
-                $fleet['research_hyperspace_technology']
+            $this->fleetCapacity += app(FleetsService::class)->getMaxStorage(
+                (int) $priceList[$id]['capacity'],
+                (int) $fleet['research_hyperspace_technology']
             ) * $count;
         }
 
         $topPlayerPoints = UsersStatistics::max('user_statistic_total_points');
 
-        $maxResourceFindExpeditionPoints = $this->fmlExpedition->getMaxExpeditionPoints(
+        $maxResourceFindExpeditionPoints = $this->expeditionService->getMaxExpeditionPoints(
             $topPlayerPoints
         );
-        $maxShipsFindExpeditionPoints = $this->fmlExpedition->getMaxShipsExpeditionPoints(
+        $maxShipsFindExpeditionPoints = $this->expeditionService->getMaxShipsExpeditionPoints(
             $topPlayerPoints
         );
 
@@ -167,8 +170,8 @@ class Expedition extends Missions
      */
     private function resultDarkMatter(array $fleet): void
     {
-        $darkMatterFound = $this->fmlExpedition->getDarkMatterSourceSize(
-            $this->fmlExpedition->calculateDarkMatterSourceSize()
+        $darkMatterFound = $this->expeditionService->getDarkMatterSourceSize(
+            $this->expeditionService->calculateDarkMatterSourceSize()
         );
 
         $this->expeditionMessage(
@@ -192,7 +195,7 @@ class Expedition extends Missions
      */
     private function resultShips(array $fleet): void
     {
-        $shipsRatio = $this->fmlExpedition->getShipsObtainableChances();
+        $shipsRatio = $this->expeditionService->getShipsObtainableChances();
         $foundChance = $this->shipExpeditionPoints / $fleet['fleet_amount'];
         $currentFleet = FleetsLib::getFleetShipsArray($fleet['fleet_array']);
         $foundShip = [];
@@ -253,9 +256,9 @@ class Expedition extends Missions
         $fleetMaxCapacity = $this->fleetCapacity - $fleetUsedStorage;
 
         // expedition resources obtained calculations
-        $typeObtained = $this->fmlExpedition->calculateResourceTypeObtained();
-        $foundAmount = $this->fmlExpedition->getResourceFoundAmount(
-            $this->fmlExpedition->getResourceSourceSizeMultChances(
+        $typeObtained = $this->expeditionService->calculateResourceTypeObtained();
+        $foundAmount = $this->expeditionService->getResourceFoundAmount(
+            $this->expeditionService->getResourceSourceSizeMultChances(
                 $typeObtained
             ),
             $this->resourceExpeditionPoints,
@@ -307,7 +310,7 @@ class Expedition extends Missions
      */
     private function resultDelay(array $fleet): void
     {
-        $fleetDelayMultiplier = $this->fmlExpedition->getFleetDeplay();
+        $fleetDelayMultiplier = $this->expeditionService->getFleetDeplay();
         $returnTime = (int) $fleet['fleet_end_time'] - (int) $fleet['fleet_end_stay'];
 
         $this->missionsModel->updateFleetEndTime(
@@ -457,7 +460,7 @@ class Expedition extends Missions
     {
         $subject = sprintf(
             __('game/expedition.exp_report_title'),
-            FormatLib::prettyCoords($coords['galaxy'], $coords['system'], $coords['planet'])
+            $this->formatService->prettyCoords((int) $coords['galaxy'], (int) $coords['system'], (int) $coords['planet'])
         );
 
         Functions::sendMessage(

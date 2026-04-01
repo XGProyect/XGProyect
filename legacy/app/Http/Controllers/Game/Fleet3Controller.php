@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\Game\Formulas\FleetsService;
+use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FleetsLib;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Research\Researches;
 use Xgp\App\Libraries\Users;
@@ -29,6 +29,12 @@ class Fleet3Controller extends BaseController
     private array $_allowed_missions = [];
     private Fleet $fleetModel;
     private Objects $objects;
+
+    public function __construct(
+        private FormatService $formatService,
+        private FleetsService $fleetsService
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -108,9 +114,9 @@ class Fleet3Controller extends BaseController
 
                     $list_of_ships[] = [
                         'ship_id' => $ship_id,
-                        'consumption' => FleetsLib::shipConsumption($ship_id, $this->user),
-                        'speed' => FleetsLib::getShipSpeed($ship_id, $this->user),
-                        'capacity' => FleetsLib::getMaxStorage(
+                        'consumption' => $this->fleetsService->shipConsumption($ship_id, (int) $this->user['research_combustion_drive'], (int) $this->user['research_impulse_drive'], (int) $this->user['research_hyperspace_drive']),
+                        'speed' => $this->fleetsService->getShipSpeed($ship_id, (int) $this->user['research_combustion_drive'], (int) $this->user['research_impulse_drive'], (int) $this->user['research_hyperspace_drive']),
+                        'capacity' => $this->fleetsService->getMaxStorage(
                             $price[$ship_id]['capacity'],
                             $this->_research->getCurrentResearch()->getResearchHyperspaceTechnology()
                         ),
@@ -125,10 +131,10 @@ class Fleet3Controller extends BaseController
 
     private function buildTitleBlock(): string
     {
-        return FormatLib::prettyCoords(
-            $this->planet['planet_galaxy'],
-            $this->planet['planet_system'],
-            $this->planet['planet_planet']
+        return $this->formatService->prettyCoords(
+            (int)$this->planet['planet_galaxy'],
+            (int)$this->planet['planet_system'],
+            (int)$this->planet['planet_planet']
         ) . ' - ' . __('game/global.planet_type')[$this->planet['planet_type']];
     }
 
@@ -399,30 +405,32 @@ class Fleet3Controller extends BaseController
 
         $this->_current_mission = $data['target_mission'];
 
-        $distance = FleetsLib::targetDistance(
-            $this->planet['planet_galaxy'],
-            $data['galaxy'],
-            $this->planet['planet_system'],
-            $data['system'],
-            $this->planet['planet_planet'],
-            $data['planet']
+        $distance = $this->fleetsService->targetDistance(
+            (int) $this->planet['planet_galaxy'],
+            (int) $data['galaxy'],
+            (int) $this->planet['planet_system'],
+            (int) $data['system'],
+            (int) $this->planet['planet_planet'],
+            (int) $data['planet']
         );
 
         $fleet = $this->getSessionShips();
         $Speed_factor = Functions::fleetSpeedFactor();
-        $fleet_speed = FleetsLib::fleetMaxSpeed($fleet, $this->user);
+        $fleet_speed = $this->fleetsService->fleetMaxSpeed($fleet, (int) $this->user['research_combustion_drive'], (int) $this->user['research_impulse_drive'], (int) $this->user['research_hyperspace_drive']);
 
-        $consumption = FleetsLib::fleetConsumption(
+        $consumption = $this->fleetsService->fleetConsumption(
             $fleet,
             $Speed_factor,
-            FleetsLib::missionDuration(
-                $data['speed'],
-                min($fleet_speed),
+            (int) $this->fleetsService->missionDuration(
+                (int) $data['speed'],
+                (int) min($fleet_speed),
                 $distance,
                 $Speed_factor
             ),
             $distance,
-            $this->user
+            (int) $this->user['research_combustion_drive'],
+            (int) $this->user['research_impulse_drive'],
+            (int) $this->user['research_hyperspace_drive']
         );
 
         // attach speed and target data

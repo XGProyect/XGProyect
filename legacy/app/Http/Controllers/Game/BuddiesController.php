@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\TimingService;
 use Exception;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Entity\BuddyEntity;
@@ -11,7 +12,6 @@ use Xgp\App\Core\Enumerators\BuddiesStatusEnumerator as BuddiesStatus;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Buddies\Buddy;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\TimingLibrary as Timing;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Buddies;
 
@@ -22,6 +22,10 @@ class BuddiesController extends BaseController
     private array $user = [];
     private ?Buddy $buddy = null;
     private Buddies $buddiesModel;
+
+    public function __construct(private TimingService $timingService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -281,7 +285,7 @@ class BuddiesController extends BaseController
     private function setText(BuddyEntity $buddy, int $onlineTime): string
     {
         if ($buddy->getBuddyStatus() == BuddiesStatus::isBuddy) {
-            return Timing::setOnlineStatus($onlineTime);
+            return $this->timingService->getOnlineStatus((int) $onlineTime, time());
         } else {
             return $buddy->getRequestText();
         }

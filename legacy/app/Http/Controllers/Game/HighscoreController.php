@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
-use Xgp\App\Libraries\FormatLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Statistics;
@@ -18,6 +18,10 @@ class HighscoreController extends BaseController
     private array $user = [];
     private array $planet = [];
     private Statistics $statisticsModel;
+
+    public function __construct(private FormatService $formatService)
+    {
+    }
 
     public function __invoke(): void
     {
@@ -75,8 +79,8 @@ class HighscoreController extends BaseController
                 $parse['alliance_name'] = $StatRow['alliance_name'];
                 $parse['ally_members'] = $StatRow['ally_members'];
                 $parse['ally_action'] = $StatRow['alliance_request_notallow'] == 1 ? '<a href="game.php?page=alliance&mode=apply&allyid=' . $StatRow['alliance_id'] . '"><img src="' . DPATH . 'img/m.gif" border="0" title="' . __('game/statistics.st_ally_request') . '" /></a>' : '';
-                $parse['ally_points'] = FormatLib::prettyNumber((int) $StatRow['alliance_statistic_' . $Order]);
-                $parse['ally_members_points'] = FormatLib::prettyNumber(floor($StatRow['alliance_statistic_' . $Order] / $StatRow['ally_members']));
+                $parse['ally_points'] = $this->formatService->prettyNumber((int) $StatRow['alliance_statistic_' . $Order]);
+                $parse['ally_members_points'] = $this->formatService->prettyNumber(floor($StatRow['alliance_statistic_' . $Order] / $StatRow['ally_members']));
                 $parse['stat_values'] .= Template::render(
                     'highscore.alliance_table',
                     $parse
@@ -125,7 +129,7 @@ class HighscoreController extends BaseController
                 }
 
                 $parse['player_rankplus'] = $this->rank_difference($ranking);
-                $parse['player_points'] = FormatLib::prettyNumber((int) $StatRow['user_statistic_' . $Order]);
+                $parse['player_points'] = $this->formatService->prettyNumber((int) $StatRow['user_statistic_' . $Order]);
                 $parse['stat_values'] .= Template::render(
                     'highscore.player_table',
                     $parse
