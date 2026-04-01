@@ -61,7 +61,10 @@ class AnnouncementController extends BaseController
         $time = time();
 
         $from = $this->formatService->customColor($level, $color);
-        $subject = $this->formatService->customColor($request->input('subject') ?? __('admin/announcement.an_none'), $color);
+        $subject = $this->formatService->customColor(
+            (string) ($request->input('subject') ?? __('admin/announcement.an_none')),
+            $color
+        );
         $message = $this->formatService->customColor((string) $request->input('text'), $color);
 
         foreach ($players as $player) {

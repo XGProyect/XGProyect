@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\Admin;
 
+use App\Services\SettingsService;
 use JsonException;
 use RuntimeException;
 use Xgp\App\Core\Enumerators\AdminPagesEnumerator as AdminPages;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
-use App\Services\SettingsService;
 
 class PermissionsService
 {

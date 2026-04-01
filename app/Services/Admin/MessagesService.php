@@ -103,8 +103,8 @@ class MessagesService
     {
         return $results->map(fn (Messages $msg) => [
             'message_id' => $msg->message_id,
-            'sender' => $msg->senderUser?->name ?? '-',
-            'receiver' => $msg->receiverUser?->name ?? '-',
+            'sender' => $msg->senderUser->name ?? '-',
+            'receiver' => $msg->receiverUser->name ?? '-',
             'message_time' => $this->timingService->formatExtendedDate((string) $msg->message_time),
             'message_type' => $this->typeName($msg->message_type),
             'message_type_key' => $msg->message_type,
