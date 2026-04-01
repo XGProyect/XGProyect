@@ -5,17 +5,38 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Exceptions\LegacyView;
+use App\Http\Controllers\Game as Game;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
+use Symfony\Component\HttpFoundation\Response as BaseResponse;
 
 class LegacyController extends BaseController
 {
-    public function __invoke(Request $request): Response
+    /**
+     * Game pages promoted to Laravel controllers.
+     * These bypass the legacy bootstrap entirely.
+     *
+     * @var array<string, class-string>
+     */
+    private const PROMOTED_PAGES = [
+        'logout' => Game\LogoutController::class,
+    ];
+
+    public function __invoke(Request $request): BaseResponse
     {
+        $file = strtr($request->getPathInfo(), ['/' => '', '.php' => '']);
+
+        if ($file === 'game') {
+            $page = $request->query('page');
+
+            if (is_string($page) && isset(self::PROMOTED_PAGES[$page])) {
+                return app()->call(self::PROMOTED_PAGES[$page]);
+            }
+        }
+
         try {
             ob_start();
-            $file = strtr($request->getPathInfo(), ['/' => '', '.php' => '']);
 
             if (empty($file)) {
                 $file = 'index';
