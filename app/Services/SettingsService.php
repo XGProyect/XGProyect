@@ -7,12 +7,17 @@ namespace App\Services;
 use App\Models\Options;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use Throwable;
 
 class SettingsService
 {
+    /**
+     * @var array<string, Options>
+     */
     private array $settings = [];
 
+    /**
+     * @return array<string, Options>
+     */
     public function all(): array
     {
         $this->init();
@@ -24,16 +29,25 @@ class SettingsService
     {
         $this->init();
 
-        try {
-            return $this->settings[$setting];
-        } catch (Throwable $e) {
-            throw new Exception('The request setting: "' . $setting . '" is not defined!', $e->getCode());
+        if (!array_key_exists($setting, $this->settings)) {
+            throw new Exception('The request setting: "' . $setting . '" is not defined!');
         }
+
+        return $this->settings[$setting];
     }
 
+    /**
+     * @return array<mixed, mixed>
+     */
     public function getArray(string $setting): array
     {
-        return json_decode($this->one($setting)->value, null, 512, JSON_THROW_ON_ERROR);
+        $decoded = json_decode((string) $this->one($setting)->value, true, 512, JSON_THROW_ON_ERROR);
+
+        if (!is_array($decoded)) {
+            throw new Exception('The setting: "' . $setting . '" does not contain a valid JSON array/object.');
+        }
+
+        return $decoded;
     }
 
     public function getBool(string $setting): bool
