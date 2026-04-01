@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
@@ -13,8 +14,6 @@ use Xgp\App\Models\Game\Messages;
 
 class ChatController extends BaseController
 {
-    public const MODULE_ID = 18;
-
     private array $user = [];
     private array $_receiver_data = [];
     private array $_message_data = [];
@@ -26,7 +25,7 @@ class ChatController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Messages));
 
         $this->user = Users::getInstance()->getUserData();
         $this->messagesModel = new Messages();

@@ -18,13 +18,12 @@ use Xgp\App\Libraries\Buildings\Building;
 use Xgp\App\Libraries\DevelopmentsLib as Developments;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\UpdatesLibrary;
+use App\Enums\Module;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Buildings;
 
 class BuildingsController extends BaseController
 {
-    public const MODULE_ID = 3;
-
     protected array $user = [];
     protected array $planet = [];
     protected string $page = '';
@@ -46,7 +45,7 @@ class BuildingsController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Buildings));
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();

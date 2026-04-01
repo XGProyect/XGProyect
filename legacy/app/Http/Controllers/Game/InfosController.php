@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
@@ -27,8 +28,6 @@ use Xgp\App\Models\Game\Infos;
  */
 class InfosController extends BaseController
 {
-    public const MODULE_ID = 24;
-
     private array $user = [];
     private array $planet = [];
     private $_element_id;
@@ -49,7 +48,7 @@ class InfosController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Information));
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Combatreport\Report;
@@ -13,15 +14,13 @@ use Xgp\App\Models\Game\Combatreport;
 
 class CombatreportController extends BaseController
 {
-    public const MODULE_ID = 23;
-
     private array $user = [];
     private ?Report $report = null;
     private Combatreport $combatreportModel;
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::CombatReports));
 
         $this->user = Users::getInstance()->getUserData();
         $this->combatreportModel = new Combatreport();

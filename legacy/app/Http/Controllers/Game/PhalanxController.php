@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Template;
@@ -15,15 +16,13 @@ use Xgp\App\Models\Game\Phalanx;
 
 class PhalanxController extends BaseController
 {
-    public const MODULE_ID = 11;
-
     private array $user = [];
     private array $planet = [];
     private Phalanx $phalanxModel;
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Galaxy));
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();

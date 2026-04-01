@@ -12,12 +12,11 @@ use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
+use App\Enums\Module;
 use Xgp\App\Models\Game\Renameplanet;
 
 class PlanetlayerController extends BaseController
 {
-    public const MODULE_ID = 1;
-
     private array $user = [];
     private array $planet = [];
     private Renameplanet $renameplanetModel;
@@ -28,7 +27,7 @@ class PlanetlayerController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Overview));
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();

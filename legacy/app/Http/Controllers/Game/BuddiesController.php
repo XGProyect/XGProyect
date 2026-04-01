@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Services\TimingService;
 use Exception;
 use Illuminate\Routing\Controller as BaseController;
@@ -17,8 +18,6 @@ use Xgp\App\Models\Game\Buddies;
 
 class BuddiesController extends BaseController
 {
-    public const MODULE_ID = 20;
-
     private array $user = [];
     private ?Buddy $buddy = null;
     private Buddies $buddiesModel;
@@ -29,7 +28,7 @@ class BuddiesController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Buddies));
 
         $this->user = Users::getInstance()->getUserData();
         $this->buddiesModel = new Buddies();

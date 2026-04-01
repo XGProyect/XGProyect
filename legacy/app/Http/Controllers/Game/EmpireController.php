@@ -14,6 +14,7 @@ use Xgp\App\Helpers\UrlHelper;
 use App\Services\Game\Formulas\DevelopmentsService;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
+use App\Enums\Module;
 use Xgp\App\Models\Game\Empire;
 
 /**
@@ -21,8 +22,6 @@ use Xgp\App\Models\Game\Empire;
  */
 class EmpireController extends BaseController
 {
-    public const MODULE_ID = 2;
-
     private array $user = [];
     private Empire $empireModel;
     private Objects $objects;
@@ -35,7 +34,7 @@ class EmpireController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Empire));
 
         $this->user = Users::getInstance()->getUserData();
         $this->objects = Objects::getInstance();

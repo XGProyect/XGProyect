@@ -16,14 +16,13 @@ use Xgp\App\Libraries\DevelopmentsLib;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\NoobsProtectionLib;
+use App\Enums\Module;
 use Xgp\App\Libraries\UpdatesLibrary;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Overview;
 
 class OverviewController extends BaseController
 {
-    public const MODULE_ID = 1;
-
     private array $user = [];
     private array $planet = [];
     private Overview $overviewModel;
@@ -39,7 +38,7 @@ class OverviewController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Overview));
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();

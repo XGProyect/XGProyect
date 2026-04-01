@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Objects;
@@ -13,8 +14,6 @@ use Xgp\App\Libraries\Users;
 
 class TechnologytreeController extends BaseController
 {
-    public const MODULE_ID = 10;
-
     private array $user = [];
     private array $planet = [];
     private $_resource;
@@ -26,7 +25,7 @@ class TechnologytreeController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Technology));
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();

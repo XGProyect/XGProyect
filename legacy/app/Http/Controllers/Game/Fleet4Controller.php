@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
 use App\Services\Game\Formulas\OfficerService;
@@ -27,7 +28,6 @@ use Xgp\App\Models\Game\Fleet;
  */
 class Fleet4Controller extends BaseController
 {
-    public const MODULE_ID = 8;
     public const REDIRECT_TARGET = 'game.php?page=movement';
 
     private array $user = [];
@@ -77,7 +77,7 @@ class Fleet4Controller extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Fleet));
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();

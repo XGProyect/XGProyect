@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Services\FormatService;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\SettingsService;
@@ -20,8 +21,6 @@ use Xgp\App\Models\Game\Officier;
  */
 class PremiumController extends BaseController
 {
-    public const MODULE_ID = 15;
-
     private array $user = [];
     private Officier $officierModel;
     private Objects $objects;
@@ -34,7 +33,7 @@ class PremiumController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Officers));
 
         $this->user = Users::getInstance()->getUserData();
         $this->officierModel = new Officier();

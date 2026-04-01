@@ -15,6 +15,7 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
+use App\Enums\Module;
 use Xgp\App\Models\Game\Resources;
 
 /**
@@ -22,8 +23,6 @@ use Xgp\App\Models\Game\Resources;
  */
 class ResourcesettingsController extends BaseController
 {
-    public const MODULE_ID = 4;
-
     private array $user = [];
     private array $planet = [];
     private $resource;
@@ -41,7 +40,7 @@ class ResourcesettingsController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::ResourceSettings));
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();

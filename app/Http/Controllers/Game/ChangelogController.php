@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Models\Changelog;
 use App\Services\SettingsService;
 use App\Services\TimingService;
@@ -13,8 +14,6 @@ use Xgp\App\Libraries\Functions;
 
 class ChangelogController extends BaseController
 {
-    public const MODULE_ID = 0;
-
     public function __construct(
         private SettingsService $settings,
         private TimingService $timingService,
@@ -26,7 +25,7 @@ class ChangelogController extends BaseController
         /**
          * @SuppressWarnings("PHPMD.StaticAccess")
          */
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Changelog));
 
         return view('changelog.view', [
             'gameTitle' => $this->settings->getString('game_name'),

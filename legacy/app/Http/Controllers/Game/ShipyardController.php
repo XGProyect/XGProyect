@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Services\Game\Formulas\DevelopmentsService;
 use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
@@ -20,8 +21,6 @@ use Xgp\App\Models\Game\Shipyard;
 
 class ShipyardController extends BaseController
 {
-    public const MODULE_ID = 7;
-
     private array $user = [];
     private array $planet = [];
     protected string $page = 'shipyard';
@@ -62,7 +61,7 @@ class ShipyardController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Shipyard));
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();

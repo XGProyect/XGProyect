@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use App\Services\Game\Formulas\OfficerService;
@@ -21,8 +22,6 @@ use Xgp\App\Models\Game\Messages;
  */
 class MessagesController extends BaseController
 {
-    public const MODULE_ID = 18;
-
     private array $user = [];
     private array $message_type = [
         MessagesEnumerator::ESPIO => ['type_name' => 'espioopen'],
@@ -40,7 +39,7 @@ class MessagesController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Messages));
 
         $this->user = Users::getInstance()->getUserData();
         $this->messagesModel = new Messages();

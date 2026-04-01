@@ -9,11 +9,10 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
+use App\Enums\Module;
 
 class TraderLayerController extends BaseController
 {
-    public const MODULE_ID = 5;
-
     private array $planet = [];
 
     public function __construct(private FormatService $formatService)
@@ -22,7 +21,7 @@ class TraderLayerController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Trader));
 
         $this->planet = Users::getInstance()->getPlanetData();
 

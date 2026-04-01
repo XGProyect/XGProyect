@@ -6,6 +6,7 @@ namespace Xgp\App\Libraries;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
+use App\Enums\Module;
 use App\Services\SettingsService;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Template;
@@ -82,12 +83,12 @@ abstract class Functions
         self::message($mes, $dest, $time, false, false, false);
     }
 
-    public static function isModuleAccesible(int $module = 0): int
+    public static function isModuleAccesible(Module $module): int
     {
         $modules = app(SettingsService::class)->getString('modules');
         $modules = explode(';', $modules);
 
-        return (int) $modules[$module];
+        return (int) $modules[$module->value];
     }
 
     public static function moduleMessage(int $accessLevel): void

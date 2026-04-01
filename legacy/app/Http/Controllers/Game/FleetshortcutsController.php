@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
@@ -15,7 +16,6 @@ use Xgp\App\Models\Game\Shortcuts as ShortcutsModel;
 
 class FleetshortcutsController extends BaseController
 {
-    public const MODULE_ID = 8;
     public const REDIRECT_TARGET = 'game.php?page=shortcuts';
 
     private array $user = [];
@@ -29,7 +29,7 @@ class FleetshortcutsController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Fleet));
 
         $this->user = Users::getInstance()->getUserData();
         $this->shortcutsModel = new ShortcutsModel();

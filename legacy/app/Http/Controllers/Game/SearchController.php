@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
@@ -15,8 +16,6 @@ use Xgp\App\Models\Game\Search;
 
 class SearchController extends BaseController
 {
-    public const MODULE_ID = 17;
-
     private ?NoobsProtectionLib $noob = null;
     private array $searchTerms = [
         'searchType' => '',
@@ -40,7 +39,7 @@ class SearchController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Search));
 
         $this->noob = new NoobsProtectionLib();
         $this->searchModel = new Search();

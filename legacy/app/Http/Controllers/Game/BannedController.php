@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Models\Banned;
 use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
@@ -13,8 +14,6 @@ use Xgp\App\Libraries\Functions;
 
 class BannedController extends BaseController
 {
-    public const MODULE_ID = 22;
-
     private int $bannedCount = 0;
 
     public function __construct(private TimingService $timingService)
@@ -23,7 +22,7 @@ class BannedController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Banned));
 
         Template::legacyView(
             'banned.view',

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
@@ -13,8 +14,6 @@ use Xgp\App\Models\Game\Statistics;
 
 class HighscoreController extends BaseController
 {
-    public const MODULE_ID = 16;
-
     private array $user = [];
     private array $planet = [];
     private Statistics $statisticsModel;
@@ -25,7 +24,7 @@ class HighscoreController extends BaseController
 
     public function __invoke(): void
     {
-        Functions::moduleMessage(Functions::isModuleAccesible(self::MODULE_ID));
+        Functions::moduleMessage(Functions::isModuleAccesible(Module::Statistics));
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
