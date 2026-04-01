@@ -20,6 +20,7 @@ class LegacyController extends BaseController
      * @var array<string, class-string>
      */
     private const PROMOTED_PAGES = [
+        'changelog' => Game\ChangelogController::class,
         'logout' => Game\LogoutController::class,
     ];
 
@@ -31,7 +32,9 @@ class LegacyController extends BaseController
             $page = $request->query('page');
 
             if (is_string($page) && isset(self::PROMOTED_PAGES[$page])) {
-                return app()->call(self::PROMOTED_PAGES[$page]);
+                $result = app()->call(self::PROMOTED_PAGES[$page]);
+
+                return $result instanceof BaseResponse ? $result : new Response($result);
             }
         }
 

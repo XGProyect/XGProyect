@@ -8,7 +8,7 @@
     </tr>
     @foreach ($changes as $item)
     <tr>
-        <th scope="row" width="42px">{{ $item['version_number'] }}</th>
+        <th scope="row" width="42px">{{ $item['versionNumber'] }}</th>
         <td style="text-align: left" class="b">{!! $item['description'] !!}</td>
     </tr>
     @endforeach
