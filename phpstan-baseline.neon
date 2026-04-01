@@ -199,12 +199,6 @@ parameters:
 			path: app/Http/Controllers/Home/RegisterController.php
 
 		-
-			message: '#^Parameter \#1 \$userId of method App\\Services\\SessionService\:\:setLoginData\(\) expects int, int\|string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/Home/RegisterController.php
-
-		-
 			message: '#^Parameter \#2 \$userPass of class App\\Mail\\Welcome constructor expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1489,126 +1483,6 @@ parameters:
 			path: app/Models/UsersStatistics.php
 
 		-
-			message: '#^Parameter \#1 \$array \(list\<array\{i\: int, name\: mixed, delete\: bool, kick\: bool, applications\: bool, memberlist\: bool, app_management\: bool, administration\: bool, \.\.\.\}\>\) of array_values is already a list, call has no effect\.$#'
-			identifier: arrayValues.list
-			count: 1
-			path: app/Services/Admin/AlliancesService.php
-
-		-
-			message: '#^Using nullsafe property access "\?\-\>changelog_description" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
-			identifier: nullsafe.neverNull
-			count: 1
-			path: app/Services/Admin/ChangelogService.php
-
-		-
-			message: '#^Using nullsafe property access "\?\-\>changelog_id" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
-			identifier: nullsafe.neverNull
-			count: 1
-			path: app/Services/Admin/ChangelogService.php
-
-		-
-			message: '#^Using nullsafe property access "\?\-\>changelog_lang_id" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
-			identifier: nullsafe.neverNull
-			count: 1
-			path: app/Services/Admin/ChangelogService.php
-
-		-
-			message: '#^Using nullsafe property access "\?\-\>changelog_version" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
-			identifier: nullsafe.neverNull
-			count: 1
-			path: app/Services/Admin/ChangelogService.php
-
-		-
-			message: '#^Method App\\Services\\Admin\\LanguagesService\:\:loadTranslations\(\) should return list\<array\{key\: string, value\: string\}\>\|null but returns array\<int, array\{key\: string, value\: string\}\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Services/Admin/LanguagesService.php
-
-		-
-			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
-			identifier: nullsafe.neverNull
-			count: 2
-			path: app/Services/Admin/MessagesService.php
-
-		-
-			message: '#^Property App\\Services\\Admin\\PermissionsService\:\:\$permissions \(array\<string, array\<int, int\>\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: app/Services/Admin/PermissionsService.php
-
-		-
-			message: '#^Method App\\Services\\PlanetService\:\:calculateNewPlanetPosition\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Services/PlanetService.php
-
-		-
-			message: '#^Method App\\Services\\PlanetService\:\:isPlanetFree\(\) has parameter \$galaxy with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: app/Services/PlanetService.php
-
-		-
-			message: '#^Method App\\Services\\PlanetService\:\:isPlanetFree\(\) has parameter \$position with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: app/Services/PlanetService.php
-
-		-
-			message: '#^Method App\\Services\\PlanetService\:\:isPlanetFree\(\) has parameter \$system with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: app/Services/PlanetService.php
-
-		-
-			message: '#^Method App\\Services\\PlanetService\:\:isPlanetFree\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Services/PlanetService.php
-
-		-
-			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: app/Services/SessionService.php
-
-		-
-			message: '#^Dead catch \- Throwable is never thrown in the try block\.$#'
-			identifier: catch.neverThrown
-			count: 1
-			path: app/Services/SettingsService.php
-
-		-
-			message: '#^Method App\\Services\\SettingsService\:\:all\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Services/SettingsService.php
-
-		-
-			message: '#^Method App\\Services\\SettingsService\:\:getArray\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Services/SettingsService.php
-
-		-
-			message: '#^Method App\\Services\\SettingsService\:\:getArray\(\) should return array but returns mixed\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Services/SettingsService.php
-
-		-
-			message: '#^Property App\\Services\\SettingsService\:\:\$settings type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: app/Services/SettingsService.php
-
-		-
-			message: '#^Parameter \#1 \$time of static method Xgp\\App\\Libraries\\TimingLibrary\:\:formatShortDate\(\) expects string, int\<1, max\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/View/Components/Admin/Navigation.php
-
-		-
 			message: '#^Cannot access property \$authlevel on App\\Models\\User\|null\.$#'
 			identifier: property.nonObject
 			count: 1
@@ -1649,24 +1523,6 @@ parameters:
 			identifier: booleanOr.alwaysTrue
 			count: 1
 			path: app/View/Components/Game/Leftmenu.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Planets\:\:\$building_crystal_store\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/View/Components/Game/Topnav.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Planets\:\:\$building_deuterium_tank\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/View/Components/Game/Topnav.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Planets\:\:\$building_metal_store\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/View/Components/Game/Topnav.php
 
 		-
 			message: '#^Cannot access property \$current_planet on App\\Models\\User\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\User\>\|null\.$#'
@@ -2905,12 +2761,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/BuildingsController.php
 
 		-
-			message: '#^Parameter \#3 \$element of static method Xgp\\App\\Libraries\\DevelopmentsLib\:\:isDevelopmentAllowed\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
 			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:\$_building has no type specified\.$#'
 			identifier: missingType.property
 			count: 1
@@ -2933,12 +2783,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Argument of an invalid type array\|bool\|null supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 1
-			path: legacy/app/Http/Controllers/Game/ChangelogController.php
 
 		-
 			message: '#^Parameter \#1 \$to of static method Xgp\\App\\Libraries\\Functions\:\:sendMessage\(\) expects int, int\|false\|null given\.$#'
@@ -3505,12 +3349,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
 
 		-
-			message: '#^Parameter \#1 \$percentage of static method Xgp\\App\\Libraries\\FleetsLib\:\:missionDuration\(\) expects int, int\|string\|false\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
 			message: '#^Parameter \#1 \$ship of static method Xgp\\App\\Libraries\\FleetsLib\:\:getShipSpeed\(\) expects int, int\|string\|false given\.$#'
 			identifier: argument.type
 			count: 1
@@ -3541,19 +3379,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
 
 		-
-			message: '#^Parameter \#2 \$destGalaxy of static method Xgp\\App\\Libraries\\FleetsLib\:\:targetDistance\(\) expects int, int\|string\|false\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
 			message: '#^Parameter \#2 \$s of method Xgp\\App\\Models\\Game\\Fleet\:\:getPlanetOwnerByCoords\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
-			message: '#^Parameter \#3 \$mission_duration of static method Xgp\\App\\Libraries\\FleetsLib\:\:fleetConsumption\(\) expects int, float given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
@@ -3565,19 +3391,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
 
 		-
-			message: '#^Parameter \#4 \$destSystem of static method Xgp\\App\\Libraries\\FleetsLib\:\:targetDistance\(\) expects int, int\|string\|false\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
 			message: '#^Parameter \#4 \$pt of method Xgp\\App\\Models\\Game\\Fleet\:\:getPlanetOwnerByCoords\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
-			message: '#^Parameter \#6 \$destPlanet of static method Xgp\\App\\Libraries\\FleetsLib\:\:targetDistance\(\) expects int, int\|string\|false\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
@@ -3901,12 +3715,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
-			message: '#^Parameter \#1 \.\.\.\$arg1 of function min expects non\-empty\-array, array given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/GalaxyController.php
-
-		-
 			message: '#^Parameter \#2 \$destGalaxy of static method Xgp\\App\\Libraries\\FleetsLib\:\:targetDistance\(\) expects int, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -3925,19 +3733,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
-			message: '#^Parameter \#4 \$destSystem of static method Xgp\\App\\Libraries\\FleetsLib\:\:targetDistance\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/GalaxyController.php
-
-		-
 			message: '#^Parameter \#4 \$planet_type of method Xgp\\App\\Models\\Game\\Galaxy\:\:getTargetUserDataByCoords\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/GalaxyController.php
-
-		-
-			message: '#^Parameter \#6 \$destPlanet of static method Xgp\\App\\Libraries\\FleetsLib\:\:targetDistance\(\) expects int, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
@@ -4171,12 +3967,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/InfosController.php
 
 		-
-			message: '#^Parameter \#1 \$n of static method Xgp\\App\\Libraries\\FormatLib\:\:colorNumber\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 7
-			path: legacy/app/Http/Controllers/Game/InfosController.php
-
-		-
 			message: '#^Parameter \#1 \$string of static method Xgp\\App\\Libraries\\FormatLib\:\:colorGreen\(\) expects string, int\|string given\.$#'
 			identifier: argument.type
 			count: 2
@@ -4192,12 +3982,6 @@ parameters:
 			message: '#^Parameter \#1 \$target_planet_id of method Xgp\\App\\Models\\Game\\Infos\:\:getTargetGate\(\) expects int, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: legacy/app/Http/Controllers/Game/InfosController.php
-
-		-
-			message: '#^Parameter \#2 \$boost of static method Xgp\\App\\Libraries\\ProductionLib\:\:productionAmount\(\) expects int, float\|int given\.$#'
-			identifier: argument.type
-			count: 8
 			path: legacy/app/Http/Controllers/Game/InfosController.php
 
 		-
@@ -4879,12 +4663,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/ResearchController.php
 
 		-
-			message: '#^Parameter \#3 \$element of static method Xgp\\App\\Libraries\\DevelopmentsLib\:\:isDevelopmentAllowed\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/ResearchController.php
-
-		-
 			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\ResearchController\:\:\$_is_working has no type specified\.$#'
 			identifier: missingType.property
 			count: 1
@@ -5023,24 +4801,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
 
 		-
-			message: '#^Parameter \#1 \$n of static method Xgp\\App\\Libraries\\FormatLib\:\:colorNumber\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 17
-			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
-
-		-
-			message: '#^Parameter \#2 \$boost of static method Xgp\\App\\Libraries\\ProductionLib\:\:productionAmount\(\) expects int, float given\.$#'
-			identifier: argument.type
-			count: 3
-			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
-
-		-
-			message: '#^Parameter \#2 \$boost of static method Xgp\\App\\Libraries\\ProductionLib\:\:productionAmount\(\) expects int, float\|int given\.$#'
-			identifier: argument.type
-			count: 4
-			path: legacy/app/Http/Controllers/Game/ResourcesettingsController.php
-
-		-
 			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\ResourcesettingsController\:\:\$planet type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -5140,18 +4900,6 @@ parameters:
 			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\ShipyardController\:\:setListOfShipyardItem\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: legacy/app/Http/Controllers/Game/ShipyardController.php
-
-		-
-			message: '#^Parameter \#1 \$itemId of method Xgp\\App\\Http\\Controllers\\Game\\ShipyardController\:\:getItemTime\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/ShipyardController.php
-
-		-
-			message: '#^Parameter \#1 \$objectId of method Xgp\\App\\Core\\Objects\:\:getObjects\(\) expects int\|null, string given\.$#'
-			identifier: argument.type
-			count: 2
 			path: legacy/app/Http/Controllers/Game/ShipyardController.php
 
 		-
@@ -8617,60 +8365,6 @@ parameters:
 			path: legacy/app/Libraries/FleetsLib.php
 
 		-
-			message: '#^Comparison operation "\<" between int\<min, \-1\> and 0 is always true\.$#'
-			identifier: smaller.alwaysTrue
-			count: 1
-			path: legacy/app/Libraries/FormatLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Libraries\\FormatLib\:\:getHTMLColorsNameList\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Libraries/FormatLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Libraries\\FormatLib\:\:prettyTimeAgo\(\) has parameter \$full with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Libraries/FormatLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Libraries\\FormatLib\:\:roundUp\(\) should return int but returns float\.$#'
-			identifier: return.type
-			count: 1
-			path: legacy/app/Libraries/FormatLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Libraries\\FormatLib\:\:shortlyNumber\(\) has parameter \$number with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Libraries/FormatLib.php
-
-		-
-			message: '#^Parameter \#1 \$string of static method Xgp\\App\\Libraries\\FormatLib\:\:colorGreen\(\) expects string, int\<0, max\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/FormatLib.php
-
-		-
-			message: '#^Parameter \#1 \$string of static method Xgp\\App\\Libraries\\FormatLib\:\:colorRed\(\) expects string, int\<min, \-1\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/FormatLib.php
-
-		-
-			message: '#^Possibly invalid array key type float\|int\.$#'
-			identifier: offsetAccess.invalidOffset
-			count: 1
-			path: legacy/app/Libraries/FormatLib.php
-
-		-
-			message: '#^Property DateInterval\:\:\$d \(int\) does not accept float\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: legacy/app/Libraries/FormatLib.php
-
-		-
 			message: '#^Method Xgp\\App\\Libraries\\Formulas\:\:getDeathStarsDestructionChance\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -9283,12 +8977,6 @@ parameters:
 			path: legacy/app/Libraries/MissionControlLib.php
 
 		-
-			message: '#^Class Xgp\\App\\Libraries\\Missions\\Expedition constructor invoked with 0 parameters, 1 required\.$#'
-			identifier: arguments.count
-			count: 1
-			path: legacy/app/Libraries/MissionControlLib.php
-
-		-
 			message: '#^Method Xgp\\App\\Libraries\\MissionControlLib\:\:processMissions\(\) has parameter \$allFleets with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -9805,18 +9493,6 @@ parameters:
 			path: legacy/app/Libraries/Missions/Expedition.php
 
 		-
-			message: '#^Parameter \#1 \$topPlayerPoints of method App\\Services\\Formulas\\Expedition\:\:getMaxExpeditionPoints\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/Missions/Expedition.php
-
-		-
-			message: '#^Parameter \#1 \$topPlayerPoints of method App\\Services\\Formulas\\Expedition\:\:getMaxShipsExpeditionPoints\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/Missions/Expedition.php
-
-		-
 			message: '#^Binary operation "\." between array\<string\>\|string and \(array\|string\) results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 2
@@ -10141,30 +9817,6 @@ parameters:
 			path: legacy/app/Libraries/Premium/Premium.php
 
 		-
-			message: '#^Method Xgp\\App\\Libraries\\ProductionLib\:\:currentProduction\(\) should return int but returns float\.$#'
-			identifier: return.type
-			count: 1
-			path: legacy/app/Libraries/ProductionLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Libraries\\ProductionLib\:\:maxProduction\(\) should return int but returns float\|int\.$#'
-			identifier: return.type
-			count: 1
-			path: legacy/app/Libraries/ProductionLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Libraries\\ProductionLib\:\:maxStorable\(\) has parameter \$storage_level with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Libraries/ProductionLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Libraries\\ProductionLib\:\:productionAmount\(\) should return int but returns float\.$#'
-			identifier: return.type
-			count: 2
-			path: legacy/app/Libraries/ProductionLib.php
-
-		-
 			message: '#^Method Xgp\\App\\Libraries\\Research\\Researches\:\:__construct\(\) has parameter \$research with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -10241,18 +9893,6 @@ parameters:
 			identifier: missingType.property
 			count: 1
 			path: legacy/app/Libraries/StatisticsLibrary.php
-
-		-
-			message: '#^Binary operation "\-" between int\<1, max\> and string results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Libraries/TimingLibrary.php
-
-		-
-			message: '#^Parameter \#2 \$timestamp of function date expects int\|null, int\|string\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/TimingLibrary.php
 
 		-
 			message: '#^Binary operation "\*" between int\<1, max\> and float\|string results in an error\.$#'
@@ -10375,18 +10015,6 @@ parameters:
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
-			message: '#^Parameter \#2 \$boost of static method Xgp\\App\\Libraries\\ProductionLib\:\:productionAmount\(\) expects int, float given\.$#'
-			identifier: argument.type
-			count: 3
-			path: legacy/app/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Parameter \#2 \$boost of static method Xgp\\App\\Libraries\\ProductionLib\:\:productionAmount\(\) expects int, float\|int given\.$#'
-			identifier: argument.type
-			count: 4
-			path: legacy/app/Libraries/UpdatesLibrary.php
-
-		-
 			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1
@@ -10460,12 +10088,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#3 \$agent of method Xgp\\App\\Models\\Libraries\\UsersLibrary\:\:updateUserActivityData\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/Users.php
-
-		-
-			message: '#^Parameter \#4 \$userId of method Xgp\\App\\Models\\Libraries\\UsersLibrary\:\:updateUserActivityData\(\) expects int, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Libraries/Users.php
@@ -10703,12 +10325,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Models/Game/Buildings.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Changelog\:\:getAllChangelogEntries\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Changelog.php
 
 		-
 			message: '#^Method Xgp\\App\\Models\\Game\\Combatreport\:\:getReportById\(\) return type has no value type specified in iterable type array\.$#'
@@ -11791,12 +11407,6 @@ parameters:
 			path: legacy/config/constants.php
 
 		-
-			message: '#^Call to an undefined method object\:\:__invoke\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: legacy/public/game.php
-
-		-
 			message: '#^Parameter \#1 \$str of function strtr expects string, string\|false\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -11807,18 +11417,6 @@ parameters:
 			identifier: method.alreadyNarrowedType
 			count: 1
 			path: tests/Feature/ExampleTest.php
-
-		-
-			message: '#^Offset ''file_size'' might not exist on array\{file_name\: string, file_size\: string, full_file_name\: string\}\|null\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: tests/Unit/App/Services/Admin/BackupServiceTest.php
-
-		-
-			message: '#^Offset ''full_file_name'' might not exist on array\{file_name\: string, file_size\: string, full_file_name\: string\}\|null\.$#'
-			identifier: offsetAccess.notFound
-			count: 2
-			path: tests/Unit/App/Services/Admin/BackupServiceTest.php
 
 		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
