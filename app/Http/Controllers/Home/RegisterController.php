@@ -9,6 +9,7 @@ use App\Mail\Welcome;
 use App\Services\Game\PlanetService;
 use App\Services\SessionService;
 use App\Services\SettingsService;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ use Xgp\App\Models\Home\Register;
 class RegisterController extends BaseController
 {
     public function __construct(
+        private AuthManager $auth,
         private PlanetService $planetService,
         private SessionService $sessionService,
         private SettingsService $settingsService
@@ -71,8 +73,8 @@ class RegisterController extends BaseController
             $request->session()->regenerate();
 
             $this->sessionService->setLoginData(
-                Auth::id(),
-                Auth::getUser()->getAuthPassword()
+                $this->auth->id(),
+                $this->auth->getUser()->getAuthPassword()
             );
 
             return redirect('game.php?page=overview');

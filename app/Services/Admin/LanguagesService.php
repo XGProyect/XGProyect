@@ -52,7 +52,7 @@ class LanguagesService
      * Returns null when the file cannot be parsed or does not contain a PHP array
      * (i.e. a real error). Returns an empty array for valid files that have no entries.
      *
-     * @return list<array{key: string, value: string}>|null
+     * @return array<int, array{key: string, value: string}>
      */
     public function loadTranslations(string $relativePath): ?array
     {
