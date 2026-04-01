@@ -20,7 +20,7 @@ class TimingService
         return date($this->settings->getString('date_format_extended'), (int) $time);
     }
 
-    public function formatShortDate(string | int $time): string
+    public function formatShortDate(float | int | string $time): string
     {
         if (!is_numeric($time)) {
             $time = strtotime((string) $time);

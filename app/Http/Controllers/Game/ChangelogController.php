@@ -20,11 +20,11 @@ class ChangelogController extends BaseController
     ) {
     }
 
+    /**
+     * @SuppressWarnings("PHPMD.StaticAccess")
+     */
     public function __invoke(): View
     {
-        /**
-         * @SuppressWarnings("PHPMD.StaticAccess")
-         */
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Changelog));
 
         return view('changelog.view', [
@@ -37,7 +37,9 @@ class ChangelogController extends BaseController
                 ->map(fn ($entry) => [
                     'versionNumber' => $entry->changelog_version,
                     'description' => nl2br(
-                        $this->timingService->formatShortDate($entry->changelog_date->timestamp) . '<br>' . $entry->changelog_description
+                        $this->timingService->formatShortDate($entry->changelog_date->timestamp)
+                        . '<br>'
+                        . $entry->changelog_description
                     ),
                 ]),
         ]);
