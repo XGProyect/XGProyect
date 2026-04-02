@@ -34,7 +34,8 @@ class Topnav extends Component
      */
     public function render(): View | Htmlable | \Closure | string
     {
-        $user = User::find(session('user_id'));
+        $rawId = session('user_id');
+        $user = User::findOrFail(is_int($rawId) ? $rawId : 0);
         $planet = Planets::where([
             ['planet_user_id', '=', $user->id],
             ['planet_id', '=', $user->current_planet],
@@ -80,11 +81,14 @@ class Topnav extends Component
         );
     }
 
+    /**
+     * @return array<int, array{selected: string, value: string, text: string}>
+     */
     private function buildPlanetList(User $user): array
     {
-        $page = isset($_GET['page']) ? $_GET['page'] : '';
-        $technology = isset($_GET['technology']) ? $_GET['technology'] : '';
-        $mode = isset($_GET['mode']) ? $_GET['mode'] : '';
+        $page = (string) request()->string('page');
+        $technology = (string) request()->string('technology');
+        $mode = (string) request()->string('mode');
 
         $allUserPlanets = Planets::where([
             ['planet_user_id', '=', $user->id],

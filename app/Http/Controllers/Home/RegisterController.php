@@ -45,11 +45,15 @@ class RegisterController extends BaseController
         );
 
         if ($newUser === null) {
-            return back()->withErrors($request);
+            return back()->withErrors([
+                'username' => __('home/register.re_create_fail'),
+            ], 'register');
         }
 
         // send welcome message
         if ($this->settingsService->getString('reg_welcome_message')) {
+            /** @var string $welcomeContent */
+            $welcomeContent = __('home/register.re_welcome_message_content');
             Functions::sendMessage(
                 $newUser->id,
                 0,
@@ -57,7 +61,7 @@ class RegisterController extends BaseController
                 5,
                 __('home/register.re_welcome_message_from'),
                 __('home/register.re_welcome_message_subject'),
-                str_replace('%s', $newUser->name, __('home/register.re_welcome_message_content'))
+                str_replace('%s', $newUser->name, $welcomeContent)
             );
         }
 
@@ -65,21 +69,26 @@ class RegisterController extends BaseController
         if ($this->settingsService->getString('reg_welcome_email')) {
             Mail::to($newUser->email)->send(new Welcome(
                 $newUser->name,
-                $request->validated('password')
+                (string) $request->string('password')
             ));
         }
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
 
-            $this->sessionService->setLoginData(
-                $this->auth->id(),
-                $this->auth->getUser()->getAuthPassword()
-            );
+            $authUser = $this->auth->getUser();
+            if ($authUser !== null) {
+                $this->sessionService->setLoginData(
+                    $this->auth->id(),
+                    $authUser->getAuthPassword()
+                );
+            }
 
             return redirect('game.php?page=overview');
         }
 
-        return back()->withErrors($request);
+        return back()->withErrors([
+            'username' => __('home/register.re_create_fail'),
+        ], 'register');
     }
 }

@@ -29,7 +29,8 @@ class Leftmenu extends Component
      */
     public function render(): View | Closure | string
     {
-        $user = User::find(session('user_id'));
+        $rawId = session('user_id');
+        $user = User::findOrFail(is_int($rawId) ? $rawId : 0);
 
         // @todo review - future reference in case there is a bug
         // $tota_rank = $this->current_user['user_statistic_total_rank'] == '' ?
@@ -70,7 +71,12 @@ class Leftmenu extends Component
 
         // remove not enabled pages
         $pages = array_filter($pages, function ($page) use ($modules) {
-            return (!isset($modules[$page[6]]) || ($modules[$page[6]] === '1' || $modules[$page[6]] === ''));
+            $moduleKey = $page[6];
+            if ($moduleKey === '') {
+                return true;
+            }
+            $idx = (int) $moduleKey;
+            return !isset($modules[$idx]) || $modules[$idx] === '1' || $modules[$idx] === '';
         });
 
         // build the menu array
@@ -85,6 +91,9 @@ class Leftmenu extends Component
             ];
         }
 
+        /** @var string $versionFile */
+        $versionFile = config('version.files');
+
         return view(
             'components.game.leftmenu',
             [
@@ -93,7 +102,7 @@ class Leftmenu extends Component
                 'menu' => $menu,
                 'isAdmin' => $user->authlevel > UserRanksEnumerator::PLAYER,
                 'servername' => $this->settingsService->getString('game_name'),
-                'changelog' => UrlHelper::setUrl('game.php?page=changelog', config('version.files')),
+                'changelog' => UrlHelper::setUrl('game.php?page=changelog', $versionFile),
             ]
         );
     }

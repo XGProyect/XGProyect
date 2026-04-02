@@ -26,6 +26,11 @@ class Officer implements GameObjectInterface
         return $this->name;
     }
 
+    public function getPrice(): Price
+    {
+        return new Price();
+    }
+
     public function getDarkmatterWeek(): int
     {
         return $this->darkmatterWeek;

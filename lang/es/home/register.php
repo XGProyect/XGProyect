@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return [
     're_disabled' => 'En estos momentos el registro a nuevos usuarios se encuentra cerrado.',
+    're_create_fail' => 'No pudimos completar tu registro en este momento. Por favor, inténtalo de nuevo en unos instantes.',
     're_welcome_message_from' => 'Admin',
     're_welcome_message_subject' => '¡Te damos la bienvenida a XGProyect!',
     're_welcome_message_content' => 'Hola %s - ¡Bienvenido a XGProyect!

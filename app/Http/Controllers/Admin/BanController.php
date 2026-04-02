@@ -65,7 +65,7 @@ class BanController extends BaseController
 
     public function unban(Request $request): RedirectResponse
     {
-        $username = $request->input('unban_name');
+        $username = (string) $request->string('unban_name');
         $user = User::where('name', $username)->first();
 
         if (!$user) {
@@ -80,10 +80,10 @@ class BanController extends BaseController
         return redirect()->route('admin.ban');
     }
 
-    private function applyBan(BanRequest $request, User $targetUser, ?object $existingBan): RedirectResponse
+    private function applyBan(BanRequest $request, User $targetUser, ?\stdClass $existingBan): RedirectResponse
     {
-        $days = (int) $request->input('days', 0);
-        $hours = (int) $request->input('hour', 0);
+        $days = $request->integer('days', 0);
+        $hours = $request->integer('hour', 0);
         /** @var User $adminUser */
         $adminUser = Auth::user();
 
@@ -103,7 +103,7 @@ class BanController extends BaseController
         $this->upsertBan(
             $targetUser->id,
             (int) $adminUser->id,
-            (string) $request->input('text', ''),
+            (string) $request->string('text'),
             $banEndTime,
             $request->filled('vacat'),
         );
@@ -113,7 +113,7 @@ class BanController extends BaseController
         return redirect()->route('admin.ban.form', ['ban_name' => $targetUser->name]);
     }
 
-    private function getBanWithPreferences(int $userId): ?object
+    private function getBanWithPreferences(int $userId): ?\stdClass
     {
         return DB::table('bans')
             ->select('bans.*', 'preferences.preference_user_id', 'preferences.preference_vacation_mode')

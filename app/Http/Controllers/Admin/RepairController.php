@@ -19,12 +19,15 @@ class RepairController extends BaseController
 
     public function index(): View
     {
-        $tables = $this->getAllTables()->map(fn (array $row) => [
-            'name' => $row['TABLE_NAME'],
-            'data' => $this->formatService->prettyBytes((int) $row['DATA_LENGTH']),
-            'index' => $this->formatService->prettyBytes((int) $row['INDEX_LENGTH']),
-            'overhead' => $this->formatService->prettyBytes((int) $row['DATA_FREE']),
-        ]);
+        $tables = $this->getAllTables()->map(function (array $row) {
+            /** @var array{TABLE_NAME: string, DATA_LENGTH: int, INDEX_LENGTH: int, DATA_FREE: int} $row */
+            return [
+                'name' => $row['TABLE_NAME'],
+                'data' => $this->formatService->prettyBytes($row['DATA_LENGTH']),
+                'index' => $this->formatService->prettyBytes($row['INDEX_LENGTH']),
+                'overhead' => $this->formatService->prettyBytes($row['DATA_FREE']),
+            ];
+        });
 
         return view('admin.repair', [
             'tables' => $tables,
@@ -35,7 +38,8 @@ class RepairController extends BaseController
     public function run(RepairRequest $request): View
     {
         $validated = $request->validated();
-        $selected = $validated['table'];
+        /** @var array<int, string> $selected */
+        $selected = (array) $validated['table'];
         $optimize = isset($validated['optimize']);
         $repair = isset($validated['repair']);
 
@@ -62,13 +66,19 @@ class RepairController extends BaseController
         ]);
     }
 
+    /**
+     * @return Collection<int, array<string, mixed>>
+     */
     private function getAllTables(): Collection
     {
-        return collect(DB::select(
+        /** @var Collection<int, array<string, mixed>> $result */
+        $result = collect(DB::select(
             'SELECT TABLE_NAME, DATA_LENGTH, INDEX_LENGTH, DATA_FREE
             FROM information_schema.TABLES
             WHERE table_schema = ?',
             [config('DB_DATABASE')]
         ))->map(fn (object $row) => (array) $row);
+
+        return $result;
     }
 }

@@ -387,10 +387,6 @@ class GameObjectRegistryTest extends TestCase
     public function testAllObjectsHavePositivePriceFactor(): void
     {
         foreach ($this->registry->all() as $id => $obj) {
-            if (!method_exists($obj, 'getPrice')) {
-                continue;
-            }
-
             $this->assertGreaterThan(
                 0,
                 $obj->getPrice()->getFactor(),

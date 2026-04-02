@@ -13,7 +13,6 @@ use Illuminate\Mail\SentMessage;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
@@ -34,7 +33,7 @@ class AnnouncementController extends BaseController
 
     public function send(AnnouncementRequest $request): RedirectResponse
     {
-        $players = DB::table('users')->get(['id', 'name', 'email']);
+        $players = User::select('id', 'name', 'email')->get();
 
         if ($request->filled('message')) {
             $this->sendMessages($request, $players);
@@ -47,12 +46,15 @@ class AnnouncementController extends BaseController
         return redirect()->route('admin.announcement');
     }
 
+    /**
+     * @param Collection<int, User> $players
+     */
     private function sendMessages(AnnouncementRequest $request, Collection $players): void
     {
         /** @var User $user */
         $user = Auth::user();
 
-        $pickedColor = (string) $request->input('color-picker', '');
+        $pickedColor = (string) $request->string('color-picker');
         $color = $this->isValidColor($pickedColor)
             ? $pickedColor
             : $this->getMessageColor()[$user->authlevel];
@@ -62,10 +64,10 @@ class AnnouncementController extends BaseController
 
         $from = $this->formatService->customColor($level, $color);
         $subject = $this->formatService->customColor(
-            (string) ($request->input('subject') ?? __('admin/announcement.an_none')),
+            (string) $request->string('subject') ?: (string) __('admin/announcement.an_none'),
             $color
         );
-        $message = $this->formatService->customColor((string) $request->input('text'), $color);
+        $message = $this->formatService->customColor((string) $request->string('text'), $color);
 
         foreach ($players as $player) {
             Functions::sendMessage(
@@ -83,14 +85,17 @@ class AnnouncementController extends BaseController
         session()->flash('success', __('admin/announcement.an_sent'));
     }
 
+    /**
+     * @param Collection<int, User> $players
+     */
     private function sendEmails(AnnouncementRequest $request, Collection $players): void
     {
         $results = [];
 
         foreach ($players as $index => $player) {
             $result = Mail::to($player->email, $player->name)->send(new Announcement(
-                (string) $request->input('subject'),
-                strtr((string) $request->input('text'), ['%player%' => $this->formatService->strongText($player->name)])
+                (string) $request->string('subject'),
+                strtr((string) $request->string('text'), ['%player%' => $this->formatService->strongText($player->name)])
             ));
 
             $results[] = $player->name . ': ' . ($result instanceof SentMessage
@@ -117,6 +122,9 @@ class AnnouncementController extends BaseController
         return (bool) preg_match('/^#[0-9a-fA-F]{6}$/', $color);
     }
 
+    /**
+     * @return array<int, string>
+     */
     private function getMessageColor(): array
     {
         return [

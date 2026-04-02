@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return [
     're_disabled' => 'New user registration is not currently available.',
+    're_create_fail' => 'We could not complete your registration right now. Please try again in a moment.',
     're_welcome_message_from' => 'Admin',
     're_welcome_message_subject' => 'Welcome to XG Proyect!',
     're_welcome_message_content' => 'Greetings, emperor %s!

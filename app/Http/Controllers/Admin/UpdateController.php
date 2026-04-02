@@ -19,6 +19,7 @@ class UpdateController extends BaseController
 
     public function index(): View
     {
+        /** @var string $systemVersion */
         $systemVersion = config('version.files');
         $dbVersion = $this->settings->getString('version');
         $subTitle = sprintf(__('admin/update.up_sub_title'), $dbVersion, $systemVersion);
@@ -40,6 +41,7 @@ class UpdateController extends BaseController
 
     public function run(UpdateRequest $request): View | RedirectResponse
     {
+        /** @var string $systemVersion */
         $systemVersion = config('version.files');
         $dbVersion = $this->settings->getString('version');
         $subTitle = sprintf(__('admin/update.up_sub_title'), $dbVersion, $systemVersion);
@@ -73,9 +75,16 @@ class UpdateController extends BaseController
         return file_exists($this->updatePath() . 'update_common.php');
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     private function startUpdate(string $dbVersion, bool $demo): array
     {
         $updatesDir = opendir($this->updatePath());
+
+        if ($updatesDir === false) {
+            return [];
+        }
         $exceptions = ['.', '..', '.htaccess', 'index.html', '.DS_Store', 'update_common.php'];
         $filesToRead = [];
         $numericDbVersion = strtr($dbVersion, ['v' => '', '.' => '']);
@@ -107,9 +116,13 @@ class UpdateController extends BaseController
         return $output;
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     private function executeFile(string $version, bool $demo): array
     {
         $updatePath = $this->updatePath() . 'update_' . $version . '.php';
+        /** @var array<int, string> $queries */
         $queries = [];
 
         require_once $updatePath;
