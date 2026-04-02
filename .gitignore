@@ -28,6 +28,5 @@ storage/logs/*.txt
 .phpdoc/*
 /docs/*
 vendor
-composer.lock
 config/xgp-db-config.php
 .php-cs-fixer.cache

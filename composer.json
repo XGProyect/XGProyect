@@ -77,7 +77,7 @@
             "vendor/bin/phpcompatinfo --progress analyser:run ./legacy/"
         ],
         "phpstan": [
-            "vendor/bin/phpstan analyse app legacy tests"
+            "vendor/bin/phpstan analyse --configuration=phpstan.neon --memory-limit 1024M --no-progress"
         ],
         "phpstan-baseline": [
             "vendor/bin/phpstan analyse --level 9 --configuration=phpstan.neon --generate-baseline=phpstan-baseline.neon app/ legacy/ tests/ --memory-limit 1024M"
