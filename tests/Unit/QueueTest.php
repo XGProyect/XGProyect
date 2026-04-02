@@ -314,11 +314,6 @@ class QueueTest extends TestCase
 
         $object->addElementToQueue($queueElements);
 
-        // Remove the following lines when you implement this test.
-        $this->assertIsString(
-            $object->returnQueueAsString()
-        );
-
         $this->assertEquals(
             $object->returnQueueAsString(),
             '1,1,20,' . $currentTime . ',build'
@@ -339,11 +334,6 @@ class QueueTest extends TestCase
         $queueElements->buildMode = 'build';
 
         $object->addElementToQueue($queueElements);
-
-        // Remove the following lines when you implement this test.
-        $this->assertIsArray(
-            $object->returnQueueAsArray()
-        );
 
         $this->assertEquals(
             $object->returnQueueAsArray(),
@@ -394,11 +384,6 @@ class QueueTest extends TestCase
         $queueElements->buildMode = 'build';
 
         $object->addElementToQueue($queueElements);
-
-        // Remove the following lines when you implement this test.
-        $this->assertIsArray(
-            $object->returnQueueAsArray()
-        );
 
         $this->assertEquals(
             $object->countQueueElements(),
