@@ -13,6 +13,7 @@ class PlanetService
     {
     }
 
+    /** @return array{galaxy: int, system: int, planet: int} */
     public function calculateNewPlanetPosition(): array
     {
         return $this->isPlanetFree(
@@ -22,7 +23,8 @@ class PlanetService
         );
     }
 
-    public function isPlanetFree($galaxy, $system, $position): array
+    /** @return array{galaxy: int, system: int, planet: int} */
+    public function isPlanetFree(int $galaxy, int $system, int $position): array
     {
         // Check if the planet is free
         $isFree = Planets::where(['planet_galaxy' => $galaxy, 'planet_system' => $system, 'planet_planet' => $position])->first();

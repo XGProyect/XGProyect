@@ -65,7 +65,7 @@ class Planets extends Model
     /**
      * Attributes that should be mass-assignable.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = [
         'planet_name',
@@ -111,7 +111,7 @@ class Planets extends Model
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = [
 
@@ -120,7 +120,7 @@ class Planets extends Model
     /**
      * The attributes that should be casted to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'planet_name' => 'string',
@@ -164,7 +164,7 @@ class Planets extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+     * @var list<string>
      */
     protected $dates = [
 
@@ -188,16 +188,19 @@ class Planets extends Model
         return $this->belongsTo(User::class, 'planet_user_id');
     }
 
+    /** @return HasOne<Buildings, $this> */
     public function buildings(): HasOne
     {
         return $this->hasOne(Buildings::class, 'building_planet_id');
     }
 
+    /** @return HasOne<Defenses, $this> */
     public function defenses(): HasOne
     {
         return $this->hasOne(Defenses::class, 'defense_planet_id');
     }
 
+    /** @return HasOne<Ships, $this> */
     public function ships(): HasOne
     {
         return $this->hasOne(Ships::class, 'ship_planet_id');

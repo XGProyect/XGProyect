@@ -40,7 +40,7 @@ class Defenses extends Model
     /**
      * Attributes that should be mass-assignable.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = [
         'defense_planet_id',
@@ -59,7 +59,7 @@ class Defenses extends Model
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = [
 
@@ -68,7 +68,7 @@ class Defenses extends Model
     /**
      * The attributes that should be casted to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'defense_id' => 'int',
@@ -87,7 +87,7 @@ class Defenses extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+     * @var list<string>
      */
     protected $dates = [
 
@@ -105,6 +105,7 @@ class Defenses extends Model
     // Functions ...
 
     // Relations ...
+    /** @return BelongsTo<Planets, $this> */
     public function planet(): BelongsTo
     {
         return $this->belongsTo(Planets::class);

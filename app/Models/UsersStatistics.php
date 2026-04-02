@@ -45,7 +45,7 @@ class UsersStatistics extends Model
     /**
      * Attributes that should be mass-assignable.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = [
         'user_statistic_buildings_points',
@@ -69,7 +69,7 @@ class UsersStatistics extends Model
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = [
 
@@ -78,7 +78,7 @@ class UsersStatistics extends Model
     /**
      * The attributes that should be casted to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'user_statistic_user_id' => 'int',
@@ -103,7 +103,7 @@ class UsersStatistics extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+     * @var list<string>
      */
     protected $dates = [
 
@@ -121,6 +121,7 @@ class UsersStatistics extends Model
     // Functions ...
 
     // Relations ...
+    /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

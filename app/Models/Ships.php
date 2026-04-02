@@ -44,7 +44,7 @@ class Ships extends Model
     /**
      * Attributes that should be mass-assignable.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = [
         'ship_planet_id',
@@ -67,7 +67,7 @@ class Ships extends Model
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = [
 
@@ -76,7 +76,7 @@ class Ships extends Model
     /**
      * The attributes that should be casted to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'ship_id' => 'int',
@@ -100,7 +100,7 @@ class Ships extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+     * @var list<string>
      */
     protected $dates = [
 
@@ -118,6 +118,7 @@ class Ships extends Model
     // Functions ...
 
     // Relations ...
+    /** @return BelongsTo<Planets, $this> */
     public function planet(): BelongsTo
     {
         return $this->belongsTo(Planets::class);

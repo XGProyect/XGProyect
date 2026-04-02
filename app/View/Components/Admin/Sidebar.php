@@ -79,7 +79,9 @@ class Sidebar extends Component
             ],
         ];
 
-        $role = (int) Auth::user()->authlevel;
+        $authUser = Auth::user();
+        $role = $authUser instanceof \App\Models\User ? $authUser->authlevel : 0;
+
         $permissions = new Permissions((new SettingsService())->getString('admin_permissions'));
 
         // Filter each section's items to only those the current role can access

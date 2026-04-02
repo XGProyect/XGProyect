@@ -48,7 +48,7 @@ class Buildings extends Model
     /**
      * Attributes that should be mass-assignable.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = [
         'building_planet_id',
@@ -75,7 +75,7 @@ class Buildings extends Model
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = [
 
@@ -84,7 +84,7 @@ class Buildings extends Model
     /**
      * The attributes that should be casted to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'building_id' => 'int',
@@ -112,7 +112,7 @@ class Buildings extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+     * @var list<string>
      */
     protected $dates = [
 
@@ -130,6 +130,7 @@ class Buildings extends Model
     // Functions ...
 
     // Relations ...
+    /** @return BelongsTo<Planets, $this> */
     public function planet(): BelongsTo
     {
         return $this->belongsTo(Planets::class);

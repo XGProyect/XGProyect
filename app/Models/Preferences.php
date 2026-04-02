@@ -36,7 +36,7 @@ class Preferences extends Model
     /**
      * Attributes that should be mass-assignable.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = [
         'preference_user_id',
@@ -51,7 +51,7 @@ class Preferences extends Model
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = [
 
@@ -60,7 +60,7 @@ class Preferences extends Model
     /**
      * The attributes that should be casted to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'preference_id' => 'int',
@@ -76,7 +76,7 @@ class Preferences extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+     * @var list<string>
      */
     protected $dates = [
 
@@ -94,6 +94,7 @@ class Preferences extends Model
     // Functions ...
 
     // Relations ...
+    /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

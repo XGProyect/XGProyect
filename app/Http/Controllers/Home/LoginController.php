@@ -33,8 +33,9 @@ class LoginController extends BaseController
             User::where('id', $authUser->id)->update(['current_planet' => DB::raw('`home_planet_id`')]);
 
             // check suspension status
-            if ($authUser->ban !== null && $authUser->ban->until <= time()) {
-                $authUser->ban->delete();
+            $ban = $authUser->ban;
+            if ($ban->until->timestamp <= time()) {
+                $ban->delete();
             }
 
             $request->session()->regenerate();

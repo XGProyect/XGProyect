@@ -133,11 +133,15 @@ class BackupServiceTest extends TestCase
         $this->disk->method('size')->willReturn(1024);
 
         $list = $this->service->getBackupList();
+        $first = $list->get(0);
+        $second = $list->get(1);
 
         $this->assertInstanceOf(Collection::class, $list);
         $this->assertCount(2, $list);
-        $this->assertStringContainsString('2026-02-28', $list[0]['full_file_name']);
-        $this->assertStringContainsString('2026-01-01', $list[1]['full_file_name']);
+        $this->assertNotNull($first);
+        $this->assertNotNull($second);
+        $this->assertStringContainsString('2026-02-28', $first['full_file_name']);
+        $this->assertStringContainsString('2026-01-01', $second['full_file_name']);
     }
 
     public function testGetBackupListReturnsEmptyWhenNoneExist(): void
@@ -170,8 +174,10 @@ class BackupServiceTest extends TestCase
         $this->disk->method('size')->willReturn($bytes);
 
         $list = $this->service->getBackupList();
+        $first = $list->get(0);
+        $this->assertNotNull($first);
 
-        $this->assertSame($expected, $list[0]['file_size']);
+        $this->assertSame($expected, $first['file_size']);
     }
 
     // -------------------------------------------------------------------------

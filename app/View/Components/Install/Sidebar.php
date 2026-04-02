@@ -46,7 +46,7 @@ class Sidebar extends Component
             'components.install.sidebar',
             [
                 'steps' => $steps,
-                'activeStep' => $this->request->route()->getName(),
+                'activeStep' => $this->request->route()?->getName(),
             ]
         );
     }

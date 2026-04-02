@@ -83,13 +83,17 @@ class ChangelogService
      */
     public function getFormData(string $action, ?Changelog $entry = null): array
     {
+        $entryDate = $entry !== null
+            ? $entry->changelog_date->toDateString()
+            : now()->toDateString();
+
         return [
             'action' => $action,
-            'changelog_id' => $entry?->changelog_id ?? 0,
-            'changelog_date' => $entry?->changelog_date->toDateString() ?? now()->toDateString(),
-            'changelog_version' => $entry?->changelog_version ?? '',
-            'languages' => $this->getLanguageOptions($entry?->changelog_lang_id ?? 0),
-            'changelog_description' => $entry?->changelog_description ?? '',
+            'changelog_id' => $entry !== null ? $entry->changelog_id : 0,
+            'changelog_date' => $entryDate,
+            'changelog_version' => $entry !== null ? $entry->changelog_version : '',
+            'languages' => $this->getLanguageOptions($entry !== null ? $entry->changelog_lang_id : 0),
+            'changelog_description' => $entry !== null ? $entry->changelog_description : '',
         ];
     }
 

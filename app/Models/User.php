@@ -46,13 +46,14 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens;
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+    * @var list<string>
      */
     protected $fillable = [
         'name',
@@ -81,7 +82,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+    * @var list<string>
      */
     protected $hidden = [
         'password',
@@ -122,7 +123,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+     * @var list<string>
      */
     protected $dates = [
 
@@ -144,31 +145,37 @@ class User extends Authenticatable
     }
 
     // Relations ...
+    /** @return HasOne<Ban, $this> */
     public function ban(): HasOne
     {
         return $this->hasOne(Ban::class);
     }
 
+    /** @return HasMany<Planets, $this> */
     public function planets(): HasMany
     {
         return $this->hasMany(Planets::class, 'planet_user_id');
     }
 
+    /** @return HasOne<Preferences, $this> */
     public function preferences(): HasOne
     {
         return $this->hasOne(Preferences::class, 'preference_user_id');
     }
 
+    /** @return HasOne<Premium, $this> */
     public function premium(): HasOne
     {
         return $this->hasOne(Premium::class, 'premium_user_id');
     }
 
+    /** @return HasOne<Research, $this> */
     public function research(): HasOne
     {
         return $this->hasOne(Research::class, 'research_user_id');
     }
 
+    /** @return HasOne<UsersStatistics, $this> */
     public function stats(): HasOne
     {
         return $this->hasOne(UsersStatistics::class, 'user_statistic_user_id');

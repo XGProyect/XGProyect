@@ -34,6 +34,7 @@ class FormulasService
         return 0;
     }
 
+    /** @return array{planet_diameter: int, planet_field_max: int} */
     public function getPlanetSize(int $position, bool $main = false): array
     {
         $min = [
@@ -98,6 +99,7 @@ class FormulasService
         return $type[$even] . 'planet' . str_pad((string) $imageId, 2, '0', STR_PAD_LEFT);
     }
 
+    /** @return array{min: int, max: int} */
     public function setPlanetTemp(int $position): array
     {
         $tempAvailable = [

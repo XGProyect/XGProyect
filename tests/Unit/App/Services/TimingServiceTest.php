@@ -26,6 +26,7 @@ class TimingServiceTest extends TestCase
     public function testFormatExtendedDateFromTimestamp(): void
     {
         $timestamp = mktime(14, 30, 0, 6, 15, 2025);
+        $this->assertNotFalse($timestamp);
         $result = $this->service->formatExtendedDate($timestamp);
         $this->assertEquals('2025-06-15 14:30:00', $result);
     }
@@ -39,6 +40,7 @@ class TimingServiceTest extends TestCase
     public function testFormatShortDateFromTimestamp(): void
     {
         $timestamp = mktime(14, 30, 0, 6, 15, 2025);
+        $this->assertNotFalse($timestamp);
         $result = $this->service->formatShortDate($timestamp);
         $this->assertEquals('2025-06-15', $result);
     }

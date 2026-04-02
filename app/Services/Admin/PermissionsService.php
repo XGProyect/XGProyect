@@ -20,12 +20,18 @@ class PermissionsService
     public function __construct(private readonly SettingsService $settings)
     {
         try {
-            $this->permissions = json_decode(
+            $decoded = json_decode(
                 $this->settings->getString('admin_permissions') ?: '{}',
                 true,
                 512,
                 JSON_THROW_ON_ERROR
             );
+
+            if (is_array($decoded)) {
+                /** @var array<string, array<int, int>> $permissions */
+                $permissions = $decoded;
+                $this->permissions = $permissions;
+            }
         } catch (JsonException $e) {
             throw new RuntimeException('Failed to load admin permissions: ' . $e->getMessage(), 0, $e);
         }
