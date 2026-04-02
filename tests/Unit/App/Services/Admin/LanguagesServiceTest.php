@@ -104,7 +104,7 @@ class LanguagesServiceTest extends TestCase
         $this->assertNotEmpty($original);
 
         // Save and re-load — keys must be preserved in order
-        $service->saveTranslations($source, $original);
+        $service->saveTranslations($source, array_values($original));
         $reloaded = $service->loadTranslations($source);
         $this->assertNotNull($reloaded);
 
