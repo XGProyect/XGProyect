@@ -171,12 +171,22 @@ class DevelopmentsServiceTest extends TestCase
     {
         $timeWithout = $this->service->developmentTime(
             ResearchId::EnergyTechnology->value,
-            1, 0, 0, 5, 0, false
+            1,
+            0,
+            0,
+            5,
+            0,
+            false
         );
 
         $timeWith = $this->service->developmentTime(
             ResearchId::EnergyTechnology->value,
-            1, 0, 0, 5, 0, true
+            1,
+            0,
+            0,
+            5,
+            0,
+            true
         );
 
         $this->assertLessThan($timeWithout, $timeWith);
