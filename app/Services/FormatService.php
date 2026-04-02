@@ -146,15 +146,15 @@ class FormatService
         return Number::fileSize($bytes, $precision);
     }
 
-    public function colorNumber(float | int $n, string $s = ''): string
+    public function colorNumber(float | int $number, string $string = ''): string
     {
-        $display = $s !== '' ? $s : (string) $n;
+        $display = $string !== '' ? $string : (string) $number;
 
-        if ($n >= 0) {
+        if ($number >= 0) {
             return $this->colorGreen($display);
         }
 
-        if ($n < 0) {
+        if ($number < 0) {
             return $this->colorRed($display);
         }
 
