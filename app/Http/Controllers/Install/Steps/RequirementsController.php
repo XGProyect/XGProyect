@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class RequirementsController extends BaseController
 {
+    /** @var array<string, non-empty-string> */
     protected array $requirements = [
         'php' => 'checkPhpVersion',
         'mysql' => 'checkMySQLVersion',
@@ -23,7 +24,9 @@ class RequirementsController extends BaseController
 
     public function __invoke(Request $request): View | Factory
     {
-        session(['last_step' => $request->route()->getName()]);
+        $route = $request->route();
+
+        session(['last_step' => $route !== null ? $route->getName() : null]);
 
         return view(
             $this->getView(),
@@ -34,14 +37,21 @@ class RequirementsController extends BaseController
         );
     }
 
+    /** @return view-string */
     protected function getView(): string
     {
         return 'install.steps.requirements';
     }
 
+    /** @return array{requirement: mixed, message: mixed, result: string} */
     protected function checkPhpVersion(): array
     {
-        if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+        $configuredVersion = config('app.php_version');
+        $currentVersion = is_string($configuredVersion) && $configuredVersion !== ''
+            ? $configuredVersion
+            : PHP_VERSION;
+
+        if (version_compare($currentVersion, '8.1.0', '<')) {
             $this->fail = true;
 
             return [
@@ -53,11 +63,12 @@ class RequirementsController extends BaseController
 
         return [
             'requirement' => __('install/install.php_version_check'),
-            'message' => __('install/install.php_version_current', ['php' => PHP_VERSION]),
+            'message' => __('install/install.php_version_current', ['php' => $currentVersion]),
             'result' => 'success',
         ];
     }
 
+    /** @return array{requirement: mixed, message: mixed, result: string} */
     protected function checkMySQLVersion(): array
     {
         return [
@@ -67,6 +78,7 @@ class RequirementsController extends BaseController
         ];
     }
 
+    /** @return array{requirement: mixed, message: mixed, result: string} */
     protected function checkFilesPermissions(): array
     {
         $requirement = __('install/install.config_writable');
@@ -95,6 +107,7 @@ class RequirementsController extends BaseController
         ];
     }
 
+    /** @return array{requirement: mixed, message: mixed, result: string} */
     protected function checkPhpExtensions(): array
     {
         $notLoaded = [];
@@ -133,6 +146,9 @@ class RequirementsController extends BaseController
         ];
     }
 
+    /**
+     * @return array<string, array{requirement: mixed, message: mixed, result: string}>
+     */
     private function checkRequirements(): array
     {
         $results = [];

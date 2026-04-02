@@ -9,16 +9,19 @@ use Illuminate\Support\Facades\Storage;
 
 class FinalController extends RequirementsController
 {
+    /** @var array<string, non-empty-string> */
     protected array $requirements = [
         'install' => 'checkInstallDir',
         'files' => 'checkFilesPermissions',
     ];
 
+    /** @return view-string */
     protected function getView(): string
     {
         return 'install.steps.final';
     }
 
+    /** @return array{requirement: mixed, message: mixed, result: string} */
     protected function checkInstallDir(): array
     {
         $requirement = __('install/install.final_install_not_accessible');
@@ -39,6 +42,7 @@ class FinalController extends RequirementsController
         ];
     }
 
+    /** @return array{requirement: mixed, message: mixed, result: string} */
     protected function checkFilesPermissions(): array
     {
         $requirement = __('install/install.final_config_writable');

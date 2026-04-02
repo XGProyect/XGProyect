@@ -15,7 +15,9 @@ class TablesController extends BaseController
 {
     public function __invoke(Request $request): View | Factory
     {
-        session(['last_step' => $request->route()->getName()]);
+        $route = $request->route();
+
+        session(['last_step' => $route !== null ? $route->getName() : null]);
 
         return view(
             'install.steps.tables',
@@ -26,9 +28,12 @@ class TablesController extends BaseController
         );
     }
 
+    /** @return array<string, string> */
     private function installSteps(): array
     {
         try {
+            /** @var array<string, string> $results */
+            $results = [];
             $commands = [
                 'wipe' => ['db:wipe', []],
                 'clear_cache' => ['cache:clear', []],

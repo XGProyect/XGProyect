@@ -21,6 +21,8 @@ class LoginController extends BaseController
 
     public function __invoke(LoginRequest $request): Redirector | RedirectResponse
     {
+        $redirect = $request->string('redirect')->toString();
+
         $credentials = [
             'email' => $request->validated('inputEmail'),
             'password' => $request->validated('inputPassword'),
@@ -43,9 +45,7 @@ class LoginController extends BaseController
                 $authUser->password
             );
 
-            return redirect(
-                'admin/' . (!empty($request->get('redirect')) ? $request->get('redirect') : 'home')
-            );
+            return redirect('admin/' . ($redirect !== '' ? $redirect : 'home'));
         }
 
         return back()->with('danger', __('admin/login.lg_error_wrong_data'));

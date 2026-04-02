@@ -6,7 +6,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Session\Store;
 use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,10 +18,13 @@ class Locale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $session = session();
+        if ($request->hasSession()) {
+            $session = $request->session();
+            $locale = $session->get('locale');
 
-        if ($session instanceof Store && $session->has('locale')) {
-            App::setLocale($session->get('locale'));
+            if (is_string($locale) && $locale !== '') {
+                App::setLocale($locale);
+            }
         }
 
         return $next($request);

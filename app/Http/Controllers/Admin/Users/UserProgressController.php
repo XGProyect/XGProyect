@@ -103,7 +103,7 @@ class UserProgressController extends BaseController
         $skip = 3;
 
         foreach ($row as $key => $value) {
-            if (!is_string($key) || !str_starts_with($key, 'research_')) {
+            if (!str_starts_with($key, 'research_')) {
                 continue;
             }
             if ($skip-- > 0) {
@@ -130,7 +130,7 @@ class UserProgressController extends BaseController
         $list = [];
 
         foreach ($row as $key => $value) {
-            if (!is_string($key) || !str_starts_with($key, 'premium_') || in_array($key, ['premium_dark_matter', 'premium_user_id'], true)) {
+            if (!str_starts_with($key, 'premium_') || in_array($key, ['premium_dark_matter', 'premium_user_id'], true)) {
                 continue;
             }
 

@@ -42,7 +42,7 @@ class Alliance extends Model
     /**
      * Attributes that should be mass-assignable.
      *
-     * @var array
+    * @var list<string>
      */
     protected $fillable = [
         'alliance_name',
@@ -61,7 +61,7 @@ class Alliance extends Model
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+    * @var list<string>
      */
     protected $hidden = [
 
@@ -70,7 +70,7 @@ class Alliance extends Model
     /**
      * The attributes that should be casted to native types.
      *
-     * @var array
+    * @var array<string, string>
      */
     protected $casts = [
         'alliance_name' => 'string',
@@ -89,7 +89,7 @@ class Alliance extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+    * @var list<string>
      */
     protected $dates = [
 
@@ -107,6 +107,7 @@ class Alliance extends Model
     // Functions ...
 
     // Relations ...
+    /** @return HasMany<User, $this> */
     public function members(): HasMany
     {
         return $this->hasMany(User::class, 'ally_id');
@@ -121,6 +122,7 @@ class Alliance extends Model
         return $this->belongsTo(User::class, 'alliance_owner', 'id');
     }
 
+    /** @return HasOne<AllianceStatistics, $this> */
     public function stats(): HasOne
     {
         return $this->hasOne(AllianceStatistics::class, 'alliance_statistic_alliance_id');

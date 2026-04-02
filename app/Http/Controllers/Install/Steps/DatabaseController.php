@@ -20,7 +20,9 @@ class DatabaseController extends BaseController
 {
     public function __invoke(Request $request): View | Factory
     {
-        session(['last_step' => $request->route()->getName()]);
+        $route = $request->route();
+
+        session(['last_step' => $route !== null ? $route->getName() : null]);
 
         return view(
             'install.steps.database',
@@ -32,17 +34,20 @@ class DatabaseController extends BaseController
 
     public function doCheck(DatabaseRequest $request): RedirectResponse
     {
+        /** @var array<string, scalar|null> $config */
+        $config = $request->validated();
+
         try {
             // Create a new connection factory instance
             $factory = new ConnectionFactory(app());
 
             // Create a new connection using the configuration
-            $connection = $factory->make($request->all());
+            $connection = $factory->make($config);
 
             // try the connection
             $connection->getPdo();
 
-            if (!$this->writeConfigFile($request->all())) {
+            if (!$this->writeConfigFile($config)) {
                 throw new Exception();
             }
         } catch (Exception $e) {
@@ -57,6 +62,7 @@ class DatabaseController extends BaseController
             ->with('success', __('install/install.db_connect_success'));
     }
 
+    /** @param array<string, scalar|null> $config */
     private function writeConfigFile(array $config): bool
     {
         $file = 'xgp-db-config.php';

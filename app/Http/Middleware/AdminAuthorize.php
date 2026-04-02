@@ -29,10 +29,14 @@ class AdminAuthorize
             abort(403);
         }
 
-        $controllerClass = (string) ($action['controller'] ?? '');
+        $controller = $action['controller'] ?? null;
+
+        if (!is_string($controller)) {
+            abort(403);
+        }
 
         // Strip method suffix (e.g. "App\...\HomeController@index" → "HomeController")
-        $classOnly = explode('@', $controllerClass)[0];
+        $classOnly = explode('@', $controller)[0];
         $lastSegment = strrchr($classOnly, '\\');
 
         if ($lastSegment !== false) {

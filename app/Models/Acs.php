@@ -33,7 +33,7 @@ class Acs extends Model
     /**
      * Attributes that should be mass-assignable.
      *
-     * @var array
+    * @var list<string>
      */
     protected $fillable = [
         'acs_name',
@@ -47,7 +47,7 @@ class Acs extends Model
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+    * @var list<string>
      */
     protected $hidden = [
 
@@ -56,7 +56,7 @@ class Acs extends Model
     /**
      * The attributes that should be casted to native types.
      *
-     * @var array
+    * @var array<string, string>
      */
     protected $casts = [
         'acs_name' => 'string',
@@ -70,7 +70,7 @@ class Acs extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+    * @var list<string>
      */
     protected $dates = [
 

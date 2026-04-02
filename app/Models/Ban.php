@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int    $user_id
  * @property int    $admin_id
  * @property string $details
- * @property Date   $until
+ * @property \Carbon\Carbon $until
  * @property User   $user
  * @property User   $admin
  */
@@ -21,7 +21,7 @@ class Ban extends Model
     /**
      * Attributes that should be mass-assignable.
      *
-     * @var array
+    * @var list<string>
      */
     protected $fillable = [
         'user_id',
@@ -33,7 +33,7 @@ class Ban extends Model
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+    * @var list<string>
      */
     protected $hidden = [
     ];
@@ -41,7 +41,7 @@ class Ban extends Model
     /**
      * The attributes that should be casted to native types.
      *
-     * @var array
+    * @var array<string, string>
      */
     protected $casts = [
         'id' => 'int',
@@ -54,7 +54,7 @@ class Ban extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+    * @var list<string>
      */
     protected $dates = [
         'until',
@@ -65,11 +65,13 @@ class Ban extends Model
     // Functions ...
 
     // Relations ...
+    /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    /** @return BelongsTo<User, $this> */
     public function admin(): BelongsTo
     {
         return $this->belongsTo(User::class, 'admin_id', 'id');

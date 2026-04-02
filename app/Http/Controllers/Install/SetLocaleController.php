@@ -13,9 +13,11 @@ class SetLocaleController extends BaseController
 {
     public function __invoke(string $locale): RedirectResponse
     {
-        if (empty($locale)) {
-            if (session()->has('locale')) {
-                $locale = session('locale');
+        if ($locale === '' && session()->has('locale')) {
+            $sessionLocale = session('locale');
+
+            if (is_string($sessionLocale) && $sessionLocale !== '') {
+                $locale = $sessionLocale;
             }
         }
 

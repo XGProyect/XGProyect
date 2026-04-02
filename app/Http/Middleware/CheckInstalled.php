@@ -19,11 +19,10 @@ class CheckInstalled
     public function handle(Request $request, Closure $next): Response
     {
         if (config('INSTALLED', 'false') === 'true') {
+            /** @var Redirector $redirect */
             $redirect = redirect();
 
-            if ($redirect instanceof Redirector) {
-                return $redirect->route('admin.index');
-            }
+            return $redirect->route('admin.index');
         }
 
         return $next($request);

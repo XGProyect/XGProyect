@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\ViewErrorBag;
 
 class WelcomeController extends BaseController
 {
@@ -34,13 +35,16 @@ class WelcomeController extends BaseController
         );
     }
 
+    /**
+     * @return array{errors: list<array{divId: string, message: string}>, loginError: bool}
+     */
     private function getErrors(Request $request): array
     {
         $errorsBlocks = [];
         $loginError = false;
-        $errorsBags = $request->getSession()->get('errors');
+        $errorsBags = $request->session()->get('errors');
 
-        if ($errorsBags !== null) {
+        if ($errorsBags instanceof ViewErrorBag) {
             if ($errorsBags->hasBag('login')) {
                 $loginError = true;
 
