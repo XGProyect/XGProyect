@@ -1,20 +1,14 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Comparison operation "\>" between App\\Models\\Date and int\<1, max\> results in an error\.$#'
+			message: '#^Comparison operation "\>" between Carbon\\Carbon and int\<1, max\> results in an error\.$#'
 			identifier: greater.invalid
 			count: 1
 			path: legacy/app/Core/Common.php
 
 		-
-			message: '#^Parameter \#1 \$time of static method Xgp\\App\\Libraries\\TimingLibrary\:\:formatExtendedDate\(\) expects int\|string, App\\Models\\Date given\.$#'
+			message: '#^Parameter \#1 \$time of method App\\Services\\TimingService\:\:formatExtendedDate\(\) expects int\|string, Carbon\\Carbon given\.$#'
 			identifier: argument.type
-			count: 1
-			path: legacy/app/Core/Common.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between App\\Models\\Ban and null will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: legacy/app/Core/Common.php
 
@@ -1489,13 +1483,13 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet1Controller.php
 
 		-
-			message: '#^Parameter \#1 \$ship of static method Xgp\\App\\Libraries\\FleetsLib\:\:getShipSpeed\(\) expects int, int\|string\|false given\.$#'
+			message: '#^Parameter \#1 \$shipId of method App\\Services\\Game\\Formulas\\FleetsService\:\:getShipSpeed\(\) expects int, int\|string\|false given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet1Controller.php
 
 		-
-			message: '#^Parameter \#1 \$ship of static method Xgp\\App\\Libraries\\FleetsLib\:\:shipConsumption\(\) expects int, int\|string\|false given\.$#'
+			message: '#^Parameter \#1 \$shipId of method App\\Services\\Game\\Formulas\\FleetsService\:\:shipConsumption\(\) expects int, int\|string\|false given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet1Controller.php
@@ -1621,13 +1615,13 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
 
 		-
-			message: '#^Parameter \#1 \$ship of static method Xgp\\App\\Libraries\\FleetsLib\:\:getShipSpeed\(\) expects int, int\|string\|false given\.$#'
+			message: '#^Parameter \#1 \$shipId of method App\\Services\\Game\\Formulas\\FleetsService\:\:getShipSpeed\(\) expects int, int\|string\|false given\.$#'
 			identifier: argument.type
 			count: 2
 			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
 
 		-
-			message: '#^Parameter \#1 \$ship of static method Xgp\\App\\Libraries\\FleetsLib\:\:shipConsumption\(\) expects int, int\|string\|false given\.$#'
+			message: '#^Parameter \#1 \$shipId of method App\\Services\\Game\\Formulas\\FleetsService\:\:shipConsumption\(\) expects int, int\|string\|false given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
@@ -1759,13 +1753,13 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
 
 		-
-			message: '#^Parameter \#1 \$ship of static method Xgp\\App\\Libraries\\FleetsLib\:\:getShipSpeed\(\) expects int, int\|string\|false given\.$#'
+			message: '#^Parameter \#1 \$shipId of method App\\Services\\Game\\Formulas\\FleetsService\:\:getShipSpeed\(\) expects int, int\|string\|false given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
 
 		-
-			message: '#^Parameter \#1 \$ship of static method Xgp\\App\\Libraries\\FleetsLib\:\:shipConsumption\(\) expects int, int\|string\|false given\.$#'
+			message: '#^Parameter \#1 \$shipId of method App\\Services\\Game\\Formulas\\FleetsService\:\:shipConsumption\(\) expects int, int\|string\|false given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
@@ -1777,7 +1771,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
 
 		-
-			message: '#^Parameter \#1 \.\.\.\$arg1 of function min expects non\-empty\-array, array given\.$#'
+			message: '#^Parameter \#1 \.\.\.\$arg1 of function min expects non\-empty\-array, array\<int, float\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
@@ -2061,7 +2055,7 @@ parameters:
 		-
 			message: '#^Cannot cast mixed to int\.$#'
 			identifier: cast.int
-			count: 4
+			count: 7
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
@@ -2125,7 +2119,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
-			message: '#^Parameter \#2 \$destGalaxy of static method Xgp\\App\\Libraries\\FleetsLib\:\:targetDistance\(\) expects int, mixed given\.$#'
+			message: '#^Parameter \#1 \.\.\.\$arg1 of function min expects non\-empty\-array, array\<int, float\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
@@ -2371,19 +2365,19 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/InfosController.php
 
 		-
-			message: '#^Parameter \#1 \$astrophysicsTech of static method Xgp\\App\\Libraries\\FleetsLib\:\:getMaxExpeditions\(\) expects int, float\|int\<1, max\> given\.$#'
+			message: '#^Parameter \#1 \$storageLevel of method App\\Services\\Game\\Formulas\\ProductionService\:\:maxStorable\(\) expects int, float\|int\<1, max\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/InfosController.php
 
 		-
-			message: '#^Parameter \#1 \$string of static method Xgp\\App\\Libraries\\FormatLib\:\:colorGreen\(\) expects string, int\|string given\.$#'
+			message: '#^Parameter \#1 \$string of method App\\Services\\FormatService\:\:colorGreen\(\) expects string, float\|int\|string given\.$#'
 			identifier: argument.type
 			count: 2
 			path: legacy/app/Http/Controllers/Game/InfosController.php
 
 		-
-			message: '#^Parameter \#1 \$string of static method Xgp\\App\\Libraries\\FormatLib\:\:colorRed\(\) expects string, \(float\|int\<1, max\>\) given\.$#'
+			message: '#^Parameter \#1 \$string of method App\\Services\\FormatService\:\:colorRed\(\) expects string, \(float\|int\<1, max\>\) given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/InfosController.php
@@ -2707,7 +2701,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/NoticesController.php
 
 		-
-			message: '#^Parameter \#1 \$priority of static method Xgp\\App\\Libraries\\FormatLib\:\:getImportanceColor\(\) expects int, string given\.$#'
+			message: '#^Parameter \#1 \$priority of method App\\Services\\FormatService\:\:getImportanceColor\(\) expects int, string given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/NoticesController.php
@@ -3007,7 +3001,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/PreferencesController.php
 
 		-
-			message: '#^Parameter \#1 \$string of static method Xgp\\App\\Libraries\\FormatLib\:\:colorRed\(\) expects string, array\<string\>\|string given\.$#'
+			message: '#^Parameter \#1 \$string of method App\\Services\\FormatService\:\:colorRed\(\) expects string, array\<string\>\|string given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/PreferencesController.php
@@ -3451,6 +3445,12 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/TraderController.php
 
 		-
+			message: '#^Class Xgp\\App\\Libraries\\Game\\ResourceMarket constructor invoked with 2 parameters, 3 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: legacy/app/Http/Controllers/Game/TraderController.php
+
+		-
 			message: '#^Comparison operation "\=\=" between array\{10, 50, 100\} and 100 results in an error\.$#'
 			identifier: equal.invalid
 			count: 1
@@ -3555,6 +3555,12 @@ parameters:
 		-
 			message: '#^Cannot call method isRefillPayable\(\) on Xgp\\App\\Libraries\\Game\\ResourceMarket\|null\.$#'
 			identifier: method.nonObject
+			count: 1
+			path: legacy/app/Http/Controllers/Game/TraderResourcesController.php
+
+		-
+			message: '#^Class Xgp\\App\\Libraries\\Game\\ResourceMarket constructor invoked with 2 parameters, 3 required\.$#'
+			identifier: arguments.count
 			count: 1
 			path: legacy/app/Http/Controllers/Game/TraderResourcesController.php
 
@@ -7903,6 +7909,18 @@ parameters:
 			path: legacy/app/Libraries/Missions/Expedition.php
 
 		-
+			message: '#^Parameter \#1 \$topPlayerPoints of method App\\Services\\Game\\Formulas\\ExpeditionService\:\:getMaxExpeditionPoints\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: legacy/app/Libraries/Missions/Expedition.php
+
+		-
+			message: '#^Parameter \#1 \$topPlayerPoints of method App\\Services\\Game\\Formulas\\ExpeditionService\:\:getMaxShipsExpeditionPoints\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: legacy/app/Libraries/Missions/Expedition.php
+
+		-
 			message: '#^Binary operation "\." between array\<string\>\|string and \(array\|string\) results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 2
@@ -8419,8 +8437,8 @@ parameters:
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
-			message: '#^Parameter \#1 \$building of static method Xgp\\App\\Libraries\\DevelopmentsLib\:\:tearDownTime\(\) expects int, int\|string given\.$#'
-			identifier: argument.type
+			message: '#^Property Xgp\\App\\Libraries\\UpdatesLibrary\:\:\$productionService is never read, only written\.$#'
+			identifier: property.onlyWritten
 			count: 1
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
@@ -8433,7 +8451,7 @@ parameters:
 		-
 			message: '#^Cannot cast mixed to int\.$#'
 			identifier: cast.int
-			count: 2
+			count: 3
 			path: legacy/app/Libraries/Users.php
 
 		-
@@ -9821,21 +9839,3 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: legacy/public/game.php
-
-		-
-			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
-			identifier: method.alreadyNarrowedType
-			count: 1
-			path: tests/Feature/ExampleTest.php
-
-		-
-			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
-			identifier: method.alreadyNarrowedType
-			count: 2
-			path: tests/Unit/QueueTest.php
-
-		-
-			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsString\(\) with string will always evaluate to true\.$#'
-			identifier: method.alreadyNarrowedType
-			count: 1
-			path: tests/Unit/QueueTest.php
