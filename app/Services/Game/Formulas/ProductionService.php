@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Game\Formulas;
 
+/**
+ * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
+ */
 class ProductionService
 {
     public function maxStorable(int $storageLevel): int

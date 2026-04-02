@@ -6,6 +6,9 @@ namespace App\Services\Game\Formulas;
 
 use App\Services\SettingsService;
 
+/**
+ * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
+ */
 class FormulasService
 {
     public function __construct(private SettingsService $settingsService)

@@ -19,6 +19,9 @@ use Xgp\App\Libraries\Users;
 use Xgp\App\Libraries\Users\Shortcuts;
 use Xgp\App\Models\Game\Fleet;
 
+/**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ */
 class Fleet2Controller extends BaseController
 {
     private array $user = [];

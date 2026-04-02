@@ -19,6 +19,9 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Alliance;
 
+/**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ */
 class AllianceController extends BaseController
 {
     public const DEFAULT_RANKS = [

@@ -8,6 +8,9 @@ use App\Core\GameObjects\GameObjectRegistry;
 use App\Core\GameObjects\Ship;
 use App\Enums\Game\DriveType;
 
+/**
+ * @SuppressWarnings("PHPMD.UnusedLocalVariable")
+ */
 class FleetsService
 {
     public function __construct(
@@ -156,7 +159,7 @@ class FleetsService
         return intval($shipStorage + ($shipStorage * 0.05 * $hyperspaceTechLevel));
     }
 
-    public function isFleetReturning(string|int $fleetMess): bool
+    public function isFleetReturning(string | int $fleetMess): bool
     {
         return ($fleetMess == 1);
     }

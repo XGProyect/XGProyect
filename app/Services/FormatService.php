@@ -9,6 +9,13 @@ use Illuminate\Support\Number;
 use Xgp\App\Core\Enumerators\ImportanceEnumerator as Importance;
 use Xgp\App\Helpers\UrlHelper;
 
+/**
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
+ * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
+ * @SuppressWarnings("PHPMD.ShortVariable")
+ * @SuppressWarnings("PHPMD.ElseExpression")
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class FormatService
 {
     public function prettyTime(float $inputSeconds): string

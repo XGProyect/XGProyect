@@ -10,6 +10,9 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\PlanetLib;
 use Xgp\App\Libraries\StatisticsLibrary;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class Colonize extends Missions
 {
     public function __construct()

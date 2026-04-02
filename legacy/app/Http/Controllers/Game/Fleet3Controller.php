@@ -366,6 +366,8 @@ class Fleet3Controller extends BaseController
     /**
      * Set inputs data
      *
+        * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
+        *
      * @return array
      */
     private function setInputsData()

@@ -20,6 +20,9 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Models\Game\Research as ResearchModel;
 
+/**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ */
 class ResearchController extends BaseController
 {
     private array $user = [];
@@ -59,6 +62,9 @@ class ResearchController extends BaseController
         $this->buildPage();
     }
 
+    /**
+     * @SuppressWarnings("PHPMD.CyclomaticComplexity")
+     */
     private function buildPage(): void
     {
         $technology_list = [];
@@ -140,6 +146,10 @@ class ResearchController extends BaseController
         );
     }
 
+    /**
+        * @SuppressWarnings("PHPMD.NPathComplexity")
+        * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
+     */
     private function doCommand(): void
     {
         $cmd = isset($_GET['cmd']) ? $_GET['cmd'] : null;
@@ -190,9 +200,9 @@ class ResearchController extends BaseController
                         $searchAstroLevel = (int) ($this->user[$this->_resource[Research::research_astrophysics]] ?? 0);
                         $searchTechnoActive = $this->officerService->isOfficerActive((int) $this->user['premium_officier_technocrat'], time());
 
-                        if ($this->developmentsService->isDevelopmentAllowed($technology, $searchLevels)
-                            && $this->developmentsService->isDevelopmentPayable($working_planet, $technology, (int) $this->user[$this->_resource[$technology]])
-                            && !$this->userLibrary->isOnVacations($this->user)
+                        if ($this->developmentsService->isDevelopmentAllowed($technology, $searchLevels) &&
+                            $this->developmentsService->isDevelopmentPayable($working_planet, $technology, (int) $this->user[$this->_resource[$technology]]) &&
+                            !$this->userLibrary->isOnVacations($this->user)
                         ) {
                             $costs = $this->developmentsService->developmentPrice(
                                 $technology,

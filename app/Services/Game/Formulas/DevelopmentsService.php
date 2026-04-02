@@ -6,14 +6,15 @@ namespace App\Services\Game\Formulas;
 
 use App\Core\GameObjects\Building;
 use App\Core\GameObjects\Defense;
-use App\Core\GameObjects\GameObjectInterface;
 use App\Core\GameObjects\GameObjectRegistry;
 use App\Core\GameObjects\Research;
 use App\Core\GameObjects\Ship;
 use App\Enums\Game\BuildingCategory;
-use App\Enums\Game\BuildingId;
-use App\Enums\Game\ResearchId;
 
+/**
+ * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
+ * @SuppressWarnings("PHPMD.ElseExpression")
+ */
 class DevelopmentsService
 {
     public function __construct(

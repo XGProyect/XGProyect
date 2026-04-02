@@ -12,6 +12,9 @@ use Xgp\App\Core\Objects;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\Functions;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class Expedition extends Missions
 {
     private int $resourceExpeditionPoints = 0;

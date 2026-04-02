@@ -23,6 +23,7 @@ use Xgp\App\Models\Game\Galaxy;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
 class GalaxyController extends BaseController
 {
