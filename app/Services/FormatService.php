@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use DateTime;
+use Illuminate\Support\Number;
 use Xgp\App\Core\Enumerators\ImportanceEnumerator as Importance;
 use Xgp\App\Helpers\UrlHelper;
 
@@ -137,21 +138,12 @@ class FormatService
         return sprintf('[%d:%d:%d]', $galaxy, $system, $planet);
     }
 
-    public function prettyBytes(float | int $bytes, int $precision = 2, bool $bitwise = false): string
+    /**
+     * @SuppressWarnings("PHPMD.StaticAccess")
+     */
+    public function prettyBytes(int | float $bytes, int $precision = 2): string
     {
-        $units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-
-        $bytes = max($bytes, 0);
-        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-        $pow = min($pow, count($units) - 1);
-
-        if ($bitwise) {
-            $bytes /= (1 << (10 * $pow));
-        } else {
-            $bytes /= pow(1024, $pow);
-        }
-
-        return round($bytes, $precision) . ' ' . $units[$pow];
+        return Number::fileSize($bytes, $precision);
     }
 
     public function colorNumber(float | int $n, string $s = ''): string

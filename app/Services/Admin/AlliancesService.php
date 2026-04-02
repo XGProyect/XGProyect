@@ -70,7 +70,7 @@ class AlliancesService
      */
     public function buildRanksViewData(array $rawRanks): array
     {
-        return array_values(array_map(function (array $details, int $index) {
+        return array_map(function (array $details, int $index) {
             /** @var array<int, int> $rights */
             $rights = $details['rights'];
 
@@ -87,7 +87,7 @@ class AlliancesService
                 'send_circular' => $rights[AllianceRanks::SEND_CIRCULAR] === SwitchInt::on,
                 'right_hand' => $rights[AllianceRanks::RIGHT_HAND] === SwitchInt::on,
             ];
-        }, $rawRanks, array_keys($rawRanks)));
+        }, $rawRanks, array_keys($rawRanks));
     }
 
     /**

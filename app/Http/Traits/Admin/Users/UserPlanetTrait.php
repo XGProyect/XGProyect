@@ -125,9 +125,7 @@ trait UserPlanetTrait
             }
         }
 
-        if ($updates !== []) {
-            DB::table('planets')->where('planet_id', $planetId)->update($updates);
-        }
+        DB::table('planets')->where('planet_id', $planetId)->update($updates);
     }
 
     /** @SuppressWarnings("PHPMD.StaticAccess") */
