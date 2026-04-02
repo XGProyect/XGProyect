@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\View\Components\Admin;
 
+use App\Models\User;
 use App\Services\SettingsService;
 use Closure;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 use Xgp\App\Libraries\Adm\Permissions;
 
@@ -16,9 +17,10 @@ class Sidebar extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
-    {
-        //
+    public function __construct(
+        private readonly Guard $auth,
+        private readonly SettingsService $settingsService,
+    ) {
     }
 
     /**
@@ -79,10 +81,10 @@ class Sidebar extends Component
             ],
         ];
 
-        $authUser = Auth::user();
-        $role = $authUser instanceof \App\Models\User ? $authUser->authlevel : 0;
+        $authUser = $this->auth->user();
+        $role = $authUser instanceof User ? $authUser->authlevel : 0;
 
-        $permissions = new Permissions((new SettingsService())->getString('admin_permissions'));
+        $permissions = new Permissions($this->settingsService->getString('admin_permissions'));
 
         // Filter each section's items to only those the current role can access
         $sections = collect($sections)
