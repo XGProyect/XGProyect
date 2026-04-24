@@ -4,109 +4,84 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Game;
 
-use Xgp\App\Core\Model;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @deprecated v4.0.0 use laravel instead
+ *
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
-class Renameplanet extends Model
+class Renameplanet
 {
-    /**
-     * Get all fleets incoming/outgoing to the planet
-     *
-     * @param integer $userId
-     * @param integer $galaxy
-     * @param integer $system
-     * @param integer $planet
-     *
-     * @return array|null
-     */
+    use PreparesLegacySql;
+
     public function getFleets(int $userId, int $galaxy, int $system, int $planet): ?array
     {
-        return $this->db->queryFetchAll(
-            'SELECT
-                `fleet_owner`,
-                `fleet_target_owner`,
-                `fleet_end_type`,
-                `fleet_mess`
-            FROM `' . FLEETS . "`
-            WHERE (
-                    fleet_owner = '" . $userId . "' AND
-                    fleet_start_galaxy = '" . $galaxy . "' AND
-                    fleet_start_system = '" . $system . "' AND
-                    fleet_start_planet = '" . $planet . "'
+        return array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT
+                        `fleet_owner`,
+                        `fleet_target_owner`,
+                        `fleet_end_type`,
+                        `fleet_mess`
+                    FROM `' . FLEETS . "`
+                    WHERE (
+                            fleet_owner = '" . $userId . "' AND
+                            fleet_start_galaxy = '" . $galaxy . "' AND
+                            fleet_start_system = '" . $system . "' AND
+                            fleet_start_planet = '" . $planet . "'
+                    )
+                    OR
+                    (
+                        fleet_target_owner = '" . $userId . "' AND
+                        fleet_end_galaxy = '" . $galaxy . "' AND
+                        fleet_end_system = '" . $system . "' AND
+                        fleet_end_planet = '" . $planet . "'
+                    )"
+                )
             )
-            OR
-            (
-                fleet_target_owner = '" . $userId . "' AND
-                fleet_end_galaxy = '" . $galaxy . "' AND
-                fleet_end_system = '" . $system . "' AND
-                fleet_end_planet = '" . $planet . "'
-            )"
         );
     }
 
-    /**
-     * Delete moon and planet
-     *
-     * @param integer $userId
-     * @param integer $planet_id
-     * @param integer $galaxy
-     * @param integer $system
-     * @param integer $planet
-     *
-     * @return void
-     */
     public function deleteMoonAndPlanet(int $userId, int $planet_id, int $galaxy, int $system, int $planet): void
     {
-        $this->db->query(
-            'UPDATE `' . PLANETS . '` AS p, `' . PLANETS . '` AS m, `' . USERS . "` AS u SET
-                p.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
-                m.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
-                u.`current_planet` = u.`home_planet_id`
-            WHERE p.`planet_id` = '" . $planet_id . "' AND
-                m.`planet_galaxy` = '" . $galaxy . "' AND
-                m.`planet_system` = '" . $system . "' AND
-                m.`planet_planet` = '" . $planet . "' AND
-                m.`planet_type` = '3' AND
-                u.`id` = '" . $userId . "';"
+        DB::statement(
+            $this->prepareSql(
+                'UPDATE `' . PLANETS . '` AS p, `' . PLANETS . '` AS m, `' . USERS . "` AS u SET
+                    p.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
+                    m.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
+                    u.`current_planet` = u.`home_planet_id`
+                WHERE p.`planet_id` = '" . $planet_id . "' AND
+                    m.`planet_galaxy` = '" . $galaxy . "' AND
+                    m.`planet_system` = '" . $system . "' AND
+                    m.`planet_planet` = '" . $planet . "' AND
+                    m.`planet_type` = '3' AND
+                    u.`id` = '" . $userId . "';"
+            )
         );
     }
 
-    /**
-     * Delete planet
-     *
-     * @param integer $userId
-     * @param integer $planet_id
-     *
-     * @return void
-     */
     public function deletePlanet(int $userId, int $planet_id): void
     {
-        $this->db->query(
-            'UPDATE `' . PLANETS . '` AS p, `' . USERS . "` AS u SET
-                p.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
-                u.`current_planet` = u.`home_planet_id`
-            WHERE p.`planet_id` = '" . $planet_id . "' AND
-                u.`id` = '" . $userId . "';"
+        DB::statement(
+            $this->prepareSql(
+                'UPDATE `' . PLANETS . '` AS p, `' . USERS . "` AS u SET
+                    p.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
+                    u.`current_planet` = u.`home_planet_id`
+                WHERE p.`planet_id` = '" . $planet_id . "' AND
+                    u.`id` = '" . $userId . "';"
+            )
         );
     }
 
-    /**
-     * Update planet name
-     *
-     * @param string $new_name
-     * @param integer $planet_id
-     *
-     * @return void
-     */
     public function updatePlanetName(string $new_name, int $planet_id): void
     {
-        $this->db->query(
-            'UPDATE `' . PLANETS . "` SET
-                `planet_name` = '" . $this->db->escapeValue($new_name) . "'
-            WHERE `planet_id` = '" . $planet_id . "'
-            LIMIT 1;"
+        DB::statement(
+            $this->prepareSql('UPDATE `' . PLANETS . '` SET `planet_name` = ? WHERE `planet_id` = ? LIMIT 1;'),
+            [$new_name, $planet_id]
         );
     }
 }
