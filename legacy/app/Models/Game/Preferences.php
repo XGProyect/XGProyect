@@ -4,65 +4,50 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Game;
 
-use Xgp\App\Core\Model;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @deprecated v4.0.0 use laravel instead
+ *
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
-class Preferences extends Model
+class Preferences
 {
-    /**
-     * Get all preferences by a certain user
-     *
-     * @param int $userId
-     *
-     * @return array
-     */
+    use PreparesLegacySql;
+
     public function getAllPreferencesByUserId(int $userId): array
     {
-        return $this->db->queryFetchAll(
-            'SELECT
-                p.*
-            FROM `' . PREFERENCES . "` p
-            WHERE p.`preference_user_id` = '" . $userId . "';"
-        ) ?? [];
+        return array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT p.* FROM `' . PREFERENCES . "` p WHERE p.`preference_user_id` = '" . $userId . "';"
+                )
+            )
+        );
     }
 
     public function checkIfNicknameExists(string $nickname): array
     {
-        return $this->db->queryFetch(
-            'SELECT `id`
-            FROM `' . USERS . "`
-            WHERE `name` = '" . $this->db->escapeValue($nickname) . "'
-            LIMIT 1;"
-        ) ?? [];
+        $row = DB::selectOne(
+            $this->prepareSql('SELECT `id` FROM `' . USERS . '` WHERE `name` = ? LIMIT 1;'),
+            [$nickname]
+        );
+
+        return $row !== null ? (array) $row : [];
     }
 
-    /**
-     * Check if the email exists
-     *
-     * @param string $email
-     *
-     * @return array
-     */
     public function checkIfEmailExists(string $email): array
     {
-        return $this->db->queryFetch(
-            'SELECT `email`
-            FROM `' . USERS . "`
-            WHERE `email` = '" . $this->db->escapeValue($email) . "'
-            LIMIT 1;"
-        ) ?? [];
+        $row = DB::selectOne(
+            $this->prepareSql('SELECT `email` FROM `' . USERS . '` WHERE `email` = ? LIMIT 1;'),
+            [$email]
+        );
+
+        return $row !== null ? (array) $row : [];
     }
 
-    /**
-     * Update validated fields
-     *
-     * @param array $fields
-     * @param integer $userId
-     *
-     * @return void
-     */
     public function updateValidatedFields(array $fields, int $userId): void
     {
         $columns_to_update = [];
@@ -77,73 +62,65 @@ class Preferences extends Model
             }
         }
 
-        $this->db->query(
-            'UPDATE ' . USERS . ' AS u, ' . PREFERENCES . ' AS p SET
-            ' . join(', ', $columns_to_update) . "
-            WHERE u.`id` = '" . $userId . "'
-                AND p.`preference_user_id` = '" . $userId . "';"
+        DB::statement(
+            $this->prepareSql(
+                'UPDATE ' . USERS . ' AS u, ' . PREFERENCES . ' AS p SET
+                ' . join(', ', $columns_to_update) . "
+                WHERE u.`id` = '" . $userId . "'
+                    AND p.`preference_user_id` = '" . $userId . "';"
+            )
         );
     }
 
-    /**
-     * Check the empire current activity
-     *
-     * @param integer $userId
-     *
-     * @return boolean
-     */
     public function isEmpireActive(int $userId): bool
     {
         if ($userId > 0) {
-            $activity = $this->db->queryFetch(
-                'SELECT (
-                    (
-                        SELECT
-                            COUNT(f.`fleet_id`) AS quantity
-                        FROM `' . FLEETS . "` f
-                        WHERE f.`fleet_owner` = '" . $userId . "'
-                    )
-                +
-                    (
-                        SELECT
-                            COUNT(p.`planet_id`) AS quantity
-                        FROM `" . PLANETS . "` p
-                        WHERE p.`planet_user_id` = '" . $userId . "'
-                            AND (p.`planet_b_building` <> 0
-                                OR `planet_b_tech` <> 0
-                                OR `planet_b_hangar` <> 0
-                            )
-                    )
-                ) as total"
+            $row = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT (
+                        (
+                            SELECT
+                                COUNT(f.`fleet_id`) AS quantity
+                            FROM `' . FLEETS . "` f
+                            WHERE f.`fleet_owner` = '" . $userId . "'
+                        )
+                    +
+                        (
+                            SELECT
+                                COUNT(p.`planet_id`) AS quantity
+                            FROM `" . PLANETS . "` p
+                            WHERE p.`planet_user_id` = '" . $userId . "'
+                                AND (p.`planet_b_building` <> 0
+                                    OR `planet_b_tech` <> 0
+                                    OR `planet_b_hangar` <> 0
+                                )
+                        )
+                    ) as total"
+                )
             );
 
-            return ($activity['total'] > 0);
+            return $row !== null && $row->total > 0;
         }
 
         return false;
     }
 
-    /**
-     * Start vacation mode first checking if it's possible to set
-     *
-     * @param integer $userId
-     *
-     * @return boolean
-     */
     public function startVacation(int $userId): bool
     {
         if (!$this->isEmpireActive($userId)) {
-            $this->db->query(
-                'UPDATE `' . PREFERENCES . '` pr, `' . PLANETS . "` p SET
-                    pr.`preference_vacation_mode` = '" . time() . "',
-                    p.`planet_building_metal_mine_percent` = '0',
-                    p.`planet_building_crystal_mine_percent` = '0',
-                    p.`planet_building_deuterium_sintetizer_percent` = '0',
-                    p.`planet_building_solar_plant_percent` = '0',
-                    p.`planet_building_fusion_reactor_percent` = '0',
-                    p.`planet_ship_solar_satellite_percent` = '0'
-                WHERE pr.`preference_user_id` = '" . $userId . "'
-                    AND p.`planet_user_id` = '" . $userId . "';"
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . PREFERENCES . '` pr, `' . PLANETS . "` p SET
+                        pr.`preference_vacation_mode` = '" . time() . "',
+                        p.`planet_building_metal_mine_percent` = '0',
+                        p.`planet_building_crystal_mine_percent` = '0',
+                        p.`planet_building_deuterium_sintetizer_percent` = '0',
+                        p.`planet_building_solar_plant_percent` = '0',
+                        p.`planet_building_fusion_reactor_percent` = '0',
+                        p.`planet_ship_solar_satellite_percent` = '0'
+                    WHERE pr.`preference_user_id` = '" . $userId . "'
+                        AND p.`planet_user_id` = '" . $userId . "';"
+                )
             );
 
             return true;
@@ -152,28 +129,23 @@ class Preferences extends Model
         return false;
     }
 
-    /**
-     * Remove vacation mode and set production to maximum
-     *
-     * @param integer $userId
-     *
-     * @return void
-     */
     public function endVacation(int $userId): void
     {
         if ($userId > 0) {
-            $this->db->query(
-                'UPDATE `' . PREFERENCES . '` pr, `' . PLANETS . "` p SET
-                    pr.`preference_vacation_mode` = NULL,
-                    p.`planet_last_update` = '" . time() . "',
-                    p.`planet_building_metal_mine_percent` = '10',
-                    p.`planet_building_crystal_mine_percent` = '10',
-                    p.`planet_building_deuterium_sintetizer_percent` = '10',
-                    p.`planet_building_solar_plant_percent` = '10',
-                    p.`planet_building_fusion_reactor_percent` = '10',
-                    p.`planet_ship_solar_satellite_percent` = '10'
-                WHERE pr.`preference_user_id` = '" . $userId . "'
-                    AND p.`planet_user_id` = '" . $userId . "';"
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . PREFERENCES . '` pr, `' . PLANETS . "` p SET
+                        pr.`preference_vacation_mode` = NULL,
+                        p.`planet_last_update` = '" . time() . "',
+                        p.`planet_building_metal_mine_percent` = '10',
+                        p.`planet_building_crystal_mine_percent` = '10',
+                        p.`planet_building_deuterium_sintetizer_percent` = '10',
+                        p.`planet_building_solar_plant_percent` = '10',
+                        p.`planet_building_fusion_reactor_percent` = '10',
+                        p.`planet_ship_solar_satellite_percent` = '10'
+                    WHERE pr.`preference_user_id` = '" . $userId . "'
+                        AND p.`planet_user_id` = '" . $userId . "';"
+                )
             );
         }
     }

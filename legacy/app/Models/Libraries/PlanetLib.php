@@ -5,13 +5,18 @@ declare(strict_types=1);
 namespace Xgp\App\Models\Libraries;
 
 use App\Models\Planets;
-use Xgp\App\Core\Model;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @deprecated v4.0.0 use laravel instead
+ *
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
-class PlanetLib extends Model
+class PlanetLib
 {
+    use PreparesLegacySql;
+
     public function checkPlanetExists(int $galaxy, int $system, int $position): bool
     {
         return Planets::where([
@@ -23,34 +28,30 @@ class PlanetLib extends Model
 
     public function checkMoonExists(int $galaxy, int $system, int $position): ?array
     {
-        return $this->db->queryFetch(
-            'SELECT pm2.`planet_id`,
-                pm2.`planet_name`,
-                pm2.`planet_temp_max`,
-                pm2.`planet_temp_min`,
-                (
-                    SELECT
-                        pm.`planet_id` AS `id_moon`
-                    FROM `' . PLANETS . "` AS pm
-                        WHERE pm.`planet_galaxy` = '" . $galaxy . "' AND
-                                pm.`planet_system` = '" . $system . "' AND
-                                pm.`planet_planet` = '" . $position . "' AND
-                                pm.`planet_type` = 3) AS `id_moon`
-                FROM `" . PLANETS . "` AS pm2
-                WHERE pm2.`planet_galaxy` = '" . $galaxy . "' AND
-                        pm2.`planet_system` = '" . $system . "' AND
-                        pm2.`planet_planet` = '" . $position . "';"
+        $row = DB::selectOne(
+            $this->prepareSql(
+                'SELECT pm2.`planet_id`,
+                    pm2.`planet_name`,
+                    pm2.`planet_temp_max`,
+                    pm2.`planet_temp_min`,
+                    (
+                        SELECT
+                            pm.`planet_id` AS `id_moon`
+                        FROM `' . PLANETS . "` AS pm
+                            WHERE pm.`planet_galaxy` = '" . $galaxy . "' AND
+                                    pm.`planet_system` = '" . $system . "' AND
+                                    pm.`planet_planet` = '" . $position . "' AND
+                                    pm.`planet_type` = 3) AS `id_moon`
+                    FROM `" . PLANETS . "` AS pm2
+                    WHERE pm2.`planet_galaxy` = '" . $galaxy . "' AND
+                            pm2.`planet_system` = '" . $system . "' AND
+                            pm2.`planet_planet` = '" . $position . "';"
+            )
         );
+
+        return $row !== null ? (array) $row : null;
     }
 
-    /**
-     * Create a new planet
-     *
-     * @param array $data
-     * @param boolean $full_insert
-     *
-     * @return void
-     */
     public function createNewPlanet(array $data, bool $full_insert = true): void
     {
         if (is_array($data)) {
@@ -60,17 +61,13 @@ class PlanetLib extends Model
                 $insert_query .= '`' . $column . "` = '" . $value . "', ";
             }
 
-            // Remove last comma
             $insert_query = substr_replace($insert_query, '', -2) . ';';
 
-            $this->db->query($insert_query);
+            DB::statement($this->prepareSql($insert_query));
 
-            // insert extra required tables
             if ($full_insert) {
-                // get the last inserted planet id
-                $planet_id = $this->db->insertId();
+                $planet_id = (int) DB::getPdo()->lastInsertId();
 
-                // create the buildings, defenses and ships tables
                 $this->insertPlanetBuildings($planet_id);
                 $this->insertPlanetDefenses($planet_id);
                 $this->insertPlanetShips($planet_id);
@@ -78,45 +75,30 @@ class PlanetLib extends Model
         }
     }
 
-    /**
-     * Insert a new record into buildings table
-     *
-     * @param integer $planet_id
-     *
-     * @return void
-     */
     private function insertPlanetBuildings(int $planet_id): void
     {
-        $this->db->query(
-            'INSERT INTO `' . BUILDINGS . "` SET `building_planet_id` = '" . $planet_id . "';"
+        DB::statement(
+            $this->prepareSql(
+                'INSERT INTO `' . BUILDINGS . "` SET `building_planet_id` = '" . $planet_id . "';"
+            )
         );
     }
 
-    /**
-     * Insert a new record into defenses table
-     *
-     * @param integer $planet_id
-     *
-     * @return void
-     */
     private function insertPlanetDefenses(int $planet_id): void
     {
-        $this->db->query(
-            'INSERT INTO `' . DEFENSES . "` SET `defense_planet_id` = '" . $planet_id . "';"
+        DB::statement(
+            $this->prepareSql(
+                'INSERT INTO `' . DEFENSES . "` SET `defense_planet_id` = '" . $planet_id . "';"
+            )
         );
     }
 
-    /**
-     * Insert a new record into ships table
-     *
-     * @param integer $planet_id
-     *
-     * @return void
-     */
     private function insertPlanetShips(int $planet_id): void
     {
-        $this->db->query(
-            'INSERT INTO `' . SHIPS . "` SET `ship_planet_id` = '" . $planet_id . "';"
+        DB::statement(
+            $this->prepareSql(
+                'INSERT INTO `' . SHIPS . "` SET `ship_planet_id` = '" . $planet_id . "';"
+            )
         );
     }
 }
