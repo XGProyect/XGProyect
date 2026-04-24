@@ -4,30 +4,32 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Game;
 
-use Xgp\App\Core\Model;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @deprecated v4.0.0 use laravel instead
+ *
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
-class Messages extends Model
+class Messages
 {
-    /**
-     * Get the list of messages by user id and type
-     *
-     * @param int    $userId         User id
-     * @param string $msg_type_string Message types
-     *
-     * @return mixed
-     */
+    use PreparesLegacySql;
+
     public function getByUserIdAndType($userId, $msg_type_string)
     {
         if ((int) $userId > 0 && !empty($msg_type_string)) {
-            return $this->db->queryFetchAll(
-                'SELECT *
-                FROM `' . MESSAGES . '`
-                WHERE `message_receiver` = ' . $userId . '
-                        AND `message_type` IN (' . rtrim($msg_type_string, ',') . ')
-                ORDER BY `message_time` DESC;'
+            return array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT *
+                        FROM `' . MESSAGES . '`
+                        WHERE `message_receiver` = ' . $userId . '
+                            AND `message_type` IN (' . rtrim($msg_type_string, ',') . ')
+                        ORDER BY `message_time` DESC;'
+                    )
+                )
             );
         }
 
@@ -37,35 +39,35 @@ class Messages extends Model
     public function getByUserId(int $userId): ?array
     {
         if ($userId > 0) {
-            return $this->db->queryFetchAll(
-                'SELECT
-                    *
-                FROM `' . MESSAGES . "`
-                WHERE `message_receiver` = '" . $userId . "'
-                ORDER BY `message_time` DESC;"
+            return array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT *
+                        FROM `' . MESSAGES . "`
+                        WHERE `message_receiver` = '" . $userId . "'
+                        ORDER BY `message_time` DESC;"
+                    )
+                )
             );
         }
 
         return null;
     }
 
-    /**
-     * Mark messages as read by user id and type
-     *
-     * @param int    $userId         User id
-     * @param string $msg_type_string Message types
-     *
-     * @return mixed
-     */
     public function markAsReadByType($userId, $msg_type_string)
     {
         if ((int) $userId > 0 && !empty($msg_type_string)) {
-            return $this->db->query(
-                'UPDATE `' . MESSAGES . "` SET
-                    `message_read` = '1'
-                WHERE `message_receiver` = " . $userId . '
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . MESSAGES . "` SET
+                        `message_read` = '1'
+                    WHERE `message_receiver` = " . $userId . '
                         AND `message_type` IN (' . rtrim($msg_type_string, ',') . ');'
+                )
             );
+
+            return true;
         }
 
         return null;
@@ -74,10 +76,12 @@ class Messages extends Model
     public function markAsRead(int $userId): void
     {
         if ($userId > 0) {
-            $this->db->query(
-                'UPDATE `' . MESSAGES . "` SET
-                    `message_read` = '1'
-                WHERE `message_receiver` = " . $userId . ';'
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . MESSAGES . "` SET
+                        `message_read` = '1'
+                    WHERE `message_receiver` = " . $userId . ';'
+                )
             );
         }
     }
@@ -85,12 +89,16 @@ class Messages extends Model
     public function getHomePlanet(int $planetId): ?array
     {
         if ((int) $planetId > 0) {
-            return $this->db->queryFetch(
-                'SELECT u.`id`, u.`name`, p.`planet_galaxy`, p.`planet_system`, p.`planet_planet`
-                FROM ' . PLANETS . ' AS p
-                INNER JOIN ' . USERS . " as u ON p.planet_user_id = u.id
-                WHERE p.`planet_user_id` = '" . $planetId . "';"
+            $row = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT u.`id`, u.`name`, p.`planet_galaxy`, p.`planet_system`, p.`planet_planet`
+                    FROM ' . PLANETS . ' AS p
+                    INNER JOIN ' . USERS . " as u ON p.planet_user_id = u.id
+                    WHERE p.`planet_user_id` = '" . $planetId . "';"
+                )
             );
+
+            return $row !== null ? (array) $row : null;
         }
 
         return null;
@@ -99,50 +107,44 @@ class Messages extends Model
     public function deleteAllByOwner(int $userId): void
     {
         if ($userId > 0) {
-            $this->db->query(
-                'DELETE FROM ' . MESSAGES . "
-                WHERE `message_receiver` = '" . $userId . "';"
+            DB::statement(
+                $this->prepareSql(
+                    'DELETE FROM ' . MESSAGES . "
+                    WHERE `message_receiver` = '" . $userId . "';"
+                )
             );
         }
     }
 
-    /**
-     * Delete message by id and current user
-     *
-     * @param int $userId       The user ID
-     * @param int $messages_ids  The messages ID
-     *
-     * @return mixed
-     */
     public function deleteByOwnerAndIds(int $userId, $messages_ids)
     {
         if ($userId > 0) {
-            return $this->db->query(
-                'DELETE FROM ' . MESSAGES . '
-                WHERE `message_id` IN (' . $messages_ids . ")
-                    AND `message_receiver` = '" . $userId . "';"
+            DB::statement(
+                $this->prepareSql(
+                    'DELETE FROM ' . MESSAGES . '
+                    WHERE `message_id` IN (' . $messages_ids . ")
+                        AND `message_receiver` = '" . $userId . "';"
+                )
             );
+
+            return true;
         }
 
         return null;
     }
 
-    /**
-     * Delete message by id and current user
-     *
-     * @param int $userId       The user ID
-     * @param int $message_type  The messages type
-     *
-     * @return mixed
-     */
     public function deleteByOwnerAndMessageType($userId, $message_type)
     {
         if ((int) $userId > 0 && (int) $message_type >= 0) {
-            return $this->db->query(
-                'DELETE FROM ' . MESSAGES . '
-                WHERE `message_type` IN (' . $message_type . ")
-                    AND `message_receiver` = '" . $userId . "';"
+            DB::statement(
+                $this->prepareSql(
+                    'DELETE FROM ' . MESSAGES . '
+                    WHERE `message_type` IN (' . $message_type . ")
+                        AND `message_receiver` = '" . $userId . "';"
+                )
             );
+
+            return true;
         }
 
         return null;
@@ -151,57 +153,58 @@ class Messages extends Model
     public function countMessagesByType(int $userId): array
     {
         if ($userId > 0) {
-            return $this->db->queryFetchAll(
-                'SELECT
-                    `message_type`,
-                    COUNT(`message_type`) AS message_type_count,
-                    SUM(`message_read` = 0) AS unread_count
-                FROM `' . MESSAGES . "`
-                WHERE `message_receiver` = '" . $userId . "'
-                GROUP BY `message_type`"
+            return array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT
+                            `message_type`,
+                            COUNT(`message_type`) AS message_type_count,
+                            SUM(`message_read` = 0) AS unread_count
+                        FROM `' . MESSAGES . "`
+                        WHERE `message_receiver` = '" . $userId . "'
+                        GROUP BY `message_type`"
+                    )
+                )
             );
         }
 
         return null;
     }
 
-    /**
-     * Count alliance members, buddys, operators and notes
-     *
-     * @param int $userId      User ID
-     * @param int $user_ally_id User Alliance ID
-     *
-     * @return mixed
-     */
     public function countAddressBookAndNotes($userId, $ally_id)
     {
         if ((int) $userId > 0 && (int) $ally_id >= 0) {
-            return $this->db->queryFetch(
-                'SELECT
-                ( SELECT COUNT(`id`)
-                    FROM `' . USERS . "`
-                    WHERE `ally_id` = '" . $ally_id . "'
-                        AND `ally_id` <> 0
-                        AND `id` <> '" . $userId . "'
-                    ) AS alliance_count,
-
-                    ( SELECT COUNT(`buddy_id`)
-                    FROM `" . BUDDY . "`
-                    WHERE `buddy_sender` = '" . $userId . "'
-                        OR `buddy_receiver` = '" . $userId . "'
-                    ) AS buddys_count,
-
-                    ( SELECT COUNT(`note_id`)
-                    FROM `" . NOTES . "`
-                    WHERE `note_owner` = '" . $userId . "'
-                    ) AS notes_count,
-
+            $row = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT
                     ( SELECT COUNT(`id`)
-                    FROM " . USERS . "
-                    WHERE authlevel <> 0
-                        AND `id` <> '" . $userId . "'
-                    ) AS operators_count"
+                        FROM `' . USERS . "`
+                        WHERE `ally_id` = '" . $ally_id . "'
+                            AND `ally_id` <> 0
+                            AND `id` <> '" . $userId . "'
+                        ) AS alliance_count,
+
+                        ( SELECT COUNT(`buddy_id`)
+                        FROM `" . BUDDY . "`
+                        WHERE `buddy_sender` = '" . $userId . "'
+                            OR `buddy_receiver` = '" . $userId . "'
+                        ) AS buddys_count,
+
+                        ( SELECT COUNT(`note_id`)
+                        FROM `" . NOTES . "`
+                        WHERE `note_owner` = '" . $userId . "'
+                        ) AS notes_count,
+
+                        ( SELECT COUNT(`id`)
+                        FROM " . USERS . "
+                        WHERE authlevel <> 0
+                            AND `id` <> '" . $userId . "'
+                        ) AS operators_count"
+                )
             );
+
+            return $row !== null ? (array) $row : null;
         }
 
         return null;
@@ -210,38 +213,37 @@ class Messages extends Model
     public function getFriends(int $userId): ?array
     {
         if ($userId > 0) {
-            return $this->db->queryFetchAll(
-                'SELECT
-                    u.`id`,
-                    u.`name`,
-                    u.`email`
-                FROM `' . BUDDY . '` b
-                LEFT JOIN `' . USERS . "` u
-                    ON u.id = IF(`buddy_sender` = '" . $userId . "', `buddy_receiver`, `buddy_sender`)
-                WHERE `buddy_sender`='" . $userId . "'
-                    OR `buddy_receiver`='" . $userId . "'"
+            return array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT u.`id`, u.`name`, u.`email`
+                        FROM `' . BUDDY . '` b
+                        LEFT JOIN `' . USERS . "` u
+                            ON u.id = IF(`buddy_sender` = '" . $userId . "', `buddy_receiver`, `buddy_sender`)
+                        WHERE `buddy_sender`='" . $userId . "'
+                            OR `buddy_receiver`='" . $userId . "'"
+                    )
+                )
             );
         }
 
         return null;
     }
 
-    /**
-     * Get all alliance members that the user can contact
-     *
-     * @param int $userId      User ID
-     * @param int $ally_id User Alliance ID
-     *
-     * @return mixed
-     */
     public function getAllianceMembers($userId, $ally_id)
     {
         if ((int) $userId > 0 && (int) $ally_id > 0) {
-            return $this->db->query(
-                'SELECT `id`, `name`, `email`
-                FROM ' . USERS . "
-                WHERE ally_id = '" . $ally_id . "'
-                    AND `id` <> '" . $userId . "';"
+            return array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT `id`, `name`, `email`
+                        FROM ' . USERS . "
+                        WHERE ally_id = '" . $ally_id . "'
+                            AND `id` <> '" . $userId . "';"
+                    )
+                )
             );
         }
 
@@ -251,11 +253,16 @@ class Messages extends Model
     public function getOperators(int $userId): ?array
     {
         if ($userId > 0) {
-            return $this->db->queryFetchAll(
-                'SELECT `name`, `email`
-                FROM ' . USERS . "
-                WHERE authlevel > '0'
-                    AND `id` <> '" . $userId . "';"
+            return array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT `name`, `email`
+                        FROM ' . USERS . "
+                        WHERE authlevel > '0'
+                            AND `id` <> '" . $userId . "';"
+                    )
+                )
             );
         }
 
@@ -265,10 +272,15 @@ class Messages extends Model
     public function getNotes(int $userId): ?array
     {
         if ($userId > 0) {
-            return $this->db->queryFetchAll(
-                'SELECT `note_id`, `note_priority`, `note_title`
-                FROM `' . NOTES . "`
-                WHERE `note_owner` = '" . $userId . "';"
+            return array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT `note_id`, `note_priority`, `note_title`
+                        FROM `' . NOTES . "`
+                        WHERE `note_owner` = '" . $userId . "';"
+                    )
+                )
             );
         }
 
