@@ -4,28 +4,27 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Game;
 
-use Xgp\App\Core\Model;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @deprecated v4.0.0 use laravel instead
+ *
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
-class Resources extends Model
+class Resources
 {
-    /**
-     * Update current planet
-     *
-     * @param array $planet
-     * @param string $sub_query
-     *
-     * @return void
-     */
+    use PreparesLegacySql;
+
     public function updateCurrentPlanet(array $planet, string $sub_query): void
     {
-        $this->db->query(
-            'UPDATE `' . PLANETS . "` SET
-                `planet_id` = '" . $planet['planet_id'] . "'
-                $sub_query
-                WHERE `planet_id` = '" . $planet['planet_id'] . "';"
+        DB::statement(
+            $this->prepareSql(
+                'UPDATE `' . PLANETS . "` SET
+                    `planet_id` = '" . $planet['planet_id'] . "'
+                    $sub_query
+                    WHERE `planet_id` = '" . $planet['planet_id'] . "';"
+            )
         );
     }
 }

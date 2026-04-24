@@ -10,13 +10,12 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator;
-use Xgp\App\Core\Model;
 use Xgp\App\Libraries\PlanetLib;
 
 /**
  * @deprecated v4.0.0 use laravel instead
  */
-class Register extends Model
+class Register
 {
     public function createNewUser(FormRequest $request, array $coords, bool $isAdmin = false): ?User
     {

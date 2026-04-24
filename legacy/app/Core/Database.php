@@ -7,12 +7,14 @@ namespace Xgp\App\Core;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use PDO;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @deprecated v4.0.0 use Laravel DB facade / Eloquent directly
  */
 class Database
 {
+    use PreparesLegacySql;
     public function closeConnection(): bool
     {
         return true;
@@ -120,8 +122,4 @@ class Database
         DB::rollback();
     }
 
-    private function prepareSql(string $query): string
-    {
-        return strtr($query, ['{xgp_prefix}' => DB::getTablePrefix()]);
-    }
 }

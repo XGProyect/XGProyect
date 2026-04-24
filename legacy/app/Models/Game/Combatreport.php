@@ -4,27 +4,25 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Game;
 
-use Xgp\App\Core\Model;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @deprecated v4.0.0 use laravel instead
+ *
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
-class Combatreport extends Model
+class Combatreport
 {
-    /**
-     * Get report by its Id
-     *
-     * @param string $report_id Report ID
-     *
-     * @return array
-     */
+    use PreparesLegacySql;
+
     public function getReportById($report_id): ?array
     {
-        return $this->db->queryFetch(
-            'SELECT
-                *
-            FROM `' . REPORTS . "`
-            WHERE `report_rid` = '" . $this->db->escapeValue($report_id) . "';"
+        $row = DB::selectOne(
+            $this->prepareSql('SELECT * FROM `' . REPORTS . '` WHERE `report_rid` = ?'),
+            [$report_id]
         );
+
+        return $row !== null ? (array) $row : null;
     }
 }

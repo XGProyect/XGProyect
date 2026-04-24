@@ -4,31 +4,28 @@ declare(strict_types=1);
 
 namespace Xgp\App\Models\Game;
 
-use Xgp\App\Core\Model;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @deprecated v4.0.0 use laravel instead
+ *
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
-class Officier extends Model
+class Officier
 {
-    /**
-     * Set premium access to the current user
-     *
-     * @param integer $userId
-     * @param integer $price
-     * @param string $officier
-     * @param integer $time_to_add
-     *
-     * @return void
-     */
+    use PreparesLegacySql;
+
     public function setPremium(int $userId, int $price, string $officier, int $time_to_add): void
     {
         if ($userId > 0) {
-            $this->db->query(
-                'UPDATE `' . PREMIUM . "` SET
-                    `premium_dark_matter` = `premium_dark_matter` - '" . $price . "',
-                    `" . $officier . "` = '" . $time_to_add . "'
-                WHERE `premium_user_id` = '" . $userId . "';"
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . PREMIUM . "` SET
+                        `premium_dark_matter` = `premium_dark_matter` - '" . $price . "',
+                        `" . $officier . "` = '" . $time_to_add . "'
+                    WHERE `premium_user_id` = '" . $userId . "';"
+                )
             );
         }
     }
