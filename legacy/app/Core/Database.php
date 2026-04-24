@@ -6,153 +6,48 @@ namespace Xgp\App\Core;
 
 use Exception;
 use Illuminate\Support\Facades\DB;
-use mysqli;
+use PDO;
 
+/**
+ * @deprecated v4.0.0 use Laravel DB facade / Eloquent directly
+ */
 class Database
 {
-    private string $last_query;
-    private mysqli $connection;
-    private array $db_data = [
-        'host' => '',
-        'port' => '',
-        'user' => '',
-        'pass' => '',
-        'name' => '',
-        'prefix' => '',
-    ];
-
-    public function __construct()
-    {
-        if (config('DB_HOST') && config('DB_PORT') && config('DB_USERNAME') && config('DB_PASSWORD') && config('DB_DATABASE') && config('DB_PREFIX')) {
-            $this->db_data = [
-                'host' => config('DB_HOST'),
-                'port' => config('DB_PORT'),
-                'user' => config('DB_USERNAME'),
-                'pass' => config('DB_PASSWORD'),
-                'name' => config('DB_DATABASE'),
-                'prefix' => config('DB_PREFIX'),
-            ];
-        }
-
-        $this->openConnection();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function openConnection()
-    {
-        if (isset($this->db_data['host']) && $this->db_data['port'] && isset($this->db_data['user']) && isset($this->db_data['pass']) && isset($this->db_data['name'])) {
-            if (!$this->tryConnection($this->db_data['host'], $this->db_data['port'], $this->db_data['user'], $this->db_data['pass'])) {
-                if (!defined('IN_INSTALL')) {
-                    throw new Exception('Database connection failed: ' . $this->connection->connect_error, -1);
-                    return false;
-                }
-            } else {
-                if (!$this->tryDatabase($this->db_data['name'])) {
-                    if (!defined('IN_INSTALL')) {
-                        throw new Exception('Database connection failed: ' . $this->connection->connect_error, -1);
-                        return false;
-                    }
-                } else {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-    }
-
-    public function tryConnection(string $host = '', string $port = '', string $user = '', string $pass = null): bool
-    {
-        try {
-            if (empty($host) or empty($user)) {
-                return false;
-            }
-
-            $this->connection = new mysqli($host, $user, $pass, null, (int) $port);
-
-            if ($this->connection->connect_error) {
-                return false;
-            }
-
-            // force utf8 to avoid weird characters
-            $this->connection->set_charset('utf8');
-
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-
-    public function tryDatabase(string $db_name): bool
-    {
-        if (empty($db_name)) {
-            return false;
-        }
-
-        $db_select = $this->connection->select_db($db_name);
-
-        if ($db_select) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public function closeConnection(): bool
     {
-        if (isset($this->connection) && (is_resource($this->connection) or is_object($this->connection))) {
-            if ($this->connection->connect_errno == 0) {
-                $this->connection->close();
-            }
-
-            unset($this->connection);
-
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     public function query(string $sql = '')
     {
-        if ($sql != '') {
-            $sql = $this->prepareSql($sql);
-            $this->last_query = $sql;
-            $result = $this->connection->query($sql);
-
-            return $result;
+        if ($sql === '') {
+            return false;
         }
 
-        return false;
+        return DB::getPdo()->query($this->prepareSql($sql));
     }
 
     public function queryFetch(string $sql = '')
     {
-        if ($sql != '') {
-            $sql = $this->prepareSql($sql);
-            $this->last_query = $sql;
-            $result = $this->connection->query($sql);
-
-            return $this->fetchArray($result);
+        if ($sql === '') {
+            return false;
         }
 
-        return false;
+        $stmt = DB::getPdo()->query($this->prepareSql($sql));
+
+        return $stmt ? $stmt->fetch(PDO::FETCH_ASSOC) : false;
     }
 
     public function queryFetchAll($sql = '')
     {
         try {
-            if ($sql != '') {
-                $sql = $this->prepareSql($sql);
-                $this->last_query = $sql;
-                $result = $this->connection->query($sql);
-
-                return $this->fetchAll($result);
+            if ($sql === '') {
+                return false;
             }
 
-            return false;
+            $stmt = DB::getPdo()->query($this->prepareSql($sql));
+
+            return $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : false;
         } catch (Exception $e) {
             return false;
         }
@@ -161,15 +56,13 @@ class Database
     public function queryMulty($sql = '')
     {
         try {
-            if ($sql != '') {
-                $sql = $this->prepareSql($sql);
-                $this->last_query = $sql;
-                $result = $this->connection->multi_query($sql);
-
-                return $result;
+            if ($sql === '') {
+                return false;
             }
 
-            return false;
+            DB::unprepared($this->prepareSql($sql));
+
+            return true;
         } catch (Exception $e) {
             return false;
         }
@@ -177,83 +70,59 @@ class Database
 
     public function escapeValue($value)
     {
-        return $this->connection->real_escape_string($value);
+        $quoted = DB::getPdo()->quote((string) $value);
+
+        return substr($quoted, 1, -1);
     }
 
     public function fetchArray($result_set)
     {
-        return $result_set->fetch_array(MYSQLI_ASSOC);
+        return $result_set->fetch(PDO::FETCH_ASSOC);
     }
 
     public function fetchAll($result_set)
     {
-        if (function_exists('mysqli_fetch_all')) {
-            return $result_set->fetch_all(MYSQLI_ASSOC);
-        }
-
-        $results_array = [];
-
-        while ($row = $this->fetchAssoc($result_set)) {
-            $results_array[] = $row;
-        }
-
-        return $results_array;
+        return $result_set->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function fetchAssoc($result_set)
     {
-        return $result_set->fetch_assoc();
+        return $result_set->fetch(PDO::FETCH_ASSOC);
     }
 
     public function fetchRow($result_set)
     {
-        return $result_set->fetch_row();
+        return $result_set->fetch(PDO::FETCH_NUM);
     }
 
     public function numFields($result_set)
     {
-        return $result_set->field_count;
+        return $result_set->columnCount();
     }
 
     public function insertId()
     {
-        // get the last id inserted over the current db connection
-        return $this->connection->insert_id;
+        return DB::getPdo()->lastInsertId();
     }
 
-    public function setAutoCommit(bool $status = true): void
+    public function beginTransaction(): void
     {
-        $this->connection->autocommit($status);
+        DB::beginTransaction();
     }
 
-    public function beginTransaction()
+    public function commitTransaction(): void
     {
-        // disable auto commit
-        $this->setAutoCommit(false);
-
-        $this->connection->begin_transaction();
+        DB::commit();
     }
 
-    public function commitTransaction()
+    public function rollbackTransaction(): void
     {
-        $this->connection->commit();
-
-        // re enable after transaction end
-        $this->setAutoCommit();
-    }
-
-    public function rollbackTransaction()
-    {
-        $this->connection->rollback();
-
-        // re enable after transaction end
-        $this->setAutoCommit();
+        DB::rollback();
     }
 
     public function backupDb($tables = '*')
     {
-        // GET ALL THE TABLES
-        if ($tables == '*') {
+        if ($tables === '*') {
             $tables = [];
             $result = $this->query('SHOW TABLES');
 
@@ -266,7 +135,6 @@ class Database
 
         $return = '';
 
-        //CYCLE TROUGHT
         foreach ($tables as $table) {
             $result = $this->query('SELECT * FROM ' . $table);
             $num_fields = $this->numFields($result);
@@ -297,14 +165,13 @@ class Database
                     $return .= ");\n";
                 }
             }
+
             $return .= "\n\n\n";
         }
 
-        // SAVE FILE
         $file_name = 'db-backup-' . date('Ymd') . '-' . time() . '-' . (sha1(join(',', $tables))) . '.sql';
         $handle = fopen(storage_path('backups') . DIRECTORY_SEPARATOR . $file_name, 'w+');
         $writed = fwrite($handle, $return);
-
         fclose($handle);
 
         return $writed;

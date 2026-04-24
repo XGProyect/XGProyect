@@ -13,16 +13,6 @@ abstract class Model
 
     public function __construct()
     {
-        $this->setNewDb();
-    }
-
-    public function __destruct()
-    {
-        $this->db->closeConnection();
-    }
-
-    private function setNewDb(): void
-    {
         $this->db = new Database();
     }
 }
