@@ -120,63 +120,6 @@ class Database
         DB::rollback();
     }
 
-    public function backupDb($tables = '*')
-    {
-        if ($tables === '*') {
-            $tables = [];
-            $result = $this->query('SHOW TABLES');
-
-            while ($row = $this->fetchRow($result)) {
-                $tables[] = $row[0];
-            }
-        } else {
-            $tables = is_array($tables) ? $tables : explode(',', $tables);
-        }
-
-        $return = '';
-
-        foreach ($tables as $table) {
-            $result = $this->query('SELECT * FROM ' . $table);
-            $num_fields = $this->numFields($result);
-
-            $return .= 'DROP TABLE ' . $table . ';';
-            $row2 = $this->fetchRow($this->query('SHOW CREATE TABLE ' . $table));
-            $return .= "\n\n" . $row2[1] . ";\n\n";
-
-            for ($i = 0; $i < $num_fields; $i++) {
-                while ($row = $this->fetchRow($result)) {
-                    $return .= 'INSERT INTO ' . $table . ' VALUES(';
-
-                    for ($j = 0; $j < $num_fields; $j++) {
-                        $row[$j] = addslashes((string) $row[$j]);
-                        $row[$j] = str_replace("\n", '\\n', $row[$j]);
-
-                        if (isset($row[$j])) {
-                            $return .= '"' . $row[$j] . '"';
-                        } else {
-                            $return .= '""';
-                        }
-
-                        if ($j < ($num_fields - 1)) {
-                            $return .= ',';
-                        }
-                    }
-
-                    $return .= ");\n";
-                }
-            }
-
-            $return .= "\n\n\n";
-        }
-
-        $file_name = 'db-backup-' . date('Ymd') . '-' . time() . '-' . (sha1(join(',', $tables))) . '.sql';
-        $handle = fopen(storage_path('backups') . DIRECTORY_SEPARATOR . $file_name, 'w+');
-        $writed = fwrite($handle, $return);
-        fclose($handle);
-
-        return $writed;
-    }
-
     private function prepareSql(string $query): string
     {
         return strtr($query, ['{xgp_prefix}' => DB::getTablePrefix()]);

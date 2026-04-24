@@ -89,16 +89,6 @@ class UpdatesLibrary extends Model
     }
 
     /**
-     * Generate an SQL Backup
-     *
-     * @return void
-     */
-    public function generateBackUp()
-    {
-        $this->db->backupDb();
-    }
-
-    /**
      * Update planet buildings, queue, fields and statistics
      *
      * @param string $building_name Building Name

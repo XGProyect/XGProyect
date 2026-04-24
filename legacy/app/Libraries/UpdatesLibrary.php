@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
-use App\Services\SettingsService;
-use App\Services\Game\Formulas\DevelopmentsService;
+use App\Services\Admin\BackupService;
 use App\Services\FormatService;
+use App\Services\Game\Formulas\DevelopmentsService;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\Game\Formulas\ProductionService;
+use App\Services\SettingsService;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
@@ -76,15 +77,13 @@ class UpdatesLibrary
 
     private function createBackup(): void
     {
-        // LAST UPDATE AND UPDATE INTERVAL, EX: 15 MINUTES
         $settings = app(SettingsService::class);
-        $auto_backup = $settings->getInt('auto_backup');
-        $last_backup = $settings->getInt('last_backup');
-        $update_interval = 6; // 6 HOURS
+        $autoBackup = $settings->getBool('auto_backup');
+        $lastBackup = $settings->getInt('last_backup');
+        $updateInterval = 6;
 
-        // CHECK TIME
-        if ((time() >= ($last_backup + (3600 * $update_interval))) && ($auto_backup == 1)) {
-            $this->updatesModel->generateBackUp(); // MAKE BACKUP
+        if ((time() >= ($lastBackup + (3600 * $updateInterval))) && $autoBackup) {
+            app(BackupService::class)->createBackup();
 
             $settings->write('last_backup', time());
         }
