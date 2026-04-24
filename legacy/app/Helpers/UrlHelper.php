@@ -19,7 +19,7 @@ abstract class UrlHelper
         return $url;
     }
 
-    public static function setUrl(string $hyperlink, string $text, string $title = '', string $attributes = ''): string
+    public static function setUrl(string $hyperlink, int|string $text, string $title = '', string $attributes = ''): string
     {
         if (empty($hyperlink)) {
             $hyperlink = '#';
