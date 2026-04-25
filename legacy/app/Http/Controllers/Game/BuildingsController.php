@@ -134,6 +134,7 @@ class BuildingsController extends BaseController
                 } else {
                     header('location:game.php?page=' . $this->page);
                 }
+                exit;
             }
         }
     }
