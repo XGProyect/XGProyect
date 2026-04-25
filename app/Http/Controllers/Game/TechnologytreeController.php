@@ -45,7 +45,7 @@ class TechnologytreeController extends BaseController
         /** @var User $user */
         $user = Auth::user();
         $planet = $user->planets()->where('planet_id', $user->current_planet)->with('buildings')->firstOrFail();
-        $buildings = $planet->buildings;
+        $buildings = $planet->buildings ?? new Buildings();
         $research = $user->research;
 
         return view('technologytree.view', [
@@ -67,7 +67,9 @@ class TechnologytreeController extends BaseController
     }
 
     /**
-     * @param Collection<int, GameObjectInterface> $objects
+     * @template TObject of GameObjectInterface
+     * @param Collection<int, TObject> $objects
+     * @return array<int, array{id: int, name: string, detail: string, requirements: string}>
      */
     private function buildList(Collection $objects, Buildings $buildings, Research $research): array
     {
@@ -79,6 +81,9 @@ class TechnologytreeController extends BaseController
         ])->values()->all();
     }
 
+    /**
+     * @return array<int, string>
+     */
     private function buildRequirements(GameObjectInterface $object, Buildings $buildings, Research $research): array
     {
         if (!$object instanceof Building && !$object instanceof ResearchObject &&

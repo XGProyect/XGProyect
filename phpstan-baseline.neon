@@ -583,12 +583,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/AllianceController.php
 
 		-
-			message: '#^Parameter \#3 \$time of static method Xgp\\App\\Libraries\\Functions\:\:message\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 11
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
 			message: '#^Parameter \#7 \$message of static method Xgp\\App\\Libraries\\Functions\:\:sendMessage\(\) expects string, string\|false\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -736,12 +730,6 @@ parameters:
 			message: '#^Parameter \#2 \$onlineTime of method Xgp\\App\\Http\\Controllers\\Game\\BuddiesController\:\:setText\(\) expects int, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: legacy/app/Http/Controllers/Game/BuddiesController.php
-
-		-
-			message: '#^Parameter \#3 \$time of static method Xgp\\App\\Libraries\\Functions\:\:message\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 2
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
@@ -1561,12 +1549,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet4Controller.php
 
 		-
-			message: '#^Parameter \#3 \$time of static method Xgp\\App\\Libraries\\Functions\:\:message\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet4Controller.php
-
-		-
 			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\Fleet4Controller\:\:\$_clean_input_data type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -1768,12 +1750,6 @@ parameters:
 			message: '#^Parameter \#3 \$subject of function preg_replace expects array\<float\|int\|string\>\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 2
-			path: legacy/app/Http/Controllers/Game/GalaxyController.php
-
-		-
-			message: '#^Parameter \#3 \$time of static method Xgp\\App\\Libraries\\Functions\:\:message\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 3
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
@@ -2012,12 +1988,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \$string of method App\\Services\\FormatService\:\:colorRed\(\) expects string, \(float\|int\<1, max\>\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/InfosController.php
-
-		-
-			message: '#^Parameter \#3 \$time of static method Xgp\\App\\Libraries\\Functions\:\:message\(\) expects string, int given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/InfosController.php
@@ -2470,12 +2440,6 @@ parameters:
 			message: '#^Parameter \#1 \$string of function trim expects string, string\|false\|null given\.$#'
 			identifier: argument.type
 			count: 1
-			path: legacy/app/Http/Controllers/Game/PlanetlayerController.php
-
-		-
-			message: '#^Parameter \#3 \$time of static method Xgp\\App\\Libraries\\Functions\:\:popupMessage\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 6
 			path: legacy/app/Http/Controllers/Game/PlanetlayerController.php
 
 		-
