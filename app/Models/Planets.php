@@ -4,26 +4,27 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property string $planet_name
- * @property string $planet_b_building_id
- * @property string $planet_b_hangar_id
- * @property string $planet_image
- * @property int    $planet_user_id
- * @property int    $planet_galaxy
- * @property int    $planet_system
- * @property int    $planet_planet
- * @property int    $planet_last_update
- * @property int    $planet_type
- * @property int    $planet_destroyed
- * @property int    $planet_b_building
- * @property int    $planet_b_tech
- * @property int    $planet_b_tech_id
- * @property int    $planet_b_hangar
+ * @property string                      $planet_name
+ * @property string                      $planet_b_hangar_id
+ * @property string                      $planet_image
+ * @property int                         $planet_user_id
+ * @property int                         $planet_galaxy
+ * @property int                         $planet_system
+ * @property int                         $planet_planet
+ * @property int                         $planet_last_update
+ * @property int                         $planet_type
+ * @property int                         $planet_destroyed
+ * @property int                         $planet_b_building  end-time cache for the active building item
+ * @property int                         $planet_b_tech      end-time cache for the active research item
+ * @property int                         $planet_b_hangar
+ * @property Collection<int,BuildingQueue> $buildingQueue
  * @property int    $planet_diameter
  * @property int    $planet_field_current
  * @property int    $planet_field_max
@@ -77,9 +78,7 @@ class Planets extends Model
         'planet_type',
         'planet_destroyed',
         'planet_b_building',
-        'planet_b_building_id',
         'planet_b_tech',
-        'planet_b_tech_id',
         'planet_b_hangar',
         'planet_b_hangar_id',
         'planet_image',
@@ -132,9 +131,7 @@ class Planets extends Model
         'planet_type' => 'int',
         'planet_destroyed' => 'int',
         'planet_b_building' => 'int',
-        'planet_b_building_id' => 'string',
         'planet_b_tech' => 'int',
-        'planet_b_tech_id' => 'int',
         'planet_b_hangar' => 'int',
         'planet_b_hangar_id' => 'string',
         'planet_image' => 'string',
@@ -204,5 +201,11 @@ class Planets extends Model
     public function ships(): HasOne
     {
         return $this->hasOne(Ships::class, 'ship_planet_id');
+    }
+
+    /** @return HasMany<BuildingQueue, $this> */
+    public function buildingQueue(): HasMany
+    {
+        return $this->hasMany(BuildingQueue::class, 'planet_id', 'planet_id')->orderBy('position');
     }
 }
