@@ -467,9 +467,9 @@ class BuildingsController extends BaseController
                     $ForDestroy,
                     $ForDestroy ? (int) ($this->user[$resource[Research::research_ionic_technology]] ?? 0) : 0
                 );
-                $this->planet['planet_metal'] += $Needed['metal'];
-                $this->planet['planet_crystal'] += $Needed['crystal'];
-                $this->planet['planet_deuterium'] += $Needed['deuterium'];
+                $this->planet['planet_metal'] += $Needed['metal'] ?? 0;
+                $this->planet['planet_crystal'] += $Needed['crystal'] ?? 0;
+                $this->planet['planet_deuterium'] += $Needed['deuterium'] ?? 0;
             }
         } else {
             $NewQueue = '0';

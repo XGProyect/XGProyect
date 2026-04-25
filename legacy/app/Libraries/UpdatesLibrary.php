@@ -336,9 +336,9 @@ class UpdatesLibrary
                         );
                         $recalculated_queue = [];
 
-                        $current_planet['planet_metal'] -= $price['metal'];
-                        $current_planet['planet_crystal'] -= $price['crystal'];
-                        $current_planet['planet_deuterium'] -= $price['deuterium'];
+                        $current_planet['planet_metal'] -= $price['metal'] ?? 0;
+                        $current_planet['planet_crystal'] -= $price['crystal'] ?? 0;
+                        $current_planet['planet_deuterium'] -= $price['deuterium'] ?? 0;
 
                         $prevData = 0;
 
@@ -402,15 +402,15 @@ class UpdatesLibrary
 
                             $insufficient = [];
 
-                            if ($price['metal'] > $current_planet['planet_metal']) {
+                            if (($price['metal'] ?? 0) > $current_planet['planet_metal']) {
                                 $insufficient[] = __('game/global.metal');
                             }
 
-                            if ($price['crystal'] > $current_planet['planet_crystal']) {
+                            if (($price['crystal'] ?? 0) > $current_planet['planet_crystal']) {
                                 $insufficient[] = __('game/global.crystal');
                             }
 
-                            if ($price['deuterium'] > $current_planet['planet_deuterium']) {
+                            if (($price['deuterium'] ?? 0) > $current_planet['planet_deuterium']) {
                                 $insufficient[] = __('game/global.deuterium');
                             }
 

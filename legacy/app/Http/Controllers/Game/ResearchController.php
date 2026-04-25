@@ -177,9 +177,9 @@ class ResearchController extends BaseController
                                     $technology,
                                     (int) $this->user[$this->_resource[$technology]]
                                 );
-                                $working_planet['planet_metal'] += $costs['metal'];
-                                $working_planet['planet_crystal'] += $costs['crystal'];
-                                $working_planet['planet_deuterium'] += $costs['deuterium'];
+                                $working_planet['planet_metal'] += $costs['metal'] ?? 0;
+                                $working_planet['planet_crystal'] += $costs['crystal'] ?? 0;
+                                $working_planet['planet_deuterium'] += $costs['deuterium'] ?? 0;
                                 $working_planet['planet_b_tech_id'] = 0;
                                 $working_planet['planet_b_tech'] = 0;
                                 $this->user['research_current_research'] = 0;
@@ -211,9 +211,9 @@ class ResearchController extends BaseController
                                 (int) $this->user[$this->_resource[$technology]]
                             );
 
-                            $working_planet['planet_metal'] -= $costs['metal'];
-                            $working_planet['planet_crystal'] -= $costs['crystal'];
-                            $working_planet['planet_deuterium'] -= $costs['deuterium'];
+                            $working_planet['planet_metal'] -= $costs['metal'] ?? 0;
+                            $working_planet['planet_crystal'] -= $costs['crystal'] ?? 0;
+                            $working_planet['planet_deuterium'] -= $costs['deuterium'] ?? 0;
                             $working_planet['planet_b_tech_id'] = $technology;
                             $working_planet['planet_b_tech'] = time() + $this->developmentsService->developmentTime(
                                 $technology,

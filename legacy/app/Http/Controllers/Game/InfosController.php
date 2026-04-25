@@ -705,9 +705,9 @@ class InfosController extends BaseController
                         )
                     ),
                     'ion_tech_bonus' => $tech_bonus,
-                    'nfo_metal' => $this->formatService->prettyNumber((int) $tear_down_resources['metal']),
-                    'nfo_crystal' => $this->formatService->prettyNumber((int) $tear_down_resources['crystal']),
-                    'nfo_deuterium' => $this->formatService->prettyNumber((int) $tear_down_resources['deuterium']),
+                    'nfo_metal' => $this->formatService->prettyNumber((int) ($tear_down_resources['metal'] ?? 0)),
+                    'nfo_crystal' => $this->formatService->prettyNumber((int) ($tear_down_resources['crystal'] ?? 0)),
+                    'nfo_deuterium' => $this->formatService->prettyNumber((int) ($tear_down_resources['deuterium'] ?? 0)),
                     'destroytime' => $this->formatService->prettyTime($tear_down_time),
                 ]
             );
