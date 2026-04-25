@@ -1,6 +1,30 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Cannot access property \$timestamp on Carbon\\Carbon\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/Game/BannedController.php
+
+		-
+			message: '#^Parameter \#1 \$time of method App\\Services\\TimingService\:\:formatExtendedDate\(\) expects int\|string, Carbon\\Carbon given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Game/BannedController.php
+
+		-
+			message: '#^Parameter \#1 \$time of method App\\Services\\TimingService\:\:formatExtendedDate\(\) expects int\|string, float\|int\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Game/BannedController.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between Carbon\\Carbon and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: app/Http/Controllers/Game/BannedController.php
+
+		-
 			message: '#^Comparison operation "\>" between Carbon\\Carbon and int\<1, max\> results in an error\.$#'
 			identifier: greater.invalid
 			count: 1
@@ -11,204 +35,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Core/Common.php
-
-		-
-			message: '#^Deprecated in PHP 8\.4\: Parameter \#4 \$pass \(string\) is implicitly nullable via default value null\.$#'
-			identifier: parameter.implicitlyNullable
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Left side of or is always false\.$#'
-			identifier: logicalOr.leftAlwaysFalse
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:backupDb\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:backupDb\(\) has parameter \$tables with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:beginTransaction\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:commitTransaction\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:escapeValue\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:escapeValue\(\) has parameter \$value with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:fetchAll\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:fetchAll\(\) has parameter \$result_set with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:fetchArray\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:fetchArray\(\) has parameter \$result_set with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:fetchAssoc\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:fetchAssoc\(\) has parameter \$result_set with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:fetchRow\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:fetchRow\(\) has parameter \$result_set with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:insertId\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:numFields\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:numFields\(\) has parameter \$result_set with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:query\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:queryFetch\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:queryFetchAll\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:queryFetchAll\(\) has parameter \$sql with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:queryMulty\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:queryMulty\(\) has parameter \$sql with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Method Xgp\\App\\Core\\Database\:\:rollbackTransaction\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Parameter \#1 \$stream of function fclose expects resource, resource\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Parameter \#1 \$stream of function fwrite expects resource, resource\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Property Xgp\\App\\Core\\Database\:\:\$db_data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Property Xgp\\App\\Core\\Database\:\:\$last_query is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Right side of && is always true\.$#'
-			identifier: booleanAnd.rightAlwaysTrue
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Right side of or is always true\.$#'
-			identifier: logicalOr.rightAlwaysTrue
-			count: 1
-			path: legacy/app/Core/Database.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 2
-			path: legacy/app/Core/Database.php
 
 		-
 			message: '#^Method Xgp\\App\\Core\\Entity\:\:__construct\(\) has parameter \$data with no value type specified in iterable type array\.$#'
@@ -547,6 +373,24 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/AllianceController.php
 
 		-
+			message: '#^Cannot access property \$alliance_name on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: legacy/app/Http/Controllers/Game/AllianceController.php
+
+		-
+			message: '#^Cannot access property \$alliance_tag on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: legacy/app/Http/Controllers/Game/AllianceController.php
+
+		-
+			message: '#^Cannot access property \$total_requests on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: legacy/app/Http/Controllers/Game/AllianceController.php
+
+		-
 			message: '#^Cannot call method bbCode\(\) on Xgp\\App\\Libraries\\BBCodeLib\|null\.$#'
 			identifier: method.nonObject
 			count: 2
@@ -655,7 +499,19 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/AllianceController.php
 
 		-
-			message: '#^Offset int\<1, 3\>\|null might not exist on array\{1\: ''Description'', 2\: ''Text'', 3\: ''RequestText''\}\.$#'
+			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\AllianceController\:\:returnAllianceMembersSort\(\) has parameter \$sort_field with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: legacy/app/Http/Controllers/Game/AllianceController.php
+
+		-
+			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\AllianceController\:\:returnAllianceMembersSort\(\) has parameter \$sort_order with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: legacy/app/Http/Controllers/Game/AllianceController.php
+
+		-
+			message: '#^Offset int\<1, 3\>\|null might not exist on array\{1\: ''alliance_description'', 2\: ''alliance_text'', 3\: ''alliance_request''\}\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/AllianceController.php
@@ -669,72 +525,6 @@ parameters:
 		-
 			message: '#^Offset int\<1, 3\>\|null might not exist on array\{1\: string, 2\: string, 3\: string\}\.$#'
 			identifier: offsetAccess.notFound
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:createNewUserRequest\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:deleteAlliance\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:getAllianceMembersById\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:getAllianceRequests\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceDescription\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceName\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceRanks\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
-			count: 4
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceRequestText\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceSettings\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceTag\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#1 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceText\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/AllianceController.php
 
@@ -775,31 +565,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/AllianceController.php
 
 		-
-			message: '#^Parameter \#1 \$userId of method Xgp\\App\\Models\\Game\\Alliance\:\:updateUserRank\(\) expects int, int\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
 			message: '#^Parameter \#1 \$value of static method Xgp\\App\\Helpers\\StringsHelper\:\:escapeString\(\) expects string, string\|false\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#2 \$alliance_id of method Xgp\\App\\Models\\Game\\Alliance\:\:addUserToAlliance\(\) expects int, int\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#2 \$alliance_name of method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceName\(\) expects string, string\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#2 \$alliance_tag of method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceTag\(\) expects string, string\|false given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/AllianceController.php
@@ -814,24 +580,6 @@ parameters:
 			message: '#^Parameter \#2 \$name of method Xgp\\App\\Libraries\\Alliance\\Ranks\:\:editRankNameById\(\) expects string, string\|false given\.$#'
 			identifier: argument.type
 			count: 2
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#2 \$rank of method Xgp\\App\\Models\\Game\\Alliance\:\:updateUserRank\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#2 \$rank_id of method Xgp\\App\\Models\\Game\\Alliance\:\:getAllianceMembersByIdAndRankId\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Parameter \#2 \$userId of method Xgp\\App\\Models\\Game\\Alliance\:\:exitAlliance\(\) expects int, int\|false given\.$#'
-			identifier: argument.type
-			count: 1
 			path: legacy/app/Http/Controllers/Game/AllianceController.php
 
 		-
@@ -851,18 +599,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Http/Controllers/Game/AllianceController.php
-
-		-
-			message: '#^Call to static method orderBy\(\) on an unknown class App\\Models\\Banned\.$#'
-			identifier: class.notFound
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BannedController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\BannedController\:\:buildBannedPlayersList\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BannedController.php
 
 		-
 			message: '#^Cannot call method getBuddies\(\) on Xgp\\App\\Libraries\\Buddies\\Buddy\|null\.$#'
@@ -925,49 +661,49 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
-			message: '#^Offset ''alliance_id'' might not exist on array\|null\.$#'
+			message: '#^Offset ''alliance_id'' might not exist on array\<mixed, mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
-			message: '#^Offset ''alliance_name'' might not exist on array\|null\.$#'
+			message: '#^Offset ''alliance_name'' might not exist on array\<mixed, mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
-			message: '#^Offset ''galaxy'' might not exist on array\|null\.$#'
+			message: '#^Offset ''galaxy'' might not exist on array\<mixed, mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
-			message: '#^Offset ''id'' might not exist on array\|null\.$#'
+			message: '#^Offset ''id'' might not exist on array\<mixed, mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
-			message: '#^Offset ''name'' might not exist on array\|null\.$#'
+			message: '#^Offset ''name'' might not exist on array\<mixed, mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
-			message: '#^Offset ''onlinetime'' might not exist on array\|null\.$#'
+			message: '#^Offset ''onlinetime'' might not exist on array\<mixed, mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
-			message: '#^Offset ''planet'' might not exist on array\|null\.$#'
+			message: '#^Offset ''planet'' might not exist on array\<mixed, mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
-			message: '#^Offset ''system'' might not exist on array\|null\.$#'
+			message: '#^Offset ''system'' might not exist on array\<mixed, mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
@@ -979,25 +715,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
-			message: '#^Parameter \#1 \$buddy_id of method Xgp\\App\\Models\\Game\\Buddies\:\:getBuddyDataByBuddyId\(\) expects int, int\|false\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: legacy/app/Http/Controllers/Game/BuddiesController.php
-
-		-
-			message: '#^Parameter \#1 \$buddy_id of method Xgp\\App\\Models\\Game\\Buddies\:\:removeBuddyById\(\) expects int, int\|false\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuddiesController.php
-
-		-
-			message: '#^Parameter \#1 \$buddy_id of method Xgp\\App\\Models\\Game\\Buddies\:\:setBuddyStatusById\(\) expects int, int\|false\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuddiesController.php
-
-		-
-			message: '#^Parameter \#1 \$sendTo of method Xgp\\App\\Models\\Game\\Buddies\:\:getBuddyIdByReceiverAndSender\(\) expects int, int\|false\|null given\.$#'
+			message: '#^Parameter \#1 \$string of function strip_tags expects string, string\|false\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
@@ -1015,25 +733,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
-			message: '#^Parameter \#1 \$user of method Xgp\\App\\Models\\Game\\Buddies\:\:insertNewBuddyRequest\(\) expects int, int\|false\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuddiesController.php
-
-		-
-			message: '#^Parameter \#1 \$userId of method Xgp\\App\\Models\\Game\\Buddies\:\:checkIfBuddyExists\(\) expects int, int\|false\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuddiesController.php
-
-		-
-			message: '#^Parameter \#1 \$userId of method Xgp\\App\\Models\\Game\\Buddies\:\:getBuddyDataById\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuddiesController.php
-
-		-
-			message: '#^Parameter \#3 \$text of method Xgp\\App\\Models\\Game\\Buddies\:\:insertNewBuddyRequest\(\) expects string, string\|false\|null given\.$#'
+			message: '#^Parameter \#2 \$onlineTime of method Xgp\\App\\Http\\Controllers\\Game\\BuddiesController\:\:setText\(\) expects int, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
@@ -1201,7 +901,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/ChatController.php
 
 		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\ChatController\:\:\$_receiver_data \(array\) does not accept array\|null\.$#'
+			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\ChatController\:\:\$_receiver_data \(array\) does not accept array\<mixed, mixed\>\|null\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: legacy/app/Http/Controllers/Game/ChatController.php
@@ -1227,12 +927,6 @@ parameters:
 		-
 			message: '#^Cannot call method getFirstReportOwnersAsArray\(\) on Xgp\\App\\Libraries\\Combatreport\\Report\|null\.$#'
 			identifier: method.nonObject
-			count: 1
-			path: legacy/app/Http/Controllers/Game/CombatreportController.php
-
-		-
-			message: '#^Parameter \#1 \$report_id of method Xgp\\App\\Models\\Game\\Combatreport\:\:getReportById\(\) expects string, string\|false\|null given\.$#'
-			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/CombatreportController.php
 
@@ -1357,6 +1051,12 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/FacilitiesController.php
 
 		-
+			message: '#^Cannot access property \$id on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: legacy/app/Http/Controllers/Game/FederationController.php
+
+		-
 			message: '#^Cannot call method getFirstAcs\(\) on Xgp\\App\\Libraries\\Game\\AcsFleets\|null\.$#'
 			identifier: method.nonObject
 			count: 2
@@ -1387,39 +1087,21 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/FederationController.php
 
 		-
-			message: '#^Parameter \#1 \$group_id of method Xgp\\App\\Models\\Game\\Fleet\:\:getAcsDataByGroupId\(\) expects string, bool\|int\|string given\.$#'
+			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\FederationController\:\:getAcsDataByGroupId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Http/Controllers/Game/FederationController.php
+
+		-
+			message: '#^Parameter \#1 \$groupId of method Xgp\\App\\Http\\Controllers\\Game\\FederationController\:\:getAcsDataByGroupId\(\) expects int, int\|string given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/FederationController.php
 
 		-
-			message: '#^Parameter \#1 \$group_id of method Xgp\\App\\Models\\Game\\Fleet\:\:getListOfAcsMembers\(\) expects int, string given\.$#'
+			message: '#^Parameter \#1 \$groupId of method Xgp\\App\\Http\\Controllers\\Game\\FederationController\:\:getAcsDataByGroupId\(\) expects int, string given\.$#'
 			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/FederationController.php
-
-		-
-			message: '#^Parameter \#2 \$group_id of method Xgp\\App\\Models\\Game\\Buddies\:\:getBuddiesDetailsForAcsById\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/FederationController.php
-
-		-
-			message: '#^Parameter \#2 \$group_id of method Xgp\\App\\Models\\Game\\Fleet\:\:getUserIdByName\(\) expects int, int\|false\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/FederationController.php
-
-		-
-			message: '#^Parameter \#2 \$group_id of method Xgp\\App\\Models\\Game\\Fleet\:\:insertNewAcsMember\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/FederationController.php
-
-		-
-			message: '#^Parameter \#2 \$group_id of method Xgp\\App\\Models\\Game\\Fleet\:\:removeAcsMember\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
+			count: 3
 			path: legacy/app/Http/Controllers/Game/FederationController.php
 
 		-
@@ -1427,6 +1109,12 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Http/Controllers/Game/FederationController.php
+
+		-
+			message: '#^Binary operation "\+\=" between int and mixed results in an error\.$#'
+			identifier: assignOp.invalid
+			count: 1
+			path: legacy/app/Http/Controllers/Game/Fleet1Controller.php
 
 		-
 			message: '#^Cannot call method getCurrentPremium\(\) on Xgp\\App\\Libraries\\Premium\\Premium\|null\.$#'
@@ -1495,6 +1183,12 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet1Controller.php
 
 		-
+			message: '#^Parameter \#1 \$ship_amount of method Xgp\\App\\Http\\Controllers\\Game\\Fleet1Controller\:\:buildShipAmount\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: legacy/app/Http/Controllers/Game/Fleet1Controller.php
+
+		-
 			message: '#^Parameter \#1 \$ship_id of method Xgp\\App\\Http\\Controllers\\Game\\Fleet1Controller\:\:buildMaxShipsLink\(\) expects int, int\|string\|false given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1525,50 +1219,8 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet1Controller.php
 
 		-
-			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
-
-		-
 			message: '#^Call to function is_null\(\) with array\{galaxy\: int\<1, 9\>\|false\|null, system\: int\<1, 499\>\|false\|null, planet\: int\<1, 16\>\|false\|null, planet_type\: int\<1, 3\>\|false\|null, target_mission\: int\|false\|null\} will always evaluate to false\.$#'
 			identifier: function.impossibleType
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
-
-		-
-			message: '#^Cannot access offset ''acs_galaxy'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
-
-		-
-			message: '#^Cannot access offset ''acs_id'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
-
-		-
-			message: '#^Cannot access offset ''acs_name'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
-
-		-
-			message: '#^Cannot access offset ''acs_planet'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
-
-		-
-			message: '#^Cannot access offset ''acs_planet_type'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
-
-		-
-			message: '#^Cannot access offset ''acs_system'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
 
@@ -1622,6 +1274,12 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \$shipId of method App\\Services\\Game\\Formulas\\FleetsService\:\:shipConsumption\(\) expects int, int\|string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet2Controller.php
@@ -1693,9 +1351,27 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
 
 		-
+			message: '#^Cannot access property \$acs_amount on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
+
+		-
+			message: '#^Cannot access property \$buddies on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
+
+		-
 			message: '#^Cannot call method getCurrentResearch\(\) on Xgp\\App\\Libraries\\Research\\Researches\|null\.$#'
 			identifier: method.nonObject
 			count: 2
+			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 5
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
 
 		-
@@ -1741,18 +1417,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
 
 		-
-			message: '#^Parameter \#1 \$acs_id of method Xgp\\App\\Models\\Game\\Fleet\:\:getAcsCount\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
-			message: '#^Parameter \#1 \$g of method Xgp\\App\\Models\\Game\\Fleet\:\:getPlanetOwnerByCoords\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
 			message: '#^Parameter \#1 \$shipId of method App\\Services\\Game\\Formulas\\FleetsService\:\:getShipSpeed\(\) expects int, int\|string\|false given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1778,24 +1442,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \.\.\.\$arrays of function array_merge expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
-			message: '#^Parameter \#2 \$s of method Xgp\\App\\Models\\Game\\Fleet\:\:getPlanetOwnerByCoords\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
-			message: '#^Parameter \#3 \$p of method Xgp\\App\\Models\\Game\\Fleet\:\:getPlanetOwnerByCoords\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
-
-		-
-			message: '#^Parameter \#4 \$pt of method Xgp\\App\\Models\\Game\\Fleet\:\:getPlanetOwnerByCoords\(\) expects int, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet3Controller.php
@@ -1851,6 +1497,24 @@ parameters:
 		-
 			message: '#^Cannot access offset ''target'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: legacy/app/Http/Controllers/Game/Fleet4Controller.php
+
+		-
+			message: '#^Cannot access property \$acs_amount on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: legacy/app/Http/Controllers/Game/Fleet4Controller.php
+
+		-
+			message: '#^Cannot access property \$buddies on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: legacy/app/Http/Controllers/Game/Fleet4Controller.php
+
+		-
+			message: '#^Cannot access property \$start_time on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet4Controller.php
 
@@ -1917,12 +1581,6 @@ parameters:
 		-
 			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\Fleet4Controller\:\:showMessage\(\) has parameter \$message with no type specified\.$#'
 			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Http/Controllers/Game/Fleet4Controller.php
-
-		-
-			message: '#^Parameter \#2 \$start_time of method Xgp\\App\\Models\\Game\\Fleet\:\:updateAcsTimes\(\) expects int, float given\.$#'
-			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/Fleet4Controller.php
 
@@ -2053,9 +1711,15 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
+			message: '#^Cannot access property \$total_fleets on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: legacy/app/Http/Controllers/Game/GalaxyController.php
+
+		-
 			message: '#^Cannot cast mixed to int\.$#'
 			identifier: cast.int
-			count: 7
+			count: 8
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
@@ -2095,19 +1759,19 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
-			message: '#^Offset ''id'' might not exist on array\|null\.$#'
+			message: '#^Offset ''id'' might not exist on array\<mixed, mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
-			message: '#^Offset ''onlinetime'' might not exist on array\|null\.$#'
+			message: '#^Offset ''onlinetime'' might not exist on array\<mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
-			message: '#^Offset ''planet_debris_metal'' might not exist on array\|null\.$#'
+			message: '#^Offset ''planet_debris_metal'' might not exist on array\<mixed, mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
@@ -2134,12 +1798,6 @@ parameters:
 			message: '#^Parameter \#3 \$time of static method Xgp\\App\\Libraries\\Functions\:\:message\(\) expects string, int given\.$#'
 			identifier: argument.type
 			count: 3
-			path: legacy/app/Http/Controllers/Game/GalaxyController.php
-
-		-
-			message: '#^Parameter \#4 \$planet_type of method Xgp\\App\\Models\\Game\\Galaxy\:\:getTargetUserDataByCoords\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
@@ -2203,15 +1861,15 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/GalaxyController.php
 
 		-
-			message: '#^Argument of an invalid type array\|null supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
+			message: '#^Binary operation "/" between mixed and 100 results in an error\.$#'
+			identifier: binaryOp.invalid
 			count: 2
 			path: legacy/app/Http/Controllers/Game/HighscoreController.php
 
 		-
-			message: '#^Binary operation "/" between mixed and 100 results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 2
+			message: '#^Cannot access property \$count on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
 			path: legacy/app/Http/Controllers/Game/HighscoreController.php
 
 		-
@@ -2257,12 +1915,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/HighscoreController.php
 
 		-
-			message: '#^Parameter \#2 \$start of method Xgp\\App\\Models\\Game\\Statistics\:\:getAlliances\(\) expects int, float given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/HighscoreController.php
-
-		-
 			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\HighscoreController\:\:\$planet type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -2278,6 +1930,12 @@ parameters:
 			message: '#^Access to an undefined property Xgp\\App\\Http\\Controllers\\Game\\InfosController\:\:\$langs\.$#'
 			identifier: property.notFound
 			count: 4
+			path: legacy/app/Http/Controllers/Game/InfosController.php
+
+		-
+			message: '#^Binary operation "\." between "SELECT\\n            …" and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
 			path: legacy/app/Http/Controllers/Game/InfosController.php
 
 		-
@@ -2383,12 +2041,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/InfosController.php
 
 		-
-			message: '#^Parameter \#1 \$target_planet_id of method Xgp\\App\\Models\\Game\\Infos\:\:getTargetGate\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/InfosController.php
-
-		-
 			message: '#^Parameter \#3 \$time of static method Xgp\\App\\Libraries\\Functions\:\:message\(\) expects string, int given\.$#'
 			identifier: argument.type
 			count: 1
@@ -2449,50 +2101,8 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/MessagesController.php
 
 		-
-			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 1
-			path: legacy/app/Http/Controllers/Game/MessagesController.php
-
-		-
 			message: '#^Binary operation "\." between ''game\.php\?'' and mixed results in an error\.$#'
 			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Http/Controllers/Game/MessagesController.php
-
-		-
-			message: '#^Cannot access offset ''alliance_count'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Http/Controllers/Game/MessagesController.php
-
-		-
-			message: '#^Cannot access offset ''buddys_count'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Http/Controllers/Game/MessagesController.php
-
-		-
-			message: '#^Cannot access offset ''id'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Http/Controllers/Game/MessagesController.php
-
-		-
-			message: '#^Cannot access offset ''name'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Http/Controllers/Game/MessagesController.php
-
-		-
-			message: '#^Cannot access offset ''notes_count'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Http/Controllers/Game/MessagesController.php
-
-		-
-			message: '#^Cannot access offset ''operators_count'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
 			path: legacy/app/Http/Controllers/Game/MessagesController.php
 
@@ -2557,27 +2167,39 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/MessagesController.php
 
 		-
-			message: '#^Parameter \#1 \$messages of method Xgp\\App\\Http\\Controllers\\Game\\MessagesController\:\:getMessagesList\(\) expects array, array\|null given\.$#'
-			identifier: argument.type
+			message: '#^Offset ''alliance_count'' might not exist on array\<mixed, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Http/Controllers/Game/MessagesController.php
 
 		-
-			message: '#^Parameter \#1 \$messages of method Xgp\\App\\Http\\Controllers\\Game\\MessagesController\:\:getMessagesList\(\) expects array, mixed given\.$#'
-			identifier: argument.type
+			message: '#^Offset ''buddys_count'' might not exist on array\<mixed, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
 			count: 1
+			path: legacy/app/Http/Controllers/Game/MessagesController.php
+
+		-
+			message: '#^Offset ''notes_count'' might not exist on array\<mixed, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: legacy/app/Http/Controllers/Game/MessagesController.php
+
+		-
+			message: '#^Offset ''operators_count'' might not exist on array\<mixed, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: legacy/app/Http/Controllers/Game/MessagesController.php
+
+		-
+			message: '#^Parameter \#1 \$messages of method Xgp\\App\\Http\\Controllers\\Game\\MessagesController\:\:getMessagesList\(\) expects array, array\<array\>\|null given\.$#'
+			identifier: argument.type
+			count: 2
 			path: legacy/app/Http/Controllers/Game/MessagesController.php
 
 		-
 			message: '#^Parameter \#1 \$str of function strtr expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: legacy/app/Http/Controllers/Game/MessagesController.php
-
-		-
-			message: '#^Parameter \#2 \$messages_ids of method Xgp\\App\\Models\\Game\\Messages\:\:deleteByOwnerAndIds\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 2
 			path: legacy/app/Http/Controllers/Game/MessagesController.php
 
 		-
@@ -2591,6 +2213,24 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Http/Controllers/Game/MessagesController.php
+
+		-
+			message: '#^Binary operation "\-" between int\<1, max\> and string results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: legacy/app/Http/Controllers/Game/MovementController.php
+
+		-
+			message: '#^Binary operation "\-" between string and string results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: legacy/app/Http/Controllers/Game/MovementController.php
+
+		-
+			message: '#^Cannot access property \$acs_owner on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: legacy/app/Http/Controllers/Game/MovementController.php
 
 		-
 			message: '#^Cannot call method getCurrentPremium\(\) on Xgp\\App\\Libraries\\Premium\\Premium\|null\.$#'
@@ -2713,19 +2353,13 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/NoticesController.php
 
 		-
-			message: '#^Parameter \#2 \$note_id of method Xgp\\App\\Models\\Game\\Notes\:\:getNoteById\(\) expects int, int\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
 			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\NoticesController\:\:\$user type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Http/Controllers/Game/NoticesController.php
 
 		-
-			message: '#^Argument of an invalid type array\|null supplied for foreach, only iterables are supported\.$#'
+			message: '#^Argument of an invalid type array\<array\>\|null supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 2
 			path: legacy/app/Http/Controllers/Game/OverviewController.php
@@ -2761,7 +2395,7 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/OverviewController.php
 
 		-
-			message: '#^Parameter \#2 \$text of static method Xgp\\App\\Helpers\\UrlHelper\:\:setUrl\(\) expects string, array\<string\>\|string given\.$#'
+			message: '#^Parameter \#2 \$text of static method Xgp\\App\\Helpers\\UrlHelper\:\:setUrl\(\) expects int\|string, array\<string\>\|string given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Http/Controllers/Game/OverviewController.php
@@ -2803,12 +2437,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/OverviewController.php
 
 		-
-			message: '#^Argument of an invalid type array\|null supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 1
-			path: legacy/app/Http/Controllers/Game/PhalanxController.php
-
-		-
 			message: '#^Cannot cast mixed to int\.$#'
 			identifier: cast.int
 			count: 4
@@ -2845,16 +2473,10 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/PhalanxController.php
 
 		-
-			message: '#^Strict comparison using \=\=\= between array\|null and false will always evaluate to false\.$#'
+			message: '#^Strict comparison using \=\=\= between array\<mixed, mixed\>\|null and false will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 1
 			path: legacy/app/Http/Controllers/Game/PhalanxController.php
-
-		-
-			message: '#^Argument of an invalid type array\|null supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 1
-			path: legacy/app/Http/Controllers/Game/PlanetlayerController.php
 
 		-
 			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\PlanetlayerController\:\:deletePlanet\(\) has no return type specified\.$#'
@@ -2891,6 +2513,12 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Http/Controllers/Game/PlanetlayerController.php
+
+		-
+			message: '#^Cannot access property \$total on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: legacy/app/Http/Controllers/Game/PreferencesController.php
 
 		-
 			message: '#^Cannot call method getCurrentPreference\(\) on Xgp\\App\\Libraries\\Game\\Preferences\|null\.$#'
@@ -3247,6 +2875,12 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/SearchController.php
 
 		-
+			message: '#^Offset ''searchText'' on array\{searchType\: string\|false\|null, searchText\: non\-falsy\-string\} in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.offset
+			count: 3
+			path: legacy/app/Http/Controllers/Game/SearchController.php
+
+		-
 			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\SearchController\:\:\$results type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -3347,36 +2981,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Http/Controllers/Game/SuppliesController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\TechnologydetailsController\:\:\$planet is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: legacy/app/Http/Controllers/Game/TechnologydetailsController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\TechnologydetailsController\:\:\$planet type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/TechnologydetailsController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\TechnologydetailsController\:\:\$technology \(int\) does not accept int\|false\|null\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: legacy/app/Http/Controllers/Game/TechnologydetailsController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\TechnologydetailsController\:\:\$user is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: legacy/app/Http/Controllers/Game/TechnologydetailsController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\TechnologydetailsController\:\:\$user type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/TechnologydetailsController.php
 
 		-
 			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\TechnologytreeController\:\:buildBlock\(\) return type has no value type specified in iterable type array\.$#'
@@ -7297,12 +6901,6 @@ parameters:
 			path: legacy/app/Libraries/Messenger/MessagesOptions.php
 
 		-
-			message: '#^Property Xgp\\App\\Libraries\\Messenger\\Messenger\:\:\$messengerModel has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: legacy/app/Libraries/Messenger/Messenger.php
-
-		-
 			message: '#^Call to an undefined method Xgp\\App\\Libraries\\Missions\\Acs\|Xgp\\App\\Libraries\\Missions\\Attack\|Xgp\\App\\Libraries\\Missions\\Colonize\|Xgp\\App\\Libraries\\Missions\\Deploy\|Xgp\\App\\Libraries\\Missions\\Destroy\|Xgp\\App\\Libraries\\Missions\\Expedition\|Xgp\\App\\Libraries\\Missions\\Missile\|Xgp\\App\\Libraries\\Missions\\Recycle\|Xgp\\App\\Libraries\\Missions\\Spy\|Xgp\\App\\Libraries\\Missions\\Stay\|Xgp\\App\\Libraries\\Missions\\Transport\:\:AcsMission\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -7381,14 +6979,14 @@ parameters:
 			path: legacy/app/Libraries/MissionControlLib.php
 
 		-
-			message: '#^Cannot call method getArrivingFleets\(\) on Xgp\\App\\Models\\Libraries\\MissionControlLib\|null\.$#'
-			identifier: method.nonObject
+			message: '#^Method Xgp\\App\\Libraries\\MissionControlLib\:\:getArrivingFleets\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Libraries/MissionControlLib.php
 
 		-
-			message: '#^Cannot call method getReturningFleets\(\) on Xgp\\App\\Models\\Libraries\\MissionControlLib\|null\.$#'
-			identifier: method.nonObject
+			message: '#^Method Xgp\\App\\Libraries\\MissionControlLib\:\:getReturningFleets\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Libraries/MissionControlLib.php
 
@@ -7527,6 +7125,12 @@ parameters:
 		-
 			message: '#^PHPDoc tag @return has invalid value \(mixed\(Ship\|Defense\)\)\: Unexpected token "\(", expected TOKEN_HORIZONTAL_WS at offset 126 on line 7$#'
 			identifier: phpDoc.parseError
+			count: 1
+			path: legacy/app/Libraries/Missions/Attack.php
+
+		-
+			message: '#^Parameter \#1 \$result of method Xgp\\App\\Libraries\\Missions\\Attack\:\:getPlayerGroupFromQuery\(\) expects array, array\|null given\.$#'
+			identifier: argument.type
 			count: 1
 			path: legacy/app/Libraries/Missions/Attack.php
 
@@ -7765,6 +7369,12 @@ parameters:
 			path: legacy/app/Libraries/Missions/Destroy.php
 
 		-
+			message: '#^Parameter \#1 \$result of method Xgp\\App\\Libraries\\Missions\\Destroy\:\:getPlayerGroupFromQuery\(\) expects array, array\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: legacy/app/Libraries/Missions/Destroy.php
+
+		-
 			message: '#^Parameter \#1 \$string of function md5 expects string, Xgp\\App\\Libraries\\BattleEngine\\Core\\BattleReport given\.$#'
 			identifier: argument.type
 			count: 1
@@ -7939,6 +7549,138 @@ parameters:
 			path: legacy/app/Libraries/Missions/Missile.php
 
 		-
+			message: '#^Binary operation "\." between "SELECT `planet_id`\\n…" and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Binary operation "\." between "SELECT\\n            …" and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 5
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Binary operation "\." between ''INSERT INTO `\{xgp…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Binary operation "\." between ''SELECT p\.`planet_id…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Binary operation "\." between ''SELECT p\.`planet…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Binary operation "\." between ''UPDATE `\{xgp_prefix…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 5
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Binary operation "\." between ''UPDATE \{xgp_prefix…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 8
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 86
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 24
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''crystal'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 7
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''deuterium'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''end'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''fleet_end_galaxy'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''fleet_end_planet'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''fleet_end_system'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''galaxy'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 19
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''metal'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 7
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''planet'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 19
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''start'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''system'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 19
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 12
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 14
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
 			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:canCompleteMission\(\) has parameter \$fleet with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -7946,6 +7688,156 @@ parameters:
 
 		-
 			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:canStartMission\(\) has parameter \$fleet with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:deleteAcsFleetById\(\) has parameter \$fleetGroupId with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getAllAcsFleetsByGroupId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getAllFleetsByEndCoordsAndTimes\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getAllFleetsByEndCoordsAndTimes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getAllPlanetDataByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getAllPlanetDataByCoords\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getAllUserDataByUserId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getFriendlyPlanetData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getFriendlyPlanetData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getInquiredUserDataByCords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getInquiredUserDataByCords\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getMissileAttackerDataByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getMissileAttackerDataByCoords\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getMissileTargetDataByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getMissileTargetDataByCoords\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getMoonIdByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getMoonIdByCoords\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getPlanetAndUserCountsCounts\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getPlanetAndUserCountsCounts\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getPlanetDebris\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getPlanetDebris\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getSpyUserDataByCords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getSpyUserDataByCords\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:getTechnologiesByUserId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:insertReport\(\) has parameter \$data with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Libraries/Missions/Missions.php
@@ -7969,6 +7861,114 @@ parameters:
 			path: legacy/app/Libraries/Missions/Missions.php
 
 		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updateAcsFleetStatusByGroupId\(\) has parameter \$fleetGroupId with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updateColonizationStatistics\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updateColonizatonReturningFleet\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updateCrystalDebrisByPlanetId\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updateFleetArrayById\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updateFleetStatusToStayById\(\) has parameter \$fleedId with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updateFleetsStatusToMakeThemReturn\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updateLostShipsAndDefensePoints\(\) has parameter \$lost with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updatePlanetDebrisByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updatePlanetDebrisFieldAndFleet\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updatePlanetDefenses\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updatePlanetLossesById\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updatePlanetResourcesByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updatePlanetsShipsByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updateReturningFleetData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missions\:\:updateUserCurrentPlanetByCoordsAndUserId\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Part \$data\[''destroyed_query''\] \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Part \$data\[''ships''\] \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
 			message: '#^Property Xgp\\App\\Libraries\\Missions\\Missions\:\:\$combat_caps has no type specified\.$#'
 			identifier: missingType.property
 			count: 1
@@ -7984,6 +7984,12 @@ parameters:
 			message: '#^Property Xgp\\App\\Libraries\\Missions\\Missions\:\:\$resource has no type specified\.$#'
 			identifier: missingType.property
 			count: 1
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 10
 			path: legacy/app/Libraries/Missions/Missions.php
 
 		-
@@ -8203,7 +8209,7 @@ parameters:
 			path: legacy/app/Libraries/PlanetLib.php
 
 		-
-			message: '#^Offset ''id_moon'' might not exist on array\|null\.$#'
+			message: '#^Offset ''id_moon'' might not exist on array\<mixed, mixed\>\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: legacy/app/Libraries/PlanetLib.php
@@ -8299,6 +8305,12 @@ parameters:
 			path: legacy/app/Libraries/SecurePageLib.php
 
 		-
+			message: '#^Binary operation "\." between ''SELECT \* FROM `'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: legacy/app/Libraries/StatisticsLibrary.php
+
+		-
 			message: '#^Binary operation "\." between mixed and string results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1
@@ -8314,6 +8326,12 @@ parameters:
 			message: '#^Offset ''rank'' might not exist on array\{old_rank\: non\-empty\-array, points\: non\-empty\-array, rank\?\: non\-empty\-array\<int\<1, max\>\>\}\.$#'
 			identifier: offsetAccess.notFound
 			count: 8
+			path: legacy/app/Libraries/StatisticsLibrary.php
+
+		-
+			message: '#^Parameter \#2 \$exponent of function pow expects float\|int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
 			path: legacy/app/Libraries/StatisticsLibrary.php
 
 		-
@@ -8365,14 +8383,14 @@ parameters:
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
-			message: '#^Method Xgp\\App\\Libraries\\UpdatesLibrary\:\:checkBuildingQueue\(\) has parameter \$current_planet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Method Xgp\\App\\Libraries\\UpdatesLibrary\:\:checkBuildingQueue\(\) has parameter \$current_planet with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
-			message: '#^Method Xgp\\App\\Libraries\\UpdatesLibrary\:\:checkBuildingQueue\(\) has parameter \$current_user with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Method Xgp\\App\\Libraries\\UpdatesLibrary\:\:checkBuildingQueue\(\) has parameter \$current_user with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
@@ -8437,10 +8455,34 @@ parameters:
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$current_planet$#'
+			identifier: parameter.notFound
+			count: 1
+			path: legacy/app/Libraries/UpdatesLibrary.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$current_user$#'
+			identifier: parameter.notFound
+			count: 1
+			path: legacy/app/Libraries/UpdatesLibrary.php
+
+		-
+			message: '#^PHPDoc tag @return with type bool is incompatible with native type string\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: legacy/app/Libraries/UpdatesLibrary.php
+
+		-
 			message: '#^Property Xgp\\App\\Libraries\\UpdatesLibrary\:\:\$productionService is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
 			path: legacy/app/Libraries/UpdatesLibrary.php
+
+		-
+			message: '#^Binary operation "\." between "SELECT\\n            …" and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: legacy/app/Libraries/Users.php
 
 		-
 			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
@@ -8451,7 +8493,7 @@ parameters:
 		-
 			message: '#^Cannot cast mixed to int\.$#'
 			identifier: cast.int
-			count: 3
+			count: 5
 			path: legacy/app/Libraries/Users.php
 
 		-
@@ -8491,31 +8533,7 @@ parameters:
 			path: legacy/app/Libraries/Users.php
 
 		-
-			message: '#^Parameter \#1 \$request_uri of method Xgp\\App\\Models\\Libraries\\UsersLibrary\:\:updateUserActivityData\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/Users.php
-
-		-
 			message: '#^Parameter \#2 \$hashedValue of static method Illuminate\\Support\\Facades\\Hash\:\:check\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/Users.php
-
-		-
-			message: '#^Parameter \#2 \$remote_addr of method Xgp\\App\\Models\\Libraries\\UsersLibrary\:\:updateUserActivityData\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/Users.php
-
-		-
-			message: '#^Parameter \#2 \$userRank of method Xgp\\App\\Models\\Libraries\\UsersLibrary\:\:updateAllianceOwner\(\) expects int, int\|string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/Users.php
-
-		-
-			message: '#^Parameter \#3 \$agent of method Xgp\\App\\Models\\Libraries\\UsersLibrary\:\:updateUserActivityData\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: legacy/app/Libraries/Users.php
@@ -8615,1206 +8633,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Libraries/Users/Shortcuts.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:createNewUserRequest\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:exitAlliance\(\) has parameter \$alliance_id with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:getAllianceDataById\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:getAllianceMembers\(\) has parameter \$sort_by_field with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:getAllianceMembers\(\) has parameter \$sort_by_order with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:getAllianceMembers\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:getAllianceMembersById\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:getAllianceMembersByIdAndRankId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:getAllianceRequests\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:getAllianceRequestsCount\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:searchAllianceByNameTag\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceName\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceRanks\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceSettings\(\) has parameter \$alliance_data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:updateAllianceTag\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Alliance\:\:updateUserRank\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 1
-			path: legacy/app/Models/Game/Alliance.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Buddies\:\:checkIfBuddyExists\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Buddies.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Buddies\:\:getBuddiesByUserId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Buddies.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Buddies\:\:getBuddiesDetailsForAcsById\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Buddies.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Buddies\:\:getBuddyDataById\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Buddies.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Buddies\:\:getBuddyIdByReceiverAndSender\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Buddies.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Buildings\:\:updatePlanetBuildingQueue\(\) has parameter \$planet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Buildings.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Combatreport\:\:getReportById\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Combatreport.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Empire\:\:getAllPlayerData\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Empire.php
-
-		-
-			message: '#^Binary operation "\-" between int\<1, max\> and string results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Binary operation "\-" between string and string results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:getAcsDataByGroupId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:getAllFleetsByUserId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:getAllPlanetsByUserId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:getListOfAcsMembers\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:getPlanetOwnerByCoords\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:getShipsByPlanetId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:getTargetDataByCoords\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:insertNewFleet\(\) has parameter \$fleet_data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:insertNewFleet\(\) has parameter \$fleet_ships with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:insertNewFleet\(\) has parameter \$planet_data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:insertNewMissilesMission\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:updatePlanet\(\) has parameter \$fleet_data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:updatePlanet\(\) has parameter \$fleet_ships with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Fleet\:\:updatePlanet\(\) has parameter \$planet_data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Parameter \#1 \$fleet_group of method Xgp\\App\\Models\\Game\\Fleet\:\:getAcsOwner\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Parameter \#1 \$fleet_group of method Xgp\\App\\Models\\Game\\Fleet\:\:removeAcs\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Parameter \#1 \$member of method Xgp\\App\\Models\\Game\\Fleet\:\:insertNewAcsMember\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Models/Game/Fleet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Galaxy\:\:getGalaxyDataByGalaxyAndSystem\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Galaxy.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Galaxy\:\:getPlanetDebrisByCoords\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Galaxy.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Galaxy\:\:getTargetUserDataByCoords\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Galaxy.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Infos\:\:getListOfMoons\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Infos.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Infos\:\:getTargetGate\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Infos.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Messages\:\:countAddressBookAndNotes\(\) has parameter \$ally_id with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Models/Game/Messages.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Messages\:\:countMessagesByType\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Messages.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Messages\:\:countMessagesByType\(\) should return array but returns null\.$#'
-			identifier: return.type
-			count: 1
-			path: legacy/app/Models/Game/Messages.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Messages\:\:getByUserId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Messages.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Messages\:\:getFriends\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Messages.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Messages\:\:getHomePlanet\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Messages.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Messages\:\:getNotes\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Messages.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Messages\:\:getOperators\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Messages.php
-
-		-
-			message: '#^PHPDoc tag @param references unknown parameter\: \$user_ally_id$#'
-			identifier: parameter.notFound
-			count: 1
-			path: legacy/app/Models/Game/Messages.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Notes\:\:createNewNote\(\) has parameter \$note_data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Notes.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Notes\:\:getAllNotesByUserId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Notes.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Notes\:\:getNoteById\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Notes.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Notes\:\:updateNoteById\(\) has parameter \$note_data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Notes.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Overview\:\:getOwnFleets\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Overview.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Overview\:\:getPlanets\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Overview.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Phalanx\:\:getFleetsToTarget\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Phalanx.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Phalanx\:\:getTargetMoonStatus\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Phalanx.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Phalanx\:\:getTargetPlanetIdAndName\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Phalanx.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Preferences\:\:checkIfEmailExists\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Preferences.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Preferences\:\:checkIfNicknameExists\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Preferences.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Preferences\:\:getAllPreferencesByUserId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Preferences.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Preferences\:\:updateValidatedFields\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Preferences.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Renameplanet\:\:getFleets\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Renameplanet.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Research\:\:getPlanetResearching\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Research.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Research\:\:startNewResearch\(\) has parameter \$current_user with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Research.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Research\:\:startNewResearch\(\) has parameter \$working_planet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Research.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Resources\:\:updateCurrentPlanet\(\) has parameter \$planet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Resources.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Search\:\:getResultsByAllianceTag\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Search.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Search\:\:getResultsByPlanetName\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Search.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Search\:\:getResultsByPlayerName\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Search.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Shipyard\:\:insertItemsToBuild\(\) has parameter \$planetId with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Models/Game/Shipyard.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Shipyard\:\:insertItemsToBuild\(\) has parameter \$resources with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Shipyard.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Statistics\:\:getAlliances\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Statistics.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Game\\Statistics\:\:getUsers\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Game/Statistics.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Home\\Register\:\:createNewUser\(\) has parameter \$coords with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Home/Register.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Home\\Register\:\:updateUserPlanet\(\) has parameter \$coords with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Home/Register.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 1
-			path: legacy/app/Models/Home/Register.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\MissionControlLib\:\:getArrivingFleets\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/MissionControlLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\MissionControlLib\:\:getReturningFleets\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/MissionControlLib.php
-
-		-
-			message: '#^Binary operation "\." between "SELECT `planet_id`\\n…" and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Binary operation "\." between "SELECT\\n            …" and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 7
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Binary operation "\." between ''INSERT INTO `\{xgp…'' and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Binary operation "\." between ''SELECT p\.`planet_id…'' and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Binary operation "\." between ''SELECT p\.`planet…'' and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Binary operation "\." between ''UPDATE `\{xgp_prefix…'' and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 3
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Binary operation "\." between ''UPDATE \{xgp_prefix…'' and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 9
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 101
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 28
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''crystal'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 8
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''deuterium'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 4
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''end'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 4
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''fleet_end_galaxy'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''fleet_end_planet'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''fleet_end_system'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''galaxy'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 22
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''metal'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 8
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''planet'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 22
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''start'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 4
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''system'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 22
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot access offset ''type'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 15
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Cannot cast mixed to int\.$#'
-			identifier: cast.int
-			count: 15
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getAllAcsFleetsByGroupId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getAllAcsFleetsByGroupId\(\) should return array but returns null\.$#'
-			identifier: return.type
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getAllFleetsByEndCoordsAndTimes\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getAllFleetsByEndCoordsAndTimes\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getAllPlanetDataByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getAllPlanetDataByCoords\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getAllUserDataByUserId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getDestroyerData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getDestroyerData\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getFriendlyPlanetData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getFriendlyPlanetData\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getInquiredUserDataByCords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getInquiredUserDataByCords\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getMissileAttackerDataByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getMissileAttackerDataByCoords\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getMissileTargetDataByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getMissileTargetDataByCoords\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getMoonIdByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getMoonIdByCoords\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getPlanetAndUserCountsCounts\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getPlanetAndUserCountsCounts\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getPlanetDebris\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getPlanetDebris\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getSpyUserDataByCords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getSpyUserDataByCords\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getTargetToDestroyData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getTargetToDestroyData\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:getTechnologiesByUserId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:insertReport\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updateColonizationStatistics\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updateColonizatonReturningFleet\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updateCrystalDebrisByPlanetId\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updateFleetArrayById\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updateFleetDataToReturn\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updateFleetStatusToStayById\(\) has parameter \$fleedId with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updateFleetsStatusToMakeThemReturn\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updateLostShipsAndDefensePoints\(\) has parameter \$lost with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updatePlanetDataAfterDestruction\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updatePlanetDebrisByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updatePlanetDebrisFieldAndFleet\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updatePlanetDefenses\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updatePlanetLossesById\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updatePlanetResourcesByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updatePlanetsShipsByCoords\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updateReturningFleetData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\Missions\\Missions\:\:updateUserCurrentPlanetByCoordsAndUserId\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Parameter \#1 \$fleetArray of static method Xgp\\App\\Libraries\\FleetsLib\:\:setFleetShipsArray\(\) expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Part \$data\[''data_to_update''\] \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Part \$data\[''destroyed_query''\] \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Part \$data\[''ships''\] \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
-			count: 1
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 12
-			path: legacy/app/Models/Libraries/Missions/Missions.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\NoobsProtectionLib\:\:readAllConfigs\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/NoobsProtectionLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\NoobsProtectionLib\:\:returnBothPartiesPoints\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/NoobsProtectionLib.php
-
-		-
-			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Models/Libraries/PlanetLib.php
-
-		-
-			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: legacy/app/Models/Libraries/PlanetLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\PlanetLib\:\:checkMoonExists\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/PlanetLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\PlanetLib\:\:createNewPlanet\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/PlanetLib.php
-
-		-
-			message: '#^Binary operation "\." between "SELECT \*\\n          …" and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Models/Libraries/StatisticsLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\StatisticsLibrary\:\:getAllAllianceStatsData\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/StatisticsLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\StatisticsLibrary\:\:getAllUserStatsData\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/StatisticsLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\StatisticsLibrary\:\:getPlanetElementToUpdate\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/StatisticsLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\StatisticsLibrary\:\:getResearchToUpdate\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/StatisticsLibrary.php
-
-		-
-			message: '#^Binary operation "\." between ''UPDATE \{xgp_prefix…'' and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 13
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_b_hangar'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_b_hangar_id'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_crystal'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_crystal_perhour'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_deuterium'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_deuterium_perhour'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_energy_max'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_energy_used'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_id'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_last_update'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_metal'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Cannot access offset ''planet_metal_perhour'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\UpdatesLibrary\:\:deleteSessions\(\) has parameter \$delBefore with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\UpdatesLibrary\:\:deleteUsersByDeletedAndInactive\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\UpdatesLibrary\:\:updateAllPlanetData\(\) has parameter \$data with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\UpdatesLibrary\:\:updateBuildingsQueue\(\) has parameter \$planet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\UpdatesLibrary\:\:updatePlanet\(\) has parameter \$planet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\UpdatesLibrary\:\:updateQueueResources\(\) has parameter \$planet with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Part \$data\[''sub_query''\] \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Part \$data\[''tech_query''\] \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
-			count: 1
-			path: legacy/app/Models/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^Binary operation "\." between "SELECT\\n            …" and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Models/Libraries/UsersLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\UsersLibrary\:\:getAllianceDataByAllianceId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/UsersLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\UsersLibrary\:\:getAllyIdByUserId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/UsersLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\UsersLibrary\:\:getUserPlanetByIdAndUserId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/UsersLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\UsersLibrary\:\:setPlanetData\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/UsersLibrary.php
-
-		-
-			message: '#^Method Xgp\\App\\Models\\Libraries\\UsersLibrary\:\:setUserDataByUserId\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Models/Libraries/UsersLibrary.php
 
 		-
 			message: '#^Binary operation "\." between mixed and \(array\<string\>\|string\) results in an error\.$#'
