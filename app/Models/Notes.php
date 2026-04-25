@@ -59,7 +59,7 @@ class Notes extends Model
     protected $casts = [
         'note_owner' => 'int',
         'note_time' => 'int',
-        'note_priority' => 'boolean',
+        'note_priority' => 'int',
         'note_title' => 'string',
         'note_text' => 'string',
     ];

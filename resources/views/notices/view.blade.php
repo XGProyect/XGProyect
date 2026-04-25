@@ -16,20 +16,23 @@
             <td role="columnheader" class="c">{{ __('game/notices.nt_col_subject') }}</td>
             <td role="columnheader" class="c">{{ __('game/notices.nt_col_date') }}</td>
         </tr>
-        @foreach($list_of_notes as $item)
+        @forelse($notes as $note)
         <tr>
             <th role="cell" width="20">
-                <input name="delnote[{{ $item['note_id'] }}]" value="y" type="checkbox">
+                <input name="delnote[{{ $note['id'] }}]" value="y" type="checkbox">
             </th>
             <th role="cell">
-                <a href="game.php?page=notices&a=2&n={{ $item['note_id'] }}">
-                    <font color="{{ $item['note_color'] }}">{{ $item['note_title'] }}</font>
+                <a href="game.php?page=notices&a=2&n={{ $note['id'] }}">
+                    <font color="{{ $note['color'] }}">{{ $note['title'] }}</font>
                 </a>
             </th>
-            <th role="cell" width="150">{{ $item['note_time'] }}</th>
+            <th role="cell" width="150">{{ $note['time'] }}</th>
         </tr>
-        @endforeach
-        {!! $no_notes !!}
+        @empty
+        <tr>
+            <th colspan="4">{{ __('game/notices.nt_no_notes_found') }}</th>
+        </tr>
+        @endforelse
         <tr>
             <td colspan="4">
                 <input value="{{ __('game/notices.nt_delete_market_notes') }}" type="submit">

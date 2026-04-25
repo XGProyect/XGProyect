@@ -24,6 +24,7 @@ class LegacyController extends BaseController
         'changelog' => Game\ChangelogController::class,
         'combatreport' => Game\CombatreportController::class,
         'logout' => Game\LogoutController::class,
+        'notices' => Game\NoticesController::class,
         'technologydetails' => Game\TechnologydetailsController::class,
         'technologytree' => Game\TechnologytreeController::class,
     ];

@@ -3,8 +3,10 @@
 @section('content')
 <script src="{{ asset('assets/js/cntchar-min.js') }}" type="text/javascript"></script>
 <form action="game.php?page=notices" method="POST">
-    <input type="hidden" name="s" value="{{ $s }}">
-    {!! $note_id !!}
+    <input type="hidden" name="s" value="{{ $formAction }}">
+    @if($noteId)
+    <input type="hidden" name="n" value="{{ $noteId }}">
+    @endif
     <table width="519px">
         <tr>
             <td class="c" colspan="2">{{ $title }}</td>
@@ -19,9 +21,9 @@
             <th>{{ __('game/notices.nt_priority') }}:</th>
             <th>
                 <select name="u">
-                    <option value="2" {selected_2}>{{ __('game/notices.nt_important') }}</option>
-                    <option value="1" {selected_1}>{{ __('game/notices.nt_normal') }}</option>
-                    <option value="0" {selected_0}>{{ __('game/notices.nt_unimportant') }}</option>
+                    <option value="2" @selected($priority == 2)>{{ __('game/notices.nt_important') }}</option>
+                    <option value="1" @selected($priority == 1)>{{ __('game/notices.nt_normal') }}</option>
+                    <option value="0" @selected($priority == 0)>{{ __('game/notices.nt_unimportant') }}</option>
                 </select>
             </th>
         </tr>
