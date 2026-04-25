@@ -73,9 +73,6 @@
         "phpunit": [
             "vendor/bin/phpunit"
         ],
-        "phpcompatinfo": [
-            "vendor/bin/phpcompatinfo --progress analyser:run ./legacy/"
-        ],
         "phpstan": [
             "vendor/bin/phpstan analyse --configuration=phpstan.neon --memory-limit 1024M --no-progress"
         ],
