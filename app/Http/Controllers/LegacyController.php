@@ -23,6 +23,7 @@ class LegacyController extends BaseController
         'banned' => Game\BannedController::class,
         'changelog' => Game\ChangelogController::class,
         'logout' => Game\LogoutController::class,
+        'technologydetails' => Game\TechnologydetailsController::class,
     ];
 
     public function __invoke(Request $request): BaseResponse
