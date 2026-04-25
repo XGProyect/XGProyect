@@ -20,6 +20,7 @@ class LegacyController extends BaseController
      * @var array<string, class-string>
      */
     private const PROMOTED_PAGES = [
+        'banned' => Game\BannedController::class,
         'changelog' => Game\ChangelogController::class,
         'logout' => Game\LogoutController::class,
     ];
