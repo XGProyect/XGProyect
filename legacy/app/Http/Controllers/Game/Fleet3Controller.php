@@ -8,6 +8,8 @@ use App\Enums\Module;
 use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
@@ -16,10 +18,15 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Research\Researches;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Fleet;
 
+/**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class Fleet3Controller extends BaseController
 {
+    use PreparesLegacySql;
+
     public const REDIRECT_TARGET = 'game.php?page=fleet1';
 
     private array $user = [];
@@ -27,7 +34,6 @@ class Fleet3Controller extends BaseController
     private ?Researches $_research = null;
     private int $_current_mission = 0;
     private array $_allowed_missions = [];
-    private Fleet $fleetModel;
     private Objects $objects;
 
     public function __construct(
@@ -42,7 +48,6 @@ class Fleet3Controller extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->fleetModel = new Fleet();
         $this->objects = new Objects();
 
         $this->setUpFleets();
@@ -89,7 +94,29 @@ class Fleet3Controller extends BaseController
         $objects = $this->objects->getObjects();
         $price = $this->objects->getPrice();
 
-        $ships = $this->fleetModel->getShipsByPlanetId($this->planet['planet_id']);
+        $planetId = (int) $this->planet['planet_id'];
+        $shipsRow = $planetId > 0 ? DB::selectOne(
+            $this->prepareSql(
+                'SELECT
+                    s.`ship_small_cargo_ship`,
+                    s.`ship_big_cargo_ship`,
+                    s.`ship_light_fighter`,
+                    s.`ship_heavy_fighter`,
+                    s.`ship_cruiser`,
+                    s.`ship_battleship`,
+                    s.`ship_colony_ship`,
+                    s.`ship_recycler`,
+                    s.`ship_espionage_probe`,
+                    s.`ship_bomber`,
+                    s.`ship_solar_satellite`,
+                    s.`ship_destroyer`,
+                    s.`ship_deathstar`,
+                    s.`ship_battlecruiser`
+                FROM `' . SHIPS . "` AS s
+                WHERE s.`ship_planet_id` = '" . $planetId . "';"
+            )
+        ) : null;
+        $ships = $shipsRow !== null ? (array) $shipsRow : [];
 
         $list_of_ships = [];
         $selected_fleet = $this->getSessionShips();
@@ -296,20 +323,35 @@ class Fleet3Controller extends BaseController
          * data
          */
         $ships = $this->getSessionShips();
-        $acs = $this->fleetModel->getAcsCount(
-            session('fleet_data')['target']['group']
+        $acsId = (int) session('fleet_data')['target']['group'];
+        $acsRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT COUNT(`acs_id`) AS `acs_amount`
+                FROM `' . ACS . "`
+                WHERE `acs_id` = '" . $acsId . "'"
+            )
         );
+        $acs = $acsRow !== null ? (int) $acsRow->acs_amount : 0;
 
         $missions = [];
         $action_type = 'other';
         $ocuppied = false;
 
-        $selected_planet = $this->fleetModel->getPlanetOwnerByCoords(
-            session('fleet_data')['target']['galaxy'],
-            session('fleet_data')['target']['system'],
-            session('fleet_data')['target']['planet'],
-            session('fleet_data')['target']['type']
+        $targetRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT
+                    p.`planet_user_id`,
+                    u.`ally_id`
+                FROM `' . PLANETS . '` AS p
+                INNER JOIN `' . USERS . "` AS u
+                    ON u.`id` = p.`planet_user_id`
+                WHERE p.`planet_galaxy` = '" . (int) session('fleet_data')['target']['galaxy'] . "'
+                    AND p.`planet_system` = '" . (int) session('fleet_data')['target']['system'] . "'
+                    AND p.`planet_planet` = '" . (int) session('fleet_data')['target']['planet'] . "'
+                    AND p.`planet_type` = '" . (int) session('fleet_data')['target']['type'] . "';"
+            )
         );
+        $selected_planet = $targetRow !== null ? (array) $targetRow : [];
 
         if ($selected_planet) {
             $ocuppied = true;
@@ -483,10 +525,26 @@ class Fleet3Controller extends BaseController
 
     private function isFriendly(array $target_planet): bool
     {
-        $is_buddy = $this->fleetModel->getBuddies(
-            $this->user['id'],
-            $target_planet['planet_user_id']
-        ) >= 1;
+        $currentUserId = (int) $this->user['id'];
+        $targetUserId = (int) $target_planet['planet_user_id'];
+        $buddyRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT COUNT(*) AS buddies
+                FROM `' . BUDDY . "`
+                WHERE (
+                    (
+                        buddy_sender = '" . $currentUserId . "'
+                        AND buddy_receiver = '" . $targetUserId . "'
+                    )
+                    OR (
+                        buddy_sender = '" . $targetUserId . "'
+                        AND buddy_receiver = '" . $currentUserId . "'
+                    )
+                )
+                AND buddy_status = 1"
+            )
+        );
+        $is_buddy = ($buddyRow !== null ? (int) $buddyRow->buddies : 0) >= 1;
 
         if (
             !$is_buddy &&

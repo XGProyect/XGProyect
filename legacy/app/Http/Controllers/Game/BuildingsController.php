@@ -19,11 +19,17 @@ use Xgp\App\Libraries\DevelopmentsLib as Developments;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\UpdatesLibrary;
 use App\Enums\Module;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Buildings;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class BuildingsController extends BaseController
 {
+    use PreparesLegacySql;
+
     protected array $user = [];
     protected array $planet = [];
     protected string $page = '';
@@ -31,7 +37,6 @@ class BuildingsController extends BaseController
 
     private $_building = null;
     private bool $_commander_active = false;
-    private Buildings $buildingsModel;
     private Users $userLibrary;
     private Objects $objects;
 
@@ -51,7 +56,6 @@ class BuildingsController extends BaseController
         $this->planet = Users::getInstance()->getPlanetData();
         $this->objects = Objects::getInstance();
 
-        $this->buildingsModel = new Buildings();
         $this->userLibrary = new Users();
 
         $this->setUpBuildings();
@@ -115,8 +119,13 @@ class BuildingsController extends BaseController
                     UpdatesLibrary::setFirstElement($this->planet, $this->user);
 
                     // start building
-                    $this->buildingsModel->updatePlanetBuildingQueue(
-                        $this->planet
+                    DB::statement(
+                        $this->prepareSql(
+                            'UPDATE `' . PLANETS . "` SET
+                                `planet_b_building` = '" . $this->planet['planet_b_building'] . "',
+                                `planet_b_building_id` = '" . $this->planet['planet_b_building_id'] . "'
+                            WHERE `planet_id` = '" . $this->planet['planet_id'] . "';"
+                        )
                     );
                 }
 

@@ -7,16 +7,21 @@ namespace Xgp\App\Http\Controllers\Game;
 use App\Enums\Module;
 use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\AcsFleets;
 use Xgp\App\Libraries\Game\Fleets;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Buddies;
-use Xgp\App\Models\Game\Fleet;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class FederationController extends BaseController
 {
+    use PreparesLegacySql;
+
     public const REDIRECT_TARGET = 'game.php?page=fleet1';
 
     private array $user = [];
@@ -25,8 +30,6 @@ class FederationController extends BaseController
     private string $_acs_code = '';
     private int $_members_count = 0;
     private string $_message = '';
-    private Fleet $fleetModel;
-    private Buddies $buddiesModel;
 
     public function __construct(private FormatService $formatService)
     {
@@ -37,8 +40,6 @@ class FederationController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Fleet));
 
         $this->user = Users::getInstance()->getUserData();
-        $this->fleetModel = new Fleet();
-        $this->buddiesModel = new Buddies();
 
         // init a new fleets object
         $this->setUpFleets();
@@ -49,9 +50,19 @@ class FederationController extends BaseController
 
     private function setUpFleets(): void
     {
+        $userId = (int) $this->user['id'];
         $this->_fleets = new Fleets(
-            $this->fleetModel->getAllFleetsByUserId((int) $this->user['id']),
-            (int) $this->user['id']
+            $userId > 0 ? array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT f.*
+                        FROM `' . FLEETS . "` f
+                        WHERE f.`fleet_owner` = '" . $userId . "';"
+                    )
+                )
+            ) : [],
+            $userId
         );
     }
 
@@ -110,15 +121,16 @@ class FederationController extends BaseController
             if ($fleet_id) {
                 $own_fleet = $this->_fleets->getOwnValidFleetById($fleet_id);
 
-                $acs = $this->fleetModel->getAcsDataByGroupId(
-                    $own_fleet->getFleetGroup()
-                );
+                $acs = $this->getAcsDataByGroupId($own_fleet->getFleetGroup());
 
                 if ($acs['acs_members'] < 5 &&
                     $member != $this->user['id']) {
-                    $this->fleetModel->insertNewAcsMember(
-                        $member,
-                        $own_fleet->getFleetGroup()
+                    DB::statement(
+                        $this->prepareSql(
+                            'INSERT INTO `' . ACS_MEMBERS . "` SET
+                                `acs_group_id` = '" . (int) $own_fleet->getFleetGroup() . "',
+                                `acs_user_id` = '" . $member . "'"
+                        )
                     );
 
                     $invite_message = __('game/fleet.fl_player') . $this->user['name'] . __('game/fleet.fl_acs_invitation_message');
@@ -151,15 +163,16 @@ class FederationController extends BaseController
             if ($fleet_id) {
                 $own_fleet = $this->_fleets->getOwnValidFleetById($fleet_id);
 
-                $acs = $this->fleetModel->getAcsDataByGroupId(
-                    $own_fleet->getFleetGroup()
-                );
+                $acs = $this->getAcsDataByGroupId($own_fleet->getFleetGroup());
 
                 if ($acs['acs_members'] >= 1 &&
                     $member != $this->user['id']) {
-                    $this->fleetModel->removeAcsMember(
-                        $member,
-                        $own_fleet->getFleetGroup()
+                    DB::statement(
+                        $this->prepareSql(
+                            'DELETE FROM `' . ACS_MEMBERS . "`
+                            WHERE `acs_group_id` = '" . (int) $own_fleet->getFleetGroup() . "'
+                                AND `acs_user_id` = '" . $member . "'"
+                        )
                     );
                 }
             }
@@ -171,7 +184,19 @@ class FederationController extends BaseController
         if (!empty($username)) {
             $fleet_id = filter_input(INPUT_GET, 'fleet', FILTER_VALIDATE_INT);
 
-            $userId = $this->fleetModel->getUserIdByName($username, $fleet_id);
+            $userRow = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT u.`id`
+                    FROM `' . USERS . "` u
+                    WHERE u.`name` = '" . $username . "'
+                    AND u.`id` NOT IN (
+                        SELECT acs.`acs_user_id`
+                        FROM `" . ACS_MEMBERS . "` acs
+                        WHERE acs.`acs_group_id` = '" . (int) $fleet_id . "'
+                    )"
+                )
+            );
+            $userId = $userRow !== null ? (int) $userRow->id : 0;
             if ($userId > 0 && $userId != $this->user['id']) {
                 $this->addAcsMember($userId);
 
@@ -204,14 +229,16 @@ class FederationController extends BaseController
             if ($fleet_id) {
                 $own_fleet = $this->_fleets->getOwnValidFleetById($fleet_id);
 
-                $acs = $this->fleetModel->getAcsDataByGroupId(
-                    $own_fleet->getFleetGroup()
-                );
+                $acs = $this->getAcsDataByGroupId($own_fleet->getFleetGroup());
 
-                $this->fleetModel->updateAcsName(
-                    $acs_name,
-                    $acs['acs_id'],
-                    $this->user['id']
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE `' . ACS . "` acs SET
+                            acs.`acs_name` = ?
+                        WHERE acs.`acs_id` = '" . (int) $acs['acs_id'] . "'
+                            AND acs.`acs_owner` = '" . (int) $this->user['id'] . "';"
+                    ),
+                    [$acs_name]
                 );
             }
         }
@@ -232,16 +259,47 @@ class FederationController extends BaseController
             if (!is_null($own_fleet)) {
                 if ($own_fleet->getFleetGroup() <= 0) {
                     // create a new acs, and get its group ID
-                    $group_id = $this->fleetModel->createNewAcs(
-                        $this->generateRandomAcsCode(),
-                        $own_fleet
-                    );
+                    $acs_code = $this->generateRandomAcsCode();
+                    $group_id = DB::transaction(function () use ($acs_code, $own_fleet): int {
+                        DB::statement(
+                            $this->prepareSql(
+                                'INSERT INTO `' . ACS . "` SET
+                                    `acs_name` = ?,
+                                    `acs_owner` = '" . $own_fleet->getFleetOwner() . "',
+                                    `acs_galaxy` = '" . $own_fleet->getFleetEndGalaxy() . "',
+                                    `acs_system` = '" . $own_fleet->getFleetEndSystem() . "',
+                                    `acs_planet` = '" . $own_fleet->getFleetEndPlanet() . "',
+                                    `acs_planet_type` = '" . $own_fleet->getFleetEndType() . "'"
+                            ),
+                            [$acs_code]
+                        );
+
+                        $group_id = (int) DB::getPdo()->lastInsertId();
+
+                        DB::statement(
+                            $this->prepareSql(
+                                'UPDATE `' . FLEETS . "` SET
+                                    `fleet_group` = '" . $group_id . "'
+                                WHERE `fleet_id` = '" . $own_fleet->getFleetId() . "'"
+                            )
+                        );
+
+                        DB::statement(
+                            $this->prepareSql(
+                                'INSERT INTO `' . ACS_MEMBERS . "` SET
+                                    `acs_group_id` = '" . $group_id . "',
+                                    `acs_user_id` = '" . $own_fleet->getFleetOwner() . "'"
+                            )
+                        );
+
+                        return $group_id;
+                    });
                 } else {
                     $group_id = $own_fleet->getFleetGroup();
                 }
 
                 $this->_group = new AcsFleets(
-                    [$this->fleetModel->getAcsDataByGroupId($group_id)],
+                    [$this->getAcsDataByGroupId($group_id)],
                     $this->user['id']
                 );
 
@@ -262,6 +320,29 @@ class FederationController extends BaseController
         return 'AG' . mt_rand(100000, 999999999);
     }
 
+    private function getAcsDataByGroupId(int $groupId): array
+    {
+        if ($groupId > 0) {
+            $row = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT
+                        acs.*,
+                        (
+                            SELECT COUNT(*)
+                            FROM `' . ACS_MEMBERS . '` am
+                            WHERE am.`acs_group_id` = acs.`acs_id`
+                        ) AS `acs_members`
+                    FROM `' . ACS . "` acs
+                    WHERE acs.`acs_id` = '" . $groupId . "';"
+                )
+            );
+
+            return $row !== null ? (array) $row : [];
+        }
+
+        return [];
+    }
+
     /**
      * Build the list of friends
      *
@@ -271,9 +352,29 @@ class FederationController extends BaseController
     {
         $list_of_buddies = [];
 
-        $buddies = $this->buddiesModel->getBuddiesDetailsForAcsById(
-            $this->user['id'],
-            $this->_group->getFirstAcs()->getAcsFleetId()
+        $userId = (int) $this->user['id'];
+        $groupId = (int) $this->_group->getFirstAcs()->getAcsFleetId();
+
+        $buddies = array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT DISTINCT u.`id`, u.`name`
+                    FROM `' . BUDDY . '` AS b
+                    LEFT JOIN `' . USERS . "` AS u
+                        ON ((u.id = b.buddy_sender) OR (u.id = b.buddy_receiver))
+                    WHERE (
+                        b.`buddy_sender` = '" . $userId . "'
+                        OR b.`buddy_receiver` = '" . $userId . "'
+                    )
+                    AND b.`buddy_status` = '1'
+                    AND u.`id` NOT IN (
+                        SELECT acs.`acs_user_id`
+                        FROM `" . ACS_MEMBERS . "` acs
+                        WHERE acs.`acs_group_id` = '" . $groupId . "'
+                    )"
+                )
+            )
         );
 
         if (count($buddies) > 0) {
@@ -299,8 +400,16 @@ class FederationController extends BaseController
     {
         $list_of_members = [];
 
-        $members = $this->fleetModel->getListOfAcsMembers(
-            $this->_group->getFirstAcs()->getAcsFleetId()
+        $members = array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT u.`id`, u.`name`
+                    FROM `' . ACS_MEMBERS . '` am
+                    INNER JOIN `' . USERS . "` u ON u.`id` = am.`acs_user_id`
+                    WHERE am.`acs_group_id` = '" . (int) $this->_group->getFirstAcs()->getAcsFleetId() . "'"
+                )
+            )
         );
 
         if (count($members) > 0) {

@@ -10,6 +10,8 @@ use App\Services\Game\Formulas\DevelopmentsService;
 use App\Services\FormatService;
 use App\Services\Game\Formulas\OfficerService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
 use Xgp\App\Core\Objects;
@@ -18,20 +20,21 @@ use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Research as ResearchModel;
 
 /**
  * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class ResearchController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $planet = [];
     private $_resource;
     private $_reslist;
     private $_is_working;
     private $_lab_level;
-    private ResearchModel $researchModel;
     private Users $userLibrary;
 
     public function __construct(
@@ -47,7 +50,6 @@ class ResearchController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->researchModel = new ResearchModel();
         $this->_resource = Objects::getInstance()->getObjects();
         $this->_reslist = Objects::getInstance()->getObjectsList();
         $this->userLibrary = new Users();
@@ -232,7 +234,19 @@ class ResearchController extends BaseController
                 }
 
                 if ($update_data == true) {
-                    $this->researchModel->startNewResearch($working_planet, $this->user);
+                    DB::statement(
+                        $this->prepareSql(
+                            'UPDATE `' . PLANETS . '` AS p, `' . RESEARCH . "` AS r SET
+                                p.`planet_b_tech_id` = '" . $working_planet['planet_b_tech_id'] . "',
+                                p.`planet_b_tech` = '" . $working_planet['planet_b_tech'] . "',
+                                p.`planet_metal` = '" . $working_planet['planet_metal'] . "',
+                                p.`planet_crystal` = '" . $working_planet['planet_crystal'] . "',
+                                p.`planet_deuterium` = '" . $working_planet['planet_deuterium'] . "',
+                                r.`research_current_research` = '" . $this->user['research_current_research'] . "'
+                            WHERE p.`planet_id` = '" . $working_planet['planet_id'] . "'
+                                AND r.`research_user_id` = '" . $this->user['id'] . "';"
+                        )
+                    );
                 }
 
                 $this->planet = $working_planet;
@@ -277,7 +291,21 @@ class ResearchController extends BaseController
 
         if ($this->user['research_current_research'] != 0) {
             if ($this->user['research_current_research'] != $this->planet['planet_id']) {
-                $working_planet = $this->researchModel->getPlanetResearching($this->user['research_current_research']);
+                $row = DB::selectOne(
+                    $this->prepareSql(
+                        'SELECT
+                            `planet_id`,
+                            `planet_name`,
+                            `planet_b_tech`,
+                            `planet_b_tech_id`,
+                            `planet_galaxy`,
+                            `planet_system`,
+                            `planet_planet`
+                        FROM `' . PLANETS . "`
+                        WHERE `planet_id` = '" . $this->user['research_current_research'] . "';"
+                    )
+                );
+                $working_planet = $row !== null ? (array) $row : [];
             }
 
             if (isset($working_planet)) {

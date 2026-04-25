@@ -9,6 +9,8 @@ use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
 use App\Services\Game\Formulas\OfficerService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
@@ -21,13 +23,14 @@ use Xgp\App\Libraries\NoobsProtectionLib;
 use Xgp\App\Libraries\Premium\Premium;
 use Xgp\App\Libraries\Research\Researches;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Fleet;
 
 /**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class Fleet4Controller extends BaseController
 {
+    use PreparesLegacySql;
     public const REDIRECT_TARGET = 'game.php?page=movement';
 
     private array $user = [];
@@ -64,7 +67,6 @@ class Fleet4Controller extends BaseController
     private bool $_occupied_planet = false;
     private int $_fleet_storage = 0;
     private array $_fleet_ships = [];
-    private Fleet $fleetModel;
     private Users $userLibrary;
     private Objects $objects;
 
@@ -81,7 +83,6 @@ class Fleet4Controller extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->fleetModel = new Fleet();
         $this->userLibrary = new Users();
         $this->objects = new Objects();
 
@@ -91,9 +92,19 @@ class Fleet4Controller extends BaseController
 
     private function setUpFleets(): void
     {
+        $userId = (int) $this->user['id'];
         $this->_fleets = new Fleets(
-            $this->fleetModel->getAllFleetsByUserId((int) $this->user['id']),
-            (int) $this->user['id']
+            $userId > 0 ? array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT f.*
+                        FROM `' . FLEETS . "` f
+                        WHERE f.`fleet_owner` = '" . $userId . "';"
+                    )
+                )
+            ) : [],
+            $userId
         );
 
         $this->_research = new Researches(
@@ -169,12 +180,30 @@ class Fleet4Controller extends BaseController
     {
         $target_data = $this->getTargetData();
 
-        $target = $this->fleetModel->getTargetDataByCoords(
-            $target_data['galaxy'],
-            $target_data['system'],
-            $target_data['planet'],
-            ($target_data['type'] != 2 ? $target_data['type'] : '1')
+        $targetType = (int) ($target_data['type'] != 2 ? $target_data['type'] : 1);
+        $targetRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT
+                    p.`planet_user_id`,
+                    p.`planet_debris_metal`,
+                    p.`planet_debris_crystal`,
+                    p.`planet_invisible_start_time`,
+                    p.`planet_destroyed`,
+                    u.`id`,
+                    u.`authlevel`,
+                    u.`onlinetime`,
+                    u.`ally_id`,
+                    pr.`preference_vacation_mode`
+                FROM `' . PLANETS . '` p
+                INNER JOIN `' . USERS . '` u ON u.`id` = p.`planet_user_id`
+                INNER JOIN `' . PREFERENCES . "` pr ON pr.`preference_user_id` = u.`id`
+                WHERE p.`planet_galaxy` = '" . (int) $target_data['galaxy'] . "'
+                    AND p.`planet_system` = '" . (int) $target_data['system'] . "'
+                    AND p.`planet_planet` = '" . (int) $target_data['planet'] . "'
+                    AND p.`planet_type` = '" . $targetType . "'"
+            )
         );
+        $target = $targetRow !== null ? (array) $targetRow : [];
 
         if ($target) {
             $this->_occupied_planet = true;
@@ -285,8 +314,17 @@ class Fleet4Controller extends BaseController
             'p' . (int) $target_data['planet'] .
             't' . (int) $target_data['type'];
 
+            $acsCountRow = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT COUNT(`acs_id`) AS `acs_amount`
+                    FROM `' . ACS . "`
+                    WHERE `acs_id` = '" . (int) $target_data['group'] . "'"
+                )
+            );
+            $acsCount = $acsCountRow !== null ? (int) $acsCountRow->acs_amount : 0;
+
             if ($target_data['acs_target'] == $target_string &&
-                $this->fleetModel->getAcsCount($target_data['group']) > 0) {
+                $acsCount > 0) {
                 // set acs group
                 $this->_fleet_data['fleet_group'] = $target_data['group'];
 
@@ -305,7 +343,29 @@ class Fleet4Controller extends BaseController
         $fleet = $this->getSessionShips();
 
         // planet ships
-        $planet_ships = $this->fleetModel->getShipsByPlanetId($this->planet['planet_id']);
+        $planetId = (int) $this->planet['planet_id'];
+        $shipsRow = $planetId > 0 ? DB::selectOne(
+            $this->prepareSql(
+                'SELECT
+                    s.`ship_small_cargo_ship`,
+                    s.`ship_big_cargo_ship`,
+                    s.`ship_light_fighter`,
+                    s.`ship_heavy_fighter`,
+                    s.`ship_cruiser`,
+                    s.`ship_battleship`,
+                    s.`ship_colony_ship`,
+                    s.`ship_recycler`,
+                    s.`ship_espionage_probe`,
+                    s.`ship_bomber`,
+                    s.`ship_solar_satellite`,
+                    s.`ship_destroyer`,
+                    s.`ship_deathstar`,
+                    s.`ship_battlecruiser`
+                FROM `' . SHIPS . "` AS s
+                WHERE s.`ship_planet_id` = '" . $planetId . "';"
+            )
+        ) : null;
+        $planet_ships = $shipsRow !== null ? (array) $shipsRow : [];
 
         // objects
         $objects = $this->objects->getObjects();
@@ -379,10 +439,26 @@ class Fleet4Controller extends BaseController
         }
 
         if ($data['mission'] == Missions::STAY) {
-            $is_buddy = $this->fleetModel->getBuddies(
-                $this->planet['planet_user_id'],
-                $this->_target_data['planet_user_id']
-            ) >= 1;
+            $currentUserId = (int) $this->planet['planet_user_id'];
+            $targetUserId = (int) $this->_target_data['planet_user_id'];
+            $buddyRow = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT COUNT(*) AS buddies
+                    FROM `' . BUDDY . "`
+                    WHERE (
+                        (
+                            buddy_sender = '" . $currentUserId . "'
+                            AND buddy_receiver = '" . $targetUserId . "'
+                        )
+                        OR (
+                            buddy_sender = '" . $targetUserId . "'
+                            AND buddy_receiver = '" . $currentUserId . "'
+                        )
+                    )
+                    AND buddy_status = 1"
+                )
+            );
+            $is_buddy = ($buddyRow !== null ? (int) $buddyRow->buddies : 0) >= 1;
 
             if ($this->_target_data['ally_id'] != $this->user['ally_id'] && !$is_buddy) {
                 $this->showMessage(
@@ -646,18 +722,27 @@ class Fleet4Controller extends BaseController
         $end_time = $stay_duration + (2 * $duration) + $base_time;
 
         if ($this->getTargetData()['group'] != 0) {
-            $acs_start_time = $this->fleetModel->getAcsMaxTime(
-                $this->getTargetData()['group']
+            $acsGroupId = (int) $this->getTargetData()['group'];
+            $acsMaxRow = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT MAX(`fleet_start_time`) AS start_time
+                    FROM `' . FLEETS . "`
+                    WHERE `fleet_group` = '" . $acsGroupId . "';"
+                )
             );
+            $acs_start_time = $acsMaxRow !== null ? (string) $acsMaxRow->start_time : '';
 
             if ($acs_start_time >= $start_time) {
                 $end_time += $acs_start_time - $start_time;
                 $start_time = $acs_start_time;
             } else {
-                $this->fleetModel->updateAcsTimes(
-                    $this->getTargetData()['group'],
-                    $start_time,
-                    ($start_time - $acs_start_time)
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE `' . FLEETS . "` SET
+                        `fleet_start_time` = '" . $start_time . "',
+                        `fleet_end_time` = fleet_end_time + '" . ($start_time - $acs_start_time) . "'
+                        WHERE `fleet_group` = '" . $acsGroupId . "';"
+                    )
                 );
 
                 $end_time += $start_time - $acs_start_time;
@@ -702,14 +787,40 @@ class Fleet4Controller extends BaseController
      *
      * @return void
      */
-    private function sendFleet()
+    private function sendFleet(): void
     {
-        // create the new fleet and
-        // remove from the planet the ships and resources
-        $this->fleetModel->insertNewFleet(
-            $this->_fleet_data,
-            $this->planet,
-            $this->_fleet_ships
-        );
+        DB::transaction(function (): void {
+            $sql = [];
+
+            foreach ($this->_fleet_data as $field => $value) {
+                $sql[] = '`' . $field . "` = '" . $value . "'";
+            }
+
+            DB::statement(
+                $this->prepareSql(
+                    'INSERT INTO `' . FLEETS . '` SET '
+                    . join(', ', $sql) .
+                    ", `fleet_creation` = '" . time() . "';"
+                )
+            );
+
+            $shipSql = [];
+
+            foreach ($this->_fleet_ships as $field => $value) {
+                $shipSql[] = '`' . $field . '` = `' . $field . "` - '" . $value . "'";
+            }
+
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . PLANETS . '` AS p
+                    INNER JOIN `' . SHIPS . '` AS s ON s.`ship_planet_id` = p.`planet_id` SET
+                    ' . join(', ', $shipSql) . ',
+                    `planet_metal` = `planet_metal` - ' . $this->_fleet_data['fleet_resource_metal'] . ',
+                    `planet_crystal` = `planet_crystal` - ' . $this->_fleet_data['fleet_resource_crystal'] . ',
+                    `planet_deuterium` = `planet_deuterium` - ' . ($this->_fleet_data['fleet_resource_deuterium'] + $this->_fleet_data['fleet_fuel']) . '
+                    WHERE `planet_id` = ' . $this->planet['planet_id'] . ';'
+                )
+            );
+        });
     }
 }

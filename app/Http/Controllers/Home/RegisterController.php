@@ -12,10 +12,15 @@ use App\Services\SettingsService;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
+use App\Models\Planets;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Throwable;
+use Xgp\App\Core\Enumerators\UserRanksEnumerator;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Models\Home\Register;
+use Xgp\App\Libraries\PlanetLib;
 
 class RegisterController extends BaseController
 {
@@ -38,11 +43,45 @@ class RegisterController extends BaseController
         // define new planet
         $newPlanetCoords = $this->planetService->calculateNewPlanetPosition();
 
-        // create new user + attach new planet
-        $newUser = (new Register())->createNewUser(
-            $request,
-            $newPlanetCoords
-        );
+        $newUser = null;
+        try {
+            DB::beginTransaction();
+
+            $newUser = User::create(array_merge(
+                $request->validated(),
+                [
+                    'name' => $request->validated()['username'],
+                    'home_planet_id' => 0,
+                    'current_planet' => 0,
+                    'lastip' => $request->ip(),
+                    'ip_at_reg' => $request->ip(),
+                    'agent' => $request->header('User-Agent'),
+                    'current_page' => $request->getRequestUri(),
+                    'register_time' => time(),
+                    'onlinetime' => time(),
+                    'authlevel' => UserRanksEnumerator::PLAYER,
+                ]
+            ));
+
+            $newUser->preferences()->create();
+            $newUser->premium()->create();
+            $newUser->research()->create();
+            $newUser->stats()->create();
+
+            (new PlanetLib())->setNewPlanet($newPlanetCoords['galaxy'], $newPlanetCoords['system'], $newPlanetCoords['planet'], $newUser->id, '', true);
+
+            User::where('id', $newUser->id)->update([
+                'home_planet_id' => Planets::where('planet_user_id', $newUser->id)->value('planet_id'),
+                'current_planet' => Planets::where('planet_user_id', $newUser->id)->value('planet_id'),
+                'galaxy' => $newPlanetCoords['galaxy'],
+                'system' => $newPlanetCoords['system'],
+                'planet' => $newPlanetCoords['planet'],
+            ]);
+
+            DB::commit();
+        } catch (Throwable $e) {
+            DB::rollback();
+        }
 
         if ($newUser === null) {
             return back()->withErrors([

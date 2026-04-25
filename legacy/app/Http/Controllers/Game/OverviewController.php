@@ -19,13 +19,18 @@ use Xgp\App\Libraries\NoobsProtectionLib;
 use App\Enums\Module;
 use Xgp\App\Libraries\UpdatesLibrary;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Overview;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class OverviewController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $planet = [];
-    private Overview $overviewModel;
     private NoobsProtectionLib $noob;
     private Objects $objects;
 
@@ -42,7 +47,6 @@ class OverviewController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->overviewModel = new Overview();
         $this->noob = new NoobsProtectionLib();
         $this->objects = new Objects();
 
@@ -141,7 +145,66 @@ class OverviewController extends BaseController
         $fleet_row = [];
         $record = 0;
 
-        $own_fleets = $this->overviewModel->getOwnFleets((int) $this->user['id']);
+        $userId = (int) $this->user['id'];
+        $own_fleets = $userId > 0 ? array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT DISTINCT
+                        fleets.*,
+                        po.`planet_name` AS `start_planet_name`,
+                        pt.`planet_name` AS `target_planet_name`,
+                        uo.`name` AS `start_planet_user`,
+                        ut.`name` AS `target_planet_user`,
+                        (
+                            SELECT
+                                GROUP_CONCAT(am.`acs_user_id`)
+                            FROM `' . ACS_MEMBERS . '` am
+                            WHERE am.`acs_group_id` = fleets.`fleet_group`
+                        ) AS `acs_members`
+                    FROM
+                    (
+                        SELECT
+                            f.*
+                        FROM
+                            `' . FLEETS . "` f
+                        WHERE
+                            f.`fleet_owner` = '" . $userId . "'
+                        OR
+                            f.`fleet_target_owner` = '" . $userId . "'
+                        UNION ALL
+                        SELECT
+                            f.*
+                        FROM
+                            `" . ACS_MEMBERS . '` am
+                        LEFT JOIN `' . FLEETS . "` f ON
+                            f.`fleet_group` = am.`acs_group_id`
+                        WHERE
+                            f.`fleet_id` IS NOT NULL
+                        AND
+                            am.`acs_user_id` = '" . $userId . "'
+                    ) fleets
+                    INNER JOIN `" . USERS . '` uo ON
+                        uo.`id` = fleets.`fleet_owner`
+                    LEFT JOIN `' . USERS . '` ut ON
+                        ut.`id` = fleets.`fleet_target_owner`
+                    INNER JOIN `' . PLANETS . '` po ON
+                    (
+                        po.`planet_galaxy` = fleets.`fleet_start_galaxy` AND
+                        po.`planet_system` = fleets.`fleet_start_system` AND
+                        po.`planet_planet` = fleets.`fleet_start_planet` AND
+                        po.`planet_type` = fleets.`fleet_start_type`
+                    )
+                    LEFT JOIN `' . PLANETS . '` pt ON
+                    (
+                        pt.`planet_galaxy` = fleets.`fleet_end_galaxy` AND
+                        pt.`planet_system` = fleets.`fleet_end_system` AND
+                        pt.`planet_planet` = fleets.`fleet_end_planet` AND
+                        pt.`planet_type` = fleets.`fleet_end_type`
+                    )'
+                )
+            )
+        ) : null;
 
         foreach ($own_fleets as $fleets) {
             //#####################################
@@ -311,7 +374,21 @@ class OverviewController extends BaseController
     {
         $colony = 1;
 
-        $planets_query = $this->overviewModel->getPlanets((int) $this->user['id']);
+        $userId = (int) $this->user['id'];
+        $planets_query = $userId > 0 ? array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT *
+                        FROM ' . PLANETS . ' AS p
+                        INNER JOIN ' . BUILDINGS . ' AS b ON b.building_planet_id = p.`planet_id`
+                        INNER JOIN ' . DEFENSES . ' AS d ON d.defense_planet_id = p.`planet_id`
+                        INNER JOIN ' . SHIPS . " AS s ON s.ship_planet_id = p.`planet_id`
+                        WHERE `planet_user_id` = '" . $userId . "'
+                                AND `planet_destroyed` = 0;"
+                )
+            )
+        ) : null;
         $planet_block = '<tr>';
 
         foreach ($planets_query as $user_planet) {

@@ -12,13 +12,18 @@ use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Phalanx;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class PhalanxController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $planet = [];
-    private Phalanx $phalanxModel;
 
     public function __invoke(): void
     {
@@ -26,7 +31,6 @@ class PhalanxController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->phalanxModel = new Phalanx();
 
         $this->buildPage();
     }
@@ -53,14 +57,43 @@ class PhalanxController extends BaseController
 
         /* main page */
         if ($this->planet['planet_deuterium'] >= 10000) {
-            $this->phalanxModel->reduceDeuterium($this->user['current_planet']);
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . PLANETS . "` SET
+                        `planet_deuterium` = `planet_deuterium` - '" . PHALANX_COST . "'
+                    WHERE `planet_id` = '" . $this->user['current_planet'] . "';"
+                )
+            );
 
-            $target_planet_info = $this->phalanxModel->getTargetPlanetIdAndName($Galaxy, $System, $Planet);
+            $planetRow = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT
+                        `planet_name`,
+                        `planet_user_id`
+                    FROM `' . PLANETS . "`
+                    WHERE `planet_galaxy` = '" . $Galaxy . "' AND
+                            `planet_system` = '" . $System . "' AND
+                            `planet_planet` = '" . $Planet . "' AND
+                            `planet_type` = 1"
+                )
+            );
+            $target_planet_info = $planetRow !== null ? (array) $planetRow : [];
 
             $TargetID = $target_planet_info['planet_user_id'];
             $TargetName = $target_planet_info['planet_name'];
 
-            $target_moon = $this->phalanxModel->getTargetMoonStatus($Galaxy, $System, $Planet);
+            $moonRow = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT
+                        `planet_destroyed`
+                    FROM `' . PLANETS . "`
+                    WHERE `planet_galaxy` = '" . $Galaxy . "' AND
+                            `planet_system` = '" . $System . "' AND
+                            `planet_planet` = '" . $Planet . "' AND
+                            `planet_type` = 3 "
+                )
+            );
+            $target_moon = $moonRow !== null ? (array) $moonRow : null;
 
             //if there isn't a moon,
             if ($target_moon === false) {
@@ -69,7 +102,51 @@ class PhalanxController extends BaseController
                 $TargetMoonIsDestroyed = (isset($target_moon['planet_destroyed']) && $target_moon['planet_destroyed'] !== 0);
             }
 
-            $FleetToTarget = $this->phalanxModel->getFleetsToTarget($Galaxy, $System, $Planet);
+            $FleetToTarget = array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT
+                            f.*,
+                            po.`planet_name` AS `start_planet_name`,
+                            pt.`planet_name` AS `target_planet_name`,
+                            uo.`name` AS `start_planet_user`,
+                            ut.`name` AS `target_planet_user`
+                        FROM `' . FLEETS . '` f
+                            INNER JOIN `' . USERS . '` uo
+                                ON uo.`id` = f.`fleet_owner`
+                            LEFT JOIN `' . USERS . '` ut
+                                ON ut.`id` = f.`fleet_target_owner`
+                            INNER JOIN `' . PLANETS . '` po
+                                ON (
+                                    po.planet_galaxy = f.fleet_start_galaxy AND
+                                    po.planet_system = f.fleet_start_system AND
+                                    po.planet_planet = f.fleet_start_planet AND
+                                    po.planet_type = f.fleet_start_type
+                                )
+                            LEFT JOIN `' . PLANETS . "` pt
+                                ON (
+                                pt.planet_galaxy = f.fleet_end_galaxy AND
+                                pt.planet_system = f.fleet_end_system AND
+                                pt.planet_planet = f.fleet_end_planet AND
+                                pt.planet_type = f.fleet_end_type
+                            )
+                            WHERE (
+                                (
+                                    f.`fleet_start_galaxy` = '" . $Galaxy . "' AND
+                                    f.`fleet_start_system` = '" . $System . "' AND
+                                    f.`fleet_start_planet` = '" . $Planet . "'
+                                )
+                                OR
+                                (
+                                    f.`fleet_end_galaxy` = '" . $Galaxy . "' AND
+                                    f.`fleet_end_system` = '" . $System . "' AND
+                                    f.`fleet_end_planet` = '" . $Planet . "'
+                                )
+                            ) ;"
+                    )
+                )
+            );
 
             $Record = 0;
             $fpage = [];

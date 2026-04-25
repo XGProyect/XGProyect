@@ -18,8 +18,8 @@ use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\GalaxyLib;
 use Xgp\App\Libraries\NoobsProtectionLib;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Fleet;
-use Xgp\App\Models\Game\Galaxy;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
@@ -27,6 +27,8 @@ use Xgp\App\Models\Game\Galaxy;
  */
 class GalaxyController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $planet = [];
     private array $galaxy = [];
@@ -38,9 +40,6 @@ class GalaxyController extends BaseController
     private $_system;
     private $noob;
     private $_galaxyLib;
-    private Galaxy $galaxyModel;
-    private Fleet $fleetModel;
-
     public function __construct(
         private FormatService $formatService,
         private FleetsService $fleetsService,
@@ -54,8 +53,6 @@ class GalaxyController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->fleetModel = new Fleet();
-        $this->galaxyModel = new Galaxy();
         $this->_resource = Objects::getInstance()->getObjects();
         $this->_pricelist = Objects::getInstance()->getPrice();
         $this->_reslist = Objects::getInstance()->getObjectsList();
@@ -88,7 +85,14 @@ class GalaxyController extends BaseController
             (int) $this->user['research_computer_technology'],
             $this->officerService->isOfficerActive((int) $this->user['premium_officier_admiral'], time())
         );
-        $current_fleets = $this->galaxyModel->countAmountFleetsByUserId((int) $this->user['id']);
+        $fleetCountRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT COUNT(`fleet_id`) AS total_fleets
+                FROM `' . FLEETS . "`
+                WHERE `fleet_owner` = '" . (int) $this->user['id'] . "';"
+            )
+        );
+        $current_fleets = $fleetCountRow !== null ? (int) $fleetCountRow->total_fleets : 0;
 
         // missiles and espionage probes
         $CurrentPlID = $this->planet['planet_id'];
@@ -110,7 +114,99 @@ class GalaxyController extends BaseController
             exit;
         }
 
-        $this->galaxy = $this->galaxyModel->getGalaxyDataByGalaxyAndSystem($this->_galaxy, $this->_system, (int) $this->user['id']);
+        $this->galaxy = array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    "SELECT
+                        (
+                            SELECT
+                                CONCAT (GROUP_CONCAT(`buddy_receiver`), ',', GROUP_CONCAT(`buddy_sender`)) AS `buddys`
+                            FROM `" . BUDDY . '` AS b
+                            WHERE
+                            (
+                                b.`buddy_receiver` = ' . (int) $this->user['id'] . '
+                                OR
+                                b.`buddy_sender` = ' . (int) $this->user['id'] . '
+                            )
+                        ) AS buddys,
+                        p.`planet_debris_metal` AS `metal`,
+                        p.`planet_debris_crystal` AS `crystal`,
+                        p.`planet_id` AS `id_planet`,
+                        p.`planet_galaxy`,
+                        p.`planet_system`,
+                        p.`planet_planet`,
+                        p.`planet_type`,
+                        p.`planet_destroyed`,
+                        p.`planet_name`,
+                        p.`planet_image`,
+                        p.`planet_last_update`,
+                        p.`planet_user_id`,
+                        u.`id`,
+                        u.`ally_id`,
+                        b.`user_id` AS `banned`,
+                        pr.`preference_vacation_mode`,
+                        u.`onlinetime`,
+                        u.`name`,
+                        u.`authlevel`,
+                        s.`user_statistic_total_rank`,
+                        s.`user_statistic_total_points`,
+                        m.`planet_id` AS `id_luna`,
+                        m.`planet_diameter`,
+                        m.`planet_temp_min`,
+                        m.`planet_destroyed` AS `destroyed_moon`,
+                        m.`planet_name` AS `name_moon`,
+                        a.`alliance_name`,
+                        a.`alliance_tag`,
+                        a.`alliance_web`,
+                        (
+                            SELECT
+                                COUNT(`id`) AS `ally_members`
+                            FROM `' . USERS . '`
+                            WHERE `ally_id` = a.`alliance_id`
+                        ) AS `ally_members`
+                    FROM `' . PLANETS . '` AS p
+                        INNER JOIN `' . USERS . '` AS u
+                            ON p.`planet_user_id` = u.`id`
+                        INNER JOIN `' . PREFERENCES . '` AS pr
+                            ON pr.`preference_user_id` = u.`id`
+                        INNER JOIN `' . USERS_STATISTICS . '` AS s
+                            ON s.`user_statistic_user_id` = u.`id`
+                        LEFT JOIN `' . ALLIANCE . '` AS a
+                            ON a.`alliance_id` = u.`ally_id`
+                        LEFT JOIN `' . PLANETS . '` AS m
+                            ON m.`planet_id` = (
+                                SELECT mp.`planet_id`
+                                FROM `' . PLANETS . '` AS mp
+                                WHERE (
+                                    mp.`planet_galaxy` = p.`planet_galaxy`
+                                    AND
+                                    mp.`planet_system` = p.`planet_system`
+                                    AND
+                                    mp.`planet_planet` = p.`planet_planet`
+                                    AND
+                                    mp.`planet_type` = "3"
+                                )
+                            )
+                        LEFT JOIN `' . BANNED . "` AS b
+                            ON b.`user_id` = u.`id`
+                    WHERE (
+                            p.planet_galaxy = '" . $this->_galaxy . "'
+                            AND
+                            p.planet_system = '" . $this->_system . "'
+                            AND
+                            p.planet_type = '1'
+                            AND
+                            (
+                                p.planet_planet > '0'
+                                AND
+                                p.planet_planet <= '" . MAX_PLANET_IN_SYSTEM . "'
+                            )
+                    )
+                    ORDER BY p.planet_planet;"
+                )
+            )
+        );
 
         $parse['selected_galaxy'] = $this->_galaxy;
         $parse['selected_system'] = $this->_system;
@@ -288,7 +384,28 @@ class GalaxyController extends BaseController
         $tempvar1 = abs($system - $this->planet['planet_system']);
         $tempvar2 = Formulas::missileRange((int) $this->user['research_impulse_drive']);
 
-        $target_user = $this->galaxyModel->getTargetUserDataByCoords($galaxy, $system, $planet);
+        $targetRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT
+                    u.`id`,
+                    u.`onlinetime`,
+                    u.`authlevel`,
+                    pr.`preference_vacation_mode`
+                FROM `' . USERS . '` AS u
+                INNER JOIN `' . PREFERENCES . '` AS pr ON pr.preference_user_id = u.id
+                WHERE u.id = (
+                    SELECT `planet_user_id`
+                    FROM `' . PLANETS . '`
+                    WHERE planet_galaxy = ' . $galaxy . '  AND
+                        planet_system = ' . $system . ' AND
+                        planet_planet = ' . $planet . ' AND
+                        planet_type = 1
+                    LIMIT 1
+                    )
+                LIMIT 1'
+            )
+        );
+        $target_user = $targetRow !== null ? (array) $targetRow : null;
 
         $user_points = $this->noob->returnPoints($this->user['id'], $target_user['id']);
         $MyGameLevel = $user_points['user_points'];
@@ -369,7 +486,7 @@ class GalaxyController extends BaseController
             8 => __('game/defenses.defense_large_shield_dome'),
         ];
 
-        $this->fleetModel->insertNewMissilesMission([
+        $missileData = [
             'fleet_owner' => $this->user['id'],
             'fleet_amount' => $missiles_amount,
             'fleet_array' => FleetsLib::setFleetShipsArray([503 => $missiles_amount]),
@@ -384,7 +501,46 @@ class GalaxyController extends BaseController
             'fleet_target_obj' => $target,
             'fleet_target_owner' => $target_user['id'],
             'current_planet' => $this->user['current_planet'],
-        ]);
+        ];
+
+        DB::transaction(function () use ($missileData): void {
+            DB::statement(
+                $this->prepareSql(
+                    'INSERT INTO `' . FLEETS . "` SET
+                    `fleet_owner` = '" . $missileData['fleet_owner'] . "',
+                    `fleet_mission` = '10',
+                    `fleet_amount` = " . $missileData['fleet_amount'] . ",
+                    `fleet_array` = '" . $missileData['fleet_array'] . "',
+                    `fleet_start_time` = '" . $missileData['fleet_start_time'] . "',
+                    `fleet_start_galaxy` = '" . $missileData['fleet_start_galaxy'] . "',
+                    `fleet_start_system` = '" . $missileData['fleet_start_system'] . "',
+                    `fleet_start_planet` ='" . $missileData['fleet_start_planet'] . "',
+                    `fleet_start_type` = '1',
+                    `fleet_end_time` = '" . $missileData['fleet_end_time'] . "',
+                    `fleet_end_stay` = '0',
+                    `fleet_end_galaxy` = '" . $missileData['fleet_end_galaxy'] . "',
+                    `fleet_end_system` = '" . $missileData['fleet_end_system'] . "',
+                    `fleet_end_planet` = '" . $missileData['fleet_end_planet'] . "',
+                    `fleet_end_type` = '1',
+                    `fleet_target_obj` = '" . $missileData['fleet_target_obj'] . "',
+                    `fleet_resource_metal` = '0',
+                    `fleet_resource_crystal` = '0',
+                    `fleet_resource_deuterium` = '0',
+                    `fleet_target_owner` = '" . $missileData['fleet_target_owner'] . "',
+                    `fleet_group` = '0',
+                    `fleet_mess` = '0',
+                    `fleet_creation` = '" . time() . "';"
+                )
+            );
+
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . DEFENSES . '` SET
+                        `defense_interplanetary_missile` = `defense_interplanetary_missile` - ' . $missileData['fleet_amount'] . "
+                    WHERE `defense_planet_id` =  '" . $missileData['current_planet'] . "'"
+                )
+            );
+        });
 
         Functions::message('<b>' . $missiles_amount . '</b>' . __('game/galaxy.gl_missiles_sended') . $DefenseLabel[$target], 'game.php?page=overview', 3);
     }
@@ -477,9 +633,37 @@ class GalaxyController extends BaseController
             die('614 ');
         }
 
-        $current_fleets = $this->galaxyModel->countAmountFleetsByUserId((int) $this->user['id']);
+        $fleetCountRow2 = DB::selectOne(
+            $this->prepareSql(
+                'SELECT COUNT(`fleet_id`) AS total_fleets
+                FROM `' . FLEETS . "`
+                WHERE `fleet_owner` = '" . (int) $this->user['id'] . "';"
+            )
+        );
+        $current_fleets = $fleetCountRow2 !== null ? (int) $fleetCountRow2->total_fleets : 0;
 
-        $target_user = $this->galaxyModel->getTargetUserDataByCoords($galaxy, $system, $planet, $_POST['planettype']);
+        $targetRow2 = DB::selectOne(
+            $this->prepareSql(
+                'SELECT
+                    u.`id`,
+                    u.`onlinetime`,
+                    u.`authlevel`,
+                    pr.`preference_vacation_mode`
+                FROM `' . USERS . '` AS u
+                INNER JOIN `' . PREFERENCES . '` AS pr ON pr.preference_user_id = u.id
+                WHERE u.id = (
+                    SELECT `planet_user_id`
+                    FROM `' . PLANETS . '`
+                    WHERE planet_galaxy = ' . $galaxy . '  AND
+                        planet_system = ' . $system . ' AND
+                        planet_planet = ' . $planet . ' AND
+                        planet_type = ' . (int) $_POST['planettype'] . '
+                    LIMIT 1
+                    )
+                LIMIT 1'
+            )
+        );
+        $target_user = $targetRow2 !== null ? (array) $targetRow2 : null;
 
         if ($target_user == null) {
             $target_user = $this->user;
@@ -487,7 +671,20 @@ class GalaxyController extends BaseController
 
         // invisible debris by jstar
         if ($order == 8) {
-            $TargetGPlanet = $this->galaxyModel->getPlanetDebrisByCoords($galaxy, $system, $planet);
+            $debrisRow = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT
+                        `planet_invisible_start_time`,
+                        `planet_debris_metal`,
+                        `planet_debris_crystal`
+                    FROM `' . PLANETS . "`
+                    WHERE `planet_galaxy` = '" . $galaxy . "'
+                        AND `planet_system` = '" . $system . "'
+                        AND `planet_planet` = '" . $planet . "'
+                        AND `planet_type` = 1;"
+                )
+            );
+            $TargetGPlanet = $debrisRow !== null ? (array) $debrisRow : null;
 
             if ($TargetGPlanet['planet_debris_metal'] == 0 && $TargetGPlanet['planet_debris_crystal'] == 0 && time() > ($TargetGPlanet['planet_invisible_start_time'] + DEBRIS_LIFE_TIME)) {
                 die();
@@ -570,31 +767,61 @@ class GalaxyController extends BaseController
             die('601 ');
         }
 
-        $this->fleetModel->insertNewFleet(
-            [
-                'fleet_owner' => $this->user['id'],
-                'fleet_mission' => intval($order),
-                'fleet_amount' => $FleetShipCount,
-                'fleet_array' => FleetsLib::setFleetShipsArray($FleetDBArray),
-                'fleet_start_time' => $fleet['start_time'],
-                'fleet_start_galaxy' => $this->planet['planet_galaxy'],
-                'fleet_start_system' => $this->planet['planet_system'],
-                'fleet_start_planet' => $this->planet['planet_planet'],
-                'fleet_start_type' => $this->planet['planet_type'],
-                'fleet_end_time' => $fleet['end_time'],
-                'fleet_end_galaxy' => intval($_POST['galaxy']),
-                'fleet_end_system' => intval($_POST['system']),
-                'fleet_end_planet' => intval($_POST['planet']),
-                'fleet_end_type' => intval($_POST['planettype']),
-                'fleet_resource_metal' => 0,
-                'fleet_resource_crystal' => 0,
-                'fleet_resource_deuterium' => 0,
-                'fleet_fuel' => $consumption,
-                'fleet_target_owner' => $target_user['id'],
-            ],
-            $this->planet,
-            $fleet_sub_query
-        );
+        $fleetData = [
+            'fleet_owner' => $this->user['id'],
+            'fleet_mission' => intval($order),
+            'fleet_amount' => $FleetShipCount,
+            'fleet_array' => FleetsLib::setFleetShipsArray($FleetDBArray),
+            'fleet_start_time' => $fleet['start_time'],
+            'fleet_start_galaxy' => $this->planet['planet_galaxy'],
+            'fleet_start_system' => $this->planet['planet_system'],
+            'fleet_start_planet' => $this->planet['planet_planet'],
+            'fleet_start_type' => $this->planet['planet_type'],
+            'fleet_end_time' => $fleet['end_time'],
+            'fleet_end_galaxy' => intval($_POST['galaxy']),
+            'fleet_end_system' => intval($_POST['system']),
+            'fleet_end_planet' => intval($_POST['planet']),
+            'fleet_end_type' => intval($_POST['planettype']),
+            'fleet_resource_metal' => 0,
+            'fleet_resource_crystal' => 0,
+            'fleet_resource_deuterium' => 0,
+            'fleet_fuel' => $consumption,
+            'fleet_target_owner' => $target_user['id'],
+        ];
+
+        DB::transaction(function () use ($fleetData, $fleet_sub_query): void {
+            $sql = [];
+
+            foreach ($fleetData as $field => $value) {
+                $sql[] = '`' . $field . "` = '" . $value . "'";
+            }
+
+            DB::statement(
+                $this->prepareSql(
+                    'INSERT INTO `' . FLEETS . '` SET '
+                    . join(', ', $sql) .
+                    ", `fleet_creation` = '" . time() . "';"
+                )
+            );
+
+            $shipSql = [];
+
+            foreach ($fleet_sub_query as $field => $value) {
+                $shipSql[] = '`' . $field . '` = `' . $field . "` - '" . $value . "'";
+            }
+
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . PLANETS . '` AS p
+                    INNER JOIN `' . SHIPS . '` AS s ON s.`ship_planet_id` = p.`planet_id` SET
+                    ' . join(', ', $shipSql) . ',
+                    `planet_metal` = `planet_metal` - ' . $fleetData['fleet_resource_metal'] . ',
+                    `planet_crystal` = `planet_crystal` - ' . $fleetData['fleet_resource_crystal'] . ',
+                    `planet_deuterium` = `planet_deuterium` - ' . ($fleetData['fleet_resource_deuterium'] + $fleetData['fleet_fuel']) . '
+                    WHERE `planet_id` = ' . $this->planet['planet_id'] . ';'
+                )
+            );
+        });
 
         foreach ($FleetArray as $Ships => $Count) {
             if ($max_spy_probes > $this->planet[$this->_resource[$Ships]]) {

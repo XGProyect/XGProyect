@@ -9,6 +9,8 @@ use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
 use App\Services\Game\Formulas\OfficerService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
@@ -17,13 +19,15 @@ use Xgp\App\Libraries\Premium\Premium;
 use Xgp\App\Libraries\Research\Researches;
 use Xgp\App\Libraries\Users;
 use Xgp\App\Libraries\Users\Shortcuts;
-use Xgp\App\Models\Game\Fleet;
 
 /**
  * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class Fleet2Controller extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $planet = [];
     private ?Researches $_research = null;
@@ -34,7 +38,6 @@ class Fleet2Controller extends BaseController
         'amount' => 0,
         'speed_all' => [],
     ];
-    private Fleet $fleetModel;
     private Objects $objects;
 
     public function __construct(
@@ -50,7 +53,6 @@ class Fleet2Controller extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->fleetModel = new Fleet();
         $this->objects = new Objects();
 
         $this->setUpFleets();
@@ -97,7 +99,29 @@ class Fleet2Controller extends BaseController
         $objects = $this->objects->getObjects();
         $price = $this->objects->getPrice();
 
-        $ships = $this->fleetModel->getShipsByPlanetId($this->planet['planet_id']);
+        $planetId = (int) $this->planet['planet_id'];
+        $shipsRow = $planetId > 0 ? DB::selectOne(
+            $this->prepareSql(
+                'SELECT
+                    s.`ship_small_cargo_ship`,
+                    s.`ship_big_cargo_ship`,
+                    s.`ship_light_fighter`,
+                    s.`ship_heavy_fighter`,
+                    s.`ship_cruiser`,
+                    s.`ship_battleship`,
+                    s.`ship_colony_ship`,
+                    s.`ship_recycler`,
+                    s.`ship_espionage_probe`,
+                    s.`ship_bomber`,
+                    s.`ship_solar_satellite`,
+                    s.`ship_destroyer`,
+                    s.`ship_deathstar`,
+                    s.`ship_battlecruiser`
+                FROM `' . SHIPS . "` AS s
+                WHERE s.`ship_planet_id` = '" . $planetId . "';"
+            )
+        ) : null;
+        $ships = $shipsRow !== null ? (array) $shipsRow : [];
 
         $list_of_ships = [];
         $selected_fleet = filter_input_array(INPUT_POST);
@@ -230,7 +254,23 @@ class Fleet2Controller extends BaseController
      */
     private function buildColoniesBlock()
     {
-        $planets = $this->fleetModel->getAllPlanetsByUserId($this->user['id']);
+        $userId = (int) $this->user['id'];
+        $planets = $userId > 0 ? array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT
+                        p.`planet_id`,
+                        p.`planet_name`,
+                        p.`planet_galaxy`,
+                        p.`planet_system`,
+                        p.`planet_planet`,
+                        p.`planet_type`
+                    FROM `' . PLANETS . "` AS p
+                    WHERE p.`planet_user_id` = '" . $userId . "';"
+                )
+            )
+        ) : [];
         $list_of_planets = [];
 
         if ($planets) {
@@ -268,7 +308,19 @@ class Fleet2Controller extends BaseController
      */
     private function buildAcsBlock()
     {
-        $current_acs = $this->fleetModel->getOngoingAcs($this->user['id']);
+        $userId = (int) $this->user['id'];
+        $current_acs = array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT acs.*
+                    FROM `' . ACS_MEMBERS . '` am
+                    INNER JOIN `' . ACS . '` acs ON acs.`acs_id` = am.`acs_group_id`
+                    INNER JOIN `' . FLEETS . "` f ON f.`fleet_group` = acs.`acs_id`
+                    WHERE am.`acs_user_id` = '" . $userId . "';"
+                )
+            )
+        );
         $acs_fleets = [];
 
         if ($current_acs) {

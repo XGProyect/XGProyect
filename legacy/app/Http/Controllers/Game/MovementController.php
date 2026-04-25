@@ -10,6 +10,8 @@ use App\Services\FormatService;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Entity\FleetEntity;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Objects;
@@ -21,17 +23,21 @@ use Xgp\App\Libraries\Game\Fleets;
 use Xgp\App\Libraries\Premium\Premium;
 use Xgp\App\Libraries\Research\Researches;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Fleet;
 
+/**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class MovementController extends BaseController
 {
+    use PreparesLegacySql;
+
     public const REDIRECT_TARGET = 'game.php?page=movement';
 
     private array $user = [];
     private ?Fleets $fleets = null;
     private ?Researches $research = null;
     private ?Premium $premium = null;
-    private Fleet $fleetModel;
 
     public function __construct(
         private FormatService $formatService,
@@ -46,7 +52,6 @@ class MovementController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Fleet));
 
         $this->user = Users::getInstance()->getUserData();
-        $this->fleetModel = new Fleet();
 
         $this->setUpFleets();
         $this->runAction();
@@ -55,9 +60,19 @@ class MovementController extends BaseController
 
     private function setUpFleets(): void
     {
+        $userId = (int) $this->user['id'];
         $this->fleets = new Fleets(
-            $this->fleetModel->getAllFleetsByUserId((int) $this->user['id']),
-            (int) $this->user['id']
+            $userId > 0 ? array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT f.*
+                        FROM `' . FLEETS . "` f
+                        WHERE f.`fleet_owner` = '" . $userId . "';"
+                    )
+                )
+            ) : [],
+            $userId
         );
 
         $this->research = new Researches(
@@ -212,13 +227,78 @@ class MovementController extends BaseController
             $fleet = $this->fleets->getOwnFleetById($fleet_id);
 
             if (!is_null($fleet) && $fleet->getFleetMess() != 1) {
-                $this->fleetModel->returnFleet(
-                    $fleet,
-                    $this->user['id']
-                );
+                $this->returnFleet($fleet, (int) $this->user['id']);
 
                 Functions::redirect(self::REDIRECT_TARGET);
             }
         }
+    }
+
+    private function returnFleet(FleetEntity $fleet, int $userId): void
+    {
+        DB::transaction(function () use ($fleet, $userId): void {
+            if ($fleet->getFleetGroup() > 0) {
+                $acsOwnerRow = DB::selectOne(
+                    $this->prepareSql(
+                        'SELECT af.`acs_owner`
+                        FROM `' . ACS . "` af
+                        WHERE af.`acs_id` = '" . $fleet->getFleetGroup() . "';"
+                    )
+                );
+                $acsOwner = $acsOwnerRow !== null ? (int) $acsOwnerRow->acs_owner : 0;
+
+                if ($acsOwner > 0 &&
+                    $acsOwner == $fleet->getFleetOwner() &&
+                    $fleet->getFleetMission() == Missions::ATTACK) {
+                    DB::statement(
+                        $this->prepareSql(
+                            'DELETE FROM `' . ACS . "`
+                            WHERE `acs_id` = '" . $fleet->getFleetGroup() . "';"
+                        )
+                    );
+
+                    DB::statement(
+                        $this->prepareSql(
+                            'UPDATE `' . FLEETS . "` f SET
+                                f.`fleet_group` = '0'
+                            WHERE f.`fleet_group` = '" . $fleet->getFleetGroup() . "';"
+                        )
+                    );
+                }
+
+                if ($fleet->getFleetMission() == Missions::ACS) {
+                    DB::statement(
+                        $this->prepareSql(
+                            'UPDATE `' . FLEETS . "` f SET
+                                f.`fleet_group` = '0'
+                            WHERE f.`fleet_id` = '" . $fleet->getFleetId() . "';"
+                        )
+                    );
+                }
+            }
+
+            $base_time = time();
+            $fleet_creation = $fleet->getFleetCreation();
+            $current_time = $base_time - $fleet_creation;
+            $flight_lenght = $fleet->getFleetStartTime() - $fleet_creation;
+            $return_time = $base_time + $current_time;
+
+            if ($fleet->getFleetEndStay() != 0 &&
+                $current_time > $flight_lenght) {
+                $return_time = $base_time + $flight_lenght;
+            }
+
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . FLEETS . "` f SET
+                        f.`fleet_start_time` = '" . $base_time . "',
+                        f.`fleet_end_stay` = '0',
+                        f.`fleet_end_time` = '" . $return_time . "',
+                        f.`fleet_target_owner` = '" . $userId . "',
+                        f.`fleet_mess` = '1'
+                    WHERE f.`fleet_id` = '" . $fleet->getFleetId() . "';"
+                )
+            );
+        });
     }
 }

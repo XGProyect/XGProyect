@@ -188,7 +188,7 @@ class Expedition extends Missions
             ]
         );
 
-        $this->missionsModel->updateDarkMatter((int) $fleet['fleet_owner'], $darkMatterFound);
+        $this->updateDarkMatter((int) $fleet['fleet_owner'], $darkMatterFound);
 
         parent::returnFleet($fleet['fleet_id']);
     }
@@ -230,7 +230,7 @@ class Expedition extends Missions
             }
         }
 
-        $this->missionsModel->updateFleetArrayById([
+        $this->updateFleetArrayById([
             'ships' => FleetsLib::setFleetShipsArray($newShips),
             'fleet_id' => $fleet['fleet_id'],
         ]);
@@ -274,7 +274,7 @@ class Expedition extends Missions
             $fillFleetStorage = $foundAmount;
         }
 
-        $this->missionsModel->updateFleetResourcesById(
+        $this->updateFleetResourcesById(
             (int) $fleet['fleet_id'],
             $typeObtained,
             $fillFleetStorage
@@ -316,7 +316,7 @@ class Expedition extends Missions
         $fleetDelayMultiplier = $this->expeditionService->getFleetDeplay();
         $returnTime = (int) $fleet['fleet_end_time'] - (int) $fleet['fleet_end_stay'];
 
-        $this->missionsModel->updateFleetEndTime(
+        $this->updateFleetEndTime(
             (int) $fleet['fleet_id'],
             ($fleet['fleet_end_time'] + ($returnTime * $fleetDelayMultiplier))
         );
@@ -342,7 +342,7 @@ class Expedition extends Missions
     {
         $returnTime = (int) $fleet['fleet_end_time'] - (int) $fleet['fleet_end_stay'];
 
-        $this->missionsModel->updateFleetEndTime(
+        $this->updateFleetEndTime(
             (int) $fleet['fleet_id'],
             ($fleet['fleet_end_time'] - ($returnTime / 2))
         );
@@ -387,7 +387,7 @@ class Expedition extends Missions
                 ]
             );
 
-            $this->missionsModel->updateLostShipsAndDefensePoints(
+            $this->updateLostShipsAndDefensePoints(
                 $fleet['fleet_owner'],
                 FleetsLib::getFleetShipsArray($fleet['fleet_array'])
             );
@@ -417,8 +417,8 @@ class Expedition extends Missions
                     ]
                 );
 
-                $this->missionsModel->updateLostShipsAndDefensePoints($fleet['fleet_owner'], $lostShips);
-                $this->missionsModel->updateFleetArrayById([
+                $this->updateLostShipsAndDefensePoints($fleet['fleet_owner'], $lostShips);
+                $this->updateFleetArrayById([
                     'ships' => FleetsLib::setFleetShipsArray($newShips),
                     'fleet_id' => $fleet['fleet_id'],
                 ]);
@@ -434,7 +434,7 @@ class Expedition extends Missions
                     ]
                 );
 
-                $this->missionsModel->updateLostShipsAndDefensePoints(
+                $this->updateLostShipsAndDefensePoints(
                     $fleet['fleet_owner'],
                     FleetsLib::getFleetShipsArray($fleet['fleet_array'])
                 );

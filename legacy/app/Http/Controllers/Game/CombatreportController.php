@@ -6,24 +6,28 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use App\Enums\Module;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Combatreport\Report;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Combatreport;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class CombatreportController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private ?Report $report = null;
-    private Combatreport $combatreportModel;
 
     public function __invoke(): void
     {
         Functions::moduleMessage(Functions::isModuleAccesible(Module::CombatReports));
 
         $this->user = Users::getInstance()->getUserData();
-        $this->combatreportModel = new Combatreport();
 
         $this->setUpReport();
 
@@ -39,8 +43,9 @@ class CombatreportController extends BaseController
 
     private function setUpReport(): void
     {
+        $row = DB::selectOne($this->prepareSql('SELECT * FROM `' . REPORTS . '` WHERE `report_rid` = ?'), [filter_input(INPUT_GET, 'report')]);
         $this->report = new Report(
-            [$this->combatreportModel->getReportById(filter_input(INPUT_GET, 'report'))],
+            [$row !== null ? (array) $row : null],
             $this->user['id']
         );
     }

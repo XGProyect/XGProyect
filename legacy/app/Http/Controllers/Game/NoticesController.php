@@ -13,16 +13,21 @@ use Xgp\App\Core\Enumerators\ImportanceEnumerator as Importance;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Libraries\Users\Notes as Note;
-use Xgp\App\Models\Game\Notes;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class NoticesController extends BaseController
 {
+    use PreparesLegacySql;
+
     public const REDIRECT_TARGET = 'game.php?page=notices';
 
     private array $user = [];
     private ?Note $notes = null;
-    private Notes $notesModel;
 
     public function __construct(
         private FormatService $formatService,
@@ -35,8 +40,6 @@ class NoticesController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Notes));
 
         $this->user = Users::getInstance()->getUserData();
-        $this->notesModel = new Notes();
-
         $this->setUpNotes();
         $this->runAction();
 
@@ -91,7 +94,17 @@ class NoticesController extends BaseController
     private function setUpNotes(): void
     {
         $this->notes = new Note(
-            $this->notesModel->getAllNotesByUserId((int) $this->user['id'])
+            array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT n.*
+                        FROM `' . NOTES . "` n
+                        WHERE n.`note_owner` = '" . (int) $this->user['id'] . "'
+                        ORDER BY n.`note_time` DESC;"
+                    )
+                )
+            )
         );
     }
 
@@ -150,7 +163,15 @@ class NoticesController extends BaseController
 
         // edit
         if ($edit_view == 2 && !is_null($note_id)) {
-            $note = $this->notesModel->getNoteById($this->user['id'], $note_id);
+            $noteRow = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT n.*
+                    FROM `' . NOTES . "` n
+                    WHERE n.`note_id` = '" . $note_id . "'
+                        AND n.`note_owner` = '" . $this->user['id'] . "';"
+                )
+            );
+            $note = $noteRow !== null ? (array) $noteRow : [];
             $selected = array_fill_keys(array_keys($selected), null); // clear values keeping the keys
 
             if ($note) {
@@ -182,28 +203,39 @@ class NoticesController extends BaseController
 
     private function createNewNote(array $data): void
     {
-        $this->notesModel->createNewNote(
-            [
-                'note_owner' => $this->user['id'],
-                'note_time' => time(),
-                'note_priority' => is_int($data['u']) ? $data['u'] : Importance::important,
-                'note_title' => !empty($data['title']) ? $data['title'] : __('game/notices.nt_your_subject'),
-                'note_text' => !empty($data['text']) ? $data['text'] : '',
-            ]
-        );
+        $note_data = [
+            'note_owner' => $this->user['id'],
+            'note_time' => time(),
+            'note_priority' => is_int($data['u']) ? $data['u'] : Importance::important,
+            'note_title' => !empty($data['title']) ? $data['title'] : __('game/notices.nt_your_subject'),
+            'note_text' => !empty($data['text']) ? $data['text'] : '',
+        ];
+        $sql = [];
+        foreach ($note_data as $field => $value) {
+            $sql[] = '`' . $field . "` = '" . $value . "'";
+        }
+        DB::statement($this->prepareSql('INSERT INTO `' . NOTES . '` SET ' . join(', ', $sql)));
     }
 
     private function editNote(array $data): void
     {
-        $this->notesModel->updateNoteById(
-            $this->user['id'],
-            $data['n'],
-            [
-                'note_time' => time(),
-                'note_priority' => is_int($data['u']) ? $data['u'] : Importance::important,
-                'note_title' => !empty($data['title']) ? $data['title'] : __('game/notices.nt_your_subject'),
-                'note_text' => !empty($data['text']) ? $data['text'] : '',
-            ]
+        $note_data = [
+            'note_time' => time(),
+            'note_priority' => is_int($data['u']) ? $data['u'] : Importance::important,
+            'note_title' => !empty($data['title']) ? $data['title'] : __('game/notices.nt_your_subject'),
+            'note_text' => !empty($data['text']) ? $data['text'] : '',
+        ];
+        $sql = [];
+        foreach ($note_data as $field => $value) {
+            $sql[] = 'n.`' . $field . "` = '" . $value . "'";
+        }
+        DB::statement(
+            $this->prepareSql(
+                'UPDATE `' . NOTES . '` n SET '
+                . join(', ', $sql)
+                . " WHERE n.`note_owner` = '" . $this->user['id'] . "'
+                    AND n.`note_id` = '" . $data['n'] . "';"
+            )
         );
     }
 
@@ -217,9 +249,12 @@ class NoticesController extends BaseController
             }
         }
 
-        $this->notesModel->deleteNoteById(
-            $this->user['id'],
-            join(',', $delete_string)
+        DB::statement(
+            $this->prepareSql(
+                'DELETE FROM `' . NOTES . "`
+                WHERE `note_owner` = '" . $this->user['id'] . "'
+                    AND `note_id` IN (" . join(',', $delete_string) . ');'
+            )
         );
     }
 }

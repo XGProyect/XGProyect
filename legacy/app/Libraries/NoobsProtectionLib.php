@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace Xgp\App\Libraries;
 
 use App\Services\SettingsService;
-use Xgp\App\Models\Libraries\NoobsProtectionLib as NoobsProtectionLibModel;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class NoobsProtectionLib
 {
-    private NoobsProtectionLibModel $noobsprotectionlibModel;
+    use PreparesLegacySql;
+
     private $protection;
     private $protectiontime;
     private $protectionmulti;
@@ -20,8 +22,6 @@ class NoobsProtectionLib
 
     public function __construct()
     {
-        $this->noobsprotectionlibModel = new NoobsProtectionLibModel();
-
         // set configs
         $this->setAllSettings();
     }
@@ -77,7 +77,25 @@ class NoobsProtectionLib
 
     public function returnPoints(int $current_user_id, int $other_user_id): array
     {
-        return $this->noobsprotectionlibModel->returnBothPartiesPoints($current_user_id, $other_user_id);
+        $row = DB::selectOne(
+            $this->prepareSql(
+                'SELECT
+                    (
+                        SELECT
+                            `user_statistic_total_points`
+                        FROM `' . USERS_STATISTICS . '`
+                        WHERE `user_statistic_user_id` = ' . $current_user_id . '
+                    ) AS user_points,
+                    (
+                        SELECT
+                            `user_statistic_total_points`
+                        FROM `' . USERS_STATISTICS . '`
+                        WHERE `user_statistic_user_id` = ' . $other_user_id . '
+                    ) AS target_points'
+            )
+        );
+
+        return $row !== null ? (array) $row : [];
     }
 
     public function isRankVisible(int $user_auth_level): bool

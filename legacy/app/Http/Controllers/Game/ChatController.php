@@ -7,17 +7,22 @@ namespace Xgp\App\Http\Controllers\Game;
 use App\Enums\Module;
 use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Messages;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class ChatController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $_receiver_data = [];
     private array $_message_data = [];
-    private Messages $messagesModel;
 
     public function __construct(private FormatService $formatService)
     {
@@ -28,7 +33,6 @@ class ChatController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Messages));
 
         $this->user = Users::getInstance()->getUserData();
-        $this->messagesModel = new Messages();
 
         $this->runAction();
 
@@ -55,7 +59,15 @@ class ChatController extends BaseController
         $message_sent = filter_input_array(INPUT_POST);
 
         if ($write_to) {
-            $this->_receiver_data = $this->messagesModel->getHomePlanet($write_to);
+            $row = (int) $write_to > 0 ? DB::selectOne(
+                $this->prepareSql(
+                    'SELECT u.`id`, u.`name`, p.`planet_galaxy`, p.`planet_system`, p.`planet_planet`
+                    FROM ' . PLANETS . ' AS p
+                    INNER JOIN ' . USERS . " as u ON p.planet_user_id = u.id
+                    WHERE p.`planet_user_id` = '" . (int) $write_to . "';"
+                )
+            ) : null;
+            $this->_receiver_data = $row !== null ? (array) $row : null;
 
             if (!$this->_receiver_data) {
                 Functions::redirect('game.php?page=messages');

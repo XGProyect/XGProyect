@@ -5,21 +5,18 @@ declare(strict_types=1);
 namespace Xgp\App\Libraries;
 
 use App\Services\SettingsService;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Objects;
-use Xgp\App\Models\Libraries\StatisticsLibrary as StatisticsLib;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class StatisticsLibrary
 {
-    private StatisticsLib $statisticsLibraryModel;
-    private $time;
+    use PreparesLegacySql;
 
-    public function __construct()
-    {
-        $this->statisticsLibraryModel = new StatisticsLib();
-    }
+    private $time;
 
     /**
      * calculatePoints
@@ -72,9 +69,18 @@ class StatisticsLibrary
         $objects = Objects::getInstance()->getObjects();
 
         if ($what == 'research') {
-            $objectsToUpdate = $this->statisticsLibraryModel->getResearchToUpdate($userId);
+            $row = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT * FROM `' . RESEARCH . "` ttu WHERE ttu.research_user_id = '" . $userId . "';"
+                )
+            );
+            $objectsToUpdate = $row !== null ? (array) $row : [];
         } else {
-            $objectsToUpdate = $this->statisticsLibraryModel->getPlanetElementToUpdate($what, $planet_id);
+            $row = DB::selectOne(
+                'SELECT * FROM `' . config('DB_PREFIX') . $what . '` ttu
+                WHERE ttu.' . rtrim($what, 's') . "_planet_id = '" . $planet_id . "';"
+            );
+            $objectsToUpdate = $row !== null ? (array) $row : [];
         }
 
         if (!is_null($objects)) {
@@ -97,7 +103,13 @@ class StatisticsLibrary
             if ($points >= 0) {
                 $what = strtr($what, ['research' => 'technology']);
 
-                $this->statisticsLibraryModel->updatePoints($what, $points, $userId);
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE ' . USERS_STATISTICS . ' SET
+                            `user_statistic_' . $what . "_points` = '" . $points . "'
+                        WHERE `user_statistic_user_id` = '" . $userId . "'"
+                    )
+                );
 
                 return true;
             }
@@ -129,7 +141,34 @@ class StatisticsLibrary
     private function makeUserRank(): void
     {
         // GET ALL DATA FROM THE USERS TO UPDATE
-        $all_stats_data = $this->statisticsLibraryModel->getAllUserStatsData();
+        $all_stats_data = array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT
+                        us.`user_statistic_user_id`,
+                        us.`user_statistic_technology_rank`,
+                        us.`user_statistic_technology_points`,
+                        us.`user_statistic_buildings_rank`,
+                        us.`user_statistic_buildings_points`,
+                        us.`user_statistic_defenses_rank`,
+                        us.`user_statistic_defenses_points`,
+                        us.`user_statistic_ships_rank`,
+                        us.`user_statistic_ships_points`,
+                        us.`user_statistic_total_rank`,
+                        (
+                            us.`user_statistic_buildings_points`
+                            + us.`user_statistic_defenses_points`
+                            + us.`user_statistic_ships_points`
+                            + us.`user_statistic_technology_points`
+                        ) AS total_points
+                    FROM ' . USERS_STATISTICS . ' us
+                    INNER JOIN ' . USERS . ' AS u
+                        ON us.`user_statistic_user_id` = u.`id` AND u.`authlevel` <= ' . app(SettingsService::class)->getInt('stat_admin_level') . '
+                    ORDER BY us.`user_statistic_user_id` ASC;'
+                )
+            )
+        );
 
         // ANY USER ?
         if (empty($all_stats_data)) {
@@ -265,7 +304,7 @@ class StatisticsLibrary
 								user_statistic_update_time = VALUES(user_statistic_update_time);';
 
         // RUN QUERY
-        $this->statisticsLibraryModel->runSingleQuery($update_query);
+        DB::statement($this->prepareSql($update_query));
 
         // MEMORY CLEAN UP
         unset($all_stats_data, $build, $defs, $ships, $tech, $rank, $update_query, $values);
@@ -274,7 +313,30 @@ class StatisticsLibrary
     private function makeAllyRank(): void
     {
         // GET ALL DATA FROM THE USERS TO UPDATE
-        $all_stats_data = $this->statisticsLibraryModel->getAllAllianceStatsData();
+        $all_stats_data = array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT a.`alliance_id`,
+                    ass.alliance_statistic_technology_rank,
+                    ass.alliance_statistic_buildings_rank,
+                    ass.alliance_statistic_defenses_rank,
+                    ass.alliance_statistic_ships_rank,
+                    ass.alliance_statistic_total_rank,
+                    SUM(us.user_statistic_buildings_points) AS buildings_points,
+                    SUM(us.user_statistic_defenses_points) AS defenses_points,
+                    SUM(us.user_statistic_ships_points) AS ships_points,
+                    SUM(us.user_statistic_technology_points) AS technology_points,
+                    SUM(us.user_statistic_total_points) AS total_points
+                    FROM ' . ALLIANCE . ' AS a
+                    INNER JOIN ' . USERS . ' AS u
+                        ON a.`alliance_id` = u.`ally_id` AND u.`authlevel` <= ' . app(SettingsService::class)->getInt('stat_admin_level') . '
+                        INNER JOIN ' . USERS_STATISTICS . ' AS us ON us.`user_statistic_user_id` = u.`id`
+                        INNER JOIN ' . ALLIANCE_STATISTICS . ' AS ass ON ass.`alliance_statistic_alliance_id` = a.`alliance_id`
+                    GROUP BY alliance_id'
+                )
+            )
+        );
 
         // ANY ALLIANCE ?
         if (empty($all_stats_data)) {
@@ -423,7 +485,7 @@ class StatisticsLibrary
                             alliance_statistic_update_time = VALUES(alliance_statistic_update_time);';
 
         // RUN QUERY
-        $this->statisticsLibraryModel->runSingleQuery($update_query);
+        DB::statement($this->prepareSql($update_query));
 
         // MEMORY CLEAN UP
         unset($all_stats_data, $build, $defs, $ships, $tech, $rank, $update_query, $values);

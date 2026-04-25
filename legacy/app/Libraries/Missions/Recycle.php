@@ -45,7 +45,7 @@ class Recycle extends Missions
         $recycled_resources = $this->calculateCapacity($fleet_row);
 
         if ($fleet_row['fleet_mess'] == 0 && $fleet_row['fleet_start_time'] <= time()) {
-            $this->missionsModel->updatePlanetDebrisFieldAndFleet([
+            $this->updatePlanetDebrisFieldAndFleet([
                 'recycled' => [
                     'metal' => $recycled_resources['metal'],
                     'crystal' => $recycled_resources['crystal'],
@@ -101,7 +101,7 @@ class Recycle extends Missions
 
     private function calculateCapacity(array $fleet_row): array
     {
-        $target_planet = $this->missionsModel->getPlanetDebris([
+        $target_planet = $this->getPlanetDebris([
             'coords' => [
                 'galaxy' => $fleet_row['fleet_end_galaxy'],
                 'system' => $fleet_row['fleet_end_system'],

@@ -68,7 +68,7 @@ class Destroy extends Missions
         $errorHandler = null;
         $exceptionHandler = null;
 
-        $target_planet = $this->missionsModel->getAllPlanetDataByCoords([
+        $target_planet = $this->getAllPlanetDataByCoords([
             'coords' => [
                 'galaxy' => $fleet_row['fleet_end_galaxy'],
                 'system' => $fleet_row['fleet_end_system'],
@@ -84,13 +84,13 @@ class Destroy extends Missions
             LangManager::getInstance()->setImplementation(new AttackLang($this->resource));
 
             if ($fleet_row['fleet_group'] > 0) {
-                $this->missionsModel->deleteAcsFleetById($fleet_row['fleet_group']);
-                $this->missionsModel->updateAcsFleetStatusByGroupId($fleet_row['fleet_group']);
+                $this->deleteAcsFleetById($fleet_row['fleet_group']);
+                $this->updateAcsFleetStatusByGroupId($fleet_row['fleet_group']);
             } else {
                 parent::returnFleet($fleet_row['fleet_id']);
             }
 
-            $targetUser = $this->missionsModel->getAllUserDataByUserId($target_planet['planet_user_id']);
+            $targetUser = $this->getAllUserDataByUserId($target_planet['planet_user_id']);
             $targetUserId = $targetUser['id'];
 
             UpdatesLibrary::updatePlanetResources($targetUser, $target_planet, time());
@@ -101,14 +101,14 @@ class Destroy extends Missions
 
             // If we have a ACS attack
             if ($fleet_row['fleet_group'] != 0) {
-                $fleets = $this->missionsModel->getAllAcsFleetsByGroupId($fleet_row['fleet_group']);
+                $fleets = $this->getAllAcsFleetsByGroupId($fleet_row['fleet_group']);
                 $attackers = $this->getPlayerGroupFromQuery($fleets);
             } else {
                 $attackers = $this->getPlayerGroup($fleet_row);
             }
 
             // defenders fleet sum
-            $def = $this->missionsModel->getAllFleetsByEndCoordsAndTimes(
+            $def = $this->getAllFleetsByEndCoordsAndTimes(
                 [
                     'coords' => [
                         'galaxy' => $fleet_row['fleet_end_galaxy'],
@@ -197,7 +197,7 @@ class Destroy extends Missions
             $this->createNewReportAndSendIt($fleet_row, $report, $target_planet['planet_name']);
 
             if ($this->_destruction['destroyed'] == 'moon') {
-                $this->missionsModel->updateFleetsStatusToMakeThemReturn([
+                $this->updateFleetsStatusToMakeThemReturn([
                     'coords' => [
                         'galaxy' => $fleet_row['fleet_end_galaxy'],
                         'system' => $fleet_row['fleet_end_system'],
@@ -208,7 +208,7 @@ class Destroy extends Missions
                 ]);
 
                 if ($targetUser['current_planet'] == $target_planet['planet_id']) {
-                    $this->missionsModel->updateUserCurrentPlanetByCoordsAndUserId([
+                    $this->updateUserCurrentPlanetByCoordsAndUserId([
                         'coords' => [
                             'galaxy' => $fleet_row['fleet_end_galaxy'],
                             'system' => $fleet_row['fleet_end_system'],
@@ -290,7 +290,7 @@ class Destroy extends Missions
                     $lostfleet[$shiptype] = $ship->getCount();
                 }
 
-                $this->missionsModel->updateLostShipsAndDefensePoints($player->getId(), $lostfleet);
+                $this->updateLostShipsAndDefensePoints($player->getId(), $lostfleet);
             }
         }
     }
@@ -300,7 +300,7 @@ class Destroy extends Missions
         list($metal, $crystal) = $report->getDebris();
 
         if (($metal + $crystal) > 0) {
-            $this->missionsModel->updatePlanetDebrisByCoords(
+            $this->updatePlanetDebrisByCoords(
                 [
                     'time' => time(),
                     'debris' => [
@@ -332,7 +332,7 @@ class Destroy extends Missions
             }
         }
 
-        $player_info = $this->missionsModel->getTechnologiesByUserId($idPlayer);
+        $player_info = $this->getTechnologiesByUserId($idPlayer);
 
         $player = new Player($idPlayer, [$fleet]);
         $player->setTech(
@@ -379,7 +379,7 @@ class Destroy extends Missions
                     if (!empty($target_user) && $target_user['id'] == $idPlayer) {
                         $player_info = $target_user;
                     } else {
-                        $player_info = $this->missionsModel->getTechnologiesByUserId($idPlayer);
+                        $player_info = $this->getTechnologiesByUserId($idPlayer);
                         $this->setHyperspaceTechLevel($idPlayer, $player_info['research_hyperspace_technology']);
                     }
 
@@ -470,7 +470,7 @@ class Destroy extends Missions
         $destroyed = ($report->getLastRoundNumber() == 1) ? 1 : 0;
         $report_data = $report . $this->buildDestroyReport($fleet_row, $report);
 
-        $this->missionsModel->insertReport([
+        $this->insertReport([
             'owners' => $owners,
             'rid' => $rid,
             'content' => addslashes($report_data),
@@ -633,7 +633,7 @@ class Destroy extends Missions
                     if ($this->_destruction['destroyed'] == 'ds') {
                         $emptyFleets[] = $idFleet;
                     } else {
-                        $this->missionsModel->updateReturningFleetData([
+                        $this->updateReturningFleetData([
                             'ships' => FleetsLib::setFleetShipsArray($fleetArray),
                             'amount' => $totalCount,
                             'stolen' => [
@@ -652,7 +652,7 @@ class Destroy extends Missions
         $id_string = join(',', $emptyFleets);
 
         if (!empty($id_string)) {
-            $this->missionsModel->deleteMultipleFleetsByIds($id_string);
+            $this->deleteMultipleFleetsByIds($id_string);
         }
 
         return $steal;
@@ -695,7 +695,7 @@ class Destroy extends Missions
         }
 
         // Updating defenses and ships on planet
-        $this->missionsModel->updatePlanetLossesById([
+        $this->updatePlanetLossesById([
             'ships' => $fleetArray,
             'stolen' => [
                 'metal' => $steal['metal'],
@@ -709,7 +709,7 @@ class Destroy extends Missions
         $id_string = join(',', $emptyFleets);
 
         if (!empty($id_string)) {
-            $this->missionsModel->deleteMultipleFleetsByIds($id_string);
+            $this->deleteMultipleFleetsByIds($id_string);
         }
     }
 

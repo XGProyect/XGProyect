@@ -23,7 +23,7 @@ class Colonize extends Missions
     public function colonizeMission($fleet_row): void
     {
         if ($fleet_row['fleet_mess'] == 0) {
-            $colonization_check = $this->missionsModel->getPlanetAndUserCountsCounts([
+            $colonization_check = $this->getPlanetAndUserCountsCounts([
                 'id' => $fleet_row['fleet_owner'],
                 'coords' => [
                     'galaxy' => $fleet_row['fleet_end_galaxy'],
@@ -57,7 +57,7 @@ class Colonize extends Missions
                         $this->colonizeMessage($fleet_row['fleet_owner'], $message[2], $fleet_row['fleet_start_time']);
 
                         if ($fleet_row['fleet_amount'] == 1) {
-                            $this->missionsModel->updateColonizationStatistics([
+                            $this->updateColonizationStatistics([
                                 'points' => StatisticsLibrary::calculatePoints(208, 1),
                                 'coords' => [
                                     'galaxy' => $fleet_row['fleet_start_galaxy'],
@@ -71,7 +71,7 @@ class Colonize extends Missions
                         } else {
                             parent::storeResources($fleet_row);
 
-                            $this->missionsModel->updateColonizatonReturningFleet([
+                            $this->updateColonizatonReturningFleet([
                                 'ships' => $this->buildNewFleet($fleet_row['fleet_array']),
                                 'points' => StatisticsLibrary::calculatePoints(208, 1),
                                 'fleet_id' => $fleet_row['fleet_id'],

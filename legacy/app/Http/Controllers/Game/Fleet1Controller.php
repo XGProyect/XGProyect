@@ -9,6 +9,8 @@ use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
 use App\Services\Game\Formulas\OfficerService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
@@ -18,20 +20,21 @@ use Xgp\App\Libraries\Game\Fleets;
 use Xgp\App\Libraries\Premium\Premium;
 use Xgp\App\Libraries\Research\Researches;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Fleet;
 
 /**
  * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class Fleet1Controller extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $planet = [];
     private ?Fleets $_fleets = null;
     private ?Researches $_research = null;
     private ?Premium $_premium = null;
     private int $_ship_count = 0;
-    private Fleet $fleetModel;
     private Objects $objects;
 
     public function __construct(
@@ -47,7 +50,6 @@ class Fleet1Controller extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->fleetModel = new Fleet();
         $this->objects = new Objects();
 
         $this->setUpFleets();
@@ -56,9 +58,19 @@ class Fleet1Controller extends BaseController
 
     private function setUpFleets(): void
     {
+        $userId = (int) $this->user['id'];
         $this->_fleets = new Fleets(
-            $this->fleetModel->getAllFleetsByUserId((int) $this->user['id']),
-            (int) $this->user['id']
+            $userId > 0 ? array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT f.*
+                        FROM `' . FLEETS . "` f
+                        WHERE f.`fleet_owner` = '" . $userId . "';"
+                    )
+                )
+            ) : [],
+            $userId
         );
 
         $this->_research = new Researches(
@@ -114,7 +126,29 @@ class Fleet1Controller extends BaseController
         $objects = $this->objects->getObjects();
         $price = $this->objects->getPrice();
 
-        $ships = $this->fleetModel->getShipsByPlanetId($this->planet['planet_id']);
+        $planetId = (int) $this->planet['planet_id'];
+        $shipsRow = $planetId > 0 ? DB::selectOne(
+            $this->prepareSql(
+                'SELECT
+                    s.`ship_small_cargo_ship`,
+                    s.`ship_big_cargo_ship`,
+                    s.`ship_light_fighter`,
+                    s.`ship_heavy_fighter`,
+                    s.`ship_cruiser`,
+                    s.`ship_battleship`,
+                    s.`ship_colony_ship`,
+                    s.`ship_recycler`,
+                    s.`ship_espionage_probe`,
+                    s.`ship_bomber`,
+                    s.`ship_solar_satellite`,
+                    s.`ship_destroyer`,
+                    s.`ship_deathstar`,
+                    s.`ship_battlecruiser`
+                FROM `' . SHIPS . "` AS s
+                WHERE s.`ship_planet_id` = '" . $planetId . "';"
+            )
+        ) : null;
+        $ships = $shipsRow !== null ? (array) $shipsRow : [];
 
         $list_of_ships = [];
 

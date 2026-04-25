@@ -16,19 +16,21 @@ use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 use App\Enums\Module;
-use Xgp\App\Models\Game\Resources;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class ResourcesettingsController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $planet = [];
     private $resource;
     private $prodGrid;
     private $reslist;
-    private Resources $resourcesModel;
     private Users $userLibrary;
 
     public function __construct(
@@ -44,7 +46,6 @@ class ResourcesettingsController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->resourcesModel = new Resources();
         $this->resource = Objects::getInstance()->getObjects();
         $this->prodGrid = Objects::getInstance()->getProduction();
         $this->reslist = Objects::getInstance()->getObjectsList();
@@ -249,7 +250,14 @@ class ResourcesettingsController extends BaseController
                 }
             }
 
-            $this->resourcesModel->updateCurrentPlanet($this->planet, $SubQry);
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . PLANETS . "` SET
+                        `planet_id` = '" . $this->planet['planet_id'] . "'
+                        $SubQry
+                        WHERE `planet_id` = '" . $this->planet['planet_id'] . "';"
+                )
+            );
 
             Functions::redirect('game.php?page=resourceSettings');
         }

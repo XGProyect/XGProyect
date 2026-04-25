@@ -23,7 +23,7 @@ class Stay extends Missions
      */
     public function stayMission($fleet_row)
     {
-        $friendly_planet = $this->missionsModel->getFriendlyPlanetData([
+        $friendly_planet = $this->getFriendlyPlanetData([
             'coords' => [
                 'start' => [
                     'galaxy' => $fleet_row['fleet_start_galaxy'],
@@ -119,7 +119,7 @@ class Stay extends Missions
      */
     private function startStay($fleet_id)
     {
-        $this->missionsModel->updateFleetStatusToStayById($fleet_id);
+        $this->updateFleetStatusToStayById($fleet_id);
     }
 
     /**

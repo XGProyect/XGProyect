@@ -8,19 +8,24 @@ use App\Enums\Module;
 use App\Services\TimingService;
 use Exception;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Entity\BuddyEntity;
 use Xgp\App\Core\Enumerators\BuddiesStatusEnumerator as BuddiesStatus;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Buddies\Buddy;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Buddies;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class BuddiesController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private ?Buddy $buddy = null;
-    private Buddies $buddiesModel;
 
     public function __construct(private TimingService $timingService)
     {
@@ -31,7 +36,6 @@ class BuddiesController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Buddies));
 
         $this->user = Users::getInstance()->getUserData();
-        $this->buddiesModel = new Buddies();
 
         // init a new buddy object
         $this->setUpBudies();
@@ -50,9 +54,20 @@ class BuddiesController extends BaseController
 
     private function setUpBudies(): void
     {
+        $userId = (int) $this->user['id'];
         $this->buddy = new Buddy(
-            $this->buddiesModel->getBuddiesByUserId((int) $this->user['id']),
-            (int) $this->user['id']
+            array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT *
+                        FROM `' . BUDDY . "`
+                        WHERE `buddy_sender` = '" . $userId . "'
+                            OR `buddy_receiver` = '" . $userId . "'"
+                    )
+                )
+            ),
+            $userId
         );
     }
 
@@ -101,9 +116,14 @@ class BuddiesController extends BaseController
     {
         $bid = filter_input(INPUT_GET, 'bid', FILTER_VALIDATE_INT);
 
-        $buddy = new BuddyEntity(
-            $this->buddiesModel->getBuddyDataByBuddyId($bid)
+        $buddyRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT *
+                FROM `' . BUDDY . "`
+                WHERE `buddy_id` = '" . (int) $bid . "'"
+            )
         );
+        $buddy = new BuddyEntity($buddyRow !== null ? (array) $buddyRow : false);
 
         if ($buddy->getBuddyStatus() == BuddiesStatus::isNotBuddy) {
             if ($buddy->getBuddySender() != $this->user['id']) {
@@ -119,20 +139,39 @@ class BuddiesController extends BaseController
             }
         }
 
-        $this->buddiesModel->removeBuddyById($bid, $this->user['id']);
+        DB::statement(
+            $this->prepareSql(
+                'DELETE FROM `' . BUDDY . "`
+                WHERE `buddy_id` = '" . (int) $bid . "'
+                    AND (`buddy_receiver` = '" . (int) $this->user['id'] . "'
+                            OR `buddy_sender` = '" . (int) $this->user['id'] . "')"
+            )
+        );
     }
 
     private function acceptRequest(): void
     {
         $bid = filter_input(INPUT_GET, 'bid', FILTER_VALIDATE_INT);
 
-        $buddy = new BuddyEntity(
-            $this->buddiesModel->getBuddyDataByBuddyId($bid)
+        $buddyRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT *
+                FROM `' . BUDDY . "`
+                WHERE `buddy_id` = '" . (int) $bid . "'"
+            )
         );
+        $buddy = new BuddyEntity($buddyRow !== null ? (array) $buddyRow : false);
 
         $this->sendMessage($buddy->getBuddySender(), 3);
 
-        $this->buddiesModel->setBuddyStatusById($bid, $this->user['id']);
+        DB::statement(
+            $this->prepareSql(
+                'UPDATE `' . BUDDY . "`
+                    SET `buddy_status` = '1'
+                WHERE `buddy_id` = '" . (int) $bid . "'
+                    AND `buddy_receiver` = '" . (int) $this->user['id'] . "'"
+            )
+        );
     }
 
     private function sendRequest(): void
@@ -142,8 +181,22 @@ class BuddiesController extends BaseController
 
         $buddy = null;
 
-        if ($buddy_data = $this->buddiesModel->getBuddyIdByReceiverAndSender($user, $this->user['id'])) {
-            $buddy = new BuddyEntity($buddy_data);
+        $buddyRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT `buddy_id`
+                FROM `' . BUDDY . "`
+                WHERE (
+                    `buddy_receiver` = '" . (int) $this->user['id'] . "'
+                    AND `buddy_sender` = '" . (int) $user . "'
+                ) OR (
+                    `buddy_receiver` = '" . (int) $user . "'
+                    AND `buddy_sender` = '" . (int) $this->user['id'] . "'
+                )"
+            )
+        );
+
+        if ($buddyRow !== null) {
+            $buddy = new BuddyEntity((array) $buddyRow);
         }
 
         if (!is_null($buddy) && $buddy->getBuddyId() != 0) {
@@ -152,10 +205,15 @@ class BuddiesController extends BaseController
 
         $this->sendMessage($user, 4);
 
-        $this->buddiesModel->insertNewBuddyRequest(
-            $user,
-            $this->user['id'],
-            $text
+        DB::statement(
+            $this->prepareSql(
+                'INSERT INTO `' . BUDDY . "` SET
+                    `buddy_sender` = '" . (int) $this->user['id'] . "',
+                    `buddy_receiver` = '" . (int) $user . "',
+                    `buddy_status` = '0',
+                    `buddy_request_text` = ?"
+            ),
+            [strip_tags($text)]
         );
     }
 
@@ -203,7 +261,14 @@ class BuddiesController extends BaseController
             Functions::message(__('game/buddies.bu_cannot_request_yourself'), 'game.php?page=buddies', 2, true);
         }
 
-        $user = $this->buddiesModel->checkIfBuddyExists($user);
+        $userRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT `id`, `name`
+                FROM `' . USERS . "`
+                WHERE `id` = '" . (int) $user . "'"
+            )
+        );
+        $user = $userRow !== null ? (array) $userRow : [];
 
         if (!$user) {
             Functions::redirect('game.php?page=buddies');
@@ -265,8 +330,22 @@ class BuddiesController extends BaseController
             $id_to_get = $buddy->getBuddySender();
         }
 
-        // get user data
-        $user_data = $this->buddiesModel->getBuddyDataById($id_to_get);
+        $userRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT u.`id`,
+                    u.`name`,
+                    u.`galaxy`,
+                    u.`system`,
+                    u.`planet`,
+                    u.`onlinetime`,
+                    a.`alliance_id`,
+                    a.`alliance_name`
+                FROM ' . USERS . ' AS u
+                LEFT JOIN `' . ALLIANCE . "` AS a ON a.`alliance_id` = u.`ally_id`
+                WHERE u.`id` = '" . $id_to_get . "'"
+            )
+        );
+        $user_data = $userRow !== null ? (array) $userRow : null;
 
         return [
             'id' => $user_data['id'],

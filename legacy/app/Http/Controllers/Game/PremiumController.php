@@ -14,15 +14,17 @@ use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Officier;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class PremiumController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
-    private Officier $officierModel;
     private Objects $objects;
 
     public function __construct(
@@ -36,7 +38,6 @@ class PremiumController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Officers));
 
         $this->user = Users::getInstance()->getUserData();
-        $this->officierModel = new Officier();
         $this->objects = new Objects();
 
         $this->runAction();
@@ -79,7 +80,16 @@ class PremiumController extends BaseController
                     $time_to_add = time() + $set_time;
                 }
 
-                $this->officierModel->setPremium($this->user['id'], $price, $officier, $time_to_add);
+                if ($this->user['id'] > 0) {
+                    DB::statement(
+                        $this->prepareSql(
+                            'UPDATE `' . PREMIUM . "` SET
+                                `premium_dark_matter` = `premium_dark_matter` - '" . $price . "',
+                                `" . $officier . "` = '" . $time_to_add . "'
+                            WHERE `premium_user_id` = '" . $this->user['id'] . "';"
+                        )
+                    );
+                }
 
                 Functions::redirect('game.php?page=premium');
             }

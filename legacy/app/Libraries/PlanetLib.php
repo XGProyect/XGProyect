@@ -6,20 +6,16 @@ namespace Xgp\App\Libraries;
 
 use App\Models\Planets;
 use App\Services\SettingsService;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
-use Xgp\App\Models\Libraries\PlanetLib as PlanetLibModel;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class PlanetLib
 {
-    private PlanetLibModel $planetslibModel;
-
-    public function __construct()
-    {
-        $this->planetslibModel = new PlanetLibModel();
-    }
+    use PreparesLegacySql;
 
     /**
      * @param int     $galaxy   Galaxy
@@ -32,7 +28,11 @@ class PlanetLib
      */
     public function setNewPlanet($galaxy, $system, $position, $owner, $name = '', $main = false): bool
     {
-        $planetExists = $this->planetslibModel->checkPlanetExists($galaxy, $system, $position);
+        $planetExists = Planets::where([
+            'planet_galaxy' => $galaxy,
+            'planet_system' => $system,
+            'planet_planet' => $position,
+        ])->first() !== null;
 
         if (!$planetExists) {
             $planet = Formulas::getPlanetSize($position, $main);
@@ -94,7 +94,27 @@ class PlanetLib
      */
     public function setNewMoon($galaxy, $system, $position, $owner, $name = '', $chance = 0, $size = 0, $max_fields = 1, $min_temp = 0, $max_temp = 0)
     {
-        $MoonPlanet = $this->planetslibModel->checkMoonExists($galaxy, $system, $position);
+        $moonRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT pm2.`planet_id`,
+                    pm2.`planet_name`,
+                    pm2.`planet_temp_max`,
+                    pm2.`planet_temp_min`,
+                    (
+                        SELECT
+                            pm.`planet_id` AS `id_moon`
+                        FROM `' . PLANETS . "` AS pm
+                            WHERE pm.`planet_galaxy` = '" . $galaxy . "' AND
+                                    pm.`planet_system` = '" . $system . "' AND
+                                    pm.`planet_planet` = '" . $position . "' AND
+                                    pm.`planet_type` = 3) AS `id_moon`
+                    FROM `" . PLANETS . "` AS pm2
+                    WHERE pm2.`planet_galaxy` = '" . $galaxy . "' AND
+                            pm2.`planet_system` = '" . $system . "' AND
+                            pm2.`planet_planet` = '" . $position . "';"
+            )
+        );
+        $MoonPlanet = $moonRow !== null ? (array) $moonRow : null;
 
         if ($MoonPlanet['id_moon'] == '' && $MoonPlanet['planet_id'] != 0) {
             $SizeMin = 2000 + ($chance * 100);
@@ -104,24 +124,38 @@ class PlanetLib
             $size = $size == 0 ? mt_rand(2000, 6000) : $size;
             $max_fields = $max_fields == 0 ? 1 : $max_fields;
 
-            $this->planetslibModel->createNewPlanet(
-                [
-                    'planet_name' => $name == '' ? __('game/global.moon') : $name,
-                    'planet_user_id' => $owner,
-                    'planet_galaxy' => $galaxy,
-                    'planet_system' => $system,
-                    'planet_planet' => $position,
-                    'planet_last_update' => time(),
-                    'planet_type' => PlanetTypesEnumerator::MOON,
-                    'planet_image' => 'mond',
-                    'planet_diameter' => $size,
-                    'planet_field_max' => $max_fields,
-                    'planet_temp_min' => $min_temp == 0 ? $temp['min'] : $min_temp,
-                    'planet_temp_max' => $max_temp == 0 ? $temp['max'] : $max_temp,
-                    'planet_b_building_id' => '0',
-                    'planet_b_hangar_id' => '',
-                ]
-            );
+            $data = [
+                'planet_name' => $name == '' ? __('game/global.moon') : $name,
+                'planet_user_id' => $owner,
+                'planet_galaxy' => $galaxy,
+                'planet_system' => $system,
+                'planet_planet' => $position,
+                'planet_last_update' => time(),
+                'planet_type' => PlanetTypesEnumerator::MOON,
+                'planet_image' => 'mond',
+                'planet_diameter' => $size,
+                'planet_field_max' => $max_fields,
+                'planet_temp_min' => $min_temp == 0 ? $temp['min'] : $min_temp,
+                'planet_temp_max' => $max_temp == 0 ? $temp['max'] : $max_temp,
+                'planet_b_building_id' => '0',
+                'planet_b_hangar_id' => '',
+            ];
+
+            $insert_query = 'INSERT INTO `' . PLANETS . '` SET ';
+
+            foreach ($data as $column => $value) {
+                $insert_query .= '`' . $column . "` = '" . $value . "', ";
+            }
+
+            $insert_query = substr_replace($insert_query, '', -2) . ';';
+
+            DB::statement($this->prepareSql($insert_query));
+
+            $planet_id = (int) DB::getPdo()->lastInsertId();
+
+            DB::statement($this->prepareSql('INSERT INTO `' . BUILDINGS . "` SET `building_planet_id` = '" . $planet_id . "';"));
+            DB::statement($this->prepareSql('INSERT INTO `' . DEFENSES . "` SET `defense_planet_id` = '" . $planet_id . "';"));
+            DB::statement($this->prepareSql('INSERT INTO `' . SHIPS . "` SET `ship_planet_id` = '" . $planet_id . "';"));
 
             return true;
         }

@@ -10,11 +10,17 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\ResourceMarket;
 use App\Enums\Module;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Trader;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class TraderController extends BaseController
 {
+    use PreparesLegacySql;
+
     public const RESOURCES = ['metal', 'crystal', 'deuterium'];
     public const PERCENTAGES = [10, 50, 100];
 
@@ -22,7 +28,6 @@ class TraderController extends BaseController
     private array $planet = [];
     private ?ResourceMarket $trader;
     private string $error = '';
-    private Trader $traderModel;
 
     public function __construct(private FormatService $formatService)
     {
@@ -34,8 +39,6 @@ class TraderController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->traderModel = new Trader();
-
         $this->setUpTrader();
         $this->runAction();
         $this->buildPage();
@@ -89,12 +92,16 @@ class TraderController extends BaseController
     {
         if ($this->trader->{'is' . $resource . 'StorageFillable'}($percentage)) {
             if ($this->trader->isRefillPayable($resource, $percentage)) {
-                $this->traderModel->refillStorage(
-                    $this->trader->{'getPriceToFill' . $percentage . 'Percent'}($resource),
-                    $resource,
-                    $this->trader->getProjectedResouces($resource, $percentage),
-                    $this->user['id'],
-                    $this->planet['planet_id']
+                $dark_matter = (int) $this->trader->{'getPriceToFill' . $percentage . 'Percent'}($resource);
+                $amount = $this->trader->getProjectedResouces($resource, $percentage);
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE `' . PREMIUM . '` pr, `' . PLANETS . "` p SET
+                        pr.`premium_dark_matter` = pr.`premium_dark_matter` - '" . $dark_matter . "',
+                        p.`planet_" . $resource . "` = '" . $amount . "'
+                        WHERE pr.`premium_user_id` = '" . $this->user['id'] . "'
+                            AND p.`planet_id` = '" . $this->planet['planet_id'] . "';"
+                    )
                 );
 
                 Functions::redirect('game.php?page=traderResources');

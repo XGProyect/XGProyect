@@ -11,17 +11,22 @@ use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Libraries\Users\Shortcuts;
-use Xgp\App\Models\Game\Shortcuts as ShortcutsModel;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class FleetshortcutsController extends BaseController
 {
+    use PreparesLegacySql;
+
     public const REDIRECT_TARGET = 'game.php?page=shortcuts';
 
     private array $user = [];
     private ?Shortcuts $_shortcuts = null;
     private array $_clean_data = [];
-    private ShortcutsModel $shortcutsModel;
 
     public function __construct(private FormatService $formatService)
     {
@@ -32,7 +37,6 @@ class FleetshortcutsController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Fleet));
 
         $this->user = Users::getInstance()->getUserData();
-        $this->shortcutsModel = new ShortcutsModel();
 
         $this->setUpShortcuts();
         $this->runAction();
@@ -216,9 +220,12 @@ class FleetshortcutsController extends BaseController
                     );
                 }
 
-                $this->shortcutsModel->updateShortcuts(
-                    $this->user['id'],
-                    $this->_shortcuts->getAllAsJsonString()
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE `' . USERS . "` u SET
+                            u.`fleet_shortcuts` = '" . $this->_shortcuts->getAllAsJsonString() . "'
+                        WHERE u.`id` = '" . $this->user['id'] . "'"
+                    )
                 );
             }
 

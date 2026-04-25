@@ -11,15 +11,20 @@ use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Users;
 use App\Enums\Module;
-use Xgp\App\Models\Game\Renameplanet;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
+use Xgp\App\Libraries\Users;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class PlanetlayerController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $planet = [];
-    private Renameplanet $renameplanetModel;
 
     public function __construct(private FormatService $formatService)
     {
@@ -31,8 +36,6 @@ class PlanetlayerController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->renameplanetModel = new Renameplanet();
-
         $this->buildPage();
     }
 
@@ -78,7 +81,10 @@ class PlanetlayerController extends BaseController
         }
 
         if ($newName != '') {
-            $this->renameplanetModel->updatePlanetName($newName, $this->user['current_planet']);
+            DB::statement(
+                $this->prepareSql('UPDATE `' . PLANETS . '` SET `planet_name` = ? WHERE `planet_id` = ? LIMIT 1;'),
+                [$newName, $this->user['current_planet']]
+            );
             Functions::popupMessage(__('game/planetlayer.rename_success', ['name' => $newName]), 'game.php?page=planetlayer', 3);
         }
     }
@@ -87,11 +93,31 @@ class PlanetlayerController extends BaseController
     {
         $own_fleet = 0;
         $enemy_fleet = 0;
-        $fleets_incoming = $this->renameplanetModel->getFleets(
-            $this->user['id'],
-            $this->planet['planet_galaxy'],
-            $this->planet['planet_system'],
-            $this->planet['planet_planet']
+        $fleets_incoming = array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT
+                        `fleet_owner`,
+                        `fleet_target_owner`,
+                        `fleet_end_type`,
+                        `fleet_mess`
+                    FROM `' . FLEETS . "`
+                    WHERE (
+                            fleet_owner = '" . $this->user['id'] . "' AND
+                            fleet_start_galaxy = '" . $this->planet['planet_galaxy'] . "' AND
+                            fleet_start_system = '" . $this->planet['planet_system'] . "' AND
+                            fleet_start_planet = '" . $this->planet['planet_planet'] . "'
+                    )
+                    OR
+                    (
+                        fleet_target_owner = '" . $this->user['id'] . "' AND
+                        fleet_end_galaxy = '" . $this->planet['planet_galaxy'] . "' AND
+                        fleet_end_system = '" . $this->planet['planet_system'] . "' AND
+                        fleet_end_planet = '" . $this->planet['planet_planet'] . "'
+                    )"
+                )
+            )
         );
 
         $end_type = 0;
@@ -116,15 +142,30 @@ class PlanetlayerController extends BaseController
 
         if (password_verify($_POST['password'], $this->user['password'])) {
             if ($this->planet['moon_id'] != 0) {
-                $this->renameplanetModel->deleteMoonAndPlanet(
-                    $this->user['id'],
-                    $this->user['current_planet'],
-                    $this->planet['planet_galaxy'],
-                    $this->planet['planet_system'],
-                    $this->planet['planet_planet']
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE `' . PLANETS . '` AS p, `' . PLANETS . '` AS m, `' . USERS . "` AS u SET
+                            p.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
+                            m.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
+                            u.`current_planet` = u.`home_planet_id`
+                        WHERE p.`planet_id` = '" . $this->user['current_planet'] . "' AND
+                            m.`planet_galaxy` = '" . $this->planet['planet_galaxy'] . "' AND
+                            m.`planet_system` = '" . $this->planet['planet_system'] . "' AND
+                            m.`planet_planet` = '" . $this->planet['planet_planet'] . "' AND
+                            m.`planet_type` = '3' AND
+                            u.`id` = '" . $this->user['id'] . "';"
+                    )
                 );
             } else {
-                $this->renameplanetModel->deletePlanet($this->user['id'], $this->user['current_planet']);
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE `' . PLANETS . '` AS p, `' . USERS . "` AS u SET
+                            p.`planet_destroyed` = '" . (time() + (PLANETS_LIFE_TIME * 3600)) . "',
+                            u.`current_planet` = u.`home_planet_id`
+                        WHERE p.`planet_id` = '" . $this->user['current_planet'] . "' AND
+                            u.`id` = '" . $this->user['id'] . "';"
+                    )
+                );
             }
 
             $nextPlanet = Planets::where([

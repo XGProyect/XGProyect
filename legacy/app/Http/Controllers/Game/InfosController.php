@@ -21,13 +21,16 @@ use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Infos;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class InfosController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $planet = [];
     private $_element_id;
@@ -35,7 +38,6 @@ class InfosController extends BaseController
     private $_pricelist;
     private $_combat_caps;
     private $_prod_grid;
-    private Infos $infosModel;
 
     public function __construct(
         private ProductionService $productionService,
@@ -52,7 +54,6 @@ class InfosController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->infosModel = new Infos();
         $this->_resource = Objects::getInstance()->getObjects();
         $this->_pricelist = Objects::getInstance()->getPrice();
         $this->_combat_caps = Objects::getInstance()->getCombatSpecs();
@@ -313,7 +314,19 @@ class InfosController extends BaseController
                     $RetMessage = __('game/infos.in_jump_gate_error_data');
                 }
 
-                $TargetGate = $this->infosModel->getTargetGate($TargetPlanet);
+                $gateRow = DB::selectOne(
+                    $this->prepareSql(
+                        'SELECT
+                            p.`planet_id`,
+                            b.`building_jump_gate`,
+                            p.`planet_last_jump_time`
+                        FROM `' . PLANETS . '` AS p
+                        INNER JOIN `' . BUILDINGS . "` AS b
+                            ON b.`building_planet_id` = p.`planet_id`
+                        WHERE p.`planet_id` = '" . $TargetPlanet . "';"
+                    )
+                );
+                $TargetGate = $gateRow !== null ? (array) $gateRow : [];
 
                 if ($TargetGate['building_jump_gate'] > 0) {
                     $RestString = $this->GetNextJumpWaitTime($TargetGate);
@@ -342,14 +355,29 @@ class InfosController extends BaseController
                             }
                         }
                         if ($SubQueryOri != '') {
-                            $this->infosModel->doJump(
-                                $SubQueryOri,
-                                $SubQueryDes,
-                                $JumpTime,
-                                $this->planet['planet_id'],
-                                $TargetGate['planet_id'],
-                                $this->user['id']
-                            );
+                            DB::transaction(function () use ($SubQueryOri, $SubQueryDes, $JumpTime, $TargetGate): void {
+                                DB::statement(
+                                    $this->prepareSql(
+                                        'UPDATE `' . PLANETS . '`, `' . USERS . '`, `' . SHIPS . "` SET
+                                            $SubQueryOri
+                                            `planet_last_jump_time` = '" . $JumpTime . "',
+                                            `current_planet` = '" . $TargetGate['planet_id'] . "'
+                                        WHERE `planet_id` = '" . $this->planet['planet_id'] . "'
+                                            AND `ship_planet_id` = '" . $this->planet['planet_id'] . "'
+                                            AND `id` = '" . $this->user['id'] . "';"
+                                    )
+                                );
+
+                                DB::statement(
+                                    $this->prepareSql(
+                                        'UPDATE `' . PLANETS . '`, `' . SHIPS . "` SET
+                                        $SubQueryDes
+                                        `planet_last_jump_time` = '" . $JumpTime . "'
+                                        WHERE `planet_id` = '" . $TargetGate['planet_id'] . "'
+                                            AND `ship_planet_id` = '" . $TargetGate['planet_id'] . "';"
+                                    )
+                                );
+                            });
 
                             $this->planet['planet_last_jump_time'] = $JumpTime;
 
@@ -397,7 +425,25 @@ class InfosController extends BaseController
 
     private function BuildJumpableMoonCombo(): string
     {
-        $MoonList = $this->infosModel->getListOfMoons($this->user['id']);
+        $MoonList = array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT
+                        m.`planet_id`,
+                        m.`planet_galaxy`,
+                        m.`planet_system`,
+                        m.`planet_planet`,
+                        m.`planet_name`,
+                        m.`planet_last_jump_time`,
+                        b.`building_jump_gate`
+                    FROM `' . PLANETS . '` AS m
+                    INNER JOIN `' . BUILDINGS . "` AS b ON b.building_planet_id = m.planet_id
+                    WHERE m.`planet_type` = '3'
+                        AND m.`planet_user_id` = '" . $this->user['id'] . "';"
+                )
+            )
+        );
 
         $Combo = '';
 

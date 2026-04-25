@@ -17,13 +17,17 @@ use Xgp\App\Libraries\Alliance\Alliances;
 use Xgp\App\Libraries\BBCodeLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Alliance;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class AllianceController extends BaseController
 {
+    use PreparesLegacySql;
+
     public const DEFAULT_RANKS = [
         'founder' => 0,
         'newcomer' => 1,
@@ -32,7 +36,6 @@ class AllianceController extends BaseController
     private array $user = [];
     private ?BBCodeLib $bbcode = null;
     private ?Alliances $alliance = null;
-    private Alliance $allianceModel;
 
     public function __construct(
         private FormatService $formatService,
@@ -46,7 +49,6 @@ class AllianceController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->bbcode = new BBCodeLib();
-        $this->allianceModel = new Alliance();
 
         $this->setUpAlliances();
         $this->buildPage();
@@ -54,8 +56,21 @@ class AllianceController extends BaseController
 
     private function setUpAlliances(): void
     {
+        $allianceId = $this->getAllianceId();
+        $allianceRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT a.*,
+                    (SELECT COUNT(id) AS `alliance_members`
+                        FROM `' . USERS . '`
+                        WHERE `ally_id` = a.`alliance_id`) AS `alliance_members`
+                FROM `' . ALLIANCE . "` AS a
+                WHERE a.`alliance_id` = '" . (int) $allianceId . "'
+                LIMIT 1;"
+            )
+        );
+
         $this->alliance = new Alliances(
-            $this->allianceModel->getAllianceDataById($this->getAllianceId()),
+            [($allianceRow !== null ? (array) $allianceRow : [])],
             (int) $this->user['id'],
             (int) $this->user['ally_rank_id']
         );
@@ -158,7 +173,13 @@ class AllianceController extends BaseController
         $button_text = __('game/alliance.al_delete_request');
 
         if (!empty($cancel)) {
-            $this->allianceModel->cancelUserRequestById($this->user['id']);
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE ' . USERS . "
+                        SET `ally_request` = '0'
+                    WHERE `id`= '" . (int) $this->user['id'] . "'"
+                )
+            );
             $request_text = __('game/alliance.al_request_deleted');
             $button_text = __('game/alliance.al_continue');
         }
@@ -225,7 +246,23 @@ class AllianceController extends BaseController
         if (!empty($searchString)) {
             $searchResults = [];
             $results = new Alliances(
-                $this->allianceModel->searchAllianceByNameTag($searchString),
+                array_map(
+                    fn ($row) => (array) $row,
+                    DB::select(
+                        $this->prepareSql(
+                            'SELECT a.alliance_id,
+                                a.alliance_tag,
+                                a.alliance_name,
+                            (SELECT COUNT(id) AS `alliance_members`
+                                FROM `' . USERS . '`
+                                WHERE `ally_id` = a.`alliance_id`) AS `alliance_members`
+                            FROM ' . ALLIANCE . ' AS a
+                            WHERE a.alliance_name LIKE ?
+                                OR a.alliance_tag LIKE ? LIMIT 30'
+                        ),
+                        ['%' . $searchString . '%', '%' . $searchString . '%']
+                    )
+                ),
                 $this->user['id']
             );
 
@@ -271,13 +308,38 @@ class AllianceController extends BaseController
                 Functions::message(strtr(__('game/alliance.al_name_already_exists'), ['%s' => $alliance_name]), 'game.php?page=alliance&mode=make', 3);
             }
 
-            $this->allianceModel->createNewAlliance(
-                $alliance_name,
-                $alliance_tag,
-                $this->user['id'],
-                __('game/alliance.al_founder_rank_text'),
-                __('game/alliance.al_new_member_rank_text')
-            );
+            DB::transaction(function () use ($alliance_name, $alliance_tag): void {
+                $rights_string = '[{"rank":"Founder","rights":{"1":1,"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1}},{"rank":"Newcomer","rights":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0}}]';
+
+                DB::statement(
+                    $this->prepareSql(
+                        'INSERT INTO `' . ALLIANCE . "` SET
+                        `alliance_name` = '" . $alliance_name . "',
+                        `alliance_tag` = '" . $alliance_tag . "',
+                        `alliance_owner` = '" . (int) $this->user['id'] . "',
+                        `alliance_register_time` = '" . time() . "',
+                        `alliance_ranks` = '" . strtr($rights_string, ['Founder' => __('game/alliance.al_founder_rank_text'), 'Newcomer' => __('game/alliance.al_new_member_rank_text')]) . "'"
+                    )
+                );
+
+                $new_ally_id = (int) DB::getPdo()->lastInsertId();
+
+                DB::statement(
+                    $this->prepareSql(
+                        'INSERT INTO ' . ALLIANCE_STATISTICS . " SET
+                        `alliance_statistic_alliance_id`='" . $new_ally_id . "'"
+                    )
+                );
+
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE ' . USERS . " SET
+                        `ally_id`='" . $new_ally_id . "',
+                        `ally_register_time`='" . time() . "'
+                        WHERE `id`='" . (int) $this->user['id'] . "'"
+                    )
+                );
+            });
 
             $message = str_replace(['%s', '%d'], [$alliance_name, $alliance_tag], __('game/alliance.al_created'));
             Functions::messageBox(
@@ -301,10 +363,15 @@ class AllianceController extends BaseController
 
         if (isset($request)) {
             if ($request['send'] != null && !empty($request['text'])) {
-                $this->allianceModel->createNewUserRequest(
-                    $this->getAllianceId(),
-                    $request['text'],
-                    $this->user['id']
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE `' . USERS . "` SET
+                        `ally_request` = '" . (int) $this->getAllianceId() . "',
+                        `ally_request_text` = '" . $request['text'] . "',
+                        `ally_register_time` = '" . time() . "',
+                        `ally_rank_id` = '1'
+                        WHERE `id`='" . (int) $this->user['id'] . "'"
+                    )
                 );
 
                 Functions::message(__('game/alliance.al_request_confirmation_message'), 'game.php?page=alliance', 3);
@@ -334,10 +401,24 @@ class AllianceController extends BaseController
         $sort_by_order = filter_input(INPUT_GET, 'sort2');
         $sort_by_order_rules = [1 => 2, 2 => 1];
 
-        $members = $this->allianceModel->getAllianceMembers(
-            (int)$this->user['ally_id'],
-            $sort_by_field,
-            $sort_by_order
+        $members = array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT u.id,
+                        u.onlinetime,
+                        u.name,
+                        u.galaxy,
+                        u.system,
+                        u.planet,
+                        u.ally_register_time,
+                        u.ally_rank_id,
+                        s.user_statistic_total_points
+                    FROM `' . USERS . '` AS u
+                    INNER JOIN `' . USERS_STATISTICS . '` AS s ON u.id = s.user_statistic_user_id
+                    WHERE u.ally_id=\'' . (int) $this->user['ally_id'] . '\'' . $this->returnAllianceMembersSort($sort_by_field, $sort_by_order)
+                )
+            )
         );
 
         $position = 0;
@@ -386,13 +467,27 @@ class AllianceController extends BaseController
             $members_list = [];
 
             if (!(bool) $post['r']) {
-                $members = $this->allianceModel->getAllianceMembersById(
-                    $this->user['ally_id']
+                $members = array_map(
+                    fn ($row) => (array) $row,
+                    DB::select(
+                        $this->prepareSql(
+                            'SELECT `id`, `name`, `ally_rank_id`
+                            FROM `' . USERS . "`
+                            WHERE `ally_id` = '" . (int) $this->user['ally_id'] . "'"
+                        )
+                    )
                 );
             } else {
-                $members = $this->allianceModel->getAllianceMembersByIdAndRankId(
-                    $this->user['ally_id'],
-                    $post['r']
+                $members = array_map(
+                    fn ($row) => (array) $row,
+                    DB::select(
+                        $this->prepareSql(
+                            'SELECT `id`, `name`
+                            FROM `' . USERS . "`
+                            WHERE `ally_id` = '" . (int) $this->user['ally_id'] . "'
+                                AND `ally_rank_id` = '" . (int) $post['r'] . "'"
+                        )
+                    )
                 );
             }
 
@@ -449,9 +544,14 @@ class AllianceController extends BaseController
         }
 
         if ((bool) filter_input(INPUT_GET, 'yes', FILTER_VALIDATE_INT)) {
-            $this->allianceModel->exitAlliance(
-                $this->getAllianceId(),
-                $this->user['id']
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . USERS . "` SET
+                        `ally_id` = '0',
+                        `ally_rank_id` = '0'
+                    WHERE `id` = '" . (int) $this->user['id'] . "'
+                        AND `ally_id` = '" . (int) $this->getAllianceId() . "'"
+                )
             );
 
             Functions::messageBox(
@@ -527,14 +627,14 @@ class AllianceController extends BaseController
         ]);
 
         if (isset($post['options'])) {
-            $this->allianceModel->updateAllianceSettings(
-                $this->getAllianceId(),
-                [
-                    'alliance_owner_range' => ($post['owner_range'] ? StringsHelper::escapeString($post['owner_range']) : ''),
-                    'alliance_web' => ($post['web'] ? StringsHelper::escapeString($post['web']) : ''),
-                    'alliance_image' => ($post['image'] ? StringsHelper::escapeString($post['image']) : ''),
-                    'alliance_request_notallow' => $post['request_notallow'],
-                ]
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . ALLIANCE . "` SET
+                        `alliance_image` = '" . ($post['image'] ? StringsHelper::escapeString($post['image']) : '') . "',
+                        `alliance_web` = '" . ($post['web'] ? StringsHelper::escapeString($post['web']) : '') . "',
+                        `alliance_request_notallow` = '" . $post['request_notallow'] . "'
+                    WHERE `alliance_id` = '" . $this->getAllianceId() . "'"
+                )
             );
 
             $ranks = $this->alliance->getCurrentAllianceRankObject();
@@ -555,24 +655,30 @@ class AllianceController extends BaseController
                 );
             }
 
-            $this->allianceModel->updateAllianceRanks(
-                $this->getAllianceId(),
-                $ranks->getAllRanksAsJsonString()
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . ALLIANCE . "` SET
+                        `alliance_ranks` = '" . $ranks->getAllRanksAsJsonString() . "'
+                    WHERE `alliance_id` = '" . (int) $this->getAllianceId() . "'"
+                )
             );
 
             Functions::redirect('game.php?page=alliance&mode=admin&edit=ally');
         }
 
         if (isset($post['t'])) {
-            $callback = [
-                1 => 'Description',
-                2 => 'Text',
-                3 => 'RequestText',
+            $textFieldMap = [
+                1 => 'alliance_description',
+                2 => 'alliance_text',
+                3 => 'alliance_request',
             ];
 
-            $this->allianceModel->{'updateAlliance' . $callback[$t]}(
-                $this->getAllianceId(),
-                StringsHelper::escapeString($post['text'])
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE ' . ALLIANCE . " SET
+                        `" . $textFieldMap[$t] . "`='" . StringsHelper::escapeString($post['text']) . "'
+                    WHERE `alliance_id` = '" . (int) $this->getAllianceId() . "'"
+                )
             );
 
             Functions::redirect('game.php?page=alliance&mode=admin&edit=ally&t=' . $t);
@@ -610,7 +716,34 @@ class AllianceController extends BaseController
 
     private function getAdminExitSection(): void
     {
-        $this->allianceModel->deleteAlliance($this->getAllianceId());
+        $allianceId = (int) $this->getAllianceId();
+
+        DB::transaction(function () use ($allianceId): void {
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . USERS . "` SET
+                        `ally_id` = '0',
+                        `ally_rank_id` = '0'
+                    WHERE `ally_id` = '" . $allianceId . "'"
+                )
+            );
+
+            DB::statement(
+                $this->prepareSql(
+                    'DELETE FROM `' . ALLIANCE . "`
+                    WHERE `alliance_id` = '" . $allianceId . "'
+                    LIMIT 1"
+                )
+            );
+
+            DB::statement(
+                $this->prepareSql(
+                    'DELETE FROM `' . ALLIANCE_STATISTICS . "`
+                    WHERE `alliance_statistic_alliance_id` = '" . $allianceId . "'
+                    LIMIT 1"
+                )
+            );
+        });
 
         Functions::redirect('game.php?page=alliance');
     }
@@ -625,9 +758,14 @@ class AllianceController extends BaseController
         if (isset($kick) &&
             $this->alliance->hasAccess(AllianceRanks::KICK) &&
             $kick != $this->alliance->getCurrentAlliance()->getAllianceOwner()) {
-            $this->allianceModel->exitAlliance(
-                $this->getAllianceId(),
-                $kick
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . USERS . "` SET
+                        `ally_id` = '0',
+                        `ally_rank_id` = '0'
+                    WHERE `id` = '" . (int) $kick . "'
+                        AND `ally_id` = '" . (int) $this->getAllianceId() . "'"
+                )
             );
         }
 
@@ -639,7 +777,14 @@ class AllianceController extends BaseController
             $ranks = $this->alliance->getCurrentAllianceRankObject();
 
             if ($ranks->getRankById($new_rank) != null or $new_rank == 0) {
-                $this->allianceModel->updateUserRank($id, $new_rank);
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE ' . USERS . ' SET
+                            `ally_rank_id` = ?
+                        WHERE `id`=?'
+                    ),
+                    [$new_rank, (int) $id]
+                );
             }
         }
 
@@ -647,10 +792,24 @@ class AllianceController extends BaseController
         $sort_by_order = filter_input(INPUT_GET, 'sort2');
         $sort_by_order_rules = [1 => 2, 2 => 1];
 
-        $members = $this->allianceModel->getAllianceMembers(
-            (int)$this->user['ally_id'],
-            $sort_by_field,
-            $sort_by_order
+        $members = array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT u.id,
+                        u.onlinetime,
+                        u.name,
+                        u.galaxy,
+                        u.system,
+                        u.planet,
+                        u.ally_register_time,
+                        u.ally_rank_id,
+                        s.user_statistic_total_points
+                    FROM `' . USERS . '` AS u
+                    INNER JOIN `' . USERS_STATISTICS . '` AS s ON u.id = s.user_statistic_user_id
+                    WHERE u.ally_id=\'' . (int) $this->user['ally_id'] . '\'' . $this->returnAllianceMembersSort($sort_by_field, $sort_by_order)
+                )
+            )
         );
 
         $position = 0;
@@ -698,9 +857,12 @@ class AllianceController extends BaseController
                 Functions::message(strtr(__('game/alliance.al_name_already_exists'), ['%s' => $name]), 'game.php?page=alliance&mode=admin&edit=name', 3);
             }
 
-            $this->allianceModel->updateAllianceName(
-                $this->getAllianceId(),
-                $name
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE ' . ALLIANCE . " AS a SET
+                        a.`alliance_name` = '" . $name . "'
+                    WHERE a.`alliance_id` = '" . $this->getAllianceId() . "';"
+                )
             );
 
             Functions::redirect('game.php?page=alliance&mode=admin&edit=ally');
@@ -726,7 +888,15 @@ class AllianceController extends BaseController
         $text = filter_input(INPUT_POST, 'text');
 
         if (isset($accept) && $show != 0) {
-            $this->allianceModel->addUserToAlliance($show, $this->getAllianceId());
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . USERS . "` SET
+                        `ally_request_text` = '',
+                        `ally_request` = '0',
+                        `ally_id` = '" . (int) $this->getAllianceId() . "'
+                    WHERE `id` = '" . (int) $show . "'"
+                )
+            );
 
             Functions::sendMessage(
                 $show,
@@ -742,7 +912,15 @@ class AllianceController extends BaseController
         }
 
         if (isset($cancel) && $show != 0) {
-            $this->allianceModel->removeUserFromAlliance($show);
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . USERS . "` SET
+                        `ally_request_text` = '',
+                        `ally_request` = '0',
+                        `ally_id` = '0'
+                    WHERE `id` = '" . (int) $show . "'"
+                )
+            );
 
             Functions::sendMessage(
                 $show,
@@ -757,7 +935,19 @@ class AllianceController extends BaseController
             Functions::redirect('game.php?page=alliance&mode=admin&edit=requests');
         }
 
-        $requests = $this->allianceModel->getAllianceRequests($this->getAllianceId());
+        $requests = array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT `id`,
+                        `name`,
+                        `ally_request_text`,
+                        `ally_register_time`
+                    FROM `' . USERS . "`
+                    WHERE `ally_request` = '" . (int) $this->getAllianceId() . "'"
+                )
+            )
+        );
 
         $requestsAmount = count($requests);
         $requestsList = [];
@@ -809,9 +999,12 @@ class AllianceController extends BaseController
                 $post['newrangname']
             );
 
-            $this->allianceModel->updateAllianceRanks(
-                $this->getAllianceId(),
-                $ranks->getAllRanksAsJsonString()
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . ALLIANCE . "` SET
+                        `alliance_ranks` = '" . $ranks->getAllRanksAsJsonString() . "'
+                    WHERE `alliance_id` = '" . (int) $this->getAllianceId() . "'"
+                )
             );
         }
 
@@ -834,9 +1027,12 @@ class AllianceController extends BaseController
                 );
             }
 
-            $this->allianceModel->updateAllianceRanks(
-                $this->getAllianceId(),
-                $ranks->getAllRanksAsJsonString()
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . ALLIANCE . "` SET
+                        `alliance_ranks` = '" . $ranks->getAllRanksAsJsonString() . "'
+                    WHERE `alliance_id` = '" . (int) $this->getAllianceId() . "'"
+                )
             );
         }
 
@@ -844,9 +1040,12 @@ class AllianceController extends BaseController
         if (isset($delete)) {
             $ranks->deleteRankById($delete);
 
-            $this->allianceModel->updateAllianceRanks(
-                $this->getAllianceId(),
-                $ranks->getAllRanksAsJsonString()
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . ALLIANCE . "` SET
+                        `alliance_ranks` = '" . $ranks->getAllRanksAsJsonString() . "'
+                    WHERE `alliance_id` = '" . (int) $this->getAllianceId() . "'"
+                )
             );
         }
 
@@ -907,9 +1106,12 @@ class AllianceController extends BaseController
                 Functions::message(strtr(__('game/alliance.al_tag_already_exists'), ['%s' => $tag]), 'game.php?page=alliance&mode=admin&edit=tag', 3);
             }
 
-            $this->allianceModel->updateAllianceTag(
-                $this->getAllianceId(),
-                $tag
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE ' . ALLIANCE . " SET
+                        `alliance_tag` = '" . $tag . "'
+                    WHERE `alliance_id` = '" . $this->getAllianceId() . "';"
+                )
             );
 
             Functions::redirect('game.php?page=alliance&mode=admin&edit=ally');
@@ -932,10 +1134,16 @@ class AllianceController extends BaseController
         $new_leader = filter_input(INPUT_POST, 'newleader', FILTER_VALIDATE_INT);
 
         if (isset($new_leader) && $new_leader != 0) {
-            $this->allianceModel->transferAlliance(
-                $this->user['ally_id'],
-                $this->user['id'],
-                $new_leader
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . USERS . '` AS u1, `' . ALLIANCE . '` AS a, `' . USERS . "` AS u2 SET
+                        u1.`ally_rank_id` = '1',
+                        a.`alliance_owner` = '" . (int) $new_leader . "',
+                        u2.`ally_rank_id` = '0'
+                    WHERE u1.`id` = " . (int) $this->user['id'] . ' AND
+                        a.`alliance_id` = ' . (int) $this->user['ally_id'] . " AND
+                        u2.`id` = '" . (int) $new_leader . "'"
+                )
             );
 
             Functions::redirect('game.php?page=alliance');
@@ -944,8 +1152,15 @@ class AllianceController extends BaseController
         $ranksObject = $this->alliance->getCurrentAllianceRankObject();
 
         $users = array_filter(
-            $this->allianceModel->getAllianceMembersById(
-                $this->getAllianceId()
+            array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT `id`, `name`, `ally_rank_id`
+                        FROM `' . USERS . "`
+                        WHERE `ally_id` = '" . (int) $this->getAllianceId() . "'"
+                    )
+                )
             ),
             function ($user) {
                 return $user['ally_rank_id'] != 0;
@@ -1061,9 +1276,14 @@ class AllianceController extends BaseController
     private function buildRequestsBlock(): array
     {
         $requests = '';
-        $count = $this->allianceModel->getAllianceRequestsCount(
-            $this->alliance->getCurrentAlliance()->getAllianceId()
-        )['total_requests'];
+        $countRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT COUNT(id) AS total_requests
+                FROM `' . USERS . "`
+                WHERE `ally_request` = '" . (int) $this->alliance->getCurrentAlliance()->getAllianceId() . "'"
+            )
+        );
+        $count = $countRow !== null ? (int) $countRow->total_requests : 0;
 
         if ($this->alliance->hasAccess(AllianceRanks::APPLICATION_MANAGEMENT) && $count != 0) {
             $requests = UrlHelper::setUrl(
@@ -1127,12 +1347,30 @@ class AllianceController extends BaseController
      */
     private function allianceNameExists(string $name): ?string
     {
-        return $this->allianceModel->checkAllianceName($name);
+        $row = DB::selectOne(
+            $this->prepareSql(
+                'SELECT `alliance_name`
+                FROM `' . ALLIANCE . '`
+                WHERE `alliance_name` = ?'
+            ),
+            [$name]
+        );
+
+        return $row !== null ? $row->alliance_name : null;
     }
 
     private function allianceTagExists(string $tag): ?string
     {
-        return $this->allianceModel->checkAllianceTag($tag);
+        $row = DB::selectOne(
+            $this->prepareSql(
+                'SELECT `alliance_tag`
+                FROM `' . ALLIANCE . '`
+                WHERE `alliance_tag` = ?'
+            ),
+            [$tag]
+        );
+
+        return $row !== null ? $row->alliance_tag : null;
     }
 
     private function getUserRank(int $member_id, int $member_rank_id)
@@ -1176,6 +1414,38 @@ class AllianceController extends BaseController
                 'options' => $options,
             ]
         );
+    }
+
+    private function returnAllianceMembersSort($sort_field, $sort_order): string
+    {
+        switch ($sort_field) {
+            case 1:
+                $sort = ' ORDER BY `name`';
+                break;
+            case 2:
+                $sort = ' ORDER BY `ally_rank_id`';
+                break;
+            case 3:
+                $sort = ' ORDER BY `user_statistic_total_points`';
+                break;
+            case 4:
+                $sort = ' ORDER BY `ally_register_time`';
+                break;
+            case 5:
+                $sort = ' ORDER BY `onlinetime`';
+                break;
+            default:
+                $sort = ' ORDER BY `id`';
+                break;
+        }
+
+        if ($sort_order == 1) {
+            $sort .= ' DESC;';
+        } elseif ($sort_order == 2) {
+            $sort .= ' ASC;';
+        }
+
+        return $sort;
     }
 
     private function buildAdminMembersActionBlock(int $member_id, int $member_name, $requested_rank = 0): string

@@ -16,11 +16,17 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\DevelopmentsLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Shipyard;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class ShipyardController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $planet = [];
     protected string $page = 'shipyard';
@@ -49,7 +55,6 @@ class ShipyardController extends BaseController
         'deuterium' => 0,
     ];
     private bool $building_in_progress = false;
-    private Shipyard $shipyardModel;
     private Objects $objects;
     private Users $userLibrary;
 
@@ -65,7 +70,6 @@ class ShipyardController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->shipyardModel = new Shipyard();
         $this->objects = new Objects();
         $this->userLibrary = new Users();
 
@@ -129,10 +133,15 @@ class ShipyardController extends BaseController
             }
 
             if ($total_items_to_build > 0) {
-                $this->shipyardModel->insertItemsToBuild(
-                    $this->resources_consumed,
-                    $shipyard_queue,
-                    $this->planet['planet_id']
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE ' . PLANETS . " AS p SET
+                            p.`planet_b_hangar_id` = CONCAT(p.`planet_b_hangar_id`, '" . $shipyard_queue . "'),
+                            p.`planet_metal` = '" . $this->resources_consumed['metal'] . "',
+                            p.`planet_crystal` = '" . $this->resources_consumed['crystal'] . "',
+                            p.`planet_deuterium` = '" . $this->resources_consumed['deuterium'] . "'
+                        WHERE p.`planet_id` = '" . $this->planet['planet_id'] . "';"
+                    )
                 );
             }
 

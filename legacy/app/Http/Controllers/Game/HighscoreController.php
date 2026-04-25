@@ -9,14 +9,20 @@ use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
+use App\Services\SettingsService;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Statistics;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class HighscoreController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $planet = [];
-    private Statistics $statisticsModel;
 
     public function __construct(private FormatService $formatService)
     {
@@ -28,8 +34,6 @@ class HighscoreController extends BaseController
 
         $this->user = Users::getInstance()->getUserData();
         $this->planet = Users::getInstance()->getPlanetData();
-        $this->statisticsModel = new Statistics();
-
         $this->buildPage();
     }
 
@@ -55,7 +59,8 @@ class HighscoreController extends BaseController
         $OldRank = $data['oldrank'];
 
         if ($who == 2) {
-            $MaxAllys = $this->statisticsModel->countAlliances();
+            $countRow = DB::selectOne($this->prepareSql('SELECT COUNT(`alliance_id`) AS `count` FROM `' . ALLIANCE . '`;'));
+            $MaxAllys = $countRow !== null ? (int) $countRow->count : 0;
 
             $parse['range'] = $this->build_range_list($MaxAllys, $range);
             $parse['stat_header'] = Template::render(
@@ -64,7 +69,29 @@ class HighscoreController extends BaseController
             );
 
             $start = floor(intval($range / 100) % 100) * 100;
-            $query = $this->statisticsModel->getAlliances($Order, $start);
+            $query = array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT
+                            s.*,
+                            a.`alliance_id`,
+                            a.`alliance_tag`,
+                            a.`alliance_name`,
+                            a.`alliance_request_notallow`,
+                            (
+                                SELECT
+                                    COUNT(id) AS `ally_members`
+                                FROM `' . USERS . '`
+                                WHERE `ally_id` = a.`alliance_id`
+                            ) AS `ally_members`
+                        FROM `' . ALLIANCE_STATISTICS . '` AS s
+                        INNER JOIN  `' . ALLIANCE . '` AS a ON a.`alliance_id` = s.`alliance_statistic_alliance_id`
+                        ORDER BY `alliance_statistic_' . $Order . '` DESC, `alliance_statistic_total_rank` ASC
+                        LIMIT ' . $start . ',100;'
+                    )
+                )
+            );
 
             $start++;
 
@@ -95,7 +122,25 @@ class HighscoreController extends BaseController
             );
 
             $start = floor(intval($range / 100) % 100) * 100;
-            $query = $this->statisticsModel->getUsers($Order, (int) $start);
+            $query = array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT
+                            s.*,
+                            u.`id`,
+                            u.`name`,
+                            u.`ally_id`,
+                            a.`alliance_name`
+                        FROM `' . USERS_STATISTICS . '` as s
+                        INNER JOIN `' . USERS . '` as u ON u.`id` = s.`user_statistic_user_id`
+                        LEFT JOIN `' . ALLIANCE . '` AS a ON a.`alliance_id` = u.`ally_id`
+                        WHERE `authlevel` <= ' . app(SettingsService::class)->getInt('stat_admin_level') . '
+                        ORDER BY `user_statistic_' . $Order . '` DESC, `user_statistic_total_rank` ASC
+                        LIMIT ' . $start . ',100;'
+                    )
+                )
+            );
 
             $start++;
             $parse['stat_values'] = '';

@@ -13,16 +13,21 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\Preferences as Pref;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Preferences;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class PreferencesController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private ?Pref $preferences = null;
     private array $fields_to_update = [];
     private string $error = '';
     private bool $post = false;
-    private Preferences $preferencesModel;
 
     public function __construct(
         private FormatService $formatService,
@@ -35,7 +40,6 @@ class PreferencesController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Options));
 
         $this->user = Users::getInstance()->getUserData();
-        $this->preferencesModel = new Preferences();
 
         $this->setUpPreferences();
         $this->runAction();
@@ -59,7 +63,14 @@ class PreferencesController extends BaseController
     private function setUpPreferences(): void
     {
         $this->preferences = new Pref(
-            $this->preferencesModel->getAllPreferencesByUserId((int) $this->user['id']),
+            array_map(
+                fn ($row) => (array) $row,
+                DB::select(
+                    $this->prepareSql(
+                        'SELECT p.* FROM `' . PREFERENCES . "` p WHERE p.`preference_user_id` = '" . (int) $this->user['id'] . "';"
+                    )
+                )
+            ),
             (int) $this->user['id']
         );
     }
@@ -113,9 +124,22 @@ class PreferencesController extends BaseController
             $this->validatePlanetSortSequence($preferences);
 
             if ($this->error == '') {
-                $this->preferencesModel->updateValidatedFields(
-                    $this->fields_to_update,
-                    (int) $this->user['id']
+                $columns_to_update = [];
+                foreach ($this->fields_to_update as $column => $value) {
+                    if (strpos($column, 'preference_') === false) {
+                        $columns_to_update[] = 'u.`' . $column . "` = '" . $value . "'";
+                    }
+                    if (strpos($column, 'preference_') !== false) {
+                        $columns_to_update[] = 'p.`' . $column . '` = ' . (is_null($value) ? 'NULL' : "'" . $value . "'");
+                    }
+                }
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE ' . USERS . ' AS u, ' . PREFERENCES . ' AS p SET
+                        ' . join(', ', $columns_to_update) . "
+                        WHERE u.`id` = '" . (int) $this->user['id'] . "'
+                            AND p.`preference_user_id` = '" . (int) $this->user['id'] . "';"
+                    )
                 );
 
                 $this->setUpPreferences();
@@ -196,7 +220,7 @@ class PreferencesController extends BaseController
             ];
         }
 
-        if ($this->preferencesModel->isEmpireActive((int) $this->user['id'])) {
+        if ($this->isEmpireActive()) {
             return [
                 'hide_no_vacation' => '',
                 'pr_vacation_mode_active' => $this->formatService->strongText(
@@ -247,7 +271,11 @@ class PreferencesController extends BaseController
                 $username_len = strlen(trim($preferences['new_user_name']));
 
                 if ($username_len > 3 && $username_len <= 20) {
-                    if (!$this->preferencesModel->checkIfNicknameExists($preferences['new_user_name'])) {
+                    $nickRow = DB::selectOne(
+                        $this->prepareSql('SELECT `id` FROM `' . USERS . '` WHERE `name` = ? LIMIT 1;'),
+                        [$preferences['new_user_name']]
+                    );
+                    if (!($nickRow !== null ? (array) $nickRow : [])) {
                         $this->fields_to_update['name'] = $preferences['new_user_name'];
                         $this->fields_to_update['preference_nickname_change'] = time();
                     } else {
@@ -285,7 +313,11 @@ class PreferencesController extends BaseController
                 $user_email_len = strlen(trim($preferences['new_user_email']));
 
                 if ($user_email_len > 4 && $user_email_len <= 64) {
-                    if (!$this->preferencesModel->checkIfEmailExists($preferences['new_user_email'])) {
+                    $emailRow = DB::selectOne(
+                        $this->prepareSql('SELECT `email` FROM `' . USERS . '` WHERE `email` = ? LIMIT 1;'),
+                        [$preferences['new_user_email']]
+                    );
+                    if (!($emailRow !== null ? (array) $emailRow : [])) {
                         $this->fields_to_update['email'] = $preferences['new_user_email'];
                     } else {
                         $this->error = __('game/preferences.pr_error_email_in_use');
@@ -321,11 +353,79 @@ class PreferencesController extends BaseController
     {
         if ($this->preferences->isVacationModeOn()) {
             if ($this->preferences->isVacationModeRemovalAllowed()) {
-                $this->preferencesModel->endVacation((int) $this->user['id']);
+                $userId = (int) $this->user['id'];
+                if ($userId > 0) {
+                    DB::statement(
+                        $this->prepareSql(
+                            'UPDATE `' . PREFERENCES . '` pr, `' . PLANETS . "` p SET
+                                pr.`preference_vacation_mode` = NULL,
+                                p.`planet_last_update` = '" . time() . "',
+                                p.`planet_building_metal_mine_percent` = '10',
+                                p.`planet_building_crystal_mine_percent` = '10',
+                                p.`planet_building_deuterium_sintetizer_percent` = '10',
+                                p.`planet_building_solar_plant_percent` = '10',
+                                p.`planet_building_fusion_reactor_percent` = '10',
+                                p.`planet_ship_solar_satellite_percent` = '10'
+                            WHERE pr.`preference_user_id` = '" . $userId . "'
+                                AND p.`planet_user_id` = '" . $userId . "';"
+                        )
+                    );
+                }
             }
         } else {
-            $this->preferencesModel->startVacation((int) $this->user['id']);
+            if (!$this->isEmpireActive()) {
+                $userId = (int) $this->user['id'];
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE `' . PREFERENCES . '` pr, `' . PLANETS . "` p SET
+                            pr.`preference_vacation_mode` = '" . time() . "',
+                            p.`planet_building_metal_mine_percent` = '0',
+                            p.`planet_building_crystal_mine_percent` = '0',
+                            p.`planet_building_deuterium_sintetizer_percent` = '0',
+                            p.`planet_building_solar_plant_percent` = '0',
+                            p.`planet_building_fusion_reactor_percent` = '0',
+                            p.`planet_ship_solar_satellite_percent` = '0'
+                        WHERE pr.`preference_user_id` = '" . $userId . "'
+                            AND p.`planet_user_id` = '" . $userId . "';"
+                    )
+                );
+            }
         }
+    }
+
+    private function isEmpireActive(): bool
+    {
+        $userId = (int) $this->user['id'];
+
+        if ($userId > 0) {
+            $row = DB::selectOne(
+                $this->prepareSql(
+                    'SELECT (
+                        (
+                            SELECT
+                                COUNT(f.`fleet_id`) AS quantity
+                            FROM `' . FLEETS . "` f
+                            WHERE f.`fleet_owner` = '" . $userId . "'
+                        )
+                    +
+                        (
+                            SELECT
+                                COUNT(p.`planet_id`) AS quantity
+                            FROM `" . PLANETS . "` p
+                            WHERE p.`planet_user_id` = '" . $userId . "'
+                                AND (p.`planet_b_building` <> 0
+                                    OR `planet_b_tech` <> 0
+                                    OR `planet_b_hangar` <> 0
+                                )
+                        )
+                    ) as total"
+                )
+            );
+
+            return $row !== null && $row->total > 0;
+        }
+
+        return false;
     }
 
     private function validateDeleteMode(array $preferences): void

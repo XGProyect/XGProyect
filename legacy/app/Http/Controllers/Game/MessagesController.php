@@ -6,6 +6,8 @@ namespace Xgp\App\Http\Controllers\Game;
 
 use App\Enums\Module;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\SettingsService;
@@ -15,13 +17,14 @@ use Xgp\App\Helpers\ArraysHelper;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Xgp\App\Models\Game\Messages;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class MessagesController extends BaseController
 {
+    use PreparesLegacySql;
+
     private array $user = [];
     private array $message_type = [
         MessagesEnumerator::ESPIO => ['type_name' => 'espioopen'],
@@ -31,7 +34,6 @@ class MessagesController extends BaseController
         MessagesEnumerator::USER => ['type_name' => 'useropen'],
         MessagesEnumerator::GENERAL => ['type_name' => 'generalopen'],
     ];
-    private Messages $messagesModel;
 
     public function __construct(private OfficerService $officerService)
     {
@@ -42,7 +44,6 @@ class MessagesController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Messages));
 
         $this->user = Users::getInstance()->getUserData();
-        $this->messagesModel = new Messages();
 
         $this->runAction();
 
@@ -69,15 +70,34 @@ class MessagesController extends BaseController
 
     private function getDefaultSection(): void
     {
-        // set messages as read
-        $this->messagesModel->markAsRead((int) $this->user['id']);
+        $userId = (int) $this->user['id'];
+
+        if ($userId > 0) {
+            DB::statement(
+                $this->prepareSql(
+                    'UPDATE `' . MESSAGES . "` SET
+                        `message_read` = '1'
+                    WHERE `message_receiver` = " . $userId . ';'
+                )
+            );
+        }
+
+        $messages = $userId > 0 ? array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT *
+                    FROM `' . MESSAGES . "`
+                    WHERE `message_receiver` = '" . $userId . "'
+                    ORDER BY `message_time` DESC;"
+                )
+            )
+        ) : null;
 
         Template::legacyView(
             'messages.default',
             [
-                'message_list' => $this->getMessagesList(
-                    $this->messagesModel->getByUserId((int) $this->user['id'])
-                ),
+                'message_list' => $this->getMessagesList($messages),
                 'operators_list' => $this->getOperatorsAddressBook(),
             ]
         );
@@ -107,12 +127,32 @@ class MessagesController extends BaseController
             $messages = true;
             $deleteOptions = true;
 
+            $userId = (int) $this->user['id'];
             $message_list = $this->getMessagesList(
-                $this->messagesModel->getByUserIdAndType($this->user['id'], $get_messages)
+                ($userId > 0 && !empty($get_messages)) ? array_map(
+                    fn ($row) => (array) $row,
+                    DB::select(
+                        $this->prepareSql(
+                            'SELECT *
+                            FROM `' . MESSAGES . '`
+                            WHERE `message_receiver` = ' . $userId . '
+                                AND `message_type` IN (' . rtrim($get_messages, ',') . ')
+                            ORDER BY `message_time` DESC;'
+                        )
+                    )
+                ) : null
             );
 
-            // set messages as read
-            $this->messagesModel->markAsReadByType($this->user['id'], $get_messages);
+            if ($userId > 0 && !empty($get_messages)) {
+                DB::statement(
+                    $this->prepareSql(
+                        'UPDATE `' . MESSAGES . "` SET
+                            `message_read` = '1'
+                        WHERE `message_receiver` = " . $userId . '
+                            AND `message_type` IN (' . rtrim($get_messages, ',') . ');'
+                    )
+                );
+            }
         }
 
         Template::legacyView(
@@ -168,7 +208,18 @@ class MessagesController extends BaseController
 
     private function getOperatorsAddressBook(): array
     {
-        $operators = $this->messagesModel->getOperators((int) $this->user['id']);
+        $userId = (int) $this->user['id'];
+        $operators = $userId > 0 ? array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT `name`, `email`
+                    FROM ' . USERS . "
+                    WHERE authlevel > '0'
+                        AND `id` <> '" . $userId . "';"
+                )
+            )
+        ) : null;
         $operators_list = [];
 
         if ($operators) {
@@ -185,7 +236,21 @@ class MessagesController extends BaseController
 
     private function getMessagesTypesList(array $active): array
     {
-        $messages_types = $this->messagesModel->countMessagesByType((int) $this->user['id']);
+        $userId = (int) $this->user['id'];
+        $messages_types = $userId > 0 ? array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT
+                        `message_type`,
+                        COUNT(`message_type`) AS message_type_count,
+                        SUM(`message_read` = 0) AS unread_count
+                    FROM `' . MESSAGES . "`
+                    WHERE `message_receiver` = '" . $userId . "'
+                    GROUP BY `message_type`"
+                )
+            )
+        ) : [];
         $messages_types_list = [];
 
         if ($messages_types) {
@@ -209,7 +274,20 @@ class MessagesController extends BaseController
 
     private function getFriendsAddressBook(): array
     {
-        $buddies = $this->messagesModel->getFriends((int) $this->user['id']);
+        $userId = (int) $this->user['id'];
+        $buddies = $userId > 0 ? array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT u.`id`, u.`name`, u.`email`
+                    FROM `' . BUDDY . '` b
+                    LEFT JOIN `' . USERS . "` u
+                        ON u.id = IF(`buddy_sender` = '" . $userId . "', `buddy_receiver`, `buddy_sender`)
+                    WHERE `buddy_sender`='" . $userId . "'
+                        OR `buddy_receiver`='" . $userId . "'"
+                )
+            )
+        ) : null;
         $buddies_list = [];
 
         if ($buddies) {
@@ -226,7 +304,19 @@ class MessagesController extends BaseController
 
     private function getAllinaceAddressBook(): array
     {
-        $members = $this->messagesModel->getAllianceMembers((int) $this->user['id'], (int) $this->user['ally_id']);
+        $userId = (int) $this->user['id'];
+        $allyId = (int) $this->user['ally_id'];
+        $members = ($userId > 0 && $allyId > 0) ? array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT `id`, `name`, `email`
+                    FROM ' . USERS . "
+                    WHERE ally_id = '" . $allyId . "'
+                        AND `id` <> '" . $userId . "';"
+                )
+            )
+        ) : null;
         $members_list = [];
 
         if ($members) {
@@ -243,7 +333,17 @@ class MessagesController extends BaseController
 
     private function getNotesList(): array
     {
-        $notes = $this->messagesModel->getNotes((int) $this->user['id']);
+        $userId = (int) $this->user['id'];
+        $notes = $userId > 0 ? array_map(
+            fn ($row) => (array) $row,
+            DB::select(
+                $this->prepareSql(
+                    'SELECT `note_id`, `note_priority`, `note_title`
+                    FROM `' . NOTES . "`
+                    WHERE `note_owner` = '" . $userId . "';"
+                )
+            )
+        ) : null;
         $notes_list = [];
 
         if ($notes) {
@@ -261,7 +361,37 @@ class MessagesController extends BaseController
 
     private function getExtraBlocksDisplay(): array
     {
-        $address_book_notes_counts = $this->messagesModel->countAddressBookAndNotes((int) $this->user['id'], (int) $this->user['ally_id']);
+        $userId = (int) $this->user['id'];
+        $allyId = (int) $this->user['ally_id'];
+        $countRow = ($userId > 0 && $allyId >= 0) ? DB::selectOne(
+            $this->prepareSql(
+                'SELECT
+                ( SELECT COUNT(`id`)
+                    FROM `' . USERS . "`
+                    WHERE `ally_id` = '" . $allyId . "'
+                        AND `ally_id` <> 0
+                        AND `id` <> '" . $userId . "'
+                    ) AS alliance_count,
+
+                    ( SELECT COUNT(`buddy_id`)
+                    FROM `" . BUDDY . "`
+                    WHERE `buddy_sender` = '" . $userId . "'
+                        OR `buddy_receiver` = '" . $userId . "'
+                    ) AS buddys_count,
+
+                    ( SELECT COUNT(`note_id`)
+                    FROM `" . NOTES . "`
+                    WHERE `note_owner` = '" . $userId . "'
+                    ) AS notes_count,
+
+                    ( SELECT COUNT(`id`)
+                    FROM " . USERS . "
+                    WHERE authlevel <> 0
+                        AND `id` <> '" . $userId . "'
+                    ) AS operators_count"
+            )
+        ) : null;
+        $address_book_notes_counts = $countRow !== null ? (array) $countRow : null;
         $current_extra_block_open = filter_input_array(INPUT_POST, [
             'owncontactsopen' => FILTER_UNSAFE_RAW,
             'ownallyopen' => FILTER_UNSAFE_RAW,
@@ -316,9 +446,18 @@ class MessagesController extends BaseController
         $messages_to_delete = filter_input_array(INPUT_POST);
         $type_to_delete = filter_input_array(INPUT_GET);
 
+        $userId = (int) $this->user['id'];
+
         switch ($delete) {
             case 'deleteall':
-                $this->messagesModel->deleteAllByOwner((int) $this->user['id']);
+                if ($userId > 0) {
+                    DB::statement(
+                        $this->prepareSql(
+                            'DELETE FROM ' . MESSAGES . "
+                            WHERE `message_receiver` = '" . $userId . "';"
+                        )
+                    );
+                }
                 break;
             case 'deletemarked':
                 foreach ($messages_to_delete as $message => $checked) {
@@ -329,8 +468,14 @@ class MessagesController extends BaseController
                     }
                 }
 
-                if (isset($message_ids)) {
-                    $this->messagesModel->deleteByOwnerAndIds((int) $this->user['id'], join(',', $message_ids));
+                if (isset($message_ids) && $userId > 0) {
+                    DB::statement(
+                        $this->prepareSql(
+                            'DELETE FROM ' . MESSAGES . '
+                            WHERE `message_id` IN (' . join(',', $message_ids) . ")
+                                AND `message_receiver` = '" . $userId . "';"
+                        )
+                    );
                 }
                 break;
             case 'deleteunmarked':
@@ -343,8 +488,14 @@ class MessagesController extends BaseController
                     }
                 }
 
-                if (isset($message_ids)) {
-                    $this->messagesModel->deleteByOwnerAndIds((int) $this->user['id'], join(',', $message_ids));
+                if (isset($message_ids) && $userId > 0) {
+                    DB::statement(
+                        $this->prepareSql(
+                            'DELETE FROM ' . MESSAGES . '
+                            WHERE `message_id` IN (' . join(',', $message_ids) . ")
+                                AND `message_receiver` = '" . $userId . "';"
+                        )
+                    );
                 }
                 break;
             case 'deleteallshown':
@@ -358,8 +509,14 @@ class MessagesController extends BaseController
                         }
                     }
 
-                    if (isset($type_id)) {
-                        $this->messagesModel->deleteByOwnerAndMessageType((int) $this->user['id'], $type_id);
+                    if (isset($type_id) && $userId > 0 && (int) $type_id >= 0) {
+                        DB::statement(
+                            $this->prepareSql(
+                                'DELETE FROM ' . MESSAGES . '
+                                WHERE `message_type` IN (' . $type_id . ")
+                                    AND `message_receiver` = '" . $userId . "';"
+                            )
+                        );
                     }
                 }
                 break;

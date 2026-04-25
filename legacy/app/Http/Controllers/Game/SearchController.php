@@ -12,10 +12,16 @@ use Xgp\App\Core\Template;
 use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\NoobsProtectionLib;
-use Xgp\App\Models\Game\Search;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 
+/**
+ * @SuppressWarnings("PHPMD.StaticAccess")
+ */
 class SearchController extends BaseController
 {
+    use PreparesLegacySql;
+
     private ?NoobsProtectionLib $noob = null;
     private array $searchTerms = [
         'searchType' => '',
@@ -31,7 +37,6 @@ class SearchController extends BaseController
         'planetNames' => 'planet_names'
     ];
     private array $results = [];
-    private Search $searchModel;
 
     public function __construct(private FormatService $formatService)
     {
@@ -42,7 +47,6 @@ class SearchController extends BaseController
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Search));
 
         $this->noob = new NoobsProtectionLib();
-        $this->searchModel = new Search();
 
         $this->runAction();
 
@@ -74,13 +78,84 @@ class SearchController extends BaseController
             switch ($searchQuery['searchType']) {
                 case 'playerName':
                 default:
-                    $this->results = $this->searchModel->getResultsByPlayerName($searchQuery['searchText']);
+                    $this->results = !empty($searchQuery['searchText']) ? array_map(
+                        fn ($row) => (array) $row,
+                        DB::select(
+                            $this->prepareSql(
+                                'SELECT
+                                    u.`id`,
+                                    u.`name`,
+                                    u.`authlevel`,
+                                    p.`planet_name`,
+                                    p.`planet_galaxy`,
+                                    p.`planet_system`,
+                                    p.`planet_planet`,
+                                    s.`user_statistic_total_rank` AS `user_rank`,
+                                    a.`alliance_id`,
+                                    a.`alliance_name`
+                                FROM `' . USERS . '` AS u
+                                    INNER JOIN `' . USERS_STATISTICS . '` AS s ON s.`user_statistic_user_id` = u.`id`
+                                    INNER JOIN `' . PLANETS . '` AS p ON p.`planet_id` = u.`home_planet_id`
+                                    LEFT JOIN `' . ALLIANCE . '` AS a ON a.alliance_id = u.`ally_id`
+                                WHERE u.`name` LIKE ?
+                                LIMIT ' . MAX_SEARCH_RESULTS . ';'
+                            ),
+                            ['%' . $searchQuery['searchText'] . '%']
+                        )
+                    ) : [];
                     break;
                 case 'allianceTag':
-                    $this->results = $this->searchModel->getResultsByAllianceTag($searchQuery['searchText']);
+                    $this->results = !empty($searchQuery['searchText']) ? array_map(
+                        fn ($row) => (array) $row,
+                        DB::select(
+                            $this->prepareSql(
+                                'SELECT
+                                    a.`alliance_id`,
+                                    a.`alliance_name`,
+                                    a.`alliance_tag`,
+                                    a.`alliance_request_notallow` AS `alliance_requests`,
+                                    s.`alliance_statistic_total_points` AS `alliance_points`,
+                                    (SELECT
+                                        COUNT(id) AS `ally_members`
+                                        FROM `' . USERS . '`
+                                        WHERE `ally_id` = a.`alliance_id`
+                                    ) AS `alliance_members`
+                                FROM `' . ALLIANCE . '` AS a
+                                    LEFT JOIN `' . ALLIANCE_STATISTICS . '` AS s ON a.`alliance_id` = s.`alliance_statistic_alliance_id`
+                                WHERE (a.alliance_name LIKE ?)
+                                    OR (a.alliance_tag LIKE ?)
+                                LIMIT ' . MAX_SEARCH_RESULTS . ';'
+                            ),
+                            ['%' . $searchQuery['searchText'] . '%', '%' . $searchQuery['searchText'] . '%']
+                        )
+                    ) : [];
                     break;
                 case 'planetNames':
-                    $this->results = $this->searchModel->getResultsByPlanetName($searchQuery['searchText']);
+                    $this->results = !empty($searchQuery['searchText']) ? array_map(
+                        fn ($row) => (array) $row,
+                        DB::select(
+                            $this->prepareSql(
+                                'SELECT
+                                    u.`id`,
+                                    u.`name`,
+                                    u.`authlevel`,
+                                    p.`planet_name`,
+                                    p.`planet_galaxy`,
+                                    p.`planet_system`,
+                                    p.`planet_planet`,
+                                    s.`user_statistic_total_rank` AS `user_rank`,
+                                    a.`alliance_id`,
+                                    a.`alliance_name`
+                                FROM `' . USERS . '` AS u
+                                    INNER JOIN `' . USERS_STATISTICS . '` AS s ON s.`user_statistic_user_id` = u.`id`
+                                    INNER JOIN `' . PLANETS . '` AS p ON p.`planet_user_id` = u.`id`
+                                    LEFT JOIN `' . ALLIANCE . '` AS a ON a.`alliance_id` = u.`ally_id`
+                                WHERE p.`planet_name` LIKE ?
+                                LIMIT ' . MAX_SEARCH_RESULTS . ';'
+                            ),
+                            ['%' . $searchQuery['searchText'] . '%']
+                        )
+                    ) : [];
                     break;
             }
 
