@@ -919,30 +919,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/ChatController.php
 
 		-
-			message: '#^Cannot call method getAllReports\(\) on Xgp\\App\\Libraries\\Combatreport\\Report\|null\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: legacy/app/Http/Controllers/Game/CombatreportController.php
-
-		-
-			message: '#^Cannot call method getFirstReportOwnersAsArray\(\) on Xgp\\App\\Libraries\\Combatreport\\Report\|null\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: legacy/app/Http/Controllers/Game/CombatreportController.php
-
-		-
-			message: '#^Parameter \#3 \$time of static method Xgp\\App\\Libraries\\Functions\:\:message\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/CombatreportController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\CombatreportController\:\:\$user type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/CombatreportController.php
-
-		-
 			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\DefensesController\:\:\$allowedStructures type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -2981,42 +2957,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Http/Controllers/Game/SuppliesController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\TechnologytreeController\:\:buildBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/TechnologytreeController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\TechnologytreeController\:\:getRequirements\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/TechnologytreeController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\TechnologytreeController\:\:\$_requirements has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: legacy/app/Http/Controllers/Game/TechnologytreeController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\TechnologytreeController\:\:\$_resource has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: legacy/app/Http/Controllers/Game/TechnologytreeController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\TechnologytreeController\:\:\$planet type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/TechnologytreeController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\TechnologytreeController\:\:\$user type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/TechnologytreeController.php
 
 		-
 			message: '#^Cannot call method getPriceToFill100Percent\(\) on Xgp\\App\\Libraries\\Game\\ResourceMarket\|null\.$#'
