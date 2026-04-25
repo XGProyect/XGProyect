@@ -63,7 +63,7 @@ class TraderLayerController extends BaseController
 
     if (is_string($storage)) {
 
-    die(Functions::message($storage, 'game.php?page=traderOverview', '2'));
+    die(Functions::message($storage, 'game.php?page=traderOverview', 2));
     }
 
     if ($this->current_planet['planet_metal'] > $necessaire) {
@@ -105,7 +105,7 @@ class TraderLayerController extends BaseController
 
     if (is_string($storage)) {
 
-    die(Functions::message($storage, 'game.php?page=traderOverview', '2'));
+    die(Functions::message($storage, 'game.php?page=traderOverview', 2));
     }
 
     if ($this->current_planet['planet_crystal'] > $necessaire) {
@@ -147,7 +147,7 @@ class TraderLayerController extends BaseController
 
     if (is_string($storage)) {
 
-    die(Functions::message($storage, 'game.php?page=traderOverview', '2'));
+    die(Functions::message($storage, 'game.php?page=traderOverview', 2));
     }
 
     if ($this->current_planet['planet_deuterium'] > $necessaire) {

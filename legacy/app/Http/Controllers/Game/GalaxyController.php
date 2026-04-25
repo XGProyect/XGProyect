@@ -60,7 +60,7 @@ class GalaxyController extends BaseController
         $this->_galaxyLib = new GalaxyLib();
 
         if ($this->user['preference_vacation_mode'] > 0) {
-            Functions::message(__('game/galaxy.gl_no_access_vm_on'), '', '');
+            Functions::message(__('game/galaxy.gl_no_access_vm_on'), '', 0);
         }
 
         $this->runAction();

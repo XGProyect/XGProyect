@@ -51,7 +51,7 @@ abstract class Functions
         return (int) (app(SettingsService::class)->getInt('fleet_speed') / 2500);
     }
 
-    public static function message(string $mes, ?string $dest = null, string $time = '3', bool $topnav = true, bool $menu = true, $center = true): void
+    public static function message(string $mes, ?string $dest = null, int $time = 3, bool $topnav = true, bool $menu = true, $center = true): void
     {
         $middle = [
             'middle1' => '',
@@ -78,7 +78,7 @@ abstract class Functions
         );
     }
 
-    public static function popupMessage(string $mes, ?string $dest = null, string $time = '3'): void
+    public static function popupMessage(string $mes, ?string $dest = null, int $time = 3): void
     {
         self::message($mes, $dest, $time, false, false, false);
     }
@@ -94,7 +94,7 @@ abstract class Functions
     public static function moduleMessage(int $accessLevel): void
     {
         if ($accessLevel == 0) {
-            self::message(__('game/global.module_not_accesible'), '', '', true);
+            self::message(__('game/global.module_not_accesible'), '', 0, true);
             exit;
         }
     }

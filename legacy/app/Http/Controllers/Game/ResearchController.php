@@ -58,7 +58,7 @@ class ResearchController extends BaseController
         $this->handleTechnologieBuild();
 
         if ($this->planet[$this->_resource[31]] == 0) {
-            Functions::message(__('game/research.re_lab_required'), '', '', true);
+            Functions::message(__('game/research.re_lab_required'), '', 0, true);
         }
 
         $this->buildPage();
