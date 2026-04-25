@@ -29,9 +29,9 @@ use Xgp\App\Libraries\Functions;
 class TechnologytreeController extends BaseController
 {
     public function __construct(
+        private FormatService $formatService,
         private GameObjectRegistry $registry,
         private SettingsService $settings,
-        private FormatService $formatService,
     ) {
     }
 
