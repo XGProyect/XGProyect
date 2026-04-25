@@ -19,6 +19,9 @@ use Illuminate\Routing\Controller as BaseController;
 use RuntimeException;
 use Xgp\App\Libraries\Functions;
 
+/**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ */
 class TechnologydetailsController extends BaseController
 {
     public function __construct(
