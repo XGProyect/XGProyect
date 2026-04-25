@@ -5,18 +5,18 @@
     <tr>
         <td class="c" colspan="2">{{ __('game/constructions.construction') }}</td>
     </tr>
-    @foreach ($list_of_constructions as $item)
+    @foreach ($constructions as $item)
     <tr>
         <th scope="row" class="l" width="40%">
             <table width="100%">
                 <tr>
                     <td style="background-color: transparent;" align="left">
-                        <a href="game.php?page=technologydetails&technology={{ $item['tt_info'] }}" style="text-decoration: none;">
-                            <img src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['tt_info'] . '.gif') }}" alt="{{ $item['tt_name'] }}" style="height: 28px; width: 28px;">
-                            <span style="vertical-align: top; font-weight: normal;">{{ $item['tt_name'] }}</span>
+                        <a href="game.php?page=technologydetails&technology={{ $item['id'] }}" style="text-decoration: none;">
+                            <img src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['id'] . '.gif') }}" alt="{{ $item['name'] }}" style="height: 28px; width: 28px;">
+                            <span style="vertical-align: top; font-weight: normal;">{{ $item['name'] }}</span>
                         </a>
                     </td>
-                    <td style="background-color: transparent; font-weight: normal;" align="right">{{ $item['tt_detail'] }}</td>
+                    <td style="background-color: transparent; font-weight: normal;" align="right">{{ $item['detail'] }}</td>
                 </tr>
             </table>
         </th>
@@ -32,18 +32,18 @@
     <tr>
         <td class="c" colspan="2">{{ __('game/technologies.research') }}</td>
     </tr>
-    @foreach ($list_of_research as $item)
+    @foreach ($research as $item)
     <tr>
         <th scope="row" class="l" width="40%">
             <table width="100%">
                 <tr>
                     <td style="background-color: transparent;" align="left">
-                        <a href="game.php?page=technologydetails&technology={{ $item['tt_info'] }}" style="text-decoration: none;">
-                            <img src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['tt_info'] . '.gif') }}" alt="{{ $item['tt_name'] }}" style="height: 28px; width: 28px;">
-                            <span style="vertical-align: top; font-weight: normal;">{{ $item['tt_name'] }}</span>
+                        <a href="game.php?page=technologydetails&technology={{ $item['id'] }}" style="text-decoration: none;">
+                            <img src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['id'] . '.gif') }}" alt="{{ $item['name'] }}" style="height: 28px; width: 28px;">
+                            <span style="vertical-align: top; font-weight: normal;">{{ $item['name'] }}</span>
                         </a>
                     </td>
-                    <td style="background-color: transparent;font-weight: normal;" align="right">{{ $item['tt_detail'] }}</td>
+                    <td style="background-color: transparent;font-weight: normal;" align="right">{{ $item['detail'] }}</td>
                 </tr>
             </table>
         </th>
@@ -59,18 +59,18 @@
     <tr>
         <td class="c" colspan="2">{{ __('game/ships.ships') }}</td>
     </tr>
-    @foreach ($list_of_ships as $item)
+    @foreach ($ships as $item)
     <tr>
         <th scope="row" class="l" width="40%">
             <table width="100%">
                 <tr>
                     <td style="background-color: transparent;" align="left">
-                        <a href="game.php?page=technologydetails&technology={{ $item['tt_info'] }}" style="text-decoration: none;">
-                            <img src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['tt_info'] . '.gif') }}" alt="{{ $item['tt_name'] }}" style="height: 28px; width: 28px;">
-                            <span style="vertical-align: top; font-weight: normal;">{{ $item['tt_name'] }}</span>
+                        <a href="game.php?page=technologydetails&technology={{ $item['id'] }}" style="text-decoration: none;">
+                            <img src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['id'] . '.gif') }}" alt="{{ $item['name'] }}" style="height: 28px; width: 28px;">
+                            <span style="vertical-align: top; font-weight: normal;">{{ $item['name'] }}</span>
                         </a>
                     </td>
-                    <td style="background-color: transparent;font-weight: normal;" align="right">{{ $item['tt_detail'] }}</td>
+                    <td style="background-color: transparent;font-weight: normal;" align="right">{{ $item['detail'] }}</td>
                 </tr>
             </table>
         </th>
@@ -86,18 +86,18 @@
     <tr>
         <td class="c" colspan="2">{{ __('game/defenses.defenses') }}</td>
     </tr>
-    @foreach ($list_of_defenses as $item)
+    @foreach ($defenses as $item)
     <tr>
         <th scope="row" class="l" width="40%">
             <table width="100%">
                 <tr>
                     <td style="background-color: transparent;" align="left">
-                        <a href="game.php?page=technologydetails&technology={{ $item['tt_info'] }}" style="text-decoration: none;">
-                            <img src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['tt_info'] . '.gif') }}" alt="{{ $item['tt_name'] }}" style="height: 28px; width: 28px;">
-                            <span style="vertical-align: top; font-weight: normal;">{{ $item['tt_name'] }}</span>
+                        <a href="game.php?page=technologydetails&technology={{ $item['id'] }}" style="text-decoration: none;">
+                            <img src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['id'] . '.gif') }}" alt="{{ $item['name'] }}" style="height: 28px; width: 28px;">
+                            <span style="vertical-align: top; font-weight: normal;">{{ $item['name'] }}</span>
                         </a>
                     </td>
-                    <td style="background-color: transparent;font-weight: normal;" align="right">{{ $item['tt_detail'] }}</td>
+                    <td style="background-color: transparent;font-weight: normal;" align="right">{{ $item['detail'] }}</td>
                 </tr>
             </table>
         </th>
@@ -113,18 +113,18 @@
     <tr>
         <td class="c" colspan="2">{{ __('game/defenses.missiles') }}</td>
     </tr>
-    @foreach ($list_of_missiles as $item)
+    @foreach ($missiles as $item)
     <tr>
         <th scope="row" class="l" width="40%">
             <table width="100%">
                 <tr>
                     <td style="background-color: transparent;" align="left">
-                        <a href="game.php?page=technologydetails&technology={{ $item['tt_info'] }}" style="text-decoration: none;">
-                            <img src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['tt_info'] . '.gif') }}" alt="{{ $item['tt_name'] }}" style="height: 28px; width: 28px;">
-                            <span style="vertical-align: top; font-weight: normal;">{{ $item['tt_name'] }}</span>
+                        <a href="game.php?page=technologydetails&technology={{ $item['id'] }}" style="text-decoration: none;">
+                            <img src="{{ asset('assets/upload/skins/xgproyect/elements/' . $item['id'] . '.gif') }}" alt="{{ $item['name'] }}" style="height: 28px; width: 28px;">
+                            <span style="vertical-align: top; font-weight: normal;">{{ $item['name'] }}</span>
                         </a>
                     </td>
-                    <td style="background-color: transparent;font-weight: normal;" align="right">{{ $item['tt_detail'] }}</td>
+                    <td style="background-color: transparent;font-weight: normal;" align="right">{{ $item['detail'] }}</td>
                 </tr>
             </table>
         </th>

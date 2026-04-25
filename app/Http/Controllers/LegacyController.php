@@ -24,6 +24,7 @@ class LegacyController extends BaseController
         'changelog' => Game\ChangelogController::class,
         'logout' => Game\LogoutController::class,
         'technologydetails' => Game\TechnologydetailsController::class,
+        'technologytree' => Game\TechnologytreeController::class,
     ];
 
     public function __invoke(Request $request): BaseResponse
