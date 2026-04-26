@@ -7,7 +7,6 @@ namespace App\Services;
 use DateTime;
 use Illuminate\Support\Number;
 use Xgp\App\Core\Enumerators\ImportanceEnumerator as Importance;
-use Xgp\App\Helpers\UrlHelper;
 
 /**
  * @SuppressWarnings("PHPMD.TooManyPublicMethods")
@@ -188,9 +187,17 @@ class FormatService
         return '<strong>' . $value . '</strong>';
     }
 
+    public function link(string $href, string $text, string $title = '', string $attributes = ''): string
+    {
+        $titleAttr = $title !== '' ? ' title="' . $title . '"' : '';
+        $attrsStr  = $attributes !== '' ? ' ' . $attributes : '';
+
+        return '<a href="' . $href . '"' . $titleAttr . $attrsStr . '>' . $text . '</a>';
+    }
+
     public function prettyCoords(int $galaxy, int $system, int $planet): string
     {
-        return UrlHelper::setUrl(
+        return $this->link(
             'game.php?page=galaxy&mode=3&galaxy=' . $galaxy . '&system=' . $system,
             $this->formatCoords($galaxy, $system, $planet)
         );

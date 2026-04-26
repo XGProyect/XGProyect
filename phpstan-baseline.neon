@@ -25,6 +25,90 @@ parameters:
 			path: app/Http/Controllers/Game/BannedController.php
 
 		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 5
+			path: app/Http/Controllers/Game/BuildingsController.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 16
+			path: app/Http/Controllers/Game/BuildingsController.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: app/Http/Controllers/Game/BuildingsController.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 2
+			path: app/Http/Controllers/Game/NoticesController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Game\\NoticesController\:\:buildListData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Controllers/Game/NoticesController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Game\\NoticesController\:\:buildWriteData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Controllers/Game/NoticesController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Game\\NoticesController\:\:deleteNotes\(\) has parameter \$delete with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Controllers/Game/NoticesController.php
+
+		-
+			message: '#^Parameter \#1 \$priority of method App\\Services\\FormatService\:\:getImportanceColor\(\) expects int, bool given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Game/NoticesController.php
+
+		-
+			message: '#^Parameter \#1 \$title of method App\\Http\\Controllers\\Game\\NoticesController\:\:sanitizeTitle\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: app/Http/Controllers/Game/NoticesController.php
+
+		-
+			message: '#^Cannot access property \$end_time on App\\Models\\BuildingQueue\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Services/Game/BuildingQueueService.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 4
+			path: app/Services/Game/BuildingQueueService.php
+
+		-
+			message: '#^Method App\\Services\\Game\\BuildingQueueService\:\:getQueueData\(\) should return array\{length\: int, to_destroy\: int, items\: array\<int, array\<string, mixed\>\>\} but returns array\{length\: int\<0, max\>, to_destroy\: int\<0, max\>, items\: array\<mixed\>\}\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Services/Game/BuildingQueueService.php
+
+		-
+			message: '#^Parameter \#1 \$element of static method Xgp\\App\\Libraries\\StatisticsLibrary\:\:calculatePoints\(\) expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Game/BuildingQueueService.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>\(Expression\)" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 14
+			path: app/Services/Game/BuildingQueueService.php
+
+		-
 			message: '#^Comparison operation "\>" between Carbon\\Carbon and int\<1, max\> results in an error\.$#'
 			identifier: greater.invalid
 			count: 1
@@ -745,138 +829,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/BuddiesController.php
 
 		-
-			message: '#^Binary operation "\+" between string and float\|int results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Binary operation "\-" between string and string results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Binary operation "\-\=" between string and 1 results in an error\.$#'
-			identifier: assignOp.invalid
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Call to function is_null\(\) with array will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:addToQueue\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:buildListOfBuildings\(\) should return string but returns list\<array\>\.$#'
-			identifier: return.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:buildQueueBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:canInitBuildAction\(\) has parameter \$buildingId with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:canInitBuildAction\(\) has parameter \$listId with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:cancelCurrent\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:setListOfBuildingsItem\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:showQueue\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:showQueue\(\) has parameter \$Sprice with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Offset int\<\-1, 3\> might not exist on ''''\|non\-empty\-list\<string\>\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Offset int\<0, 3\> might not exist on ''''\|non\-empty\-list\<string\>\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Parameter \#1 \$QueueID of method Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:removeFromQueue\(\) expects int, int\|false\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Parameter \#1 \$building of method Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:addToQueue\(\) expects int, int\|false\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Parameter \#2 \$array of function join expects array, array\<int, string\>\|string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:\$_building has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:\$allowedBuildings type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:\$planet type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\BuildingsController\:\:\$user type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/BuildingsController.php
-
-		-
 			message: '#^Parameter \#1 \$to of static method Xgp\\App\\Libraries\\Functions\:\:sendMessage\(\) expects int, int\|false\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1007,12 +959,6 @@ parameters:
 			identifier: deadCode.unreachable
 			count: 1
 			path: legacy/app/Http/Controllers/Game/EmpireController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\FacilitiesController\:\:\$allowedBuildings type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/FacilitiesController.php
 
 		-
 			message: '#^Cannot access property \$id on mixed\.$#'
@@ -2233,78 +2179,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/MovementController.php
 
 		-
-			message: '#^Cannot call method getNotes\(\) on Xgp\\App\\Libraries\\Users\\Notes\|null\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
-			message: '#^Cannot call method hasNotes\(\) on Xgp\\App\\Libraries\\Users\\Notes\|null\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\NoticesController\:\:buildEditBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\NoticesController\:\:buildNotesListBlock\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\NoticesController\:\:createNewNote\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\NoticesController\:\:deleteNote\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\NoticesController\:\:editNote\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
-			message: '#^Method Xgp\\App\\Http\\Controllers\\Game\\NoticesController\:\:getCurrentPage\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
-			message: '#^Parameter \#1 \$note_id of method Xgp\\App\\Libraries\\Users\\Notes\:\:getNoteById\(\) expects int, int\|false given\.$#'
-			identifier: argument.type
-			count: 4
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
-			message: '#^Parameter \#1 \$priority of method App\\Services\\FormatService\:\:getImportanceColor\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
-			message: '#^Parameter \#1 \$value of function count expects array\|Countable, array\<string\|false\>\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\NoticesController\:\:\$user type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/NoticesController.php
-
-		-
 			message: '#^Argument of an invalid type array\<array\>\|null supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 2
@@ -2915,12 +2789,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: legacy/app/Http/Controllers/Game/ShipyardController.php
-
-		-
-			message: '#^Property Xgp\\App\\Http\\Controllers\\Game\\SuppliesController\:\:\$allowedBuildings type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: legacy/app/Http/Controllers/Game/SuppliesController.php
 
 		-
 			message: '#^Cannot call method getPriceToFill100Percent\(\) on Xgp\\App\\Libraries\\Game\\ResourceMarket\|null\.$#'
@@ -8359,26 +8227,14 @@ parameters:
 			path: legacy/app/Libraries/UpdatesLibrary.php
 
 		-
-			message: '#^PHPDoc tag @param references unknown parameter\: \$current_planet$#'
-			identifier: parameter.notFound
-			count: 1
-			path: legacy/app/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^PHPDoc tag @param references unknown parameter\: \$current_user$#'
-			identifier: parameter.notFound
-			count: 1
-			path: legacy/app/Libraries/UpdatesLibrary.php
-
-		-
-			message: '#^PHPDoc tag @return with type bool is incompatible with native type string\.$#'
-			identifier: return.phpDocType
-			count: 1
-			path: legacy/app/Libraries/UpdatesLibrary.php
-
-		-
 			message: '#^Property Xgp\\App\\Libraries\\UpdatesLibrary\:\:\$productionService is never read, only written\.$#'
 			identifier: property.onlyWritten
+			count: 1
+			path: legacy/app/Libraries/UpdatesLibrary.php
+
+		-
+			message: '#^Static method Xgp\\App\\Libraries\\UpdatesLibrary\:\:checkBuildingQueue\(\) is unused\.$#'
+			identifier: method.unused
 			count: 1
 			path: legacy/app/Libraries/UpdatesLibrary.php
 

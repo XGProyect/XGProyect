@@ -23,8 +23,10 @@ class LegacyController extends BaseController
         'banned' => Game\BannedController::class,
         'changelog' => Game\ChangelogController::class,
         'combatreport' => Game\CombatreportController::class,
+        'facilities' => Game\FacilitiesController::class,
         'logout' => Game\LogoutController::class,
         'notices' => Game\NoticesController::class,
+        'supplies' => Game\SuppliesController::class,
         'technologydetails' => Game\TechnologydetailsController::class,
         'technologytree' => Game\TechnologytreeController::class,
     ];

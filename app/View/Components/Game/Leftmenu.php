@@ -11,7 +11,6 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator;
-use Xgp\App\Helpers\UrlHelper;
 
 class Leftmenu extends Component
 {
@@ -82,11 +81,11 @@ class Leftmenu extends Component
         // build the menu array
         foreach ($pages as $page) {
             $menu[$page[5]][] = [
-                'link' => UrlHelper::setUrl(
-                    ($page[4] ? '' : ($page[0] . (!empty($page[2]) ? $page[2] : ''))),
+                'link' => $this->formatService->link(
+                    $page[4] ? '#' : ($page[0] . ($page[2] !== '' ? $page[2] : '')),
                     $this->formatService->spanStyleElement(__('game/menu.' . $page[1]), 'color: ' . $page[3] . ';'),
                     __('game/menu.' . $page[1]),
-                    ($page[4] ? 'onClick="f(\'' . $page[0] . '\', \'' . __('game/menu.' . $page[1]) . '\')"' : '')
+                    $page[4] ? 'onClick="f(\'' . $page[0] . '\', \'' . __('game/menu.' . $page[1]) . '\')"' : ''
                 ),
             ];
         }
@@ -97,12 +96,12 @@ class Leftmenu extends Component
         return view(
             'components.game.leftmenu',
             [
-                'userName' => UrlHelper::setUrl('game.php?page=preferences', $user->name),
+                'userName' => $this->formatService->link('game.php?page=preferences', $user->name),
                 'blocks' => $blocks,
                 'menu' => $menu,
                 'isAdmin' => $user->authlevel > UserRanksEnumerator::PLAYER,
                 'servername' => $this->settingsService->getString('game_name'),
-                'changelog' => UrlHelper::setUrl('game.php?page=changelog', $versionFile),
+                'changelog' => $this->formatService->link('game.php?page=changelog', $versionFile),
             ]
         );
     }

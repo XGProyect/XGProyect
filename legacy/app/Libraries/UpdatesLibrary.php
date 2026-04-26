@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
+use App\Models\Planets;
 use App\Services\Admin\BackupService;
 use App\Services\FormatService;
+use App\Services\Game\BuildingQueueService;
 use App\Services\Game\Formulas\DevelopmentsService;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\Game\Formulas\ProductionService;
@@ -125,18 +127,49 @@ class UpdatesLibrary
      *
      * @return void
      */
-    public static function updateBuildingsQueue(&$current_planet, &$current_user)
+    public static function updateBuildingsQueue(&$current_planet, &$current_user): void
     {
-        while ($current_planet['planet_b_building_id'] != 0) {
-            if ($current_planet['planet_b_building'] <= time()) {
-                if (self::checkBuildingQueue($current_planet, $current_user)) {
-                    self::setFirstElement($current_planet, $current_user);
-                } else {
-                    break;
+        /** @var Planets|null $planet */
+        $planet = Planets::with(['buildings'])->where('planet_id', $current_planet['planet_id'])->first();
+
+        if (!$planet) {
+            return;
+        }
+
+        app(BuildingQueueService::class)->processCompletions($planet, $current_user);
+
+        // Sync modified scalar fields back to the flat array
+        $current_planet['planet_b_building']    = $planet->planet_b_building;
+        $current_planet['planet_metal']         = $planet->planet_metal;
+        $current_planet['planet_crystal']       = $planet->planet_crystal;
+        $current_planet['planet_deuterium']     = $planet->planet_deuterium;
+        $current_planet['planet_field_current'] = $planet->planet_field_current;
+        $current_planet['planet_field_max']     = $planet->planet_field_max;
+
+        // Sync building levels from the buildings relation
+        if ($planet->buildings) {
+            foreach ($planet->buildings->getAttributes() as $key => $value) {
+                if (array_key_exists($key, $current_planet)) {
+                    $current_planet[$key] = $value;
                 }
-            } else {
-                break;
             }
+        }
+
+        // Rebuild the legacy string cache from building_queues for pages not yet migrated
+        $queue = $planet->buildingQueue()->orderBy('position')->get();
+
+        if ($queue->isEmpty()) {
+            $current_planet['planet_b_building_id'] = '0';
+        } else {
+            $current_planet['planet_b_building_id'] = $queue->map(
+                fn ($item) => implode(',', [
+                    $item->building_id,
+                    $item->target_level,
+                    $item->duration,
+                    $item->end_time,
+                    $item->mode,
+                ])
+            )->join(';');
         }
     }
 
@@ -172,14 +205,6 @@ class UpdatesLibrary
         }
     }
 
-    /**
-     * Check the current queue, remove the first element and update the planet with what was just completed
-     *
-     * @param array $current_planet
-     * @param array $current_user
-     *
-     * @return boolean
-     */
     private static function sql(string $sql): string
     {
         return strtr($sql, ['{xgp_prefix}' => DB::getTablePrefix()]);
