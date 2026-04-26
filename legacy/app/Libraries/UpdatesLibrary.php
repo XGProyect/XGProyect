@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Xgp\App\Libraries;
 
 use App\Models\Planets;
+use App\Models\User;
 use App\Services\Admin\BackupService;
 use App\Services\FormatService;
-use App\Models\User;
 use App\Services\Game\BuildingQueueService;
-use App\Services\Game\ResearchQueueService;
 use App\Services\Game\Formulas\DevelopmentsService;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\Game\Formulas\ProductionService;
+use App\Services\Game\ResearchQueueService;
 use App\Services\SettingsService;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Concerns\PreparesLegacySql;
@@ -20,7 +20,6 @@ use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
 use Xgp\App\Core\Objects;
-use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib as Developments;
 
 /**
@@ -33,7 +32,6 @@ class UpdatesLibrary
 
     public function __construct(private ProductionService $productionService)
     {
-
         // Other stuff
         $this->cleanUp();
         $this->createBackup();
@@ -141,12 +139,12 @@ class UpdatesLibrary
         app(BuildingQueueService::class)->processCompletions($planet, $current_user);
 
         // Sync modified scalar fields back to the flat array
-        $current_planet['planet_b_building']    = $planet->planet_b_building;
-        $current_planet['planet_metal']         = $planet->planet_metal;
-        $current_planet['planet_crystal']       = $planet->planet_crystal;
-        $current_planet['planet_deuterium']     = $planet->planet_deuterium;
+        $current_planet['planet_b_building'] = $planet->planet_b_building;
+        $current_planet['planet_metal'] = $planet->planet_metal;
+        $current_planet['planet_crystal'] = $planet->planet_crystal;
+        $current_planet['planet_deuterium'] = $planet->planet_deuterium;
         $current_planet['planet_field_current'] = $planet->planet_field_current;
-        $current_planet['planet_field_max']     = $planet->planet_field_max;
+        $current_planet['planet_field_max'] = $planet->planet_field_max;
 
         // Sync building levels from the buildings relation
         if ($planet->buildings) {
@@ -214,7 +212,7 @@ class UpdatesLibrary
 
             if ($planet !== null) {
                 $current_planet['planet_b_tech_id'] = $planet->planet_b_tech_id;
-                $current_planet['planet_b_tech']    = $planet->planet_b_tech;
+                $current_planet['planet_b_tech'] = $planet->planet_b_tech;
             }
         }
     }
@@ -490,7 +488,7 @@ class UpdatesLibrary
                                 __('game/buildings.bd_building_queue_' . $build_mode . '_order'),
                                 $element_name,
                                 $level,
-                                UrlHelper::setUrl(
+                                app(FormatService::class)->link(
                                     'game.php?page=galaxy&mode=3&galaxy=' . $current_planet['planet_galaxy'] . '&system=' . $current_planet['planet_system'],
                                     $current_planet['planet_name'] . ' ' . app(FormatService::class)->prettyCoords(
                                         (int) $current_planet['planet_galaxy'],
@@ -782,7 +780,6 @@ class UpdatesLibrary
         }
 
         if ($Simul == false) {
-
             // SHIPS AND DEFENSES UPDATE
             $builded = self::updateHangarQueue($current_user, $current_planet, $ProductionTime);
             $ship_points = 0;

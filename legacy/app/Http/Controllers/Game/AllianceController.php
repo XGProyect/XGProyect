@@ -8,6 +8,8 @@ use App\Enums\Module;
 use App\Services\FormatService;
 use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\AllianceRanksEnumerator as AllianceRanks;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Core\Template;
@@ -17,8 +19,6 @@ use Xgp\App\Libraries\Alliance\Alliances;
 use Xgp\App\Libraries\BBCodeLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Illuminate\Support\Facades\DB;
-use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
@@ -268,7 +268,7 @@ class AllianceController extends BaseController
 
             foreach ($results->getAlliances() as $result) {
                 $searchResults[] = [
-                    'ally_tag' => UrlHelper::setUrl('game.php?page=alliance&mode=apply&allyid=' . $result->getAllianceId(), $result->getAllianceTag()),
+                    'ally_tag' => app(FormatService::class)->link('game.php?page=alliance&mode=apply&allyid=' . $result->getAllianceId(), $result->getAllianceTag()),
                     'alliance_name' => $result->getAllianceName(),
                     'ally_members' => $result->getAllianceMembers(),
                 ];
@@ -675,8 +675,8 @@ class AllianceController extends BaseController
 
             DB::statement(
                 $this->prepareSql(
-                    'UPDATE ' . ALLIANCE . " SET
-                        `" . $textFieldMap[$t] . "`='" . StringsHelper::escapeString($post['text']) . "'
+                    'UPDATE ' . ALLIANCE . ' SET
+                        `' . $textFieldMap[$t] . "`='" . StringsHelper::escapeString($post['text']) . "'
                     WHERE `alliance_id` = '" . (int) $this->getAllianceId() . "'"
                 )
             );
@@ -1205,7 +1205,7 @@ class AllianceController extends BaseController
         if (!$this->user['ally_id'] &&
             !$this->user['ally_request'] &&
             $this->alliance->getCurrentAlliance()->getAllianceRequestNotAllow()) {
-            $url = UrlHelper::setUrl(
+            $url = app(FormatService::class)->link(
                 'game.php?page=alliance&mode=apply&allyid=' . $this->getAllianceId(),
                 __('game/alliance.al_click_to_send_request'),
                 __('game/alliance.al_click_to_send_request')
@@ -1249,7 +1249,7 @@ class AllianceController extends BaseController
         $list_of_members = '';
 
         if ($this->alliance->hasAccess(AllianceRanks::VIEW_MEMBER_LIST)) {
-            $list_of_members = ' (' . UrlHelper::setUrl('game.php?page=alliance&mode=memberslist', __('game/alliance.al_user_list')) . ')';
+            $list_of_members = ' (' . app(FormatService::class)->link('game.php?page=alliance&mode=memberslist', __('game/alliance.al_user_list')) . ')';
         }
 
         return [
@@ -1264,7 +1264,7 @@ class AllianceController extends BaseController
         $admin_area = '';
 
         if ($this->alliance->hasAccess(AllianceRanks::ADMINISTRATION)) {
-            $admin_area = ' (' . UrlHelper::setUrl('game.php?page=alliance&mode=admin&edit=ally', __('game/alliance.al_manage_alliance')) . ')';
+            $admin_area = ' (' . app(FormatService::class)->link('game.php?page=alliance&mode=admin&edit=ally', __('game/alliance.al_manage_alliance')) . ')';
         }
 
         return [
@@ -1286,7 +1286,7 @@ class AllianceController extends BaseController
         $count = $countRow !== null ? (int) $countRow->total_requests : 0;
 
         if ($this->alliance->hasAccess(AllianceRanks::APPLICATION_MANAGEMENT) && $count != 0) {
-            $requests = UrlHelper::setUrl(
+            $requests = app(FormatService::class)->link(
                 'game.php?page=alliance&mode=admin&edit=requests',
                 $count . ' ' . __('game/alliance.al_new_requests')
             );
@@ -1303,7 +1303,7 @@ class AllianceController extends BaseController
         if ($this->alliance->hasAccess(AllianceRanks::SEND_CIRCULAR)) {
             return [
                 'detail_title' => __('game/alliance.al_circular_message'),
-                'detail_content' => UrlHelper::setUrl('game.php?page=alliance&mode=circular', __('game/alliance.al_send_circular_message')),
+                'detail_content' => app(FormatService::class)->link('game.php?page=alliance&mode=circular', __('game/alliance.al_send_circular_message')),
             ];
         }
 
@@ -1329,7 +1329,7 @@ class AllianceController extends BaseController
 
         if ($webUrl != '') {
             $url = UrlHelper::prepUrl($webUrl);
-            $web = UrlHelper::setUrl($url, $url, $url, 'target="_blank"');
+            $web = app(FormatService::class)->link($url, $url, $url, 'target="_blank"');
         }
 
         return $web;
@@ -1464,13 +1464,13 @@ class AllianceController extends BaseController
             $action = 'game.php?page=alliance&mode=admin&edit=members&kick=' . $member_id;
             $content = Functions::setImage(DPATH . 'alliance/abort.gif');
             $attributes = 'onclick="javascript:return confirm(\'' . strtr(__('game/alliance.al_confirm_remove_member'), ['%s' => $member_name]) . '\');"';
-            $kick_user = UrlHelper::setUrl($action, $content, '', $attributes);
+            $kick_user = app(FormatService::class)->link($action, $content, '', $attributes);
         }
 
         if ($this->alliance->hasAccess(AllianceRanks::ADMINISTRATION)) {
             $action = 'game.php?page=alliance&mode=admin&edit=members&rank=' . $member_id;
             $content = Functions::setImage(DPATH . 'alliance/key.gif');
-            $change_rank = UrlHelper::setUrl($action, $content);
+            $change_rank = app(FormatService::class)->link($action, $content);
         }
 
         if (empty($kick_user) && empty($change_rank)) {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Enums\Module;
-use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
+use App\Services\Game\Formulas\FleetsService;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
@@ -16,7 +16,6 @@ use Xgp\App\Core\Entity\FleetEntity;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
-use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\Fleets;
@@ -212,7 +211,7 @@ class MovementController extends BaseController
                 $content = '<input type="button" value="' . __('game/fleet.fl_acs') . '">';
                 $attributes = 'onClick="f(\'game.php?page=federationlayer&fleet=' . $fleet->getFleetId() . '\', \'\')"';
 
-                $actions .= UrlHelper::setUrl('#', $content, '', $attributes);
+                $actions .= app(FormatService::class)->link('#', $content, '', $attributes);
             }
         }
 

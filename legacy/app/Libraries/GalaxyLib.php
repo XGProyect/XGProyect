@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
-use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
+use App\Services\Game\Formulas\FleetsService;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
@@ -180,7 +180,7 @@ class GalaxyLib
                 $attributes = "onclick=fenster('game.php?page=phalanx&galaxy=" . $this->galaxy .
                 '&amp;system=' . $this->system . '&amp;planet=' . $this->planet .
                 '&amp;planettype=' . self::PLANET_TYPE . "')";
-                $phalanx_link = UrlHelper::setUrl('', $this->row_data['planet_name'], 'Phalanx', $attributes);
+                $phalanx_link = app(FormatService::class)->link('', $this->row_data['planet_name'], 'Phalanx', $attributes);
             }
 
             $planetname = $phalanx_link;
@@ -397,12 +397,12 @@ class GalaxyLib
         }
 
         $actions = '<td>';
-        $actions .= str_replace('"', '\\\'', UrlHelper::setUrl(
+        $actions .= str_replace('"', '\\\'', app(FormatService::class)->link(
             'game.php?page=chat&playerId=' . $this->row_data['id'],
             __('game/global.write_message')
         ));
         $actions .= '</td></tr><tr><td>';
-        $actions .= str_replace('"', '\\\'', UrlHelper::setUrl(
+        $actions .= str_replace('"', '\\\'', app(FormatService::class)->link(
             'game.php?page=buddies&mode=2&u=' . $this->row_data['id'],
             __('game/galaxy.gl_buddy_request')
         ));
@@ -447,7 +447,7 @@ class GalaxyLib
             $parse['ally_id'] = $this->row_data['ally_id'];
 
             if ($this->row_data['alliance_web'] != '') {
-                $web_url = UrlHelper::setUrl(
+                $web_url = app(FormatService::class)->link(
                     UrlHelper::prepUrl($this->row_data['alliance_web']),
                     __('game/galaxy.gl_alliance_web_page'),
                     '',
@@ -515,9 +515,9 @@ class GalaxyLib
 
         foreach ($available_actions as $action) {
             if (isset($actions[$action]['url'])) {
-                $links[] = UrlHelper::setUrl($actions[$action]['url'], $actions[$action]['image']);
+                $links[] = app(FormatService::class)->link($actions[$action]['url'], $actions[$action]['image']);
             } else {
-                $links[] = UrlHelper::setUrl('', $actions[$action]['image'], '', $actions[$action]['attributes']);
+                $links[] = app(FormatService::class)->link('', $actions[$action]['image'], '', $actions[$action]['attributes']);
             }
         }
 
@@ -540,7 +540,7 @@ class GalaxyLib
     {
         $url = 'game.php?page=fleet1&galaxy=' . $this->galaxy . '&amp;system=' . $this->system . '&amp;planet=' .
         $this->planet . '&amp;planettype=' . $planet_type . '&amp;target_mission=1';
-        return str_replace('"', '\\\'', UrlHelper::setUrl($url, __('game/missions.type_mission')[Missions::ATTACK]));
+        return str_replace('"', '\\\'', app(FormatService::class)->link($url, __('game/missions.type_mission')[Missions::ATTACK]));
     }
 
     /**
@@ -554,7 +554,7 @@ class GalaxyLib
     {
         $url = 'game.php?page=fleet1&galaxy=' . $this->galaxy . '&system=' . $this->system .
         '&planet=' . $this->planet . '&planettype=' . $planet_type . '&target_mission=3';
-        return str_replace('"', '\\\'', UrlHelper::setUrl($url, __('game/missions.type_mission')[Missions::TRANSPORT]));
+        return str_replace('"', '\\\'', app(FormatService::class)->link($url, __('game/missions.type_mission')[Missions::TRANSPORT]));
     }
 
     /**
@@ -568,7 +568,7 @@ class GalaxyLib
     {
         $url = 'game.php?page=fleet1&galaxy=' . $this->galaxy . '&system=' . $this->system .
         '&planet=' . $this->planet . '&planettype=' . $planet_type . '&target_mission=4';
-        return str_replace('"', '\\\'', UrlHelper::setUrl($url, __('game/missions.type_mission')[Missions::DEPLOY]));
+        return str_replace('"', '\\\'', app(FormatService::class)->link($url, __('game/missions.type_mission')[Missions::DEPLOY]));
     }
 
     /**
@@ -582,14 +582,14 @@ class GalaxyLib
     {
         $url = 'game.php?page=fleet1&galaxy=' . $this->galaxy . '&system=' . $this->system .
         '&planet=' . $this->planet . '&planettype=' . $planet_type . '&target_mission=5';
-        return str_replace('"', '\\\'', UrlHelper::setUrl($url, __('game/missions.type_mission')[Missions::STAY]));
+        return str_replace('"', '\\\'', app(FormatService::class)->link($url, __('game/missions.type_mission')[Missions::STAY]));
     }
 
     private function spyLink($planet_type): string
     {
         $attributes = 'onclick="javascript:doit(6, ' . $this->galaxy . ', ' . $this->system . ', ' . $this->planet . ', ' . $planet_type . ', ' . $this->current_user['preference_spy_probes'] . ');"';
 
-        return str_replace('"', '\\\'', UrlHelper::setUrl('', __('game/missions.type_mission')[Missions::SPY], '', $attributes));
+        return str_replace('"', '\\\'', app(FormatService::class)->link('', __('game/missions.type_mission')[Missions::SPY], '', $attributes));
     }
 
     /**
@@ -603,7 +603,7 @@ class GalaxyLib
     {
         $url = 'game.php?page=fleet1&galaxy=' . $this->galaxy . '&system=' . $this->system . '&planet=' .
         $this->planet . '&planettype=' . $planet_type . '&target_mission=9';
-        return str_replace('"', '\\\'', UrlHelper::setUrl($url, __('game/missions.type_mission')[Missions::DESTROY]));
+        return str_replace('"', '\\\'', app(FormatService::class)->link($url, __('game/missions.type_mission')[Missions::DESTROY]));
     }
 
     /**
@@ -617,7 +617,7 @@ class GalaxyLib
     {
         $url = 'game.php?page=galaxy&mode=2&galaxy=' . $this->galaxy . '&system=' . $this->system . '&planet=' .
         $this->planet . '&current=' . $this->current_user['current_planet'];
-        return str_replace('"', '\\\'', UrlHelper::setUrl($url, __('game/galaxy.gl_missile_attack')));
+        return str_replace('"', '\\\'', app(FormatService::class)->link($url, __('game/galaxy.gl_missile_attack')));
     }
 
     /**
@@ -631,7 +631,7 @@ class GalaxyLib
     {
         $attributes = 'onclick=fenster(&#039;game.php?page=phalanx&galaxy=' . $this->galaxy . '&amp;system=' .
         $this->system . '&amp;planet=' . $this->planet . '&amp;planettype=' . $planet_type . '&#039;)';
-        return str_replace('"', '\\\'', UrlHelper::setUrl('', __('game/galaxy.gl_phalanx'), '', $attributes));
+        return str_replace('"', '\\\'', app(FormatService::class)->link('', __('game/galaxy.gl_phalanx'), '', $attributes));
     }
     //#####################################
     //

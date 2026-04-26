@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
+use App\Enums\Module;
 use App\Services\FormatService;
+use App\Services\Game\Formulas\DevelopmentsService;
+use App\Services\SettingsService;
 use Exception;
 use Illuminate\Routing\Controller as BaseController;
-use App\Services\SettingsService;
-use Xgp\App\Core\Objects;
-use Xgp\App\Core\Template;
-use Xgp\App\Helpers\UrlHelper;
-use App\Services\Game\Formulas\DevelopmentsService;
-use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\Users;
-use App\Enums\Module;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Concerns\PreparesLegacySql;
+use Xgp\App\Core\Objects;
+use Xgp\App\Core\Template;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\Users;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
@@ -249,9 +248,9 @@ class EmpireController extends BaseController
 
         $url = 'game.php?page=' . $page . '&cp=' . $planet['planet_id'] . '&re=0&planettype=' . $planet['planet_type'];
 
-        return UrlHelper::setUrl(
+        return app(FormatService::class)->link(
             $url,
-            $source[$this->objects->getObjects($elementId)]
+            (string) $source[$this->objects->getObjects($elementId)]
         );
     }
 }

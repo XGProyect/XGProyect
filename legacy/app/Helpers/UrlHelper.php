@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Helpers;
 
+/**
+ * @deprecated v4.0.0 use FormatService::link() or any laravel helper instead
+ */
 abstract class UrlHelper
 {
     public static function prepUrl(string $url = ''): string
@@ -19,23 +22,9 @@ abstract class UrlHelper
         return $url;
     }
 
-    public static function setUrl(string $hyperlink, int|string $text, string $title = '', string $attributes = ''): string
-    {
-        if (empty($hyperlink)) {
-            $hyperlink = '#';
-        }
-
-        if (!empty($title)) {
-            $title = 'title="' . $title . '"';
-        }
-
-        if (!empty($attributes)) {
-            $attributes = ' ' . $attributes;
-        }
-
-        return '<a href="' . $hyperlink . '" ' . $title . ' ' . $attributes . '>' . $text . '</a>';
-    }
-
+    /**
+     * @SuppressWarnings("PHPMD.Superglobals")
+     */
     public static function getUrlProtocol(): string
     {
         return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' or $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';

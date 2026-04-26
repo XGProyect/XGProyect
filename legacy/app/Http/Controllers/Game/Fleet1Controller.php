@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Enums\Module;
-use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
+use App\Services\Game\Formulas\FleetsService;
 use App\Services\Game\Formulas\OfficerService;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +14,6 @@ use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
-use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Game\Fleets;
 use Xgp\App\Libraries\Premium\Premium;
@@ -184,7 +183,7 @@ class Fleet1Controller extends BaseController
     {
         $title = __('game/fleet.fl_speed_title') . $this->fleetsService->getShipSpeed($ship_id, (int) $this->user['research_combustion_drive'], (int) $this->user['research_impulse_drive'], (int) $this->user['research_hyperspace_drive']);
 
-        return UrlHelper::setUrl('', __('game/ships.' . $ship_name), $title);
+        return app(FormatService::class)->link('', __('game/ships.' . $ship_name), $title);
     }
 
     /**
@@ -212,7 +211,7 @@ class Fleet1Controller extends BaseController
             return null;
         }
 
-        return UrlHelper::setUrl('#', __('game/fleet.fl_max'), '', 'onclick="javascript:maxShip(\'ship' . $ship_id . '\');"');
+        return app(FormatService::class)->link('#', __('game/fleet.fl_max'), '', 'onclick="javascript:maxShip(\'ship' . $ship_id . '\');"');
     }
 
     /**

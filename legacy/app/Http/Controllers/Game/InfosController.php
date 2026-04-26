@@ -5,24 +5,23 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Enums\Module;
-use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
-use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
-use App\Services\SettingsService;
-use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
 use App\Services\Game\Formulas\DevelopmentsService;
+use App\Services\Game\Formulas\FleetsService;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\Game\Formulas\ProductionService;
+use App\Services\SettingsService;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
+use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
+use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\StringsHelper;
-use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
-use Illuminate\Support\Facades\DB;
-use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
@@ -697,7 +696,7 @@ class InfosController extends BaseController
             $page .= Template::render(
                 'infos/info_buildings_destroy',
                 [
-                    'tear_down_url' => UrlHelper::setUrl(
+                    'tear_down_url' => app(FormatService::class)->link(
                         $tear_down_url,
                         StringsHelper::parseReplacements(
                             __('game/infos.in_destroy'),

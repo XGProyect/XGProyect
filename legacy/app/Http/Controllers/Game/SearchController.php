@@ -7,13 +7,12 @@ namespace Xgp\App\Http\Controllers\Game;
 use App\Enums\Module;
 use App\Services\FormatService;
 use Illuminate\Routing\Controller as BaseController;
-use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
-use Xgp\App\Core\Template;
-use Xgp\App\Helpers\UrlHelper;
-use Xgp\App\Libraries\Functions;
-use Xgp\App\Libraries\NoobsProtectionLib;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Concerns\PreparesLegacySql;
+use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
+use Xgp\App\Core\Template;
+use Xgp\App\Libraries\Functions;
+use Xgp\App\Libraries\NoobsProtectionLib;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
@@ -229,7 +228,7 @@ class SearchController extends BaseController
     private function setPosition(int $userRank, int $userLevel): string
     {
         if ($this->noob->isRankVisible($userLevel)) {
-            return UrlHelper::setUrl(
+            return app(FormatService::class)->link(
                 'game.php?page=statistics&start=' . $userRank,
                 $this->formatService->prettyNumber((int) $userRank)
             );
@@ -240,13 +239,13 @@ class SearchController extends BaseController
 
     private function getPlayersActions(int $userId): string
     {
-        $chatLink = UrlHelper::setUrl(
+        $chatLink = app(FormatService::class)->link(
             'game.php?page=chat&playerId=' . $userId,
             Functions::setImage(DPATH . '/img/m.gif', __('game/search.sh_tip_write')),
             __('game/search.sh_tip_apply')
         );
 
-        $buddyLink = UrlHelper::setUrl(
+        $buddyLink = app(FormatService::class)->link(
             '#',
             Functions::setImage(DPATH . '/img/b.gif', __('game/search.sh_tip_buddy_request')),
             __('game/search.sh_tip_apply'),
@@ -259,7 +258,7 @@ class SearchController extends BaseController
     private function getAllianceApplicationAction(int $allianceId, int $alliance_requests): string
     {
         if ($alliance_requests == SwitchInt::on) {
-            return UrlHelper::setUrl(
+            return app(FormatService::class)->link(
                 'game.php?page=alliance&mode=apply&allyid=' . $allianceId,
                 Functions::setImage(DPATH . '/img/m.gif', __('game/search.sh_tip_apply')),
                 __('game/search.sh_tip_apply')

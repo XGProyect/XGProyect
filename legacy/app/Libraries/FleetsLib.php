@@ -11,7 +11,6 @@ use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
-use Xgp\App\Helpers\UrlHelper;
 
 class FleetsLib
 {
@@ -157,7 +156,7 @@ class FleetsLib
         $link = 'game.php?page=galaxy&mode=3&galaxy=' .
             $fleetRow['fleet_start_galaxy'] . '&system=' . $fleetRow['fleet_start_system'];
 
-        return UrlHelper::setUrl($link, $coords, '', $fleetType);
+        return app(FormatService::class)->link($link, $coords, '', $fleetType);
     }
 
     public static function targetLink(array $fleetRow, string $fleetType): string
@@ -171,7 +170,7 @@ class FleetsLib
         $link = 'game.php?page=galaxy&mode=3&galaxy=' .
             $fleetRow['fleet_end_galaxy'] . '&system=' . $fleetRow['fleet_end_system'];
 
-        return UrlHelper::setUrl($link, $coords, '', $fleetType);
+        return app(FormatService::class)->link($link, $coords, '', $fleetType);
     }
 
     public static function fleetResourcesPopup(array $fleetRow, string $text, string $fleet_type): string
@@ -268,7 +267,7 @@ class FleetsLib
     {
         $url = 'game.php?page=chat&playerId=' . $fleetRow['fleet_owner'];
         $image = Functions::setImage(DPATH . '/img/m.gif');
-        $link = $fleetRow['start_planet_user'] . ' ' . UrlHelper::setUrl($url, $image);
+        $link = $fleetRow['start_planet_user'] . ' ' . app(FormatService::class)->link($url, $image);
 
         return $link;
     }

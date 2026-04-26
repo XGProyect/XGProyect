@@ -2245,12 +2245,6 @@ parameters:
 			path: legacy/app/Http/Controllers/Game/OverviewController.php
 
 		-
-			message: '#^Parameter \#2 \$text of static method Xgp\\App\\Helpers\\UrlHelper\:\:setUrl\(\) expects int\|string, array\<string\>\|string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Http/Controllers/Game/OverviewController.php
-
-		-
 			message: '#^Parameter \#3 \$Owner of static method Xgp\\App\\Libraries\\FleetsLib\:\:flyingFleetsTable\(\) expects int, false given\.$#'
 			identifier: argument.type
 			count: 4
@@ -2260,12 +2254,6 @@ parameters:
 			message: '#^Parameter \#3 \$Owner of static method Xgp\\App\\Libraries\\FleetsLib\:\:flyingFleetsTable\(\) expects int, true given\.$#'
 			identifier: argument.type
 			count: 4
-			path: legacy/app/Http/Controllers/Game/OverviewController.php
-
-		-
-			message: '#^Parameter \#3 \$title of static method Xgp\\App\\Helpers\\UrlHelper\:\:setUrl\(\) expects string, array\<string\>\|string given\.$#'
-			identifier: argument.type
-			count: 1
 			path: legacy/app/Http/Controllers/Game/OverviewController.php
 
 		-
@@ -3225,18 +3213,6 @@ parameters:
 		-
 			message: '#^Method Xgp\\App\\Libraries\\BBCodeLib\:\:setUnderline\(\) is unused\.$#'
 			identifier: method.unused
-			count: 1
-			path: legacy/app/Libraries/BBCodeLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Libraries\\BBCodeLib\:\:setUrl\(\) is unused\.$#'
-			identifier: method.unused
-			count: 1
-			path: legacy/app/Libraries/BBCodeLib.php
-
-		-
-			message: '#^Method Xgp\\App\\Libraries\\BBCodeLib\:\:setUrl\(\) never returns null so it can be removed from the return type\.$#'
-			identifier: return.unusedType
 			count: 1
 			path: legacy/app/Libraries/BBCodeLib.php
 

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Missions;
 
-use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
-use Xgp\App\Helpers\UrlHelper;
+use App\Services\Game\Formulas\FleetsService;
 use Xgp\App\Libraries\BattleEngine\Core\Battle;
 use Xgp\App\Libraries\BattleEngine\Core\BattleReport;
 use Xgp\App\Libraries\BattleEngine\Models\Defense;
@@ -739,7 +738,7 @@ class Attack extends Missions
         $js = "OnClick=\'f(\"game.php?page=combatreport&report=" . $rid . "\", \"\");\'";
         $content = sprintf(__('game/attack.at_report_title'), $target_planet_name, $this->formatService->prettyCoords((int)$g, (int)$s, (int)$p));
 
-        return UrlHelper::setUrl(
+        return app(FormatService::class)->link(
             '',
             $content,
             '',

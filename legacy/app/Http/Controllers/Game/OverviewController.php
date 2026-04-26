@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace Xgp\App\Http\Controllers\Game;
 
-use App\Services\Game\Formulas\DevelopmentsService;
+use App\Enums\Module;
 use App\Services\FormatService;
+use App\Services\Game\Formulas\DevelopmentsService;
 use App\Services\TimingService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Objects;
 use Xgp\App\Core\Template;
-use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\DevelopmentsLib;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\NoobsProtectionLib;
-use App\Enums\Module;
 use Xgp\App\Libraries\UpdatesLibrary;
 use Xgp\App\Libraries\Users;
-use Illuminate\Support\Facades\DB;
-use Xgp\App\Core\Concerns\PreparesLegacySql;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
@@ -125,12 +124,12 @@ class OverviewController extends BaseController
             $new_message = '<tr>';
 
             if ($this->user['new_message'] == 1) {
-                $new_message .= '<th role="cell" colspan="4">' . UrlHelper::setUrl('game.php?page=messages', __('game/overview.ov_have_new_message'), __('game/overview.ov_have_new_message')) . '</th>';
+                $new_message .= '<th role="cell" colspan="4">' . $this->formatService->link('game.php?page=messages', __('game/overview.ov_have_new_message'), __('game/overview.ov_have_new_message')) . '</th>';
             }
 
             if ($this->user['new_message'] > 1) {
                 $link_text = str_replace('%m', $this->formatService->prettyNumber((int) $this->user['new_message']), __('game/overview.ov_have_new_messages'));
-                $new_message .= '<th role="cell" colspan="4">' . UrlHelper::setUrl('game.php?page=messages', $link_text, $link_text) . '</th>';
+                $new_message .= '<th role="cell" colspan="4">' . $this->formatService->link('game.php?page=messages', $link_text, $link_text) . '</th>';
             }
 
             $new_message .= '</tr>';
@@ -363,7 +362,7 @@ class OverviewController extends BaseController
             $image = asset('assets/upload/skins/xgproyect/planets/' . $this->planet['moon_image'] . '.jpg');
             $attributes = 'height="50" width="50"';
 
-            $return['moonImg'] = UrlHelper::setUrl($url, Functions::setImage($image, $moon_name, $attributes), $moon_name);
+            $return['moonImg'] = $this->formatService->link($url, Functions::setImage($image, $moon_name, $attributes), $moon_name);
             $return['moon'] = $moon_name;
         }
 
@@ -398,7 +397,7 @@ class OverviewController extends BaseController
                 $attributes = 'height="50" width="50"';
 
                 $planet_block .= '<th>' . $user_planet['planet_name'] . '<br>';
-                $planet_block .= UrlHelper::setUrl($url, Functions::setImage($image, $user_planet['planet_name'], $attributes));
+                $planet_block .= $this->formatService->link($url, Functions::setImage($image, $user_planet['planet_name'], $attributes));
                 $planet_block .= '<center>';
                 $planet_block .= $this->getCurrentWork($user_planet, false);
                 $planet_block .= '</center></th>';
@@ -427,7 +426,11 @@ class OverviewController extends BaseController
         if ($this->noob->isRankVisible((int) $this->user['authlevel'])) {
             $userRank = __('game/overview.ov_place', [
                 'points' => $this->formatService->prettyNumber((int) $this->user['user_statistic_total_points']),
-                'url' => UrlHelper::setUrl('game.php?page=statistics&range=' . $totalRank, $totalRank, $totalRank),
+                'url' => $this->formatService->link(
+                    'game.php?page=statistics&range=' . $totalRank,
+                    (string) $totalRank,
+                    (string) $totalRank
+                ),
                 'total' => $this->planet['stats_users'],
             ]);
         }

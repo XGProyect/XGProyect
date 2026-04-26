@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Xgp\App\Libraries;
 
 use App\Services\FormatService;
-use Xgp\App\Helpers\UrlHelper;
 
 class BBCodeLib
 {
@@ -114,7 +113,7 @@ class BBCodeLib
         ];
 
         if (in_array(strstr($url, ':', true), $exclude) == false) {
-            return UrlHelper::setUrl($url, $title, $title);
+            return app(FormatService::class)->link($url, $title, $title);
         }
 
         return $url;

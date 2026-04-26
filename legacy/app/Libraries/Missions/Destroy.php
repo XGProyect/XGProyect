@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Missions;
 
-use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
+use App\Services\Game\Formulas\FleetsService;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
-use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\BattleEngine\Core\Battle;
 use Xgp\App\Libraries\BattleEngine\Core\BattleReport;
 use Xgp\App\Libraries\BattleEngine\Models\Defense;
@@ -794,7 +793,7 @@ class Destroy extends Missions
         $js = "OnClick=\'f(\"game.php?page=combatreport&report=" . $rid . "\", \"\");\'";
         $content = __('game/destroy.des_report_title') . ' ' . $this->formatService->prettyCoords((int)$g, (int)$s, (int)$p);
 
-        return UrlHelper::setUrl(
+        return app(FormatService::class)->link(
             '',
             $content,
             '',

@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Enums\Module;
+use App\Services\Game\Formulas\OfficerService;
+use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
-use App\Services\Game\Formulas\OfficerService;
-use App\Services\SettingsService;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\ArraysHelper;
-use Xgp\App\Helpers\UrlHelper;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 
@@ -196,7 +195,7 @@ class MessagesController extends BaseController
     private function setMessageReply(int $from): string
     {
         if ($from > 0) {
-            return UrlHelper::setUrl(
+            return app(FormatService::class)->link(
                 'game.php?page=chat&playerId=' . $from,
                 Functions::setImage(DPATH . '/img/m.gif', __('game/messages.mg_send_message')),
                 __('game/messages.mg_send_message')
