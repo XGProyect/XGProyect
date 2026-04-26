@@ -1,8 +1,10 @@
 @extends('master.game')
 
 @section('content')
+{!! $queueScript !!}
 <font color="#ff0000">{!! $noresearch !!}</font>
 <table align="top" width="530">
+    {!! $queueRows !!}
     @foreach ($technologies as $item)
     <tr>
         <th class="l">

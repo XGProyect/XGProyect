@@ -7,7 +7,9 @@ namespace Xgp\App\Libraries;
 use App\Models\Planets;
 use App\Services\Admin\BackupService;
 use App\Services\FormatService;
+use App\Models\User;
 use App\Services\Game\BuildingQueueService;
+use App\Services\Game\ResearchQueueService;
 use App\Services\Game\Formulas\DevelopmentsService;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\Game\Formulas\ProductionService;
@@ -170,6 +172,50 @@ class UpdatesLibrary
                     $item->mode,
                 ])
             )->join(';');
+        }
+    }
+
+    /**
+     * updateResearchQueue
+     *
+     * @param array<string,mixed> $current_planet Current planet data (by reference for sync-back)
+     * @param array<string,mixed> $current_user   Current user data (by reference for sync-back)
+     *
+     * @return void
+     */
+    public static function updateResearchQueue(array &$current_planet, array &$current_user): void
+    {
+        $userId = (int) ($current_user['id'] ?? 0);
+
+        if ($userId === 0) {
+            return;
+        }
+
+        /** @var User|null $user */
+        $user = User::with(['research', 'researchQueue'])->find($userId);
+
+        if ($user === null) {
+            return;
+        }
+
+        app(ResearchQueueService::class)->processCompletions($user);
+
+        // Sync research levels back to the flat user array
+        foreach ($user->research->getAttributes() as $key => $value) {
+            if (array_key_exists($key, $current_user)) {
+                $current_user[$key] = $value;
+            }
+        }
+
+        // Sync planet tech cache fields back if this planet was involved
+        if (isset($current_planet['planet_id'])) {
+            /** @var Planets|null $planet */
+            $planet = Planets::find((int) $current_planet['planet_id']);
+
+            if ($planet !== null) {
+                $current_planet['planet_b_tech_id'] = $planet->planet_b_tech_id;
+                $current_planet['planet_b_tech']    = $planet->planet_b_tech;
+            }
         }
     }
 
@@ -764,26 +810,7 @@ class UpdatesLibrary
                 }
             }
 
-            // RESEARCH UPDATE
-            if ($current_planet['planet_b_tech'] <= time() && $current_planet['planet_b_tech_id'] != 0) {
-                $current_user['research_points'] = StatisticsLibrary::calculatePoints(
-                    $current_planet['planet_b_tech_id'],
-                    $current_user[$resource[$current_planet['planet_b_tech_id']]],
-                    'tech'
-                );
-
-                $current_user[$resource[$current_planet['planet_b_tech_id']]]++;
-
-                $tech_query = "`planet_b_tech` = '0',";
-                $tech_query .= "`planet_b_tech_id` = '0',";
-                $tech_query .= '`' . $resource[$current_planet['planet_b_tech_id']] . "` = '" .
-                    $current_user[$resource[$current_planet['planet_b_tech_id']]] . "',";
-                $tech_query .= "`user_statistic_technology_points` = `user_statistic_technology_points` + '" .
-                    $current_user['research_points'] . "',";
-                $tech_query .= "`research_current_research` = '0',";
-            } else {
-                $tech_query = '';
-            }
+            $tech_query = '';
 
             $data = [
                 'planet' => $current_planet,

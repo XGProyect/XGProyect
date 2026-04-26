@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int                         $planet_destroyed
  * @property int                         $planet_b_building  end-time cache for the active building item
  * @property int                         $planet_b_tech      end-time cache for the active research item
+ * @property int                         $planet_b_tech_id   tech ID currently being researched (legacy cache)
  * @property int                         $planet_b_hangar
  * @property Collection<int,BuildingQueue> $buildingQueue
  * @property int    $planet_diameter
@@ -79,6 +80,7 @@ class Planets extends Model
         'planet_destroyed',
         'planet_b_building',
         'planet_b_tech',
+        'planet_b_tech_id',
         'planet_b_hangar',
         'planet_b_hangar_id',
         'planet_image',
@@ -132,6 +134,7 @@ class Planets extends Model
         'planet_destroyed' => 'int',
         'planet_b_building' => 'int',
         'planet_b_tech' => 'int',
+        'planet_b_tech_id' => 'int',
         'planet_b_hangar' => 'int',
         'planet_b_hangar_id' => 'string',
         'planet_image' => 'string',

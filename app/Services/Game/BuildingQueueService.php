@@ -106,12 +106,12 @@ class BuildingQueueService
             );
         }
 
-        if ($count === 0) {
-            $forDestroy = $mode === 'destroy';
-            $ionTech = $forDestroy
-                ? (int) ($user[$this->registry->get(ResearchEnumerator::research_ionic_technology)->getName()] ?? 0)
-                : 0;
+        $forDestroy = $mode === 'destroy';
+        $ionTech = $forDestroy
+            ? (int) ($user[$this->registry->get(ResearchEnumerator::research_ionic_technology)->getName()] ?? 0)
+            : 0;
 
+        if ($count === 0) {
             if (!$this->developmentsService->isDevelopmentPayable(
                 $this->planetResources($planet),
                 $buildingId,
@@ -122,6 +122,11 @@ class BuildingQueueService
             )) {
                 return false;
             }
+
+            $price = $this->developmentsService->developmentPrice($buildingId, $levelForCalc, true, $forDestroy, $ionTech);
+            $planet->planet_metal     -= $price['metal'] ?? 0;
+            $planet->planet_crystal   -= $price['crystal'] ?? 0;
+            $planet->planet_deuterium -= $price['deuterium'] ?? 0;
         }
 
         $endTime = $count === 0
@@ -352,11 +357,7 @@ class BuildingQueueService
                 $planet->planet_metal -= $price['metal'] ?? 0;
                 $planet->planet_crystal -= $price['crystal'] ?? 0;
                 $planet->planet_deuterium -= $price['deuterium'] ?? 0;
-
-                $this->recalculateEndTimes($planet);
-
-                $updatedFirst = $planet->buildingQueue()->where('position', 1)->first();
-                $planet->planet_b_building = $updatedFirst ? $updatedFirst->end_time : 0;
+                $planet->planet_b_building = $first->end_time;
                 $planet->save();
                 break;
             }
@@ -373,29 +374,6 @@ class BuildingQueueService
             $planet->buildingQueue()->where('position', '>', $deletedPosition)->orderBy('position')->get() as $item
         ) {
             $item->position -= 1;
-            $item->save();
-        }
-    }
-
-    private function recalculateEndTimes(Planets $planet): void
-    {
-        $roboticsCol = $this->registry->get(BuildingsEnumerator::BUILDING_ROBOT_FACTORY)->getName();
-        $naniteCol = $this->registry->get(BuildingsEnumerator::BUILDING_NANO_FACTORY)->getName();
-        $robotics = (int) ($planet->buildings?->$roboticsCol ?? 0);
-        $nanite = (int) ($planet->buildings?->$naniteCol ?? 0);
-        $running = time();
-
-        foreach ($planet->buildingQueue()->orderBy('position')->get() as $item) {
-            $itemCol = $this->registry->get($item->building_id)->getName();
-            $itemLvl = (int) ($planet->buildings?->$itemCol ?? 0);
-
-            $newDuration = $item->mode === 'build'
-                ? $this->developmentsService->developmentTime($item->building_id, $itemLvl, $robotics, $nanite, 0, 0, false)
-                : (int) $this->developmentsService->tearDownTime($item->building_id, $itemLvl, $robotics, $nanite);
-
-            $running += $newDuration;
-            $item->duration = $newDuration;
-            $item->end_time = $running;
             $item->save();
         }
     }

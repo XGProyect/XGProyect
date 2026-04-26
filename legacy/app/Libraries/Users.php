@@ -42,6 +42,9 @@ class Users
 
             // Update buildings queue
             UpdatesLibrary::updateBuildingsQueue($this->planetData, $this->userData);
+
+            // Update research queue
+            UpdatesLibrary::updateResearchQueue($this->planetData, $this->userData);
         }
     }
 

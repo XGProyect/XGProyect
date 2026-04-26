@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -40,8 +41,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @property Planets            $planets
  * @property Preferences        $preferences
  * @property Premium            $premium
- * @property Research           $research
- * @property UsersStatistics    $stats
+ * @property Research                         $research
+ * @property Collection<int,ResearchQueue>    $researchQueue
+ * @property UsersStatistics                  $stats
  */
 class User extends Authenticatable
 {
@@ -173,6 +175,12 @@ class User extends Authenticatable
     public function research(): HasOne
     {
         return $this->hasOne(Research::class, 'research_user_id');
+    }
+
+    /** @return HasMany<ResearchQueue, $this> */
+    public function researchQueue(): HasMany
+    {
+        return $this->hasMany(ResearchQueue::class, 'user_id');
     }
 
     /** @return HasOne<UsersStatistics, $this> */
