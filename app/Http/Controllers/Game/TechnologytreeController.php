@@ -68,7 +68,9 @@ class TechnologytreeController extends BaseController
 
     /**
      * @template TObject of GameObjectInterface
+     *
      * @param Collection<int, TObject> $objects
+     *
      * @return array<int, array{id: int, name: string, detail: string, requirements: string}>
      */
     private function buildList(Collection $objects, Buildings $buildings, Research $research): array

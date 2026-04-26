@@ -190,7 +190,7 @@ class FormatService
     public function link(string $href, string $text, string $title = '', string $attributes = ''): string
     {
         $titleAttr = $title !== '' ? ' title="' . $title . '"' : '';
-        $attrsStr  = $attributes !== '' ? ' ' . $attributes : '';
+        $attrsStr = $attributes !== '' ? ' ' . $attributes : '';
 
         return '<a href="' . $href . '"' . $titleAttr . $attrsStr . '>' . $text . '</a>';
     }

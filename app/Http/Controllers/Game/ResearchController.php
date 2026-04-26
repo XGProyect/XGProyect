@@ -74,10 +74,10 @@ class ResearchController extends BaseController
      */
     private function handleAction(Request $request, array $userData, array $planetData): RedirectResponse
     {
-        $cmd    = (string) $request->query('cmd', '');
+        $cmd = (string) $request->query('cmd', '');
         $techId = (int) $request->query('tech', 0);
 
-        $userModel   = User::with(['research', 'researchQueue'])->find((int) ($userData['id'] ?? 0));
+        $userModel = User::with(['research', 'researchQueue'])->find((int) ($userData['id'] ?? 0));
         $planetModel = Planets::with(['buildings'])->where('planet_id', $planetData['planet_id'])->first();
 
         if ($userModel === null || $planetModel === null) {
@@ -106,10 +106,10 @@ class ResearchController extends BaseController
      */
     private function showPage(array $userData, array $planetData): View
     {
-        $userModel   = User::with(['research', 'researchQueue'])->find((int) ($userData['id'] ?? 0));
+        $userModel = User::with(['research', 'researchQueue'])->find((int) ($userData['id'] ?? 0));
         $planetModel = Planets::with(['buildings', 'buildingQueue'])->where('planet_id', $planetData['planet_id'])->first();
 
-        $labCol   = $this->registry->get(BuildingsEnumerator::BUILDING_LABORATORY)->getName();
+        $labCol = $this->registry->get(BuildingsEnumerator::BUILDING_LABORATORY)->getName();
         $labLevel = (int) ($planetData[$labCol] ?? 0);
 
         if ($labLevel === 0) {
@@ -118,21 +118,21 @@ class ResearchController extends BaseController
 
         if ($userModel === null || $planetModel === null) {
             return view('research.view', [
-                'gameTitle'    => $this->settingsService->getString('game_name'),
-                'noresearch'   => '',
-                'queueScript'  => '',
-                'queueRows'    => '',
+                'gameTitle' => $this->settingsService->getString('game_name'),
+                'noresearch' => '',
+                'queueScript' => '',
+                'queueRows' => '',
                 'technologies' => [],
             ]);
         }
 
-        $queue      = $userModel->researchQueue()->orderBy('position')->get();
+        $queue = $userModel->researchQueue()->orderBy('position')->get();
         $activeItem = $queue->firstWhere('position', 1);
-        $isWorking  = $activeItem !== null;
+        $isWorking = $activeItem !== null;
         $queueCount = $queue->count();
 
-        $labInQueue    = $planetModel->buildingQueue()->where('building_id', BuildingsEnumerator::BUILDING_LABORATORY)->exists();
-        $isOnVacation  = (int) ($userData['preference_vacation_mode'] ?? 0) > 0;
+        $labInQueue = $planetModel->buildingQueue()->where('building_id', BuildingsEnumerator::BUILDING_LABORATORY)->exists();
+        $isOnVacation = (int) ($userData['preference_vacation_mode'] ?? 0) > 0;
         $commanderActive = $this->officerService->isOfficerActive(
             (int) ($userData['premium_officier_commander'] ?? 0),
             time()
@@ -142,8 +142,8 @@ class ResearchController extends BaseController
             time()
         );
 
-        $totalLabLevel    = $this->researchQueueService->labLevel($userModel, $planetModel);
-        $astrophysicsCol  = $this->registry->get(ResearchEnumerator::research_astrophysics)->getName();
+        $totalLabLevel = $this->researchQueueService->labLevel($userModel, $planetModel);
+        $astrophysicsCol = $this->registry->get(ResearchEnumerator::research_astrophysics)->getName();
         $astrophysicsLevel = (int) ($userData[$astrophysicsCol] ?? 0);
 
         $workingPlanet = null;
@@ -159,9 +159,9 @@ class ResearchController extends BaseController
                 continue;
             }
 
-            $techCol      = $this->registry->get($techId)->getName();
+            $techCol = $this->registry->get($techId)->getName();
             $currentLevel = (int) ($userData[$techCol] ?? 0);
-            $duration     = $this->developmentsService->developmentTime(
+            $duration = $this->developmentsService->developmentTime(
                 $techId,
                 $currentLevel,
                 0,
@@ -172,13 +172,13 @@ class ResearchController extends BaseController
             );
 
             $technologies[] = [
-                'tech_id'    => $techId,
+                'tech_id' => $techId,
                 'tech_level' => $this->formatLevel($techId, $currentLevel, $userData),
-                'tech_name'  => __('game/technologies.' . $techCol),
+                'tech_name' => __('game/technologies.' . $techCol),
                 'tech_descr' => __('game/research.descriptions')[$techCol],
                 'tech_price' => $this->buildPriceHtml($planetData, $techId, $currentLevel),
                 'search_time' => '<br>' . __('game/research.re_time') . $this->formatService->prettyTime($duration),
-                'tech_link'  => $this->getActionLink(
+                'tech_link' => $this->getActionLink(
                     $techId,
                     $isWorking,
                     $queueCount,
@@ -192,15 +192,15 @@ class ResearchController extends BaseController
             ];
         }
 
-        $queueItems  = $queue->all();
+        $queueItems = $queue->all();
         $queueScript = ($commanderActive && !empty($queueItems)) ? view('research.queue_script')->render() : '';
-        $queueRows   = $commanderActive ? $this->buildQueueHtml($queueItems) : '';
+        $queueRows = $commanderActive ? $this->buildQueueHtml($queueItems) : '';
 
         return view('research.view', [
-            'gameTitle'    => $this->settingsService->getString('game_name'),
-            'noresearch'   => $labInQueue ? __('game/research.re_building_lab') : '',
-            'queueScript'  => $queueScript,
-            'queueRows'    => $queueRows,
+            'gameTitle' => $this->settingsService->getString('game_name'),
+            'noresearch' => $labInQueue ? __('game/research.re_building_lab') : '',
+            'queueScript' => $queueScript,
+            'queueRows' => $queueRows,
             'technologies' => $technologies,
         ]);
     }
@@ -231,11 +231,11 @@ class ResearchController extends BaseController
      */
     private function buildPriceHtml(array $planetData, int $techId, int $level): string
     {
-        $costs  = $this->developmentsService->developmentPrice($techId, $level);
+        $costs = $this->developmentsService->developmentPrice($techId, $level);
         $labels = [
-            'metal'      => __('game/global.metal'),
-            'crystal'    => __('game/global.crystal'),
-            'deuterium'  => __('game/global.deuterium'),
+            'metal' => __('game/global.metal'),
+            'crystal' => __('game/global.crystal'),
+            'deuterium' => __('game/global.deuterium'),
             'energy_max' => __('game/global.energy'),
         ];
         $text = __('game/buildings.require');
@@ -245,10 +245,10 @@ class ResearchController extends BaseController
                 continue;
             }
 
-            $cost      = $costs[$type];
+            $cost = $costs[$type];
             $available = (float) ($planetData['planet_' . $type] ?? 0);
             $formatted = $this->formatService->prettyNumber((int) $cost);
-            $text     .= $label . ': ';
+            $text .= $label . ': ';
 
             if ($cost > $available) {
                 $shortage = $this->formatService->prettyNumber($cost - $available);
@@ -296,9 +296,9 @@ class ResearchController extends BaseController
 
         if (!$this->developmentsService->isDevelopmentPayable(
             [
-                'planet_metal'      => (float) ($planet->planet_metal ?? 0),
-                'planet_crystal'    => (float) ($planet->planet_crystal ?? 0),
-                'planet_deuterium'  => (float) ($planet->planet_deuterium ?? 0),
+                'planet_metal' => (float) ($planet->planet_metal ?? 0),
+                'planet_crystal' => (float) ($planet->planet_crystal ?? 0),
+                'planet_deuterium' => (float) ($planet->planet_deuterium ?? 0),
                 'planet_energy_max' => (float) ($planet->planet_energy_max ?? 0),
             ],
             $techId,
@@ -315,7 +315,7 @@ class ResearchController extends BaseController
 
     private function buildCountdown(ResearchQueue $item, Planets $planet, ?Planets $workingPlanet): string
     {
-        $timeLeft  = $item->end_time - time();
+        $timeLeft = $item->end_time - time();
         $homePlanet = $workingPlanet ?? $planet;
 
         $techName = '';
@@ -332,7 +332,7 @@ class ResearchController extends BaseController
             'tech_time' => $timeLeft,
             'tech_name' => $techName,
             'tech_home' => $homePlanet->planet_id,
-            'tech_id'   => $item->tech_id,
+            'tech_id' => $item->tech_id,
         ])->render();
     }
 
@@ -344,7 +344,7 @@ class ResearchController extends BaseController
         $html = '';
 
         foreach ($items as $item) {
-            $techCol  = $this->registry->get($item->tech_id)->getName();
+            $techCol = $this->registry->get($item->tech_id)->getName();
             $techName = __('game/technologies.' . $techCol);
             $timeLeft = max(0, $item->end_time - time());
 

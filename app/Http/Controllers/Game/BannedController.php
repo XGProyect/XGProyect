@@ -32,17 +32,17 @@ class BannedController extends BaseController
         $bannedPlayers = $bans->map(fn (Ban $ban) => [
             'player' => $ban->user->name,
             'reason' => $ban->details,
-            'since'  => $this->timingService->formatExtendedDate($ban->created_at->timestamp),
-            'until'  => $ban->until !== null
+            'since' => $this->timingService->formatExtendedDate($ban->created_at->timestamp),
+            'until' => $ban->until !== null
                 ? $this->timingService->formatExtendedDate($ban->until)
                 : '∞',
-            'by'     => $ban->admin->name,
+            'by' => $ban->admin->name,
         ])->all();
 
         return view('banned.view', [
-            'gameTitle'    => $this->settings->getString('game_name'),
+            'gameTitle' => $this->settings->getString('game_name'),
             'bannedPlayers' => $bannedPlayers,
-            'bannedTotal'   => count($bannedPlayers),
+            'bannedTotal' => count($bannedPlayers),
         ]);
     }
 }

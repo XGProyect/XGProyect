@@ -124,8 +124,8 @@ class BuildingQueueService
             }
 
             $price = $this->developmentsService->developmentPrice($buildingId, $levelForCalc, true, $forDestroy, $ionTech);
-            $planet->planet_metal     -= $price['metal'] ?? 0;
-            $planet->planet_crystal   -= $price['crystal'] ?? 0;
+            $planet->planet_metal -= $price['metal'] ?? 0;
+            $planet->planet_crystal -= $price['crystal'] ?? 0;
             $planet->planet_deuterium -= $price['deuterium'] ?? 0;
         }
 

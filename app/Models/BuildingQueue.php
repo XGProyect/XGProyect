@@ -32,12 +32,12 @@ class BuildingQueue extends Model
     ];
 
     protected $casts = [
-        'planet_id'    => 'int',
-        'position'     => 'int',
-        'building_id'  => 'int',
+        'planet_id' => 'int',
+        'position' => 'int',
+        'building_id' => 'int',
         'target_level' => 'int',
-        'duration'     => 'int',
-        'end_time'     => 'int',
+        'duration' => 'int',
+        'end_time' => 'int',
     ];
 
     /** @return BelongsTo<Planets, $this> */

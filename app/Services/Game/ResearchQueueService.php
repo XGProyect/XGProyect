@@ -46,12 +46,12 @@ class ResearchQueueService
             return false;
         }
 
-        $techCol      = $this->registry->get($techId)->getName();
+        $techCol = $this->registry->get($techId)->getName();
         $alreadyQueued = $queue->where('tech_id', $techId)->count();
         $currentLevel = (int) ($userData[$techCol] ?? 0);
         $levelForCalc = $currentLevel + $alreadyQueued;
 
-        $labLevel       = $this->labLevel($user, $planet);
+        $labLevel = $this->labLevel($user, $planet);
         $astrophysicsCol = $this->registry->get(ResearchEnumerator::research_astrophysics)->getName();
         $astrophysicsLevel = (int) ($userData[$astrophysicsCol] ?? 0);
 
@@ -91,13 +91,13 @@ class ResearchQueueService
         }
 
         ResearchQueue::create([
-            'user_id'      => $user->id,
-            'planet_id'    => $planet->planet_id,
-            'position'     => $count + 1,
-            'tech_id'      => $techId,
+            'user_id' => $user->id,
+            'planet_id' => $planet->planet_id,
+            'position' => $count + 1,
+            'tech_id' => $techId,
             'target_level' => $levelForCalc + 1,
-            'duration'     => $duration,
-            'end_time'     => $endTime,
+            'duration' => $duration,
+            'end_time' => $endTime,
         ]);
 
         return true;
@@ -172,7 +172,7 @@ class ResearchQueueService
                 break;
             }
 
-            $techCol  = $this->registry->get($item->tech_id)->getName();
+            $techCol = $this->registry->get($item->tech_id)->getName();
             $newLevel = (int) $user->research->$techCol + 1;
 
             $user->research->$techCol = $newLevel;
@@ -188,7 +188,7 @@ class ResearchQueueService
 
             if ($activePlanet !== null) {
                 $activePlanet->planet_b_tech_id = 0;
-                $activePlanet->planet_b_tech    = 0;
+                $activePlanet->planet_b_tech = 0;
                 $activePlanet->save();
             }
 
@@ -205,7 +205,7 @@ class ResearchQueueService
 
     public function labLevel(User $user, Planets $planet): int
     {
-        $intergalCol   = $this->registry->get(ResearchEnumerator::research_intergalactic_research_network)->getName();
+        $intergalCol = $this->registry->get(ResearchEnumerator::research_intergalactic_research_network)->getName();
         $intergalLevel = (int) $user->research->$intergalCol;
 
         if ($intergalLevel < 1) {
@@ -227,11 +227,11 @@ class ResearchQueueService
 
         if ($planet !== null) {
             $cost = $this->developmentsService->developmentPrice($item->tech_id, $item->target_level - 1);
-            $planet->planet_metal     -= $cost['metal'] ?? 0;
-            $planet->planet_crystal   -= $cost['crystal'] ?? 0;
+            $planet->planet_metal -= $cost['metal'] ?? 0;
+            $planet->planet_crystal -= $cost['crystal'] ?? 0;
             $planet->planet_deuterium -= $cost['deuterium'] ?? 0;
-            $planet->planet_b_tech_id  = $item->tech_id;
-            $planet->planet_b_tech     = $item->end_time;
+            $planet->planet_b_tech_id = $item->tech_id;
+            $planet->planet_b_tech = $item->end_time;
             $planet->save();
         }
 
@@ -251,15 +251,16 @@ class ResearchQueueService
     private function planetResources(Planets $planet): array
     {
         return [
-            'planet_metal'      => $planet->planet_metal,
-            'planet_crystal'    => $planet->planet_crystal,
-            'planet_deuterium'  => $planet->planet_deuterium,
+            'planet_metal' => $planet->planet_metal,
+            'planet_crystal' => $planet->planet_crystal,
+            'planet_deuterium' => $planet->planet_deuterium,
             'planet_energy_max' => (float) $planet->planet_energy_max,
         ];
     }
 
     /**
      * @param array<string,mixed> $userData
+     *
      * @return array<int, int>
      */
     private function buildLevels(Planets $planet, array $userData): array

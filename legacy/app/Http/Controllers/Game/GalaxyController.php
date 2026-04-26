@@ -40,6 +40,7 @@ class GalaxyController extends BaseController
     private $_system;
     private $noob;
     private $_galaxyLib;
+
     public function __construct(
         private FormatService $formatService,
         private FleetsService $fleetsService,

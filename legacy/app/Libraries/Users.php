@@ -26,7 +26,6 @@ class Users
 
     public function __construct()
     {
-
         if (self::isSessionSet()) {
             // Get user data and check it
             $this->setUserData();

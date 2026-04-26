@@ -32,13 +32,13 @@ class ResearchQueue extends Model
     ];
 
     protected $casts = [
-        'user_id'      => 'int',
-        'planet_id'    => 'int',
-        'position'     => 'int',
-        'tech_id'      => 'int',
+        'user_id' => 'int',
+        'planet_id' => 'int',
+        'position' => 'int',
+        'tech_id' => 'int',
         'target_level' => 'int',
-        'duration'     => 'int',
-        'end_time'     => 'int',
+        'duration' => 'int',
+        'end_time' => 'int',
     ];
 
     /** @return BelongsTo<User, $this> */
