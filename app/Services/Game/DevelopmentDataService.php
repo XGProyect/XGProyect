@@ -15,11 +15,13 @@ class DevelopmentDataService
         private GameObjectRegistry $registry,
         private DevelopmentsService $developmentsService,
         private FormatService $formatService,
-    ) {}
+    ) {
+    }
 
     /**
      * @param  array<string,mixed>  $planetData
      * @param  array<string,mixed>  $userData
+     *
      * @return array<int, int>
      */
     public function levelsFromData(array $planetData, array $userData): array
@@ -31,6 +33,7 @@ class DevelopmentDataService
 
     /**
      * @param  array<string,mixed>  $userData
+     *
      * @return array<int, int>
      */
     public function levelsFromPlanet(Planets $planet, array $userData): array
@@ -42,9 +45,10 @@ class DevelopmentDataService
 
     /**
      * @param  Planets|array<string,mixed>  $planet
+     *
      * @return array<string, float>
      */
-    public function planetResources(Planets|array $planet): array
+    public function planetResources(Planets | array $planet): array
     {
         if (is_array($planet)) {
             return [
@@ -66,7 +70,7 @@ class DevelopmentDataService
     /**
      * @param  Planets|array<string,mixed>  $planet
      */
-    public function buildPriceHtml(Planets|array $planet, int $elementId, int $level): string
+    public function buildPriceHtml(Planets | array $planet, int $elementId, int $level): string
     {
         $costs = $this->developmentsService->developmentPrice($elementId, $level);
         $resources = $this->planetResources($planet);
@@ -79,23 +83,23 @@ class DevelopmentDataService
         $text = __('game/buildings.require');
 
         foreach ($labels as $type => $label) {
-            if (! isset($costs[$type])) {
+            if (!isset($costs[$type])) {
                 continue;
             }
 
             $cost = $costs[$type];
-            $available = $resources['planet_'.$type] ?? 0;
+            $available = $resources['planet_' . $type] ?? 0;
             $formatted = $this->formatService->prettyNumber((int) $cost);
-            $text .= $label.': ';
+            $text .= $label . ': ';
 
             if ($cost > $available) {
                 $shortage = $this->formatService->prettyNumber($cost - $available);
-                $text .= '<b style="color:red;"><t title="-'.$shortage.'"><span class="noresources">'.$formatted.'</span></t></b> ';
+                $text .= '<b style="color:red;"><t title="-' . $shortage . '"><span class="noresources">' . $formatted . '</span></t></b> ';
 
                 continue;
             }
 
-            $text .= '<b style="color:lime;">'.$formatted.'</b> ';
+            $text .= '<b style="color:lime;">' . $formatted . '</b> ';
         }
 
         return $text;
@@ -103,6 +107,7 @@ class DevelopmentDataService
 
     /**
      * @param  callable(string):int  $levelResolver
+     *
      * @return array<int, int>
      */
     private function buildLevels(callable $levelResolver): array

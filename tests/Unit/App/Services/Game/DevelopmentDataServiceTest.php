@@ -22,18 +22,18 @@ class DevelopmentDataServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        if (! defined('TECHNOCRATE_SPEED')) {
+        if (!defined('TECHNOCRATE_SPEED')) {
             define('TECHNOCRATE_SPEED', 0.25);
         }
 
         $settingsService = $this->createMock(SettingsService::class);
         $settingsService->method('getInt')->willReturn(2500);
 
-        $registry = new GameObjectRegistry;
+        $registry = new GameObjectRegistry();
         $formulas = new FormulasService($settingsService);
         $developmentsService = new DevelopmentsService($registry, $formulas);
 
-        $this->service = new DevelopmentDataService($registry, $developmentsService, new FormatService);
+        $this->service = new DevelopmentDataService($registry, $developmentsService, new FormatService());
     }
 
     public function test_levels_from_data_combines_planet_and_user_levels(): void
@@ -53,7 +53,7 @@ class DevelopmentDataServiceTest extends TestCase
 
     public function test_levels_from_planet_uses_loaded_buildings_relation(): void
     {
-        $planet = new Planets;
+        $planet = new Planets();
         $planet->setRelation('buildings', new Buildings([
             'building_laboratory' => 8,
         ]));

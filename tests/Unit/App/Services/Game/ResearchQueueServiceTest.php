@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\App\Services\Game;
 
 use App\Models\ResearchQueue;
+use App\Services\Game\QueueSequenceService;
 use App\Services\Game\ResearchQueueService;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -68,6 +69,7 @@ class ResearchQueueServiceTest extends TestCase
     {
         return new ResearchQueueService(
             registry: $this->createStub(\App\Core\GameObjects\GameObjectRegistry::class),
+            queueSequenceService: new QueueSequenceService(),
             developmentDataService: $this->createStub(\App\Services\Game\DevelopmentDataService::class),
             developmentsService: $this->createStub(\App\Services\Game\Formulas\DevelopmentsService::class),
         );

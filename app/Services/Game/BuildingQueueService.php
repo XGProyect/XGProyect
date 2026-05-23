@@ -23,11 +23,13 @@ class BuildingQueueService
     private const MAX_QUEUE_SIZE = 5;
 
     public function __construct(
+        private QueueSequenceService $queueSequenceService,
         private DevelopmentsService $developmentsService,
         private DevelopmentDataService $developmentDataService,
         private FormatService $formatService,
         private GameObjectRegistry $registry,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array{length: int, to_destroy: int, items: array<int, array<string, mixed>>}
@@ -71,7 +73,7 @@ class BuildingQueueService
 
         $levels = $this->developmentDataService->levelsFromPlanet($planet, $user);
 
-        if (! $this->developmentsService->isDevelopmentAllowed($buildingId, $levels)) {
+        if (!$this->developmentsService->isDevelopmentAllowed($buildingId, $levels)) {
             return false;
         }
 
@@ -112,7 +114,7 @@ class BuildingQueueService
             : 0;
 
         if ($count === 0) {
-            if (! $this->developmentsService->isDevelopmentPayable(
+            if (!$this->developmentsService->isDevelopmentPayable(
                 $this->developmentDataService->planetResources($planet),
                 $buildingId,
                 $levelForCalc,
@@ -158,7 +160,7 @@ class BuildingQueueService
     {
         $firstItem = $planet->buildingQueue()->where('position', 1)->first();
 
-        if (! $firstItem) {
+        if (!$firstItem) {
             return false;
         }
 
@@ -195,24 +197,25 @@ class BuildingQueueService
         $naniteCol = $this->registry->get(BuildingsEnumerator::BUILDING_NANO_FACTORY)->getName();
         $robotics = (int) ($planet->buildings?->$roboticsCol ?? 0);
         $nanite = (int) ($planet->buildings?->$naniteCol ?? 0);
-        $runningTime = time();
+        $this->queueSequenceService->rebuildAfterHeadRemoval(
+            $remaining,
+            $firstItem->building_id,
+            time(),
+            static fn (BuildingQueue $item): int => $item->building_id,
+            static function (BuildingQueue $item): void {
+                $item->target_level -= 1;
+            },
+            function (BuildingQueue $item) use ($planet, $robotics, $nanite): int {
+                $itemCol = $this->registry->get($item->building_id)->getName();
+                $itemLvl = (int) ($planet->buildings?->$itemCol ?? 0);
+
+                return $item->mode === 'build'
+                    ? $this->developmentsService->developmentTime($item->building_id, $itemLvl, $robotics, $nanite, 0, 0, false)
+                    : (int) $this->developmentsService->tearDownTime($item->building_id, $itemLvl, $robotics, $nanite);
+            }
+        );
 
         foreach ($remaining as $item) {
-            if ($item->building_id === $firstItem->building_id) {
-                $item->target_level -= 1;
-            }
-
-            $itemCol = $this->registry->get($item->building_id)->getName();
-            $itemLvl = (int) ($planet->buildings?->$itemCol ?? 0);
-
-            $newDuration = $item->mode === 'build'
-                ? $this->developmentsService->developmentTime($item->building_id, $itemLvl, $robotics, $nanite, 0, 0, false)
-                : (int) $this->developmentsService->tearDownTime($item->building_id, $itemLvl, $robotics, $nanite);
-
-            $runningTime += $newDuration;
-            $item->position -= 1;
-            $item->duration = $newDuration;
-            $item->end_time = $runningTime;
             $item->save();
         }
 
@@ -228,31 +231,11 @@ class BuildingQueueService
             return;
         }
 
-        $queue = $planet->buildingQueue()->orderBy('position')->get();
-        $targetItem = $queue->firstWhere('position', $position);
-
-        if (! $targetItem) {
-            return;
-        }
-
-        $lastOccurrence = $queue
-            ->where('building_id', $targetItem->building_id)
-            ->where('position', '>=', $position)
-            ->last();
-
-        if (! $lastOccurrence) {
-            return;
-        }
-
-        $removedPosition = $lastOccurrence->position;
-        $removedDuration = $lastOccurrence->duration;
-        $lastOccurrence->delete();
-
-        foreach ($queue->where('position', '>', $removedPosition)->sortBy('position') as $item) {
-            $item->position -= 1;
-            $item->end_time -= $removedDuration;
-            $item->save();
-        }
+        $this->queueSequenceService->removeTailOccurrenceAtPosition(
+            $planet->buildingQueue()->orderBy('position')->get(),
+            $position,
+            static fn (BuildingQueue $item): int => $item->building_id
+        );
     }
 
     /**
@@ -263,7 +246,7 @@ class BuildingQueueService
         while (true) {
             $first = $planet->buildingQueue()->where('position', 1)->first();
 
-            if (! $first || $first->end_time > time()) {
+            if (!$first || $first->end_time > time()) {
                 break;
             }
 
@@ -321,7 +304,7 @@ class BuildingQueueService
         while (true) {
             $first = $planet->buildingQueue()->where('position', 1)->first();
 
-            if (! $first) {
+            if (!$first) {
                 break;
             }
 
@@ -420,9 +403,9 @@ class BuildingQueueService
         }
 
         $buildingName = $this->registry->get($item->building_id)->getName();
-        $elementName = __('game/constructions.'.$buildingName);
-        $galaxyUrl = 'game.php?page=galaxy&mode=3&galaxy='.$planet->planet_galaxy.'&system='.$planet->planet_system;
-        $coordsText = $planet->planet_name.' '.$this->formatService->prettyCoords(
+        $elementName = __('game/constructions.' . $buildingName);
+        $galaxyUrl = 'game.php?page=galaxy&mode=3&galaxy=' . $planet->planet_galaxy . '&system=' . $planet->planet_system;
+        $coordsText = $planet->planet_name . ' ' . $this->formatService->prettyCoords(
             $planet->planet_galaxy,
             $planet->planet_system,
             $planet->planet_planet
@@ -431,7 +414,7 @@ class BuildingQueueService
 
         $message = sprintf(
             __('game/buildings.bd_building_queue_not_enough_resources'),
-            __('game/buildings.bd_building_queue_'.$item->mode.'_order'),
+            __('game/buildings.bd_building_queue_' . $item->mode . '_order'),
             $elementName,
             $item->target_level,
             $coordsLink,

@@ -17,6 +17,7 @@ use Xgp\App\Core\Enumerators\ResearchEnumerator;
 use Xgp\App\Libraries\StatisticsLibrary;
 
 /**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class ResearchQueueService
@@ -25,6 +26,7 @@ class ResearchQueueService
 
     public function __construct(
         private GameObjectRegistry $registry,
+        private QueueSequenceService $queueSequenceService,
         private DevelopmentDataService $developmentDataService,
         private DevelopmentsService $developmentsService,
     ) {
@@ -172,30 +174,11 @@ class ResearchQueueService
             return;
         }
 
-        $queue = $user->researchQueue()->orderBy('position')->get();
-        $item = $queue->firstWhere('position', $position);
-
-        if ($item === null) {
-            return;
-        }
-
-        $lastOccurrence = $this->findLastQueuedOccurrenceForRemoval($queue, $item);
-
-        if ($lastOccurrence === null) {
-            return;
-        }
-
-        $removedPosition = $lastOccurrence->position;
-        $removedDuration = $lastOccurrence->duration;
-        $lastOccurrence->delete();
-
-        foreach (
-            $queue->where('position', '>', $removedPosition)->sortBy('position') as $r
-        ) {
-            $r->position -= 1;
-            $r->end_time -= $removedDuration;
-            $r->save();
-        }
+        $this->queueSequenceService->removeTailOccurrenceAtPosition(
+            $user->researchQueue()->orderBy('position')->get(),
+            $position,
+            static fn (ResearchQueue $item): int => $item->tech_id
+        );
     }
 
     public function processCompletions(User $user): void
@@ -284,20 +267,16 @@ class ResearchQueueService
         int $startTime,
         callable $durationResolver,
     ): void {
-        $runningTime = $startTime;
-
-        foreach ($queue->values() as $index => $item) {
-            if ($item->tech_id === $removedTechId) {
+        $this->queueSequenceService->rebuildAfterHeadRemoval(
+            $queue,
+            $removedTechId,
+            $startTime,
+            static fn (ResearchQueue $item): int => $item->tech_id,
+            static function (ResearchQueue $item): void {
                 $item->target_level -= 1;
-            }
-
-            $duration = $durationResolver($item);
-
-            $runningTime += $duration;
-            $item->position = $index + 1;
-            $item->duration = $duration;
-            $item->end_time = $runningTime;
-        }
+            },
+            $durationResolver
+        );
     }
 
     /**
@@ -305,10 +284,11 @@ class ResearchQueueService
      */
     private function findLastQueuedOccurrenceForRemoval(Collection $queue, ResearchQueue $targetItem): ?ResearchQueue
     {
-        $candidate = $queue
-            ->where('tech_id', $targetItem->tech_id)
-            ->where('position', '>=', $targetItem->position)
-            ->last();
+        $candidate = $this->queueSequenceService->findLastOccurrenceForRemoval(
+            $queue,
+            $targetItem,
+            static fn (ResearchQueue $item): int => $item->tech_id
+        );
 
         return $candidate instanceof ResearchQueue ? $candidate : null;
     }
