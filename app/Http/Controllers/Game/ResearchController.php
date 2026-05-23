@@ -105,6 +105,10 @@ class ResearchController extends BaseController
     /**
      * @param  array<string,mixed>  $userData
      * @param  array<string,mixed>  $planetData
+     *
+     * @SuppressWarnings("PHPMD.NPathComplexity")
+     * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
+     * @SuppressWarnings("PHPMD.CyclomaticComplexity")
      */
     private function showPage(array $userData, array $planetData): View
     {
