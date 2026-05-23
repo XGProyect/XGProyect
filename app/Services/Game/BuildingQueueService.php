@@ -219,7 +219,13 @@ class BuildingQueueService
             $item->save();
         }
 
-        $planet->planet_b_building = $remaining->first()->end_time;
+        $nextItem = $remaining->first();
+
+        if (!$nextItem instanceof BuildingQueue) {
+            return true;
+        }
+
+        $planet->planet_b_building = $nextItem->end_time;
         $planet->save();
 
         return true;

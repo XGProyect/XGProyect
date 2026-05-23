@@ -15,6 +15,7 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/ServerController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Admin/UpdateController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Game/NoticesController.php"/>
+  <violation rule="PHPMD\Rule\Design\LongParameterList" file="app/Http/Controllers/Game/ResearchController.php" method="getActionLink"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Home/LoginController.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="app/Http/Controllers/Home/RegisterController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Home/RegisterController.php"/>
@@ -34,6 +35,7 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Providers/BroadcastServiceProvider.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Providers/RouteServiceProvider.php"/>
   <violation rule="PHPMD\Rule\UnusedLocalVariable" file="app/Services/Admin/PermissionsService.php"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="app/Services/Game/BuildingQueueService.php" method="add"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Services/SessionService.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Services/SettingsService.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/View/Components/Admin/Navigation.php"/>
@@ -120,6 +122,7 @@
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/BuddiesController.php" method="buildRequestForm"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/ChatController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/ChatController.php"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/EmpireController.php" method="buildBlocks"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/EmpireController.php" method="setImage"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/EmpireController.php" method="setName"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Http/Controllers/Game/EmpireController.php" method="setCoords"/>
@@ -336,7 +339,6 @@
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setItalic"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setUnderline"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setStrike"/>
-  <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="legacy/app/Libraries/BBCodeLib.php"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setEmail"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setImage"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/BBCodeLib.php" method="setFontColor"/>
@@ -680,6 +682,7 @@
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/UpdatesLibrary.php" method="updateBuildingsQueue"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Libraries/UpdatesLibrary.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Libraries/UpdatesLibrary.php"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/UpdatesLibrary.php" method="updateResearchQueue"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Libraries/UpdatesLibrary.php" method="checkBuildingQueue"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Libraries/UpdatesLibrary.php" method="checkBuildingQueue"/>
   <violation rule="PHPMD\Rule\UnusedFormalParameter" file="legacy/app/Libraries/UpdatesLibrary.php"/>

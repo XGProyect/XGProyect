@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Services\Game\QueueSequenceItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $duration
  * @property int $end_time
  */
-class ResearchQueue extends Model
+class ResearchQueue extends Model implements QueueSequenceItem
 {
     public $timestamps = false;
 
@@ -51,5 +52,45 @@ class ResearchQueue extends Model
     public function planet(): BelongsTo
     {
         return $this->belongsTo(Planets::class, 'planet_id', 'planet_id');
+    }
+
+    public function getQueuePosition(): int
+    {
+        return $this->position;
+    }
+
+    public function setQueuePosition(int $position): void
+    {
+        $this->position = $position;
+    }
+
+    public function getQueueDuration(): int
+    {
+        return $this->duration;
+    }
+
+    public function setQueueDuration(int $duration): void
+    {
+        $this->duration = $duration;
+    }
+
+    public function getQueueEndTime(): int
+    {
+        return $this->end_time;
+    }
+
+    public function setQueueEndTime(int $endTime): void
+    {
+        $this->end_time = $endTime;
+    }
+
+    public function removeFromQueue(): void
+    {
+        $this->delete();
+    }
+
+    public function persistQueueChanges(): void
+    {
+        $this->save();
     }
 }

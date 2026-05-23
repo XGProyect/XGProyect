@@ -134,7 +134,7 @@ class ResearchQueueService
             $currentTime = time();
             $astrophysicsCol = $this->registry->get(ResearchEnumerator::research_astrophysics)->getName();
             $astrophysicsLevel = (int) $user->research->$astrophysicsCol;
-            $technocrateActive = (int) ($user->premium?->premium_officier_technocrat ?? 0) > $currentTime;
+            $technocrateActive = $user->premium->premium_officier_technocrat > $currentTime;
 
             $this->rebuildQueueAfterHeadRemoval(
                 $remaining,
@@ -277,20 +277,6 @@ class ResearchQueueService
             },
             $durationResolver
         );
-    }
-
-    /**
-     * @param  Collection<int, ResearchQueue>  $queue
-     */
-    private function findLastQueuedOccurrenceForRemoval(Collection $queue, ResearchQueue $targetItem): ?ResearchQueue
-    {
-        $candidate = $this->queueSequenceService->findLastOccurrenceForRemoval(
-            $queue,
-            $targetItem,
-            static fn (ResearchQueue $item): int => $item->tech_id
-        );
-
-        return $candidate instanceof ResearchQueue ? $candidate : null;
     }
 
     private function resolveDuration(

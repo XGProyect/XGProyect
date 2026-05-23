@@ -25,15 +25,9 @@ parameters:
 			path: app/Http/Controllers/Game/BannedController.php
 
 		-
-			message: '#^Cannot cast mixed to float\.$#'
-			identifier: cast.double
-			count: 5
-			path: app/Http/Controllers/Game/BuildingsController.php
-
-		-
 			message: '#^Cannot cast mixed to int\.$#'
 			identifier: cast.int
-			count: 16
+			count: 15
 			path: app/Http/Controllers/Game/BuildingsController.php
 
 		-
@@ -79,21 +73,9 @@ parameters:
 			path: app/Http/Controllers/Game/NoticesController.php
 
 		-
-			message: '#^Cannot cast mixed to float\.$#'
-			identifier: cast.double
-			count: 1
-			path: app/Http/Controllers/Game/ResearchController.php
-
-		-
 			message: '#^Cannot cast mixed to int\.$#'
 			identifier: cast.int
 			count: 10
-			path: app/Http/Controllers/Game/ResearchController.php
-
-		-
-			message: '#^Using nullsafe property access "\?\-\>\(Expression\)" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
-			identifier: nullsafe.neverNull
-			count: 2
 			path: app/Http/Controllers/Game/ResearchController.php
 
 		-
@@ -123,7 +105,7 @@ parameters:
 		-
 			message: '#^Using nullsafe property access "\?\-\>\(Expression\)" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
-			count: 11
+			count: 10
 			path: app/Services/Game/BuildingQueueService.php
 
 		-
@@ -135,7 +117,7 @@ parameters:
 		-
 			message: '#^Using nullsafe property access "\?\-\>\(Expression\)" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
-			count: 2
+			count: 1
 			path: app/Services/Game/ResearchQueueService.php
 
 		-

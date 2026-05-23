@@ -9,7 +9,12 @@ use Illuminate\Support\Collection;
 class QueueSequenceService
 {
     /**
-     * @param  Collection<int, object>  $queue
+     * @template T of QueueSequenceItem
+     *
+     * @param  Collection<int, T>  $queue
+     * @param  callable(T): int  $objectIdResolver
+     * @param  callable(T): void  $matchingItemNormalizer
+     * @param  callable(T): int  $durationResolver
      */
     public function rebuildAfterHeadRemoval(
         Collection $queue,
@@ -26,26 +31,37 @@ class QueueSequenceService
                 $matchingItemNormalizer($item);
             }
 
-            $duration = (int) $durationResolver($item);
+            $duration = $durationResolver($item);
 
             $runningTime += $duration;
-            $item->position = $index + 1;
-            $item->duration = $duration;
-            $item->end_time = $runningTime;
+            $item->setQueuePosition($index + 1);
+            $item->setQueueDuration($duration);
+            $item->setQueueEndTime($runningTime);
         }
     }
 
     /**
-     * @param  Collection<int, object>  $queue
+     * @template T of QueueSequenceItem
+     *
+     * @param  Collection<int, T>  $queue
+     * @param  callable(T): int  $objectIdResolver
      */
     public function removeTailOccurrenceAtPosition(
         Collection $queue,
         int $position,
         callable $objectIdResolver,
     ): bool {
-        $targetItem = $queue->firstWhere('position', $position);
+        $targetItem = null;
 
-        if (!is_object($targetItem)) {
+        foreach ($queue as $item) {
+            if ($item->getQueuePosition() === $position) {
+                $targetItem = $item;
+
+                break;
+            }
+        }
+
+        if ($targetItem === null) {
             return false;
         }
 
@@ -55,37 +71,54 @@ class QueueSequenceService
             return false;
         }
 
-        $removedPosition = (int) $lastOccurrence->position;
-        $removedDuration = (int) $lastOccurrence->duration;
-        $lastOccurrence->delete();
+        $removedPosition = $lastOccurrence->getQueuePosition();
+        $removedDuration = $lastOccurrence->getQueueDuration();
+        $lastOccurrence->removeFromQueue();
 
-        foreach ($queue->where('position', '>', $removedPosition)->sortBy('position') as $item) {
-            $item->position -= 1;
-            $item->end_time -= $removedDuration;
-            $item->save();
+        foreach ($queue as $item) {
+            if ($item->getQueuePosition() <= $removedPosition) {
+                continue;
+            }
+
+            $item->setQueuePosition($item->getQueuePosition() - 1);
+            $item->setQueueEndTime($item->getQueueEndTime() - $removedDuration);
+            $item->persistQueueChanges();
         }
 
         return true;
     }
 
     /**
-     * @param  Collection<int, object>  $queue
+     * @template T of QueueSequenceItem
+     *
+     * @param  Collection<int, T>  $queue
+     * @param  T  $targetItem
+     * @param  callable(T): int  $objectIdResolver
+     *
+     * @return T|null
      */
     public function findLastOccurrenceForRemoval(
         Collection $queue,
-        object $targetItem,
+        QueueSequenceItem $targetItem,
         callable $objectIdResolver,
-    ): ?object {
+    ): ?QueueSequenceItem {
         $targetObjectId = $objectIdResolver($targetItem);
+        $candidate = null;
 
-        $candidate = $queue
-            ->filter(
-                static fn (object $item): bool => $objectIdResolver($item) === $targetObjectId &&
-                    (int) $item->position >= (int) $targetItem->position
-            )
-            ->sortBy('position')
-            ->last();
+        foreach ($queue as $item) {
+            if ($objectIdResolver($item) !== $targetObjectId) {
+                continue;
+            }
 
-        return is_object($candidate) ? $candidate : null;
+            if ($item->getQueuePosition() < $targetItem->getQueuePosition()) {
+                continue;
+            }
+
+            if ($candidate === null || $item->getQueuePosition() > $candidate->getQueuePosition()) {
+                $candidate = $item;
+            }
+        }
+
+        return $candidate;
     }
 }

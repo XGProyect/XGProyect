@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Enums\Module;
+use App\Services\FormatService;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;

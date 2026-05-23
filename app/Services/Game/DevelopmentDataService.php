@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Game;
 
 use App\Core\GameObjects\GameObjectRegistry;
+use App\Models\Buildings;
 use App\Models\Planets;
 use App\Services\FormatService;
 use App\Services\Game\Formulas\DevelopmentsService;
@@ -27,7 +28,7 @@ class DevelopmentDataService
     public function levelsFromData(array $planetData, array $userData): array
     {
         return $this->buildLevels(
-            fn (string $column): int => (int) ($planetData[$column] ?? $userData[$column] ?? 0)
+            fn (string $column): int => $this->toInt($planetData[$column] ?? $userData[$column] ?? 0)
         );
     }
 
@@ -38,8 +39,17 @@ class DevelopmentDataService
      */
     public function levelsFromPlanet(Planets $planet, array $userData): array
     {
+        /** @var Buildings|null $buildings */
+        $buildings = $planet->getRelationValue('buildings');
+
+        if (!$buildings instanceof Buildings) {
+            return $this->buildLevels(
+                fn (string $column): int => $this->toInt($userData[$column] ?? 0)
+            );
+        }
+
         return $this->buildLevels(
-            fn (string $column): int => (int) ($planet->buildings?->$column ?? $userData[$column] ?? 0)
+            fn (string $column): int => $this->toInt($buildings->$column ?? $userData[$column] ?? 0)
         );
     }
 
@@ -52,10 +62,10 @@ class DevelopmentDataService
     {
         if (is_array($planet)) {
             return [
-                'planet_metal' => (float) ($planet['planet_metal'] ?? 0),
-                'planet_crystal' => (float) ($planet['planet_crystal'] ?? 0),
-                'planet_deuterium' => (float) ($planet['planet_deuterium'] ?? 0),
-                'planet_energy_max' => (float) ($planet['planet_energy_max'] ?? 0),
+                'planet_metal' => $this->toFloat($planet['planet_metal'] ?? 0),
+                'planet_crystal' => $this->toFloat($planet['planet_crystal'] ?? 0),
+                'planet_deuterium' => $this->toFloat($planet['planet_deuterium'] ?? 0),
+                'planet_energy_max' => $this->toFloat($planet['planet_energy_max'] ?? 0),
             ];
         }
 
@@ -119,5 +129,31 @@ class DevelopmentDataService
         }
 
         return $levels;
+    }
+
+    private function toInt(mixed $value): int
+    {
+        if (is_int($value)) {
+            return $value;
+        }
+
+        if (is_float($value) || is_string($value) || is_bool($value)) {
+            return (int) $value;
+        }
+
+        return 0;
+    }
+
+    private function toFloat(mixed $value): float
+    {
+        if (is_float($value)) {
+            return $value;
+        }
+
+        if (is_int($value) || is_string($value) || is_bool($value)) {
+            return (float) $value;
+        }
+
+        return 0.0;
     }
 }

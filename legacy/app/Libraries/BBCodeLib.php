@@ -47,6 +47,13 @@ class BBCodeLib
 
     private function getBbCode(array $matches, string $replace): string
     {
+        if ($replace === '$this->setUrl(\'\\1\',\'\\2\')') {
+            $url = isset($matches[1]) && is_string($matches[1]) ? $matches[1] : '';
+            $title = isset($matches[2]) && is_string($matches[2]) ? $matches[2] : '';
+
+            return $this->setUrl($url, $title);
+        }
+
         if (isset($matches[1])) {
             $replacements = [
                 '\1' => isset($matches[1]) ? $matches[1] : '',
@@ -104,7 +111,7 @@ class BBCodeLib
         return '<span style="text-decoration: line-through;">' . stripslashes($string) . '</span>';
     }
 
-    private function setUrl(string $url, string $title): ?string
+    private function setUrl(string $url, string $title): string
     {
         $title = htmlspecialchars(stripslashes($title), ENT_QUOTES);
         $url = trim($url);

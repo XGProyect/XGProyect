@@ -128,8 +128,14 @@ class OverviewController extends BaseController
             }
 
             if ($this->user['new_message'] > 1) {
-                $link_text = str_replace('%m', $this->formatService->prettyNumber((int) $this->user['new_message']), __('game/overview.ov_have_new_messages'));
-                $new_message .= '<th role="cell" colspan="4">' . $this->formatService->link('game.php?page=messages', $link_text, $link_text) . '</th>';
+                $messageTemplate = __('game/overview.ov_have_new_messages');
+
+                if (!is_string($messageTemplate)) {
+                    $messageTemplate = '';
+                }
+
+                $linkText = str_replace('%m', $this->formatService->prettyNumber((int) $this->user['new_message']), $messageTemplate);
+                $new_message .= '<th role="cell" colspan="4">' . $this->formatService->link('game.php?page=messages', $linkText, $linkText) . '</th>';
             }
 
             $new_message .= '</tr>';
