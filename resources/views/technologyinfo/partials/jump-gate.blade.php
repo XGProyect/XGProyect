@@ -3,11 +3,11 @@
     @csrf
     <table border="0" style="margin: 8px auto 0;">
         <tr>
-            <th>{{ __('game/infos.in_jump_gate_start_moon') }}</th>
+            <th>{{ __('game/technologydetails.in_jump_gate_start_moon') }}</th>
             <th>{!! $jumpGate['startMoonLink'] !!}</th>
         </tr>
         <tr>
-            <th>{{ __('game/infos.in_jump_gate_finish_moon') }}</th>
+            <th>{{ __('game/technologydetails.in_jump_gate_finish_moon') }}</th>
             <th>
                 <select name="jmpto">
                     @foreach ($jumpGate['destinations'] as $destination)
@@ -19,7 +19,7 @@
     </table>
     <table width="519" style="margin: 0 auto;">
         <tr>
-            <td class="c" colspan="2">{{ __('game/infos.in_jump_gate_select_ships') }}</td>
+            <td class="c" colspan="2">{{ __('game/technologydetails.in_jump_gate_select_ships') }}</td>
         </tr>
         <tr>
             <th class="l" colspan="2" align="right">
@@ -42,7 +42,7 @@
         </tr>
         @endforeach
         <tr>
-            <th colspan="2"><input value="{{ __('game/infos.in_jump_gate_jump') }}" type="submit"></th>
+            <th colspan="2"><input value="{{ __('game/technologydetails.in_jump_gate_jump') }}" type="submit"></th>
         </tr>
         {!! $jumpGate['countdownScriptTail'] !!}
     </table>

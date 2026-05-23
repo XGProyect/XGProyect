@@ -151,15 +151,15 @@ class TechnologyInfoService
 
         $stats = [
             [
-                'label' => __('game/infos.in_struct_pt'),
+                'label' => __('game/technologydetails.in_struct_pt'),
                 'value' => $this->formatService->prettyNumber(($this->priceList[$this->elementId]['metal'] ?? 0) + ($this->priceList[$this->elementId]['crystal'] ?? 0)),
             ],
             [
-                'label' => __('game/infos.in_shield_pt'),
+                'label' => __('game/technologydetails.in_shield_pt'),
                 'value' => $this->formatService->prettyNumber((int) ($this->combatCaps[$this->elementId]['shield'] ?? 0)),
             ],
             [
-                'label' => __('game/infos.in_attack_pt'),
+                'label' => __('game/technologydetails.in_attack_pt'),
                 'value' => $this->formatService->prettyNumber((int) ($this->combatCaps[$this->elementId]['attack'] ?? 0)),
             ],
         ];
@@ -176,23 +176,23 @@ class TechnologyInfoService
             }
 
             $stats[] = [
-                'label' => __('game/infos.in_base_speed'),
+                'label' => __('game/technologydetails.in_base_speed'),
                 'value' => $this->formatService->prettyNumber((int) ($this->priceList[$this->elementId]['speed'] ?? 0)) . $updatedSpeed,
             ];
             $stats[] = [
-                'label' => __('game/infos.in_capacity'),
-                'value' => $this->formatService->prettyNumber((int) ($this->priceList[$this->elementId]['capacity'] ?? 0)) . '&nbsp;' . __('game/infos.in_units'),
+                'label' => __('game/technologydetails.in_capacity'),
+                'value' => $this->formatService->prettyNumber((int) ($this->priceList[$this->elementId]['capacity'] ?? 0)) . '&nbsp;' . __('game/technologydetails.in_units'),
             ];
             $stats[] = [
-                'label' => __('game/infos.in_consumption'),
+                'label' => __('game/technologydetails.in_consumption'),
                 'value' => $this->formatService->prettyNumber((int) ($this->priceList[$this->elementId]['consumption'] ?? 0)) . $updatedConsumption,
             ];
         }
 
         return [
             'type' => 'combat',
-            'title' => __('game/infos.in_title_head') . ' ' . ($isShip ? __('game/ships.ships') : __('game/defenses.defenses')),
-            'nameLabel' => __('game/infos.in_name'),
+            'title' => __('game/technologydetails.in_title_head') . ' ' . ($isShip ? __('game/ships.ships') : __('game/defenses.defenses')),
+            'nameLabel' => __('game/technologydetails.in_name'),
             'name' => $this->getElementName($this->elementId),
             'imageId' => $this->elementId,
             'description' => $this->getElementDescription($this->elementId),
@@ -210,11 +210,11 @@ class TechnologyInfoService
             return [
                 'headers' => [
                     __('game/global.level'),
-                    __('game/infos.in_prod_p_hour'),
-                    __('game/infos.in_difference'),
-                    __('game/infos.in_lvl_difference'),
-                    __('game/infos.in_energy_balance'),
-                    __('game/infos.in_difference'),
+                    __('game/technologydetails.in_prod_p_hour'),
+                    __('game/technologydetails.in_difference'),
+                    __('game/technologydetails.in_lvl_difference'),
+                    __('game/technologydetails.in_energy_balance'),
+                    __('game/technologydetails.in_difference'),
                 ],
                 'rows' => $this->buildProductionRows(false),
                 'footerRows' => [],
@@ -225,9 +225,9 @@ class TechnologyInfoService
             return [
                 'headers' => [
                     __('game/global.level'),
-                    __('game/infos.in_energy_balance'),
-                    __('game/infos.in_difference'),
-                    __('game/infos.in_lvl_difference'),
+                    __('game/technologydetails.in_energy_balance'),
+                    __('game/technologydetails.in_difference'),
+                    __('game/technologydetails.in_lvl_difference'),
                 ],
                 'rows' => $this->buildProductionRows(true),
                 'footerRows' => [],
@@ -238,8 +238,8 @@ class TechnologyInfoService
             return [
                 'headers' => [
                     __('game/global.level'),
-                    __('game/infos.in_storage_capacity'),
-                    __('game/infos.in_difference'),
+                    __('game/technologydetails.in_storage_capacity'),
+                    __('game/technologydetails.in_difference'),
                 ],
                 'rows' => $this->buildStorageRows(),
                 'footerRows' => [],
@@ -250,11 +250,11 @@ class TechnologyInfoService
             return [
                 'headers' => [
                     __('game/global.level'),
-                    __('game/infos.in_energy_balance'),
-                    __('game/infos.in_difference'),
-                    __('game/infos.in_lvl_difference'),
-                    __('game/infos.in_used_deuter'),
-                    __('game/infos.in_difference'),
+                    __('game/technologydetails.in_energy_balance'),
+                    __('game/technologydetails.in_difference'),
+                    __('game/technologydetails.in_lvl_difference'),
+                    __('game/technologydetails.in_used_deuter'),
+                    __('game/technologydetails.in_difference'),
                 ],
                 'rows' => $this->buildProductionRows(false),
                 'footerRows' => [],
@@ -265,7 +265,7 @@ class TechnologyInfoService
             return [
                 'headers' => [
                     __('game/global.level'),
-                    __('game/infos.in_range'),
+                    __('game/technologydetails.in_range'),
                 ],
                 'rows' => $this->buildRangeRows(),
                 'footerRows' => [],
@@ -276,14 +276,14 @@ class TechnologyInfoService
             return [
                 'headers' => [
                     __('game/global.level'),
-                    __('game/infos.in_max_colonies'),
-                    __('game/infos.in_max_expeditions'),
+                    __('game/technologydetails.in_max_colonies'),
+                    __('game/technologydetails.in_max_expeditions'),
                 ],
                 'rows' => $this->buildAstrophysicsRows(),
                 'footerRows' => [
-                    __('game/infos.in_astrophysics_first'),
-                    __('game/infos.in_astrophysics_second'),
-                    __('game/infos.in_astrophysics_third'),
+                    __('game/technologydetails.in_astrophysics_first'),
+                    __('game/technologydetails.in_astrophysics_second'),
+                    __('game/technologydetails.in_astrophysics_third'),
                 ],
             ];
         }
@@ -547,7 +547,7 @@ class TechnologyInfoService
                 'id' => $ship,
                 'name' => (string) __('game/ships.' . $resourceKey),
                 'max' => $this->formatService->prettyNumber((int) ($this->planet[$resourceKey] ?? 0)),
-                'availability' => __('game/infos.in_jump_gate_available'),
+                'availability' => __('game/technologydetails.in_jump_gate_available'),
                 'tabIndex' => $currentIndex,
             ];
             $currentIndex++;
@@ -577,7 +577,7 @@ class TechnologyInfoService
 
         if ($ionTechnologyPercentage > 0) {
             $techBonus = StringsHelper::parseReplacements(
-                __('game/infos.in_ion_tech_bonus'),
+                __('game/technologydetails.in_ion_tech_bonus'),
                 [$this->formatService->colorGreen('-' . $ionTechnologyPercentage . '%')]
             );
         }
@@ -599,7 +599,7 @@ class TechnologyInfoService
         return [
             'url' => 'game.php?page=' . $this->developmentsService->setBuildingPage($this->elementId) . '&cmd=destroy&building=' . $this->elementId,
             'label' => StringsHelper::parseReplacements(
-                __('game/infos.in_destroy'),
+                __('game/technologydetails.in_destroy'),
                 [$this->getElementName($this->elementId)]
             ),
             'ionBonusHtml' => $techBonus,
@@ -608,9 +608,9 @@ class TechnologyInfoService
                 ['label' => __('game/global.crystal'), 'value' => $this->formatService->prettyNumber((int) ($tearDownResources['crystal'] ?? 0))],
                 ['label' => __('game/global.deuterium'), 'value' => $this->formatService->prettyNumber((int) ($tearDownResources['deuterium'] ?? 0))],
             ],
-            'durationLabel' => __('game/infos.in_dest_durati'),
+            'durationLabel' => __('game/technologydetails.in_dest_durati'),
             'duration' => $this->formatService->prettyTime($tearDownTime),
-            'costsLabel' => __('game/infos.in_needed'),
+            'costsLabel' => __('game/technologydetails.in_needed'),
         ];
     }
 
@@ -653,7 +653,7 @@ class TechnologyInfoService
         if ($this->elementId !== 43 || (int) ($this->planet[$this->resource[43]] ?? 0) <= 0) {
             return [
                 'success' => false,
-                'message' => __('game/infos.in_jump_gate_error_data'),
+                'message' => __('game/technologydetails.in_jump_gate_error_data'),
             ];
         }
 
@@ -662,7 +662,7 @@ class TechnologyInfoService
         if ($restString['value'] !== 0) {
             return [
                 'success' => false,
-                'message' => __('game/infos.in_jump_gate_already_used') . $restString['string'],
+                'message' => __('game/technologydetails.in_jump_gate_already_used') . $restString['string'],
             ];
         }
 
@@ -682,7 +682,7 @@ class TechnologyInfoService
         if ($gateRow === null) {
             return [
                 'success' => false,
-                'message' => __('game/infos.in_jump_gate_doesnt_have_one'),
+                'message' => __('game/technologydetails.in_jump_gate_doesnt_have_one'),
             ];
         }
 
@@ -692,7 +692,7 @@ class TechnologyInfoService
         if ((int) ($targetGate['building_jump_gate'] ?? 0) <= 0) {
             return [
                 'success' => false,
-                'message' => __('game/infos.in_jump_gate_doesnt_have_one'),
+                'message' => __('game/technologydetails.in_jump_gate_doesnt_have_one'),
             ];
         }
 
@@ -701,7 +701,7 @@ class TechnologyInfoService
         if ($restString['value'] !== 0) {
             return [
                 'success' => false,
-                'message' => __('game/infos.in_jump_gate_not_ready_target') . $restString['string'],
+                'message' => __('game/technologydetails.in_jump_gate_not_ready_target') . $restString['string'],
             ];
         }
 
@@ -733,7 +733,7 @@ class TechnologyInfoService
         if ($subQueryOrigin === '') {
             return [
                 'success' => false,
-                'message' => __('game/infos.in_jump_gate_error_data'),
+                'message' => __('game/technologydetails.in_jump_gate_error_data'),
             ];
         }
 
@@ -768,7 +768,7 @@ class TechnologyInfoService
 
         return [
             'success' => true,
-            'message' => __('game/infos.in_jump_gate_done') . $restString['string'],
+            'message' => __('game/technologydetails.in_jump_gate_done') . $restString['string'],
         ];
     }
 
@@ -786,7 +786,7 @@ class TechnologyInfoService
                 continue;
             }
 
-            $items[] = $this->buildRapidFireItem(__('game/infos.in_rf_again'), $type, $shots, '#00ff00');
+            $items[] = $this->buildRapidFireItem(__('game/technologydetails.in_rf_again'), $type, $shots, '#00ff00');
         }
 
         return $items;
@@ -806,7 +806,7 @@ class TechnologyInfoService
                 continue;
             }
 
-            $items[] = $this->buildRapidFireItem(__('game/infos.in_rf_from'), $type, $shots, '#ff0000');
+            $items[] = $this->buildRapidFireItem(__('game/technologydetails.in_rf_from'), $type, $shots, '#ff0000');
         }
 
         return $items;
@@ -871,7 +871,7 @@ class TechnologyInfoService
             return '';
         }
 
-        $infoTranslations = __('game/infos.info');
+        $infoTranslations = __('game/technologydetails.info');
 
         return is_array($infoTranslations) ? ($infoTranslations[$resourceKey] ?? '') : '';
     }
