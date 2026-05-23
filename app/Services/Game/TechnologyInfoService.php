@@ -141,12 +141,12 @@ class TechnologyInfoService
      */
     private function buildCombatSummary(bool $isShip): array
     {
-        $extraHtml = '';
+        $rapidFireItems = [];
 
         if ($isShip) {
-            $extraHtml = $this->showRapidFireFrom() . $this->showRapidFireTo();
+            $rapidFireItems = array_merge($this->buildRapidFireFromItems(), $this->buildRapidFireAgainstItems());
         } elseif ($this->elementId < 500) {
-            $extraHtml = $this->showRapidFireTo() . $this->showRapidFireFrom();
+            $rapidFireItems = array_merge($this->buildRapidFireAgainstItems(), $this->buildRapidFireFromItems());
         }
 
         $stats = [
@@ -196,7 +196,7 @@ class TechnologyInfoService
             'name' => $this->getElementName($this->elementId),
             'imageId' => $this->elementId,
             'description' => $this->getElementDescription($this->elementId),
-            'extraHtml' => $extraHtml,
+            'rapidFireItems' => $rapidFireItems,
             'stats' => $stats,
         ];
     }
@@ -772,34 +772,64 @@ class TechnologyInfoService
         ];
     }
 
-    private function showRapidFireTo(): string
+    /**
+     * @return array<int, array{label: string, chance: string, shots: string, color: string}>
+     */
+    private function buildRapidFireAgainstItems(): array
     {
-        $result = '';
+        $items = [];
 
         for ($type = 200; $type < 500; $type++) {
-            if (($this->combatCaps[$this->elementId]['sd'][$type] ?? 0) <= 1) {
+            $shots = (int) ($this->combatCaps[$this->elementId]['sd'][$type] ?? 0);
+
+            if ($shots <= 1) {
                 continue;
             }
 
-            $result .= __('game/infos.in_rf_again') . ' ' . $this->getElementName($type) . ' <font color="#00ff00">' . $this->combatCaps[$this->elementId]['sd'][$type] . '</font><br>';
+            $items[] = $this->buildRapidFireItem(__('game/infos.in_rf_again'), $type, $shots, '#00ff00');
         }
 
-        return $result;
+        return $items;
     }
 
-    private function showRapidFireFrom(): string
+    /**
+     * @return array<int, array{label: string, chance: string, shots: string, color: string}>
+     */
+    private function buildRapidFireFromItems(): array
     {
-        $result = '';
+        $items = [];
 
         for ($type = 200; $type < 500; $type++) {
-            if (($this->combatCaps[$type]['sd'][$this->elementId] ?? 0) <= 1) {
+            $shots = (int) ($this->combatCaps[$type]['sd'][$this->elementId] ?? 0);
+
+            if ($shots <= 1) {
                 continue;
             }
 
-            $result .= __('game/infos.in_rf_from') . ' ' . $this->getElementName($type) . ' <font color="#ff0000">' . $this->combatCaps[$type]['sd'][$this->elementId] . '</font><br>';
+            $items[] = $this->buildRapidFireItem(__('game/infos.in_rf_from'), $type, $shots, '#ff0000');
         }
 
-        return $result;
+        return $items;
+    }
+
+    /**
+     * @return array{label: string, chance: string, shots: string, color: string}
+     */
+    private function buildRapidFireItem(string $prefix, int $type, int $shots, string $color): array
+    {
+        return [
+            'label' => $prefix . ' ' . $this->getElementName($type),
+            'chance' => $this->formatRapidFireChance($shots),
+            'shots' => $this->formatService->prettyNumber($shots),
+            'color' => $color,
+        ];
+    }
+
+    private function formatRapidFireChance(int $shots): string
+    {
+        $chance = (($shots - 1) / $shots) * 100;
+
+        return rtrim(rtrim($this->formatService->floatToString($chance, 2, true), '0'), '.');
     }
 
     /**

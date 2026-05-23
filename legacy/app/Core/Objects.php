@@ -11,6 +11,9 @@ use App\Core\GameObjects\GameObjectRegistry;
 use App\Core\GameObjects\Officer;
 use App\Core\GameObjects\Ship;
 
+/**
+ * @deprecated Use GameObjectRegistry instead
+ */
 class Objects
 {
     private static ?Objects $instance = null;

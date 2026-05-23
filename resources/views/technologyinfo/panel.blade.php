@@ -14,7 +14,7 @@
             <th role="cell">{{ $summary['name'] }}</th>
         </tr>
         <tr>
-            <th role="cell" colspan="2">
+            <td colspan="2" style="font-weight: normal; text-align: left;">
                 <table role="presentation">
                     <tbody>
                         <tr>
@@ -23,14 +23,14 @@
                             </td>
                             <td>
                                 {!! $summary['description'] !!}
-                                @if ($summary['extraHtml'] !== '')
-                                <br><br>{!! $summary['extraHtml'] !!}
+                                @if ($summary['rapidFireItems'] !== [])
+                                @include('technologyinfo.partials.rapid-fire', ['items' => $summary['rapidFireItems']])
                                 @endif
                             </td>
                         </tr>
                     </tbody>
                 </table>
-            </th>
+            </td>
         </tr>
         @foreach ($summary['stats'] as $stat)
         <tr>
@@ -47,7 +47,7 @@
             <td class="c">{{ $summary['title'] }}</td>
         </tr>
         <tr>
-            <th>
+            <td style="font-weight: normal; text-align: left;">
                 <table role="presentation">
                     <tbody>
                         <tr>
@@ -58,7 +58,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </th>
+            </td>
         </tr>
         @if ($detailTable !== null)
         <tr>
