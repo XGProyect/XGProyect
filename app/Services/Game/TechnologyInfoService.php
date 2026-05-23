@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\Game;
 
+use App\Core\GameObjects\Building;
+use App\Core\GameObjects\GameObject;
+use App\Core\GameObjects\GameObjectRegistry;
+use App\Core\GameObjects\Officer;
+use App\Core\GameObjects\Ship;
 use App\Services\FormatService;
 use App\Services\Game\Formulas\DevelopmentsService;
 use App\Services\Game\Formulas\FleetsService;
@@ -14,7 +19,6 @@ use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
-use Xgp\App\Core\Objects;
 use Xgp\App\Helpers\StringsHelper;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
@@ -49,6 +53,7 @@ class TechnologyInfoService
     private int $elementId = 0;
 
     public function __construct(
+        private GameObjectRegistry $registry,
         private ProductionService $productionService,
         private FormatService $formatService,
         private OfficerService $officerService,
@@ -107,12 +112,123 @@ class TechnologyInfoService
         $this->user = $userData ?? Users::getInstance()->getUserData();
         $this->planet = $planetData ?? Users::getInstance()->getPlanetData();
 
-        $objects = Objects::getInstance();
-        $this->resource = $objects->getObjects();
-        $this->priceList = $objects->getPrice();
-        $this->combatCaps = $objects->getCombatSpecs();
-        $this->productionGrid = $objects->getProduction();
+        $this->resource = $this->buildResourceMap();
+        $this->priceList = $this->buildPriceList();
+        $this->combatCaps = $this->buildCombatCaps();
+        $this->productionGrid = $this->buildProductionGrid();
         $this->elementId = $elementId;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function buildResourceMap(): array
+    {
+        $resourceMap = [];
+
+        foreach ($this->registry->all() as $id => $object) {
+            $resourceMap[$id] = $object->getName();
+        }
+
+        return $resourceMap;
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function buildPriceList(): array
+    {
+        $priceList = [];
+
+        foreach ($this->registry->all() as $id => $object) {
+            if ($object instanceof Officer) {
+                $priceList[$id] = [
+                    'darkmatter_week' => $object->getDarkmatterWeek(),
+                    'darkmatter_month' => $object->getDarkmatterMonth(),
+                    'img_big' => $object->getImgBig(),
+                    'img_small' => $object->getImgSmall(),
+                ];
+
+                continue;
+            }
+
+            if (!$object instanceof GameObject) {
+                continue;
+            }
+
+            $priceList[$id] = $object->getPrice()->toArray();
+
+            if ($object instanceof Ship) {
+                $priceList[$id]['consumption'] = $object->getConsumption();
+                $priceList[$id]['consumption2'] = $object->getConsumption2();
+                $priceList[$id]['speed'] = $object->getSpeed();
+                $priceList[$id]['speed2'] = $object->getSpeed2();
+                $priceList[$id]['capacity'] = $object->getCapacity();
+            }
+        }
+
+        return $priceList;
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function buildCombatCaps(): array
+    {
+        $combatCaps = [];
+
+        foreach ($this->registry->ships() as $id => $ship) {
+            $combatCaps[$id] = [
+                'shield' => $ship->getShield(),
+                'attack' => $ship->getAttack(),
+                'sd' => $ship->getRapidFire()->toArray(),
+            ];
+        }
+
+        foreach ($this->registry->defenses() as $id => $defense) {
+            $combatCaps[$id] = [
+                'shield' => $defense->getShield(),
+                'attack' => $defense->getAttack(),
+            ];
+
+            if ($defense->getRapidFire()->isNotEmpty()) {
+                $combatCaps[$id]['sd'] = $defense->getRapidFire()->toArray();
+            }
+        }
+
+        return $combatCaps;
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function buildProductionGrid(): array
+    {
+        $productionGrid = [];
+
+        foreach ($this->registry->producers() as $id => $object) {
+            $production = $object instanceof Building || $object instanceof Ship
+                ? $object->getProduction()
+                : null;
+
+            if ($production === null) {
+                continue;
+            }
+
+            $productionGrid[$id] = $production->toLegacyArray();
+            $productionGrid[$id]['formule'] = [
+                'metal' => fn (int $level, float $levelFactor, float $planetTemp, int $energyTech): float
+                    => $production->calculateMetal($level, $levelFactor),
+                'crystal' => fn (int $level, float $levelFactor, float $planetTemp, int $energyTech): float
+                    => $production->calculateCrystal($level, $levelFactor),
+                'deuterium' => fn (int $level, float $levelFactor, float $planetTemp, int $energyTech): float
+                    => $production->calculateDeuterium($level, $levelFactor, $planetTemp),
+                'energy' => fn (int $level, float $levelFactor, float $planetTemp, int $energyTech): float
+                    => $production->calculateEnergy($level, $levelFactor, $planetTemp, $energyTech),
+            ];
+        }
+
+        return $productionGrid;
     }
 
     /**
