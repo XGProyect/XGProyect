@@ -205,35 +205,6 @@
   <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/HighscoreController.php" method="rank_difference"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/HighscoreController.php" method="build_range_list"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/HighscoreController.php" method="ranking_type"/>
-  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
-  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/InfosController.php" method="__invoke"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/InfosController.php" method="buildPage"/>
-  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/InfosController.php" method="buildPage"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/InfosController.php" method="buildPage"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/InfosController.php" method="buildPage"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Http/Controllers/Game/InfosController.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="storage_table"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="astrophysics_table"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="GetNextJumpWaitTime"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="GetNextJumpWaitTime"/>
-  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/InfosController.php" method="doFleetJump"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/InfosController.php" method="doFleetJump"/>
-  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/InfosController.php" method="doFleetJump"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="BuildFleetListRows"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="BuildJumpableMoonCombo"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="phalanxRange"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="legacy/app/Http/Controllers/Game/InfosController.php" method="showProductionTable"/>
-  <violation rule="PHPMD\Rule\Design\LongMethod" file="legacy/app/Http/Controllers/Game/InfosController.php" method="showProductionTable"/>
-  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="legacy/app/Http/Controllers/Game/InfosController.php" method="showProductionTable"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="showProductionTable"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="ShowRapidFireTo"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="ShowRapidFireFrom"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseParameterName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="planet_link"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="legacy/app/Http/Controllers/Game/InfosController.php" method="planet_link"/>
   <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="legacy/app/Http/Controllers/Game/MessagesController.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Http/Controllers/Game/MessagesController.php"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Http/Controllers/Game/MessagesController.php" method="getPremiumSection"/>

@@ -1,9 +1,19 @@
 @extends('master.game')
 
 @section('content')
-{!! $techInfo !!}
+@if ($errors->has('jmpto'))
+<div style="width: 519px; margin: 0 auto;">
+    <x-notice width="519px" color="red" :message="$errors->first('jmpto')" />
+</div>
+@endif
 
-<table width="569" style="margin-top: 8px;">
+<div style="width: 519px; margin: 0 auto;">
+    <x-notice width="519px" :color="session('technologyinfo_notice_color', '')" :message="session('technologyinfo_notice_message', '')" />
+</div>
+
+@include('technologyinfo.panel', ['info' => $techInfo])
+
+<table width="569" style="margin: 8px auto 0;">
     <tr>
         <td class="c" colspan="2">{{ __('game/technologydetails.techtree_title') }}</td>
     </tr>
@@ -30,7 +40,7 @@
     </tr>
 </table>
 
-<table width="569" style="margin-top: 8px;">
+<table width="569" style="margin: 8px auto 0;">
     <tr>
         <td class="c" colspan="2">{{ $applicationsTitle }}</td>
     </tr>

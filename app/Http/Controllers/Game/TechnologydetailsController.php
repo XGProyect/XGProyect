@@ -13,13 +13,14 @@ use App\Core\GameObjects\Research;
 use App\Core\GameObjects\Ship;
 use App\Enums\Module;
 use App\Services\FormatService;
+use App\Services\Game\TechnologyInfoService;
 use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Validator;
 use RuntimeException;
-use Xgp\App\Http\Controllers\Game\InfosController as LegacyInfosController;
 use Xgp\App\Libraries\Functions;
 use Xgp\App\Libraries\Users;
 
@@ -32,7 +33,7 @@ class TechnologydetailsController extends BaseController
         private GameObjectRegistry $registry,
         private SettingsService $settings,
         private FormatService $formatService,
-        private LegacyInfosController $infosController,
+        private TechnologyInfoService $technologyInfoService,
     ) {
     }
 
@@ -43,7 +44,12 @@ class TechnologydetailsController extends BaseController
     {
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Information));
 
+        $legacyTechnology = $request->integer('gid');
         $technology = $request->integer('technology');
+
+        if ($technology === 0 && $legacyTechnology > 0) {
+            $technology = $legacyTechnology;
+        }
 
         if (!$this->registry->has($technology)) {
             return redirect('game.php?page=technologytree');
@@ -57,6 +63,31 @@ class TechnologydetailsController extends BaseController
 
         $userData = Users::getInstance()->getUserData();
         $planetData = Users::getInstance()->getPlanetData();
+
+        if ($legacyTechnology > 0 && $request->query('page') === 'infos' && $request->isMethod('get')) {
+            return redirect('game.php?page=technologydetails&technology=' . $technology);
+        }
+
+        if ($technology === 43 && $request->isMethod('post')) {
+            $jumpGateInput = $this->validateJumpGateInput($request);
+
+            if ($jumpGateInput instanceof RedirectResponse) {
+                return $jumpGateInput;
+            }
+
+            $jumpGateResult = $this->technologyInfoService->handleJumpGate(
+                $technology,
+                $jumpGateInput['targetPlanet'],
+                $jumpGateInput['ships'],
+                $userData,
+                $planetData,
+            );
+
+            return redirect('game.php?page=technologydetails&technology=' . $technology)
+                ->with('technologyinfo_notice_message', $jumpGateResult['message'])
+                ->with('technologyinfo_notice_color', $jumpGateResult['color']);
+        }
+
         $levels = $this->buildLevels($planetData, $userData);
         $name = $this->translatedName($object);
 
@@ -64,11 +95,42 @@ class TechnologydetailsController extends BaseController
             'gameTitle' => $this->settings->getString('game_name'),
             'id' => $technology,
             'name' => $name,
-            'techInfo' => $this->infosController->renderInfoContent($technology, $userData, $planetData),
+            'techInfo' => $this->technologyInfoService->buildViewData($technology, $userData, $planetData),
             'requirements' => $this->buildRequirementsHtml($object, $levels),
             'applicationsTitle' => __('game/technologydetails.applications_title', ['technology' => $name]),
             'applications' => $this->buildApplications($object, $levels),
         ]);
+    }
+
+    /**
+     * @return array{targetPlanet: int, ships: array<int, int>}|RedirectResponse
+     */
+    private function validateJumpGateInput(Request $request): array | RedirectResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'jmpto' => ['required', 'integer', 'min:1'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('game.php?page=technologydetails&technology=43')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $ships = [];
+
+        foreach ($this->registry->ships() as $ship) {
+            if ($ship->getId() < 200 || $ship->getId() >= 250) {
+                continue;
+            }
+
+            $ships[$ship->getId()] = max(0, $request->integer('c' . $ship->getId()));
+        }
+
+        return [
+            'targetPlanet' => (int) $validator->validated()['jmpto'],
+            'ships' => $ships,
+        ];
     }
 
     /**
