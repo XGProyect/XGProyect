@@ -120,21 +120,21 @@ abstract class BuildingsController extends BaseController
         }
 
         $buildListScript = '';
-        $buildList = '';
+        $queueRows = [];
 
         if ($commanderActive && $queueData['length'] > 0) {
             $buildListScript = view('buildings.build_list_script', [
                 'call_program' => $this->page,
                 'current_page' => $this->page,
             ])->render();
-            $buildList = $this->buildQueueHtml($queueData['items'], (int) ($planet['planet_id'] ?? 0));
+            $queueRows = $this->buildQueueRows($queueData['items'], (int) ($planet['planet_id'] ?? 0));
         }
 
         return view('buildings.body', [
             'gameTitle' => $this->settingsService->getString('game_name'),
             'list_of_buildings' => $listOfBuildings,
             'BuildListScript' => $buildListScript,
-            'BuildList' => $buildList,
+            'queueRows' => $queueRows,
         ]);
     }
 
@@ -300,11 +300,13 @@ abstract class BuildingsController extends BaseController
     /**
      * @param  array<int, array<string,mixed>>  $items
      *
+     * @return array<int, array<string, mixed>>
+     *
      * @SuppressWarnings("PHPMD.ElseExpression")
      */
-    private function buildQueueHtml(array $items, int $planetId): string
+    private function buildQueueRows(array $items, int $planetId): array
     {
-        $html = '';
+        $rows = [];
 
         foreach ($items as $item) {
             $endTime = (int) $item['end_time'];
@@ -319,38 +321,29 @@ abstract class BuildingsController extends BaseController
             $targetLevel = (int) $item['target_level'];
             $mode = (string) $item['mode'];
             $title = __('game/constructions.' . $this->registry->get($buildingId)->getName());
+            $isActive = $position === 1;
 
-            $html .= '<tr>';
-
-            if ($mode === 'build') {
-                $html .= '<td class="l" colspan="2">' . $position . '.: ' . $title . ' ' . $targetLevel . '</td>';
-            } else {
-                $html .= '<td class="l" colspan="2">' . $position . '.: ' . $title . ' ' . $targetLevel . ' ' . __('game/buildings.bd_dismantle') . '</td>';
-            }
-
-            $html .= '<td class="k">';
-
-            if ($position === 1) {
-                $cancelUrl = 'game.php?page=' . $this->page . '&listid=1&cmd=cancel&planet=' . $planetId;
-                $html .= '<div id="blc" class="z">' . $timeLeft . '<br>';
-                $html .= $this->formatService->link($cancelUrl, __('game/buildings.bd_interrupt')) . '</div>';
-                $html .= '<script language="JavaScript">';
-                $html .= 'pp = "' . $timeLeft . "\";\n";
-                $html .= 'pk = "1' . "\";\n";
-                $html .= "pm = \"cancel\";\n";
-                $html .= 'pl = "' . $planetId . "\";\n";
-                $html .= "t();\n";
-                $html .= '</script>';
-                $html .= '<strong color="lime"><br><font color="lime">' . $this->timingService->formatExtendedDate($endTime) . '</font></strong>';
-            } else {
-                $removeUrl = 'game.php?page=' . $this->page . '&listid=' . $position . '&cmd=remove&planet=' . $planetId;
-                $html .= '<font color="red">' . $this->formatService->link($removeUrl, __('game/buildings.bd_cancel')) . '</font>';
-            }
-
-            $html .= '</td></tr>';
+            $rows[] = [
+                'label' => $mode === 'build'
+                    ? $position . '.: ' . $title . ' ' . $targetLevel
+                    : $position . '.: ' . $title . ' ' . $targetLevel . ' ' . __('game/buildings.bd_dismantle'),
+                'is_active' => $isActive,
+                'time_left' => $timeLeft,
+                'cancel_url' => 'game.php?page=' . $this->page . '&listid=1&cmd=cancel&planet=' . $planetId,
+                'cancel_label' => __('game/buildings.bd_interrupt'),
+                'timer_variables' => [
+                    'pp' => $timeLeft,
+                    'pk' => 1,
+                    'pm' => 'cancel',
+                    'pl' => $planetId,
+                ],
+                'finish_at' => $this->timingService->formatExtendedDate($endTime),
+                'remove_url' => 'game.php?page=' . $this->page . '&listid=' . $position . '&cmd=remove&planet=' . $planetId,
+                'remove_label' => __('game/buildings.bd_cancel'),
+            ];
         }
 
-        return $html;
+        return $rows;
     }
 
     /**

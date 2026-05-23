@@ -123,7 +123,7 @@ class ResearchController extends BaseController
                 'gameTitle' => $this->settingsService->getString('game_name'),
                 'noresearch' => '',
                 'queueScript' => '',
-                'queueRows' => '',
+                'queueRows' => [],
                 'technologies' => [],
             ]);
         }
@@ -197,7 +197,7 @@ class ResearchController extends BaseController
 
         $queueItems = $queue->all();
         $queueScript = ($commanderActive && !empty($queueItems)) ? view('research.queue_script')->render() : '';
-        $queueRows = $commanderActive ? $this->buildQueueHtml($queueItems) : '';
+        $queueRows = $commanderActive ? $this->buildQueueRows($queueItems) : [];
 
         return view('research.view', [
             'gameTitle' => $this->settingsService->getString('game_name'),
@@ -297,38 +297,34 @@ class ResearchController extends BaseController
 
     /**
      * @param  array<int, ResearchQueue>  $items
+     *
+     * @return array<int, array<string, mixed>>
      */
-    private function buildQueueHtml(array $items): string
+    private function buildQueueRows(array $items): array
     {
-        $html = '';
+        $rows = [];
 
         foreach ($items as $item) {
             $techCol = $this->registry->get($item->tech_id)->getName();
             $techName = __('game/technologies.' . $techCol);
             $timeLeft = max(0, $item->end_time - time());
+            $isActive = $item->position === 1;
 
-            $html .= '<tr>';
-            $html .= '<td class="l" colspan="2">' . $item->position . '.: ' . $techName . ' ' . $item->target_level . '</td>';
-            $html .= '<td class="k">';
-
-            if ($item->position === 1) {
-                $cancelUrl = 'game.php?page=research&cmd=cancel';
-                $html .= '<div id="blc" class="z">' . $timeLeft . '<br>';
-                $html .= $this->formatService->link($cancelUrl, __('game/research.re_cancel'));
-                $html .= '</div>';
-                $html .= '<script language="JavaScript">';
-                $html .= 'pp = "' . $timeLeft . "\";\n";
-                $html .= "t();\n";
-                $html .= '</script>';
-                $html .= '<strong><font color="lime">' . $this->timingService->formatExtendedDate($item->end_time) . '</font></strong>';
-            } else {
-                $removeUrl = 'game.php?page=research&cmd=remove&position=' . $item->position;
-                $html .= '<font color="red">' . $this->formatService->link($removeUrl, __('game/research.re_cancel')) . '</font>';
-            }
-
-            $html .= '</td></tr>';
+            $rows[] = [
+                'label' => $item->position . '.: ' . $techName . ' ' . $item->target_level,
+                'is_active' => $isActive,
+                'time_left' => $timeLeft,
+                'cancel_url' => 'game.php?page=research&cmd=cancel',
+                'cancel_label' => __('game/research.re_cancel'),
+                'timer_variables' => [
+                    'pp' => $timeLeft,
+                ],
+                'finish_at' => $this->timingService->formatExtendedDate($item->end_time),
+                'remove_url' => 'game.php?page=research&cmd=remove&position=' . $item->position,
+                'remove_label' => __('game/research.re_cancel'),
+            ];
         }
 
-        return $html;
+        return $rows;
     }
 }

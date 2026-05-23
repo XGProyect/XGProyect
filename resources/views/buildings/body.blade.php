@@ -3,7 +3,7 @@
 @section('content')
 {!! $BuildListScript !!}
 <table width="530">
-    {!! $BuildList !!}
+    @include('game.queue_rows', ['rows' => $queueRows])
     @foreach ($list_of_buildings as $item)
     <tr>
         <td class="l" width="120" height="120">
