@@ -10,6 +10,7 @@ use App\Models\Planets;
 use App\Models\ResearchQueue;
 use App\Models\User;
 use App\Services\FormatService;
+use App\Services\Game\DevelopmentDataService;
 use App\Services\Game\Formulas\DevelopmentsService;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\Game\ResearchQueueService;
@@ -34,12 +35,12 @@ class ResearchController extends BaseController
         ResearchEnumerator::research_espionage_technology => [
             'officer' => 'premium_officier_technocrat',
             'const' => TECHNOCRATE_SPY,
-            'lang' => 're_spy'
+            'lang' => 're_spy',
         ],
         ResearchEnumerator::research_computer_technology => [
             'officer' => 'premium_officier_admiral',
             'const' => AMIRAL,
-            'lang' => 're_commander'
+            'lang' => 're_commander',
         ],
     ];
 
@@ -47,6 +48,7 @@ class ResearchController extends BaseController
         private GameObjectRegistry $registry,
         private DevelopmentsService $developmentsService,
         private FormatService $formatService,
+        private DevelopmentDataService $developmentDataService,
         private OfficerService $officerService,
         private SettingsService $settingsService,
         private ResearchQueueService $researchQueueService,
@@ -69,8 +71,8 @@ class ResearchController extends BaseController
     }
 
     /**
-     * @param array<string,mixed> $userData
-     * @param array<string,mixed> $planetData
+     * @param  array<string,mixed>  $userData
+     * @param  array<string,mixed>  $planetData
      */
     private function handleAction(Request $request, array $userData, array $planetData): RedirectResponse
     {
@@ -101,8 +103,8 @@ class ResearchController extends BaseController
     }
 
     /**
-     * @param array<string,mixed> $userData
-     * @param array<string,mixed> $planetData
+     * @param  array<string,mixed>  $userData
+     * @param  array<string,mixed>  $planetData
      */
     private function showPage(array $userData, array $planetData): View
     {
@@ -151,7 +153,7 @@ class ResearchController extends BaseController
             $workingPlanet = Planets::find($activeItem->planet_id);
         }
 
-        $levels = $this->buildLevels($planetModel, $userData);
+        $levels = $this->developmentDataService->levelsFromPlanet($planetModel, $userData);
 
         $technologies = [];
         foreach ($this->registry->research()->keys()->all() as $techId) {
@@ -176,7 +178,7 @@ class ResearchController extends BaseController
                 'tech_level' => $this->formatLevel($techId, $currentLevel, $userData),
                 'tech_name' => __('game/technologies.' . $techCol),
                 'tech_descr' => __('game/research.descriptions')[$techCol],
-                'tech_price' => $this->buildPriceHtml($planetData, $techId, $currentLevel),
+                'tech_price' => $this->developmentDataService->buildPriceHtml($planetData, $techId, $currentLevel),
                 'search_time' => '<br>' . __('game/research.re_time') . $this->formatService->prettyTime($duration),
                 'tech_link' => $this->getActionLink(
                     $techId,
@@ -187,7 +189,8 @@ class ResearchController extends BaseController
                     $commanderActive,
                     $activeItem,
                     $planetModel,
-                    $workingPlanet
+                    $workingPlanet,
+                    $currentLevel
                 ),
             ];
         }
@@ -206,7 +209,7 @@ class ResearchController extends BaseController
     }
 
     /**
-     * @param array<string,mixed> $userData
+     * @param  array<string,mixed>  $userData
      */
     private function formatLevel(int $techId, int $level, array $userData): string
     {
@@ -224,44 +227,6 @@ class ResearchController extends BaseController
         return $text;
     }
 
-    /**
-     * @param array<string,mixed> $planetData
-     *
-     * @SuppressWarnings("PHPMD.ElseExpression")
-     */
-    private function buildPriceHtml(array $planetData, int $techId, int $level): string
-    {
-        $costs = $this->developmentsService->developmentPrice($techId, $level);
-        $labels = [
-            'metal' => __('game/global.metal'),
-            'crystal' => __('game/global.crystal'),
-            'deuterium' => __('game/global.deuterium'),
-            'energy_max' => __('game/global.energy'),
-        ];
-        $text = __('game/buildings.require');
-
-        foreach ($labels as $type => $label) {
-            if (!isset($costs[$type])) {
-                continue;
-            }
-
-            $cost = $costs[$type];
-            $available = (float) ($planetData['planet_' . $type] ?? 0);
-            $formatted = $this->formatService->prettyNumber((int) $cost);
-            $text .= $label . ': ';
-
-            if ($cost > $available) {
-                $shortage = $this->formatService->prettyNumber($cost - $available);
-                $text .= '<b style="color:red;"><t title="-' . $shortage . '"><span class="noresources">' . $formatted . '</span></t></b> ';
-                continue;
-            }
-
-            $text .= '<b style="color:lime;">' . $formatted . '</b> ';
-        }
-
-        return $text;
-    }
-
     private function getActionLink(
         int $techId,
         bool $isWorking,
@@ -271,9 +236,10 @@ class ResearchController extends BaseController
         bool $commanderActive,
         ?ResearchQueue $activeItem,
         Planets $planet,
-        ?Planets $workingPlanet
+        ?Planets $workingPlanet,
+        int $currentLevel,
     ): string {
-        if ($isWorking && $activeItem !== null && $activeItem->tech_id === $techId) {
+        if ($isWorking && !$commanderActive && $activeItem !== null && $activeItem->tech_id === $techId) {
             return $this->buildCountdown($activeItem, $planet, $workingPlanet);
         }
 
@@ -292,17 +258,10 @@ class ResearchController extends BaseController
             );
         }
 
-        $techCol = $this->registry->get($techId)->getName();
-
         if (!$this->developmentsService->isDevelopmentPayable(
-            [
-                'planet_metal' => (float) ($planet->planet_metal ?? 0),
-                'planet_crystal' => (float) ($planet->planet_crystal ?? 0),
-                'planet_deuterium' => (float) ($planet->planet_deuterium ?? 0),
-                'planet_energy_max' => (float) ($planet->planet_energy_max ?? 0),
-            ],
+            $this->developmentDataService->planetResources($planet),
             $techId,
-            (int) ($planet->buildings?->$techCol ?? 0)
+            $currentLevel
         )) {
             return $this->formatService->colorRed(__('game/research.re_research'));
         }
@@ -337,7 +296,7 @@ class ResearchController extends BaseController
     }
 
     /**
-     * @param array<int, ResearchQueue> $items
+     * @param  array<int, ResearchQueue>  $items
      */
     private function buildQueueHtml(array $items): string
     {
@@ -371,20 +330,5 @@ class ResearchController extends BaseController
         }
 
         return $html;
-    }
-
-    /**
-     * @param array<string,mixed> $userData
-     *
-     * @return array<int, int>
-     */
-    private function buildLevels(Planets $planet, array $userData): array
-    {
-        $levels = [];
-        foreach ($this->registry->all() as $id => $obj) {
-            $column = $obj->getName();
-            $levels[$id] = (int) ($planet->buildings?->$column ?? $userData[$column] ?? 0);
-        }
-        return $levels;
     }
 }

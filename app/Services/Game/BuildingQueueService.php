@@ -24,13 +24,13 @@ class BuildingQueueService
 
     public function __construct(
         private DevelopmentsService $developmentsService,
+        private DevelopmentDataService $developmentDataService,
         private FormatService $formatService,
         private GameObjectRegistry $registry,
-    ) {
-    }
+    ) {}
 
     /**
-     *  @return array{length: int, to_destroy: int, items: array<int, array<string, mixed>>}
+     * @return array{length: int, to_destroy: int, items: array<int, array<string, mixed>>}
      */
     public function getQueueData(Planets $planet): array
     {
@@ -44,7 +44,7 @@ class BuildingQueueService
     }
 
     /**
-     * @param array<string,mixed> $user
+     * @param  array<string,mixed>  $user
      *
      * @SuppressWarnings("PHPMD.NPathComplexity")
      * @SuppressWarnings("PHPMD.ElseExpression")
@@ -69,9 +69,9 @@ class BuildingQueueService
             }
         }
 
-        $levels = $this->buildLevels($planet, $user);
+        $levels = $this->developmentDataService->levelsFromPlanet($planet, $user);
 
-        if (!$this->developmentsService->isDevelopmentAllowed($buildingId, $levels)) {
+        if (! $this->developmentsService->isDevelopmentAllowed($buildingId, $levels)) {
             return false;
         }
 
@@ -112,8 +112,8 @@ class BuildingQueueService
             : 0;
 
         if ($count === 0) {
-            if (!$this->developmentsService->isDevelopmentPayable(
-                $this->planetResources($planet),
+            if (! $this->developmentsService->isDevelopmentPayable(
+                $this->developmentDataService->planetResources($planet),
                 $buildingId,
                 $levelForCalc,
                 true,
@@ -152,13 +152,13 @@ class BuildingQueueService
     }
 
     /**
-     * @param array<string,mixed> $user
+     * @param  array<string,mixed>  $user
      */
     public function cancelFirst(Planets $planet, array $user): bool
     {
         $firstItem = $planet->buildingQueue()->where('position', 1)->first();
 
-        if (!$firstItem) {
+        if (! $firstItem) {
             return false;
         }
 
@@ -187,6 +187,7 @@ class BuildingQueueService
         if ($remaining->isEmpty()) {
             $planet->planet_b_building = 0;
             $planet->save();
+
             return true;
         }
 
@@ -230,7 +231,7 @@ class BuildingQueueService
         $queue = $planet->buildingQueue()->orderBy('position')->get();
         $targetItem = $queue->firstWhere('position', $position);
 
-        if (!$targetItem) {
+        if (! $targetItem) {
             return;
         }
 
@@ -239,7 +240,7 @@ class BuildingQueueService
             ->where('position', '>=', $position)
             ->last();
 
-        if (!$lastOccurrence) {
+        if (! $lastOccurrence) {
             return;
         }
 
@@ -255,14 +256,14 @@ class BuildingQueueService
     }
 
     /**
-     * @param array<string,mixed> $user
+     * @param  array<string,mixed>  $user
      */
     public function processCompletions(Planets $planet, array $user): void
     {
         while (true) {
             $first = $planet->buildingQueue()->where('position', 1)->first();
 
-            if (!$first || $first->end_time > time()) {
+            if (! $first || $first->end_time > time()) {
                 break;
             }
 
@@ -313,14 +314,14 @@ class BuildingQueueService
     }
 
     /**
-     * @param array<string,mixed> $user
+     * @param  array<string,mixed>  $user
      */
     private function advanceQueue(Planets $planet, array $user): void
     {
         while (true) {
             $first = $planet->buildingQueue()->where('position', 1)->first();
 
-            if (!$first) {
+            if (! $first) {
                 break;
             }
 
@@ -333,11 +334,12 @@ class BuildingQueueService
             if ($forDestroy && $currentLevel === 0) {
                 $first->delete();
                 $this->shiftPositionsDown($planet, 1);
+
                 continue;
             }
 
             $isPaid = $this->developmentsService->isDevelopmentPayable(
-                $this->planetResources($planet),
+                $this->developmentDataService->planetResources($planet),
                 $first->building_id,
                 $currentLevel,
                 true,
@@ -379,7 +381,7 @@ class BuildingQueueService
     }
 
     /**
-     * @param array<string,mixed> $user
+     * @param  array<string,mixed>  $user
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
@@ -418,9 +420,9 @@ class BuildingQueueService
         }
 
         $buildingName = $this->registry->get($item->building_id)->getName();
-        $elementName = __('game/constructions.' . $buildingName);
-        $galaxyUrl = 'game.php?page=galaxy&mode=3&galaxy=' . $planet->planet_galaxy . '&system=' . $planet->planet_system;
-        $coordsText = $planet->planet_name . ' ' . $this->formatService->prettyCoords(
+        $elementName = __('game/constructions.'.$buildingName);
+        $galaxyUrl = 'game.php?page=galaxy&mode=3&galaxy='.$planet->planet_galaxy.'&system='.$planet->planet_system;
+        $coordsText = $planet->planet_name.' '.$this->formatService->prettyCoords(
             $planet->planet_galaxy,
             $planet->planet_system,
             $planet->planet_planet
@@ -429,7 +431,7 @@ class BuildingQueueService
 
         $message = sprintf(
             __('game/buildings.bd_building_queue_not_enough_resources'),
-            __('game/buildings.bd_building_queue_' . $item->mode . '_order'),
+            __('game/buildings.bd_building_queue_'.$item->mode.'_order'),
             $elementName,
             $item->target_level,
             $coordsLink,
@@ -446,35 +448,5 @@ class BuildingQueueService
             $message,
             true
         );
-    }
-
-    /**
-     * @return array<string, float>
-     */
-    private function planetResources(Planets $planet): array
-    {
-        return [
-            'planet_metal' => $planet->planet_metal,
-            'planet_crystal' => $planet->planet_crystal,
-            'planet_deuterium' => $planet->planet_deuterium,
-            'planet_energy_max' => (float) $planet->planet_energy_max,
-        ];
-    }
-
-    /**
-     * @param array<string,mixed> $user
-     *
-     * @return array<int, int>
-     */
-    private function buildLevels(Planets $planet, array $user): array
-    {
-        $levels = [];
-
-        foreach ($this->registry->all() as $id => $obj) {
-            $column = $obj->getName();
-            $levels[$id] = (int) ($planet->buildings?->$column ?? $user[$column] ?? 0);
-        }
-
-        return $levels;
     }
 }

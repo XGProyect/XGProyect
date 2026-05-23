@@ -9,6 +9,7 @@ use App\Enums\Module;
 use App\Models\Planets;
 use App\Services\FormatService;
 use App\Services\Game\BuildingQueueService;
+use App\Services\Game\DevelopmentDataService;
 use App\Services\Game\Formulas\DevelopmentsService;
 use App\Services\Game\Formulas\OfficerService;
 use App\Services\SettingsService;
@@ -40,17 +41,17 @@ abstract class BuildingsController extends BaseController
         protected GameObjectRegistry $registry,
         protected DevelopmentsService $developmentsService,
         protected FormatService $formatService,
+        protected DevelopmentDataService $developmentDataService,
         protected OfficerService $officerService,
         protected SettingsService $settingsService,
         protected TimingService $timingService,
         protected BuildingQueueService $queueService,
-    ) {
-    }
+    ) {}
 
     /** @return int[] */
     abstract protected function setAllowedBuildings(int $planetType): array;
 
-    public function __invoke(Request $request): View | RedirectResponse
+    public function __invoke(Request $request): View|RedirectResponse
     {
         Functions::moduleMessage(Functions::isModuleAccesible(Module::Buildings));
 
@@ -65,8 +66,8 @@ abstract class BuildingsController extends BaseController
     }
 
     /**
-     * @param array<string,mixed> $user
-     * @param array<string,mixed> $planet
+     * @param  array<string,mixed>  $user
+     * @param  array<string,mixed>  $planet
      */
     private function handleAction(Request $request, array $user, array $planet): RedirectResponse
     {
@@ -74,14 +75,14 @@ abstract class BuildingsController extends BaseController
         $building = (int) $request->query('building', 0);
         $listId = (int) $request->query('listid', 0);
 
-        if (!in_array($cmd, ['cancel', 'destroy', 'insert', 'remove'], true)) {
-            return redirect('game.php?page=' . $this->page);
+        if (! in_array($cmd, ['cancel', 'destroy', 'insert', 'remove'], true)) {
+            return redirect('game.php?page='.$this->page);
         }
 
         $planetModel = Planets::with(['buildings'])->where('planet_id', $planet['planet_id'])->first();
 
         if ($planetModel === null) {
-            return redirect('game.php?page=' . $this->page);
+            return redirect('game.php?page='.$this->page);
         }
 
         if ($cmd === 'insert' && $this->canInitBuildAction($building, $user, $planet)) {
@@ -98,12 +99,12 @@ abstract class BuildingsController extends BaseController
             return redirect('game.php?page=overview');
         }
 
-        return redirect('game.php?page=' . $this->page);
+        return redirect('game.php?page='.$this->page);
     }
 
     /**
-     * @param array<string,mixed> $user
-     * @param array<string,mixed> $planet
+     * @param  array<string,mixed>  $user
+     * @param  array<string,mixed>  $planet
      */
     private function showPage(array $user, array $planet): View
     {
@@ -137,10 +138,9 @@ abstract class BuildingsController extends BaseController
     }
 
     /**
-     * @param array<string,mixed>                                    $user
-     * @param array<string,mixed>                                    $planet
-     * @param array{length:int,items:array<int,array<string,mixed>>} $queueData
-     *
+     * @param  array<string,mixed>  $user
+     * @param  array<string,mixed>  $planet
+     * @param  array{length:int,items:array<int,array<string,mixed>>}  $queueData
      * @return array<string,mixed>
      */
     private function buildItem(int $id, array $user, array $planet, array $queueData, bool $commanderActive): array
@@ -150,17 +150,17 @@ abstract class BuildingsController extends BaseController
 
         return [
             'i' => $id,
-            'nivel' => $level > 0 ? ' (' . __('game/global.level') . $level . ')' : '',
-            'n' => __('game/constructions.' . $objName),
+            'nivel' => $level > 0 ? ' ('.__('game/global.level').$level.')' : '',
+            'n' => __('game/constructions.'.$objName),
             'descriptions' => __('game/buildings.descriptions')[$objName],
-            'price' => $this->buildPriceHtml($planet, $id, $level),
-            'time' => '<br>' . __('game/buildings.bd_time') . $this->formatService->prettyTime($this->getBuildingTime($id, $planet)),
+            'price' => $this->developmentDataService->buildPriceHtml($planet, $id, $level),
+            'time' => '<br>'.__('game/buildings.bd_time').$this->formatService->prettyTime($this->getBuildingTime($id, $planet)),
             'click' => $this->getActionButton($id, $user, $planet, $queueData, $commanderActive),
         ];
     }
 
     /**
-     * @param array<string,mixed> $planet
+     * @param  array<string,mixed>  $planet
      */
     private function getBuildingLevel(int $buildingId, array $planet): int
     {
@@ -168,7 +168,7 @@ abstract class BuildingsController extends BaseController
     }
 
     /**
-     * @param array<string,mixed> $planet
+     * @param  array<string,mixed>  $planet
      */
     private function getBuildingTime(int $buildingId, array $planet): int
     {
@@ -184,9 +184,9 @@ abstract class BuildingsController extends BaseController
     }
 
     /**
-     * @param array<string,mixed> $user
-     * @param array<string,mixed> $planet
-     * @param array{length:int,items:array<int,array<string,mixed>>} $queueData
+     * @param  array<string,mixed>  $user
+     * @param  array<string,mixed>  $planet
+     * @param  array{length:int,items:array<int,array<string,mixed>>}  $queueData
      */
     private function getActionButton(
         int $buildingId,
@@ -195,7 +195,7 @@ abstract class BuildingsController extends BaseController
         array $queueData,
         bool $commanderActive
     ): string {
-        $buildUrl = 'game.php?page=' . $this->page . '&cmd=insert&building=' . $buildingId;
+        $buildUrl = 'game.php?page='.$this->page.'&cmd=insert&building='.$buildingId;
         $queueLength = $queueData['length'];
         $isOnVacation = ((int) ($user['preference_vacation_mode'] ?? 0)) > 0;
 
@@ -228,13 +228,8 @@ abstract class BuildingsController extends BaseController
             return $this->buildCountDownClock($buildingId, $queueData);
         }
 
-        if (!$this->developmentsService->isDevelopmentPayable(
-            [
-                'planet_metal' => (float) ($planet['planet_metal'] ?? 0),
-                'planet_crystal' => (float) ($planet['planet_crystal'] ?? 0),
-                'planet_deuterium' => (float) ($planet['planet_deuterium'] ?? 0),
-                'planet_energy_max' => (float) ($planet['planet_energy_max'] ?? 0),
-            ],
+        if (! $this->developmentsService->isDevelopmentPayable(
+            $this->developmentDataService->planetResources($planet),
             $buildingId,
             $this->getBuildingLevel($buildingId, $planet),
             true,
@@ -265,8 +260,8 @@ abstract class BuildingsController extends BaseController
     }
 
     /**
-     * @param array<string,mixed> $user
-     * @param array<string,mixed> $planet
+     * @param  array<string,mixed>  $user
+     * @param  array<string,mixed>  $planet
      */
     private function isWorkInProgress(int $buildingId, array $user, array $planet): bool
     {
@@ -294,51 +289,14 @@ abstract class BuildingsController extends BaseController
         ];
 
         $color = ucfirst($map[$code]['color']);
-        $text = __('game/buildings.' . $map[$code]['lang']);
-        $method = 'color' . $color;
+        $text = __('game/buildings.'.$map[$code]['lang']);
+        $method = 'color'.$color;
 
         return $this->formatService->$method($text);
     }
 
     /**
-     * @param array<string,mixed> $planet
-     *
-     * @SuppressWarnings("PHPMD.ElseExpression")
-     */
-    private function buildPriceHtml(array $planet, int $id, int $level): string
-    {
-        $costs = $this->developmentsService->developmentPrice($id, $level);
-        $labels = [
-            'metal' => __('game/global.metal'),
-            'crystal' => __('game/global.crystal'),
-            'deuterium' => __('game/global.deuterium'),
-            'energy_max' => __('game/global.energy'),
-        ];
-        $text = __('game/buildings.require');
-
-        foreach ($labels as $type => $label) {
-            if (!isset($costs[$type])) {
-                continue;
-            }
-
-            $cost = $costs[$type];
-            $available = (float) ($planet['planet_' . $type] ?? 0);
-            $formatted = $this->formatService->prettyNumber((int) $cost);
-            $text .= $label . ': ';
-
-            if ($cost > $available) {
-                $shortage = $this->formatService->prettyNumber($cost - $available);
-                $text .= '<b style="color:red;"><t title="-' . $shortage . '"><span class="noresources">' . $formatted . '</span></t></b> ';
-            } else {
-                $text .= '<b style="color:lime;">' . $formatted . '</b> ';
-            }
-        }
-
-        return $text;
-    }
-
-    /**
-     * @param array<int, array<string,mixed>> $items
+     * @param  array<int, array<string,mixed>>  $items
      *
      * @SuppressWarnings("PHPMD.ElseExpression")
      */
@@ -358,33 +316,33 @@ abstract class BuildingsController extends BaseController
             $buildingId = (int) $item['building_id'];
             $targetLevel = (int) $item['target_level'];
             $mode = (string) $item['mode'];
-            $title = __('game/constructions.' . $this->registry->get($buildingId)->getName());
+            $title = __('game/constructions.'.$this->registry->get($buildingId)->getName());
 
             $html .= '<tr>';
 
             if ($mode === 'build') {
-                $html .= '<td class="l" colspan="2">' . $position . '.: ' . $title . ' ' . $targetLevel . '</td>';
+                $html .= '<td class="l" colspan="2">'.$position.'.: '.$title.' '.$targetLevel.'</td>';
             } else {
-                $html .= '<td class="l" colspan="2">' . $position . '.: ' . $title . ' ' . $targetLevel . ' ' . __('game/buildings.bd_dismantle') . '</td>';
+                $html .= '<td class="l" colspan="2">'.$position.'.: '.$title.' '.$targetLevel.' '.__('game/buildings.bd_dismantle').'</td>';
             }
 
             $html .= '<td class="k">';
 
             if ($position === 1) {
-                $cancelUrl = 'game.php?page=' . $this->page . '&listid=1&cmd=cancel&planet=' . $planetId;
-                $html .= '<div id="blc" class="z">' . $timeLeft . '<br>';
-                $html .= $this->formatService->link($cancelUrl, __('game/buildings.bd_interrupt')) . '</div>';
+                $cancelUrl = 'game.php?page='.$this->page.'&listid=1&cmd=cancel&planet='.$planetId;
+                $html .= '<div id="blc" class="z">'.$timeLeft.'<br>';
+                $html .= $this->formatService->link($cancelUrl, __('game/buildings.bd_interrupt')).'</div>';
                 $html .= '<script language="JavaScript">';
-                $html .= 'pp = "' . $timeLeft . "\";\n";
-                $html .= 'pk = "1' . "\";\n";
+                $html .= 'pp = "'.$timeLeft."\";\n";
+                $html .= 'pk = "1'."\";\n";
                 $html .= "pm = \"cancel\";\n";
-                $html .= 'pl = "' . $planetId . "\";\n";
+                $html .= 'pl = "'.$planetId."\";\n";
                 $html .= "t();\n";
                 $html .= '</script>';
-                $html .= '<strong color="lime"><br><font color="lime">' . $this->timingService->formatExtendedDate($endTime) . '</font></strong>';
+                $html .= '<strong color="lime"><br><font color="lime">'.$this->timingService->formatExtendedDate($endTime).'</font></strong>';
             } else {
-                $removeUrl = 'game.php?page=' . $this->page . '&listid=' . $position . '&cmd=remove&planet=' . $planetId;
-                $html .= '<font color="red">' . $this->formatService->link($removeUrl, __('game/buildings.bd_cancel')) . '</font>';
+                $removeUrl = 'game.php?page='.$this->page.'&listid='.$position.'&cmd=remove&planet='.$planetId;
+                $html .= '<font color="red">'.$this->formatService->link($removeUrl, __('game/buildings.bd_cancel')).'</font>';
             }
 
             $html .= '</td></tr>';
@@ -394,8 +352,8 @@ abstract class BuildingsController extends BaseController
     }
 
     /**
-     * @param array<string,mixed> $user
-     * @param array<string,mixed> $planet
+     * @param  array<string,mixed>  $user
+     * @param  array<string,mixed>  $planet
      */
     private function canInitBuildAction(int $buildingId, array $user, array $planet): bool
     {
@@ -403,9 +361,8 @@ abstract class BuildingsController extends BaseController
     }
 
     /**
-     * @param array<string,mixed> $user
-     * @param array<string,mixed> $planet
-     *
+     * @param  array<string,mixed>  $user
+     * @param  array<string,mixed>  $planet
      * @return int[]
      */
     private function resolveAllowedBuildings(array $user, array $planet): array
@@ -413,11 +370,7 @@ abstract class BuildingsController extends BaseController
         $planetType = (int) ($planet['planet_type'] ?? 1);
         $raw = $this->setAllowedBuildings($planetType);
 
-        $levels = [];
-        foreach ($this->registry->all() as $id => $obj) {
-            $column = $obj->getName();
-            $levels[$id] = (int) ($planet[$column] ?? $user[$column] ?? 0);
-        }
+        $levels = $this->developmentDataService->levelsFromData($planet, $user);
 
         return array_values(array_filter(
             $raw,

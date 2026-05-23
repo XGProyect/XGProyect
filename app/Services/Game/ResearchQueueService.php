@@ -11,6 +11,7 @@ use App\Models\ResearchQueue;
 use App\Models\User;
 use App\Models\UsersStatistics;
 use App\Services\Game\Formulas\DevelopmentsService;
+use Illuminate\Support\Collection;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator;
 use Xgp\App\Core\Enumerators\ResearchEnumerator;
 use Xgp\App\Libraries\StatisticsLibrary;
@@ -24,12 +25,13 @@ class ResearchQueueService
 
     public function __construct(
         private GameObjectRegistry $registry,
+        private DevelopmentDataService $developmentDataService,
         private DevelopmentsService $developmentsService,
     ) {
     }
 
     /**
-     * @param array<string,mixed> $userData
+     * @param  array<string,mixed>  $userData
      */
     public function add(User $user, Planets $planet, array $userData, int $techId, bool $technocrateActive): bool
     {
@@ -40,7 +42,7 @@ class ResearchQueueService
             return false;
         }
 
-        $levels = $this->buildLevels($planet, $userData);
+        $levels = $this->developmentDataService->levelsFromPlanet($planet, $userData);
 
         if (!$this->developmentsService->isDevelopmentAllowed($techId, $levels)) {
             return false;
@@ -69,7 +71,7 @@ class ResearchQueueService
 
         if ($count === 0) {
             if (!$this->developmentsService->isDevelopmentPayable(
-                $this->planetResources($planet),
+                $this->developmentDataService->planetResources($planet),
                 $techId,
                 $levelForCalc
             )) {
@@ -124,12 +126,37 @@ class ResearchQueueService
         }
 
         $item->delete();
-        $this->shiftPositionsDown($user);
+        $remaining = $user->researchQueue()->orderBy('position')->get();
 
-        $nextItem = $user->researchQueue()->where('position', 1)->first();
+        if ($remaining->isNotEmpty()) {
+            $currentTime = time();
+            $astrophysicsCol = $this->registry->get(ResearchEnumerator::research_astrophysics)->getName();
+            $astrophysicsLevel = (int) $user->research->$astrophysicsCol;
+            $technocrateActive = (int) ($user->premium?->premium_officier_technocrat ?? 0) > $currentTime;
+
+            $this->rebuildQueueAfterHeadRemoval(
+                $remaining,
+                $item->tech_id,
+                $currentTime,
+                fn (ResearchQueue $queuedItem): int => $this->resolveDuration(
+                    $user,
+                    $queuedItem,
+                    $astrophysicsLevel,
+                    $technocrateActive
+                )
+            );
+
+            foreach ($remaining as $queuedItem) {
+                $queuedItem->save();
+            }
+        }
+
+        /** @var ResearchQueue|null $nextItem */
+        $nextItem = $remaining->firstWhere('position', 1);
 
         if ($nextItem !== null) {
             $this->startItem($user, $nextItem);
+
             return true;
         }
 
@@ -145,17 +172,25 @@ class ResearchQueueService
             return;
         }
 
-        $item = $user->researchQueue()->where('position', $position)->first();
+        $queue = $user->researchQueue()->orderBy('position')->get();
+        $item = $queue->firstWhere('position', $position);
 
         if ($item === null) {
             return;
         }
 
-        $removedDuration = $item->duration;
-        $item->delete();
+        $lastOccurrence = $this->findLastQueuedOccurrenceForRemoval($queue, $item);
+
+        if ($lastOccurrence === null) {
+            return;
+        }
+
+        $removedPosition = $lastOccurrence->position;
+        $removedDuration = $lastOccurrence->duration;
+        $lastOccurrence->delete();
 
         foreach (
-            $user->researchQueue()->where('position', '>', $position)->orderBy('position')->get() as $r
+            $queue->where('position', '>', $removedPosition)->sortBy('position') as $r
         ) {
             $r->position -= 1;
             $r->end_time -= $removedDuration;
@@ -210,6 +245,7 @@ class ResearchQueueService
 
         if ($intergalLevel < 1) {
             $labCol = $this->registry->get(BuildingsEnumerator::BUILDING_LABORATORY)->getName();
+
             return (int) ($planet->buildings?->$labCol ?? 0);
         }
 
@@ -239,37 +275,72 @@ class ResearchQueueService
         $user->research->save();
     }
 
+    /**
+     * @param  Collection<int, ResearchQueue>  $queue
+     */
+    private function rebuildQueueAfterHeadRemoval(
+        Collection $queue,
+        int $removedTechId,
+        int $startTime,
+        callable $durationResolver,
+    ): void {
+        $runningTime = $startTime;
+
+        foreach ($queue->values() as $index => $item) {
+            if ($item->tech_id === $removedTechId) {
+                $item->target_level -= 1;
+            }
+
+            $duration = $durationResolver($item);
+
+            $runningTime += $duration;
+            $item->position = $index + 1;
+            $item->duration = $duration;
+            $item->end_time = $runningTime;
+        }
+    }
+
+    /**
+     * @param  Collection<int, ResearchQueue>  $queue
+     */
+    private function findLastQueuedOccurrenceForRemoval(Collection $queue, ResearchQueue $targetItem): ?ResearchQueue
+    {
+        $candidate = $queue
+            ->where('tech_id', $targetItem->tech_id)
+            ->where('position', '>=', $targetItem->position)
+            ->last();
+
+        return $candidate instanceof ResearchQueue ? $candidate : null;
+    }
+
+    private function resolveDuration(
+        User $user,
+        ResearchQueue $item,
+        int $astrophysicsLevel,
+        bool $technocrateActive,
+    ): int {
+        $planet = Planets::with('buildings')->find($item->planet_id);
+
+        if ($planet === null) {
+            return $item->duration;
+        }
+
+        return $this->developmentsService->developmentTime(
+            $item->tech_id,
+            $item->target_level - 1,
+            0,
+            0,
+            $this->labLevel($user, $planet),
+            $astrophysicsLevel,
+            $technocrateActive
+        );
+    }
+
     private function shiftPositionsDown(User $user): void
     {
         foreach ($user->researchQueue()->orderBy('position')->get() as $item) {
             $item->position -= 1;
             $item->save();
         }
-    }
-
-    /** @return array<string, float> */
-    private function planetResources(Planets $planet): array
-    {
-        return [
-            'planet_metal' => $planet->planet_metal,
-            'planet_crystal' => $planet->planet_crystal,
-            'planet_deuterium' => $planet->planet_deuterium,
-            'planet_energy_max' => (float) $planet->planet_energy_max,
-        ];
-    }
-
-    /**
-     * @param array<string,mixed> $userData
-     *
-     * @return array<int, int>
-     */
-    private function buildLevels(Planets $planet, array $userData): array
-    {
-        $levels = [];
-        foreach ($this->registry->all() as $id => $obj) {
-            $column = $obj->getName();
-            $levels[$id] = (int) ($planet->buildings?->$column ?? $userData[$column] ?? 0);
-        }
-        return $levels;
     }
 }
