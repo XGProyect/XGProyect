@@ -16,6 +16,7 @@ use App\Services\Game\Formulas\OfficerService;
 use App\Services\Game\Formulas\ProductionService;
 use App\Services\SettingsService;
 use Illuminate\Support\Facades\DB;
+use InvalidArgumentException;
 use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\ResearchEnumerator as Research;
@@ -73,10 +74,6 @@ class TechnologyInfoService
     {
         $this->initializeContext($elementId, $userData, $planetData);
 
-        if (!array_key_exists($this->elementId, $this->resource)) {
-            Functions::redirect('game.php?page=technologytree');
-        }
-
         return [
             'summary' => $this->buildSummarySection(),
             'detailTable' => $this->buildDetailTable(),
@@ -109,6 +106,10 @@ class TechnologyInfoService
      */
     private function initializeContext(int $elementId, ?array $userData, ?array $planetData): void
     {
+        if (!$this->registry->has($elementId)) {
+            throw new InvalidArgumentException("Technology info requested for unknown object ID {$elementId}.");
+        }
+
         $this->user = $userData ?? Users::getInstance()->getUserData();
         $this->planet = $planetData ?? Users::getInstance()->getPlanetData();
 

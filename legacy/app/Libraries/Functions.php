@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Storage;
 use App\Enums\Module;
 use App\Services\SettingsService;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 use Xgp\App\Core\Enumerators\MessagesEnumerator;
 use Xgp\App\Core\Template;
 use Xgp\App\Helpers\StringsHelper;
@@ -156,6 +156,9 @@ abstract class Functions
         return '<img src="' . $path . '" title="' . $title . '" border="0"' . $attributes . '>';
     }
 
+    /**
+     * @deprecated use laravel redirect or Response
+     */
     public static function redirect(string $route): void
     {
         header('location:' . $route);
