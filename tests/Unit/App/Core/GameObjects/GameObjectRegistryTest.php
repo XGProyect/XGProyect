@@ -12,7 +12,9 @@ use App\Core\GameObjects\Officer;
 use App\Core\GameObjects\Research;
 use App\Core\GameObjects\Ship;
 use App\Enums\Game\BuildingCategory;
+use App\Enums\Game\DefenseId;
 use App\Enums\Game\DriveType;
+use App\Enums\Game\ShipId;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
@@ -293,6 +295,39 @@ class GameObjectRegistryTest extends TestCase
 
         $this->assertInstanceOf(Ship::class, $satellite);
         $this->assertTrue($satellite->hasProduction());
+    }
+
+    public function testReaperUsesCurrentCombatProfile(): void
+    {
+        /** @var Ship $reaper */
+        $reaper = $this->registry->get(ShipId::Reaper->value);
+        $price = $reaper->getPrice();
+
+        $this->assertSame(85000, $price->getMetal());
+        $this->assertSame(55000, $price->getCrystal());
+        $this->assertSame(20000, $price->getDeuterium());
+        $this->assertSame(700.0, $reaper->getShield());
+        $this->assertSame(2800.0, $reaper->getAttack());
+        $this->assertSame(7000, $reaper->getSpeed());
+        $this->assertSame(7000, $reaper->getSpeed2());
+        $this->assertSame(10000, $reaper->getCapacity());
+        $this->assertSame(550, $reaper->getConsumption());
+        $this->assertSame(550, $reaper->getConsumption2());
+        $this->assertSame([
+            ShipId::Battleship->value => 7,
+            ShipId::EspionageProbe->value => 5,
+            ShipId::Bomber->value => 4,
+            ShipId::SolarSatellite->value => 5,
+            ShipId::Destroyer->value => 3,
+        ], $reaper->getRapidFire()->toArray());
+
+        /** @var Ship $deathstar */
+        $deathstar = $this->registry->get(ShipId::Deathstar->value);
+        $this->assertSame(10, $deathstar->getRapidFire()->get(ShipId::Reaper->value));
+
+        /** @var Defense $ionCannon */
+        $ionCannon = $this->registry->get(DefenseId::IonCannon->value);
+        $this->assertSame(2, $ionCannon->getRapidFire()->get(ShipId::Reaper->value));
     }
 
     public function testSmallCargoShipDriveIsUpgradeable(): void

@@ -28,7 +28,7 @@ return [
         'ship_solar_satellite' => 'Los satélites solares son simples satélites en órbita equipados con células fotovoltaicas y transmisores para llevar la energía al planeta. Se transmite por este medio a la tierra usando un rayo láser especial.',
         'ship_destroyer' => 'El destructor es la nave más pesada jamás vista y posee un potencial de ataque sin precedentes.',
         'ship_deathstar' => 'No hay nada tan grande y peligroso como una estrella de la muerte aproximándose.',
-        'ship_reaper' => 'El Acorazado es una nave altamente especializada en la intercepción de flotas hostiles.',
+        'ship_reaper' => 'Una nave de la clase Segador es un poderoso instrumento destructivo que puede saquear los campos de escombros inmediatamente después de la batalla.',
         'defense_rocket_launcher' => 'El lanzamisiles es un sistema de defensa sencillo, pero barato.',
         'defense_light_laser' => 'Por medio de un rayo láser concentrado, se puede provocar más daño que con las armas balísticas normales.',
         'defense_heavy_laser' => 'Los lásers grandes posee una mejor salida de energía y una mayor integridad estructural que los lásers pequeños.',

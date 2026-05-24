@@ -95,7 +95,7 @@ return [
     'us_user_ship_solar_satellite' => 'Satélite solar',
     'us_user_ship_destroyer' => 'Destructor',
     'us_user_ship_deathstar' => 'Estrella de la muerte',
-    'us_user_ship_reaper' => 'Acorazado',
+    'us_user_ship_reaper' => 'Segador',
 
     // ── Defenses labels ───────────────────────────────────────────────────────
     'us_user_defense_rocket_launcher' => 'Lanzamisiles',
@@ -354,7 +354,7 @@ return [
         212 => 'Satélite solar',
         213 => 'Destructor',
         214 => 'Estrella de la muerte',
-        215 => 'Acorazado',
+        215 => 'Segador',
         401 => 'Lanzamisiles',
         402 => 'Láser pequeño',
         403 => 'Láser grande',

@@ -51,7 +51,7 @@ return [
         212 => 'Satélite solar',
         213 => 'Destructor',
         214 => 'Estrella de la muerte',
-        215 => 'Acorazado',
+        215 => 'Segador',
         401 => 'Lanzamisiles',
         402 => 'Láser pequeño',
         403 => 'Láser grande',

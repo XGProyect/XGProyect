@@ -17,5 +17,5 @@ return [
     'ship_solar_satellite' => 'Satélite solar',
     'ship_destroyer' => 'Destructor',
     'ship_deathstar' => 'Estrella de la muerte',
-    'ship_reaper' => 'Acorazado',
+    'ship_reaper' => 'Segador',
 ];
