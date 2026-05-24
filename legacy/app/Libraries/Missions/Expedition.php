@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries\Missions;
 
+use App\Core\GameObjects\GameObjectRegistry;
+use App\Core\GameObjects\Ship;
 use App\Models\UsersStatistics;
 use App\Services\FormatService;
 use App\Services\Game\Formulas\ExpeditionService;
 use App\Services\Game\Formulas\FleetsService;
-use Xgp\App\Core\Objects;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\Functions;
 
@@ -23,7 +24,8 @@ class Expedition extends Missions
 
     public function __construct(
         private ExpeditionService $expeditionService,
-        private FormatService $formatService
+        private FormatService $formatService,
+        private GameObjectRegistry $registry
     ) {
         parent::__construct();
     }
@@ -123,18 +125,25 @@ class Expedition extends Missions
 
     private function setExpeditionPoints(array $fleet): void
     {
-        $priceList = Objects::getInstance()->getPrice();
         $expeditionPoints = 0;
 
         foreach (FleetsLib::getFleetShipsArray($fleet['fleet_array']) as $id => $count) {
-            if (in_array($id, $this->expeditionService->getPossibleShips())) {
+            $ship = $this->registry->ships()->get((int) $id);
+
+            if (!$ship instanceof Ship) {
+                continue;
+            }
+
+            $price = $ship->getPrice();
+
+            if (in_array((int) $id, $this->expeditionService->getPossibleShips(), true)) {
                 $expeditionPoints += $this->expeditionService->calculateExpeditionPoints(
-                    ($priceList[$id]['metal'] + $priceList[$id]['crystal'])
+                    $price->getMetal() + $price->getCrystal()
                 ) * $count;
             }
 
             $this->fleetCapacity += app(FleetsService::class)->getMaxStorage(
-                (int) $priceList[$id]['capacity'],
+                $ship->getCapacity(),
                 (int) $fleet['research_hyperspace_technology']
             ) * $count;
         }
