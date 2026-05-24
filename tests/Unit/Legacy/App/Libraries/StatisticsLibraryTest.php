@@ -113,6 +113,16 @@ class StatisticsLibraryTest extends TestCase
             'building_metal_mine' => 2,
         ]);
 
+        DB::table('ships')->insert([
+            'ship_planet_id' => 10,
+            'ship_small_cargo_ship' => 2,
+        ]);
+
+        DB::table('defenses')->insert([
+            'defense_planet_id' => 10,
+            'defense_rocket_launcher' => 3,
+        ]);
+
         (new StatisticsLibrary())->rebuildAllPoints();
 
         $stats = DB::table('users_statistics')->where('user_statistic_user_id', 1)->first();
@@ -120,6 +130,11 @@ class StatisticsLibraryTest extends TestCase
         $this->assertNotNull($stats);
         $this->assertEqualsWithDelta($this->expectedPoints(113, 12), (float) $stats->user_statistic_technology_points, 0.00001);
         $this->assertEqualsWithDelta($this->expectedPoints(1, 2), (float) $stats->user_statistic_buildings_points, 0.00001);
+        $this->assertEqualsWithDelta(
+            $this->expectedPoints(202, 2) + $this->expectedPoints(401, 3),
+            (float) $stats->user_statistic_military_points,
+            0.00001
+        );
     }
 
     private function createTables(): void
@@ -148,6 +163,9 @@ class StatisticsLibraryTest extends TestCase
             $table->double('user_statistic_ships_points')->default(0);
             $table->integer('user_statistic_ships_old_rank')->default(0);
             $table->integer('user_statistic_ships_rank')->default(0);
+            $table->double('user_statistic_military_points')->default(0);
+            $table->integer('user_statistic_military_old_rank')->default(0);
+            $table->integer('user_statistic_military_rank')->default(0);
             $table->double('user_statistic_technology_points')->default(0);
             $table->integer('user_statistic_technology_old_rank')->default(0);
             $table->integer('user_statistic_technology_rank')->default(0);
@@ -178,11 +196,13 @@ class StatisticsLibraryTest extends TestCase
         Schema::connection('sqlite')->create('ships', function (Blueprint $table): void {
             $table->increments('ship_id');
             $table->unsignedInteger('ship_planet_id');
+            $table->integer('ship_small_cargo_ship')->default(0);
         });
 
         Schema::connection('sqlite')->create('defenses', function (Blueprint $table): void {
             $table->increments('defense_id');
             $table->unsignedInteger('defense_planet_id');
+            $table->integer('defense_rocket_launcher')->default(0);
         });
     }
 

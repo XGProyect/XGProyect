@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int   $alliance_statistic_defenses_rank
  * @property int   $alliance_statistic_ships_old_rank
  * @property int   $alliance_statistic_ships_rank
+ * @property int   $alliance_statistic_military_old_rank
+ * @property int   $alliance_statistic_military_rank
  * @property int   $alliance_statistic_technology_old_rank
  * @property int   $alliance_statistic_technology_rank
  * @property int   $alliance_statistic_total_old_rank
@@ -22,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $alliance_statistic_buildings_points
  * @property float $alliance_statistic_defenses_points
  * @property float $alliance_statistic_ships_points
+ * @property float $alliance_statistic_military_points
  * @property float $alliance_statistic_technology_points
  * @property float $alliance_statistic_total_points
  */
@@ -56,6 +59,9 @@ class AllianceStatistics extends Model
         'alliance_statistic_ships_points',
         'alliance_statistic_ships_old_rank',
         'alliance_statistic_ships_rank',
+        'alliance_statistic_military_points',
+        'alliance_statistic_military_old_rank',
+        'alliance_statistic_military_rank',
         'alliance_statistic_technology_points',
         'alliance_statistic_technology_old_rank',
         'alliance_statistic_technology_rank',
@@ -90,6 +96,9 @@ class AllianceStatistics extends Model
         'alliance_statistic_ships_points' => 'double',
         'alliance_statistic_ships_old_rank' => 'int',
         'alliance_statistic_ships_rank' => 'int',
+        'alliance_statistic_military_points' => 'double',
+        'alliance_statistic_military_old_rank' => 'int',
+        'alliance_statistic_military_rank' => 'int',
         'alliance_statistic_technology_points' => 'double',
         'alliance_statistic_technology_old_rank' => 'int',
         'alliance_statistic_technology_rank' => 'int',

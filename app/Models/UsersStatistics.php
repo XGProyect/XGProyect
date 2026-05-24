@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int   $user_statistic_defenses_rank
  * @property int   $user_statistic_ships_old_rank
  * @property int   $user_statistic_ships_rank
+ * @property int   $user_statistic_military_old_rank
+ * @property int   $user_statistic_military_rank
  * @property int   $user_statistic_technology_old_rank
  * @property int   $user_statistic_technology_rank
  * @property int   $user_statistic_total_old_rank
@@ -23,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property float $user_statistic_buildings_points
  * @property float $user_statistic_defenses_points
  * @property float $user_statistic_ships_points
+ * @property float $user_statistic_military_points
  * @property float $user_statistic_technology_points
  * @property float $user_statistic_total_points
  */
@@ -57,6 +60,9 @@ class UsersStatistics extends Model
         'user_statistic_ships_points',
         'user_statistic_ships_old_rank',
         'user_statistic_ships_rank',
+        'user_statistic_military_points',
+        'user_statistic_military_old_rank',
+        'user_statistic_military_rank',
         'user_statistic_technology_points',
         'user_statistic_technology_old_rank',
         'user_statistic_technology_rank',
@@ -91,6 +97,9 @@ class UsersStatistics extends Model
         'user_statistic_ships_points' => 'double',
         'user_statistic_ships_old_rank' => 'int',
         'user_statistic_ships_rank' => 'int',
+        'user_statistic_military_points' => 'double',
+        'user_statistic_military_old_rank' => 'int',
+        'user_statistic_military_rank' => 'int',
         'user_statistic_technology_points' => 'double',
         'user_statistic_technology_old_rank' => 'int',
         'user_statistic_technology_rank' => 'int',

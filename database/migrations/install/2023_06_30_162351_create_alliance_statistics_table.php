@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +23,9 @@ return new class () extends Migration {
             $table->double('alliance_statistic_ships_points', 132, 8)->default(0.00000000);
             $table->integer('alliance_statistic_ships_old_rank')->default(0);
             $table->integer('alliance_statistic_ships_rank')->default(0);
+            $table->double('alliance_statistic_military_points', 132, 8)->default(0.00000000);
+            $table->integer('alliance_statistic_military_old_rank')->default(0);
+            $table->integer('alliance_statistic_military_rank')->default(0);
             $table->double('alliance_statistic_technology_points', 132, 8)->default(0.00000000);
             $table->integer('alliance_statistic_technology_old_rank')->default(0);
             $table->integer('alliance_statistic_technology_rank')->default(0);

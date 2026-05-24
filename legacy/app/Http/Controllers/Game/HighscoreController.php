@@ -42,15 +42,19 @@ class HighscoreController extends BaseController
         $who = (isset($_POST['who'])) ? $_POST['who'] : ((isset($_GET['who'])) ? $_GET['who'] : 1);
         $type = (isset($_POST['type'])) ? $_POST['type'] : ((isset($_GET['type'])) ? $_GET['type'] : 1);
         $range = (isset($_POST['range'])) ? $_POST['range'] : ((isset($_GET['range'])) ? $_GET['range'] : 1);
+        $type = is_scalar($type) ? (string) $type : '1';
+
+        if ($type === '5') {
+            $type = '4';
+        }
 
         $parse['who'] = '<option value="1"' . (($who == '1') ? ' SELECTED' : '') . '>' . __('game/highscore.st_player') . '</option>';
         $parse['who'] .= '<option value="2"' . (($who == '2') ? ' SELECTED' : '') . '>' . __('game/highscore.st_alliance') . '</option>';
 
-        $parse['type'] = '<option value="1"' . (($type == '1') ? ' SELECTED' : '') . '>' . __('game/highscore.st_points') . '</option>';
-        $parse['type'] .= '<option value="2"' . (($type == '2') ? ' SELECTED' : '') . '>' . __('game/highscore.st_fleets') . '</option>';
-        $parse['type'] .= '<option value="3"' . (($type == '3') ? ' SELECTED' : '') . '>' . __('game/highscore.st_researh') . '</option>';
-        $parse['type'] .= '<option value="4"' . (($type == '4') ? ' SELECTED' : '') . '>' . __('game/highscore.st_buildings') . '</option>';
-        $parse['type'] .= '<option value="5"' . (($type == '5') ? ' SELECTED' : '') . '>' . __('game/highscore.st_defenses') . '</option>';
+        $parse['type'] = '<option value="1"' . (($type == '1') ? ' SELECTED' : '') . '>' . __('game/highscore.st_total') . '</option>';
+        $parse['type'] .= '<option value="2"' . (($type == '2') ? ' SELECTED' : '') . '>' . __('game/highscore.st_economy') . '</option>';
+        $parse['type'] .= '<option value="3"' . (($type == '3') ? ' SELECTED' : '') . '>' . __('game/highscore.st_research') . '</option>';
+        $parse['type'] .= '<option value="4"' . (($type == '4') ? ' SELECTED' : '') . '>' . __('game/highscore.st_military') . '</option>';
 
         $data = $this->ranking_type($type);
         $Order = $data['order'];
@@ -251,32 +255,26 @@ class HighscoreController extends BaseController
                 $return['oldrank'] = 'total_old_rank';
                 break;
 
-            case 2: // SHIPS
-                $return['order'] = 'ships_points';
-                $return['points'] = 'ships_points';
-                $return['rank'] = 'ships_rank';
-                $return['oldrank'] = 'ships_old_rank';
-                break;
-
-            case 3: // TECHNOLOGY
-                $return['order'] = 'technology_points';
-                $return['points'] = 'technology_points';
-                $return['rank'] = 'technology_rank';
-                $return['oldrank'] = 'technology_old_rank';
-                break;
-
-            case 4: // BUILDINGS
+            case 2: // ECONOMY
                 $return['order'] = 'buildings_points';
                 $return['points'] = 'buildings_points';
                 $return['rank'] = 'buildings_rank';
                 $return['oldrank'] = 'buildings_old_rank';
                 break;
 
-            case 5: // DEFENSE
-                $return['order'] = 'defenses_points';
-                $return['points'] = 'defenses_points';
-                $return['rank'] = 'defenses_rank';
-                $return['oldrank'] = 'defenses_old_rank';
+            case 3: // RESEARCH
+                $return['order'] = 'technology_points';
+                $return['points'] = 'technology_points';
+                $return['rank'] = 'technology_rank';
+                $return['oldrank'] = 'technology_old_rank';
+                break;
+
+            case 4: // MILITARY
+            case 5: // Backward compatibility for the old defense filter.
+                $return['order'] = 'military_points';
+                $return['points'] = 'military_points';
+                $return['rank'] = 'military_rank';
+                $return['oldrank'] = 'military_old_rank';
                 break;
         }
 

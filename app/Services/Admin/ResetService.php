@@ -208,6 +208,8 @@ class ResetService
             'user_statistic_defenses_rank' => 0,
             'user_statistic_ships_old_rank' => 0,
             'user_statistic_ships_rank' => 0,
+            'user_statistic_military_old_rank' => 0,
+            'user_statistic_military_rank' => 0,
             'user_statistic_technology_old_rank' => 0,
             'user_statistic_technology_rank' => 0,
             'user_statistic_total_old_rank' => 0,
@@ -216,6 +218,7 @@ class ResetService
             'user_statistic_buildings_points' => 0,
             'user_statistic_defenses_points' => 0,
             'user_statistic_ships_points' => 0,
+            'user_statistic_military_points' => 0,
             'user_statistic_technology_points' => 0,
             'user_statistic_total_points' => 0,
         ]);
@@ -257,6 +260,8 @@ class ResetService
                     'user_statistic_defenses_rank' => 0,
                     'user_statistic_ships_old_rank' => 0,
                     'user_statistic_ships_rank' => 0,
+                    'user_statistic_military_old_rank' => 0,
+                    'user_statistic_military_rank' => 0,
                     'user_statistic_technology_old_rank' => 0,
                     'user_statistic_technology_rank' => 0,
                     'user_statistic_total_old_rank' => 0,
@@ -265,6 +270,7 @@ class ResetService
                     'user_statistic_buildings_points' => 0,
                     'user_statistic_defenses_points' => 0,
                     'user_statistic_ships_points' => 0,
+                    'user_statistic_military_points' => 0,
                     'user_statistic_technology_points' => 0,
                     'user_statistic_total_points' => 0,
                 ]);

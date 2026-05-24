@@ -548,7 +548,8 @@ class Missions
             $this->prepareSql(
                 'UPDATE `' . USERS_STATISTICS . "` AS us SET
                     us.`user_statistic_ships_points` = us.`user_statistic_ships_points` - '" . $shipPoints . "' ,
-                    us.`user_statistic_defenses_points` = us.`user_statistic_defenses_points` - '" . $defensePoints . "'
+                    us.`user_statistic_defenses_points` = us.`user_statistic_defenses_points` - '" . $defensePoints . "',
+                    us.`user_statistic_military_points` = us.`user_statistic_military_points` - '" . ($shipPoints + $defensePoints) . "'
                 WHERE us.`user_statistic_user_id` = '" . $playerId . "'"
             )
         );
@@ -557,10 +558,14 @@ class Missions
     protected function updateColonizationStatistics(array $data = []): void
     {
         if (is_array($data)) {
+            $pointsValue = $data['points'] ?? 0;
+            $points = is_numeric($pointsValue) ? (int) $pointsValue : 0;
+
             DB::statement(
                 $this->prepareSql(
                     'UPDATE ' . USERS_STATISTICS . ' AS us SET
-                    us.`user_statistic_ships_points` = us.`user_statistic_ships_points` - ' . $data['points'] . '
+                    us.`user_statistic_ships_points` = us.`user_statistic_ships_points` - ' . $points . ',
+                    us.`user_statistic_military_points` = us.`user_statistic_military_points` - ' . $points . '
                     WHERE us.`user_statistic_user_id` = (
                         SELECT p.planet_user_id FROM ' . PLANETS . " AS p
                         WHERE p.planet_galaxy = '" . $data['coords']['galaxy'] . "' AND
@@ -576,6 +581,9 @@ class Missions
     protected function updateColonizatonReturningFleet(array $data = []): void
     {
         if (is_array($data)) {
+            $pointsValue = $data['points'] ?? 0;
+            $points = is_numeric($pointsValue) ? (int) $pointsValue : 0;
+
             DB::statement(
                 $this->prepareSql(
                     'UPDATE ' . FLEETS . ', ' . USERS_STATISTICS . " SET
@@ -585,7 +593,8 @@ class Missions
                     `fleet_resource_crystal` = '0',
                     `fleet_resource_deuterium` = '0',
                     `fleet_mess` = '1',
-                    `user_statistic_ships_points` = `user_statistic_ships_points` - " . $data['points'] . "
+                    `user_statistic_ships_points` = `user_statistic_ships_points` - " . $points . ',
+                    `user_statistic_military_points` = `user_statistic_military_points` - ' . $points . "
                     WHERE `fleet_id` = '" . $data['fleet_id'] . "' AND
                         `user_statistic_user_id` = (
                         SELECT planet_user_id FROM " . PLANETS . "

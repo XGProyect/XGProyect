@@ -836,6 +836,7 @@ class UpdatesLibrary
                         `planet_energy_max` = '" . $data['planet']['planet_energy_max'] . "',
                         `user_statistic_ships_points` = `user_statistic_ships_points` + '" . $data['ship_points'] . "',
                         `user_statistic_defenses_points` = `user_statistic_defenses_points`  + '" . $data['defense_points'] . "',
+                        `user_statistic_military_points` = `user_statistic_military_points` + '" . ($data['ship_points'] + $data['defense_points']) . "',
                         {$data['sub_query']}
                         {$data['tech_query']}
                         `planet_b_hangar` = '" . $data['planet']['planet_b_hangar'] . "'
