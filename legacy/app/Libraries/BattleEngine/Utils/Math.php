@@ -45,7 +45,7 @@ abstract class Math
             if ($denum->result == 0) {
                 throw new Exception('denum is zero');
             }
-            $shots = floor($num->result / $denum->result);
+            $shots = (int) floor($num->result / $denum->result);
             $rest = Math::rest($num->result, $denum->result);
             return new Number($shots, $rest);
         } else {
@@ -58,7 +58,8 @@ abstract class Math
     {
         $result = $first->result * $second->result;
         if ($real) {
-            return new Number(floor($result), $result - floor($result));
+            $wholeResult = (int) floor($result);
+            return new Number($wholeResult, $result - $wholeResult);
         }
         return new Number($result);
     }

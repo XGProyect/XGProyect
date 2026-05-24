@@ -141,7 +141,7 @@ class Fire
     private function calculateRf()
     {
         //rapid fire
-        $tmpshots = round($this->getShotsFromOneAttackerShipOfType($this->attackerShipType) * $this->attackerShipType->getCount());
+        $tmpshots = (int) round($this->getShotsFromOneAttackerShipOfType($this->attackerShipType) * $this->attackerShipType->getCount());
         log_var('$tmpshots', $tmpshots);
         $this->power += $tmpshots * $this->attackerShipType->getPower();
         $this->shots += $tmpshots;

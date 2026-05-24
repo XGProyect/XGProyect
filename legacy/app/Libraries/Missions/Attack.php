@@ -417,13 +417,14 @@ class Attack extends Missions
         $idDefs = $report->getDefendersId();
         $idAll = array_merge($idAtts, $idDefs);
         $owners = join(',', $idAll);
-        $rid = md5($report) . time();
+        $reportContent = (string) $report;
+        $rid = md5($reportContent) . time();
         $destroyed = ($report->getLastRoundNumber() == 1) ? 1 : 0;
 
         $this->insertReport([
             'owners' => $owners,
             'rid' => $rid,
-            'content' => addslashes($report),
+            'content' => addslashes($reportContent),
             'time' => time(),
             'destroyed' => $destroyed,
         ]);

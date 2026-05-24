@@ -52,6 +52,14 @@ class FleetsServiceTest extends TestCase
         $this->assertGreaterThan(0, $result);
     }
 
+    public function testMissionDurationAcceptsCalculatedFleetSpeed(): void
+    {
+        $fleetSpeeds = $this->service->fleetMaxSpeed([202 => 1], 0, 5, 0);
+        $result = $this->service->missionDuration(100, min($fleetSpeeds), 5000, 1);
+
+        $this->assertGreaterThan(0, $result);
+    }
+
     public function testGetShipSpeedSmallCargoNoCombustion(): void
     {
         // Small cargo (202): base speed 5000, combustion drive, 0 tech

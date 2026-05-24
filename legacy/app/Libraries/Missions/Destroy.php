@@ -17,7 +17,6 @@ use Xgp\App\Libraries\BattleEngine\Models\PlayerGroup;
 use Xgp\App\Libraries\BattleEngine\Models\Ship;
 use Xgp\App\Libraries\BattleEngine\Utils\DebugManager;
 use Xgp\App\Libraries\BattleEngine\Utils\LangManager;
-use Xgp\App\Libraries\Combatreport\Report;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
@@ -420,12 +419,12 @@ class Destroy extends Missions
     /**
      * updateMoon
      *
-     * @param Report $target_data Target Data
-     * @param int    $death_stars Amount of death stars
+        * @param array $target_data Target Data
+        * @param int   $death_stars Amount of death stars
      *
      * @return void
      */
-    private function updateMoon($target_data, $death_stars)
+    private function updateMoon(array $target_data, int $death_stars)
     {
         if ($this->_destruction['flag']) {
             return null;
@@ -465,9 +464,10 @@ class Destroy extends Missions
         $idDefs = $report->getDefendersId();
         $idAll = array_merge($idAtts, $idDefs);
         $owners = join(',', $idAll);
-        $rid = md5($report) . time();
+        $reportContent = (string) $report;
+        $rid = md5($reportContent) . time();
         $destroyed = ($report->getLastRoundNumber() == 1) ? 1 : 0;
-        $report_data = $report . $this->buildDestroyReport($fleet_row, $report);
+        $report_data = $reportContent . $this->buildDestroyReport($fleet_row, $report);
 
         $this->insertReport([
             'owners' => $owners,

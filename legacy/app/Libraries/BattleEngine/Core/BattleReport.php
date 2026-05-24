@@ -221,7 +221,7 @@ class BattleReport
                     }
                     $count = $shipType->getCount() - $repairedAmount;
                     if ($count > 0) {
-                        $return[$idPlayer][$idFleet][get_class($shipType)][$idShipType] = [$cost[0] * $count, $cost[1] * $count];
+                        $return[$idPlayer][$idFleet][$this->getShipTypeRole($shipType)][$idShipType] = [$cost[0] * $count, $cost[1] * $count];
                     } elseif ($count < 0) {
                         throw new Exception('Count negative');
                     }
@@ -248,7 +248,7 @@ class BattleReport
 
     public function getMoonProb()
     {
-        return min(floor(array_sum($this->getDebris()) / MOON_UNIT_PROB), MAX_MOON_PROB);
+        return (int) min(floor(array_sum($this->getDebris()) / MOON_UNIT_PROB), MAX_MOON_PROB);
     }
 
     public function getAttackerDebris()
@@ -397,7 +397,7 @@ class BattleReport
         foreach ($lostShips->getIterator() as $idPlayer => $player) {
             foreach ($player->getIterator() as $idFleet => $fleet) {
                 foreach ($fleet->getIterator() as $idShipType => $shipType) {
-                    $lostShips->decrement($idPlayer, $idFleet, $idShipType, round($shipType->getCount() * (1 - $shipType->getRepairProb())));
+                    $lostShips->decrement($idPlayer, $idFleet, $idShipType, (int) round($shipType->getCount() * (1 - $shipType->getRepairProb())));
                 }
             }
         }
@@ -416,6 +416,14 @@ class BattleReport
             }
         }
         return $playersBefore_clone;
+    }
+
+    private function getShipTypeRole(object $shipType): string
+    {
+        $className = get_class($shipType);
+        $separatorPosition = strrpos($className, '\\');
+
+        return $separatorPosition === false ? $className : substr($className, $separatorPosition + 1);
     }
 
     public function getAttackersId(): array

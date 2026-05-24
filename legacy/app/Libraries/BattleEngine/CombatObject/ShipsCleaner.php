@@ -89,7 +89,7 @@ class ShipsCleaner
 
         /*         * * calculating the amount of exploded ships ** */
 
-        $teoricExploded = round($this->fighters->getCount() * $probToExplode);
+        $teoricExploded = (int) round($this->fighters->getCount() * $probToExplode);
         if (USE_EXPLODED_LIMITATION) {
             $teoricExploded = min($teoricExploded, $this->lastShots);
         }

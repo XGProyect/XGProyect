@@ -38,7 +38,7 @@ class FleetsLib
         return $distance;
     }
 
-    public static function missionDuration(int $percentage, int $maxFleetSpeed, int $distance, int $speedFactor): float
+    public static function missionDuration(int $percentage, float $maxFleetSpeed, int $distance, int $speedFactor): float
     {
         // original formula: 3500 / Factor(percentage) * sqrt($distance * 10 / $max_fleet_speed) + 10)
         return (35000 / $percentage * sqrt($distance * 10 / $maxFleetSpeed) + 10) / $speedFactor;
@@ -272,7 +272,7 @@ class FleetsLib
         return $link;
     }
 
-    public static function flyingFleetsTable(array $fleetRow, string $Status, int $Owner, string $Label, string $Record, array $current_user, bool $acs_owner = false): string
+    public static function flyingFleetsTable(array $fleetRow, int $Status, bool $Owner, string $Label, int $Record, array $current_user, bool $acs_owner = false): string
     {
         $FleetStyle = [
             1 => 'attack',
@@ -437,10 +437,12 @@ class FleetsLib
         $bloc['fleet_status'] = $FleetStatus[$Status];
         $bloc['fleet_prefix'] = $FleetPrefix;
         $bloc['fleet_style'] = $FleetStyle[$MissionType];
-        $bloc['fleet_javai'] = Functions::chronoApplet($Label, $Record, $Rest, true);
-        $bloc['fleet_order'] = $Label . $Record;
+        $recordReference = (string) $Record;
+
+        $bloc['fleet_javai'] = Functions::chronoApplet($Label, $recordReference, $Rest, true);
+        $bloc['fleet_order'] = $Label . $recordReference;
         $bloc['fleet_descr'] = $EventString;
-        $bloc['fleet_javas'] = Functions::chronoApplet($Label, $Record, $Rest, false);
+        $bloc['fleet_javas'] = Functions::chronoApplet($Label, $recordReference, $Rest, false);
         $bloc['fleet_time'] = app(TimingService::class)->formatExtendedDate($Time);
 
         return Template::render(

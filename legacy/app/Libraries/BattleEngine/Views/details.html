@@ -14,7 +14,10 @@ $Cdebris = number_format($debris[1],0, ',', '.');
 <br>
 <?php } ?>
 <br>
+<?php $repairedDefenders = $this->getDefendersRepaired(); ?>
+<?php if (!$repairedDefenders->isEmpty()) { ?>
 Repaired Defense:<br>
-<?php foreach ($this->getDefendersRepaired() as $_id => $_player) {  ?>
+<?php foreach ($repairedDefenders as $_id => $_player) {  ?>
     <?php $st='Defender'; include('player2.html'); ?>
+<?php } ?>
 <?php } ?>

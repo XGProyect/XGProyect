@@ -17,25 +17,28 @@ class AttackLang implements Lang
 
     public function getShipName(int $id): string
     {
-        return __('game/ships.' . $this->objects[$id]);
+        $objectName = $this->objects[$id];
+        $translationGroup = str_starts_with($objectName, 'defense_') ? 'game/defenses.' : 'game/ships.';
+
+        return __($translationGroup . $objectName);
     }
 
-    public function getAttackersAttackingDescr(int $amount, int $damage): string
+    public function getAttackersAttackingDescr(string | int $amount, string | int $damage): string
     {
         return sprintf(__('game/combatreport.cr_fleet_attack_1'), $amount, $damage);
     }
 
-    public function getDefendersDefendingDescr(int $damage): string
+    public function getDefendersDefendingDescr(string | int $damage): string
     {
         return sprintf(__('game/combatreport.cr_fleet_attack_2'), $damage);
     }
 
-    public function getDefendersAttackingDescr(int $amount, int $damage): string
+    public function getDefendersAttackingDescr(string | int $amount, string | int $damage): string
     {
         return sprintf(__('game/combatreport.cr_fleet_defs_1'), $amount, $damage);
     }
 
-    public function getAttackersDefendingDescr(int $damage): string
+    public function getAttackersDefendingDescr(string | int $damage): string
     {
         return sprintf(__('game/combatreport.cr_fleet_defs_2'), $damage);
     }
@@ -60,22 +63,22 @@ class AttackLang implements Lang
         return __('game/combatreport.cr_both_won');
     }
 
-    public function getStoleDescr(int $metal, int $crystal, int $deuterium): string
+    public function getStoleDescr(string | int $metal, string | int $crystal, string | int $deuterium): string
     {
         return sprintf(__('game/combatreport.cr_stealed_ressources'), $metal, $crystal, $deuterium);
     }
 
-    public function getAttackersLostUnits(int $units): string
+    public function getAttackersLostUnits(string | int $units): string
     {
         return sprintf(__('game/combatreport.cr_attacker_lostunits'), $units);
     }
 
-    public function getDefendersLostUnits(int $units): string
+    public function getDefendersLostUnits(string | int $units): string
     {
         return sprintf(__('game/combatreport.cr_defender_lostunits'), $units);
     }
 
-    public function getFloatingDebris(int $metal, int $crystal): string
+    public function getFloatingDebris(string | int $metal, string | int $crystal): string
     {
         return sprintf(__('game/combatreport.cr_debris_units'), $metal, $crystal);
     }

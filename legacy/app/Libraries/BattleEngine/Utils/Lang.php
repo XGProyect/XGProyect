@@ -8,13 +8,13 @@ interface Lang
 {
     public function getShipName(int $id): string;
 
-    public function getAttackersAttackingDescr(int $amount, int $damage): string;
+    public function getAttackersAttackingDescr(string | int $amount, string | int $damage): string;
 
-    public function getDefendersDefendingDescr(int $damage): string;
+    public function getDefendersDefendingDescr(string | int $damage): string;
 
-    public function getDefendersAttackingDescr(int $amount, int $damage): string;
+    public function getDefendersAttackingDescr(string | int $amount, string | int $damage): string;
 
-    public function getAttackersDefendingDescr(int $damage): string;
+    public function getAttackersDefendingDescr(string | int $damage): string;
 
     public function getTechs(int $weaponsTech, int $shieldsTech, int $armourTech): string;
 
@@ -24,13 +24,13 @@ interface Lang
 
     public function getDraw(): string;
 
-    public function getStoleDescr(int $metal, int $crystal, int $deuterium): string;
+    public function getStoleDescr(string | int $metal, string | int $crystal, string | int $deuterium): string;
 
-    public function getAttackersLostUnits(int $units): string;
+    public function getAttackersLostUnits(string | int $units): string;
 
-    public function getDefendersLostUnits(int $units): string;
+    public function getDefendersLostUnits(string | int $units): string;
 
-    public function getFloatingDebris(int $metal, int $crystal): string;
+    public function getFloatingDebris(string | int $metal, string | int $crystal): string;
 
     public function getMoonProb(int $prob): string;
 
