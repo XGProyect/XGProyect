@@ -483,7 +483,7 @@ class GalaxyLib
         $actions = [
             'spy' => [
                 'image' => Functions::setImage(DPATH . 'img/e.gif', __('game/galaxy.gl_spy')),
-                'attributes' => 'onclick="javascript:doit(6, ' . $this->galaxy . ', ' . $this->system . ', ' . $this->planet . ', 1, ' . $this->current_user['preference_spy_probes'] . ');"',
+                'attributes' => $this->spyActionAttributes(self::PLANET_TYPE),
             ],
             'write' => [
                 'image' => Functions::setImage(DPATH . 'img/m.gif', __('game/global.write_message')),
@@ -587,9 +587,14 @@ class GalaxyLib
 
     private function spyLink($planet_type): string
     {
-        $attributes = 'onclick="javascript:doit(6, ' . $this->galaxy . ', ' . $this->system . ', ' . $this->planet . ', ' . $planet_type . ', ' . $this->current_user['preference_spy_probes'] . ');"';
+        $attributes = $this->spyActionAttributes((int) $planet_type);
 
         return str_replace('"', '\\\'', app(FormatService::class)->link('', __('game/missions.type_mission')[Missions::SPY], '', $attributes));
+    }
+
+    private function spyActionAttributes(int $planetType): string
+    {
+        return 'onclick="javascript:doit(6, ' . $this->galaxy . ', ' . $this->system . ', ' . $this->planet . ', ' . $planetType . ', ' . $this->current_user['preference_spy_probes'] . '); return false;"';
     }
 
     /**
