@@ -708,7 +708,7 @@ class GameObjectRegistry
             requirements: new Collection([21 => 12, 114 => 6, 118 => 7, 199 => 1]),
             shield: 50000,
             attack: 200000,
-            rapidFire: new Collection([202 => 250, 203 => 250, 204 => 200, 205 => 100, 206 => 33, 207 => 30, 208 => 250, 209 => 250, 210 => 1250, 211 => 25, 212 => 1250, 213 => 5, 215 => 15, 401 => 200, 402 => 200, 403 => 100, 404 => 50, 405 => 100]),
+            rapidFire: new Collection([202 => 250, 203 => 250, 204 => 200, 205 => 100, 206 => 33, 207 => 30, 208 => 250, 209 => 250, 210 => 1250, 211 => 25, 212 => 1250, 213 => 5, 215 => 10, 401 => 200, 402 => 200, 403 => 100, 404 => 50, 405 => 100]),
             speed: 100,
             speed2: 100,
             consumption: 1,
@@ -720,16 +720,16 @@ class GameObjectRegistry
         $this->objects[215] = new Ship(
             id: 215,
             name: 'ship_reaper',
-            price: new Price(metal: 30000, crystal: 40000, deuterium: 15000, factor: 1),
+            price: new Price(metal: 85000, crystal: 55000, deuterium: 20000, factor: 1),
             requirements: new Collection([21 => 8, 114 => 5, 118 => 5, 120 => 12]),
-            shield: 400,
-            attack: 700,
-            rapidFire: new Collection([202 => 3, 203 => 3, 205 => 4, 206 => 4, 207 => 7, 210 => 5, 212 => 5]),
-            speed: 10000,
-            speed2: 10000,
-            consumption: 250,
-            consumption2: 250,
-            capacity: 750,
+            shield: 700,
+            attack: 2800,
+            rapidFire: new Collection([207 => 7, 210 => 5, 211 => 4, 212 => 5, 213 => 3]),
+            speed: 7000,
+            speed2: 7000,
+            consumption: 550,
+            consumption2: 550,
+            capacity: 10000,
             drive: new DriveSpec(primary: DriveType::Hyperspace),
         );
     }
@@ -786,7 +786,7 @@ class GameObjectRegistry
             requirements: new Collection([21 => 4, 121 => 4]),
             shield: 500,
             attack: 150,
-            rapidFire: new Collection(),
+            rapidFire: new Collection([215 => 2]),
         );
 
         $this->objects[406] = new Defense(
