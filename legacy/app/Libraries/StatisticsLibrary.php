@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Xgp\App\Libraries;
 
+use App\Core\GameObjects\GameObjectInterface;
+use App\Core\GameObjects\GameObjectRegistry;
 use App\Services\SettingsService;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Concerns\PreparesLegacySql;
-use Xgp\App\Core\Objects;
 
 /**
  * @SuppressWarnings("PHPMD.StaticAccess")
@@ -28,6 +29,8 @@ class StatisticsLibrary
         'defenses' => 'defense',
         'ships' => 'ship',
     ];
+
+    private static ?GameObjectRegistry $registry = null;
 
     private $time;
     private ?int $pointDivisor = null;
@@ -56,12 +59,21 @@ class StatisticsLibrary
                 break;
         }
 
-        $element = Objects::getInstance()->getPrice((int) $element);
-        $resources_total = $element['metal'] + $element['crystal'] + $element['deuterium'];
-        $level_mult = pow($element['factor'], $current_level);
+        $price = self::registry()->get((int) $element)->getPrice();
+        $resources_total = $price->getMetal() + $price->getCrystal() + $price->getDeuterium();
+        $level_mult = pow($price->getFactor(), $current_level);
         $points = ($resources_total * $level_mult) / app(SettingsService::class)->getInt('stat_points');
 
         return (int) $points;
+    }
+
+    private static function registry(): GameObjectRegistry
+    {
+        if (self::$registry === null) {
+            self::$registry = app(GameObjectRegistry::class);
+        }
+
+        return self::$registry;
     }
 
     /**
@@ -145,7 +157,7 @@ class StatisticsLibrary
     private function calculateRowsPoints(iterable $rows): float
     {
         $points = 0.0;
-        $objects = Objects::getInstance()->getObjects();
+        $objects = self::registry()->all();
 
         foreach ($rows as $row) {
             $points += $this->calculateRowPoints((array) $row, $objects);
@@ -156,18 +168,20 @@ class StatisticsLibrary
 
     /**
      * @param array<string, mixed> $row
-     * @param array<int, string>   $objects
+     * @param iterable<int, GameObjectInterface> $objects
      */
-    private function calculateRowPoints(array $row, array $objects): float
+    private function calculateRowPoints(array $row, iterable $objects): float
     {
         $points = 0.0;
 
-        foreach ($objects as $id => $object) {
-            if (!isset($row[$object])) {
+        foreach ($objects as $object) {
+            $column = $object->getName();
+
+            if (!isset($row[$column])) {
                 continue;
             }
 
-            $points += $this->calculateObjectPoints((int) $id, $this->toInt($row[$object]));
+            $points += $this->calculateObjectPoints($object->getId(), $this->toInt($row[$column]));
         }
 
         return $points;
@@ -184,9 +198,9 @@ class StatisticsLibrary
             return 0.0;
         }
 
-        $price = Objects::getInstance()->getPrice($objectId);
-        $resourcesTotal = $price['metal'] + $price['crystal'] + $price['deuterium'];
-        $factor = (float) $price['factor'];
+        $price = self::registry()->get($objectId)->getPrice();
+        $resourcesTotal = $price->getMetal() + $price->getCrystal() + $price->getDeuterium();
+        $factor = $price->getFactor();
         $multiplier = ($factor === 1.0)
             ? $level
             : (pow($factor, $level) - 1) / ($factor - 1);

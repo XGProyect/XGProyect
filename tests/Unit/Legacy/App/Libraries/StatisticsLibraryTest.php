@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Legacy\App\Libraries;
 
+use App\Core\GameObjects\GameObjectRegistry;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
-use Xgp\App\Core\Objects;
 use Xgp\App\Libraries\StatisticsLibrary;
 
 /** @SuppressWarnings("PHPMD.StaticAccess") */
@@ -201,13 +201,13 @@ class StatisticsLibraryTest extends TestCase
 
     private function expectedPoints(int $objectId, int $level): float
     {
-        $price = Objects::getInstance()->getPrice($objectId);
-        $factor = (float) $price['factor'];
+        $price = (new GameObjectRegistry())->get($objectId)->getPrice();
+        $factor = $price->getFactor();
         $multiplier = ($factor === 1.0)
             ? $level
             : (pow($factor, $level) - 1) / ($factor - 1);
 
-        return (($price['metal'] + $price['crystal'] + $price['deuterium']) * $multiplier) / 1000;
+        return (($price->getMetal() + $price->getCrystal() + $price->getDeuterium()) * $multiplier) / 1000;
     }
 
     private function statValue(string $column): float
