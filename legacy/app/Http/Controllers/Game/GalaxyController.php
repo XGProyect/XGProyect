@@ -628,6 +628,8 @@ class GalaxyController extends BaseController
         $galaxy = isset($_POST['galaxy']) ? (int) $_POST['galaxy'] : 0;
         $system = isset($_POST['system']) ? (int) $_POST['system'] : 0;
         $planet = isset($_POST['planet']) ? (int) $_POST['planet'] : 0;
+        $planetType = isset($_POST['planettype']) ? (int) $_POST['planettype'] : GalaxyLib::PLANET_TYPE;
+        $targetLookupType = $this->targetLookupPlanetType($planetType);
         $FleetArray = isset($fleet['fleetarray']) ? $fleet['fleetarray'] : null;
 
         if (($galaxy > MAX_GALAXY_IN_WORLD or $galaxy < 1) or ($system > MAX_SYSTEM_IN_GALAXY or $system < 1) or ($planet > MAX_PLANET_IN_SYSTEM or $planet < 1) or (is_null($FleetArray))) {
@@ -658,7 +660,7 @@ class GalaxyController extends BaseController
                     WHERE planet_galaxy = ' . $galaxy . '  AND
                         planet_system = ' . $system . ' AND
                         planet_planet = ' . $planet . ' AND
-                        planet_type = ' . (int) $_POST['planettype'] . '
+                        planet_type = ' . $targetLookupType . '
                     LIMIT 1
                     )
                 LIMIT 1'
@@ -782,7 +784,7 @@ class GalaxyController extends BaseController
             'fleet_end_galaxy' => intval($_POST['galaxy']),
             'fleet_end_system' => intval($_POST['system']),
             'fleet_end_planet' => intval($_POST['planet']),
-            'fleet_end_type' => intval($_POST['planettype']),
+            'fleet_end_type' => $planetType,
             'fleet_resource_metal' => 0,
             'fleet_resource_crystal' => 0,
             'fleet_resource_deuterium' => 0,
@@ -835,5 +837,10 @@ class GalaxyController extends BaseController
         }
 
         die($ResultMessage);
+    }
+
+    private function targetLookupPlanetType(int $planetType): int
+    {
+        return $planetType === GalaxyLib::DEBRIS_TYPE ? GalaxyLib::PLANET_TYPE : $planetType;
     }
 }

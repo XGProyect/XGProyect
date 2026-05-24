@@ -298,7 +298,7 @@ class GalaxyLib
             $parse['system'] = $this->system;
             $parse['planet'] = $this->planet;
             $parse['image'] = strtr(DPATH, ['\\' => '/']) . 'planets/debris.jpg';
-            $parse['planettype'] = self::PLANET_TYPE;
+            $parse['planettype'] = self::DEBRIS_TYPE;
             $parse['recsended'] = $recyclers_sended;
             $parse['planet_debris_metal'] = $this->formatService->prettyNumber((int) $this->row_data['metal']);
             $parse['planet_debris_crystal'] = $this->formatService->prettyNumber((int) $this->row_data['crystal']);
