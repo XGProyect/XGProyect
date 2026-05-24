@@ -13,7 +13,7 @@
 
 @include('technologyinfo.panel', ['info' => $techInfo])
 
-<table width="569" style="margin: 8px auto 0;">
+<table width="519" style="margin: 8px auto 0;">
     <tr>
         <td class="c" colspan="2">{{ __('game/technologydetails.techtree_title') }}</td>
     </tr>
@@ -40,7 +40,7 @@
     </tr>
 </table>
 
-<table width="569" style="margin: 8px auto 0;">
+<table width="519" style="margin: 8px auto 0;">
     <tr>
         <td class="c" colspan="2">{{ $applicationsTitle }}</td>
     </tr>

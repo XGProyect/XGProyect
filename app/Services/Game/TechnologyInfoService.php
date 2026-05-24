@@ -783,30 +783,9 @@ class TechnologyInfoService
             ];
         }
 
-        $gateRow = DB::selectOne(
-            $this->prepareSql(
-                'SELECT
-                    p.`planet_id`,
-                    b.`building_jump_gate`,
-                    p.`planet_last_jump_time`
-                FROM `' . PLANETS . '` AS p
-                INNER JOIN `' . BUILDINGS . "` AS b
-                    ON b.`building_planet_id` = p.`planet_id`
-                WHERE p.`planet_id` = '" . $targetPlanet . "';"
-            )
-        );
+        $targetGate = $this->findJumpGateDestination($targetPlanet);
 
-        if ($gateRow === null) {
-            return [
-                'success' => false,
-                'message' => __('game/technologydetails.in_jump_gate_doesnt_have_one'),
-            ];
-        }
-
-        /** @var array<string, mixed> $targetGate */
-        $targetGate = (array) $gateRow;
-
-        if ((int) ($targetGate['building_jump_gate'] ?? 0) <= 0) {
+        if ($targetGate === null) {
             return [
                 'success' => false,
                 'message' => __('game/technologydetails.in_jump_gate_doesnt_have_one'),
@@ -887,6 +866,43 @@ class TechnologyInfoService
             'success' => true,
             'message' => __('game/technologydetails.in_jump_gate_done') . $restString['string'],
         ];
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    private function findJumpGateDestination(int $targetPlanet): ?array
+    {
+        if (
+            $targetPlanet <= 0 ||
+            $targetPlanet === (int) ($this->planet['planet_id'] ?? 0)
+        ) {
+            return null;
+        }
+
+        $gateRow = DB::selectOne(
+            $this->prepareSql(
+                'SELECT
+                    p.`planet_id`,
+                    b.`building_jump_gate`,
+                    p.`planet_last_jump_time`
+                FROM `' . PLANETS . '` AS p
+                INNER JOIN `' . BUILDINGS . "` AS b
+                    ON b.`building_planet_id` = p.`planet_id`
+                WHERE p.`planet_id` = '" . $targetPlanet . "'
+                    AND p.`planet_type` = '3'
+                    AND p.`planet_user_id` = '" . ((int) ($this->user['id'] ?? 0)) . "';"
+            )
+        );
+
+        if ($gateRow === null) {
+            return null;
+        }
+
+        /** @var array<string, mixed> $targetGate */
+        $targetGate = (array) $gateRow;
+
+        return (int) ($targetGate['building_jump_gate'] ?? 0) > 0 ? $targetGate : null;
     }
 
     /**
