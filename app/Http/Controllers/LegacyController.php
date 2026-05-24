@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Exceptions\LegacyView;
-use App\Http\Controllers\Game as Game;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
@@ -23,6 +22,7 @@ class LegacyController extends BaseController
         'banned' => Game\BannedController::class,
         'changelog' => Game\ChangelogController::class,
         'combatreport' => Game\CombatreportController::class,
+        'empire' => Game\EmpireController::class,
         'facilities' => Game\FacilitiesController::class,
         'logout' => Game\LogoutController::class,
         'notices' => Game\NoticesController::class,

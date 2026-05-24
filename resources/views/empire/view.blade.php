@@ -80,7 +80,12 @@
         </tr>
         @foreach ($resources as $item)
         <tr>
-            {!! $item['value'] !!}
+            <th width="75px">{{ $item['label'] }}</th>
+            @foreach ($item['cells'] as $cell)
+            <th width="75px">
+                <a href="{{ $cell['url'] }}">{!! $cell['value'] !!}</a>
+            </th>
+            @endforeach
         </tr>
         @endforeach
         <tr>
@@ -88,7 +93,12 @@
         </tr>
         @foreach ($facilities as $item)
         <tr>
-            {!! $item['value'] !!}
+            <th width="75px">{{ $item['label'] }}</th>
+            @foreach ($item['cells'] as $cell)
+            <th width="75px">
+                <a href="{{ $cell['url'] }}">{!! $cell['value'] !!}</a>
+            </th>
+            @endforeach
         </tr>
         @endforeach
         <tr height="20px">
@@ -96,12 +106,22 @@
         </tr>
         @foreach ($defenses as $item)
         <tr>
-            {!! $item['value'] !!}
+            <th width="75px">{{ $item['label'] }}</th>
+            @foreach ($item['cells'] as $cell)
+            <th width="75px">
+                <a href="{{ $cell['url'] }}">{!! $cell['value'] !!}</a>
+            </th>
+            @endforeach
         </tr>
         @endforeach
         @foreach ($missiles as $item)
         <tr>
-            {!! $item['value'] !!}
+            <th width="75px">{{ $item['label'] }}</th>
+            @foreach ($item['cells'] as $cell)
+            <th width="75px">
+                <a href="{{ $cell['url'] }}">{!! $cell['value'] !!}</a>
+            </th>
+            @endforeach
         </tr>
         @endforeach
         <tr height="20px">
@@ -109,7 +129,12 @@
         </tr>
         @foreach ($tech as $item)
         <tr>
-            {!! $item['value'] !!}
+            <th width="75px">{{ $item['label'] }}</th>
+            @foreach ($item['cells'] as $cell)
+            <th width="75px">
+                <a href="{{ $cell['url'] }}">{!! $cell['value'] !!}</a>
+            </th>
+            @endforeach
         </tr>
         @endforeach
         <tr height="20px">
@@ -117,7 +142,12 @@
         </tr>
         @foreach ($fleet as $item)
         <tr>
-            {!! $item['value'] !!}
+            <th width="75px">{{ $item['label'] }}</th>
+            @foreach ($item['cells'] as $cell)
+            <th width="75px">
+                <a href="{{ $cell['url'] }}">{!! $cell['value'] !!}</a>
+            </th>
+            @endforeach
         </tr>
         @endforeach
     </tbody>
