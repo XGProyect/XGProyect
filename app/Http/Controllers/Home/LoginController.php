@@ -6,16 +6,18 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
+use App\Services\Game\HomePlanetService;
 use App\Services\SessionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class LoginController extends BaseController
 {
-    public function __construct(private SessionService $sessionService)
-    {
+    public function __construct(
+        private HomePlanetService $homePlanetService,
+        private SessionService $sessionService,
+    ) {
     }
 
     public function __invoke(LoginRequest $request): RedirectResponse
@@ -29,8 +31,7 @@ class LoginController extends BaseController
             /** @var User $authUser */
             $authUser = Auth::getUser();
 
-            // set current planet
-            User::where('id', $authUser->id)->update(['current_planet' => DB::raw('`home_planet_id`')]);
+            $this->homePlanetService->resetCurrentToHome($authUser);
 
             // check suspension status
             $ban = $authUser->ban;

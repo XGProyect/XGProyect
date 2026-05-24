@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Services\FormatService;
+use App\Services\Game\HomePlanetService;
 use App\Models\Planets;
-use App\Models\User;
 use Illuminate\Routing\Controller as BaseController;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator;
 use Xgp\App\Core\Template;
@@ -26,8 +26,10 @@ class PlanetlayerController extends BaseController
     private array $user = [];
     private array $planet = [];
 
-    public function __construct(private FormatService $formatService)
-    {
+    public function __construct(
+        private FormatService $formatService,
+        private HomePlanetService $homePlanetService
+    ) {
     }
 
     public function __invoke(): void
@@ -61,7 +63,7 @@ class PlanetlayerController extends BaseController
             'planetlayer.view',
             [
                 'planetImage' => $this->planet['planet_image'],
-                'mainPlanet' => ($this->user['home_planet_id'] === $this->planet['planet_id']),
+                'mainPlanet' => ((int) $this->user['home_planet_id'] === (int) $this->planet['planet_id']),
                 'withColonies' => $hasColonies,
                 'isMoon' => $isMoon,
                 'defaultName' => $defaultName,
@@ -168,16 +170,11 @@ class PlanetlayerController extends BaseController
                 );
             }
 
-            $nextPlanet = Planets::where([
-                'planet_user_id' => $this->user['id'],
-                'planet_type' => 1,
-                'planet_destroyed' => 0,
-            ])->firstOrFail()->planet_id;
-
-            User::where(['id' => $this->user['id']])->update([
-                'home_planet_id' => $nextPlanet,
-                'current_planet' => $nextPlanet
-            ]);
+            $this->homePlanetService->moveCurrentAfterAbandoningPlanet(
+                (int) $this->user['id'],
+                (int) $this->user['current_planet'],
+                (int) $this->user['home_planet_id']
+            );
 
             Functions::popupMessage(__('game/planetlayer.rp_planet_abandoned'), 'game.php?page=planetlayer', 3);
         } else {
