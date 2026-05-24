@@ -5,17 +5,44 @@ declare(strict_types=1);
 namespace Tests\Unit\App\Services\Game\Formulas;
 
 use App\Services\Game\Formulas\ExpeditionService;
+use App\Services\SettingsService;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 /**
  * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
 class ExpeditionServiceTest extends TestCase
 {
+    /** @var array<string, int> */
+    private const DEFAULT_WEIGHTS = [
+        'expedition_result_dark_matter_weight' => 900,
+        'expedition_result_ships_weight' => 2200,
+        'expedition_result_resources_weight' => 3250,
+        'expedition_result_pirates_weight' => 560,
+        'expedition_result_aliens_weight' => 260,
+        'expedition_result_delay_weight' => 700,
+        'expedition_result_early_weight' => 200,
+        'expedition_result_nothing_weight' => 1880,
+        'expedition_result_merchant_weight' => 17,
+        'expedition_result_black_hole_weight' => 33,
+        'expedition_dark_matter_source_small_weight' => 8900,
+        'expedition_dark_matter_source_medium_weight' => 1000,
+        'expedition_dark_matter_source_large_weight' => 100,
+        'expedition_resource_type_metal_weight' => 6850,
+        'expedition_resource_type_crystal_weight' => 2400,
+        'expedition_resource_type_deuterium_weight' => 750,
+        'expedition_resource_source_normal_weight' => 8900,
+        'expedition_resource_source_large_weight' => 1000,
+        'expedition_resource_source_xl_weight' => 100,
+        'expedition_fleet_delay_2_weight' => 8900,
+        'expedition_fleet_delay_3_weight' => 1000,
+        'expedition_fleet_delay_5_weight' => 100,
+    ];
+
     public function testGetMaxExpeditionPoints(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
 
         $this->assertEquals(2500, $expedition->getMaxExpeditionPoints(50000));
         $this->assertEquals(6000, $expedition->getMaxExpeditionPoints(500000));
@@ -29,7 +56,7 @@ class ExpeditionServiceTest extends TestCase
 
     public function testGetMaxShipsExpeditionPoints(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
 
         $this->assertEquals(250000, $expedition->getMaxShipsExpeditionPoints(50000));
         $this->assertEquals(600000, $expedition->getMaxShipsExpeditionPoints(500000));
@@ -43,7 +70,7 @@ class ExpeditionServiceTest extends TestCase
 
     public function testMaxExpeditionPointsAcceptStatisticFloats(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
 
         $this->assertEquals(6000, $expedition->getMaxExpeditionPoints(500000.0));
         $this->assertEquals(600000, $expedition->getMaxShipsExpeditionPoints(500000.0));
@@ -53,7 +80,7 @@ class ExpeditionServiceTest extends TestCase
     {
         $exampleIntegrity = 800;
 
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
         $result = $expedition->calculateExpeditionPoints($exampleIntegrity);
 
         $expectedResult = 4; // Expected result for $structuralIntegrity = 800
@@ -63,7 +90,7 @@ class ExpeditionServiceTest extends TestCase
 
     public function testGetExpeditionResult(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
         $result = $expedition->getExpeditionResult();
 
         $validResults = [
@@ -75,6 +102,8 @@ class ExpeditionServiceTest extends TestCase
 
     public function testExpeditionWeightTablesUseExpectedOdds(): void
     {
+        $expedition = $this->expeditionService();
+
         $this->assertSame([
             'darkMatter' => 900,
             'ships' => 2200,
@@ -86,30 +115,36 @@ class ExpeditionServiceTest extends TestCase
             'nothing' => 1880,
             'merchant' => 17,
             'blackHole' => 33,
-        ], $this->getExpeditionServiceWeights('EXPEDITION_RESULT_WEIGHTS'));
+        ], $expedition->getExpeditionResultWeights());
 
         $this->assertSame([
             'small' => 8900,
             'medium' => 1000,
             'large' => 100,
-        ], $this->getExpeditionServiceWeights('DARK_MATTER_SOURCE_SIZE_WEIGHTS'));
+        ], $expedition->getDarkMatterSourceSizeWeights());
+
+        $this->assertSame([
+            'metal' => 6850,
+            'crystal' => 2400,
+            'deuterium' => 750,
+        ], $expedition->getResourceTypeWeights());
 
         $this->assertSame([
             'normal' => 8900,
             'large' => 1000,
             'xl' => 100,
-        ], $this->getExpeditionServiceWeights('RESOURCE_SOURCE_SIZE_WEIGHTS'));
+        ], $expedition->getResourceSourceSizeWeights());
 
         $this->assertSame([
             2 => 8900,
             3 => 1000,
             5 => 100,
-        ], $this->getExpeditionServiceWeights('FLEET_DELAY_WEIGHTS'));
+        ], $expedition->getFleetDelayWeights());
     }
 
     public function testCalculateDarkMatterSourceSize(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
         $result = $expedition->calculateDarkMatterSourceSize();
 
         $validResults = ['small', 'medium', 'large'];
@@ -119,7 +154,7 @@ class ExpeditionServiceTest extends TestCase
 
     public function testGetDarkMatterSourceSize(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
 
         $resultSmall = $expedition->getDarkMatterSourceSize('small');
         $this->assertGreaterThanOrEqual(300, $resultSmall);
@@ -136,7 +171,7 @@ class ExpeditionServiceTest extends TestCase
 
     public function testCalculateResourceTypeObtained(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
         $result = $expedition->calculateResourceTypeObtained();
 
         $validResults = ['metal', 'crystal', 'deuterium'];
@@ -146,7 +181,7 @@ class ExpeditionServiceTest extends TestCase
 
     public function testCalculateResourceSourceSize(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
         $result = $expedition->calculateResourceSourceSize();
 
         $validResults = ['normal', 'large', 'xl'];
@@ -156,7 +191,7 @@ class ExpeditionServiceTest extends TestCase
 
     public function testGetResourceSourceSizeMultChances(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
 
         $resultNormal = $expedition->getResourceSourceSizeMultChances('normal');
         $this->assertGreaterThanOrEqual(10, $resultNormal);
@@ -173,7 +208,7 @@ class ExpeditionServiceTest extends TestCase
 
     public function testGetResourceFoundAmount(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
 
         // Test case 1: metal resource type
         $result = $expedition->getResourceFoundAmount(2, 100, 'metal');
@@ -190,7 +225,7 @@ class ExpeditionServiceTest extends TestCase
 
     public function testCalculateShipFoundAmount(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
 
         $result = $expedition->calculateShipFoundAmount(3, 150);
         $this->assertEquals(225, $result);
@@ -198,7 +233,7 @@ class ExpeditionServiceTest extends TestCase
 
     public function testGetPossibleShips(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
 
         $result = $expedition->getPossibleShips();
 
@@ -220,7 +255,7 @@ class ExpeditionServiceTest extends TestCase
 
     public function testGetShipsObtainableChances(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
 
         $result = $expedition->getShipsObtainableChances();
 
@@ -242,22 +277,28 @@ class ExpeditionServiceTest extends TestCase
 
     public function testGetFleetDeplay(): void
     {
-        $expedition = new ExpeditionService();
+        $expedition = $this->expeditionService();
 
         $result = $expedition->getFleetDeplay();
         $this->assertContains($result, [2, 3, 5]); // Assert that the result is one of the allowed values
     }
 
-    /**
-     * @return array<array-key, int>
-     */
-    private function getExpeditionServiceWeights(string $constantName): array
+    /** @param array<string, int> $overrides */
+    private function expeditionService(array $overrides = []): ExpeditionService
     {
-        $weights = (new ReflectionClass(ExpeditionService::class))->getConstant($constantName);
+        $settings = $this->createStub(SettingsService::class);
+        $weights = array_merge(self::DEFAULT_WEIGHTS, $overrides);
 
-        $this->assertIsArray($weights);
+        $settings->method('getInt')->willReturnCallback(
+            static function (string $setting) use ($weights): int {
+                if (!array_key_exists($setting, $weights)) {
+                    throw new InvalidArgumentException('Missing setting: ' . $setting);
+                }
 
-        /** @var array<array-key, int> $weights */
-        return $weights;
+                return $weights[$setting];
+            }
+        );
+
+        return new ExpeditionService($settings);
     }
 }

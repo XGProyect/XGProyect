@@ -19,6 +19,7 @@ abstract class AdminPagesEnumerator
         'mailing',
         'modules',
         'planets',
+        'expeditions',
         'registration',
         'statistics',
         'premium',

@@ -4,49 +4,13 @@ declare(strict_types=1);
 
 namespace App\Services\Game\Formulas;
 
+use App\Services\SettingsService;
+
 class ExpeditionService
 {
-    /** @var array<string, int> */
-    private const EXPEDITION_RESULT_WEIGHTS = [
-        'darkMatter' => 900, // 9%
-        'ships' => 2200, // 22%
-        'resources' => 3250, // 32.5%
-        'pirates' => 560, // 5.6%
-        'aliens' => 260, // 2.6%
-        'delay' => 700, // 7%
-        'early' => 200, // 2%
-        'nothing' => 1880, // 18.8%
-        'merchant' => 17, // 0.17%
-        'blackHole' => 33, // 0.33%
-    ];
-
-    /** @var array<string, int> */
-    private const DARK_MATTER_SOURCE_SIZE_WEIGHTS = [
-        'small' => 8900, // 89%
-        'medium' => 1000, // 10%
-        'large' => 100, // 1%
-    ];
-
-    /** @var array<string, int> */
-    private const RESOURCE_TYPE_WEIGHTS = [
-        'metal' => 6850, // 68.5%
-        'crystal' => 2400, // 24%
-        'deuterium' => 750, // 7.5%
-    ];
-
-    /** @var array<string, int> */
-    private const RESOURCE_SOURCE_SIZE_WEIGHTS = [
-        'normal' => 8900, // 89%
-        'large' => 1000, // 10%
-        'xl' => 100, // 1%
-    ];
-
-    /** @var array<int, int> */
-    private const FLEET_DELAY_WEIGHTS = [
-        2 => 8900, // 89%
-        3 => 1000, // 10%
-        5 => 100, // 1%
-    ];
+    public function __construct(private readonly SettingsService $settings)
+    {
+    }
 
     /**
      * Also applies for resources
@@ -96,12 +60,12 @@ class ExpeditionService
 
     public function getExpeditionResult(): string
     {
-        return $this->pickWeighted(self::EXPEDITION_RESULT_WEIGHTS, 'nothing');
+        return $this->pickWeighted($this->getExpeditionResultWeights(), 'nothing');
     }
 
     public function calculateDarkMatterSourceSize(): string
     {
-        return $this->pickWeighted(self::DARK_MATTER_SOURCE_SIZE_WEIGHTS, 'small');
+        return $this->pickWeighted($this->getDarkMatterSourceSizeWeights(), 'small');
     }
 
     public function getDarkMatterSourceSize(string $discoveryType): int
@@ -119,12 +83,12 @@ class ExpeditionService
 
     public function calculateResourceTypeObtained(): string
     {
-        return $this->pickWeighted(self::RESOURCE_TYPE_WEIGHTS, 'metal');
+        return $this->pickWeighted($this->getResourceTypeWeights(), 'metal');
     }
 
     public function calculateResourceSourceSize(): string
     {
-        return $this->pickWeighted(self::RESOURCE_SOURCE_SIZE_WEIGHTS, 'normal');
+        return $this->pickWeighted($this->getResourceSourceSizeWeights(), 'normal');
     }
 
     public function getResourceSourceSizeMultChances(string $discoveryType): int
@@ -200,7 +164,64 @@ class ExpeditionService
 
     public function getFleetDeplay(): int
     {
-        return $this->pickWeighted(self::FLEET_DELAY_WEIGHTS, 2);
+        return $this->pickWeighted($this->getFleetDelayWeights(), 2);
+    }
+
+    /** @return array<string, int> */
+    public function getExpeditionResultWeights(): array
+    {
+        return [
+            'darkMatter' => $this->settings->getInt('expedition_result_dark_matter_weight'),
+            'ships' => $this->settings->getInt('expedition_result_ships_weight'),
+            'resources' => $this->settings->getInt('expedition_result_resources_weight'),
+            'pirates' => $this->settings->getInt('expedition_result_pirates_weight'),
+            'aliens' => $this->settings->getInt('expedition_result_aliens_weight'),
+            'delay' => $this->settings->getInt('expedition_result_delay_weight'),
+            'early' => $this->settings->getInt('expedition_result_early_weight'),
+            'nothing' => $this->settings->getInt('expedition_result_nothing_weight'),
+            'merchant' => $this->settings->getInt('expedition_result_merchant_weight'),
+            'blackHole' => $this->settings->getInt('expedition_result_black_hole_weight'),
+        ];
+    }
+
+    /** @return array<string, int> */
+    public function getDarkMatterSourceSizeWeights(): array
+    {
+        return [
+            'small' => $this->settings->getInt('expedition_dark_matter_source_small_weight'),
+            'medium' => $this->settings->getInt('expedition_dark_matter_source_medium_weight'),
+            'large' => $this->settings->getInt('expedition_dark_matter_source_large_weight'),
+        ];
+    }
+
+    /** @return array<string, int> */
+    public function getResourceTypeWeights(): array
+    {
+        return [
+            'metal' => $this->settings->getInt('expedition_resource_type_metal_weight'),
+            'crystal' => $this->settings->getInt('expedition_resource_type_crystal_weight'),
+            'deuterium' => $this->settings->getInt('expedition_resource_type_deuterium_weight'),
+        ];
+    }
+
+    /** @return array<string, int> */
+    public function getResourceSourceSizeWeights(): array
+    {
+        return [
+            'normal' => $this->settings->getInt('expedition_resource_source_normal_weight'),
+            'large' => $this->settings->getInt('expedition_resource_source_large_weight'),
+            'xl' => $this->settings->getInt('expedition_resource_source_xl_weight'),
+        ];
+    }
+
+    /** @return array<int, int> */
+    public function getFleetDelayWeights(): array
+    {
+        return [
+            2 => $this->settings->getInt('expedition_fleet_delay_2_weight'),
+            3 => $this->settings->getInt('expedition_fleet_delay_3_weight'),
+            5 => $this->settings->getInt('expedition_fleet_delay_5_weight'),
+        ];
     }
 
     /**

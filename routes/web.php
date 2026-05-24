@@ -89,6 +89,8 @@ Route::prefix('admin')->group(function () {
             Route::post('/permissions', [Admin\PermissionsController::class, 'save'])->name('admin.permissions.save');
             Route::get('/planets', [Admin\PlanetsController::class, 'index'])->name('admin.planets');
             Route::post('/planets', [Admin\PlanetsController::class, 'update'])->name('admin.planets.update');
+            Route::get('/expeditions', [Admin\ExpeditionsController::class, 'index'])->name('admin.expeditions');
+            Route::post('/expeditions', [Admin\ExpeditionsController::class, 'update'])->name('admin.expeditions.update');
             Route::get('/premium', [Admin\PremiumController::class, 'index'])->name('admin.premium');
             Route::post('/premium', [Admin\PremiumController::class, 'update'])->name('admin.premium.update');
             Route::get('/rebuildhighscores', [Admin\RebuildHighscoresController::class, 'index'])->name('admin.rebuildhighscores');

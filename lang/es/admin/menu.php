@@ -16,6 +16,7 @@ return [
     'mailing' => 'Ajustes de e-mail',
     'modules' => 'Características del servidor',
     'planets' => 'Ajustes de nuevos planetas',
+    'expeditions' => 'Probabilidades de expedición',
     'registration' => 'Ajustes de registro',
     'statistics' => 'Ajustes de estadísticas',
     'premium' => 'Ajustes de premium',

@@ -38,6 +38,7 @@ class Sidebar extends Component
                     'mailing' => [],
                     'modules' => [],
                     'planets' => [],
+                    'expeditions' => [],
                     'registration' => [],
                     'statistics' => [],
                     'premium' => [],

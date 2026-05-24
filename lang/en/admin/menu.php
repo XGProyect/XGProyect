@@ -16,6 +16,7 @@ return [
     'mailing' => 'Mail settings',
     'modules' => 'Server features',
     'planets' => 'New planets settings',
+    'expeditions' => 'Expedition chances',
     'registration' => 'User registration settings',
     'statistics' => 'Statistics settings',
     'premium' => 'Premium settings',
