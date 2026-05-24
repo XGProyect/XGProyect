@@ -22,6 +22,7 @@ return [
     'lm_alliance' => 'Alliance',
     'lm_buddylist' => 'Buddies',
     'lm_notes' => 'Notes',
+    'lm_playerprofile' => 'Profile',
     'lm_statistics' => 'Highscore',
     'lm_search' => 'Search',
     'lm_options' => 'Options',

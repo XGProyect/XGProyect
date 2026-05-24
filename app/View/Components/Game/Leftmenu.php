@@ -54,6 +54,7 @@ class Leftmenu extends Component
             ['game.php?page=alliance', 'lm_alliance', '', '#ffffff', false, '1', '13'],
             ['game.php?page=premium', 'lm_officiers', '', '#ff8900', false, '1', '15'],
             ['game.php?page=messages', 'lm_messages', '', '#ffffff', false, '1', '18'],
+            ['game.php?page=playerprofile', 'lm_playerprofile', '', '#ff8900', false, '2', ''],
             ['game.php?page=highscore', 'lm_statistics', '&range=' . $user->stats->user_statistic_total_rank, '#ffffff', false, '2', '16'],
             ['game.php?page=notices', 'lm_notes', '', '#ffffff', true, '2', '19'],
             ['game.php?page=buddies', 'lm_buddylist', '', '#ffffff', false, '2', '20'],
@@ -96,7 +97,7 @@ class Leftmenu extends Component
         return view(
             'components.game.leftmenu',
             [
-                'userName' => $this->formatService->link('game.php?page=preferences', $user->name),
+                'userName' => $this->formatService->link('game.php?page=playerprofile', $user->name),
                 'blocks' => $blocks,
                 'menu' => $menu,
                 'isAdmin' => $user->authlevel > UserRanksEnumerator::PLAYER,

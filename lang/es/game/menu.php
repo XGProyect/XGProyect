@@ -22,6 +22,7 @@ return [
     'lm_alliance' => 'Alianza',
     'lm_buddylist' => 'Amigos',
     'lm_notes' => 'Notas',
+    'lm_playerprofile' => 'Perfil',
     'lm_statistics' => 'Clasificación',
     'lm_search' => 'Búsqueda',
     'lm_options' => 'Opciones',
