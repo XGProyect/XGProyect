@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Game;
 
 use App\Models\Preferences;
 use App\Models\User;
+use App\Services\Game\PreferencesService;
 use App\Services\SettingsService;
 use App\Services\TimingService;
 use Illuminate\Contracts\View\View;
@@ -20,6 +21,7 @@ class ChangenickController extends BaseController
     public function __construct(
         private SettingsService $settings,
         private TimingService $timingService,
+        private PreferencesService $preferencesService,
     ) {
     }
 
@@ -27,7 +29,7 @@ class ChangenickController extends BaseController
     {
         /** @var User $user */
         $user = Auth::user();
-        $preferences = $this->preferencesFor($user);
+        $preferences = $this->preferencesService->preferencesFor($user);
         $message = '';
         $color = '';
 
@@ -46,25 +48,9 @@ class ChangenickController extends BaseController
             'color' => $color,
             'message' => $message,
             'currentName' => $user->name,
-            'canChangeName' => $this->isNickNameChangeAllowed($preferences),
-            'nextChangeAt' => $this->timingService->formatExtendedDate($this->nextNickNameChangeAt($preferences)),
+            'canChangeName' => $this->preferencesService->isNicknameChangeAllowed($preferences),
+            'nextChangeAt' => $this->timingService->formatExtendedDate($this->preferencesService->nextNicknameChangeAt($preferences)),
         ]);
-    }
-
-    private function preferencesFor(User $user): Preferences
-    {
-        $preferences = Preferences::firstOrCreate(
-            ['preference_user_id' => $user->id],
-            [
-                'preference_spy_probes' => 1,
-                'preference_planet_sort' => 0,
-                'preference_planet_sort_sequence' => 0,
-            ]
-        );
-
-        $user->setRelation('preferences', $preferences);
-
-        return $preferences;
     }
 
     /**
@@ -72,12 +58,12 @@ class ChangenickController extends BaseController
      */
     private function changeName(Request $request, User $user, Preferences $preferences): array
     {
-        if (!$this->isNickNameChangeAllowed($preferences)) {
+        if (!$this->preferencesService->isNicknameChangeAllowed($preferences)) {
             return [
                 'success' => false,
                 'message' => strtr(
                     $this->translation('game/changenick.cn_error_week_wait'),
-                    ['%s' => $this->timingService->formatExtendedDate($this->nextNickNameChangeAt($preferences))]
+                    ['%s' => $this->timingService->formatExtendedDate($this->preferencesService->nextNicknameChangeAt($preferences))]
                 ),
             ];
         }
@@ -122,16 +108,6 @@ class ChangenickController extends BaseController
         });
 
         return ['success' => true, 'message' => $this->translation('game/changenick.cn_name_changed')];
-    }
-
-    private function isNickNameChangeAllowed(Preferences $preferences): bool
-    {
-        return $this->nextNickNameChangeAt($preferences) < time();
-    }
-
-    private function nextNickNameChangeAt(Preferences $preferences): int
-    {
-        return (int) $preferences->preference_nickname_change + ONE_WEEK;
     }
 
     private function filledString(Request $request, string $key): ?string

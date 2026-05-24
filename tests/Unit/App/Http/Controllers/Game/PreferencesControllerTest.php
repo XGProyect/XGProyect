@@ -8,6 +8,7 @@ use App\Core\GameObjects\GameObjectRegistry;
 use App\Http\Controllers\Game\PreferencesController;
 use App\Models\Preferences;
 use App\Services\FormatService;
+use App\Services\Game\PreferencesService;
 use App\Services\SettingsService;
 use App\Services\TimingService;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -68,6 +69,7 @@ class PreferencesControllerTest extends TestCase
             timingService: $this->createStub(TimingService::class),
             settingsService: $this->createStub(SettingsService::class),
             registry: new GameObjectRegistry(),
+            preferencesService: new PreferencesService(new Preferences()),
         );
     }
 }

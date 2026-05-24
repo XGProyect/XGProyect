@@ -12,6 +12,7 @@ use App\Models\Planets;
 use App\Models\Preferences;
 use App\Models\User;
 use App\Services\FormatService;
+use App\Services\Game\PreferencesService;
 use App\Services\SettingsService;
 use App\Services\TimingService;
 use Illuminate\Contracts\View\View;
@@ -34,6 +35,7 @@ class PreferencesController extends BaseController
         private TimingService $timingService,
         private SettingsService $settingsService,
         private GameObjectRegistry $registry,
+        private PreferencesService $preferencesService,
     ) {
     }
 
@@ -43,7 +45,7 @@ class PreferencesController extends BaseController
 
         /** @var User $user */
         $user = Auth::user();
-        $preferences = $this->preferencesFor($user);
+        $preferences = $this->preferencesService->preferencesFor($user);
         $submitted = $request->isMethod('post');
         $error = '';
 
@@ -59,22 +61,6 @@ class PreferencesController extends BaseController
         }
 
         return view('preferences.view', $this->buildViewData($user, $preferences, $submitted, $error));
-    }
-
-    private function preferencesFor(User $user): Preferences
-    {
-        $preferences = Preferences::firstOrCreate(
-            ['preference_user_id' => $user->id],
-            [
-                'preference_spy_probes' => 1,
-                'preference_planet_sort' => 0,
-                'preference_planet_sort_sequence' => 0,
-            ]
-        );
-
-        $user->setRelation('preferences', $preferences);
-
-        return $preferences;
     }
 
     /**
@@ -123,7 +109,7 @@ class PreferencesController extends BaseController
     {
         return [
             'name' => $user->name,
-            'hide_nickname_change' => $this->isNickNameChangeAllowed($preferences) ? '' : 'style="display: none"',
+            'hide_nickname_change' => $this->preferencesService->isNicknameChangeAllowed($preferences) ? '' : 'style="display: none"',
             'email' => $user->email,
         ];
     }
@@ -308,7 +294,7 @@ class PreferencesController extends BaseController
         $newUserName = $this->filledString($request, 'new_user_name');
         $password = $this->filledString($request, 'confirmation_user_password');
 
-        if ($newUserName === null || $password === null || !$this->isNickNameChangeAllowed($preferences)) {
+        if ($newUserName === null || $password === null || !$this->preferencesService->isNicknameChangeAllowed($preferences)) {
             return null;
         }
 
@@ -448,11 +434,6 @@ class PreferencesController extends BaseController
         }
 
         return $updates->all();
-    }
-
-    private function isNickNameChangeAllowed(Preferences $preferences): bool
-    {
-        return ((int) $preferences->preference_nickname_change + ONE_WEEK) < time();
     }
 
     private function isVacationModeOn(Preferences $preferences): bool
