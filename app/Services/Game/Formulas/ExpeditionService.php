@@ -137,7 +137,7 @@ class ExpeditionService
             210, // ship_espionage_probe
             211, // ship_bomber
             213, // ship_destroyer
-            215, // ship_battlecruiser
+            215, // ship_reaper
         ];
     }
 
@@ -158,7 +158,7 @@ class ExpeditionService
             210 => 0.1, // ship_espionage_probe
             211 => 0.0625, // ship_bomber
             213 => 0.0625, // ship_destroyer
-            215 => 0.0625, // ship_battlecruiser
+            215 => 0.0625, // ship_reaper
         ];
     }
 

@@ -191,12 +191,12 @@ class ShipsEntity
     }
 
     /**
-     * Return the ship battlecruiser
+     * Return the ship reaper
      *
      * @return string
      */
-    public function getShipBattlecruiser()
+    public function getShipReaper()
     {
-        return $this->_ships['ship_battlecruiser'];
+        return $this->_ships['ship_reaper'];
     }
 }

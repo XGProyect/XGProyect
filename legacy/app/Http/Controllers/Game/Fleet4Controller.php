@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Enums\Module;
-use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
+use App\Services\Game\Formulas\FleetsService;
 use App\Services\Game\Formulas\OfficerService;
+use App\Services\SettingsService;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\MissionsEnumerator as Missions;
 use Xgp\App\Core\Enumerators\PlanetTypesEnumerator as PlanetTypes;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
-use App\Services\SettingsService;
 use Xgp\App\Core\Objects;
 use Xgp\App\Libraries\FleetsLib;
 use Xgp\App\Libraries\Functions;
@@ -360,7 +360,7 @@ class Fleet4Controller extends BaseController
                     s.`ship_solar_satellite`,
                     s.`ship_destroyer`,
                     s.`ship_deathstar`,
-                    s.`ship_battlecruiser`
+                    s.`ship_reaper`
                 FROM `' . SHIPS . "` AS s
                 WHERE s.`ship_planet_id` = '" . $planetId . "';"
             )

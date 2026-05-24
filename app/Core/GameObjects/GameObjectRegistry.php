@@ -719,7 +719,7 @@ class GameObjectRegistry
 
         $this->objects[215] = new Ship(
             id: 215,
-            name: 'ship_battlecruiser',
+            name: 'ship_reaper',
             price: new Price(metal: 30000, crystal: 40000, deuterium: 15000, factor: 1),
             requirements: new Collection([21 => 8, 114 => 5, 118 => 5, 120 => 12]),
             shield: 400,

@@ -95,7 +95,7 @@ return [
     'us_user_ship_solar_satellite' => 'Solar Satellite',
     'us_user_ship_destroyer' => 'Destroyer',
     'us_user_ship_deathstar' => 'Deathstar',
-    'us_user_ship_battlecruiser' => 'Battlecruiser',
+    'us_user_ship_reaper' => 'Reaper',
 
     // ── Defenses labels ───────────────────────────────────────────────────────
     'us_user_defense_rocket_launcher' => 'Rocket Launcher',
@@ -354,7 +354,7 @@ return [
         212 => 'Solar Satellite',
         213 => 'Destroyer',
         214 => 'Deathstar',
-        215 => 'Battlecruiser',
+        215 => 'Reaper',
         401 => 'Rocket Launcher',
         402 => 'Light Laser',
         403 => 'Heavy Laser',

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Enums\Module;
-use App\Services\Game\Formulas\DevelopmentsService;
 use App\Services\FormatService;
+use App\Services\Game\Formulas\DevelopmentsService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Core\Enumerators\BuildingsEnumerator as Buildings;
 use Xgp\App\Core\Enumerators\DefensesEnumerator as Defenses;
 use Xgp\App\Core\Enumerators\ShipsEnumerator as Ships;
@@ -16,8 +18,6 @@ use Xgp\App\Core\Template;
 use Xgp\App\Libraries\DevelopmentsLib;
 use Xgp\App\Libraries\Formulas;
 use Xgp\App\Libraries\Functions;
-use Illuminate\Support\Facades\DB;
-use Xgp\App\Core\Concerns\PreparesLegacySql;
 use Xgp\App\Libraries\Users;
 
 /**
@@ -45,7 +45,7 @@ class ShipyardController extends BaseController
         Ships::ship_solar_satellite,
         Ships::ship_destroyer,
         Ships::ship_deathstar,
-        Ships::ship_battlecruiser,
+        Ships::ship_reaper,
     ];
     protected array $missiles = [];
 

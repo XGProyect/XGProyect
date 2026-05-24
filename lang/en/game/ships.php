@@ -17,5 +17,5 @@ return [
     'ship_solar_satellite' => 'Solar Satellite',
     'ship_destroyer' => 'Destroyer',
     'ship_deathstar' => 'Deathstar',
-    'ship_battlecruiser' => 'Battlecruiser',
+    'ship_reaper' => 'Reaper',
 ];

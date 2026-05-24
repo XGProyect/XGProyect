@@ -95,7 +95,7 @@ return [
     'us_user_ship_solar_satellite' => 'Satélite solar',
     'us_user_ship_destroyer' => 'Destructor',
     'us_user_ship_deathstar' => 'Estrella de la muerte',
-    'us_user_ship_battlecruiser' => 'Acorazado',
+    'us_user_ship_reaper' => 'Acorazado',
 
     // ── Defenses labels ───────────────────────────────────────────────────────
     'us_user_defense_rocket_launcher' => 'Lanzamisiles',

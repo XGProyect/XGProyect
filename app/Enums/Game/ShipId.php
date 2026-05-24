@@ -19,5 +19,5 @@ enum ShipId: int
     case SolarSatellite = 212;
     case Destroyer = 213;
     case Deathstar = 214;
-    case Battlecruiser = 215;
+    case Reaper = 215;
 }

@@ -51,7 +51,7 @@ return [
         212 => 'Solar Satellite',
         213 => 'Destroyer',
         214 => 'Deathstar',
-        215 => 'Battlecruiser',
+        215 => 'Reaper',
         401 => 'Rocket Launcher',
         402 => 'Light Laser',
         403 => 'Heavy Laser',

@@ -26,7 +26,7 @@ return new class () extends Migration {
             $table->integer('ship_solar_satellite')->default(0);
             $table->integer('ship_destroyer')->default(0);
             $table->integer('ship_deathstar')->default(0);
-            $table->integer('ship_battlecruiser')->default(0);
+            $table->integer('ship_reaper')->default(0);
         });
     }
 

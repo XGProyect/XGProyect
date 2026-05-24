@@ -28,7 +28,7 @@ return [
         'ship_solar_satellite' => 'Solar satellites are simple platforms of solar cells, located in a high, stationary orbit. They gather sunlight and transmit it to the ground station via laser. A solar satellite produces 27 energy on this planet.',
         'ship_destroyer' => 'The destroyer is the king of the warships.',
         'ship_deathstar' => 'The destructive power of the deathstar is unsurpassed.',
-        'ship_battlecruiser' => 'The Battlecruiser is highly specialized in the interception of hostile fleets.',
+        'ship_reaper' => 'A ship of the Reaper class is a mighty destructive instrument, which can plunder the debris fields immediately after battle.',
         'defense_rocket_launcher' => 'The rocket launcher is a simple, cost-effective defensive option.',
         'defense_light_laser' => 'Concentrated firing at a target with photons can produce significantly greater damage than standard ballistic weapons.',
         'defense_heavy_laser' => 'The heavy laser is the logical development of the light laser.',

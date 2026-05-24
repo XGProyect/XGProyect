@@ -142,7 +142,7 @@ class Fleet1Controller extends BaseController
                     s.`ship_solar_satellite`,
                     s.`ship_destroyer`,
                     s.`ship_deathstar`,
-                    s.`ship_battlecruiser`
+                    s.`ship_reaper`
                 FROM `' . SHIPS . "` AS s
                 WHERE s.`ship_planet_id` = '" . $planetId . "';"
             )

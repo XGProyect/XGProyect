@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Xgp\App\Http\Controllers\Game;
 
 use App\Enums\Module;
-use App\Services\Game\Formulas\FleetsService;
 use App\Services\FormatService;
+use App\Services\Game\Formulas\FleetsService;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Xgp\App\Core\Concerns\PreparesLegacySql;
@@ -111,7 +111,7 @@ class Fleet3Controller extends BaseController
                     s.`ship_solar_satellite`,
                     s.`ship_destroyer`,
                     s.`ship_deathstar`,
-                    s.`ship_battlecruiser`
+                    s.`ship_reaper`
                 FROM `' . SHIPS . "` AS s
                 WHERE s.`ship_planet_id` = '" . $planetId . "';"
             )
@@ -275,7 +275,7 @@ class Fleet3Controller extends BaseController
             Ships::ship_deathstar => [
                 Missions::ATTACK, Missions::ACS, Missions::TRANSPORT, Missions::DEPLOY, Missions::STAY, Missions::DESTROY, Missions::EXPEDITION,
             ],
-            Ships::ship_battlecruiser => [
+            Ships::ship_reaper => [
                 Missions::ATTACK, Missions::ACS, Missions::TRANSPORT, Missions::DEPLOY, Missions::STAY, Missions::EXPEDITION,
             ],
         ];
