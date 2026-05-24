@@ -16,7 +16,21 @@ class StatisticsLibrary
 {
     use PreparesLegacySql;
 
+    private const USER_POINT_COLUMNS = [
+        'buildings' => 'user_statistic_buildings_points',
+        'defenses' => 'user_statistic_defenses_points',
+        'ships' => 'user_statistic_ships_points',
+        'research' => 'user_statistic_technology_points',
+    ];
+
+    private const PLANET_POINT_TABLES = [
+        'buildings' => 'building',
+        'defenses' => 'defense',
+        'ships' => 'ship',
+    ];
+
     private $time;
+    private ?int $pointDivisor = null;
 
     /**
      * calculatePoints
@@ -61,61 +75,132 @@ class StatisticsLibrary
      */
     public function rebuildPoints($userId, $planet_id, $what)
     {
-        if (!in_array(config('DB_PREFIX') . $what, [BUILDINGS, DEFENSES, RESEARCH, SHIPS])) {
+        unset($planet_id);
+
+        if (!isset(self::USER_POINT_COLUMNS[$what])) {
             return false;
         }
 
-        $points = 0;
+        DB::table('users_statistics')->updateOrInsert(
+            ['user_statistic_user_id' => (int) $userId],
+            [self::USER_POINT_COLUMNS[$what] => $this->calculateUserCategoryPoints((int) $userId, $what)]
+        );
+
+        return true;
+    }
+
+    public function rebuildAllPoints(): void
+    {
+        foreach (DB::table('users')->select('id')->orderBy('id')->cursor() as $user) {
+            DB::table('users_statistics')->updateOrInsert(
+                ['user_statistic_user_id' => (int) $user->id],
+                $this->calculateUserPointColumns((int) $user->id)
+            );
+        }
+    }
+
+    /**
+     * @return array<string, float>
+     */
+    private function calculateUserPointColumns(int $userId): array
+    {
+        $points = [];
+
+        foreach (self::USER_POINT_COLUMNS as $category => $column) {
+            $points[$column] = $this->calculateUserCategoryPoints($userId, $category);
+        }
+
+        return $points;
+    }
+
+    private function calculateUserCategoryPoints(int $userId, string $category): float
+    {
+        if ($category === 'research') {
+            $row = DB::table('research')
+                ->where('research_user_id', $userId)
+                ->first();
+
+            return $row === null ? 0.0 : $this->calculateRowsPoints([(array) $row]);
+        }
+
+        if (!isset(self::PLANET_POINT_TABLES[$category])) {
+            return 0.0;
+        }
+
+        $singular = self::PLANET_POINT_TABLES[$category];
+        $rows = DB::table($category)
+            ->join('planets', $category . '.' . $singular . '_planet_id', '=', 'planets.planet_id')
+            ->where('planets.planet_user_id', $userId)
+            ->where('planets.planet_destroyed', 0)
+            ->select($category . '.*')
+            ->get()
+            ->map(static fn ($row): array => (array) $row);
+
+        return $this->calculateRowsPoints($rows);
+    }
+
+    /**
+     * @param iterable<array<string, mixed>|object> $rows
+     */
+    private function calculateRowsPoints(iterable $rows): float
+    {
+        $points = 0.0;
         $objects = Objects::getInstance()->getObjects();
 
-        if ($what == 'research') {
-            $row = DB::selectOne(
-                $this->prepareSql(
-                    'SELECT * FROM `' . RESEARCH . "` ttu WHERE ttu.research_user_id = '" . $userId . "';"
-                )
-            );
-            $objectsToUpdate = $row !== null ? (array) $row : [];
-        } else {
-            $row = DB::selectOne(
-                'SELECT * FROM `' . config('DB_PREFIX') . $what . '` ttu
-                WHERE ttu.' . rtrim($what, 's') . "_planet_id = '" . $planet_id . "';"
-            );
-            $objectsToUpdate = $row !== null ? (array) $row : [];
+        foreach ($rows as $row) {
+            $points += $this->calculateRowPoints((array) $row, $objects);
         }
 
-        if (!is_null($objects)) {
-            foreach ($objects as $id => $object) {
-                if (isset($objectsToUpdate[$object])) {
-                    $price = Objects::getInstance()->getPrice($id);
-                    $total = $price['metal'] + $price['crystal'] + $price['deuterium'];
-                    $level = $objectsToUpdate[$object];
+        return $points;
+    }
 
-                    if ($price['factor'] > 1) {
-                        $s = (pow($price['factor'], $level) - 1) / ($price['factor'] - 1);
-                    } else {
-                        $s = $price['factor'] * $level;
-                    }
+    /**
+     * @param array<string, mixed> $row
+     * @param array<int, string>   $objects
+     */
+    private function calculateRowPoints(array $row, array $objects): float
+    {
+        $points = 0.0;
 
-                    $points += ($total * $s) / 1000;
-                }
+        foreach ($objects as $id => $object) {
+            if (!isset($row[$object])) {
+                continue;
             }
 
-            if ($points >= 0) {
-                $what = strtr($what, ['research' => 'technology']);
-
-                DB::statement(
-                    $this->prepareSql(
-                        'UPDATE ' . USERS_STATISTICS . ' SET
-                            `user_statistic_' . $what . "_points` = '" . $points . "'
-                        WHERE `user_statistic_user_id` = '" . $userId . "'"
-                    )
-                );
-
-                return true;
-            }
+            $points += $this->calculateObjectPoints((int) $id, $this->toInt($row[$object]));
         }
 
-        return false;
+        return $points;
+    }
+
+    private function toInt(mixed $value): int
+    {
+        return is_numeric($value) ? (int) $value : 0;
+    }
+
+    private function calculateObjectPoints(int $objectId, int $level): float
+    {
+        if ($level <= 0) {
+            return 0.0;
+        }
+
+        $price = Objects::getInstance()->getPrice($objectId);
+        $resourcesTotal = $price['metal'] + $price['crystal'] + $price['deuterium'];
+        $factor = (float) $price['factor'];
+        $multiplier = ($factor === 1.0)
+            ? $level
+            : (pow($factor, $level) - 1) / ($factor - 1);
+
+        return ($resourcesTotal * $multiplier) / $this->pointDivisor();
+    }
+
+    private function pointDivisor(): int
+    {
+        if ($this->pointDivisor === null) {
+            $this->pointDivisor = max(1, app(SettingsService::class)->getInt('stat_points'));
+        }
+
+        return $this->pointDivisor;
     }
 
     public function makeStats()
@@ -125,6 +210,7 @@ class StatisticsLibrary
 
         $result['initial_memory'] = [round(memory_get_usage() / 1024, 1), round(memory_get_usage(true) / 1024, 1)];
 
+        $this->rebuildAllPoints();
         self::makeUserRank();
         self::makeAllyRank();
 
@@ -174,6 +260,12 @@ class StatisticsLibrary
         if (empty($all_stats_data)) {
             return;
         }
+
+        $tech = ['old_rank' => [], 'points' => [], 'rank' => []];
+        $build = ['old_rank' => [], 'points' => [], 'rank' => []];
+        $defs = ['old_rank' => [], 'points' => [], 'rank' => []];
+        $ships = ['old_rank' => [], 'points' => [], 'rank' => []];
+        $total = ['old_rank' => [], 'points' => []];
 
         // BUILD ALL THE ARRAYS
         foreach ($all_stats_data as $CurUser) {
@@ -342,6 +434,12 @@ class StatisticsLibrary
         if (empty($all_stats_data)) {
             return;
         }
+
+        $tech = ['old_rank' => [], 'points' => [], 'rank' => []];
+        $build = ['old_rank' => [], 'points' => [], 'rank' => []];
+        $defs = ['old_rank' => [], 'points' => [], 'rank' => []];
+        $ships = ['old_rank' => [], 'points' => [], 'rank' => []];
+        $total = ['old_rank' => [], 'points' => []];
 
         // BUILD ALL THE ARRAYS
         foreach ($all_stats_data as $CurAlliance) {
