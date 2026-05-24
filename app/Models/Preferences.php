@@ -14,8 +14,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int     $preference_spy_probes
  * @property int     $preference_vacation_mode
  * @property int     $preference_delete_mode
- * @property boolean $preference_planet_sort
- * @property boolean $preference_planet_sort_sequence
+ * @property int     $preference_planet_sort
+ * @property int     $preference_planet_sort_sequence
  */
 class Preferences extends Model
 {
@@ -67,8 +67,8 @@ class Preferences extends Model
         'preference_user_id' => 'int',
         'preference_nickname_change' => 'int',
         'preference_spy_probes' => 'int',
-        'preference_planet_sort' => 'boolean',
-        'preference_planet_sort_sequence' => 'boolean',
+        'preference_planet_sort' => 'int',
+        'preference_planet_sort_sequence' => 'int',
         'preference_vacation_mode' => 'int',
         'preference_delete_mode' => 'int',
     ];
@@ -97,6 +97,6 @@ class Preferences extends Model
     /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'preference_user_id');
     }
 }

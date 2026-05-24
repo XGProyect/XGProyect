@@ -26,6 +26,7 @@ class LegacyController extends BaseController
         'facilities' => Game\FacilitiesController::class,
         'logout' => Game\LogoutController::class,
         'notices' => Game\NoticesController::class,
+        'preferences' => Game\PreferencesController::class,
         'research' => Game\ResearchController::class,
         'supplies' => Game\SuppliesController::class,
         'technologydetails' => Game\TechnologydetailsController::class,
