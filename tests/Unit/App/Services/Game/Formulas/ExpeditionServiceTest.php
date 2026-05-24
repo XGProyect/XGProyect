@@ -40,6 +40,14 @@ class ExpeditionServiceTest extends TestCase
         $this->assertEquals(2500000, $expedition->getMaxShipsExpeditionPoints(120000000));
     }
 
+    public function testMaxExpeditionPointsAcceptStatisticFloats(): void
+    {
+        $expedition = new ExpeditionService();
+
+        $this->assertEquals(6000, $expedition->getMaxExpeditionPoints(500000.0));
+        $this->assertEquals(600000, $expedition->getMaxShipsExpeditionPoints(500000.0));
+    }
+
     public function testCalculateExpeditionPoints(): void
     {
         $exampleIntegrity = 800;

@@ -9,7 +9,7 @@ class ExpeditionService
     /**
      * Also applies for resources
      */
-    public function getMaxExpeditionPoints(int $topPlayerPoints): int
+    public function getMaxExpeditionPoints(int | float $topPlayerPoints): int
     {
         if ($topPlayerPoints < 100000) {
             return 2500;
@@ -42,7 +42,7 @@ class ExpeditionService
         return 25000;
     }
 
-    public function getMaxShipsExpeditionPoints(int $topPlayerPoints): int
+    public function getMaxShipsExpeditionPoints(int | float $topPlayerPoints): int
     {
         return $this->getMaxExpeditionPoints($topPlayerPoints) * 100;
     }

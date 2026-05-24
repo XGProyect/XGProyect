@@ -141,6 +141,12 @@ class Expedition extends Missions
 
         $topPlayerPoints = UsersStatistics::max('user_statistic_total_points');
 
+        if (!is_numeric($topPlayerPoints)) {
+            $topPlayerPoints = 0.0;
+        }
+
+        $topPlayerPoints = (float) $topPlayerPoints;
+
         $maxResourceFindExpeditionPoints = $this->expeditionService->getMaxExpeditionPoints(
             $topPlayerPoints
         );
