@@ -6,6 +6,48 @@ namespace App\Services\Game\Formulas;
 
 class ExpeditionService
 {
+    /** @var array<string, int> */
+    private const EXPEDITION_RESULT_WEIGHTS = [
+        'darkMatter' => 900, // 9%
+        'ships' => 2200, // 22%
+        'resources' => 3250, // 32.5%
+        'pirates' => 560, // 5.6%
+        'aliens' => 260, // 2.6%
+        'delay' => 700, // 7%
+        'early' => 200, // 2%
+        'nothing' => 1880, // 18.8%
+        'merchant' => 17, // 0.17%
+        'blackHole' => 33, // 0.33%
+    ];
+
+    /** @var array<string, int> */
+    private const DARK_MATTER_SOURCE_SIZE_WEIGHTS = [
+        'small' => 8900, // 89%
+        'medium' => 1000, // 10%
+        'large' => 100, // 1%
+    ];
+
+    /** @var array<string, int> */
+    private const RESOURCE_TYPE_WEIGHTS = [
+        'metal' => 6850, // 68.5%
+        'crystal' => 2400, // 24%
+        'deuterium' => 750, // 7.5%
+    ];
+
+    /** @var array<string, int> */
+    private const RESOURCE_SOURCE_SIZE_WEIGHTS = [
+        'normal' => 8900, // 89%
+        'large' => 1000, // 10%
+        'xl' => 100, // 1%
+    ];
+
+    /** @var array<int, int> */
+    private const FLEET_DELAY_WEIGHTS = [
+        2 => 8900, // 89%
+        3 => 1000, // 10%
+        5 => 100, // 1%
+    ];
+
     /**
      * Also applies for resources
      */
@@ -54,55 +96,12 @@ class ExpeditionService
 
     public function getExpeditionResult(): string
     {
-        // probability ratios - we add a weight
-        $events = [
-            'darkMatter' => 900, // 9%
-            'ships' => 2200, // 22%
-            'resources' => 3250, // 32.5%
-            'pirates' => 580, // 5.8%
-            'aliens' => 260, // 2.6%
-            'delay' => 700, // 7%
-            'early' => 200, // 2%
-            'nothing' => 1860, // 18.6%
-            'merchant' => 17, // 0.17%
-            'blackHole' => 33, // 0.33%
-        ];
-        $randomNumber = mt_rand(0, array_sum($events));
-        $sum = 0;
-
-        foreach ($events as $event => $probability) {
-            $sum += $probability;
-
-            if ($randomNumber <= $sum) {
-                return $event;
-            }
-        }
-
-        // fallback
-        return 'nothing';
+        return $this->pickWeighted(self::EXPEDITION_RESULT_WEIGHTS, 'nothing');
     }
 
     public function calculateDarkMatterSourceSize(): string
     {
-        // probability ratios - we add a weight
-        $discoveryTypes = [
-            'small' => 8900, // 89%
-            'medium' => 2400, // 10%
-            'large' => 750, // 1%
-        ];
-        $randomNumber = mt_rand(0, array_sum($discoveryTypes));
-        $sum = 0;
-
-        foreach ($discoveryTypes as $discovery => $probability) {
-            $sum += $probability;
-
-            if ($randomNumber <= $sum) {
-                return $discovery;
-            }
-        }
-
-        // fallback
-        return 'small';
+        return $this->pickWeighted(self::DARK_MATTER_SOURCE_SIZE_WEIGHTS, 'small');
     }
 
     public function getDarkMatterSourceSize(string $discoveryType): int
@@ -120,48 +119,12 @@ class ExpeditionService
 
     public function calculateResourceTypeObtained(): string
     {
-        // probability ratios - we add a weight
-        $resources = [
-            'metal' => 6850, // 68,5%
-            'crystal' => 2400, // 24%
-            'deuterium' => 750, // 7.5%
-        ];
-        $randomNumber = mt_rand(0, array_sum($resources));
-        $sum = 0;
-
-        foreach ($resources as $resource => $probability) {
-            $sum += $probability;
-
-            if ($randomNumber <= $sum) {
-                return $resource;
-            }
-        }
-
-        // fallback
-        return 'metal';
+        return $this->pickWeighted(self::RESOURCE_TYPE_WEIGHTS, 'metal');
     }
 
     public function calculateResourceSourceSize(): string
     {
-        // probability ratios - we add a weight
-        $discoveryTypes = [
-            'normal' => 8900, // 89%
-            'large' => 2400, // 10%
-            'xl' => 750, // 1%
-        ];
-        $randomNumber = mt_rand(0, array_sum($discoveryTypes));
-        $sum = 0;
-
-        foreach ($discoveryTypes as $discovery => $probability) {
-            $sum += $probability;
-
-            if ($randomNumber <= $sum) {
-                return $discovery;
-            }
-        }
-
-        // fallback
-        return 'normal';
+        return $this->pickWeighted(self::RESOURCE_SOURCE_SIZE_WEIGHTS, 'normal');
     }
 
     public function getResourceSourceSizeMultChances(string $discoveryType): int
@@ -237,24 +200,30 @@ class ExpeditionService
 
     public function getFleetDeplay(): int
     {
-        // probability ratios - we add a weight
-        $resources = [
-            2 => 8900, // 89%
-            3 => 2400, // 10%
-            5 => 750, // 1%
-        ];
-        $randomNumber = mt_rand(0, array_sum($resources));
+        return $this->pickWeighted(self::FLEET_DELAY_WEIGHTS, 2);
+    }
+
+    /**
+     * @template T of array-key
+     *
+     * @param array<T, int> $weights
+     * @param T $fallback
+     *
+     * @return T
+     */
+    private function pickWeighted(array $weights, string | int $fallback): string | int
+    {
+        $randomNumber = mt_rand(1, array_sum($weights));
         $sum = 0;
 
-        foreach ($resources as $resource => $probability) {
-            $sum += $probability;
+        foreach ($weights as $result => $weight) {
+            $sum += $weight;
 
             if ($randomNumber <= $sum) {
-                return $resource;
+                return $result;
             }
         }
 
-        // fallback
-        return 2;
+        return $fallback;
     }
 }

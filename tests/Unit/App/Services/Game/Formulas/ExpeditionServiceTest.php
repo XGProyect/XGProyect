@@ -6,6 +6,7 @@ namespace Tests\Unit\App\Services\Game\Formulas;
 
 use App\Services\Game\Formulas\ExpeditionService;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
  * @SuppressWarnings("PHPMD.TooManyPublicMethods")
@@ -70,6 +71,40 @@ class ExpeditionServiceTest extends TestCase
         ];
 
         $this->assertContains($result, $validResults);
+    }
+
+    public function testExpeditionWeightTablesUseExpectedOdds(): void
+    {
+        $this->assertSame([
+            'darkMatter' => 900,
+            'ships' => 2200,
+            'resources' => 3250,
+            'pirates' => 560,
+            'aliens' => 260,
+            'delay' => 700,
+            'early' => 200,
+            'nothing' => 1880,
+            'merchant' => 17,
+            'blackHole' => 33,
+        ], $this->getExpeditionServiceWeights('EXPEDITION_RESULT_WEIGHTS'));
+
+        $this->assertSame([
+            'small' => 8900,
+            'medium' => 1000,
+            'large' => 100,
+        ], $this->getExpeditionServiceWeights('DARK_MATTER_SOURCE_SIZE_WEIGHTS'));
+
+        $this->assertSame([
+            'normal' => 8900,
+            'large' => 1000,
+            'xl' => 100,
+        ], $this->getExpeditionServiceWeights('RESOURCE_SOURCE_SIZE_WEIGHTS'));
+
+        $this->assertSame([
+            2 => 8900,
+            3 => 1000,
+            5 => 100,
+        ], $this->getExpeditionServiceWeights('FLEET_DELAY_WEIGHTS'));
     }
 
     public function testCalculateDarkMatterSourceSize(): void
@@ -211,5 +246,18 @@ class ExpeditionServiceTest extends TestCase
 
         $result = $expedition->getFleetDeplay();
         $this->assertContains($result, [2, 3, 5]); // Assert that the result is one of the allowed values
+    }
+
+    /**
+     * @return array<array-key, int>
+     */
+    private function getExpeditionServiceWeights(string $constantName): array
+    {
+        $weights = (new ReflectionClass(ExpeditionService::class))->getConstant($constantName);
+
+        $this->assertIsArray($weights);
+
+        /** @var array<array-key, int> $weights */
+        return $weights;
     }
 }
