@@ -29,9 +29,9 @@ return [
 
     // requirements
     'requirements_details' => 'Estos son los requerimientos mínimos para instalar XGP.<br><br>Por el momento únicamente contamos con soporte para MySQL / MariaDB, pero intentaremos proveer soporte a otros motores en un futuro.',
-    'php_version_check' => 'Versión PHP 8.1',
+    'php_version_check' => 'Versión PHP 8.2',
     'php_version_current' => 'Tienes :php',
-    'php_version_need' => 'Necesitas al menos 8.1',
+    'php_version_need' => 'Necesitas al menos 8.2',
     'mysql_check' => 'Versión MySQL 5.7',
     'mysql_check_current' => 'Revisa tu DB',
     'mysql_check_need' => 'Revisa tu DB',

@@ -29,9 +29,9 @@ return [
 
     // requirements
     'requirements_details' => 'These requirements are the minimum needed to run XGP.<br><br>At the moment we only support MySQL / MariaDB, but we intend to support other drivers in a future.',
-    'php_version_check' => 'PHP Version 8.1',
+    'php_version_check' => 'PHP Version 8.2',
     'php_version_current' => 'You have :php',
-    'php_version_need' => 'You need at least 8.1',
+    'php_version_need' => 'You need at least 8.2',
     'mysql_check' => 'MySQL Version 5.7',
     'mysql_check_current' => 'Check your DB',
     'mysql_check_need' => 'Check your DB',
