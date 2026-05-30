@@ -96,6 +96,9 @@ class FinalController extends RequirementsController
         Artisan::call('cache:clear');
         Artisan::call('config:clear');
 
+        // wipe install progress so the flow can be started fresh next time
+        session()->flush();
+
         return true;
     }
 }
