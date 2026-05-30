@@ -79,6 +79,12 @@ parameters:
 			path: app/Http/Controllers/Game/ResearchController.php
 
 		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: app/Http/Controllers/Game/TechnologydetailsController.php
+
+		-
 			message: '#^Cannot access property \$end_time on App\\Models\\BuildingQueue\|null\.$#'
 			identifier: property.nonObject
 			count: 1
@@ -119,6 +125,96 @@ parameters:
 			identifier: nullsafe.neverNull
 			count: 1
 			path: app/Services/Game/ResearchQueueService.php
+
+		-
+			message: '#^Binary operation "\+" between mixed and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Binary operation "\." between ''\<a href\="game\.php…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 4
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Cannot access offset ''crystal'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Cannot access offset ''deuterium'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Cannot access offset ''energy'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Cannot access offset ''metal'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Cannot access offset int on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Cannot access offset int\<200, 499\> on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 43
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Instanceof between App\\Core\\GameObjects\\Ship and App\\Core\\GameObjects\\Ship will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Method App\\Services\\Game\\TechnologyInfoService\:\:getNextJumpWaitTime\(\) should return array\{string\: string, value\: int\} but returns array\{string\: non\-falsy\-string, value\: float\|int\}\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Offset int\<min, 11\>\|int\<13, max\> might not exist on array\{1\: float\|int, 2\: float\|int, 3\: float\|int, 4\: float\|int\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 4
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Result of \|\| is always true\.$#'
+			identifier: booleanOr.alwaysTrue
+			count: 1
+			path: app/Services/Game/TechnologyInfoService.php
+
+		-
+			message: '#^Trying to invoke mixed but it''s not a callable\.$#'
+			identifier: callable.nonCallable
+			count: 4
+			path: app/Services/Game/TechnologyInfoService.php
 
 		-
 			message: '#^Comparison operation "\>" between Carbon\\Carbon and int\<1, max\> results in an error\.$#'
@@ -6625,6 +6721,12 @@ parameters:
 			path: legacy/app/Libraries/Missions/Destroy.php
 
 		-
+			message: '#^Method Xgp\\App\\Libraries\\Missions\\Destroy\:\:updateMoon\(\) has parameter \$target_data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: legacy/app/Libraries/Missions/Destroy.php
+
+		-
 			message: '#^Method Xgp\\App\\Libraries\\Missions\\Destroy\:\:updateMoon\(\) with return type void returns null but should not return anything\.$#'
 			identifier: return.void
 			count: 1
@@ -6775,10 +6877,10 @@ parameters:
 			path: legacy/app/Libraries/Missions/Expedition.php
 
 		-
-			message: '#^Parameter \#1 \$topPlayerPoints of method App\\Services\\Game\\Formulas\\ExpeditionService\:\:getMaxExpeditionPoints\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: legacy/app/Libraries/Missions/Expedition.php
+			message: '#^Binary operation "\." between array\<string\>\|string and \(array\|string\) results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 2
+			path: legacy/app/Libraries/Missions/Missile.php
 
 		-
 			message: '#^Method Xgp\\App\\Libraries\\Missions\\Missile\:\:missileMission\(\) has parameter \$fleet_row with no value type specified in iterable type array\.$#'
@@ -6837,11 +6939,35 @@ parameters:
 		-
 			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
 			identifier: binaryOp.invalid
+			count: 76
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 24
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''crystal'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
 			count: 7
 			path: legacy/app/Libraries/Missions/Missions.php
 
 		-
 			message: '#^Cannot access offset ''deuterium'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''end'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: legacy/app/Libraries/Missions/Missions.php
+
+		-
+			message: '#^Cannot access offset ''fleet_end_galaxy'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
 			path: legacy/app/Libraries/Missions/Missions.php
@@ -7525,32 +7651,8 @@ parameters:
 			path: legacy/app/Libraries/SecurePageLib.php
 
 		-
-			message: '#^Binary operation "\." between ''SELECT \* FROM `'' and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Libraries/StatisticsLibrary.php
-
-		-
-			message: '#^Binary operation "\." between mixed and string results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: legacy/app/Libraries/StatisticsLibrary.php
-
-		-
 			message: '#^Method Xgp\\App\\Libraries\\StatisticsLibrary\:\:makeStats\(\) has no return type specified\.$#'
 			identifier: missingType.return
-			count: 1
-			path: legacy/app/Libraries/StatisticsLibrary.php
-
-		-
-			message: '#^Offset ''rank'' might not exist on array\{old_rank\: non\-empty\-array, points\: non\-empty\-array, rank\?\: non\-empty\-array\<int\<1, max\>\>\}\.$#'
-			identifier: offsetAccess.notFound
-			count: 8
-			path: legacy/app/Libraries/StatisticsLibrary.php
-
-		-
-			message: '#^Parameter \#2 \$exponent of function pow expects float\|int, mixed given\.$#'
-			identifier: argument.type
 			count: 1
 			path: legacy/app/Libraries/StatisticsLibrary.php
 
