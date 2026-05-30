@@ -1,4 +1,3 @@
-
 <p align="center"
     <a href="https://www.xgproyect.org/" target="_blank">
         <img align="center" img src="https://xgproyect.org/wp-content/uploads/2019/10/xgp-new-logo-black.png" width="250px" title="XG Proyect" alt="xgp-logo">
