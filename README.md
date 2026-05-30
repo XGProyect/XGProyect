@@ -38,19 +38,58 @@ composer create-project xgproyect/xgproyect
 
 ### Quick start
 
-By default if you did not change any setting, to connect to the game go to `http://localhost`, to check the email client go to `http://localhost:8025` and to connect to the DB by default we use `mysql` on port `3306` and user/password `root`. Also, you can check your `.env` file for the initial configutations, or if you want to make any change.
+The easiest way to run XG Proyect locally is with Docker through Laravel Sail. See this <a href="https://laravel.com/docs/12.x/sail">Laravel Sail guide</a> if you need to install or configure it first.
 
-## How to run XG Proyect?
-Easiest way to do it, is using Docker, through sail. See this <a href="https://laravel.com/docs/12.x/sail">Laravel Sail guide</a> to install it.
+1. Start the containers:
 
+```bash
+./vendor/bin/sail up -d
 ```
-sail up
+
+If you already configured the Sail shell alias, you can use:
+
+```bash
+sail up -d
 ```
+
+2. Open the local services:
+
+- Game: `http://localhost`
+- Mailpit: `http://localhost:8025`
+- Adminer: `http://localhost:8080`
+
+3. Use the default MySQL connection from `.env.example`:
+
+- Host: `mysql`
+- Port: `3306`
+- Database: `xgproyect`
+- Username: `xgp`
+- Password: `xgp`
+
+If you already created your own `.env`, those values may be different. Check that file because it overrides `.env.example`.
 
 ## Mailpit
-XGP uses Mailpit to make mailing support better. Mailpit allows you to intercept emails locally and receive them under a convenient panel.
+
+Mailpit captures outgoing emails locally so you can inspect them from a simple web UI.
+
+Open `http://localhost:8025` after starting Sail.
 
 Read more about <a href="https://github.com/axllent/mailpit" target="_blank">Mailpit guide</a> to get started.
+
+## Adminer
+
+Adminer provides a lightweight UI for the local MySQL database.
+
+Open `http://localhost:8080` and use these defaults:
+
+- Server: `mysql`
+- Database: `xgproyect`
+- Username: `xgp`
+- Password: `xgp`
+
+If your local `.env` uses different database credentials, use those values instead.
+
+Read more about <a href="https://www.adminer.org/" target="_blank">Adminer</a> to get started.
 
 ## Who is using XG Proyect?
 We are happy to deliver this software giving others the possibility to have a good OGame Clon.
