@@ -54,6 +54,16 @@ services:
             - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
         networks:
             - sail
+    adminer:
+        image: 'adminer:latest'
+        ports:
+            - '${FORWARD_ADMINER_PORT:-8080}:8080'
+        environment:
+            ADMINER_DEFAULT_SERVER: mysql
+        networks:
+            - sail
+        depends_on:
+            - mysql
 networks:
     sail:
         driver: bridge
