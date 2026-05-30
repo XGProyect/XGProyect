@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property string                      $planet_name
  * @property string                      $planet_b_hangar_id
+ * @property string                      $planet_b_building_id
  * @property string                      $planet_image
  * @property int                         $planet_user_id
  * @property int                         $planet_galaxy
@@ -79,6 +80,7 @@ class Planets extends Model
         'planet_type',
         'planet_destroyed',
         'planet_b_building',
+        'planet_b_building_id',
         'planet_b_tech',
         'planet_b_tech_id',
         'planet_b_hangar',
