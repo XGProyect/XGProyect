@@ -88,14 +88,22 @@ class FinalController extends RequirementsController
 
         $disk->setVisibility($file, 'public');
 
-        // The install guards read config('INSTALLED'), not getenv(), so write it as a
-        // config() override appended after the connection block.
-        $installData = "\n";
-        $installData .= "config([\n";
-        $installData .= '    ' . var_export('INSTALLED', true) . ' => ' . var_export('true', true) . ",\n";
-        $installData .= "]);\n";
+        // Flip the INSTALLED flag written during the database step inside the existing
+        // config() block, instead of appending a second block.
+        $content = (string) $disk->get($file);
+        $content = str_replace(
+            "'INSTALLED' => 'false'",
+            "'INSTALLED' => 'true'",
+            $content
+        );
 
-        $disk->append($file, $installData);
+        $disk->put($file, $content);
+
+        // OPcache may keep serving the previous compiled version of this file to other
+        // processes (e.g. php-fpm); config:clear does not touch it, so invalidate it here.
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate(config_path($file), true);
+        }
 
         Artisan::call('cache:clear');
         Artisan::call('config:clear');

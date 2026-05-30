@@ -48,7 +48,9 @@ class DatabaseController extends BaseController
 
             // try the connection
             $pdo = $connection->getPdo();
-            $serverVersion = (string) $pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
+            /** @var scalar|null $serverAttribute */
+            $serverAttribute = $pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
+            $serverVersion = (string) $serverAttribute;
 
             if (!InstallRequirements::isSupportedDatabaseVersion($serverVersion)) {
                 return back()
@@ -111,13 +113,25 @@ class DatabaseController extends BaseController
         $connectionData .= '    ' . var_export("database.connections.{$driver}.password", true) . ' => ' . var_export((string) ($config['password'] ?? ''), true) . ",\n";
         $connectionData .= '    ' . var_export("database.connections.{$driver}.prefix", true) . ' => ' . var_export((string) ($config['prefix'] ?? ''), true) . ",\n";
         $connectionData .= '    ' . var_export('SECRETWORD', true) . ' => ' . var_export('xgp-' . StringsHelper::randomString(16), true) . ",\n";
+        $connectionData .= '    ' . var_export('INSTALLED', true) . ' => ' . var_export('false', true) . ",\n";
         $connectionData .= "]);\n";
 
         $disk->put($file, $connectionData);
+
+        // OPcache may keep serving the previous compiled version of this file to other
+        // processes (e.g. php-fpm); config:clear does not touch it, so invalidate it here.
+        $this->invalidateOpcache(config_path($file));
 
         Artisan::call('cache:clear');
         Artisan::call('config:clear');
 
         return true;
+    }
+
+    private function invalidateOpcache(string $path): void
+    {
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate($path, true);
+        }
     }
 }
