@@ -90,10 +90,6 @@ class FinalController extends RequirementsController
 
         $installData = "putenv('INSTALLED=true');\n";
         $installData .= "\n";
-        $installData .= "config([\n";
-        $installData .= "    'INSTALLED' => 'true',\n";
-        $installData .= ']);';
-        $installData .= "\n";
 
         $disk->append($file, $installData);
 

@@ -100,17 +100,6 @@ class DatabaseController extends BaseController
         $connectionData .= "putenv('DB_DATABASE=" . $config['database'] . "');\n";
         $connectionData .= "putenv('DB_PREFIX=" . ($config['prefix'] ?? '') . "');\n";
         $connectionData .= "putenv('SECRETWORD=xgp-" . StringsHelper::randomString(16) . "');\n";
-        $connectionData .= "\n";
-        $connectionData .= "config([\n";
-        $connectionData .= "    'DB_HOST' => '" . $config['host'] . "',\n";
-        $connectionData .= "    'DB_PORT' => '" . ($config['port'] ?? 3306) . "',\n";
-        $connectionData .= "    'DB_USERNAME' => '" . $config['username'] . "',\n";
-        $connectionData .= "    'DB_PASSWORD' => '" . ($config['password'] ?? '') . "',\n";
-        $connectionData .= "    'DB_DATABASE' => '" . $config['database'] . "',\n";
-        $connectionData .= "    'DB_PREFIX' => '" . ($config['prefix'] ?? '') . "',\n";
-        $connectionData .= "    'SECRETWORD' => 'xgp-" . StringsHelper::randomString(16) . "',\n";
-        $connectionData .= ']);';
-        $connectionData .= "\n";
 
         $disk->put($file, $connectionData);
 

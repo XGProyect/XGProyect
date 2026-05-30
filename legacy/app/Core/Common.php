@@ -7,7 +7,6 @@ namespace Xgp\App\Core;
 use App\Models\User;
 use App\Services\SettingsService;
 use App\Services\TimingService;
-use Exception;
 use Illuminate\Support\Facades\Auth;
 use Xgp\App\Core\Enumerators\SwitchIntEnumerator as SwitchInt;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator as UserRanks;
@@ -27,45 +26,17 @@ class Common
     private const APPLICATIONS = [
         'game' => ['setSystemTimezone', 'setSecure', 'setUpdates', 'isServerOpen', 'checkBanStatus'],
     ];
-    private bool $is_installed = false;
 
     public function bootUp(string $app): void
     {
         // overall loads
-        $this->isServerInstalled();
+        Functions::setLanguage();
 
         // specific pages load or executions
         if (isset(self::APPLICATIONS[$app])) {
             foreach (self::APPLICATIONS[$app] as $method) {
                 $this->$method();
             }
-        }
-    }
-
-    private function isServerInstalled(): void
-    {
-        try {
-            $config_file = CONFIGS_PATH . 'xgp-db-config.php';
-
-            if (file_exists($config_file)) {
-                require $config_file;
-
-                // check if it is installed
-                if (config('DB_HOST') && config('DB_PORT') && config('DB_USERNAME') && config('DB_PASSWORD') && config('DB_DATABASE') && config('DB_PREFIX')) {
-                    $this->is_installed = true;
-                }
-            } else {
-                fopen($config_file, 'w+');
-            }
-
-            // set language
-            Functions::setLanguage();
-
-            if (!$this->is_installed && !defined('IN_INSTALL')) {
-                Functions::redirect(SYSTEM_ROOT . 'install.php');
-            }
-        } catch (Exception $e) {
-            die('Error #0001' . $e->getMessage());
         }
     }
 
