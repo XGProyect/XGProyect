@@ -47,7 +47,7 @@ class Price
     }
 
     /**
-     * @return array<string, int|float>
+     * @return array{metal: int, crystal: int, deuterium: int, factor: float, energy?: int, energy_max?: int}
      */
     public function toArray(): array
     {

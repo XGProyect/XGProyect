@@ -73,7 +73,7 @@ class ProductionFormula
     /**
      * Get the legacy-compatible array format for backward compatibility.
      *
-     * @return array<string, mixed>
+     * @return array{metal: int, crystal: int, deuterium: int, energy: int, factor: float}
      */
     public function toLegacyArray(): array
     {
