@@ -88,8 +88,12 @@ class FinalController extends RequirementsController
 
         $disk->setVisibility($file, 'public');
 
-        $installData = "putenv('INSTALLED=true');\n";
-        $installData .= "\n";
+        // The install guards read config('INSTALLED'), not getenv(), so write it as a
+        // config() override appended after the connection block.
+        $installData = "\n";
+        $installData .= "config([\n";
+        $installData .= '    ' . var_export('INSTALLED', true) . ' => ' . var_export('true', true) . ",\n";
+        $installData .= "]);\n";
 
         $disk->append($file, $installData);
 

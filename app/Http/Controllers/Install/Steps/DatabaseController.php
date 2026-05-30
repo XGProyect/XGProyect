@@ -91,15 +91,27 @@ class DatabaseController extends BaseController
             return false;
         }
 
+        $driver = (string) ($config['driver'] ?? 'mysql');
+
+        // The application reads database settings through config()/env() (config/database.php),
+        // never getenv(), so values are written as config() overrides instead of putenv().
+        // This file is loaded after config/database.php (natural sort order), so these
+        // overrides win over the env() defaults that file resolves at bootstrap and keep the
+        // default connection correct for the whole request lifecycle (validation, controllers
+        // and the running game) without binding it manually in each entry point.
         $connectionData = "<?php\n";
         $connectionData .= "\n";
-        $connectionData .= "putenv('DB_HOST=" . $config['host'] . "');\n";
-        $connectionData .= "putenv('DB_PORT=" . ($config['port'] ?? 3306) . "');\n";
-        $connectionData .= "putenv('DB_USERNAME=" . $config['username'] . "');\n";
-        $connectionData .= "putenv('DB_PASSWORD=" . ($config['password'] ?? '') . "');\n";
-        $connectionData .= "putenv('DB_DATABASE=" . $config['database'] . "');\n";
-        $connectionData .= "putenv('DB_PREFIX=" . ($config['prefix'] ?? '') . "');\n";
-        $connectionData .= "putenv('SECRETWORD=xgp-" . StringsHelper::randomString(16) . "');\n";
+        $connectionData .= "config([\n";
+        $connectionData .= '    ' . var_export('database.default', true) . ' => ' . var_export($driver, true) . ",\n";
+        $connectionData .= '    ' . var_export("database.connections.{$driver}.driver", true) . ' => ' . var_export($driver, true) . ",\n";
+        $connectionData .= '    ' . var_export("database.connections.{$driver}.host", true) . ' => ' . var_export((string) $config['host'], true) . ",\n";
+        $connectionData .= '    ' . var_export("database.connections.{$driver}.port", true) . ' => ' . var_export((string) ($config['port'] ?? 3306), true) . ",\n";
+        $connectionData .= '    ' . var_export("database.connections.{$driver}.database", true) . ' => ' . var_export((string) $config['database'], true) . ",\n";
+        $connectionData .= '    ' . var_export("database.connections.{$driver}.username", true) . ' => ' . var_export((string) $config['username'], true) . ",\n";
+        $connectionData .= '    ' . var_export("database.connections.{$driver}.password", true) . ' => ' . var_export((string) ($config['password'] ?? ''), true) . ",\n";
+        $connectionData .= '    ' . var_export("database.connections.{$driver}.prefix", true) . ' => ' . var_export((string) ($config['prefix'] ?? ''), true) . ",\n";
+        $connectionData .= '    ' . var_export('SECRETWORD', true) . ' => ' . var_export('xgp-' . StringsHelper::randomString(16), true) . ",\n";
+        $connectionData .= "]);\n";
 
         $disk->put($file, $connectionData);
 

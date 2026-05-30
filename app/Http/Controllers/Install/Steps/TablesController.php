@@ -10,7 +10,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 
 class TablesController extends BaseController
 {
@@ -33,11 +32,6 @@ class TablesController extends BaseController
     private function installSteps(): array
     {
         try {
-            // Bind the connection that was validated during the database step so the
-            // migrations always run against the same server, regardless of whether the
-            // freshly written config file has been (re)loaded or the config is cached.
-            $this->bindValidatedConnection();
-
             /** @var array<string, string> $results */
             $results = [];
             $commands = [
@@ -54,12 +48,6 @@ class TablesController extends BaseController
             foreach ($commands as $key => $command) {
                 $exitCode = Artisan::call($command[0], $command[1]);
                 $results[$key] = nl2br(Artisan::output());
-
-                // config:clear wipes the cached config and, with it, the runtime
-                // connection we bound above; rebind it before continuing.
-                if ($command[0] === 'config:clear') {
-                    $this->bindValidatedConnection();
-                }
 
                 // Artisan commands report failures through the exit code without
                 // throwing, so an unchecked loop would mark a broken install as a
@@ -80,38 +68,5 @@ class TablesController extends BaseController
         }
 
         return [];
-    }
-
-    /**
-     * Apply the connection validated during the database step to the runtime
-     * configuration and reset any already-resolved connection.
-     */
-    private function bindValidatedConnection(): void
-    {
-        /** @var array<string, scalar|null>|null $config */
-        $config = session('db_config');
-
-        if (!is_array($config)) {
-            return;
-        }
-
-        $default = (string) config('database.default');
-
-        config([
-            "database.connections.{$default}" => array_merge(
-                (array) config("database.connections.{$default}"),
-                [
-                    'driver' => $config['driver'] ?? 'mysql',
-                    'host' => $config['host'] ?? null,
-                    'port' => $config['port'] ?? 3306,
-                    'database' => $config['database'] ?? null,
-                    'username' => $config['username'] ?? null,
-                    'password' => $config['password'] ?? '',
-                    'prefix' => $config['prefix'] ?? '',
-                ]
-            ),
-        ]);
-
-        DB::purge($default);
     }
 }
