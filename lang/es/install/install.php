@@ -28,13 +28,13 @@ return [
     'accept' => 'Genial, ¡vamos!',
 
     // requirements
-    'requirements_details' => 'Estos son los requerimientos mínimos para instalar XGP.<br><br>Por el momento únicamente contamos con soporte para MySQL / MariaDB, pero intentaremos proveer soporte a otros motores en un futuro.',
-    'php_version_check' => 'Versión PHP 8.2',
+    'requirements_details' => 'Estos son los requerimientos mínimos para instalar XGP.<br><br>Por el momento únicamente contamos con soporte para MySQL / MariaDB, pero intentaremos proveer soporte a otros motores en un futuro. La versión del servidor de base de datos se valida después de ingresar los datos de conexión.',
+    'php_version_check' => 'Versión PHP :version',
     'php_version_current' => 'Tienes :php',
-    'php_version_need' => 'Necesitas al menos 8.2',
-    'mysql_check' => 'Versión MySQL 5.7',
-    'mysql_check_current' => 'Revisa tu DB',
-    'mysql_check_need' => 'Revisa tu DB',
+    'php_version_need' => 'Necesitas al menos :version',
+    'mysql_check' => 'MySQL / MariaDB :version+',
+    'mysql_check_current' => 'Se valida después de ingresar las credenciales de la base de datos',
+    'mysql_check_need' => 'Necesitas MySQL / MariaDB :version o posterior',
     'config_writable' => 'Config editable',
     'config_writable_ok' => 'OK',
     'config_writable_need' => ':file no es editable',
@@ -56,6 +56,7 @@ return [
     'prefix_help' => 'Principalmente útil si planeas ejecutar varias instalaciones de XGP en la misma base de datos.',
     'db_check' => 'Establecer conexión',
     'db_connect_success' => '¡Conexión establecida con éxito!',
+    'db_version_fail' => 'El servidor de base de datos debe ejecutar la versión :version o posterior. Versión actual: :current.',
     'db_connect_fail' => 'La conexión ha fallado, revisa los datos de conexión e intenta nuevamente.',
 
     // tables

@@ -28,13 +28,13 @@ return [
     'accept' => 'Sure, got it!',
 
     // requirements
-    'requirements_details' => 'These requirements are the minimum needed to run XGP.<br><br>At the moment we only support MySQL / MariaDB, but we intend to support other drivers in a future.',
-    'php_version_check' => 'PHP Version 8.2',
+    'requirements_details' => 'These requirements are the minimum needed to run XGP.<br><br>At the moment we only support MySQL / MariaDB, but we intend to support other drivers in a future. The database server version is validated after you enter the connection details.',
+    'php_version_check' => 'PHP Version :version',
     'php_version_current' => 'You have :php',
-    'php_version_need' => 'You need at least 8.2',
-    'mysql_check' => 'MySQL Version 5.7',
-    'mysql_check_current' => 'Check your DB',
-    'mysql_check_need' => 'Check your DB',
+    'php_version_need' => 'You need at least :version',
+    'mysql_check' => 'MySQL / MariaDB :version+',
+    'mysql_check_current' => 'Validated after you enter the database credentials',
+    'mysql_check_need' => 'You need MySQL / MariaDB :version or later',
     'config_writable' => 'Writable config path',
     'config_writable_ok' => 'OK',
     'config_writable_need' => ':file is not writable',
@@ -56,6 +56,7 @@ return [
     'prefix_help' => 'Mostly helpful if you plan to run multiple XGP installations on the same database.',
     'db_check' => 'Try to connect',
     'db_connect_success' => 'Connection stablished successfully!',
+    'db_version_fail' => 'The database server must run version :version or later. Current version: :current.',
     'db_connect_fail' => 'The connection couldn\'t be stablished. Check them and try again!',
 
     // tables

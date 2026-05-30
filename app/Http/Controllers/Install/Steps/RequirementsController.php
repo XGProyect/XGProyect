@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Install\Steps;
 
+use App\Services\InstallRequirements;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -46,23 +47,20 @@ class RequirementsController extends BaseController
     /** @return array{requirement: mixed, message: mixed, result: string} */
     protected function checkPhpVersion(): array
     {
-        $configuredVersion = config('app.php_version');
-        $currentVersion = is_string($configuredVersion) && $configuredVersion !== ''
-            ? $configuredVersion
-            : PHP_VERSION;
+        $currentVersion = PHP_VERSION;
 
-        if (version_compare($currentVersion, '8.1.0', '<')) {
+        if (!InstallRequirements::isSupportedPhpVersion($currentVersion)) {
             $this->fail = true;
 
             return [
-                'requirement' => __('install/install.php_version_check'),
-                'message' => __('install/install.php_version_need'),
+                'requirement' => __('install/install.php_version_check', ['version' => InstallRequirements::MINIMUM_PHP_VERSION]),
+                'message' => __('install/install.php_version_need', ['version' => InstallRequirements::MINIMUM_PHP_VERSION]),
                 'result' => 'danger',
             ];
         }
 
         return [
-            'requirement' => __('install/install.php_version_check'),
+            'requirement' => __('install/install.php_version_check', ['version' => InstallRequirements::MINIMUM_PHP_VERSION]),
             'message' => __('install/install.php_version_current', ['php' => $currentVersion]),
             'result' => 'success',
         ];
@@ -72,7 +70,7 @@ class RequirementsController extends BaseController
     protected function checkMySQLVersion(): array
     {
         return [
-            'requirement' => __('install/install.mysql_check'),
+            'requirement' => __('install/install.mysql_check', ['version' => InstallRequirements::MINIMUM_DATABASE_VERSION]),
             'message' => __('install/install.mysql_check_current'),
             'result' => 'warning',
         ];
@@ -110,31 +108,14 @@ class RequirementsController extends BaseController
     /** @return array{requirement: mixed, message: mixed, result: string} */
     protected function checkPhpExtensions(): array
     {
-        $notLoaded = [];
-        $extensions = [
-            'bcmath',
-            'ctype',
-            'fileinfo',
-            'json',
-            'mbstring',
-            'openssl',
-            'pdo',
-            'tokenizer',
-            'xml',
-        ];
+        $notLoaded = InstallRequirements::missingPhpExtensions();
 
-        foreach ($extensions as $extension) {
-            if (!@extension_loaded($extension)) {
-                $notLoaded[] = $extension;
-            }
-        }
-
-        if (count($notLoaded) > 0) {
+        if ($notLoaded !== []) {
             $this->fail = true;
 
             return [
                 'requirement' => __('install/install.php_ext_check'),
-                'message' => __('install/install.php_ext_check_need', ['ext' => join(', ', $notLoaded)]),
+                'message' => __('install/install.php_ext_check_need', ['ext' => implode(', ', $notLoaded)]),
                 'result' => 'danger',
             ];
         }

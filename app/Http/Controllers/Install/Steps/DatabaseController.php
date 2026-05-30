@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Install\Steps;
 
 use App\Http\Requests\Install\DatabaseRequest;
+use App\Services\InstallRequirements;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
+use PDO;
 use Xgp\App\Helpers\StringsHelper;
 
 class DatabaseController extends BaseController
@@ -45,7 +47,17 @@ class DatabaseController extends BaseController
             $connection = $factory->make($config);
 
             // try the connection
-            $connection->getPdo();
+            $pdo = $connection->getPdo();
+            $serverVersion = (string) $pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
+
+            if (!InstallRequirements::isSupportedDatabaseVersion($serverVersion)) {
+                return back()
+                    ->withInput()
+                    ->with('danger', __('install/install.db_version_fail', [
+                        'version' => InstallRequirements::MINIMUM_DATABASE_VERSION,
+                        'current' => InstallRequirements::extractDatabaseVersion($serverVersion) ?? $serverVersion,
+                    ]));
+            }
 
             if (!$this->writeConfigFile($config)) {
                 throw new Exception();
