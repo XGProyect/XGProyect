@@ -34,6 +34,7 @@ abstract class AdminPagesEnumerator
 
     public const EDITION = [
         'users',
+        'bots',
         'alliances',
         'languages',
         'changelog',

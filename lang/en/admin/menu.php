@@ -25,6 +25,7 @@ return [
     'fleets' => 'Fleet movements',
     'messages' => 'Messages',
     'users' => 'Users',
+    'bots' => 'Bots',
     'alliances' => 'Alliances',
     'languages' => 'Languages',
     'changelog' => 'Changelog',

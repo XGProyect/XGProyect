@@ -25,6 +25,7 @@ return [
     'fleets' => 'Flotas en vuelo',
     'messages' => 'Mensajes',
     'users' => 'Usuarios',
+    'bots' => 'Bots',
     'alliances' => 'Alianzas',
     'languages' => 'Idiomas',
     'changelog' => 'Lista de cambios',
