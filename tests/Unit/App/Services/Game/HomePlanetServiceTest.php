@@ -72,6 +72,7 @@ class HomePlanetServiceTest extends TestCase
 
         $user = DB::table('users')->where('id', 1)->first();
 
+        $this->assertNotNull($user);
         $this->assertSame(20, $result);
         $this->assertSame(20, (int) $user->home_planet_id);
         $this->assertSame(20, (int) $user->current_planet);
@@ -92,6 +93,7 @@ class HomePlanetServiceTest extends TestCase
 
         $user = DB::table('users')->where('id', 1)->first();
 
+        $this->assertNotNull($user);
         $this->assertSame(10, $result);
         $this->assertSame(10, (int) $user->home_planet_id);
         $this->assertSame(10, (int) $user->current_planet);
@@ -112,6 +114,7 @@ class HomePlanetServiceTest extends TestCase
 
         $storedUser = DB::table('users')->where('id', 1)->first();
 
+        $this->assertNotNull($storedUser);
         $this->assertSame(20, $result);
         $this->assertSame(20, (int) $storedUser->home_planet_id);
         $this->assertSame(20, (int) $storedUser->current_planet);

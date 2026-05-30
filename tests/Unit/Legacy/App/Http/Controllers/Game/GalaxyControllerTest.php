@@ -45,7 +45,10 @@ class GalaxyControllerTest extends TestCase
             new OfficerService(),
         );
         $method = new ReflectionMethod(GalaxyController::class, 'targetLookupPlanetType');
+        $result = $method->invoke($controller, $planetType);
 
-        return $method->invoke($controller, $planetType);
+        $this->assertIsInt($result);
+
+        return $result;
     }
 }

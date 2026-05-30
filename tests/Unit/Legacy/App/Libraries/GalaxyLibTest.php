@@ -36,6 +36,8 @@ class GalaxyLibTest extends TestCase
 
         $html = $method->invoke($galaxyLib);
 
+        $this->assertIsString($html);
+
         $this->assertStringContainsString(
             'onclick="javascript:doit(6, 1, 2, 3, 1, 4); return false;"',
             $html
@@ -49,6 +51,8 @@ class GalaxyLibTest extends TestCase
         $method = new ReflectionMethod(GalaxyLib::class, 'spyLink');
 
         $html = $method->invoke($galaxyLib, GalaxyLib::MOON_TYPE);
+
+        $this->assertIsString($html);
 
         $this->assertStringContainsString(
             "onclick=\\'javascript:doit(6, 1, 2, 3, 3, 4); return false;\\'",

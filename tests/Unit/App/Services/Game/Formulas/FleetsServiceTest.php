@@ -55,6 +55,9 @@ class FleetsServiceTest extends TestCase
     public function testMissionDurationAcceptsCalculatedFleetSpeed(): void
     {
         $fleetSpeeds = $this->service->fleetMaxSpeed([202 => 1], 0, 5, 0);
+        $this->assertNotEmpty($fleetSpeeds);
+
+        /** @var non-empty-array<int, float> $fleetSpeeds */
         $result = $this->service->missionDuration(100, min($fleetSpeeds), 5000, 1);
 
         $this->assertGreaterThan(0, $result);
