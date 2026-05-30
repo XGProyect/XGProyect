@@ -69,6 +69,7 @@ class DatabaseController extends BaseController
         }
 
         session()->put('connect_success', true);
+        session()->put('db_config', $config);
 
         return back()
             ->with('success', __('install/install.db_connect_success'));
