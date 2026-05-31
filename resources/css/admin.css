@@ -1,0 +1,35 @@
+/*
+ * XGProyect — admin CP entry stylesheet.
+ *
+ * Architecture:
+ *   base/       → design tokens + global typography
+ *   components/ → reusable building blocks (button, card, form, ...)
+ *   layout/     → page shell (sidebar, topbar)
+ *   compat.css  → adaptor that maps remaining Bootstrap class names
+ *                 (form-control, btn, row/col) onto the new tokens so
+ *                 the 56 admin views still render while we migrate
+ *                 them page-by-page. Drop rules as pages get rewritten.
+ */
+
+@import "tailwindcss";
+
+@source "../views/admin/**/*.{blade.php,php}";
+@source "../views/components/admin/**/*.{blade.php,php}";
+@source "../views/master/admin.blade.php";
+
+@import "./admin/base/tokens.css";
+@import "./admin/base/typography.css";
+
+@import "./admin/components/button.css";
+@import "./admin/components/card.css";
+@import "./admin/components/form.css";
+@import "./admin/components/table.css";
+@import "./admin/components/alert.css";
+@import "./admin/components/badge.css";
+
+@import "./admin/layout/sidebar.css";
+@import "./admin/layout/topbar.css";
+
+@import "./admin/compat.css";
+
+[data-lucide] { stroke-width: 1.75; }

@@ -1,0 +1,98 @@
+/*
+ * Admin table (theme-aware via tokens.css).
+ */
+
+.adm-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+    color: var(--surface-fg);
+}
+.adm-table thead th {
+    padding: 10px 14px;
+    background: var(--surface-card-alt);
+    color: var(--surface-muted);
+    text-align: left;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--surface-border);
+    white-space: nowrap;
+}
+.adm-table tbody td {
+    padding: 12px 14px;
+    color: var(--surface-fg);
+    border-bottom: 1px solid var(--surface-border);
+    vertical-align: middle;
+}
+.adm-table tbody tr:hover { background: var(--surface-hover); }
+.adm-table tbody tr:last-child td { border-bottom: none; }
+
+.adm-table-compact tbody td,
+.adm-table-compact thead th { padding: 7px 10px; }
+.adm-table-sticky thead th { position: sticky; top: 0; z-index: 1; }
+
+/* Search input meant to enhance an `.adm-table`. */
+.adm-table-search {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    max-width: 320px;
+}
+.adm-table-search input {
+    width: 100%;
+    padding: 7px 12px 7px 32px;
+    font-size: 12px;
+    color: var(--input-fg);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+}
+.adm-table-search input:focus {
+    outline: none;
+    border-color: var(--color-brand-500);
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.18);
+}
+.adm-table-search-icon,
+.adm-table-search > [data-lucide] {
+    position: absolute;
+    left: 11px;
+    width: 14px;
+    height: 14px;
+    color: var(--surface-muted);
+    pointer-events: none;
+}
+
+/* Pagination strip (fed by data-table-pager="#xyz"). */
+.adm-table-pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--surface-border);
+    background: var(--surface-card-alt);
+    color: var(--surface-muted);
+    font-size: 12px;
+}
+.adm-table-pager-info { font-variant-numeric: tabular-nums; }
+.adm-table-pager-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.adm-table-pager-pos {
+    color: var(--surface-fg);
+    font-variant-numeric: tabular-nums;
+    min-width: 44px;
+    text-align: center;
+}
+.adm-table-sort-icon {
+    margin-left: 6px;
+    display: inline-flex;
+    vertical-align: middle;
+    color: var(--surface-muted);
+}

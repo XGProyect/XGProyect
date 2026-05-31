@@ -1,12 +1,20 @@
 {
     "private": true,
+    "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "vite build"
     },
     "devDependencies": {
-        "axios": "^1.1.2",
-        "laravel-vite-plugin": "^0.7.2",
-        "vite": "^4.0.0"
+        "@tailwindcss/vite": "^4.0.0",
+        "axios": "^1.7.0",
+        "laravel-vite-plugin": "^1.0.0",
+        "tailwindcss": "^4.0.0",
+        "vite": "^6.0.0"
+    },
+    "dependencies": {
+        "@alpinejs/collapse": "^3.15.12",
+        "alpinejs": "^3.14.8",
+        "lucide": "^0.469.0"
     }
 }

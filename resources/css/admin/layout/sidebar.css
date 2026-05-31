@@ -1,0 +1,137 @@
+/*
+ * Admin sidebar — fixed left rail with the navigation, collapsible to a
+ * mini icons-only state on desktop and a slide-in drawer on mobile.
+ *
+ * Theme-aware via the semantic vars declared in tokens.css.
+ */
+
+.adm-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--sidebar-width);
+    background: linear-gradient(180deg, var(--sidebar-bg-from) 0%, var(--sidebar-bg-to) 100%);
+    border-right: 1px solid var(--surface-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 50;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-sidebar-collapsed="true"] .adm-sidebar { width: var(--sidebar-collapsed-width); }
+[data-sidebar-collapsed="true"] .adm-sidebar .adm-sidebar-text { display: none; }
+[data-sidebar-collapsed="true"] .adm-sidebar .adm-sidebar-section { display: none; }
+[data-sidebar-collapsed="true"] .adm-sidebar .adm-sidebar-link { justify-content: center; }
+[data-sidebar-collapsed="true"] .adm-sidebar-brand-sub { display: none; }
+[data-sidebar-collapsed="true"] .adm-sidebar-brand-title { display: none; }
+[data-sidebar-collapsed="true"] .adm-sidebar-foot { display: none; }
+
+@media (max-width: 1023px) {
+    .adm-sidebar { transform: translateX(-100%); }
+    [data-sidebar-mobile-open="true"] .adm-sidebar { transform: translateX(0); }
+}
+
+.adm-sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--surface-border);
+    height: var(--topbar-height);
+    flex-shrink: 0;
+    text-decoration: none;
+}
+.adm-sidebar-brand-mark {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    background: var(--color-brand-600);
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 15px;
+    flex-shrink: 0;
+}
+.adm-sidebar-brand-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--surface-fg);
+    letter-spacing: -0.2px;
+}
+.adm-sidebar-brand-sub {
+    font-size: 11px;
+    color: var(--surface-muted);
+    line-height: 1;
+}
+
+.adm-sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.adm-sidebar-section {
+    padding: 10px 10px 4px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--sidebar-label);
+}
+
+.adm-sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--surface-fg);
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.adm-sidebar-link [data-lucide] {
+    width: 18px;
+    height: 18px;
+    color: var(--surface-muted);
+    flex-shrink: 0;
+}
+.adm-sidebar-link:hover {
+    background: var(--surface-hover);
+    color: var(--color-brand-400);
+}
+.adm-sidebar-link:hover [data-lucide] { color: var(--color-brand-400); }
+.adm-sidebar-link.is-active {
+    background: var(--color-brand-600);
+    color: #ffffff;
+}
+.adm-sidebar-link.is-active [data-lucide] { color: #ffffff; }
+
+.adm-sidebar-badge {
+    margin-left: auto;
+    min-width: 20px;
+    height: 18px;
+    padding: 0 6px;
+    border-radius: 9px;
+    background: var(--color-state-danger);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+[data-sidebar-collapsed="true"] .adm-sidebar-badge { display: none; }
+
+.adm-sidebar-foot {
+    padding: 12px 14px;
+    border-top: 1px solid var(--surface-border);
+    font-size: 11px;
+    color: var(--surface-muted);
+    flex-shrink: 0;
+}

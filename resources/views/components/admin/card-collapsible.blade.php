@@ -1,19 +1,12 @@
 {{--
-    Admin collapsible card component (Bootstrap accordion pattern).
+    Admin collapsible card (Alpine-driven, replaces Bootstrap accordion).
 
     Usage:
-        <x-admin.card-collapsible id="collapseStats" title="Statistics" :open="true">
+        <x-admin.card-collapsible id="collapseStats" title="Statistics" :open="true" icon="server">
             <p>Content goes here</p>
         </x-admin.card-collapsible>
 
-    Props:
-        id      (string)           - unique id for the collapse target (no #)
-        title   (string)           - card header label
-        icon    (string|null)      - FontAwesome class shown before the title
-        badge   (int|string|null)  - optional count badge shown next to the title
-        open    (bool)             - whether the panel starts expanded (default true)
-        flush   (bool)             - removes card-body padding (p-0) for full-bleed tables
-        chevron (bool)             - show the collapse chevron arrow (default false)
+    Props mirror the legacy SB Admin component so existing pages don't need to change.
 --}}
 @props([
     'id',
@@ -25,20 +18,23 @@
     'chevron' => false,
 ])
 
-<div class="card shadow mb-4">
-    <a href="#{{ $id }}" class="d-block card-header py-3" data-toggle="collapse"
-        role="button" aria-expanded="{{ $open ? 'true' : 'false' }}" aria-controls="{{ $id }}">
-        <h6 class="m-0 font-weight-bold text-primary">
-            @if ($chevron)<i class="fas fa-chevron-down fa-xs mr-2 collapse-icon"></i>@endif
-            @if ($icon)<i class="{{ $icon }} mr-1"></i>@endif
-            {{ $title }}
+<div class="adm-card mb-4" id="{{ $id }}" x-data="{ open: @js((bool) $open) }">
+    <div class="adm-card-header" style="cursor: pointer;" @click="open = !open">
+        <h2 class="adm-card-title">
+            @if ($icon)<i data-lucide="{{ $icon }}"></i>@endif
+            <span>{{ $title }}</span>
             @if (!is_null($badge))
-                <span class="badge badge-secondary ml-1">{{ $badge }}</span>
+                <span class="adm-badge adm-badge-neutral">{{ $badge }}</span>
             @endif
-        </h6>
-    </a>
-    <div class="collapse {{ $open ? 'show' : '' }}" id="{{ $id }}">
-        <div class="{{ $flush ? 'card-body p-0' : 'card-body' }}">
+        </h2>
+        <button type="button" class="adm-card-collapse-toggle" aria-label="Toggle">
+            <i data-lucide="chevron-down"
+               :style="open ? '' : 'transform: rotate(-90deg);'"
+               style="transition: transform 0.15s ease;"></i>
+        </button>
+    </div>
+    <div x-show="open" x-collapse>
+        <div @class(['adm-card-body', '!p-0' => $flush])>
             {!! $slot !!}
         </div>
     </div>

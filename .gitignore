@@ -30,3 +30,6 @@ storage/logs/*.txt
 vendor
 config/xgp-db-config.php
 .php-cs-fixer.cache
+.claude/settings.json
+INSTALL.md
+public/index.php

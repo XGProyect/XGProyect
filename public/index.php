@@ -34,6 +34,23 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 require __DIR__.'/../vendor/autoload.php';
 
 /*
+ * Subdirectory + Apache rewrite fix.
+ *
+ * When the user hits /XGProyect/admin/server, Apache rewrites it internally
+ * to /XGProyect/public/index.php but leaves SCRIPT_NAME pointing at the
+ * rewritten path. Symfony then derives baseUrl as /XGProyect/public/ — wrong
+ * for the user's URL — so generated links / redirects include /public/.
+ *
+ * Apache exposes the original URL via REDIRECT_URL. We use it to rewrite
+ * SCRIPT_NAME and PHP_SELF so Symfony detects /XGProyect/ as the base.
+ */
+if (isset($_SERVER['REDIRECT_URL']) && str_ends_with((string) ($_SERVER['SCRIPT_NAME'] ?? ''), '/public/index.php')) {
+    $base = substr($_SERVER['SCRIPT_NAME'], 0, -strlen('public/index.php'));
+    $_SERVER['SCRIPT_NAME'] = $base . 'index.php';
+    $_SERVER['PHP_SELF'] = $base . 'index.php';
+}
+
+/*
 |--------------------------------------------------------------------------
 | Run The Application
 |--------------------------------------------------------------------------

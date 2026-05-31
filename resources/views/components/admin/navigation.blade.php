@@ -1,109 +1,64 @@
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-    <!-- Sidebar Toggle (Topbar) -->
-    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-        <i class="fa fa-bars"></i>
+<header class="adm-topbar">
+    <button type="button"
+            class="adm-topbar-toggle"
+            data-action="adm-toggle-sidebar"
+            title="Toggle sidebar"
+            aria-label="Toggle sidebar">
+        <i data-lucide="menu"></i>
     </button>
 
-    <!-- Topbar Search -->
-    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
-          action="{{ route('admin.search') }}" method="GET">
-        <div class="input-group">
-            <input type="text" name="term" class="form-control bg-light border-0 small" placeholder="{{ __('admin/navigation.nv_search_for') }}"
-                aria-label="Search" aria-describedby="basic-addon2" autocomplete="off">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">
-                    <i class="fas fa-search fa-sm"></i>
-                </button>
-            </div>
-        </div>
+    <div class="adm-topbar-title">@yield('page-title', 'Admin Panel')</div>
+
+    <form action="{{ route('admin.search') }}" method="GET" class="adm-topbar-search">
+        <i data-lucide="search"></i>
+        <input type="text"
+               name="term"
+               placeholder="{{ __('admin/navigation.nv_search_for') }}"
+               autocomplete="off">
     </form>
 
-    <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
+    <div class="adm-topbar-spacer"></div>
 
-        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-        <li class="nav-item dropdown no-arrow d-sm-none">
-            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
+    <button type="button"
+            class="adm-topbar-bell"
+            data-action="adm-toggle-theme"
+            title="Toggle theme"
+            aria-label="Toggle theme">
+        <i data-lucide="moon" data-theme-icon-dark></i>
+        <i data-lucide="sun" data-theme-icon-light style="display: none;"></i>
+    </button>
+
+    <a href="https://github.com/XGProyect/XGProyect/releases"
+       target="_blank"
+       rel="noopener"
+       class="adm-topbar-bell"
+       title="{{ __('admin/navigation.nv_new_download') }}">
+        <i data-lucide="bell"></i>
+    </a>
+
+    <a href="{{ url('game.php?page=overview') }}" class="adm-btn adm-btn-ghost adm-btn-sm" title="Open game">
+        <i data-lucide="external-link"></i>
+        <span>Game</span>
+    </a>
+
+    <div x-data="{ open: false }" style="position: relative;">
+        <button type="button"
+                class="adm-topbar-user"
+                @click="open = !open"
+                @click.outside="open = false">
+            <span class="adm-topbar-user-avatar">{{ strtoupper(mb_substr($username, 0, 1)) }}</span>
+            <span class="adm-topbar-user-name">{{ $username }}</span>
+            <i data-lucide="chevron-down"></i>
+        </button>
+
+        <div x-show="open"
+             x-transition.opacity
+             class="adm-topbar-menu"
+             style="display: none">
+            <a href="{{ route('admin.logout') }}">
+                <i data-lucide="log-out"></i>
+                <span>{{ __('admin/navigation.nv_logout') }}</span>
             </a>
-            <!-- Dropdown - Messages -->
-            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search"
-                      action="{{ route('admin.search') }}" method="GET">
-                    <div class="input-group">
-                        <input type="text" name="term" class="form-control bg-light border-0 small" placeholder="Search for..."
-                            aria-label="Search" aria-describedby="basic-addon2" autocomplete="off">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </li>
-
-        <!-- Nav Item - Alerts -->
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter"></span>
-            </a>
-            <!-- Dropdown - Alerts -->
-            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                    {{ __('admin/navigation.nv_alert_center') }}
-                </h6>
-                <a class="dropdown-item d-flex align-items-center"
-                    href="https://github.com/XGProyect/XGProyect/releases" target="_blank">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-success">
-                            <i class="fas fa-download text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">{{ $currentDate }}</div>
-                        <span class="font-weight-bold">{{ __('admin/navigation.nv_new_download') }}</span>
-                    </div>
-                </a>
-                <!--<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>-->
-            </div>
-        </li>
-
-        <div class="topbar-divider d-none d-sm-block"></div>
-
-        <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ $username }}</span>
-            </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <!--<a class="dropdown-item" href="#">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
-                </a>-->
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    {{ __('admin/navigation.nv_logout') }}
-                </a>
-            </div>
-        </li>
-    </ul>
-</nav>
+        </div>
+    </div>
+</header>
