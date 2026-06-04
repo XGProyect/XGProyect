@@ -29,6 +29,7 @@ class LegacyController extends BaseController
         'highscore' => Game\HighscoreController::class,
         'logout' => Game\LogoutController::class,
         'notices' => Game\NoticesController::class,
+        'overview' => Game\OverviewController::class,
         'playerprofile' => Game\PlayerprofileController::class,
         'preferences' => Game\PreferencesController::class,
         'research' => Game\ResearchController::class,
