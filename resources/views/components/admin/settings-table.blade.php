@@ -1,19 +1,11 @@
 {{--
-    Admin settings-table component.
+    Admin settings-table component (Tailwind rewrite).
 
     Wraps the repeated label/input row pattern used across all settings views.
-
-    Usage:
-        <x-admin.settings-table>
-            <tr>
-                <td><span>{{ __('...label...') }}</span></td>
-                <td><input class="form-control" ...></td>
-            </tr>
-            ...
-        </x-admin.settings-table>
+    Existing pages keep working — only the wrapper styling changed.
 --}}
-<div class="table-responsive">
-    <table class="table table-borderless">
+<div style="overflow-x: auto;">
+    <table class="adm-table adm-table-compact" style="background: transparent;">
         <tbody>
             {!! $slot !!}
         </tbody>

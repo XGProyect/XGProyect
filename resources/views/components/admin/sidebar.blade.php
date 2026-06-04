@@ -1,45 +1,82 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/home">
-        <div class="sidebar-brand-icon">
-            <img src="https://xgproyect.org/wp-content/uploads/2019/10/xgp-new-logo-white.png" alt="XG Proyect Logo"
-                title="XG Proyect" width="150px">
-        </div>
+@php
+    /**
+     * Icon map per section — lucide names. Keep in sync with sections in
+     * App\View\Components\Admin\Sidebar so each block lights up with a
+     * meaningful icon at the top of its group header (when collapsed) and
+     * next to each item.
+     */
+    $sectionIcons = [
+        'configuration' => 'settings',
+        'information' => 'info',
+        'edition' => 'pencil',
+        'tools' => 'wrench',
+        'maintenance' => 'brush',
+    ];
+
+    /** Per-item icons — lucide names. */
+    $itemIcons = [
+        // configuration
+        'server' => 'server',
+        'mailing' => 'mail',
+        'modules' => 'boxes',
+        'planets' => 'globe',
+        'expeditions' => 'compass',
+        'registration' => 'user-plus',
+        'statistics' => 'bar-chart-3',
+        'premium' => 'star',
+        // information
+        'tasks' => 'list-checks',
+        'errors' => 'triangle-alert',
+        'fleets' => 'rocket',
+        'messages' => 'message-square',
+        // edition
+        'users' => 'users',
+        'bots' => 'bot',
+        'alliances' => 'shield',
+        'languages' => 'languages',
+        'changelog' => 'history',
+        'permissions' => 'key-round',
+        // tools
+        'backup' => 'database',
+        'announcement' => 'megaphone',
+        'ban' => 'gavel',
+        'rebuildhighscores' => 'trophy',
+        'update' => 'arrow-up-from-line',
+        // maintenance
+        'repair' => 'hammer',
+        'reset' => 'rotate-ccw',
+    ];
+@endphp
+
+<aside class="adm-sidebar">
+    <a href="{{ url('admin/home') }}" class="adm-sidebar-brand">
+        <span class="adm-sidebar-brand-mark">XG</span>
+        <span class="adm-sidebar-text">
+            <div class="adm-sidebar-brand-title">XG Proyect</div>
+            <div class="adm-sidebar-brand-sub">Admin · v{{ config('version.files') }}</div>
+        </span>
     </a>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        {{ __('admin/menu.general') }}
-    </div>
-
-    @foreach ($sections as $sectionTitle => $menuItems)
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item{{ $activeBlock === $sectionTitle ? ' show' : '' }}">
-        <a class="nav-link{{ $activeBlock === $sectionTitle ? '' : ' collapsed' }}" href="#" data-toggle="collapse" data-target="#collapse{{ $loop->iteration }}" aria-expanded="true"
-            aria-controls="collapse{{ $loop->iteration }}">
-            <i class="fas fa-fw {{ $menuItems['icon'] }}"></i>
-            <span>{{ __('admin/menu.' . $sectionTitle) }}</span>
-        </a>
-        <div id="collapse{{ $loop->iteration }}" class="collapse{{ $activeBlock === $sectionTitle ? ' show active' : '' }}" aria-labelledby="heading{{ $loop->iteration }}" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                @foreach ($menuItems['items'] as $item => $data)
-                <a class="collapse-item{{ ($item === $activePage) ? ' active' : '' }}" href="/admin/{{ $item }}" @isset($data[0]) {!! $data[0] !!} @endisset>
-                    {{ __('admin/menu.' . $item) }}
-                </a>
-                @endforeach
+    <nav class="adm-sidebar-nav">
+        @foreach ($sections as $sectionTitle => $menuItems)
+            <div class="adm-sidebar-section adm-sidebar-text">
+                {{ __('admin/menu.' . $sectionTitle) }}
             </div>
-        </div>
-    </li>
-    @endforeach
 
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
+            @foreach ($menuItems['items'] as $item => $data)
+                @php($isActive = $item === $activePage)
+                <a href="{{ url("admin/{$item}") }}"
+                   data-page="{{ $item }}"
+                   class="adm-sidebar-link{{ $isActive ? ' is-active' : '' }}"
+                   @isset($data[0]) {!! $data[0] !!} @endisset>
+                    <i data-lucide="{{ $itemIcons[$item] ?? 'circle' }}"></i>
+                    <span class="adm-sidebar-text">{{ __("admin/menu.{$item}") }}</span>
+                </a>
+            @endforeach
+        @endforeach
+    </nav>
 
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    <div class="adm-sidebar-foot adm-sidebar-text">
+        XG Proyect v{{ config('version.files') }}
     </div>
-</ul>
+</aside>

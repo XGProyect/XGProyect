@@ -1,0 +1,76 @@
+/*
+ * Admin button component — indigo primary + outline / ghost / danger variants.
+ */
+
+.adm-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.adm-btn:disabled, .adm-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+.adm-btn [data-lucide] { width: 14px; height: 14px; }
+
+.adm-btn-primary {
+    color: #fff;
+    background: var(--color-brand-600);
+    border-color: var(--color-brand-600);
+}
+.adm-btn-primary:hover:not([disabled]) {
+    background: var(--color-brand-700);
+    border-color: var(--color-brand-700);
+}
+
+.adm-btn-secondary {
+    color: #e2e8f0;
+    background: #1e293b;
+    border-color: #334155;
+}
+.adm-btn-secondary:hover:not([disabled]) {
+    background: #243147;
+    border-color: #475569;
+}
+
+.adm-btn-ghost {
+    color: #cbd5e1;
+    background: transparent;
+    border-color: transparent;
+}
+.adm-btn-ghost:hover:not([disabled]) {
+    background: rgb(99 102 241 / 0.1);
+    color: #fff;
+}
+
+.adm-btn-danger {
+    color: #fff;
+    background: #dc2626;
+    border-color: #dc2626;
+}
+.adm-btn-danger:hover:not([disabled]) {
+    background: #b91c1c;
+    border-color: #b91c1c;
+}
+
+.adm-btn-success {
+    color: #fff;
+    background: #16a34a;
+    border-color: #16a34a;
+}
+.adm-btn-success:hover:not([disabled]) {
+    background: #15803d;
+    border-color: #15803d;
+}
+
+.adm-btn-sm  { padding: 5px 12px; font-size: 12px; }
+.adm-btn-lg  { padding: 11px 20px; font-size: 14px; }
+.adm-btn-block { width: 100%; }

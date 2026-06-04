@@ -5,9 +5,12 @@
     RewriteCond %{REQUEST_URI}::$1 ^(.*?/)(.*)::\2$
     RewriteRule ^(.*)$ - [E=BASE:%1]
 
-    # redirect requests to public folder
+    # Redirect any explicit /public/ URL back to the clean one. Must be an
+    # absolute path (BASE prefix) so the browser doesn't append it to the
+    # current URL, which would produce /XGProyect/public/admin/admin/server.
     RewriteCond %{THE_REQUEST} /public/([^\s?]*) [NC]
-    RewriteRule ^ %1 [L,NE,R=302]
+    RewriteRule ^ %{ENV:BASE}%1 [L,NE,R=302]
 
-    RewriteRule ^((?!public/).*)$ %{ENV:BASE}/public/$1 [L,NC]
+    # Then rewrite the clean URL internally to /public/ so PHP serves index.php.
+    RewriteRule ^((?!public/).*)$ %{ENV:BASE}public/$1 [L,NC]
 </IfModule>

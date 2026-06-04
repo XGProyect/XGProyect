@@ -1,0 +1,362 @@
+/*
+ * Legacy markup adaptor.
+ *
+ * The 56 admin views still ship Bootstrap 4 / SB Admin 2 class names
+ * (`form-control`, `row col-lg-6`, `btn btn-primary`, `custom-switch`).
+ * Rewriting every page in one PR is too risky; this layer makes that
+ * markup render correctly under the new dark/light Tailwind system.
+ *
+ * Rules consume the same semantic vars as the native .adm-* components,
+ * so themes still apply. Drop the rule when a page gets migrated.
+ */
+
+/* ============================================================
+   Grid (Bootstrap row / col-*)
+   ============================================================ */
+
+.container-fluid { width: 100%; padding: 0; }
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -8px;
+}
+.row > [class*="col-"] {
+    padding: 0 8px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+}
+.col, .col-12 { flex: 0 0 100%; max-width: 100%; }
+.col-6  { flex: 0 0 50%; max-width: 50%; }
+.col-4  { flex: 0 0 33.333%; max-width: 33.333%; }
+.col-8  { flex: 0 0 66.666%; max-width: 66.666%; }
+.col-3  { flex: 0 0 25%; max-width: 25%; }
+.col-9  { flex: 0 0 75%; max-width: 75%; }
+
+@media (min-width: 768px) {
+    .col-md-6  { flex: 0 0 50%; max-width: 50%; }
+    .col-md-4  { flex: 0 0 33.333%; max-width: 33.333%; }
+    .col-md-3  { flex: 0 0 25%; max-width: 25%; }
+    .col-md-12 { flex: 0 0 100%; max-width: 100%; }
+}
+@media (min-width: 992px) {
+    .col-lg-6  { flex: 0 0 50%; max-width: 50%; }
+    .col-lg-4  { flex: 0 0 33.333%; max-width: 33.333%; }
+    .col-lg-3  { flex: 0 0 25%; max-width: 25%; }
+    .col-lg-8  { flex: 0 0 66.666%; max-width: 66.666%; }
+    .col-lg-12 { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* ============================================================
+   Inputs / selects / textareas
+   ============================================================ */
+
+.form-control,
+.form-select,
+.form-control-sm,
+input[type="text"]:not(.adm-input):not([class*="adm-topbar"]):not([class*="adm-table-search"]),
+input[type="number"]:not(.adm-input),
+input[type="email"]:not(.adm-input),
+input[type="url"]:not(.adm-input),
+input[type="password"]:not(.adm-input),
+input[type="search"]:not(.adm-input):not([class*="adm-topbar"]):not([class*="adm-table-search"]),
+select:not(.adm-select),
+textarea:not(.adm-textarea) {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--input-fg);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    box-sizing: border-box;
+}
+.form-control:focus,
+.form-select:focus,
+select:not(.adm-select):focus,
+textarea:not(.adm-textarea):focus,
+input:not(.adm-input):focus {
+    outline: none;
+    border-color: var(--color-brand-500);
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.2);
+}
+.form-control::placeholder,
+textarea::placeholder { color: var(--input-placeholder); }
+.form-control-sm { padding: 5px 9px; font-size: 12px; }
+
+/*
+ * Custom select chevron — drawn from two CSS linear-gradients so the colour
+ * comes from `--input-fg` and follows the theme toggle. A raw SVG data URI
+ * with a baked-in stroke colour can't react to CSS variables, which left
+ * the chevron invisible in light mode.
+ */
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 32px;
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--input-fg) 50%),
+        linear-gradient(135deg, var(--input-fg) 50%, transparent 50%);
+    background-position:
+        calc(100% - 17px) calc(50% - 2px),
+        calc(100% - 12px) calc(50% - 2px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+}
+select::-ms-expand { display: none; }
+
+/* ============================================================
+   Buttons (.btn .btn-primary etc.)
+   ============================================================ */
+
+.btn:not(.adm-btn) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: background 0.15s ease, border-color 0.15s ease;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.btn-primary:not(.adm-btn-primary) {
+    color: #fff;
+    background: var(--color-brand-600);
+    border-color: var(--color-brand-600);
+}
+.btn-primary:not(.adm-btn-primary):hover {
+    background: var(--color-brand-700);
+    border-color: var(--color-brand-700);
+}
+.btn-secondary { color: var(--surface-fg); background: var(--surface-soft); border-color: var(--surface-border); }
+.btn-secondary:hover { background: var(--surface-hover); }
+.btn-success    { color: #fff; background: #16a34a; border-color: #16a34a; }
+.btn-success:hover { background: #15803d; }
+.btn-danger     { color: #fff; background: #dc2626; border-color: #dc2626; }
+.btn-danger:hover { background: #b91c1c; }
+.btn-warning    { color: #1a1a1a; background: #f59e0b; border-color: #f59e0b; }
+.btn-info       { color: #fff; background: #0ea5e9; border-color: #0ea5e9; }
+.btn-link       { color: var(--color-brand-400); background: transparent; padding: 0; border: none; }
+.btn-link:hover { color: var(--color-brand-300); text-decoration: underline; }
+
+.btn-sm { padding: 5px 12px; font-size: 12px; }
+.btn-lg { padding: 11px 20px; font-size: 14px; }
+.btn-icon-split .icon { display: inline-flex; align-items: center; }
+.btn-icon-split .text { margin-left: 4px; }
+.btn-block { width: 100%; display: flex; }
+
+/* ============================================================
+   Tables (.table .table-bordered .table-responsive)
+   ============================================================ */
+
+.table-responsive { width: 100%; overflow-x: auto; }
+
+.table:not(.adm-table) {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+    color: var(--surface-fg);
+}
+.table:not(.adm-table) thead th {
+    padding: 10px 14px;
+    background: var(--surface-card-alt);
+    color: var(--surface-muted);
+    text-align: left;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--surface-border);
+    white-space: nowrap;
+}
+.table:not(.adm-table) tbody td,
+.table:not(.adm-table) tbody th {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--surface-border);
+    vertical-align: middle;
+    color: var(--surface-fg);
+    font-weight: 400;
+}
+.table:not(.adm-table) tbody tr:hover { background: var(--surface-hover); }
+.table-borderless td,
+.table-borderless th { border: none !important; }
+
+/* ============================================================
+   Switches (Bootstrap 4 custom-switch + bare checkboxes)
+   ============================================================ */
+
+.custom-control.custom-switch {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    min-height: 22px;
+}
+.custom-control.custom-switch .custom-control-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.custom-control.custom-switch .custom-control-label {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 22px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+.custom-control.custom-switch .custom-control-label::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #334155;
+    border-radius: 999px;
+    transition: 0.2s;
+    border: none;
+}
+.custom-control.custom-switch .custom-control-label::after {
+    content: '';
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    top: 3px;
+    background: #f1f5f9;
+    border-radius: 50%;
+    transition: 0.2s;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+}
+.custom-control.custom-switch .custom-control-input:checked + .custom-control-label::before {
+    background: var(--color-brand-600);
+}
+.custom-control.custom-switch .custom-control-input:checked + .custom-control-label::after {
+    transform: translateX(18px);
+}
+
+/* Bare checkboxes */
+input[type="checkbox"]:not(.custom-control-input):not(.form-check-input) {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--color-brand-600);
+    cursor: pointer;
+}
+input[type="radio"] { accent-color: var(--color-brand-600); }
+
+.form-check { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.form-check-input { width: 16px; height: 16px; accent-color: var(--color-brand-600); }
+.form-check-label { font-size: 13px; color: var(--surface-fg); cursor: pointer; }
+
+/* ============================================================
+   Utility classes (used by old views)
+   ============================================================ */
+
+.text-gray-400, .text-gray-500, .text-gray-600 { color: var(--surface-muted); }
+.text-gray-300 { color: var(--surface-fg); }
+.text-gray-800, .text-gray-900 { color: var(--surface-fg); }
+.text-white, .text-white-50 { color: var(--surface-fg); }
+.text-muted    { color: var(--surface-muted); }
+.text-primary  { color: var(--color-brand-400); }
+.text-success  { color: var(--color-state-success); }
+.text-danger   { color: var(--color-state-danger); }
+.text-warning  { color: var(--color-state-warning); }
+.text-info     { color: var(--color-state-info); }
+.text-center   { text-align: center; }
+.text-left     { text-align: left; }
+.text-right    { text-align: right; }
+
+.font-weight-bold, .font-weight-bolder { font-weight: 700; }
+.font-weight-normal { font-weight: 400; }
+.font-weight-light  { font-weight: 300; }
+.small             { font-size: 12px; }
+
+.mb-0 { margin-bottom: 0 !important; }
+.mb-1 { margin-bottom: 4px !important; }
+.mb-2 { margin-bottom: 8px !important; }
+.mb-3 { margin-bottom: 12px !important; }
+.mb-4 { margin-bottom: 16px !important; }
+.mb-5 { margin-bottom: 24px !important; }
+.mt-1 { margin-top: 4px !important; }
+.mt-2 { margin-top: 8px !important; }
+.mt-3 { margin-top: 12px !important; }
+.mt-4 { margin-top: 16px !important; }
+.ml-1 { margin-left: 4px !important; }
+.ml-2 { margin-left: 8px !important; }
+.mr-1 { margin-right: 4px !important; }
+.mr-2 { margin-right: 8px !important; }
+.mx-auto { margin-left: auto !important; margin-right: auto !important; }
+.my-auto { margin-top: auto !important; margin-bottom: auto !important; }
+
+.d-block        { display: block; }
+.d-flex         { display: flex; }
+.d-inline-block { display: inline-block; }
+.d-none         { display: none; }
+.d-sm-flex      { display: flex; }
+.align-items-center { align-items: center; }
+.justify-content-between { justify-content: space-between; }
+.justify-content-center  { justify-content: center; }
+
+.w-100 { width: 100%; }
+.h-100 { height: 100%; }
+.py-3 { padding-top: 12px; padding-bottom: 12px; }
+
+/* Bootstrap alert */
+.alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    margin-bottom: 16px;
+    font-size: 13px;
+}
+.alert-success { background: rgb(34 197 94 / 0.1); border-color: rgb(34 197 94 / 0.3); color: #4ade80; }
+.alert-warning { background: rgb(245 158 11 / 0.1); border-color: rgb(245 158 11 / 0.3); color: #fbbf24; }
+.alert-danger  { background: rgb(239 68 68 / 0.1); border-color: rgb(239 68 68 / 0.3); color: #f87171; }
+.alert-info    { background: rgb(56 189 248 / 0.1); border-color: rgb(56 189 248 / 0.3); color: #38bdf8; }
+.alert-dismissible .close {
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    float: right;
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* Bootstrap badge */
+.badge:not(.adm-badge) {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+.badge-primary   { background: rgb(99 102 241 / 0.2); color: var(--color-brand-400); }
+.badge-secondary { background: rgb(100 116 139 / 0.2); color: var(--surface-fg); }
+.badge-success   { background: rgb(34 197 94 / 0.15); color: #4ade80; }
+.badge-warning   { background: rgb(245 158 11 / 0.15); color: #fbbf24; }
+.badge-danger    { background: rgb(239 68 68 / 0.15); color: #f87171; }
+
+/* SB Admin card fallback (some pages use .card directly). */
+.card:not(.adm-card) {
+    background: var(--surface-card);
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+.card:not(.adm-card) .card-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--surface-border);
+    background: transparent;
+}
+.card:not(.adm-card) .card-body { padding: 18px; }
+.shadow, .shadow-sm { box-shadow: 0 1px 3px rgb(0 0 0 / 0.2); }

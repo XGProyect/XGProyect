@@ -1,29 +1,26 @@
 {{--
-    Admin page header component.
+    Admin page header (Tailwind rewrite).
 
     Usage:
-        <x-admin.page-header
-            title="Page Title"
-            subtitle="Optional description shown below the title."
-        >
-            (optional right-side action via <x-slot name="action">)
+        <x-admin.page-header title="Page Title" subtitle="Optional description">
+            <x-slot name="action">
+                <a href="…" class="adm-btn adm-btn-primary">Action</a>
+            </x-slot>
         </x-admin.page-header>
-
-    Props:
-        title     (string)      - page heading text
-        subtitle  (string|null) - optional paragraph below the heading (rendered as raw HTML)
 --}}
 @props([
     'title',
     'subtitle' => null,
 ])
 
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">{{ $title }}</h1>
+<div class="adm-page-header">
+    <div>
+        <h1 class="adm-page-title">{{ $title }}</h1>
+        @if ($subtitle)
+            <p class="adm-page-subtitle">{!! $subtitle !!}</p>
+        @endif
+    </div>
     @isset($action)
-        {{ $action }}
+        <div class="adm-page-actions">{!! $action !!}</div>
     @endisset
 </div>
-@if ($subtitle)
-    <p class="mb-4 text-gray-600">{!! $subtitle !!}</p>
-@endif

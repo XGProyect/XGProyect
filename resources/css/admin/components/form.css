@@ -1,0 +1,98 @@
+/*
+ * Admin form components. Inputs/selects/textareas share a consistent
+ * dark style. Pair with `.adm-field` rows for label + control alignment.
+ */
+
+.adm-field {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+}
+.adm-field + .adm-field {
+    border-top: 1px solid rgb(55 65 81 / 0.4);
+}
+.adm-field-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #cbd5e1;
+}
+.adm-field-help {
+    grid-column: 2;
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.adm-input,
+.adm-select,
+.adm-textarea {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 13px;
+    font-family: inherit;
+    color: #e2e8f0;
+    background: #0b0f19;
+    border: 1px solid rgb(55 65 81 / 0.7);
+    border-radius: 8px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.adm-input:focus,
+.adm-select:focus,
+.adm-textarea:focus {
+    outline: none;
+    border-color: var(--color-brand-500);
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.2);
+}
+.adm-input::placeholder,
+.adm-textarea::placeholder { color: #64748b; }
+
+/*
+ * Switch — iOS-style toggle. Replaces every checkbox in the admin so the
+ * settings UIs read like a modern dashboard rather than a 2010 form.
+ *
+ * Usage:
+ *   <label class="adm-switch">
+ *       <input type="checkbox" name="x" {{ $checked ? 'checked' : '' }}>
+ *       <span></span>
+ *   </label>
+ */
+.adm-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.adm-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+.adm-switch > span {
+    position: absolute;
+    inset: 0;
+    background: #334155;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+}
+.adm-switch > span::after {
+    content: '';
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    top: 3px;
+    background: #f1f5f9;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+}
+.adm-switch input:checked + span { background: var(--color-brand-600); }
+.adm-switch input:checked + span::after { transform: translateX(18px); }
+.adm-switch input:focus-visible + span {
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.25);
+}

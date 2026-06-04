@@ -1,30 +1,27 @@
 {{--
-    Admin status-alert component (view-data driven, not session-flash).
+    Admin status alert (Tailwind rewrite). View-data driven; for session
+    flashes use <x-alert/>.
 
-    Renders a dismissible Bootstrap alert whose style/type/message are computed
-    by the controller and passed as view data. Use <x-alert/> for session flashes.
-
-    Usage:
-        <x-admin.status-alert
-            :message="$errorMessage"
-            :style="$secondStyle"
-            :type="$errorType"
-        />
-
-    Props:
-        message  (string)  - alert body text (rendered as raw HTML, may contain <br>)
-        style    (string)  - Bootstrap alert modifier class, e.g. "alert-success"
-        type     (string)  - bold prefix label, e.g. "OK", "Warning", "Error"
+    Maps the legacy Bootstrap class names (alert-success/warning/danger)
+    to the new .adm-alert-* variants so controllers don't need to change.
 --}}
 @props(['message', 'style', 'type'])
 
-<div class="row mb-3">
-    <div class="col">
-        <div class="alert {{ $style }} alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <strong>{{ $type }}</strong> {!! $message !!}
-        </div>
+@php
+    $variant = match ($style) {
+        'alert-danger'  => ['cls' => 'adm-alert-danger',  'icon' => 'octagon-x'],
+        'alert-warning' => ['cls' => 'adm-alert-warning', 'icon' => 'triangle-alert'],
+        'alert-info'    => ['cls' => 'adm-alert-info',    'icon' => 'info'],
+        default         => ['cls' => 'adm-alert-success', 'icon' => 'circle-check'],
+    };
+@endphp
+
+<div class="adm-alert {{ $variant['cls'] }}">
+    <i data-lucide="{{ $variant['icon'] }}"></i>
+    <div>
+        @if (!empty($type))
+            <div class="adm-alert-title">{{ $type }}</div>
+        @endif
+        <div class="adm-alert-body">{!! $message !!}</div>
     </div>
 </div>
