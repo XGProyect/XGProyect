@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +23,7 @@ return new class () extends Migration {
             $table->integer('planet_type')->default(1);
             $table->integer('planet_destroyed')->default(0);
             $table->integer('planet_b_building')->default(0);
-            $table->text('planet_b_building_id');
+            $table->text('planet_b_building_id')->nullable();
             $table->integer('planet_b_tech')->default(0);
             $table->integer('planet_b_tech_id')->default(0);
             $table->integer('planet_b_hangar')->default(0);

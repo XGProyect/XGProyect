@@ -7,13 +7,13 @@ namespace App\Http\Controllers\Install\Steps;
 use App\Http\Requests\Install\AdminRequest;
 use App\Models\Planets;
 use App\Models\User;
-use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 use Xgp\App\Core\Enumerators\UserRanksEnumerator;
 use Xgp\App\Libraries\PlanetLib;
 
@@ -70,12 +70,14 @@ class AdminController extends BaseController
             ]);
 
             DB::commit();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             DB::rollback();
+
+            report($e);
 
             return back()
                 ->withInput()
-                ->with('danger', __('install/install.admin_create_fail'));
+                ->with('danger', __('install/install.admin_create_fail') . (config('app.debug') ? ' (' . $e->getMessage() . ')' : ''));
         }
 
         session()->put('admin_create_success', true);
