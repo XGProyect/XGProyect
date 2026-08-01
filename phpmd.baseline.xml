@@ -30,7 +30,6 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Install/Steps/DatabaseController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Install/Steps/FinalController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Install/Steps/RequirementsController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\ErrorControlOperator" file="app/Http/Controllers/Install/Steps/RequirementsController.php" method="checkPhpExtensions"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Controllers/Install/Steps/TablesController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Middleware/Locale.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/Http/Middleware/SetFileSessionDriver.php"/>
@@ -58,13 +57,10 @@
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/View/Components/Game/Topnav.php"/>
   <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="app/View/Components/Game/Topnav.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="app/View/Components/Install/Navigation.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCasePropertyName" file="legacy/app/Core/Common.php"/>
-  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Core/Common.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\ElseExpression" file="legacy/app/Core/Common.php"/>
-  <violation rule="PHPMD\Rule\Design\ExitExpression" file="legacy/app/Core/Common.php"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Core/Common.php" method="setSystemTimezone"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Core/Common.php" method="setSecure"/>
   <violation rule="PHPMD\Rule\Controversial\Superglobals" file="legacy/app/Core/Common.php" method="setSecure"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseVariableName" file="legacy/app/Core/Common.php"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Core/Common.php" method="setUpdates"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Core/Common.php" method="isServerOpen"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="legacy/app/Core/Common.php" method="checkBanStatus"/>

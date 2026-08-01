@@ -5515,6 +5515,12 @@ parameters:
 			path: legacy/app/Libraries/Buildings/Queue.php
 
 		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 4
+			path: legacy/app/Libraries/Buildings/Queue.php
+
+		-
 			message: '#^Method Xgp\\App\\Libraries\\Combatreport\\Report\:\:__construct\(\) has parameter \$reports with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
