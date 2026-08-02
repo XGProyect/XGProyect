@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Concerns\HasHighscoreColumns;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -30,6 +32,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class AllianceStatistics extends Model
 {
+    use HasHighscoreColumns;
+
     /**
      * The database table used by the model.
      *
@@ -125,6 +129,45 @@ class AllianceStatistics extends Model
     public $timestamps = false;
 
     // Scopes...
+
+    /**
+     * Build the alliance ranking query for a given highscore type. Joins the
+     * alliance table, exposes the member count via a correlated subquery, and
+     * aliases `points`, `current_rank`, `old_rank` so the controller is free
+     * of column-suffix knowledge.
+     *
+     * @param Builder<self> $query
+     *
+     * @return Builder<self>
+     */
+    public function scopeRanking(Builder $query, int $type): Builder
+    {
+        $columns = self::highscoreColumnsFor($type);
+
+        $memberCount = User::query()
+            ->selectRaw('COUNT(id)')
+            ->whereColumn('users.ally_id', 'alliance.alliance_id');
+
+        return $query
+            ->join('alliance', 'alliance.alliance_id', '=', 'alliance_statistics.alliance_statistic_alliance_id')
+            ->orderByDesc('alliance_statistics.alliance_statistic_' . $columns['points'])
+            ->orderBy('alliance_statistics.alliance_statistic_total_rank')
+            ->select([
+                'alliance.alliance_id',
+                'alliance.alliance_name',
+                'alliance.alliance_tag',
+                'alliance.alliance_request_notallow',
+                'alliance_statistics.alliance_statistic_' . $columns['points'] . ' as points',
+                'alliance_statistics.alliance_statistic_' . $columns['rank'] . ' as current_rank',
+                'alliance_statistics.alliance_statistic_' . $columns['oldRank'] . ' as old_rank',
+            ])
+            ->selectSub($memberCount, 'member_count');
+    }
+
+    public static function rankingCount(): int
+    {
+        return Alliance::query()->count();
+    }
 
     // Functions ...
 

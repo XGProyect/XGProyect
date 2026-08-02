@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Concerns\HasHighscoreColumns;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -31,6 +33,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class UsersStatistics extends Model
 {
+    use HasHighscoreColumns;
+
     /**
      * The database table used by the model.
      *
@@ -126,6 +130,44 @@ class UsersStatistics extends Model
     public $timestamps = false;
 
     // Scopes...
+
+    /**
+     * Build the player ranking query for a given highscore type. Joins users +
+     * alliance and exposes aliased `points`, `current_rank`, `old_rank` so the
+     * caller doesn't need to know the underlying column suffix.
+     *
+     * @param Builder<self> $query
+     *
+     * @return Builder<self>
+     */
+    public function scopeRanking(Builder $query, int $type, int $statAdminLevel): Builder
+    {
+        $columns = self::highscoreColumnsFor($type);
+
+        return $query
+            ->join('users', 'users.id', '=', 'users_statistics.user_statistic_user_id')
+            ->leftJoin('alliance', 'alliance.alliance_id', '=', 'users.ally_id')
+            ->where('users.authlevel', '<=', $statAdminLevel)
+            ->orderByDesc('users_statistics.user_statistic_' . $columns['points'])
+            ->orderBy('users_statistics.user_statistic_total_rank')
+            ->select([
+                'users.id',
+                'users.name',
+                'users.ally_id',
+                'alliance.alliance_name',
+                'users_statistics.user_statistic_' . $columns['points'] . ' as points',
+                'users_statistics.user_statistic_' . $columns['rank'] . ' as current_rank',
+                'users_statistics.user_statistic_' . $columns['oldRank'] . ' as old_rank',
+            ]);
+    }
+
+    /**
+     * Count rows visible in the ranking (respects stat_admin_level cut-off).
+     */
+    public static function rankingCount(int $statAdminLevel): int
+    {
+        return User::query()->where('authlevel', '<=', $statAdminLevel)->count();
+    }
 
     // Functions ...
 
